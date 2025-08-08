@@ -1,41 +1,28 @@
 package com.vs.schoolmessenger.Parent.Assignment
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.PopupMenu
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
-import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
-import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
-import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
-import me.relex.circleindicator.CircleIndicator2
+import com.vs.schoolmessenger.Utils.Constant
 
 class AssignmentAdapter(
     var itemList: MutableList<AssignmentData>,
@@ -160,6 +147,68 @@ class AssignmentAdapter(
             rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
             total_numbers.visibility = View.GONE
+
+            rytList2.setOnClickListener {
+                val convertedList = data.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
+                }
+                val isHomeWorkData = FilePreview(
+                    id = "",
+                    title = data.title,
+                    description = data.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = data.thumbnail,
+                    isUnread = true,
+                    isCompleted = true,
+                    isMenuType = Constant.M_ASSIGNMENT,
+                    fileList = convertedList,
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
+            }
+
+            rcyAssignment.addOnItemTouchListener(
+                object : RecyclerView.SimpleOnItemTouchListener() {
+                    override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                        val child = rv.findChildViewUnder(e.x, e.y)
+                        if (child != null && e.action == MotionEvent.ACTION_UP) {
+                            val position = rv.getChildAdapterPosition(child)
+                            val convertedList = data.file_path.map {
+                                GetFilePathDetails(
+                                    type = it.type,
+                                    url = it.url,
+                                )
+                            }
+                            val isHomeWorkData = FilePreview(
+                                id = "",
+                                title = data.title,
+                                description = data.description,
+                                subjectName = "",
+                                sentBy = "",
+                                thumbnail = data.thumbnail,
+                                isUnread = true,
+                                isCompleted = true,
+                                isMenuType = Constant.M_ASSIGNMENT,
+                                fileList = convertedList,
+                            )
+
+                            val intent = Intent(context, ChildHomeWork::class.java)
+                            intent.putExtra("isPreViewData", isHomeWorkData)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            context.startActivity(intent)
+                        }
+                        return false
+                    }
+                }
+            )
+
 
             if (hasFiles) {
                 val fileList = data.file_path!!

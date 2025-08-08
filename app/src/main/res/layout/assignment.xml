@@ -470,6 +470,7 @@
                 android:visibility="gone">
 
                 <ImageView
+                    android:id="@+id/noDataImage"
                     android:layout_width="@dimen/two_hundred"
                     android:layout_height="@dimen/two_hundred"
                     android:layout_marginTop="@dimen/twenty_five"
