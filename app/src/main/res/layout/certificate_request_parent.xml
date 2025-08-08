@@ -112,7 +112,8 @@
                 android:layout_below="@+id/header_text"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"></Spinner>
+                android:layout_marginEnd="@dimen/ten">
+            </Spinner>
 
             <TextView
                 android:id="@+id/header_text1"

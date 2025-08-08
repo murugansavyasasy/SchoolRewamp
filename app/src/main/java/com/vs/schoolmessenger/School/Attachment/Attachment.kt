@@ -15,7 +15,9 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -35,6 +37,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -115,6 +118,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 //        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.lnrTabOneName.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
@@ -244,16 +248,32 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             Constant.isTitleLength,
             binding.lblTitleTextCount
         )
+
+
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                mAttachmentReportAdapter?.filter?.filter(s)
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
     }
 
     fun isLoadAttachmentReportList(isHomeAttachmentReport: List<AttachmentReportData>) {
-        mAttachmentReportAdapter =
-            AttachmentReportAdapter(
-                isHomeAttachmentReport,
-                this,
-                this,
-                Constant.isShimmerViewDisable
-            )
+
+        mAttachmentReportAdapter = AttachmentReportAdapter(
+            isHomeAttachmentReport,
+            this,
+            this,
+            Constant.isShimmerViewDisable,
+            binding.nomessage,
+            binding.txtNoData
+        )
+
+
         binding.rcyAttachment.layoutManager = LinearLayoutManager(this)
         binding.rcyAttachment.isNestedScrollingEnabled = false
         binding.rcyAttachment.adapter = mAttachmentReportAdapter
@@ -634,6 +654,14 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.schoollistfilter.visibility = View.VISIBLE
                 isLoadSchoolList()
+            }
+
+            R.id.imgSearchToolBar -> {
+                if(binding.search.isVisible) {
+                    binding.search.visibility = View.GONE
+                } else {
+                    binding.search.visibility = View.VISIBLE
+                }
             }
         }
     }
