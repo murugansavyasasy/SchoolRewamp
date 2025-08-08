@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
+
+
     <ImageView
         android:id="@+id/imgBack"
         android:layout_width="@dimen/thirty_five"
@@ -127,15 +130,35 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcChildHW"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
-        android:layout_marginBottom="@dimen/thirty"
+        android:layout_marginBottom="@dimen/ten"
         app:layout_constraintTop_toBottomOf="@id/lblAttachments"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/lblviewSubmissions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_shadow_light_primary"
+        android:gravity="center"
+        style="@style/CustomTextStylePoppinsBold"
+        android:padding="8dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        android:text="View Submissions"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/thirteen_sp"
+        app:layout_constraintTop_toBottomOf="@id/rcChildHW"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 
     <TextView
@@ -153,5 +176,8 @@
         app:layout_constraintTop_toBottomOf="@+id/rcChildHW">
 
     </TextView>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
