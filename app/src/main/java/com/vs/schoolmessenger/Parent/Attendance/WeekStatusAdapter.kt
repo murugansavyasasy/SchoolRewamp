@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.Parent.Attendance.WeekStatusModel.GetWeekStatusData
+import com.vs.schoolmessenger.Parent.Attendance.Model.GetWeekStatusData
 import com.vs.schoolmessenger.R
 
 class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
@@ -18,9 +18,7 @@ class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
 
     inner class WeekStatusViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val lblDay: TextView = itemView.findViewById(R.id.lblDay)
-        val imgTick: ImageView = itemView.findViewById(R.id.imgTick)
-        val lbltext: TextView = itemView.findViewById(R.id.lbltext)
-        val lnrBackground: LinearLayout = itemView.findViewById(R.id.lnrBackground)
+        val lnrBackground: View = itemView.findViewById(R.id.lnrBackground)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeekStatusViewHolder {
@@ -32,35 +30,21 @@ class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
     override fun onBindViewHolder(holder: WeekStatusViewHolder, position: Int) {
         val item = items[position]
         val status = item.status.trim()
-
         holder.lblDay.text = item.day
 
-        val drawable = GradientDrawable().apply {
-            shape = GradientDrawable.OVAL
-            when (status) {
-                "P" -> {
-                    setColor(ContextCompat.getColor(holder.itemView.context, R.color.PrimaryColor))
-                    setStroke(0, Color.TRANSPARENT)
-                    holder.imgTick.visibility = View.VISIBLE
-                    holder.lbltext.visibility = View.GONE
-                }
-                "A" -> {
-                    setColor(Color.RED)
-                    setStroke(0, Color.TRANSPARENT)
-                    holder.imgTick.visibility = View.GONE
-                    holder.lbltext.visibility = View.VISIBLE
-                    holder.lbltext.text = "A"
-                }
-                else -> {
-                    setColor(Color.WHITE)
-                    setStroke(2, Color.RED)
-                    holder.imgTick.visibility = View.GONE
-                    holder.lbltext.visibility = View.GONE
-                }
-            }
+        if (status == "x"||status == "X") {
+            holder.lnrBackground.setBackgroundResource(R.drawable.present_icon)
+        } else if (status == "A") {
+            holder.lnrBackground.setBackgroundResource(R.drawable.absent_icon)
+        } else if (status == "-") {
+            holder.lnrBackground.setBackgroundResource(R.drawable.not_taken_icon)
+        } else if (status == "/") {
+            holder.lnrBackground.setBackgroundResource(R.drawable.first_half_icon)
+        } else if (status == "SH") {
+            holder.lnrBackground.setBackgroundResource(R.drawable.second_half_icon)
+        } else if (status == "S") {
+            holder.lnrBackground.setBackgroundResource(R.drawable.holiday_icon)
         }
-
-        holder.lnrBackground.background = drawable
     }
 
     override fun getItemCount(): Int = items.size

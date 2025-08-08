@@ -11,28 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </TextView>
-    <LinearLayout
+    <View
         android:id="@+id/lnrBackground"
         android:layout_marginTop="@dimen/five"
         android:layout_width="@dimen/twenty_five"
-        android:gravity="center"
-        android:background="@drawable/circle_dark_blue"
         android:layout_height="@dimen/twenty_five">
-        <TextView
-            android:id="@+id/lbltext"
-            android:layout_width="wrap_content"
-            android:text="A"
-            android:visibility="gone"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content">
-        </TextView>
-        <ImageView
-            android:id="@+id/imgTick"
-            android:layout_width="@dimen/fifteen"
-            android:src="@drawable/white_tick_icon"
-            android:layout_height="@dimen/fifteen">
-        </ImageView>
-    </LinearLayout>
+    </View>
 
 
 </LinearLayout>

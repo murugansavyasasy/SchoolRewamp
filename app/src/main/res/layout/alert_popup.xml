@@ -15,10 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifteen"
         android:gravity="center"
+        style="@style/CustomTextStylePoppinsBold"
         android:text="@string/confirmation"
-        android:textColor="#000"
         android:textSize="@dimen/eighteen_sp"
-        android:textStyle="bold" />
+         />
 
     <TextView
         android:id="@+id/lblSelectTarget"
@@ -27,7 +27,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/ten"
         android:text="@string/selected_target_1"
-        android:textColor="#444"
+        android:textColor="@color/light_gray_4"
         android:textSize="@dimen/sixteen_sp" />
 
     <TextView
@@ -40,7 +40,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/ten"
         android:text="@string/are_you_sure_want_to_send_this_message"
-        android:textColor="#444"
+        android:textColor="@color/light_gray_4"
         android:textSize="@dimen/fifteen_sp" />
 
     <View

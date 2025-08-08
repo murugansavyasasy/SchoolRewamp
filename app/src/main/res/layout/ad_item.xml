@@ -35,9 +35,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/SeeAll"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/navi_blue1"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="normal">
+                >
 
             </TextView>
 
@@ -99,9 +100,9 @@
                     android:maxLines="1"
                     android:padding="@dimen/five"
                     android:text="@string/Assignment"
-                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    >
 
                 </TextView>
             </LinearLayout>
@@ -129,9 +130,9 @@
                     android:maxLines="1"
                     android:padding="@dimen/five"
                     android:text="@string/Leave_Request"
-                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    >
 
                 </TextView>
             </LinearLayout>
@@ -161,9 +162,9 @@
                     android:maxLines="1"
                     android:padding="@dimen/five"
                     android:text="@string/HomeWork"
-                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                   >
 
                 </TextView>
             </LinearLayout>

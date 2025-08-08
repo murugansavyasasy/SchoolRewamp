@@ -27,8 +27,7 @@
                 android:layout_width="@dimen/seventy_five"
                 android:layout_height="match_parent"
                 android:src="@drawable/schoolboy"
-                android:textColor="@color/black"
-                android:textStyle="bold">
+                >
             </ImageView>
 
 
@@ -45,7 +44,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="Saran"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/seventeen_sp"
                     style="@style/CustomTextStylePoppinsBold"
                     >
@@ -57,7 +55,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/fifteen"
                     android:text="I-A"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/sixteen_sp"
                     style="@style/CustomTextStylePoppinsMedium"
                    >
@@ -70,7 +67,6 @@
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginBottom="@dimen/ten"
                     android:text="Admission Number : VS1 -19661530"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/sixteen_sp"
                     style="@style/CustomTextStylePoppinsMedium">
                 </TextView>
@@ -79,14 +75,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="@dimen/five"
                     android:gravity="center_vertical">
 
                     <ImageView
                         android:id="@+id/phone_icon"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="6dp"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/six"
                         android:src="@drawable/phone_call_icon" />
 
                     <TextView
@@ -95,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:text="8610487261"
                         android:textColor="@color/navi_blue2"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/fifteen_sp"
                         style="@style/CustomTextStylePoppinsMedium" />
                 </LinearLayout>
 

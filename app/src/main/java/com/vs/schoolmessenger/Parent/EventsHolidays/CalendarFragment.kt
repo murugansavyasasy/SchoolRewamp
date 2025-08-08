@@ -22,6 +22,8 @@ import android.view.Gravity
 import android.util.Log
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter.HolidayAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.FragmentCalendarBinding
@@ -195,56 +197,42 @@ class CalendarFragment : Fragment() {
             cal.get(Calendar.MONTH) + 1 == currentMonth && cal.get(Calendar.YEAR) == currentYear
         }
 
+
         if (visibleHolidays.isNotEmpty()) {
-            val builder = SpannableStringBuilder()
-            builder.append("Holidays for $currentMonthYear\n\n")
-
-            val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_holiday_dot_circle)
-            val iconSize = resources.getDimensionPixelSize(R.dimen.holiday_dot_size)
-            icon?.setBounds(0, 0, iconSize, iconSize)
-
             val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 
-            visibleHolidays.forEach { holiday ->
+            val holidayModels = visibleHolidays.map {
                 val formattedDate = try {
-                    val parsedDate = inputFormat.parse(holiday.date)
+                    val parsedDate = inputFormat.parse(it.date)
                     outputFormat.format(parsedDate!!)
                 } catch (e: Exception) {
-                    holiday.date
+                    it.date
                 }
 
-                val spanText = SpannableString("  ${holiday.name}\n   $formattedDate\n\n")
-
-                spanText.setSpan(
-                    StyleSpan(Typeface.NORMAL),
-                    2,
-                    2 + holiday.name.length,
-                    Spannable.SPAN_INCLUSIVE_EXCLUSIVE
-                )
-
-                icon?.let {
-                    val imageSpan = ImageSpan(it, ImageSpan.ALIGN_BOTTOM)
-                    spanText.setSpan(imageSpan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-                }
-
-                builder.append(spanText)
+                Holiday(it.name, it.year,formattedDate)
             }
 
-            binding.holidaylabel.text = builder
-            binding.holidaylabel.gravity = Gravity.START
+            Log.d("holidayModels",holidayModels.toString())
+
+            binding.holidayRecyclerView.visibility = View.VISIBLE
+            binding.holidaylabel.visibility = View.VISIBLE
+            binding.holidayRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.holidayRecyclerView.adapter = HolidayAdapter(holidayModels)
             binding.holidaylabel.setTextColor(
                 ContextCompat.getColor(requireContext(), android.R.color.black)
             )
-            binding.holidaylabel.setBackgroundResource(R.drawable.rect_blue_white_radious)
-
-        } else {
-            binding.holidaylabel.text = "No holidays in $currentMonthYear"
-            binding.holidaylabel.gravity = Gravity.CENTER
+            binding.holidaylabel.text = "Holidays for $currentMonthYear"
+        }
+        else {
+            binding.holidayRecyclerView.visibility = View.GONE
+            binding.holidaylabel.visibility = View.VISIBLE
             binding.holidaylabel.setTextColor(
                 ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
             )
+            binding.holidaylabel.text = "No holidays in $currentMonthYear"
         }
+
     }
 
 

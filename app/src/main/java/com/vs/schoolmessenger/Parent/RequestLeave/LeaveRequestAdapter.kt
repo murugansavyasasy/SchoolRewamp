@@ -28,6 +28,8 @@ class LeaveRequestAdapter(
     private val TYPE_DATA = 1
     private var fullList: List<LeaveData> = itemList ?: listOf()
     private var filteredList: List<LeaveData> = fullList
+    private var expandedPosition = RecyclerView.NO_POSITION
+
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -50,7 +52,17 @@ class LeaveRequestAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
-            holder.bind(filteredList[position], listener)
+
+            val isExpanded = position == expandedPosition
+            holder.bind(filteredList[position], listener, isExpanded)
+            holder.itemView.findViewById<ImageView>(R.id.options).setOnClickListener {
+                if (expandedPosition != position) {
+                    val prevPosition = expandedPosition
+                    expandedPosition = position
+                    notifyItemChanged(prevPosition)
+                    notifyItemChanged(position)
+                }
+            }
         }
     }
 
@@ -60,9 +72,6 @@ class LeaveRequestAdapter(
         isLoading = false
         notifyDataSetChanged()
     }
-
-
-
 
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -80,7 +89,7 @@ class LeaveRequestAdapter(
         private val lblGetOutPass: TextView = itemView.findViewById(R.id.lblGetOutPass)
 
         @SuppressLint("SetTextI18n")
-        fun bind(data: LeaveData, listener: LeaveRequestClickListener) {
+        fun bind(data: LeaveData, listener: LeaveRequestClickListener, isExpanded: Boolean) {
             textName.text = data.student_name
             textFirstLetter.text = data.student_name.firstOrNull()?.toString() ?: "?"
 
@@ -133,10 +142,7 @@ class LeaveRequestAdapter(
                 }
             }
 
-            options.setOnClickListener {
-                val isVisible = relbuttons.visibility == View.VISIBLE
-                relbuttons.visibility = if (isVisible) View.GONE else View.VISIBLE
-            }
+            relbuttons.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
             deleteButton.setOnClickListener {
                 listener.onItemDeleteClick(data)
