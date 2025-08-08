@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -134,8 +135,50 @@ class AttachmentReportAdapter(
 
             lblDate.text = Constant.convertDateAndTimeFormat(data.date)
             lblTitle.text = data.title
-            lblDescription.text = data.description
             lblPostedBy.text = "Posted By : ${data.sent_by}"
+
+            lblDescription.text = data.description
+            lblDescription.maxLines = 3
+            lblDescription.ellipsize = TextUtils.TruncateAt.END
+            lblSeeMore.visibility = View.GONE
+
+            var isExpanded = false
+
+
+            lblDescription.maxLines = Integer.MAX_VALUE
+            lblDescription.ellipsize = null
+            lblDescription.text = data.description
+
+            lblDescription.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    lblDescription.viewTreeObserver.removeOnPreDrawListener(this)
+
+                    if (lblDescription.lineCount > 3) {
+                        lblDescription.maxLines = 3
+                        lblDescription.ellipsize = TextUtils.TruncateAt.END
+                        lblSeeMore.visibility = View.VISIBLE
+                    } else {
+                        lblSeeMore.visibility = View.GONE
+                    }
+                    return true
+                }
+            })
+
+
+
+            lblSeeMore.setOnClickListener {
+                isExpanded = !isExpanded
+                if (isExpanded) {
+                    lblDescription.maxLines = Int.MAX_VALUE
+                    lblDescription.ellipsize = null
+                    lblSeeMore.text = "See Less"
+                } else {
+                    lblDescription.maxLines = 3
+                    lblDescription.ellipsize = TextUtils.TruncateAt.END
+                    lblSeeMore.text = "See More"
+                }
+            }
+
 
             if (data.file_path.isNotEmpty()) {
                 rcyFile.visibility = View.VISIBLE
@@ -146,64 +189,30 @@ class AttachmentReportAdapter(
             imgEditAndDelete.visibility =
                 if (data.can_delete && data.can_edit) View.VISIBLE else View.GONE
 
-            lblDescription.maxLines = 3
-            lblDescription.ellipsize = TextUtils.TruncateAt.END
-            lblSeeMore.text = "See More"
-            lblSeeMore.visibility = View.GONE
-
-            var isExpanded = false
-
-            lblDescription.post {
-                if (lblDescription.lineCount > 3) {
-                    lblSeeMore.visibility = View.VISIBLE
-                    lblDescription.maxLines = 3
-                    lblDescription.ellipsize = TextUtils.TruncateAt.END
-                    lblSeeMore.text = "See More"
-                } else {
-                    lblSeeMore.visibility = View.GONE
-                }
-            }
-
             imgReadUnRead.visibility = if (data.is_unread) View.VISIBLE else View.GONE
-
-            lblSeeMore.setOnClickListener {
-                if (isExpanded) {
-                    lblDescription.maxLines = 3
-                    lblDescription.ellipsize = TextUtils.TruncateAt.END
-                    lblSeeMore.text = "See More"
-                } else {
-                    lblDescription.maxLines = Int.MAX_VALUE
-                    lblDescription.ellipsize = null
-                    lblSeeMore.text = "See Less"
-                }
-                isExpanded = !isExpanded
-            }
 
             imgEditAndDelete.setOnClickListener {
                 listener.onItemClick(item, it, adapterPosition)
             }
 
-            rcyFile.setOnClickListener {
-                if (item[position].is_unread) {
-                    item[position].is_unread = false
+
+            val markAsRead = {
+                if (data.is_unread) {
+                    data.is_unread = false
                     imgReadUnRead.visibility = View.GONE
                     listener.onReadStatusClick(item, adapterPosition)
                 }
             }
 
-            rytHeader.setOnClickListener {
-                if (item[position].is_unread) {
-                    item[position].is_unread = false
-                    imgReadUnRead.visibility = View.GONE
-                    listener.onReadStatusClick(item, adapterPosition)
-                }
-            }
+            rcyFile.setOnClickListener { markAsRead() }
+            rytHeader.setOnClickListener { markAsRead() }
 
             val attachmentAdapter = AttachmentFileView(data.file_path, context, "")
             rcyFile.layoutManager = GridLayoutManager(context, 3)
             rcyFile.isNestedScrollingEnabled = false
             rcyFile.adapter = attachmentAdapter
         }
+
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
