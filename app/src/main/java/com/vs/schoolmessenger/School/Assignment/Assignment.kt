@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -15,13 +16,18 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.MediaController
 import android.widget.PopupWindow
@@ -37,6 +43,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
@@ -55,8 +62,10 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
+import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
+import com.vs.schoolmessenger.School.Assignment.Model.StudentSubmission
+import com.vs.schoolmessenger.School.Attachment.AttachmentReportAdapter
 import com.vs.schoolmessenger.School.Event.CreateEvent
-import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -102,6 +111,8 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
 
+    var mAttachmentReportAdapter: AssignmentStudentListAdapter? = null
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
@@ -123,10 +134,38 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
 
+    private lateinit var adapter: AssignmentStudentListAdapter
+    private lateinit var rcyAssignmentReport: RecyclerView
+    private lateinit var txtSearchMenu: EditText
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
+
+        rcyAssignmentReport = findViewById(R.id.rcyAssignmentReport)
+        txtSearchMenu = findViewById(R.id.txtSearchMenu)
+
+        adapter = AssignmentStudentListAdapter(
+            itemList = emptyList(),
+            listener = object : AssignmentStudentListClickListener {
+                override fun onStudentClick(student: StudentSubmission) {
+
+                }
+            },
+            context = this,
+            isLoading = true
+        )
+
+
+        rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
+        rcyAssignmentReport.adapter = adapter
+
+
         super.setupViews()
         setupToolbar()
+
+
+
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)
@@ -143,6 +182,41 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
+        txtSearchMenu.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("SearchInput", "Filtering with input: $s")
+                adapter.filter.filter(s)
+            }
+        })
+
+        binding.txtSearchMenu.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val query = binding.txtSearchMenu.text.toString()
+                adapter.filter.filter(query)
+
+
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
+                binding.txtSearchMenu.clearFocus()
+                true
+            } else false
+        }
+
+
+
+        appViewModel?.getassignmentlist?.observe(this) { response ->
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                adapter.updateList(response.data)
+                binding.rcyAssignmentReport.visibility = View.VISIBLE
+                binding.noDataFound.visibility = View.GONE
+            } else {
+                binding.rcyAssignmentReport.visibility = View.GONE
+                binding.noDataFound.visibility = View.VISIBLE
+            }
+        }
+
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -156,10 +230,13 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
+
         isSelectedDate = Constant.getCurrentDate()
 
         binding.lblDatePick.text = Constant.convertToReadableDate(isSelectedDate)
         binding.lblTimePick.text = Constant.getCurrentTime()
+
+
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -300,6 +377,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
+
 
 
     override fun onClick(v: View?) {

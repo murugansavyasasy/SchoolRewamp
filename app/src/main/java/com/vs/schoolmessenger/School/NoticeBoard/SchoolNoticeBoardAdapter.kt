@@ -345,7 +345,6 @@ class SchoolNoticeBoardAdapter(
                 }
             }
         }
-
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

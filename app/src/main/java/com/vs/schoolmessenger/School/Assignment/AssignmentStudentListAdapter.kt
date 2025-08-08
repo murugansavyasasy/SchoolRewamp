@@ -1,12 +1,13 @@
 package com.vs.schoolmessenger.School.Assignment
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -15,17 +16,22 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
 import com.vs.schoolmessenger.School.Assignment.Model.StudentSubmission
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AssignmentStudentListAdapter(
     private var itemList: List<StudentSubmission>?,
     private var listener: AssignmentStudentListClickListener,
     private var context: Context,
     private var isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+
+    // Lists for search filtering
+    private var originalList: List<StudentSubmission> = itemList ?: emptyList()
+    private var filteredList: List<StudentSubmission> = itemList ?: emptyList()
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -44,7 +50,7 @@ class AssignmentStudentListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            itemList?.get(position)?.let {
+            filteredList.getOrNull(position)?.let {
                 holder.bind(it, position, this)
             }
         } else if (holder is ShimmerViewHolder) {
@@ -53,20 +59,56 @@ class AssignmentStudentListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 3 else itemList?.size ?: 0
+        return if (isLoading) 3 else filteredList.size
     }
 
     fun updateList(newData: List<StudentSubmission>) {
-        itemList = newData
+        Log.d("AdapterUpdate", "Updating list with size: ${newData.size}")
+        originalList = newData
+        filteredList = newData
         isLoading = false
         notifyDataSetChanged()
     }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString = constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
+                Log.d("AdapterFilter", "Filtering with constraint: $charString")
+                Log.d("AdapterFilter", "Original list size: ${originalList.size}")
+                originalList.forEach {
+                    Log.d("AdapterFilter", "Item: ${it.student_name} ${it.standard} ${it.section} ${it.submit_status}")
+                }
+
+                val resultList = if (charString.isEmpty()) {
+                    originalList
+                } else {
+                    originalList.filter {
+                        it.student_name?.lowercase(Locale.getDefault())?.contains(charString) == true ||
+                                it.standard?.lowercase(Locale.getDefault())?.contains(charString) == true ||
+                                it.section?.lowercase(Locale.getDefault())?.contains(charString) == true ||
+                                it.submit_status?.lowercase(Locale.getDefault())?.contains(charString) == true
+                    }
+                }
+                return FilterResults().apply { values = resultList }
+            }
+
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<StudentSubmission> ?: emptyList()
+                Log.d("AdapterFilter", "Filtered list size: ${filteredList.size}")
+                notifyDataSetChanged()
+            }
+        }
+    }
+
 
     class DataViewHolder(
         itemView: View,
         private val context: Context,
         private val listener: AssignmentStudentListClickListener
     ) : RecyclerView.ViewHolder(itemView) {
+
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
         private val standardlabel: TextView = itemView.findViewById(R.id.standardlabel)
@@ -80,23 +122,17 @@ class AssignmentStudentListAdapter(
             standardlabel.text = data.section
             statuslabel.text = data.submit_status
 
-            if(data.submit_status == "SUBMITTED") {
-                arrow_icon.visibility = View.VISIBLE
-            } else {
-                arrow_icon.visibility = View.GONE
-            }
+            arrow_icon.visibility = if (data.submit_status.equals("SUBMITTED", true)) View.VISIBLE else View.GONE
 
             rlarelativelayout.setOnClickListener {
-                if(data.submit_status == "SUBMITTED") {
+                if (data.submit_status.equals("SUBMITTED", true)) {
                     val intent = Intent(context, AssignmentStudentListDetail::class.java)
                     intent.putParcelableArrayListExtra("submission_list", ArrayList(data.submissions_details))
                     context.startActivity(intent)
                 } else {
-                    Log.d("Assignement Student List Adapter","No Redirection Available")
+                    Log.d("AssignmentAdapter", "No Redirection Available")
                 }
-
             }
-
         }
     }
 

@@ -23,6 +23,10 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
         return AssignmentStudentListReportBinding.inflate(layoutInflater)
     }
 
+
+    override fun onStudentClick(student: StudentSubmission) {
+    }
+
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
