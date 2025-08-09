@@ -614,6 +614,22 @@
     <string name="cause">Cause</string>
     <string name="add_attachment">Add Attachment</string>
     <string name="assignment_progress">Assignment Progress</string>
+    <string name="pending">Pending</string>
+    <string name="activate_coupon">ACTIVATE COUPON</string>
+    <string name="go_to_website">GO TO WEBSITE</string>
+    <string name="how_to_use">How to use</string>
+    <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="request_for_certificate">Request for certificate</string>
+    <string name="popular_country">Popular Country</string>
+    <string name="select_country">Select Country</string>
+    <string name="you_can_change_the_language_in_your_profile_settings_after_signing_in">You can change the language in your profile settings after signing in.</string>
+    <string name="active">Active</string>
+    <string name="expired">Expired</string>
+    <string name="redeemed">Redeemed</string>
+    <string name="select_category">Select Category</string>
+    <string name="starts_on">Starts on</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="ongoing_events">Ongoing Events</string>
 
 
 </resources>
