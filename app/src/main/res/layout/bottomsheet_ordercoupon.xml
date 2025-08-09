@@ -13,9 +13,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginTop="@dimen/thirty"
+        android:layout_marginStart="@dimen/eighteen"
+        android:layout_marginEnd="@dimen/eighteen"
         android:orientation="vertical">
 
         <ImageView
@@ -31,13 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/eight">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/thumbnail"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
                 android:src="@drawable/small_postercoupon"
                 app:shapeAppearanceOverlay="@style/ImageMediumRoundedCorners" />
 
@@ -51,21 +51,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TONI&amp;GUY"
-                    android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/fifteen_sp"
                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_marginStart="5dp" />
+                    android:layout_marginStart="@dimen/five" />
 
                 <TextView
                     android:id="@+id/desc_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Saloon&amp;Spa"
-                    android:textStyle="normal"
-                    android:textSize="13sp"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_marginStart="5dp" />
+                    android:layout_marginStart="@dimen/five" />
             </LinearLayout>
         </LinearLayout>
 
@@ -74,17 +71,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="18dp">
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/eighteen">
 
             <TextView
                 android:id="@+id/offer_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="GET 20% OFF THIS SUMMER"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="20sp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/twenty_sp"
                 android:layout_marginStart="5dp" />
 
             <TextView
@@ -95,17 +91,16 @@
                 android:textColor="@color/clr_red"
                 android:textStyle="normal"
                 android:layout_marginTop="5dp"
-                android:textSize="13sp"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:layout_marginStart="5dp" />
+                android:layout_marginStart="@dimen/five" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="25dp"
+            android:layout_height="@dimen/one"
+            android:layout_marginStart="@dimen/twenty_five"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/twenty_five"
             android:background="@color/grey" />
 
         <!-- Code and info -->
@@ -113,14 +108,14 @@
             android:id="@+id/linear_layout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/twenty"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="@dimen/ten">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/twele"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -129,26 +124,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="6dp"
+                    android:padding="@dimen/six"
                     android:background="@drawable/dashed_border"
                     android:gravity="center_vertical"
                     android:layout_gravity="center"
-                    android:layout_margin="8dp">
+                    android:layout_margin="@dimen/eight">
 
                     <TextView
                         android:id="@+id/frame_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="PICKPAUK123"
-                        android:textStyle="bold"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:textColor="@color/clr_green"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/fourteen_sp" />
 
                     <ImageView
                         android:id="@+id/copy_icon"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginStart="8dp"
+                        android:layout_width="@dimen/sixteen"
+                        android:layout_height="@dimen/sixteen"
+                        android:layout_marginStart="@dimen/eight"
                         android:src="@drawable/copyimage" />
                 </LinearLayout>
 
@@ -156,14 +151,13 @@
                     android:id="@+id/desc_text6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="@dimen/twele"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twele"
                    style="@style/CustomTextStylePoppinsMedium"
                     android:gravity="center"
                     android:text="Let the staff scan the QR Code or use the coupon code to claim the offer"
                     android:textColor="@color/teacher_clr_grey_dark"
-                    android:textSize="13sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -171,12 +165,12 @@
                 android:id="@+id/expandable_text3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="40dp"
-                android:padding="10dp"
+                android:layout_marginEnd="@dimen/fourty"
+                android:padding="@dimen/ten"
                 android:text="Here are some important details to remember..."
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/grey"
-                android:textSize="14sp"
-                android:textStyle="normal"
+                android:textSize="@dimen/fourteen_sp"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -185,41 +179,39 @@
             android:id="@+id/linear_layout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="@dimen/ten">
 
             <Button
                 android:id="@+id/btn_activate_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="GO TO WEBSITE"
-                android:textColor="@android:color/black"
+                android:text="@string/go_to_website"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textAllCaps="true"
-                android:textStyle="bold"
                 android:visibility="gone"
-                android:textSize="17sp"
+                android:textSize="@dimen/seventeen_sp"
                 android:gravity="center"
                 android:background="@drawable/bg_background_coupon"
-                android:layout_marginBottom="13dp"
+                android:layout_marginBottom="@dimen/thirteen"
                 android:layout_gravity="bottom"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_marginStart="@dimen/twele"
+                android:layout_marginEnd="@dimen/twele" />
 
             <Button
                 android:id="@+id/btn_activate_coupon2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="GO TO HOME"
-                android:textColor="@android:color/black"
                 android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textSize="17sp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/seventeen_sp"
                 android:gravity="center"
                 android:background="@drawable/bg_background_white_coupon"
-                android:layout_marginBottom="13dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="@dimen/thirteen"
+                android:layout_marginStart="@dimen/twele"
+                android:layout_marginEnd="@dimen/twele"
                 android:layout_gravity="bottom" />
 
             <!-- Expandables -->
@@ -228,7 +220,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="@dimen/ten">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -237,12 +229,11 @@
 
                     <TextView
                         android:id="@+id/remember"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/zero"
                         android:layout_height="wrap_content"
-                        android:text="How to use"
-                        android:textColor="@color/black"
+                        android:text="@string/how_to_use"
                         android:textStyle="normal"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/fifteen_sp"
                       style="@style/CustomTextStylePoppinsMedium"
                         android:layout_weight="1" />
 
@@ -251,8 +242,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_down_black"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="5dp" />
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginStart="@dimen/five" />
                 </LinearLayout>
 
                 <TextView
@@ -260,9 +251,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="How to use content..."
-                    android:textSize="14sp"
-                    android:padding="10dp"
-                    android:layout_marginEnd="40dp"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:padding="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fourty"
                     android:visibility="gone"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:textColor="@color/grey" />
@@ -270,9 +261,9 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_height="@dimen/one"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
                 android:background="@color/grey" />
 
             <LinearLayout
@@ -280,7 +271,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="@dimen/ten">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -289,12 +280,12 @@
 
                     <TextView
                         android:id="@+id/remember1"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/zero"
                         android:layout_height="wrap_content"
-                        android:text="Terms &amp; Conditions"
+                        android:text="@string/terms_amp_conditions"
                         android:textColor="@color/black"
                         android:textStyle="normal"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/fifteen_sp"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_weight="1" />
 
@@ -303,8 +294,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_down_black"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="5dp" />
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginStart="@dimen/five" />
                 </LinearLayout>
 
                 <TextView
@@ -312,9 +303,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Terms and conditions content..."
-                    android:textSize="14sp"
-                    android:padding="10dp"
-                    android:layout_marginEnd="40dp"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:padding="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fourty"
                     android:visibility="gone"
                     android:textColor="@color/grey" />
             </LinearLayout>

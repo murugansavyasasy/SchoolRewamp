@@ -33,7 +33,6 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_marginTop="@dimen/seventeen"
         android:textColor="@color/grey"
-        android:textSize="@dimen/thirteen_sp"
         android:layout_toEndOf="@+id/imgDate"
         android:text="">
 
@@ -59,8 +58,7 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:text=""
-        android:textColor="@color/black"
-        android:textSize="@dimen/thirteen_sp">
+        >
 
     </TextView>
 
@@ -74,7 +72,6 @@
         android:layout_marginTop="@dimen/five"
         android:text=""
         android:textColor="@color/light_gray"
-        android:textSize="@dimen/thirteen_sp"
         android:maxLines="10"
         android:ellipsize="end" />
 
@@ -119,7 +116,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="@dimen/point_one"
         android:layout_below="@+id/lblPostedBy"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"

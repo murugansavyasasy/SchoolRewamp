@@ -139,10 +139,8 @@
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+               style="@style/CustomTextStylePoppinsMedium"
+                >
 
             </EditText>
 
@@ -154,11 +152,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:fontFamily="@font/poppins_medium"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:text="0 / 50"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+                >
 
             </TextView>
 
@@ -206,11 +203,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:fontFamily="@font/poppins_medium"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:text="0 / 500"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+                >
 
             </TextView>
 
@@ -250,11 +246,9 @@
                 android:layout_toEndOf="@+id/imgCalender"
                 android:drawableEnd="@drawable/ic_down_arrow"
                 android:drawablePadding="@dimen/ten"
-                android:fontFamily="@font/poppins_medium"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+                >
 
             </TextView>
 
@@ -268,11 +262,9 @@
                 android:layout_marginEnd="@dimen/fifteen"
                 android:drawableEnd="@drawable/ic_down_arrow"
                 android:drawablePadding="@dimen/ten"
-                android:fontFamily="@font/poppins_medium"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:text="12:12 PM"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal"></TextView>
+                ></TextView>
 
 
             <RelativeLayout

@@ -11,7 +11,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="lightyellow_color">#f6e7ad</color>
     <color name="black">#FF000000</color>
+    <color name="black_2">#000000</color>
     <color name="light_gray_4">#444</color>
+    <color name="light_gray_5">#666666</color>
     <color name="light_red_2">#FF4444</color>
     <color name="green_3">#00AA7F</color>
     <color name="light_green_2">#8ED16B</color>

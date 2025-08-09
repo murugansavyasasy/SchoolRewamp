@@ -56,17 +56,17 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Select Country"
+                    android:text="@string/select_country"
                     android:textColor="@color/bpWhite"
                     android:textSize="@dimen/twenty_sp"
-                    android:textStyle="bold" />
+                    />
 
                 <TextView
                     style="@style/CustomTextStylePoppinsRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/five"
-                    android:text="You can change the language in your profile settings after signing in."
+                    android:text="@string/you_can_change_the_language_in_your_profile_settings_after_signing_in"
                     android:textColor="@color/bpWhite"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
@@ -114,7 +114,6 @@
                 android:inputType="text"
                 android:maxLength="10"
                 android:paddingHorizontal="@dimen/ten"
-                android:textColor="@color/black"
                 android:textColorHint="@color/light_gray_"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -140,8 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
-            android:text="Popular Country"
-            android:textColor="@color/black"
+            android:text="@string/popular_country"
             android:textSize="@dimen/fifteen_sp" />
 
 
@@ -201,7 +199,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/one"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/two"
                         android:background="@color/navi_blue3"
@@ -230,343 +228,3 @@
     </RelativeLayout>
 
 </RelativeLayout>
-
-
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:id="@+id/conCountry"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:visibility="gone"-->
-    <!--        android:layout_marginTop="@dimen/twenty"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblCountryTitle"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="@dimen/twenty"-->
-    <!--            android:textSize="@dimen/fifteen_sp"-->
-    <!--            android:text="@string/lblChoosecountry"-->
-    <!--            style="@style/CustomTextStylePoppinsBold"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            android:layout_marginTop="@dimen/ten"/>-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblContent"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="@dimen/twenty"-->
-    <!--            android:layout_marginEnd="@dimen/twenty"-->
-    <!--            android:layout_marginTop="@dimen/twenty"-->
-    <!--            android:textSize="@dimen/fifteen_sp"-->
-    <!--            style="@style/CustomTextStylePoppinsRegular"-->
-    <!--            android:lineSpacingExtra="@dimen/five"-->
-    <!--            android:text="@string/lblCountryNotes"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/lblCountryTitle" />-->
-
-
-    <!--        <Spinner-->
-    <!--            android:id="@+id/isSpinner"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/twenty"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:text="Select Your Country"-->
-    <!--            style="@style/CustomTextStyle"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/lblContent">-->
-
-    <!--        </Spinner>-->
-
-    <!--        <View-->
-    <!--            android:id="@+id/vw"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="@dimen/one"-->
-    <!--            android:layout_marginStart="@dimen/twenty"-->
-    <!--            android:layout_marginEnd="@dimen/twenty"-->
-    <!--            android:background="@color/black"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/isSpinner" />-->
-
-
-    <!--        <RelativeLayout-->
-    <!--            android:id="@+id/rytTerms"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:padding="@dimen/five"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/vw">-->
-
-    <!--            <CheckBox-->
-    <!--                android:id="@+id/terms_checkbox"-->
-    <!--                style="@style/CustomCheckbox"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_centerVertical="true"-->
-    <!--                tools:ignore="MissingConstraints" />-->
-
-
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/lblTermsConditions"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_toEndOf="@+id/terms_checkbox"-->
-    <!--                android:orientation="vertical">-->
-
-    <!--                <TextView-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_centerVertical="true"-->
-    <!--                    android:layout_marginStart="@dimen/ten"-->
-    <!--                    android:layout_toEndOf="@+id/terms_checkbox"-->
-    <!--                    android:text="@string/lblIagreetotheTermsandConditions"-->
-    <!--                    style="@style/CustomTextStylePoppinsBold"-->
-    <!--                    android:textColor="@color/navi_blue6"-->
-    <!--                    android:layout_marginTop="@dimen/five"-->
-    <!--                    android:textSize="@dimen/fifteen_sp" />-->
-
-    <!--                <View-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="1dp"-->
-    <!--                    android:layout_marginStart="@dimen/ten"-->
-    <!--                    android:layout_marginTop="@dimen/two"-->
-    <!--                    android:background="@color/navi_blue3" />-->
-    <!--            </LinearLayout>-->
-
-    <!--        </RelativeLayout>-->
-
-    <!--        <ImageView-->
-    <!--            android:id="@+id/btnArrowNext"-->
-    <!--            android:layout_width="@dimen/thirty_five"-->
-    <!--            android:layout_height="@dimen/thirty_five"-->
-    <!--            android:layout_centerInParent="true"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/rytTerms"-->
-    <!--            android:src="@drawable/right_arrow1">-->
-    <!--        </ImageView>-->
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/conCountry">-->
-
-    <!--        <RelativeLayout-->
-    <!--            android:id="@+id/rytShape1"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/twenty"-->
-    <!--            app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/lnrFirst"-->
-    <!--                android:layout_width="@dimen/one_twenty"-->
-    <!--                android:layout_height="@dimen/one_twenty"-->
-    <!--                android:layout_alignParentStart="true"-->
-    <!--                android:layout_marginStart="@dimen/minus_twenty"-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:gravity="center"-->
-    <!--                android:background="@drawable/country_shape_one"-->
-    <!--                android:orientation="vertical">-->
-
-    <!--                <ImageView-->
-    <!--                    android:layout_width="@dimen/thirty_five"-->
-    <!--                    android:layout_height="@dimen/thirty_five"-->
-    <!--                    android:src="@drawable/indiaflag">-->
-
-    <!--                </ImageView>-->
-
-    <!--                <TextView-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:gravity="center"-->
-    <!--                    android:layout_marginTop="@dimen/ten"-->
-    <!--                    android:text="@string/lblIndia"-->
-    <!--                    android:textStyle="bold"-->
-    <!--                    android:fontFamily="@font/poppins_bold"-->
-    <!--                    android:textColor="@color/white"-->
-    <!--                    android:textSize="@dimen/twele_sp" />-->
-
-    <!--            </LinearLayout>-->
-
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/lnrSecound"-->
-    <!--                android:layout_width="@dimen/two_hundred"-->
-    <!--                android:layout_height="@dimen/two_hundred"-->
-    <!--                android:layout_centerHorizontal="true"-->
-    <!--                android:layout_marginStart="@dimen/twenty"-->
-    <!--                android:layout_marginTop="@dimen/minus_thirty"-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:gravity="center"-->
-    <!--                android:background="@drawable/country_shape_four"-->
-    <!--                android:orientation="vertical">-->
-
-    <!--                <ImageView-->
-    <!--                    android:layout_width="@dimen/thirty_five"-->
-    <!--                    android:layout_height="@dimen/thirty_five"-->
-    <!--                    android:src="@drawable/thailand_flag">-->
-
-    <!--                </ImageView>-->
-
-    <!--                <TextView-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:gravity="center"-->
-    <!--                    android:text="@string/lblThailand"-->
-    <!--                    android:textStyle="bold"-->
-    <!--                    android:layout_marginTop="@dimen/ten"-->
-    <!--                    android:fontFamily="@font/poppins_bold"-->
-    <!--                    android:textColor="@color/white"-->
-    <!--                    android:textSize="@dimen/twele_sp" />-->
-
-    <!--            </LinearLayout>-->
-
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/lnrThird"-->
-    <!--                android:layout_width="@dimen/one_twenty"-->
-    <!--                android:layout_height="@dimen/one_twenty"-->
-    <!--                android:layout_alignParentEnd="true"-->
-    <!--                android:layout_marginStart="@dimen/twenty"-->
-    <!--                android:layout_marginEnd="@dimen/minus_twenty"-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:gravity="center"-->
-    <!--                android:background="@drawable/country_shape_two"-->
-    <!--                android:orientation="vertical">-->
-
-    <!--                <ImageView-->
-    <!--                    android:layout_width="@dimen/thirty_five"-->
-    <!--                    android:layout_height="@dimen/thirty_five"-->
-    <!--                    android:src="@drawable/united_states_flag">-->
-
-    <!--                </ImageView>-->
-
-    <!--                <TextView-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_marginEnd="@dimen/ten"-->
-    <!--                    android:gravity="center"-->
-    <!--                    android:layout_marginTop="@dimen/ten"-->
-    <!--                    android:layout_marginStart="@dimen/ten"-->
-    <!--                    android:text="@string/lblUSA"-->
-    <!--                    android:textStyle="bold"-->
-    <!--                    android:fontFamily="@font/poppins_bold"-->
-    <!--                    android:textColor="@color/white"-->
-    <!--                    android:textSize="@dimen/twele_sp" />-->
-
-    <!--            </LinearLayout>-->
-    <!--        </RelativeLayout>-->
-
-    <!--        <RelativeLayout-->
-    <!--            android:id="@+id/rytShape2"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/minus_fourty"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/rytShape1">-->
-
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/lnrFourth"-->
-    <!--                android:layout_width="@dimen/two_hundred"-->
-    <!--                android:layout_height="@dimen/two_hundred"-->
-    <!--                android:layout_alignParentStart="true"-->
-    <!--                android:layout_marginStart="@dimen/minus_sixty"-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:gravity="center"-->
-    <!--                android:background="@drawable/country_shape_five"-->
-    <!--                android:orientation="vertical">-->
-
-    <!--                <ImageView-->
-    <!--                    android:layout_width="@dimen/thirty_five"-->
-    <!--                    android:layout_height="@dimen/thirty_five"-->
-    <!--                    android:src="@drawable/australia_flag">-->
-
-    <!--                </ImageView>-->
-
-    <!--                <TextView-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:gravity="center"-->
-    <!--                    android:layout_marginTop="@dimen/ten"-->
-    <!--                    android:text="@string/lblaustralia"-->
-    <!--                    android:textStyle="bold"-->
-    <!--                    android:fontFamily="@font/poppins_bold"-->
-    <!--                    android:textColor="@color/white"-->
-    <!--                    android:textSize="@dimen/twele_sp" />-->
-
-    <!--            </LinearLayout>-->
-
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/lnrFifth"-->
-    <!--                android:layout_width="@dimen/one_twenty"-->
-    <!--                android:layout_height="@dimen/one_twenty"-->
-    <!--                android:layout_centerHorizontal="true"-->
-    <!--                android:layout_marginStart="@dimen/twenty"-->
-    <!--                android:gravity="center"-->
-    <!--                android:layout_marginTop="@dimen/thirty"-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:background="@drawable/country_shape_three"-->
-    <!--                android:orientation="vertical">-->
-
-    <!--                <ImageView-->
-    <!--                    android:layout_width="@dimen/thirty_five"-->
-    <!--                    android:layout_height="@dimen/thirty_five"-->
-    <!--                    android:src="@drawable/zimbabwe_flag">-->
-
-    <!--                </ImageView>-->
-
-    <!--                <TextView-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_marginTop="@dimen/ten"-->
-    <!--                    android:gravity="center"-->
-    <!--                    android:text="@string/lblzimbabwe"-->
-    <!--                    android:textStyle="bold"-->
-    <!--                    android:fontFamily="@font/poppins_bold"-->
-    <!--                    android:textColor="@color/white"-->
-    <!--                    android:textSize="@dimen/twele_sp" />-->
-
-    <!--            </LinearLayout>-->
-
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/lnrSixth"-->
-    <!--                android:layout_width="@dimen/two_hundred"-->
-    <!--                android:layout_height="@dimen/two_hundred"-->
-    <!--                android:layout_alignParentEnd="true"-->
-    <!--                android:layout_marginStart="@dimen/twenty"-->
-    <!--                android:layout_marginEnd="@dimen/minus_sixty"-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:gravity="center"-->
-    <!--                android:background="@drawable/country_shape_six"-->
-    <!--                android:orientation="vertical">-->
-
-    <!--                <ImageView-->
-    <!--                    android:layout_width="@dimen/thirty_five"-->
-    <!--                    android:layout_height="@dimen/thirty_five"-->
-    <!--                    android:src="@drawable/finland_flag">-->
-
-    <!--                </ImageView>-->
-
-    <!--                <TextView-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:gravity="center"-->
-    <!--                    android:text="@string/lblfinland"-->
-    <!--                    android:layout_marginTop="@dimen/ten"-->
-    <!--                    android:fontFamily="@font/poppins_bold"-->
-    <!--                    android:textStyle="bold"-->
-    <!--                    android:textColor="@color/white"-->
-    <!--                    android:textSize="@dimen/twele_sp" />-->
-
-    <!--            </LinearLayout>-->
-    <!--        </RelativeLayout>-->
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-    <!--</RelativeLayout>-->
