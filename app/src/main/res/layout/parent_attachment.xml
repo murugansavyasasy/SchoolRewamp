@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <include
@@ -131,8 +132,9 @@
         android:id="@+id/recycleracademic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytFilter"
-        android:layout_above="@+id/seeMoreLabel">
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_below="@+id/rytFilter">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -165,19 +167,6 @@
             android:gravity="center"
             android:text="@string/no_list_found"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/seeMoreLabel"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/twenty"
-            android:layout_marginBottom="@dimen/fifteen"
-            android:text="@string/see_more"
-            android:textColor="@color/navi_blue2"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />
 

@@ -39,7 +39,7 @@ class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
             shape = GradientDrawable.OVAL
             when (status) {
                 "P" -> {
-                    setColor(ContextCompat.getColor(holder.itemView.context, R.color.light_purple1))
+                    setColor(ContextCompat.getColor(holder.itemView.context, R.color.PrimaryColor))
                     setStroke(0, Color.TRANSPARENT)
                     holder.imgTick.visibility = View.VISIBLE
                     holder.lbltext.visibility = View.GONE

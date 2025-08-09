@@ -604,6 +604,24 @@ object Constant {
         }
     }
 
+    fun showErrorAlert(activity: Activity, title: String, content: String) {
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.custom_error_alert, null)
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.show()
+        // Access views
+        val titleText = dialogView.findViewById<TextView>(R.id.alertTitle)
+        val messageText = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        messageText.text = content
+        titleText.text = title
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+    }
+
     fun isDeveloperOptionsEnabled(context: Context): Boolean {
         return Settings.Global.getInt(
             context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
@@ -848,6 +866,50 @@ object Constant {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             activity.startActivity(intent)
             activity.finish()
+            closePopup()
+        }
+    }
+
+    fun showDataValidationNoDashboardRedirect(title: String, message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        titleText.text = title
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
             closePopup()
         }
     }

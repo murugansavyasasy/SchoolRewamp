@@ -46,6 +46,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Stud
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
+import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -142,12 +143,12 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
 
-
     var isDeleteHomeWork: LiveData<StatusMessageModel?>? = null
         private set
 
 
-
+    var isDeleteAttachment: LiveData<StatusMessageModel?>? = null
+        private set
 
     var isGetDailyCollectionReport: LiveData<DailyCollectionReportResponse?>? = null
         private set
@@ -222,7 +223,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isCertificateRequestList: LiveData<CertificatesListResponse?>? = null
     var isTimeTabletList: LiveData<TimeTableResponse?>? = null
 
-    var isAttachmentResponse: LiveData<AttachmentResponse?>? = null
+    var isAttachmentResponse: LiveData<AttachmentReportResponse?>? = null
     var isAttachmentResponseArchive: LiveData<AttachmentResponse?>? = null
 
     var getabsenteescountbydate: LiveData<AbsenteesResponse?>? = null
@@ -273,6 +274,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isAttachmentReportResponse: LiveData<AttachmentReportResponse?>? = null
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
+    var getassignmentlist: LiveData<SubmissionResponse?>? = null
 
 
     fun init() {
@@ -295,6 +297,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isEditAttachment = apiSchoolRepositories.isUpdateAttachmentLiveData
         isEditNoticeBoard = apiSchoolRepositories.isUpdateNoticeBoardLiveData
         isDeleteHomeWork = apiSchoolRepositories.isDeleteHomeworkLiveData
+        isDeleteAttachment = apiSchoolRepositories.isAttachmentLiveData
         isNoticeBoardReport = apiSchoolRepositories.isNoticeBoardReportLiveData
         isNoticeBoardStaffReport = apiSchoolRepositories.isNoticeBoardStaffReportLiveData
         isGetDailyCollectionReport = apiSchoolRepositories.isGetDailyCollectionReportLiveData
@@ -370,12 +373,14 @@ class App(application: Application) : AndroidViewModel(application) {
         getexamslist = apiParentRepositories.getexamslistLiveData
         getviewmarks = apiParentRepositories.getviewmarksLiveData
         isleaverequestupdate = apiParentRepositories.isleaverequestupdateLiveData
+        isleaverequestdelete = apiParentRepositories.isleaverequestdeleteLiveData
         getProgressMarks = apiParentRepositories.getProgressMarksLiveData
         isHomeWorkComplete = apiParentRepositories.isUpdateCompleteHomeWorkLiveData
         getstudentdetailsforchat = apiParentRepositories.getstudentdetailsforchatLiveData
         isnoticeboarddelete = apiSchoolRepositories.isnoticeboarddeleteLiveData
         isEventDelete = apiSchoolRepositories.isEventDeleteLiveData
         isAttachmentReportResponse = apiSchoolRepositories.isAttachmentResponseLiveData
+        getassignmentlist = apiSchoolRepositories.getassignmentlistLiveData
 
     }
 
@@ -396,10 +401,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isGetSubjectList(
-        isToken: String,
-        isAcademicYearId: Int,
-        isSectionId: String,
-        activity: Activity
+        isToken: String, isAcademicYearId: Int, isSectionId: String, activity: Activity
     ) {
         apiSchoolRepositories.isGetSubjectList(isToken, isAcademicYearId, isSectionId, activity)
     }
@@ -411,10 +413,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isGetStudentList(
-        isToken: String,
-        isSection: String,
-        isAcademicYearId: Int,
-        activity: Activity
+        isToken: String, isSection: String, isAcademicYearId: Int, activity: Activity
     ) {
         apiSchoolRepositories.isGetStudentList(isToken, isSection, isAcademicYearId, activity)
     }
@@ -433,59 +432,35 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isGetHomeWorkReport(
-        isToken: String,
-        isSectionId: Int,
-        isAcademicYearId: Int,
-        isdate: String,
-        activity: Activity
+        isToken: String, isSectionId: Int, isAcademicYearId: Int, isdate: String, activity: Activity
     ) {
         apiSchoolRepositories.isGetHomeWorkReport(
-            isToken,
-            isSectionId,
-            isAcademicYearId,
-            isdate,
-            activity
+            isToken, isSectionId, isAcademicYearId, isdate, activity
         )
     }
 
 
     fun isGetAssignmentReport(
-        isToken: String,
-        isAcademicYearId: Int,
-        activity: Activity
+        isToken: String, isAcademicYearId: Int, activity: Activity
     ) {
         apiSchoolRepositories.isGetAssignmentReport(
-            isToken,
-            isAcademicYearId,
-            activity
+            isToken, isAcademicYearId, activity
         )
     }
 
     fun isAssignmentDelete(
-        isToken: String,
-        jsonObject: JsonObject,
-        activity: Activity
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
         apiSchoolRepositories.isDeleteAssignment(
-            isToken,
-            jsonObject,
-            activity
+            isToken, jsonObject, activity
         )
     }
 
     fun isGetDailyCollectionReport(
-        isToken: String,
-        istype: String,
-        isfromdate: String,
-        istodate: String,
-        activity: Activity
+        isToken: String, istype: String, isfromdate: String, istodate: String, activity: Activity
     ) {
         apiSchoolRepositories.isGetDailyCollectionReport(
-            isToken,
-            istype,
-            isfromdate,
-            istodate,
-            activity
+            isToken, istype, isfromdate, istodate, activity
         )
     }
 
@@ -504,6 +479,7 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isNoticeBoardReport(isToken: String, activity: Activity) {
         apiSchoolRepositories.isNoticeBoardReport(isToken, activity)
     }
+
     fun isNoticeBoardStaffReport(isToken: String, activity: Activity) {
         apiSchoolRepositories.isNoticeBoardStaffReport(isToken, activity)
     }
@@ -603,23 +579,15 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getStaffWiseAttendanceReport(isToken: String, isCurrentDate: String, activity: Activity) {
         apiSchoolRepositories.getGiometricStaffWiseAttendancereport(
-            isToken,
-            isCurrentDate,
-            activity
+            isToken, isCurrentDate, activity
         )
     }
 
     fun getStaffWiseAttendanceReportList(
-        isToken: String,
-        isSelectedDate: String,
-        isStaffId: Int,
-        activity: Activity
+        isToken: String, isSelectedDate: String, isStaffId: Int, activity: Activity
     ) {
         apiSchoolRepositories.getGiometricStaffWiseAttendancereportStaffList(
-            isToken,
-            isSelectedDate,
-            isStaffId,
-            activity
+            isToken, isSelectedDate, isStaffId, activity
         )
     }
 
@@ -632,11 +600,7 @@ class App(application: Application) : AndroidViewModel(application) {
         activity: Activity
     ) {
         apiSchoolRepositories.getStudentReportList(
-            isToken,
-            isAcademicYearId,
-            class_id,
-            section_id,
-            activity
+            isToken, isAcademicYearId, class_id, section_id, activity
         )
     }
 
@@ -654,10 +618,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getabsenteesstudentbydate(
-        isToken: String,
-        absent_on: String,
-        section_id: String,
-        activity: Activity
+        isToken: String, absent_on: String, section_id: String, activity: Activity
     ) {
         apiSchoolRepositories.getabsenteesstudentbydate(isToken, absent_on, section_id, activity)
     }
@@ -671,18 +632,12 @@ class App(application: Application) : AndroidViewModel(application) {
         activity: Activity
     ) {
         apiSchoolRepositories.getStudentAttendanceReportForSchool(
-            isToken,
-            section_id,
-            from_date,
-            to_date,
-            class_id,
-            activity
+            isToken, section_id, from_date, to_date, class_id, activity
         )
     }
 
     fun getCertificateTypes(
-        isToken: String,
-        activity: Activity
+        isToken: String, activity: Activity
     ) {
         apiParentRepositories.getCertificateTypes(isToken, activity)
     }
@@ -738,25 +693,16 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun getlpViewReport(
-        isToken: String,
-        section_subject_id: String,
-        lesson_plan_status: Int,
-        activity: Activity
+        isToken: String, section_subject_id: String, lesson_plan_status: Int, activity: Activity
     ) {
 
         apiSchoolRepositories.getlpViewReport(
-            isToken,
-            section_subject_id,
-            lesson_plan_status,
-            activity
+            isToken, section_subject_id, lesson_plan_status, activity
         )
     }
 
     fun getlpeditReport(
-        isToken: String,
-        particular_id: String,
-        request_type: String,
-        activity: Activity
+        isToken: String, particular_id: String, request_type: String, activity: Activity
     ) {
 
         apiSchoolRepositories.getlpeditReport(isToken, particular_id, request_type, activity)
@@ -783,37 +729,25 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getCouponsCategorySummary(
-        category_id: String,
-        mobile_no: String,
-        parentName: String,
-        apiKey: String
+        category_id: String, mobile_no: String, parentName: String, apiKey: String
     ) {
         apiSchoolRepositories.getCouponsCategorySummary(category_id, mobile_no, parentName, apiKey)
     }
 
     fun getmycouponsSummary(
-        coupon_status: String,
-        mobile_no: String,
-        parentName: String,
-        apiKey: String
+        coupon_status: String, mobile_no: String, parentName: String, apiKey: String
     ) {
         apiSchoolRepositories.getmycouponsSummary(coupon_status, mobile_no, parentName, apiKey)
     }
 
     fun getCouponDetails(
-        source_link: String,
-        mobile_no: String,
-        parentName: String,
-        apiKey: String
+        source_link: String, mobile_no: String, parentName: String, apiKey: String
     ) {
         apiSchoolRepositories.getCouponDetails(source_link, mobile_no, parentName, apiKey)
     }
 
     fun sendactivatecoupon(
-        source_link: String,
-        mobile_no: String,
-        parentName: String,
-        apiKey: String
+        source_link: String, mobile_no: String, parentName: String, apiKey: String
     ) {
         apiSchoolRepositories.sendactivatecoupon(source_link, mobile_no, parentName, apiKey)
     }
@@ -835,45 +769,35 @@ class App(application: Application) : AndroidViewModel(application) {
         activity: Activity
     ) {
         apiParentRepositories.getstaffanswers(
-            isToken,
-            staff_id,
-            subject_id,
-            offset,
-            is_class_teacher,
-            activity
+            isToken, staff_id, subject_id, offset, is_class_teacher, activity
         )
     }
 
- fun getstaffquestions(
+    fun getstaffquestions(
         isToken: String,
         is_class_teacher: Boolean,
         section_id: String,
         subject_id: String,
         offset: Int
- ) {
+    ) {
         apiSchoolRepositories.getstaffquestions(
-            isToken,
-            is_class_teacher,
-            section_id,
-            subject_id,
-            offset
+            isToken, is_class_teacher, section_id, subject_id, offset
         )
     }
 
 
     fun sendquestion(
-        isToken: String,
-        request: QuestionModelRequest
+        isToken: String, request: QuestionModelRequest
     ) {
         apiParentRepositories.sendquestion(isToken, request)
     }
 
     fun sendanswer(
-        isToken: String,
-        request: AnswerModelRequest
+        isToken: String, request: AnswerModelRequest
     ) {
         apiSchoolRepositories.sendanswer(isToken, request)
     }
+
     fun getexams(
         isToken: String
     ) {
@@ -888,10 +812,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun getviewmarks(
-        isToken: String,
-        exam_id: String
+        isToken: String, exam_id: String
     ) {
-        apiParentRepositories.getviewmarks(isToken,exam_id)
+        apiParentRepositories.getviewmarks(isToken, exam_id)
     }
 
 
@@ -914,36 +837,51 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject) {
-        apiParentRepositories.isHomeWorkComplete(isToken,jsonObject)
+        apiParentRepositories.isHomeWorkComplete(isToken, jsonObject)
     }
 
-    fun isHomeWorkUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
-        apiSchoolRepositories.isEditHomeWork(isToken,jsonObject,activity)
+    fun isHomeWorkUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.isEditHomeWork(isToken, jsonObject, activity)
+    }
+
+    fun isNoticeBoardUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.isEditNoticeBoard(isToken, jsonObject, activity)
+    }
+
+
+    fun isHomeWorkDelete(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.isHomeWorkDelete(isToken, jsonObject, activity)
     }
 
     fun isAttachmentUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
         apiSchoolRepositories.isEditAttachment(isToken,jsonObject,activity)
     }
 
-    fun isNoticeBoardUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
-        apiSchoolRepositories.isEditNoticeBoard(isToken,jsonObject,activity)
+//    fun isNoticeBoardUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
+//        apiSchoolRepositories.isEditNoticeBoard(isToken,jsonObject,activity)
+//    }
+//    fun isHomeWorkDelete(isToken: String, jsonObject: JsonObject,activity: Activity) {
+//        apiSchoolRepositories.isHomeWorkDelete(isToken,jsonObject,activity)
+//    }
+
+    fun isAttachmentDelete(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        apiSchoolRepositories.isAttachmentDelete(isToken,jsonObject,activity)
     }
-
-
-
-
-    fun isHomeWorkDelete(isToken: String, jsonObject: JsonObject,activity: Activity) {
-        apiSchoolRepositories.isHomeWorkDelete(isToken,jsonObject,activity)
-    }
-
-
 
     fun getProgressMarks(
-        isToken: String,
-        exam_id: String
+        isToken: String, exam_id: String
     ) {
-        apiParentRepositories.getProgressMarks(isToken,exam_id)
+        apiParentRepositories.getProgressMarks(isToken, exam_id)
     }
+
+    fun getassignmentlist(
+        isToken: String,
+        id: String,
+        type: String
+    ) {
+        apiSchoolRepositories.getassignmentlist(isToken,id,type)
+    }
+
 }
 
 

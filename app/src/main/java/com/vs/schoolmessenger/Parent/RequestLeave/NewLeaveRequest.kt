@@ -1,18 +1,24 @@
 package com.vs.schoolmessenger.Parent.RequestLeave
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -39,10 +45,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     private var originalLeaveTo: String = ""
     private var originalFromSession: String = ""
     private var originalToSession: String = ""
-    private var leaveRequestId: String = ""
-//    private var leaveFromDate: String = ""
-//    private var leaveToDate: String = ""
-//    private var reasonText: String = ""
+
 
 
     private val Session = listOf(
@@ -62,7 +65,8 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
         binding.imgBack.setOnClickListener(this)
         binding.btnupdate.setOnClickListener(this)
-        binding.lblParentToolBar.text = getString(R.string.leave_requests)
+        binding.btnApplyLeave.setOnClickListener(this)
+        binding.lblParentToolBar.text = getString(R.string.new_leave)
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.lblStudentName.text = isChildDetails?.name ?: ""
         binding.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -75,12 +79,52 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
         binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
 
-        // Initially show From Date calendar only
         loadFromCalendar()
         isFromSpinner()
         isToSpinner()
         getIntentValuesIfEditing()
         validateDateAndSession(showError = true)
+
+        binding.etLeaveReason.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                validateDateAndSession(showError = true)
+            }
+        })
+
+        appViewModel!!.isleaverequestupdate?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@NewLeaveRequest)
+                    Log.d("isleaverequestupdate", response.message)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success), response.message, this
+                    )
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
+
+        appViewModel!!.isLeaveRequest?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@NewLeaveRequest)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success), response.message, this
+                    )
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
 
         binding.lnrFromDate.setOnClickListener {
             loadFromCalendar()
@@ -110,6 +154,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         val today = LocalDate.now()
         val minFromDate = today.minusMonths(1)
         val maxFromDate = today.plusYears(1)
+
 
         val fromFragment = CustomCalendarFragment.newInstance(
             minDate = minFromDate.toString(),
@@ -166,9 +211,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                 binding.tvToDate.text = formatDate(selected)
             }
         }
-
         validateDateAndSession(showError = true)
-
     }
 
 
@@ -234,37 +277,23 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
+            R.id.btnApplyLeave -> {
+                Constant.showSendConfirmationDialog(
+                    this,
+                    getString(R.string.confirmation),
+                    getString(R.string.permission_ok),
+                    getString(R.string.Cancel),
+                    "",
+                    getString(R.string.Are_you_sure_you_want_to_apply_for_leave)
+                ) { confirmed ->
+                    if (confirmed) {
+                        Constant.showLoading(this)
+                        isApplyLeave()
+                    }
+                }
+            }
 
             R.id.btnupdate -> {
-
-//                var hasError = false
-//
-//                // Validate date/session
-//                if (!validateDateAndSession(showError = true)) {
-//                    hasError = true
-//                }
-//
-//                // Validate leave reason
-//                if (binding.etLeaveReason.text.toString().trim().isEmpty()) {
-//                    hasError = true
-//                    Constant.errorAlert(this, getString(R.string.alert), "Please enter a reason for leave.")
-//                }
-//
-//                // Set button background based on error status
-//                if (hasError) {
-//                    binding.btnupdate.setBackgroundColor(Color.GRAY)
-//                    return
-//                } else {
-//                    binding.btnupdate.setBackgroundResource(R.drawable.bg_green_radious)
-//                }
-
-                if (binding.etLeaveReason.text.toString().trim().isEmpty()) {
-
-                    return
-                }
-
-
-                // Proceed if changes are made
                 if (hasChangesMade()) {
                     Constant.showSendConfirmationDialog(
                         this,
@@ -280,23 +309,36 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                         }
                     }
                 } else {
-                    Constant.errorAlert(this, getString(R.string.alert), getString(R.string.no_changes_made))
+                    Constant.showErrorAlert(this, getString(R.string.alert), getString(R.string.no_changes_made))
                 }
             }
         }
     }
 
+    private fun isApplyLeave() {
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.leave_from, fromDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: "")
+            addProperty(APIKeyNames.leave_to, toDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: "")
+            addProperty(APIKeyNames.reason,  binding.etLeaveReason.text.toString().trim())
+            addProperty(APIKeyNames.f_session,  if (isFromSession == "First Half") "FH" else "SH")
+            addProperty(APIKeyNames.t_session,if (isToSession == "First Half") "FH" else "SH")
+        }
+
+        Log.d("isApplyLeave",jsonObject.toString())
+
+        appViewModel?.isSendLeaveRequestApply(isAccessToken!!, jsonObject, this)
+    }
+
 
     private fun isUpdateLeaveReq() {
     val updatedRequest = LeaveRequestUpdate(
-        id = intent.getStringExtra("requestId") ?: "",
+        id = intent.getStringExtra("isId") ?: "",
         leave_from = fromDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: "",
         leave_to = toDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: "",
         reason = binding.etLeaveReason.text.toString().trim(),
         f_session = if (isFromSession == "First Half") "FH" else "SH",
         t_session = if (isToSession == "First Half") "FH" else "SH"
     )
-
     appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
 }
 
@@ -307,9 +349,9 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         RequestEdit = intent.getBooleanExtra("isRequestEdit", false)
 
         if (RequestEdit) {
+            binding.lblParentToolBar.text = getString(R.string.edit_leave_request)
             binding.btnApplyLeave.visibility = View.GONE
-            binding.linearLayout9.visibility = View.VISIBLE
-
+            binding.btnupdate.visibility = View.VISIBLE
             originalReason = intent.getStringExtra("isReason") ?: ""
             originalLeaveFrom = intent.getStringExtra("isLeaveFrom") ?: ""
             originalLeaveTo = intent.getStringExtra("isLeaveTo") ?: ""
@@ -324,6 +366,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             try {
                 fromDate = LocalDate.parse(originalLeaveFrom, backendFormat)
                 binding.tvFromDate.text = displayFormat.format(fromDate)
+                loadFromCalendar()//here were setting the fromDate in from date calendar by deafult
 
                 toDate = LocalDate.parse(originalLeaveTo, backendFormat)
                 binding.tvToDate.text = displayFormat.format(toDate)
@@ -367,20 +410,19 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     private fun validateDateAndSession(showError: Boolean = true): Boolean {
         val errors = mutableListOf<String>()
+        val reason = binding.etLeaveReason.text.toString().trim()
 
+        // Validate Reason
+        if (reason.isEmpty()) {
+            errors.add("Reason is Required")
+        }
+
+        //Validate From/To Dates
         if (fromDate == null || toDate == null) {
             if (showError) {
-                binding.lblErrorMessage.text = ""
-                binding.btnApplyLeave.text = "Apply Leave"
-                val drawable = ContextCompat.getDrawable(this, R.drawable.background_radius_button)?.mutate()
-                drawable?.setTint(Color.GRAY)
-                binding.btnApplyLeave.background = drawable
-                val drawable2 = ContextCompat.getDrawable(this, R.drawable.bg_green_radious)?.mutate()
-                drawable2?.setTint(Color.GRAY)
-                binding.btnupdate.background = drawable2
-                binding.btnupdate.isEnabled=false
-                binding.btnApplyLeave.isEnabled=false
+                binding.lblErrorMessage.text = errors.joinToString("\n")
             }
+            disableButtons()
             return false
         }
 
@@ -388,6 +430,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             errors.add("To Date cannot be before From Date.")
         }
 
+        // Validate Session
         val fromIndex = Session.indexOf(isFromSession)
         val toIndex = Session.indexOf(isToSession)
 
@@ -395,49 +438,59 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             errors.add("From session cannot be after To session on the same day.")
         }
 
+        // Handle Error Message
         if (errors.isNotEmpty()) {
             if (showError) {
                 binding.lblErrorMessage.text = errors.joinToString("\n")
-                binding.btnApplyLeave.text = "Apply Leave"
-                val drawable = ContextCompat.getDrawable(this, R.drawable.background_radius_button)?.mutate()
-                drawable?.setTint(Color.GRAY)
-                binding.btnApplyLeave.background = drawable
-                val drawable2 = ContextCompat.getDrawable(this, R.drawable.bg_green_radious)?.mutate()
-                drawable2?.setTint(Color.GRAY)
-                binding.btnupdate.background = drawable2
-                binding.btnupdate.isEnabled=false
-                binding.btnApplyLeave.isEnabled=false
             }
+            disableButtons()
             return false
         }
 
-        // On success
-        if (showError) {
-            binding.lblErrorMessage.text = ""
+        //  If all validations pass
+        binding.lblErrorMessage.text = ""
 
-            var totalDays = 0f
-            if (fromDate == toDate) {
-                totalDays = if (fromIndex == toIndex) 0.5f else 1f
-            } else {
-                val daysBetween = ChronoUnit.DAYS.between(fromDate, toDate).toInt() + 1
-                totalDays = daysBetween.toFloat()
+        var totalDays = 0f
+        if (fromDate == toDate) {
+            totalDays = if (fromIndex == toIndex) 0.5f else 1f
+        } else {
+            val daysBetween = ChronoUnit.DAYS.between(fromDate, toDate).toInt() + 1
+            totalDays = daysBetween.toFloat()
 
-                if (fromIndex > 0) totalDays -= 0.5f
-                if (toIndex < Session.lastIndex) totalDays -= 0.5f
-            }
-
-            val formattedDays = if (totalDays % 1 == 0f) totalDays.toInt().toString() else totalDays.toString()
-            val dayText = if (totalDays == 1f) "Day" else "Days"
-
-            binding.btnApplyLeave.text = "Apply for $formattedDays $dayText Leave"
-            binding.btnApplyLeave.setBackgroundResource(R.drawable.background_radius_button) // Restore original background
-            binding.btnupdate.setBackgroundResource(R.drawable.bg_green_radious) // Restore original background
-            binding.btnupdate.isEnabled=true
-            binding.btnApplyLeave.isEnabled=true
+            if (fromIndex > 0) totalDays -= 0.5f
+            if (toIndex < Session.lastIndex) totalDays -= 0.5f
         }
 
+        val formattedDays = if (totalDays % 1 == 0f) totalDays.toInt().toString() else totalDays.toString()
+        val dayText = if (totalDays == 1f) "Day" else "Days"
+
+        binding.btnApplyLeave.text = "Apply for $formattedDays $dayText Leave"
+        binding.btnupdate.text = "Update for $formattedDays $dayText Leave"
+
+        enableButtons()
         return true
     }
+
+
+    private fun disableButtons() {
+        val grayDrawable = ContextCompat.getDrawable(this, R.drawable.background_radius_button)?.mutate()
+        grayDrawable?.setTint(Color.GRAY)
+        binding.btnApplyLeave.background = grayDrawable
+        binding.btnupdate.background = grayDrawable
+        binding.btnApplyLeave.isEnabled = false
+        binding.btnupdate.isEnabled = false
+        binding.btnApplyLeave.text = "Apply Leave"
+        binding.btnupdate.text = "Update Leave"
+    }
+
+    private fun enableButtons() {
+        val normalDrawable = ContextCompat.getDrawable(this, R.drawable.background_radius_button)?.mutate()
+        binding.btnApplyLeave.background = normalDrawable
+        binding.btnupdate.background = normalDrawable
+        binding.btnApplyLeave.isEnabled = true
+        binding.btnupdate.isEnabled = true
+    }
+
 
 
 

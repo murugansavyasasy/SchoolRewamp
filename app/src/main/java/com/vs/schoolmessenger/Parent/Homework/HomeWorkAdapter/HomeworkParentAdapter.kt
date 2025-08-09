@@ -59,11 +59,6 @@ class HomeworkParentAdapter(
         notifyDataSetChanged()
     }
 
-    fun updateLoading(isLoadingNow: Boolean) {
-        isLoading = isLoadingNow
-        notifyDataSetChanged()
-    }
-
     fun filter(query: String) {
         val lowerCaseQuery = query.lowercase(Locale.getDefault())
         isHomeWorkData = if (lowerCaseQuery.isEmpty()) {

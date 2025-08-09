@@ -5,10 +5,6 @@
     android:background="@color/mild4"
     android:fitsSystemWindows="true">
 
-    <include
-        android:id="@+id/drawerLayout"
-        layout="@layout/school_home_fragment"
-        />
 
     <FrameLayout
         android:id="@+id/fragment_container"

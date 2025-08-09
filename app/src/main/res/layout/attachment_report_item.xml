@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/rytHeader"
     android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgReadUnRead"
+        android:layout_width="@dimen/fifteen"
+        android:src="@drawable/circle_bg_red"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginStart="@dimen/five"
+        android:layout_height="@dimen/fifteen">
+
+    </ImageView>
 
 
     <ImageView
@@ -9,6 +21,7 @@
         android:layout_width="@dimen/twenty_five"
         android:layout_height="@dimen/twenty_five"
         android:layout_marginStart="@dimen/ten"
+        android:layout_toEndOf="@+id/imgReadUnRead"
         android:layout_marginTop="@dimen/fifteen"
         android:src="@drawable/calendar"></ImageView>
 
@@ -17,8 +30,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/fifteen"
-        android:textColor="@color/black"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_marginTop="@dimen/seventeen"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/thirteen_sp"
         android:layout_toEndOf="@+id/imgDate"
         android:text="">
 
@@ -42,26 +57,39 @@
         android:layout_below="@+id/imgDate"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:text="skdvbsidgcaosduchgisaudchbsaiyvcig"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp">
 
     </TextView>
 
-
     <TextView
         android:id="@+id/lblDescription"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblTitle"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/five"
-        android:text="skdvbsidgcaosduchgisaudchbsaiyvcig"
+        android:text=""
         android:textColor="@color/light_gray"
-        android:textSize="@dimen/thirteen_sp">
+        android:textSize="@dimen/thirteen_sp"
+        android:maxLines="3"
+        android:ellipsize="end" />
 
-    </TextView>
+    <TextView
+        android:id="@+id/lblSeeMore"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblDescription"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
+        android:visibility="gone"
+        android:text="@string/SeeMore"
+        android:textColor="@color/dark_blue_1"
+        android:textSize="@dimen/thirteen_sp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyFile"
@@ -70,7 +98,7 @@
         android:visibility="gone"
         android:layout_marginStart="@dimen/ten"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblDescription">
+        android:layout_below="@+id/lblSeeMore">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -79,6 +107,7 @@
         android:layout_width="match_parent"
         android:textSize="@dimen/thirteen_sp"
         android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginTop="@dimen/ten"
         android:textColor="@color/grey"
         android:gravity="end"
         android:text="Posted By : "

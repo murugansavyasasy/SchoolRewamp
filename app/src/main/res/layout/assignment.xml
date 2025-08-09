@@ -220,7 +220,8 @@
                 android:layout_below="@+id/lblSubDate"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:src="@drawable/calender_icon"></ImageView>
+                android:src="@drawable/calender_icon">
+            </ImageView>
 
 
             <TextView

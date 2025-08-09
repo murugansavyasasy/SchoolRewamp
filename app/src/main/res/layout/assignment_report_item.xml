@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rect_shadow_white"
@@ -17,16 +18,15 @@
         android:textSize="20sp" />
 
 
-
     <ImageView
         android:id="@+id/options"
         android:layout_width="18dp"
         android:layout_height="18dp"
-       android:layout_alignParentEnd="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_more_vert"
-        android:contentDescription="Calendar icon" />
+        android:contentDescription="Calendar icon"
+        android:src="@drawable/ic_more_vert" />
 
     <TextView
         android:id="@+id/createddate"
@@ -34,16 +34,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/options"
-        android:layout_toStartOf="@id/options"
         android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@id/options"
         android:text="21/05/2025"
         android:textColor="@color/grey"
         android:textSize="13sp" />
 
 
-
-
-<TextView
+    <TextView
         android:id="@+id/lblTitle"
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
@@ -69,7 +67,6 @@
         android:textSize="13sp" />
 
 
-
     <LinearLayout
         android:id="@+id/lnrSendBy"
         android:layout_width="match_parent"
@@ -77,7 +74,7 @@
         android:layout_below="@+id/lblDescription"
         android:layout_marginTop="@dimen/ten"
         android:orientation="horizontal"
-        android:visibility="visible"
+        android:visibility="gone"
         android:weightSum="1">
 
         <TextView
@@ -118,7 +115,6 @@
     </LinearLayout>
 
 
-
     <TextView
         android:id="@+id/lblCategotry"
         style="@style/CustomTextStylePoppinsMedium"
@@ -131,7 +127,7 @@
         android:background="@drawable/rect_shadow_light_green1"
         android:padding="8dp"
         android:text="Category - Electronics"
-        android:textColor="@color/black"
+        android:textColor="@color/clr_grey_dark"
         android:textSize="13sp" />
 
 
@@ -145,50 +141,105 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@+id/lblCategotry"
-        android:background="@drawable/rect_shadow_light_yellow1"
+        android:background="@drawable/rect_light_yellow1"
         android:padding="8dp"
         android:text="Submission Due - 05/07/2021"
         android:textColor="@color/clr_grey_dark"
         android:textSize="13sp" />
 
 
-
-
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rytList"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/one_fifty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/lblCategotry"
-        android:layout_marginTop="@dimen/five"
-        android:visibility="gone">
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcyAssignment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
+        <RelativeLayout
+            android:id="@+id/rytList2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_radiantwhite1"
+            android:minHeight="60dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-        <android.webkit.WebView
-            android:id="@+id/webView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#000000"
-            android:visibility="gone" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyAssignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp" />
 
+            <TextView
+                android:id="@+id/total_numbers"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="-15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@id/rcyAssignment"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/video_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_image_background_white_coupon"
+            android:scaleType="fitXY"
+            android:src="@drawable/video_play"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/RoundedSquare" />
 
         <ProgressBar
             android:id="@+id/loadingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:indeterminateDrawable="@drawable/progress_bar_white"
             android:indeterminateOnly="true"
             android:visibility="gone">
 
         </ProgressBar>
-    </RelativeLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
 
+        <ImageView
+            android:id="@+id/arrow_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/dark_pink_background"
+            android:paddingStart="10dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="8dp"
+            android:src="@drawable/arrow_right_white"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
 
     <RelativeLayout
@@ -196,11 +247,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytList"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="@dimen/ten">
 
         <TextView
             android:id="@+id/lblSubmitted"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_shadow_light_yellow1"
@@ -208,13 +260,13 @@
             android:padding="8dp"
             android:text="@string/submitted"
             android:textColor="@color/black"
-            android:textSize="13sp"
-            style="@style/CustomTextStylePoppinsMedium">
+            android:textSize="13sp">
         </TextView>
 
 
         <TextView
             android:id="@+id/lblNotSubmitted"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
@@ -222,11 +274,9 @@
             android:background="@drawable/rect_shadow_light_yellow1"
             android:gravity="center"
             android:padding="8dp"
-            style="@style/CustomTextStylePoppinsMedium"
             android:text="Not Submitted : 1"
             android:textColor="@color/black"
-            android:textSize="13sp"
-           >
+            android:textSize="13sp">
         </TextView>
 
         <ImageView
@@ -236,8 +286,8 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_toEndOf="@+id/lblNotSubmitted"
             android:gravity="center"
-            android:visibility="gone"
-            android:src="@drawable/delete_bin">
+            android:src="@drawable/delete_bin"
+            android:visibility="gone">
         </ImageView>
 
     </RelativeLayout>

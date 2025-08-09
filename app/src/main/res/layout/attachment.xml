@@ -345,7 +345,8 @@
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
                     android:alpha="0.4"
-                    android:src="@drawable/search_icon"></ImageView>
+                    android:src="@drawable/search_icon">
+                </ImageView>
 
                 <EditText
                     android:id="@+id/edtSearch"

@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Stud
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
+import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -101,6 +102,7 @@ class SchoolServices {
     var isUpdateAttachment: MutableLiveData<StatusMessageModel?>
     var isUpdateNoticeBoard: MutableLiveData<StatusMessageModel?>
     var isDeleteHomeWork: MutableLiveData<StatusMessageModel?>
+    var isDeleteAttachment: MutableLiveData<StatusMessageModel?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
@@ -158,6 +160,7 @@ class SchoolServices {
     var isnoticeboarddelete: MutableLiveData<NoticeBoardDeleteResponse?>
     var isEventDelete: MutableLiveData<EventDeleteResponse?>
     var isAttachmentResponse: MutableLiveData<AttachmentReportResponse?>
+    var getassignmentlist: MutableLiveData<SubmissionResponse?>
 
 
     init {
@@ -185,6 +188,7 @@ class SchoolServices {
         isUpdateHomeWork = MutableLiveData()
         isUpdateAttachment = MutableLiveData()
         isDeleteHomeWork = MutableLiveData()
+        isDeleteAttachment = MutableLiveData()
         isSendVoice = MutableLiveData()
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
@@ -234,6 +238,7 @@ class SchoolServices {
         isEventDelete = MutableLiveData()
         isNoticeBoardStaffReport = MutableLiveData()
         isAttachmentResponse = MutableLiveData()
+        getassignmentlist = MutableLiveData()
     }
 
 
@@ -899,6 +904,42 @@ class SchoolServices {
     val isDeleteHomeworkLiveData: LiveData<StatusMessageModel?>
         get() = isDeleteHomeWork
 
+    fun isAttachmentDelete(
+        isToken: String, jsonObject: JsonObject,activity: Activity
+    ) {
+
+        RestClient.apiInterfaces.isAttachmentDelete(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isDeleteAttachment.postValue(response.body())
+                            } else {
+                                isDeleteAttachment.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isDeleteAttachment.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isDeleteAttachment.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isAttachmentLiveData: LiveData<StatusMessageModel?>
+        get() = isDeleteAttachment
 
 
 
@@ -2827,6 +2868,50 @@ class SchoolServices {
     val isAttachmentResponseLiveData: LiveData<AttachmentReportResponse?>
         get() = isAttachmentResponse
 
+
+
+
+    fun getassignmentlist(
+        isToken: String,
+        id: String,
+        type: String
+    ) {
+        RestClient.apiInterfaces.getassignmentlist(isToken,id,type)
+            ?.enqueue(object : Callback<SubmissionResponse?> {
+                override fun onResponse(
+                    call: Call<SubmissionResponse?>,
+                    response: Response<SubmissionResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getassignmentlist.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getassignmentlist.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SubmissionResponse?>,
+                    t: Throwable
+                ) {
+                    getassignmentlist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getassignmentlistLiveData: LiveData<SubmissionResponse?>
+        get() = getassignmentlist
 
 
 }

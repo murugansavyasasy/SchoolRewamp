@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/gray"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_theme_parent"
+        android:background="@drawable/gradient_theme_school"
         android:paddingVertical="@dimen/fifteen">
 
         <ImageView
@@ -16,11 +17,9 @@
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
             android:layout_centerVertical="true"
-            android:src="@drawable/left_arrow">
-
+            android:src="@drawable/arrow_left_white">
         </ImageView>
-
-
+        
         <TextView
             android:id="@+id/lblParentToolBar"
             android:layout_width="wrap_content"
@@ -29,7 +28,7 @@
             android:layout_toStartOf="@+id/rlaStudentName"
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             style="@style/CustomTextStylePoppinsBold">
 
@@ -50,7 +49,7 @@
                 android:text=""
                 android:layout_gravity="end"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -62,7 +61,7 @@
                 android:layout_below="@+id/lblStudentName"
                 android:text=""
                 android:layout_gravity="end"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -90,7 +89,7 @@
             android:background="@drawable/white_radious"
             android:gravity="center"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
@@ -106,7 +105,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
@@ -145,7 +144,7 @@
             android:layout_toEndOf="@id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
 

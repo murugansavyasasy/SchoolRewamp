@@ -134,6 +134,20 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             isMultipleSchool = false
         }
 
+        appViewModel!!.isDeleteAttachment?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@Attachment)
+                    mAttachmentReportAdapter!!.removeItemAt(isAttachmentPosition)
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
+
+
         appViewModel!!.isEditAttachment?.observe(this) { response ->
             Constant.hideLoading(this@Attachment)
             if (response != null) {
@@ -730,6 +744,12 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         showEditDeletePopup(isAttachmentData, view)
     }
 
+    override fun onReadStatusClick(
+        isData: List<AttachmentReportData>,
+        isPosition: Int
+    ) {
+    }
+
     fun showEditDeletePopup(data: List<AttachmentReportData>, anchor: View) {
         val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
         val popupWindow = PopupWindow(
@@ -782,7 +802,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             } else {
                 val jsonObject = JsonObject()
                 jsonObject.addProperty(APIKeyNames.id, isAttachmentId)
-                appViewModel?.isHomeWorkDelete(isAccessToken!!, jsonObject, this)
+                appViewModel?.isAttachmentDelete(isAccessToken!!, jsonObject, this)
             }
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
@@ -995,7 +1015,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         binding.rytAttachmentReport.visibility = View.GONE
         binding.rytAttachment.visibility = View.VISIBLE
         binding.edtTitle.setText(data.get(isAttachmentPosition).title)
-        binding.edtDescription.setText(data.get(isAttachmentPosition).title)
+        binding.edtDescription.setText(data.get(isAttachmentPosition).description)
 
         if (data.get(isAttachmentPosition).file_path.isNotEmpty()) {
             val mappedList = data.get(isAttachmentPosition).file_path.map { filePath ->

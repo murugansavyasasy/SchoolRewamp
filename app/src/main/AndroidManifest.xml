@@ -151,6 +151,9 @@
         <activity android:name=".Parent.RequestLeave.NewLeaveRequest"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
+        <activity android:name=".Parent.RequestLeave.OutPass"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity
             android:name=".Parent.Assignment.AssignmentFilePicking"
             android:theme="@style/AppTheme"
@@ -241,6 +244,16 @@
             android:name=".Dashboard.Settings.ReportTheBug.ReportTheBug"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".School.Assignment.AssignmentStudentList"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".School.Assignment.AssignmentStudentListDetail"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
         <activity
             android:name=".Dashboard.Settings.RateUs.RateUs"
             android:theme="@style/AppTheme"

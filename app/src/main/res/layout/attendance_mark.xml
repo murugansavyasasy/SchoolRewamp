@@ -95,7 +95,8 @@
                 android:text="@string/choose_academic_year"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+            </TextView>
 
 
             <RelativeLayout

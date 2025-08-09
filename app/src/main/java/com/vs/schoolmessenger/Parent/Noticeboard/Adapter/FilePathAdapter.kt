@@ -78,21 +78,9 @@ class FilePathAdapter (
         }
     }
 
-
-
-
-
-
-
-
-
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val DefaultImage: ShapeableImageView = itemView.findViewById(R.id.ImgPDF)
-//        private val ImgOrDocumentType:ImageView=itemView.findViewById(R.id.imageOrDocumentType)
-//        private val WebViewThumbnail:WebView=itemView.findViewById(R.id.WVThumbnaildocument)
-
-//        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
 
         private val fileItem: RelativeLayout = itemView.findViewById(R.id.fileItem)
 

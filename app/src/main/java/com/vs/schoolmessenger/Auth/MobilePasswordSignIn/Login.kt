@@ -20,12 +20,13 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.fingerPrintAunthenticateListener
 import com.vs.schoolmessenger.databinding.LoginBinding
+import com.vs.schoolmessenger.databinding.LoginNewBinding
 
-class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAunthenticateListener {
+class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener, fingerPrintAunthenticateListener {
 
     private var isPasswordVisible = false
-    override fun getViewBinding(): LoginBinding {
-        return LoginBinding.inflate(layoutInflater)
+    override fun getViewBinding(): LoginNewBinding {
+        return LoginNewBinding.inflate(layoutInflater)
     }
 
     var authViewModel: Auth? = null
@@ -41,7 +42,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)
         binding.rytFingerPrint.setOnClickListener(this)
-        isToolBarWhiteTheme()
+        isToolBarPrimaryTheme()
 
         val mobile_number = SharedPreference.getMobileNumber(this)
         val password = SharedPreference.getPassWord(this)

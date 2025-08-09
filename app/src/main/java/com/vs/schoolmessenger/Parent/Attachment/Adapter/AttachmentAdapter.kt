@@ -46,7 +46,6 @@ class AttachmentAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
     private var fullList: List<AttachmentData> = attachmentList ?: listOf()
     private var filteredList: List<AttachmentData> = attachmentList ?: listOf()
 
@@ -230,6 +229,7 @@ class AttachmentAdapter(
                         Log.e("WebViewError", "Error loading: ${error?.description}")
                     }
                 }
+
                 webView.loadUrl(item.file_path.firstOrNull()?.url ?: "")
             } else {
 //                indicator.visibility = if (item.file_path.size > 1) View.VISIBLE else View.GONE

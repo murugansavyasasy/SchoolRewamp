@@ -129,7 +129,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
-        window.setBackgroundDrawableResource(R.drawable.bg_blue_backround)
+        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
 
     protected open fun setUpGradientParent() {
@@ -172,6 +172,16 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = this.resources.getColor(R.color.white)
             window.navigationBarColor = this.resources.getColor(R.color.white)
+        }
+    }
+
+    fun isToolBarPrimaryTheme() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
+            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
         }
     }
 

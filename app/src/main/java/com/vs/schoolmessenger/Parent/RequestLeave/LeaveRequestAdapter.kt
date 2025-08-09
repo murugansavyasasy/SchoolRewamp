@@ -2,12 +2,15 @@ package com.vs.schoolmessenger.Parent.RequestLeave
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.AttendanceReport
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.Utils.Constant
@@ -56,15 +59,7 @@ class LeaveRequestAdapter(
         isLoading = false
         notifyDataSetChanged()
     }
-//
-//    fun filterByStatus(status: String) {
-//        filteredList = if (status == "All") {
-//            fullList
-//        } else {
-//            fullList.filter { it.status.equals(status, ignoreCase = true) }
-//        }
-//        notifyDataSetChanged()
-//    }
+
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textName: TextView = itemView.findViewById(R.id.textName)
@@ -73,10 +68,12 @@ class LeaveRequestAdapter(
         private val textNoOfDays: TextView = itemView.findViewById(R.id.textNoOfDays)
         private val textFirstLetter: TextView = itemView.findViewById(R.id.textFirstLetter)
         private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
+        private val textLeaveType: TextView = itemView.findViewById(R.id.textLeaveType)
         private val options: ImageView = itemView.findViewById(R.id.options)
         private val relbuttons: RelativeLayout = itemView.findViewById(R.id.relbuttons)
         private val deleteButton: LinearLayout = itemView.findViewById(R.id.deletebutton)
         private val editButton: LinearLayout = itemView.findViewById(R.id.editbutton)
+        private val lblGetOutPass: TextView = itemView.findViewById(R.id.lblGetOutPass)
 
         @SuppressLint("SetTextI18n")
         fun bind(data: LeaveData, listener: LeaveRequestClickListener) {
@@ -87,13 +84,21 @@ class LeaveRequestAdapter(
             textNoOfDays.text = "${data.no_of_days} ${if (data.no_of_days == "1") "Day" else "Days"} Application"
             textReason.text = data.reason
 
+            if (data.leave_type==""){
+                textLeaveType.visibility=View.GONE
+            }else{
+                textLeaveType.visibility=View.VISIBLE
+                textLeaveType.text=data.leave_type
+            }
+
             when (data.status) {
                 Constant.waiting_for_approval -> {
                     btnApprove.apply {
                         visibility = View.VISIBLE
-                        text = "Waiting"
-                        setBackgroundColor(Color.parseColor("#fff0b2"))
-                        setTextColor(Color.parseColor("#FFB300"))
+                        text = "Awaiting"
+                        lblGetOutPass.visibility=View.GONE
+                        applyTintedBackground(btnApprove, R.drawable.bg_leave_approved, R.color.light_yellow_1)
+                        setTextColor(Color.parseColor("#996633"))
                         options.visibility = View.VISIBLE
                         relbuttons.visibility = View.GONE
                     }
@@ -102,8 +107,10 @@ class LeaveRequestAdapter(
                     btnApprove.apply {
                         visibility = View.VISIBLE
                         text = "Approved"
-                        setBackgroundColor(Color.parseColor("#c2eecd"))
+                        lblGetOutPass.visibility=View.VISIBLE
+                        applyTintedBackground(btnApprove, R.drawable.bg_leave_approved, R.color.light_green_1)
                         setTextColor(Color.parseColor("#2E7D32"))
+
                         options.visibility = View.GONE
                     relbuttons.visibility = View.GONE
                     }
@@ -112,7 +119,8 @@ class LeaveRequestAdapter(
                     btnApprove.apply {
                         visibility = View.VISIBLE
                         text = "Rejected"
-                        setBackgroundColor(Color.parseColor("#ffebea"))
+                        lblGetOutPass.visibility=View.GONE
+                        applyTintedBackground(btnApprove, R.drawable.bg_leave_approved, R.color.light_red_1)
                         setTextColor(Color.parseColor("#D32F2F"))
                         options.visibility = View.GONE
                     relbuttons.visibility = View.GONE
@@ -123,7 +131,6 @@ class LeaveRequestAdapter(
             options.setOnClickListener {
                 val isVisible = relbuttons.visibility == View.VISIBLE
                 relbuttons.visibility = if (isVisible) View.GONE else View.VISIBLE
-                btnApprove.visibility = if (isVisible) View.VISIBLE else View.GONE
             }
 
             deleteButton.setOnClickListener {
@@ -133,8 +140,25 @@ class LeaveRequestAdapter(
             editButton.setOnClickListener {
                 listener.onItemEditClick(data)
             }
+
+            lblGetOutPass.setOnClickListener {
+                val context = it.context
+                val myIntent = Intent(context, OutPass::class.java)
+                context.startActivity(myIntent)
+            }
+
+        }
+
+
+        fun applyTintedBackground(view: View, drawableRes: Int, colorRes: Int) {
+            val context = view.context
+            val bgDrawable = ContextCompat.getDrawable(context, drawableRes)
+            bgDrawable?.setTint(ContextCompat.getColor(context, colorRes))
+            view.background = bgDrawable
         }
     }
+
+
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
