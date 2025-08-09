@@ -548,6 +548,7 @@
     <string name="lblReset">Reset</string>
     <string name="Students_List">Students List</string>
     <string name="MarkAllPresent">Mark all as present!</string>
+    <string name="MarkAllPresent2">Mark all as present</string>
     <string name="done">Done</string>
     <string name="are_you_sure_want_to_send_this_attachment">Are you sure want to send this attachment?</string>
     <string name="Pick_atlease_one_file">Pick atlease one file</string>
@@ -609,6 +610,10 @@
     <string name="no_changes_made">No Changes Made</string>
     <string name="generate_outpass"><u>Generate Outpass</u></string>
     <string name="enter_reason">Enter Reason</string>
+    <string name="type">Type</string>
+    <string name="cause">Cause</string>
+    <string name="add_attachment">Add Attachment</string>
+    <string name="assignment_progress">Assignment Progress</string>
 
 
 </resources>

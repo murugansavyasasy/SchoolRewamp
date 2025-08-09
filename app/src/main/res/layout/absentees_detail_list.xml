@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/badge_count"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="@dimen/twenty_six"
+        android:layout_height="@dimen/twenty_six"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/eight"
         android:background="@drawable/circle_background"
@@ -18,7 +18,6 @@
        style="@style/CustomTextStylePoppinsBold"
         android:gravity="center"
         android:text=""
-        android:textColor="@color/black"
         android:textSize="@dimen/twele_sp"
         />
 
@@ -89,89 +88,3 @@
 
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
-
-
-    <!--Existing Code-->
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_marginTop="@dimen/thirteen"-->
-    <!--    android:layout_height="wrap_content">-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/badge_count"-->
-    <!--        android:layout_width="@dimen/twenty_four"-->
-    <!--        android:layout_height="@dimen/twenty_four"-->
-    <!--        android:background="@drawable/circle_background"-->
-    <!--        android:text=""-->
-    <!--        android:textSize="@dimen/twele_sp"-->
-    <!--        android:elevation="@dimen/ten"-->
-    <!--        android:textColor="@color/black"-->
-    <!--        android:gravity="center"-->
-    <!--        android:textStyle="normal"-->
-    <!--        android:fontFamily="@font/poppins_regular"-->
-    <!--        android:layout_alignParentEnd="true"-->
-    <!--        android:layout_marginEnd="@dimen/eight" />-->
-
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        app:cardCornerRadius="@dimen/seven"-->
-    <!--        app:cardElevation="@dimen/four"-->
-    <!--        android:layout_marginStart="@dimen/ten"-->
-    <!--        android:layout_marginEnd="@dimen/ten"-->
-    <!--        android:layout_marginTop="@dimen/ten"-->
-    <!--        android:padding="@dimen/twele"-->
-    <!--        android:layout_height="wrap_content">-->
-
-    <!--        <RelativeLayout-->
-    <!--            android:id="@+id/relative_layout"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content">-->
-
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/content_layout"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:orientation="vertical"-->
-    <!--                android:gravity="center"-->
-    <!--                android:layout_centerInParent="true">-->
-
-    <!--                <TextView-->
-    <!--                    android:id="@+id/grade_view"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:text=""-->
-    <!--                    android:textSize="@dimen/seventeen_sp"-->
-    <!--                    android:textStyle="bold"-->
-    <!--                    android:layout_marginTop="@dimen/ten"-->
-    <!--                    android:fontFamily="@font/poppins_bold"-->
-    <!--                    android:textColor="@color/black" />-->
-
-    <!--                <TextView-->
-    <!--                    android:id="@+id/date_view"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:text=""-->
-    <!--                    android:textSize="@dimen/seventeen_sp"-->
-    <!--                    android:textColor="@color/black"-->
-    <!--                    android:textStyle="normal"-->
-    <!--                    android:fontFamily="@font/poppins_regular"-->
-    <!--                    android:layout_marginTop="@dimen/eight"-->
-    <!--                    android:layout_marginBottom="@dimen/ten" />-->
-    <!--            </LinearLayout>-->
-
-
-    <!--            <ImageView-->
-    <!--                android:id="@+id/arrow_icon"-->
-    <!--                android:layout_width="@dimen/twenty"-->
-    <!--                android:layout_height="@dimen/twenty"-->
-    <!--                android:src="@drawable/rightarrrow"-->
-    <!--                android:layout_alignParentEnd="true"-->
-    <!--                android:layout_marginTop="@dimen/fourty"-->
-    <!--                android:layout_marginEnd="@dimen/twele" />-->
-
-    <!--        </RelativeLayout>-->
-
-    <!--    </androidx.cardview.widget.CardView>-->
-    <!--</RelativeLayout>-->

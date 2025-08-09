@@ -44,9 +44,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         super.attachBaseContext(context)
     }
     private lateinit var contactPermissionLauncher: ActivityResultLauncher<String>
-
-
-
     var authViewModel: Auth? = null
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null

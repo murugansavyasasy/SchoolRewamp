@@ -66,15 +66,16 @@ class AssignmentStudentListAdapter(
         return if (isLoading) 3 else filteredList.size
     }
 
-    /**
-     * Update the adapter with new data and refresh list.
-     */
     fun updateList(newData: List<StudentSubmission>) {
-        originalList = ArrayList(newData)  // Keep original for filtering
-        filteredList = newData
+        originalList = ArrayList(newData)
+        filteredList = ArrayList(newData)
         isLoading = false
         notifyDataSetChanged()
-        // Show/hide no data UI accordingly
+
+        toggleNoDataUI()
+    }
+
+    private fun toggleNoDataUI() {
         if (filteredList.isEmpty()) {
             noDataImage?.visibility = View.VISIBLE
             noDataText?.visibility = View.VISIBLE
@@ -83,6 +84,8 @@ class AssignmentStudentListAdapter(
             noDataText?.visibility = View.GONE
         }
     }
+
+
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -109,10 +112,10 @@ class AssignmentStudentListAdapter(
                 filterResults.values = resultList
                 return filterResults
             }
-
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as? List<StudentSubmission> ?: emptyList()
+                filteredList = ArrayList(results?.values as? List<StudentSubmission> ?: emptyList())
                 notifyDataSetChanged()
+                toggleNoDataUI()
 
                 if (filteredList.isEmpty()) {
                     noDataImage?.visibility = View.VISIBLE
@@ -132,14 +135,30 @@ class AssignmentStudentListAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
+
         private val sectionLabel: TextView = itemView.findViewById(R.id.sectionlabel)
         private val standardLabel: TextView = itemView.findViewById(R.id.standardlabel)
         private val statusLabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val layout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
         private val arrowIcon: ImageView = itemView.findViewById(R.id.arrow_icon)
 
+        private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
+        private val statuslabel: TextView = itemView.findViewById(R.id.statuslabel)
+        private val submittedLabel: TextView = itemView.findViewById(R.id.submittedLabel)
+        private val submittedDate: TextView = itemView.findViewById(R.id.submittedDate)
+        private val cancelimage: ImageView = itemView.findViewById(R.id.cancelimage)
+
+
+
         fun bind(data: StudentSubmission, position: Int, adapter: AssignmentStudentListAdapter) {
+
+            sectionlabel.text = data.standard + " - " + data.section
+            val submissiondetails = data.submissions_details.firstOrNull()
+            submittedLabel.text = data.submit_status
+            submittedDate.text = submissiondetails?.submitted_on
+
             lblStudentName.text = data.student_name
+
             sectionLabel.text = data.standard
             standardLabel.text = data.section
             statusLabel.text = data.submit_status
@@ -155,6 +174,17 @@ class AssignmentStudentListAdapter(
                     Log.d("AssignmentAdapter", "No Redirection Available")
                 }
             }
+
+            if (data.submit_status == "SUBMITTED") {
+                statuslabel.text = "Submitted"
+                cancelimage.setBackgroundResource(R.drawable.correcticonsvg)
+            } else {
+                statuslabel.text = "Pending"
+                cancelimage.setBackgroundResource(R.drawable.close_red_color)
+            }
+
+
+
         }
     }
 

@@ -94,13 +94,12 @@ class SchoolEventUpcomingAdapter (
                     fullList
                 } else {
                     fullList.filter {
-                        it.title.lowercase().contains(query) || it.description.lowercase()
-                            .contains(query) || it.venue.lowercase().contains(query)
+                        it.title.lowercase().contains(query) ||
+                                it.description.lowercase().contains(query) ||
+                                it.venue.lowercase().contains(query)
                     }
                 }
-                val filterResults = FilterResults()
-                filterResults.values = result
-                return filterResults
+                return FilterResults().apply { values = result }
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
@@ -110,6 +109,7 @@ class SchoolEventUpcomingAdapter (
             }
         }
     }
+
 
     fun removeItemAt(position: Int) {
         if (position in filteredList.indices) {

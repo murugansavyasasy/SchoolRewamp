@@ -68,9 +68,7 @@ import java.util.Locale
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding
-
     private lateinit var items: List<ScrollItem>
-
     lateinit var isMenuAdapter: SchoolMenuAdapter
     private var isSearchVisible = false
     private var appViewModel: App? = null
@@ -147,7 +145,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 } else {
 //                    binding.lblSchoolRegionalName.visibility = View.GONE
                 }
-
             }
         }
 

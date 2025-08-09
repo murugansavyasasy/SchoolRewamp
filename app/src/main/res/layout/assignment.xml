@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Create"
+                    android:text="@string/Create"
                     android:textColor="@color/iconBlue"></TextView>
 
                 <View
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Reports"></TextView>
+                    android:text="@string/Reports"></TextView>
 
                 <View
                     android:id="@+id/line3"
@@ -91,11 +91,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:fontFamily="@font/poppins_bold"
+                style="@style/CustomTextStylePoppinsBold"
                 android:text="@string/Catogory"
-                android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+                >
 
             </TextView>
 
@@ -125,11 +124,10 @@
                 android:layout_below="@+id/rytSendingType"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:fontFamily="@font/poppins_bold"
                 android:text="@string/Title"
-                android:textColor="@color/black"
+               style="@style/CustomTextStylePoppinsBold"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+                >
 
             </TextView>
 
@@ -171,11 +169,10 @@
                 android:layout_below="@+id/lblTitleTextCount"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:fontFamily="@font/poppins_bold"
                 android:text="@string/Description"
-                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+                >
 
             </TextView>
 
@@ -191,13 +188,12 @@
                 android:editable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:fontFamily="@font/poppins_regular"
                 android:gravity="start"
                 android:hint="@string/Description"
                 android:padding="@dimen/ten"
-                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+                >
 
             </EditText>
 
@@ -226,11 +222,10 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
-                android:fontFamily="@font/poppins_bold"
                 android:text="@string/SubmissionDate"
-                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+               >
 
             </TextView>
 
@@ -294,9 +289,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="Add Attachment"
+                    android:text="@string/add_attachment"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    >
 
                 </TextView>
 
@@ -370,8 +365,7 @@
             android:layout_marginStart="5dp"
             android:visibility="gone"
             android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="5dp"
-           >
+            android:layout_marginEnd="5dp">
 
             <LinearLayout
                 android:id="@+id/AcademicYear"

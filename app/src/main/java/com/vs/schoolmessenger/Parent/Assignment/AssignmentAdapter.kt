@@ -124,7 +124,6 @@ class AssignmentAdapter(
             lblTitle.text = data.title
             lblCategory.text = data.category
             lblassigned.text = "Assigned" + " - " + Constant.convertToReadableDate(data.created_date)
-//            lblSubmissionDue.text = "Submission Due" + " - " + data.end_date
             createddate.text = Constant.convertToReadableDate(data.created_date)
             lblSubject.text = data.subject
             lbldeadline.text = "Submission date" +" "+ data.end_date
@@ -166,6 +165,9 @@ class AssignmentAdapter(
                     isCompleted = true,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
+                    submittedCount =  data.submitted_count,
+                    totalCount = data.total_count,
+                    assignmentid = data.id
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -197,6 +199,9 @@ class AssignmentAdapter(
                                 isCompleted = true,
                                 isMenuType = Constant.M_ASSIGNMENT,
                                 fileList = convertedList,
+                                submittedCount =  data.submitted_count,
+                                totalCount = data.total_count,
+                                assignmentid = data.id
                             )
 
                             val intent = Intent(context, ChildHomeWork::class.java)
@@ -235,106 +240,15 @@ class AssignmentAdapter(
 
                 rcyAssignment.adapter = fileAdapter
             }
-//            video_player.isClickable = true
-//            video_player.isFocusable = true
-//
-//            video_player.setOnTouchListener { _, event ->
-//                if (event.action == MotionEvent.ACTION_UP) {
-//                    Constant.commonFileList.clear()
-//                    Constant.selectedFileIndex = -1
-//                    Constant.commonFileList = data.file_path.map {
-//                        CommonFileData(it.type, it.url)
-//                    }.toMutableList()
-//                    Constant.selectedFileIndex = position
-//                    val intent = Intent(context, FilesViewActivity::class.java)
-//                    intent.putExtra(Constant.subjectName, data.subject)
-//                    context.startActivity(intent)
-//                    return@setOnTouchListener true
-//                }
-//                false
-//            }
 
             lblSubmitted.setOnClickListener { listener.onSubmittedClick(data) }
             lblNotSubmitted.setOnClickListener { listener.onNotSubmittedClick(data) }
             options.setOnClickListener {
                 listener.onEditAndDeleteClick(data,it,adapterPosition)
             }
-
-//            options.setOnClickListener {
-//                val popup = PopupMenu(context, options)
-//                popup.menuInflater.inflate(R.menu.notice_options_menu, popup.menu)
-//
-//                try {
-//                    val fields = popup.javaClass.declaredFields
-//                    for (field in fields) {
-//                        if (field.name == "mPopup") {
-//                            field.isAccessible = true
-//                            val menuPopupHelper = field.get(popup)
-//                            val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
-//                            val setForceIcons =
-//                                classPopupHelper.getMethod("setForceShowIcon", Boolean::class.java)
-//                            setForceIcons.invoke(menuPopupHelper, true)
-//                            break
-//                        }
-//                    }
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//                val pos = adapterPosition
-//                popup.setOnMenuItemClickListener {
-//
-//                        menuItem ->
-//                    when (menuItem.itemId) {
-//                        R.id.menu_edit -> {
-//                            // Uncomment
-//                            // listener.onEditNotice(noticeData)
-//                            true
-//                        }
-//
-//                        R.id.menu_delete -> {
-//                            val pos = adapterPosition
-//                            if (pos != RecyclerView.NO_POSITION) {
-//                                AlertDialog.Builder(context).setTitle("Delete Confirmation")
-//                                    .setMessage("Are you sure you want to delete this assignment?")
-//                                    .setPositiveButton("Yes") { dialog, _ ->
-//                                        adapter.itemList.removeAt(pos)
-//                                        adapter.notifyItemRemoved(pos)
-//                                        listener.onDeleteClick(data)
-//                                        dialog.dismiss()
-//                                    }.setNegativeButton("No") { dialog, _ ->
-//                                        dialog.dismiss()
-//                                    }.show()
-//                            }
-//                            true
-//                        }
-//
-//                        else -> false
-//                    }
-//                }
-//
-//                popup.show()
-//            }
-
-
         }
 
-//        private fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
-//            val adapter = recyclerView.adapter ?: return
-//            createIndicators(adapter.itemCount, 0)
-//            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//                override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-//                    val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
-//                    val firstVisible = layoutManager.findFirstVisibleItemPosition()
-//                    this@attachToRecyclerView.animatePageSelected(firstVisible)
-//                }
-//            })
-//
-//            adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-//                override fun onChanged() {
-//                    createIndicators(adapter.itemCount, 0)
-//                }
-//            })
-//        }
+
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

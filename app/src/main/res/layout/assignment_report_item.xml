@@ -11,11 +11,10 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
         android:text="Hello Title"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="@dimen/twenty_sp" />
 
 
     <ImageView
@@ -23,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/ten"
         android:contentDescription="Calendar icon"
         android:src="@drawable/ic_more_vert" />
 
@@ -34,13 +33,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/options"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="@dimen/ten"
         android:layout_toStartOf="@id/options"
         android:text="21/05/2025"
         android:textColor="@color/grey"
-        android:textSize="13sp"
         android:visibility="gone" />
-
 
     <TextView
         android:id="@+id/lblDescription"
@@ -48,11 +45,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblTitle"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
         android:text="Experiment with solar power building and connection between them is the real power"
         android:textColor="@color/clr_grey_dark"
-        android:textSize="13sp" />
+        android:textSize="@dimen/thirteen_sp" />
 
 
     <LinearLayout
@@ -109,14 +106,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnrSendBy"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
         android:background="@drawable/rect_shadow_light_green1"
-        android:padding="8dp"
+        android:padding="@dimen/eight"
         android:text="Assigned - 03/07/2025"
         android:textColor="@color/dark_blue_1"
-        android:textSize="13sp" />
+         />
 
 
     <TextView
@@ -125,15 +122,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnrSendBy"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
         android:layout_toEndOf="@+id/lblassigned"
         android:background="@drawable/rect_light_grey"
-        android:padding="8dp"
+        android:padding="@dimen/eight"
         android:text="GENERAL"
         android:textColor="@color/clr_grey_dark"
-        android:textSize="13sp" />
+         />
 
 
 
@@ -144,8 +141,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblCategory"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
         android:layout_marginBottom="@dimen/ten">
 
         <TextView
@@ -155,10 +152,10 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rect_shadow_light_green1"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="@dimen/eight"
             android:text="TAMIL"
             android:textColor="@color/dark_blue_1"
-            android:textSize="13sp">
+            >
         </TextView>
 
 
@@ -171,10 +168,10 @@
             android:layout_toEndOf="@+id/lblSubject"
             android:background="@drawable/rect_shadow_light_yellow1"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="@dimen/eight"
             android:text="Deadline 04-07-2025"
             android:textColor="@color/dark_orange"
-            android:textSize="13sp">
+           >
         </TextView>
     </RelativeLayout>
 
@@ -182,12 +179,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lblassignmentprogress"
-        android:text="Assignment Progress"
+        android:text="@string/assignment_progress"
         android:textColor="@color/black"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_below="@+id/relative_layout1"
-        android:layout_marginStart="10dp"
-        android:textSize="15sp"/>
+        android:layout_marginStart="@dimen/ten"
+        android:textSize="@dimen/fifteen_sp"/>
 
 
     <ProgressBar
@@ -199,10 +196,10 @@
         android:progress="30"
         android:max="100"
         android:layout_below="@+id/lblassignmentprogress"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/eight"/>
 
 
 
@@ -211,16 +208,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/progressBarAssignment"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginBottom="@dimen/two"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/rytList2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:minHeight="60dp"
+            android:layout_marginBottom="@dimen/ten"
+            android:minHeight="@dimen/sixty"
             android:orientation="horizontal"
             android:visibility="gone">
 
@@ -229,25 +226,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp" />
+                android:paddingStart="@dimen/five"
+                android:paddingEnd="@dimen/five" />
 
             <TextView
                 android:id="@+id/total_numbers"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="-15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginStart="@dimen/minus_fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/ten"
                 android:layout_toEndOf="@id/rcyAssignment"
                 android:background="@drawable/bg_image_background_white_coupon"
                 android:gravity="center"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="@dimen/fifteen_sp" />
 
         </RelativeLayout>
 
@@ -256,8 +252,8 @@
             android:id="@+id/video_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
             android:background="@drawable/bg_image_background_white_coupon"
             android:scaleType="fitXY"
             android:src="@drawable/video_play"
@@ -275,8 +271,8 @@
         </ProgressBar>
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
             android:layout_weight="1" />
 
 
@@ -284,14 +280,14 @@
             android:id="@+id/arrow_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/ten"
             android:background="@drawable/dark_pink_background"
-            android:paddingStart="10dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="8dp"
+            android:paddingStart="@dimen/ten"
+            android:paddingTop="@dimen/eight"
+            android:paddingEnd="@dimen/ten"
+            android:paddingBottom="@dimen/eight"
             android:src="@drawable/arrow_right_white"
             android:visibility="gone" />
 
@@ -306,8 +302,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytList"
         android:layout_centerHorizontal="false"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginStart="@dimen/ten"
         android:layout_marginBottom="@dimen/ten">
 
         <TextView
@@ -317,7 +313,7 @@
             android:background="@drawable/rect_shadow_light_yellow1"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsBold"
-            android:padding="8dp"
+            android:padding="@dimen/eight"
             android:text="@string/submitted"
             android:textColor="@color/dark_orange"
             android:textSize="@dimen/thirteen_sp">
@@ -332,7 +328,7 @@
             android:layout_toEndOf="@+id/lblSubmitted"
             android:background="@drawable/rect_shadow_light_yellow1"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="@dimen/eight"
             android:text="NotSubmitted : 1"
             android:textColor="@color/dark_orange"
             android:textSize="@dimen/thirteen_sp"
