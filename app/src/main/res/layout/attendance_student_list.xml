@@ -27,19 +27,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Murugan"
-                android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp" />
 
             <TextView
                 android:id="@+id/lblAdmissionNoValue"
-                style="@style/CustomTextStylePoppinsRegular"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
                 android:text="123456"
                 android:textColor="@color/light_gray"
                 android:textSize="@dimen/ten_sp"
-                android:textStyle="bold" />
+                 />
 
         </LinearLayout>
 

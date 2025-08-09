@@ -15,9 +15,9 @@
         android:layout_marginEnd="@dimen/ten"
         android:padding="@dimen/sixteen_sp"
         android:text="@string/monday"
-        android:textColor="@color/black"
+        style="@style/CustomTextStylePoppinsBold"
         android:textSize="@dimen/eighteen"
-        android:textStyle="bold" />
+         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSchedule"
@@ -29,7 +29,7 @@
     <LinearLayout
         android:id="@+id/lnrNoRecords"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/zero"
         android:layout_marginBottom="@dimen/hundred_fifty"
         android:layout_weight="1"
         android:gravity="center"
@@ -47,11 +47,11 @@
             android:id="@+id/txtNoData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_gravity="center_horizontal"
             android:text="@string/no_timetable_available"
-            android:textColor="@color/black"
             android:textSize="@dimen/sixteen"
-            android:textStyle="bold" />
+             />
     </LinearLayout>
 
 

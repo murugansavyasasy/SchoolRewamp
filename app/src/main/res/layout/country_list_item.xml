@@ -45,9 +45,7 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_toEndOf="@+id/imgCountryLogo"
             android:text="Select Country"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal" />
+             />
 
 
         <LinearLayout

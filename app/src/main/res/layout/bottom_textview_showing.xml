@@ -24,9 +24,9 @@
         android:layout_toEndOf="@+id/imgOne"
         android:padding="@dimen/ten"
         android:text=""
-        android:textColor="@color/black"
+        style="@style/CustomTextStylePoppinsBold"
         android:textSize="@dimen/fifteen_sp"
-        android:textStyle="bold" />
+         />
 
 
     <ImageView
@@ -49,10 +49,10 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_toEndOf="@+id/imgTwo"
         android:padding="@dimen/ten"
+        style="@style/CustomTextStylePoppinsBold"
         android:text=""
-        android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
-        android:textStyle="bold" />
+        />
 
 
 </RelativeLayout>

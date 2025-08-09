@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Create"
+                android:text="@string/Create"
                 android:textColor="@color/iconBlue"></TextView>
 
             <View
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Reports"></TextView>
+                android:text="@string/Reports"></TextView>
 
             <View
                 android:id="@+id/line2"
@@ -98,10 +98,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:text="@string/Venue"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                 />
 
             <TextView
                 android:id="@+id/lblStar"
@@ -111,7 +110,7 @@
                 android:layout_toEndOf="@id/lblLocation"
                 android:text="@string/mandatory"
                 android:textColor="@color/red"
-                android:textSize="@dimen/thirteen_sp" />
+                />
 
 
             <EditText
@@ -122,11 +121,10 @@
                 android:layout_below="@+id/lblLocation"
                 android:layout_alignStart="@+id/lblLocation"
                 android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/bg_edittext_view_line"
                 android:inputType="text"
                 android:paddingBottom="@dimen/ten"
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
             <ImageView
@@ -146,8 +144,7 @@
                 android:layout_alignStart="@+id/txtLocation"
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/Title"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+               />
 
             <TextView
                 android:id="@+id/lblStar1"
@@ -173,7 +170,6 @@
                 android:background="@drawable/bg_edittext_view_line"
                 android:inputType="text"
                 android:paddingBottom="@dimen/ten"
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
@@ -184,10 +180,9 @@
                 android:layout_below="@+id/txtTitle"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:text="0 of 50"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+               />
 
             <TextView
                 android:id="@+id/lblEventDesc"
@@ -198,8 +193,7 @@
                 android:layout_alignStart="@+id/txtTitle"
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/Description"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                />
 
 
             <TextView
@@ -212,7 +206,7 @@
                 android:layout_toEndOf="@id/lblEventDesc"
                 android:text="@string/mandatory"
                 android:textColor="@color/red"
-                android:textSize="@dimen/thirteen_sp" />
+                />
 
 
             <RelativeLayout
@@ -237,8 +231,7 @@
                     android:hint="@string/Description"
                     android:maxLength="500"
                     android:padding="@dimen/ten"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                   >
 
                 </EditText>
 
@@ -253,10 +246,9 @@
                 android:layout_below="@+id/rytDesc"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:text="@string/_0_of_500"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+               />
 
             <TextView
                 android:id="@+id/lblSelectCategory"
@@ -266,7 +258,7 @@
                 android:layout_below="@+id/lbTextCount"
                 android:layout_alignStart="@+id/txtTitle"
                 android:layout_marginTop="@dimen/fifteen"
-                android:text="Select Category"
+                android:text="@string/select_category"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -278,7 +270,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/five"
                 android:backgroundTint="@android:color/white"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/five">
 
                 <Spinner
                     android:id="@+id/isCategorySpinner"
@@ -302,7 +294,7 @@
                     android:id="@+id/rytEventDateTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/ten">
 
 
                     <TextView
@@ -311,9 +303,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="Starts on"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp" />
+                        android:text="@string/starts_on"
+                       />
 
                     <TextView
                         android:id="@+id/lblStar4"
@@ -324,7 +315,7 @@
                         android:layout_toEndOf="@id/lblStart"
                         android:text="@string/mandatory"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/thirteen_sp" />
+                         />
 
 
                     <RelativeLayout
@@ -333,7 +324,7 @@
                         android:layout_height="match_parent"
                         android:layout_below="@+id/lblStart"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="10dp">
+                        android:layout_marginEnd="@dimen/ten">
 
                         <RelativeLayout
                             android:id="@+id/rytStartDate"
@@ -362,7 +353,6 @@
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginTop="@dimen/five"
                                         android:text="Fri"
-                                        android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp" />
 
                                     <TextView
@@ -373,7 +363,6 @@
                                         android:background="@color/primary_light"
                                         android:gravity="center"
                                         android:text="12"
-                                        android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp" />
 
                                 </LinearLayout>
@@ -399,7 +388,6 @@
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_toEndOf="@+id/imgDateDown"
                                 android:text=""
-                                android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
 
                         </RelativeLayout>
@@ -455,9 +443,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
-                            android:text="Add Attachment"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp">
+                            android:text="@string/add_attachment"
+                           >
 
                         </TextView>
 
@@ -465,7 +452,7 @@
                             android:id="@+id/lblOptional"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_marginStart="@dimen/eight"
                             android:layout_marginTop="@dimen/ten"
                             android:layout_toEndOf="@+id/lblAddPhoto"
                             android:text="@string/Optional"
@@ -529,8 +516,8 @@
         android:layout_height="@dimen/thirty_five"
         android:layout_below="@+id/toolbarLayout1"
         android:layout_margin="@dimen/ten"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:background="@drawable/rect_grey"
         android:visibility="gone">
 
@@ -565,8 +552,8 @@
         android:id="@+id/noDataText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No data found"
-        android:textSize="16sp"
+        android:text="@string/no_data_found"
+        android:textSize="@dimen/sixteen_sp"
         android:textColor="@color/black"
         android:layout_below="@id/noDataImage"
         android:layout_centerHorizontal="true"
@@ -589,18 +576,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp">
+            android:paddingBottom="@dimen/sixteen">
 
             <TextView
                 android:id="@+id/headerview"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Ongoing Events"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="@string/ongoing_events"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/eighteen_sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -608,10 +595,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/headerview"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/ten"
                 android:scrollbars="none" />
 
 
@@ -621,7 +608,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rcyongoingevent"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/twenty"
                 android:src="@drawable/dotindicator" />
 
 
@@ -631,11 +618,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dotindicator"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Upcoming Events"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="@string/upcoming_events"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/eighteen_sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -643,10 +630,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/upcomingevent_headerview"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/ten"
                 android:scrollbars="none" />
 
 
@@ -656,11 +643,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rcyupcomingevent"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
                 android:text="Completed Events"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/eighteen_sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -668,10 +655,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/completedevent_headerview"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/ten"
                 android:scrollbars="none" />
 
 
