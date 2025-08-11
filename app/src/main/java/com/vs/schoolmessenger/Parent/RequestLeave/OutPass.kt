@@ -1,30 +1,19 @@
 package com.vs.schoolmessenger.Parent.RequestLeave
 
-import android.content.Intent
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
-import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayout
-import com.google.gson.JsonObject
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.GatePassBinding
-import com.vs.schoolmessenger.databinding.LeaveRequestBinding
 
 
 class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener{
@@ -32,7 +21,7 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener{
     override fun getViewBinding(): GatePassBinding {
         return GatePassBinding.inflate(layoutInflater)
     }
-
+    private var isChildDetails: ChildDetails? = null
     private var appViewModel: App? = null
 
 
@@ -42,10 +31,31 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener{
         setupToolbarBlue()
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
+        val childDetails = SharedPreference.getChildDetails(this)
         binding.imgBack.setOnClickListener(this)
         binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
         binding.btnOk.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
 
+
+        Glide.with(this)
+            .load(childDetails!!.profile)
+            .placeholder(R.drawable.user_vector_icon)
+            .error(R.drawable.user_vector_icon)
+            .into(binding.profileImage1)
+
+        binding.tvName.text=Constant.isLeaveData!!.student_name
+        binding.isLeaveApplyOn.text=Constant.convertToReadableDateformat(Constant.isLeaveData!!.applied_on)
+        binding.tvStandard.text=Constant.isLeaveData!!.class_name+" - "+Constant.isLeaveData!!.section_name
+        binding.lblFromDate.text=Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
+        binding.lblToDate.text=Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
+        if (Constant.isLeaveData!!.no_of_days=="1"){
+            binding.lblDays.text=Constant.isLeaveData!!.no_of_days+" Day"
+        }
+        else{
+            binding.lblDays.text=Constant.isLeaveData!!.no_of_days+" Days"
+        }
+        binding.lblApprovalBy.text=Constant.isLeaveData!!.approved_by
+        binding.lblReason.text=Constant.isLeaveData!!.reason
     }
 
     override fun onClick(p0: View?) {

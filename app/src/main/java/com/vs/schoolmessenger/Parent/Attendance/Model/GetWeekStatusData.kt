@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.Attendance.WeekStatusModel
+package com.vs.schoolmessenger.Parent.Attendance.Model
 
 class GetWeekStatusData (
     val day: String,

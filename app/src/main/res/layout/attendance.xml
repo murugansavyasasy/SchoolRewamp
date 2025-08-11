@@ -160,15 +160,31 @@
                         </TextView>
                     </LinearLayout>
                 </LinearLayout>
-                <TextView
+                <RelativeLayout
                     android:id="@+id/lblHeading"
-                    android:layout_marginTop="@dimen/fifteen"
                     android:layout_below="@+id/lnrCalendarDetails"
-                    android:layout_width="match_parent"
-                    android:text="@string/this_week_status"
-                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                </TextView>
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/lblHeadingWeek"
+                        android:layout_width="wrap_content"
+                        android:text="@string/this_week_status"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <ImageView
+                        android:id="@+id/imgInfo"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/info_icon"
+                        android:layout_marginStart="@dimen/three"
+                        android:layout_toEndOf="@+id/lblHeadingWeek"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen">
+
+                    </ImageView>
+                </RelativeLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_below="@+id/lblHeading"

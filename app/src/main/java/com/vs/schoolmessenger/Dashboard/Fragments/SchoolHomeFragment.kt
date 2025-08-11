@@ -3,29 +3,22 @@ package com.vs.schoolmessenger.Dashboard.Fragments
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
+
+
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
+
+
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -75,9 +68,7 @@ import java.util.Locale
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding
-
     private lateinit var items: List<ScrollItem>
-
     lateinit var isMenuAdapter: SchoolMenuAdapter
     private var isSearchVisible = false
     private var appViewModel: App? = null
@@ -113,10 +104,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
-//        binding.imgNotification.setOnClickListener(this)
-//        binding.imgSearchClick.setOnClickListener(this)
-//        binding.changeroll.setOnClickListener(this)
-//        binding.imgSearchCancel.setOnClickListener(this)
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         val formattedDate = dateFormat.format(currentDate)
@@ -142,36 +129,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             } else {
                 //   binding.lblSchoolRegionalName.visibility = View.GONE
             }
-//            binding.lblSchoolAddress.text = staffDetails!!.school_address
-//            binding.lblSchoolAddress.visibility = View.VISIBLE
-//            Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
-//                .listener(object : RequestListener<Drawable> {
-//
-//                    override fun onLoadFailed(
-//                        e: GlideException?,
-//                        model: Any?,
-//                        target: com.bumptech.glide.request.target.Target<Drawable?>,
-//                        isFirstResource: Boolean
-//                    ): Boolean {
-//                        Handler(Looper.getMainLooper()).post {
-//                            Glide.with(requireActivity()).load(R.drawable.school_sample)
-//                                .into(binding.imgSchoolLogo)
-//                        }
-//                        return false
-//                    }
-//
-//
-//                    override fun onResourceReady(
-//                        resource: Drawable,
-//                        model: Any,
-//                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
-//                        dataSource: com.bumptech.glide.load.DataSource,
-//                        isFirstResource: Boolean
-//                    ): Boolean {
-//                        Log.d("Glide", "Image load success")
-//                        return false
-//                    }
-//                }).into(binding.imgSchoolLogo)
 
         } else {
             access_token = userDetails!!.staff_details[0].access_token
@@ -188,58 +145,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 } else {
 //                    binding.lblSchoolRegionalName.visibility = View.GONE
                 }
-//                binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
-//                Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
-//                    .listener(object : RequestListener<Drawable> {
-//
-//                        override fun onLoadFailed(
-//                            e: GlideException?,
-//                            model: Any?,
-//                            target: com.bumptech.glide.request.target.Target<Drawable?>,
-//                            isFirstResource: Boolean
-//                        ): Boolean {
-//                            Handler(Looper.getMainLooper()).post {
-//                                Glide.with(requireActivity()).load(R.drawable.school_sample)
-//                                    .into(binding.imgSchoolLogo)
-//                            }
-//                            return false
-//                        }
-//
-//                        override fun onResourceReady(
-//                            resource: Drawable,
-//                            model: Any,
-//                            target: com.bumptech.glide.request.target.Target<Drawable?>?,
-//                            dataSource: com.bumptech.glide.load.DataSource,
-//                            isFirstResource: Boolean
-//                        ): Boolean {
-//                            Log.d("Glide", "Image load success")
-//                            return false
-//                        }
-//                    }).into(binding.imgSchoolLogo)
             }
         }
 
-//        if (userDetails!!.is_parent && userDetails!!.is_staff) {
-//            binding.changeroll.visibility = View.VISIBLE
-//        } else {
-//            if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-//                if (userDetails!!.staff_details.size > 1) {
-//                    binding.changeroll.visibility = View.VISIBLE
-//                } else {
-//                    binding.changeroll.visibility = View.GONE
-//                }
-//            } else {
-//                binding.changeroll.visibility = View.GONE
-//            }
-//        }
+        binding.imgBurgerMenu.setOnClickListener(this)
 
-//        binding.lblViewDetails.paintFlags =
-//            binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-//
-//        binding.lblGif.playAnimation()
-//        binding.lblGif.setAnimation(R.raw.mathematics)
+        binding.imgBurgerMenu.setOnClickListener {
+            (activity as? SchoolDashboard)?.openDrawer()
+        }
 
-//        isDashBoardData()
+
 
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
@@ -275,13 +190,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-//        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {}
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                filter(s.toString())
-//            }
-//        })
+
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -331,6 +240,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //        }
 //    }
 
+
     private fun createSampleData(): List<ScrollItem> {
         return listOf(
             ScrollItem(R.drawable.home_work_icon_school, "Daily Homework"),
@@ -348,14 +258,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
         )
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-//        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//            override fun getSpanSize(position: Int): Int {
-//                return when (isMenuAdapter.getItemViewType(position)) {
-//                    2 -> 3 // TYPE_AD: Span across all 3 columns
-//                    else -> 1 // Default: 1 span per item
-//                }
-//            }
-//        }
+
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
     }
@@ -378,32 +281,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-//            R.id.imgNotification -> {
-//                Constant.isParentChoose = false
-//                val intent = Intent(requireActivity(), Notification::class.java)
-//                startActivity(intent)
-//            }
-
-//            R.id.changeroll -> {
-//                requireActivity().onBackPressedDispatcher.onBackPressed()
-//            }
-
-//            R.id.imgSearchClick -> {
-//
-////                if (isSearchVisible) {
-////                    binding.txtSearchMenu.setText("")
-////                    isSearchVisible = false
-////                    binding.rytSearchBar.visibility = View.GONE
-////                } else {
-////                    isSearchVisible = true
-////                    binding.rytSearchBar.visibility = View.VISIBLE
-////                }
-//            }
-//            R.id.imgSearchCancel->{
-//                binding.txtSearchMenu.setText("")
-//                isSearchVisible = false
-//                binding.rytSearchBar.visibility = View.GONE
-//            }
         }
     }
 
@@ -481,7 +358,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_HOMEWORK -> {
 
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
                     HomeWork::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {

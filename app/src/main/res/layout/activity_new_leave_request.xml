@@ -72,7 +72,6 @@
         android:text="@string/leave_requests"
         android:layout_marginTop="@dimen/ten"
         android:layout_below="@+id/rytHeader"
-        android:textColor="@color/black"
         android:textSize="@dimen/twenty">
 
     </TextView>
@@ -105,15 +104,15 @@
                     android:padding="@dimen/ten">
 
                     <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="12dp"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginEnd="@dimen/twele"
                         android:background="@drawable/background_radius_button"
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="@dimen/fourty"
+                            android:layout_height="@dimen/fourty"
                             android:scaleType="centerInside"
                             android:src="@drawable/grid_view" />
 
@@ -127,26 +126,26 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Type"
-                            android:textColor="#888888"
+                            android:text="@string/type"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:textColor="@color/light_gray_2"
                             android:textSize="@dimen/fourteen_sp" />
 
-                        <TextView
+                        <Spinner
+                            android:id="@+id/isLeaveCategories"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:text="Casual"
-                            android:textColor="#000000"
-                            android:textSize="@dimen/thirteen_sp"
+                            android:background="@null"
+                            android:spinnerMode="dropdown"
                             />
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/one"
                     android:layout_marginTop="@dimen/ten"
-                    android:background="#D1D1D6" />
+                    android:background="@color/gray4" />
                 <!-- Reason -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,9 +155,9 @@
                     android:padding="@dimen/ten">
 
                     <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="12dp"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginEnd="@dimen/twele"
                         android:background="@drawable/background_radius_button"
                         android:gravity="center">
 
@@ -177,8 +176,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Cause"
-                            android:textColor="#888888"
+                            android:text="@string/cause"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:textColor="@color/light_gray_2"
                             android:textSize="@dimen/fourteen_sp" />
 
                         <EditText
@@ -187,11 +187,12 @@
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
                             android:inputType="textCapSentences"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
-                            android:text="Trip to Cannes"
+                            android:paddingTop="@dimen/four"
+                            android:paddingBottom="@dimen/four"
+                            android:text=""
+                            android:hint="@string/enter_reason"
                             style="@style/CustomTextStylePoppinsBold"
-                            android:textColorHint="#888888"
+                            android:textColorHint="@color/light_gray_2"
                             android:textSize="@dimen/thirteen_sp" />
 
                     </LinearLayout>
@@ -199,9 +200,9 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/one"
                     android:layout_marginTop="@dimen/ten"
-                    android:background="#D1D1D6" />
+                    android:background="@color/gray4" />
                 <!-- From Date -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -212,9 +213,9 @@
 
                     <!-- Icon -->
                     <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="12dp"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginEnd="@dimen/twele"
                         android:background="@drawable/background_radius_button"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -228,7 +229,7 @@
 
                     <!-- Date & Session Layout -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/zero"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="horizontal"
@@ -237,17 +238,18 @@
                         <!-- From Date -->
                         <LinearLayout
                             android:id="@+id/lnrFromDate"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/zero"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.45"
                             android:orientation="vertical"
-                            android:paddingEnd="8dp">
+                            android:paddingEnd="@dimen/eight">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="From"
-                                android:textColor="#888888"
+                                android:text="@string/from"
+                                style="@style/CustomTextStylePoppinsRegular"
+                                android:textColor="@color/light_gray_2"
                                 android:textSize="@dimen/fourteen_sp" />
 
                             <TextView
@@ -256,37 +258,40 @@
                                 android:layout_height="wrap_content"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:text="@string/select_date"
-                                android:drawablePadding="@dimen/three"
+                                android:drawablePadding="@dimen/five"
                                 android:textSize="@dimen/thirteen_sp"
-                                android:drawableEnd="@drawable/down_arrow" />
+                                android:drawableEnd="@drawable/down_arrow_3" />
                         </LinearLayout>
 
                         <!-- Divider -->
                         <View
-                            android:layout_width="1dp"
+                            android:layout_width="@dimen/one"
                             android:layout_height="match_parent"
-                            android:background="#D1D1D6" />
+                            android:background="@color/gray4" />
 
                         <!-- Session Spinner -->
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/zero"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.555"
                             android:orientation="vertical"
-                            android:paddingStart="8dp">
+                            android:paddingStart="@dimen/eight">
 
                             <TextView
+                                style="@style/CustomTextStylePoppinsRegular"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/session"
-                                android:textColor="#888888"
+                                android:textColor="@color/light_gray_2"
                                 android:textSize="@dimen/fourteen_sp" />
 
                             <Spinner
                                 android:id="@+id/isFromSession"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/custom_spinner_background" />
+                                android:background="@null"
+                                android:spinnerMode="dropdown"
+                                 />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -294,9 +299,9 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/one"
                     android:layout_marginTop="@dimen/ten"
-                    android:background="#D1D1D6" />
+                    android:background="@color/gray4" />
                 <!--            <CalendarView-->
 
                 <LinearLayout
@@ -330,7 +335,7 @@
                         android:id="@+id/FromDone"
                         android:layout_marginTop="@dimen/five"
                         android:layout_width="wrap_content"
-                        android:text="Done"
+                        android:text="@string/done"
                         android:layout_marginEnd="@dimen/fifteen"
                         android:visibility="gone"
                         android:layout_gravity="end"
@@ -353,7 +358,7 @@
                         android:layout_marginTop="@dimen/five"
                         android:id="@+id/ToDone"
                         android:layout_width="wrap_content"
-                        android:text="Done"
+                        android:text="@string/done"
                         android:layout_marginEnd="@dimen/fifteen"
                         android:visibility="gone"
                         android:layout_gravity="end"
@@ -368,9 +373,9 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/one"
                         android:layout_marginTop="@dimen/ten"
-                        android:background="#D1D1D6" />
+                        android:background="@color/gray4" />
 
 
                 </LinearLayout>
@@ -386,9 +391,9 @@
 
                     <!-- Icon -->
                     <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="12dp"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginEnd="@dimen/twele"
                         android:background="@drawable/background_radius_button"
                         android:gravity="center">
 
@@ -401,7 +406,7 @@
 
                     <!-- Date & Session Container -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/zero"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="horizontal"
@@ -410,25 +415,26 @@
                         <!-- To Date -->
                         <LinearLayout
                             android:id="@+id/lnrToDate"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/zero"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.45"
                             android:orientation="vertical"
                             android:layout_marginEnd="@dimen/three">
 
                             <TextView
+                                style="@style/CustomTextStylePoppinsRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="To"
-                                android:textColor="#888888"
+                                android:text="@string/to"
+                                android:textColor="@color/light_gray_2"
                                 android:textSize="@dimen/fourteen_sp" />
 
                             <TextView
                                 android:id="@+id/tvToDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:drawableEnd="@drawable/down_arrow"
-                                android:drawablePadding="@dimen/three"
+                                android:drawableEnd="@drawable/down_arrow_3"
+                                android:drawablePadding="@dimen/five"
                                 android:text="@string/select_date"
                                 android:textSize="@dimen/thirteen_sp"
                                 style="@style/CustomTextStylePoppinsBold" />
@@ -436,13 +442,13 @@
 
                         <!-- Divider -->
                         <View
-                            android:layout_width="1dp"
+                            android:layout_width="@dimen/one"
                             android:layout_height="match_parent"
-                            android:background="#D1D1D6" />
+                            android:background="@color/gray4" />
 
                         <!-- To Session -->
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/zero"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.55"
                             android:orientation="vertical"
@@ -452,14 +458,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/session"
-                                android:textColor="#888888"
+                                android:textColor="@color/light_gray_2"
                                 android:textSize="@dimen/fourteen_sp" />
 
                             <Spinner
                                 android:id="@+id/isToSession"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/custom_spinner_background" />
+                                android:background="@null"
+                                android:spinnerMode="dropdown"
+                                 />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -490,7 +498,7 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:gravity="center"
                 android:text="Apply for Leave"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:layout_height="wrap_content">
 
@@ -511,7 +519,7 @@
                 android:gravity="center"
                 android:text="Update Leave"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
+                android:textSize="@dimen/sixteen_sp"
                 android:layout_height="wrap_content">
 
             </TextView>

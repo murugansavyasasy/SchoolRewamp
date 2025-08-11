@@ -1,12 +1,11 @@
 package com.vs.schoolmessenger.School.Assignment
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -67,21 +66,30 @@ class AssignmentStudentListAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
-        private val standardlabel: TextView = itemView.findViewById(R.id.standardlabel)
         private val statuslabel: TextView = itemView.findViewById(R.id.statuslabel)
-        private val rlarelativelayout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
+        private val submittedLabel: TextView = itemView.findViewById(R.id.submittedLabel)
+        private val submittedDate: TextView = itemView.findViewById(R.id.submittedDate)
+        private val cancelimage: ImageView = itemView.findViewById(R.id.cancelimage)
+
 
         fun bind(data: StudentSubmission, position: Int, adapter: AssignmentStudentListAdapter) {
-            lblStudentName.text = data.student_name
-            sectionlabel.text = data.standard
-            standardlabel.text = data.section
-            statuslabel.text = data.submit_status
 
-            rlarelativelayout.setOnClickListener {
-                val intent = Intent(context, AssignmentStudentListDetail::class.java)
-                intent.putParcelableArrayListExtra("submission_list", ArrayList(data.submissions_details))
-                context.startActivity(intent)
+            sectionlabel.text = data.standard + " - " + data.section
+            val submissiondetails = data.submissions_details.firstOrNull()
+            submittedLabel.text = data.submit_status
+            submittedDate.text = submissiondetails?.submitted_on
+
+            lblStudentName.text = data.student_name
+
+            if (data.submit_status == "SUBMITTED") {
+                statuslabel.text = "Submitted"
+                cancelimage.setBackgroundResource(R.drawable.correcticonsvg)
+            } else {
+                statuslabel.text = "Pending"
+                cancelimage.setBackgroundResource(R.drawable.close_red_color)
             }
+
+
 
         }
     }

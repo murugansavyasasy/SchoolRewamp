@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
@@ -25,7 +26,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -35,6 +36,7 @@ import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.ToastManager.showToast
 import com.vs.schoolmessenger.databinding.SchoolDashboardBinding
 
 class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickListener {
@@ -47,11 +49,14 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     }
 
     private lateinit var contactPermissionLauncher: ActivityResultLauncher<String>
-
     var authViewModel: Auth? = null
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
     var access_token = ""
+
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+
 
     override fun getViewBinding(): SchoolDashboardBinding {
         return SchoolDashboardBinding.inflate(layoutInflater)
@@ -61,7 +66,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
     override fun setupViews() {
         super.setupViews()
-
 //        val menuIcon = binding.drawerLayout.menuIcon
 //        val drawerLayout = binding.drawerLayout.drawerLayout
 //        val navigationView = binding.drawerLayout.navigationView
@@ -114,6 +118,34 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
         setUpGradientSchool()
 
+        drawerLayout = binding.drawerLayout
+        navigationView = binding.navigationView
+
+        binding.navigationView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.view_profile -> {
+                    BaseActivity.loadFragment(this, ProfileFragment())
+                    updateNavBar(R.id.icon_profile)
+                }
+                R.id.setting_click -> {
+                    BaseActivity.loadFragment(this, SettingsFragment())
+                    updateNavBar(R.id.icon_settings)
+                }
+                R.id.help_click -> {
+                    BaseActivity.loadFragment(this, HelpFragment())
+                    updateNavBar(R.id.icon_help)
+                }
+                R.id.role_click -> {
+                    val intent = Intent(this, PrioritySelection::class.java)
+                    startActivity(intent)
+                }
+            }
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
+
+
+
 
         accessChildView(
             binding,
@@ -163,6 +195,21 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
         isGetAcademicYear()
     }
+
+
+    fun openDrawer() {
+        if (::drawerLayout.isInitialized) {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+    }
+
+
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+
     private fun isGetAcademicYear() {
         appViewModel!!.isGetAcademicYear(access_token, this)
 

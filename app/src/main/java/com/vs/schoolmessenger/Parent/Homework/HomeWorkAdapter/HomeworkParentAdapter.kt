@@ -28,6 +28,7 @@ class HomeworkParentAdapter(
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_parent_item)
@@ -50,6 +51,7 @@ class HomeworkParentAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 5 else isHomeWorkData.size
     }
+
 
     fun updateList(newData: List<GetHomeworkDetails>, date: String) {
         isHomeWorkData = newData

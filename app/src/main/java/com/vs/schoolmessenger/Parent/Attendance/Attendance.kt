@@ -3,7 +3,10 @@ package com.vs.schoolmessenger.Parent.Attendance
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.PorterDuff
+import android.util.Log
+import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.PopupMenu
 import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -11,7 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.AttendanceReport
-import com.vs.schoolmessenger.Parent.Attendance.WeekStatusModel.GetWeekStatusData
+import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStatsData
+import com.vs.schoolmessenger.Parent.Attendance.Model.GetWeekStatusData
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Holidays
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.NewLeaveRequest
@@ -30,6 +34,7 @@ class Attendance : BaseActivity<AttendanceBinding>(){
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
+    private var isStudentStatsData: getStudentStatsData? = null
     private var isChildDetails: ChildDetails? = null
 
     override fun setupViews() {
@@ -41,6 +46,8 @@ class Attendance : BaseActivity<AttendanceBinding>(){
             onBackPressed()
         }
         binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+
+        binding.imgInfo.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
 
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.lblStudentName.text = isChildDetails?.name ?: ""
@@ -55,14 +62,30 @@ class Attendance : BaseActivity<AttendanceBinding>(){
         binding.lblDateSuffix.text =Constant.getDaySuffix(dateDetails["day"]?.toIntOrNull() ?:1)
         binding.lblDay.text = dateDetails["weekday"]
         binding.lblMonthYear.text = dateDetails["monthYear"]
+        loadStudentStats()
+        binding.imgInfo.setOnClickListener{
+            val popupMenu = PopupMenu(this, binding.imgInfo)
+            popupMenu.menuInflater.inflate(R.menu.attendance_leave_status_menu, popupMenu.menu)
+            forcePopupMenuIcons(popupMenu)
+            popupMenu.show()
+        }
 
 
-        binding.lblAttendancePercentage.text = 45.toString()
-        binding.lblLeaveTakenPercentage.text = 3.toString()
-        binding.lblOngoingDaysPercentage.text = 111.toString()
-        animateProgress(binding.attendanceProgressBar,45, 60)
-        animateProgress(binding.leaveTakenProgressBar, 3,5)
-        animateProgress(binding.ongoingDaysProgressBar, 11,60)
+        appViewModel!!.isStudentStats?.observe(this) { response ->
+            Constant.hideLoading(this@Attendance)
+            if (response != null) {
+                if (response.status) {
+                    isStudentStatsData= response.data.firstOrNull()
+                    isLoadStudentStats(isStudentStatsData!!)
+
+
+                } else {
+                    Constant.showDataValidation(
+                        response.status.toString(), response.message, this
+                    )
+                }
+            }
+        }
 
 
         binding.lnrLeaveRequest.setOnClickListener{
@@ -85,22 +108,36 @@ class Attendance : BaseActivity<AttendanceBinding>(){
             this@Attendance.startActivity(myIntent)
         }
 
-        val weekList = listOf(
-            GetWeekStatusData("M", "P"),
-            GetWeekStatusData("T", "P" ),
-            GetWeekStatusData("W", "A" ),
-            GetWeekStatusData("T", "P" ),
-            GetWeekStatusData("F", "" ),
-            GetWeekStatusData("S", "" ),
-        )
-
-        binding.rcWeekStatus.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rcWeekStatus.adapter = WeekStatusAdapter(weekList)
-
-
-
     }
+
+    private fun isLoadStudentStats(data: getStudentStatsData) {
+        binding.lblAttendancePercentage.text = data.attendance_percentage
+        binding.lblLeaveTakenPercentage.text = data.absent_days.toString()
+        binding.lblOngoingDaysPercentage.text = data.completed_working_days.toString()
+        animateProgress(binding.attendanceProgressBar,data.attendance_percentage.toIntOrNull() ?: 0, 100)
+        animateProgress(binding.leaveTakenProgressBar, data.absent_days,20)
+        animateProgress(binding.ongoingDaysProgressBar, data.completed_working_days,data.total_working_days)
+
+        val attList = data.weekly_status.att_list
+
+        val days = listOf("M", "T", "W", "T", "F", "S", "S")
+
+        if (attList.isNotEmpty()) {
+            binding.rcWeekStatus.visibility=View.VISIBLE
+
+            val weekList = days.mapIndexed { index, day ->
+                GetWeekStatusData(day, attList.getOrElse(index) { "" })
+            }
+            binding.rcWeekStatus.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            binding.rcWeekStatus.adapter = WeekStatusAdapter(weekList)
+        }
+        else{
+            binding.rcWeekStatus.visibility=View.GONE
+        }
+    }
+
+
     fun animateProgress(progressBar: ProgressBar, current: Int, max: Int, duration: Long = 1000) {
         val safeMax = if (max <= 0) 1 else max           // Avoid divide by zero
         val safeCurrent = current.coerceIn(0, safeMax)   // Clamp current within valid range
@@ -112,6 +149,27 @@ class Attendance : BaseActivity<AttendanceBinding>(){
         animator.duration = duration
         animator.interpolator = DecelerateInterpolator()
         animator.start()
+    }
+
+    private fun loadStudentStats() {
+        appViewModel!!.isStudentStats(isAccessToken!!)
+    }
+
+    private fun forcePopupMenuIcons(menu: PopupMenu) {
+        try {
+            val fields = menu.javaClass.declaredFields
+            for (field in fields) {
+                if (field.name == "mPopup") {
+                    field.isAccessible = true
+                    val helper = field.get(menu)
+                    val classPopup = Class.forName(helper.javaClass.name)
+                    val setIcons = classPopup.getMethod("setForceShowIcon", Boolean::class.java)
+                    setIcons.invoke(helper, true)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 

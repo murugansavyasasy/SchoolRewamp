@@ -12,8 +12,12 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
@@ -36,6 +40,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
@@ -52,6 +57,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
@@ -129,10 +135,17 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetAssignmentReport: LiveData<AssignmentResponse?>? = null
         private set
 
+    var isGetEventCategory: LiveData<EventCategoryResponse?>? = null
+        private set
+
+
     var isAssignmentDelete: LiveData<LPDeleteResponse?>? = null
         private set
 
     var isEditHomeWork: LiveData<StatusMessageModel?>? = null
+        private set
+
+    var isEditEvent: LiveData<StatusMessageModel?>? = null
         private set
 
     var isEditAttachment: LiveData<StatusMessageModel?>? = null
@@ -275,6 +288,11 @@ class App(application: Application) : AndroidViewModel(application) {
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
     var getassignmentlist: LiveData<SubmissionResponse?>? = null
+    var getLeaveCategories: LiveData<GetLeaveCategoriesData?>? = null
+    var isAssignmentlist: LiveData<ParentAssignmentResponse?>? = null
+    var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
+    var isStudentStats: LiveData<getStudentStats?>? = null
+
 
 
     fun init() {
@@ -292,8 +310,10 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetTextHistory = apiSchoolRepositories.isGetTextHistoryLiveData
         isGetHomeWorkReport = apiSchoolRepositories.isGetHomeWorkReportLiveData
         isGetAssignmentReport = apiSchoolRepositories.isGetAssignmentReportLiveData
+        isGetEventCategory = apiSchoolRepositories.isGetEventCategoryLiveData
         isAssignmentDelete = apiSchoolRepositories.isDeleteAssignmentLiveData
         isEditHomeWork = apiSchoolRepositories.isUpdateHomeworkLiveData
+        isEditEvent = apiSchoolRepositories.isUpdateEventLiveData
         isEditAttachment = apiSchoolRepositories.isUpdateAttachmentLiveData
         isEditNoticeBoard = apiSchoolRepositories.isUpdateNoticeBoardLiveData
         isDeleteHomeWork = apiSchoolRepositories.isDeleteHomeworkLiveData
@@ -382,6 +402,11 @@ class App(application: Application) : AndroidViewModel(application) {
         isAttachmentReportResponse = apiSchoolRepositories.isAttachmentResponseLiveData
         getassignmentlist = apiSchoolRepositories.getassignmentlistLiveData
 
+        getLeaveCategories = apiParentRepositories.getLeaveCategoriesLiveData
+        isAssignmentlist = apiParentRepositories.isAssignmentlistLiveData
+        isSubmitAssignment = apiParentRepositories.isSubmitAssignmentLiveData
+        isStudentStats = apiParentRepositories.isStudentStatsLiveData
+
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -445,6 +470,13 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiSchoolRepositories.isGetAssignmentReport(
             isToken, isAcademicYearId, activity
+        )
+    }
+    fun isGetEventCategories(
+        isToken: String, activity: Activity
+    ) {
+        apiSchoolRepositories.isEventCategories(
+            isToken, activity
         )
     }
 
@@ -832,7 +864,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun isEventDelFete(isToken: String, request: RequestBody, activity: Activity) {
+    fun isEventDelete(isToken: String, request: JsonObject, activity: Activity) {
         apiSchoolRepositories.isEventDelete(isToken, request, activity)
     }
 
@@ -843,6 +875,11 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isHomeWorkUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.isEditHomeWork(isToken, jsonObject, activity)
     }
+
+    fun isEventUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.isEditEvent(isToken, jsonObject, activity)
+    }
+
 
     fun isNoticeBoardUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.isEditNoticeBoard(isToken, jsonObject, activity)
@@ -882,6 +919,28 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getassignmentlist(isToken,id,type)
     }
 
+
+    fun getLeaveCategories(isToken: String) {
+        apiParentRepositories.getLeaveCategories(isToken)
+    }
+
+
+    fun isAssignmentlist(
+        isToken: String
+    ) {
+        apiParentRepositories.isAssignmentlist(isToken)
+    }
+
+
+    fun isSubmitAssignment(
+        isToken: String, request: AssignmentModelRequest
+    ) {
+        apiParentRepositories.isSubmitAssignment(isToken,request)
+    }
+
+    fun isStudentStats(isToken: String) {
+        apiParentRepositories.isStudentStats(isToken)
+    }
 }
 
 

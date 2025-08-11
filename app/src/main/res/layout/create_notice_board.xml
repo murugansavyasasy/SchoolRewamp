@@ -537,7 +537,6 @@
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
 
-
     <Spinner
         android:id="@+id/schoollistfilter"
         android:layout_width="match_parent"

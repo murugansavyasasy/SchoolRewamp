@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.AttendanceReport
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -27,6 +28,8 @@ class LeaveRequestAdapter(
     private val TYPE_DATA = 1
     private var fullList: List<LeaveData> = itemList ?: listOf()
     private var filteredList: List<LeaveData> = fullList
+    private var expandedPosition = RecyclerView.NO_POSITION
+
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -49,7 +52,17 @@ class LeaveRequestAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
-            holder.bind(filteredList[position], listener)
+
+            val isExpanded = position == expandedPosition
+            holder.bind(filteredList[position], listener, isExpanded)
+            holder.itemView.findViewById<ImageView>(R.id.options).setOnClickListener {
+                if (expandedPosition != position) {
+                    val prevPosition = expandedPosition
+                    expandedPosition = position
+                    notifyItemChanged(prevPosition)
+                    notifyItemChanged(position)
+                }
+            }
         }
     }
 
@@ -76,7 +89,7 @@ class LeaveRequestAdapter(
         private val lblGetOutPass: TextView = itemView.findViewById(R.id.lblGetOutPass)
 
         @SuppressLint("SetTextI18n")
-        fun bind(data: LeaveData, listener: LeaveRequestClickListener) {
+        fun bind(data: LeaveData, listener: LeaveRequestClickListener, isExpanded: Boolean) {
             textName.text = data.student_name
             textFirstLetter.text = data.student_name.firstOrNull()?.toString() ?: "?"
 
@@ -90,6 +103,7 @@ class LeaveRequestAdapter(
                 textLeaveType.visibility=View.VISIBLE
                 textLeaveType.text=data.leave_type
             }
+
 
             when (data.status) {
                 Constant.waiting_for_approval -> {
@@ -128,10 +142,7 @@ class LeaveRequestAdapter(
                 }
             }
 
-            options.setOnClickListener {
-                val isVisible = relbuttons.visibility == View.VISIBLE
-                relbuttons.visibility = if (isVisible) View.GONE else View.VISIBLE
-            }
+            relbuttons.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
             deleteButton.setOnClickListener {
                 listener.onItemDeleteClick(data)
@@ -144,9 +155,26 @@ class LeaveRequestAdapter(
             lblGetOutPass.setOnClickListener {
                 val context = it.context
                 val myIntent = Intent(context, OutPass::class.java)
+                val saveLeaveData = LeaveData(
+                    id = data.id,
+                    applied_on=data.applied_on,
+                    student_name=data.student_name,
+                    class_name=data.class_name,
+                    section_name=data.section_name,
+                    leave_from=data.leave_from,
+                    leave_to=data.leave_to,
+                    no_of_days=data.no_of_days,
+                    reason=data.reason,
+                    status=data.status,
+                    updated_on=data.updated_on,
+                    from_session=data.from_session,
+                    to_session=data.to_session,
+                    approved_by=data.approved_by,
+                    leave_type=data.leave_type
+                )
+                Constant.isLeaveData = saveLeaveData
                 context.startActivity(myIntent)
             }
-
         }
 
 
@@ -156,6 +184,8 @@ class LeaveRequestAdapter(
             bgDrawable?.setTint(ContextCompat.getColor(context, colorRes))
             view.background = bgDrawable
         }
+
+
     }
 
 
@@ -166,202 +196,3 @@ class LeaveRequestAdapter(
         }
     }
 }
-
-//package com.vs.schoolmessenger.Parent.RequestLeave
-//
-//import android.annotation.SuppressLint
-//import android.content.Context
-//import android.graphics.Color
-//import android.text.TextUtils
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import android.widget.ImageView
-//import android.widget.LinearLayout
-//import android.widget.RelativeLayout
-//import android.widget.TextView
-//import androidx.recyclerview.widget.RecyclerView
-//import com.facebook.shimmer.ShimmerFrameLayout
-//import com.vs.schoolmessenger.R
-//import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequestAdapter.ShimmerViewHolder
-//import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
-//import com.vs.schoolmessenger.Utils.Constant
-//import com.vs.schoolmessenger.Utils.ShimmerUtil
-//
-//class LeaveRequestAdapter(
-//    private var itemList: List<LeaveData>?,
-//    private var listener: LeaveRequestClickListener,
-//    private var context: Context,
-//    private var isLoading: Boolean
-//
-//) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-//
-//    private val TYPE_SHIMMER = 0
-//    private val TYPE_DATA = 1
-//    private var fullList: List<LeaveData> = itemList ?: listOf()
-//    private var filteredList: List<LeaveData> = fullList
-//
-//
-//    override fun getItemViewType(position: Int): Int {
-//        return if (isLoading) TYPE_SHIMMER else TYPE_DATA
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//        return if (viewType == TYPE_SHIMMER) {
-//
-//            val shimmerView =
-//                ShimmerUtil.wrapWithShimmer(parent, R.layout.leave_request_history_item)
-//            ShimmerViewHolder(
-//                shimmerView
-//            )
-//        } else {
-//            val view =
-//                LayoutInflater.from(parent.context)
-//                    .inflate(R.layout.leave_request_history_item, parent, false)
-//            DataViewHolder(view, context) // Pass context to DataViewHolder
-//        }
-//    }
-//
-//    override fun getItemCount(): Int {
-//        return if (isLoading) 20 else filteredList.size
-//    }
-//
-//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        if (holder is DataViewHolder) {
-//            holder.bind(filteredList[position], position, listener, this)
-//        }
-//    }
-//
-//    fun updateData(newList: List<LeaveData>) {
-//        fullList = newList
-//        filteredList = newList
-//        notifyDataSetChanged()
-//    }
-//
-//    fun filterByStatus(status: String) {
-//        filteredList = if (status == "All") {
-//            fullList
-//        } else {
-//            fullList.filter { it.status.equals(status, ignoreCase = true) }
-//        }
-//        notifyDataSetChanged()
-//    }
-//
-//    class DataViewHolder(itemView: View, private val context: Context) :
-//        RecyclerView.ViewHolder(itemView) {
-//
-//        private var isTextExpanded = false
-//
-//        private val textName: TextView = itemView.findViewById(R.id.textName)
-//        private val textDate: TextView = itemView.findViewById(R.id.textDate)
-//        private val textReason: TextView = itemView.findViewById(R.id.textReason)
-//        private val textNoOfDays: TextView = itemView.findViewById(R.id.textNoOfDays)
-//        private val textFirstLetter: TextView = itemView.findViewById(R.id.textFirstLetter)
-//        private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
-//        private val options: ImageView = itemView.findViewById(R.id.options)
-//        private val relbuttons: RelativeLayout = itemView.findViewById(R.id.relbuttons)
-//        private val deletebutton: LinearLayout = itemView.findViewById(R.id.deletebutton)
-//        private val editbutton: LinearLayout = itemView.findViewById(R.id.editbutton)
-//
-//        @SuppressLint("ClickableViewAccessibility")
-//        fun bind(
-//            data: LeaveData,
-//            position: Int,
-//            listener: LeaveRequestClickListener,
-//            adapter: LeaveRequestAdapter
-//        ) {
-//            textName.text = data.student_name
-//            textFirstLetter.text = data.student_name.first().toString()
-//            textDate.text = Constant.convertDateTimeFormat(data.leave_from.toString()) +
-//                    " - " + Constant.convertDateTimeFormat(data.leave_to.toString())
-//
-////            textNoOfDays.text = if (data.no_of_days == "1") {
-////                "( ${data.no_of_days} Day )"
-////            } else {
-////                "( ${data.no_of_days} Days )"
-////            }
-//
-//            textNoOfDays.text = "${data.no_of_days} ${if (data.no_of_days == "1") "Day" else "Days"} Application"
-//
-//
-//            textReason.text = data.reason
-//
-//
-//            when (data.status) {
-//                Constant.waiting_for_approval -> {
-//                    btnApprove.visibility = View.VISIBLE
-//                    btnApprove.text = "Waiting"
-//                    btnApprove.setBackgroundColor(Color.parseColor("#fff0b2"))
-//                    btnApprove.setTextColor(Color.parseColor("#FFB300"))
-//                }
-//
-//                Constant.approved -> {
-//                    btnApprove.visibility = View.VISIBLE
-//                    btnApprove.text = "Approved"
-//                    btnApprove.setBackgroundColor(Color.parseColor("#c2eecd"))
-//                    btnApprove.setTextColor(Color.parseColor("#2E7D32"))
-//                }
-//
-//                Constant.rejected -> {
-//                    btnApprove.visibility = View.VISIBLE
-//                    btnApprove.text = "Rejected"
-//                    btnApprove.setBackgroundColor(Color.parseColor("#ffebea"))
-//                    btnApprove.setTextColor(Color.parseColor("#D32F2F"))
-//                }
-//            }
-//
-//
-////            when (data.status) {
-////                Constant.waiting_for_approval -> {
-////                    btnApprove.visibility = View.VISIBLE
-////                    btnApprove.setBackgroundResource(R.drawable.bg_leave_waiting)
-////                    btnApprove.text = "Waiting"
-////                    options.visibility = View.VISIBLE
-//                    relbuttons.visibility = View.GONE
-//                }
-////
-////                Constant.approved -> {
-////                    btnApprove.visibility = View.VISIBLE
-////                    btnApprove.setBackgroundResource(R.drawable.bg_leave_approved)
-////                    btnApprove.text = "Approved"
-////                    options.visibility = View.GONE
-////                    relbuttons.visibility = View.GONE
-////                }
-////
-////                Constant.rejected -> {
-////                    btnApprove.visibility = View.VISIBLE
-////                    btnApprove.setBackgroundResource(R.drawable.bg_leave_rejected)
-////                    btnApprove.text = "Rejected"
-////                    options.visibility = View.GONE
-////                    relbuttons.visibility = View.GONE
-////                }
-////            }
-//
-//            options.setOnClickListener {
-//                if (relbuttons.visibility == View.VISIBLE) {
-//                    relbuttons.visibility = View.GONE
-//                    btnApprove.visibility = View.VISIBLE
-//                } else {
-//                    relbuttons.visibility = View.VISIBLE
-//                    btnApprove.visibility = View.GONE
-//                }
-//            }
-//
-//
-//            deletebutton.setOnClickListener {
-//                listener.onItemDeleteClick(data)
-//            }
-//
-//            editbutton.setOnClickListener {
-//                listener.onItemEditClick(data)
-//            }
-//
-//        }
-//    }
-//
-//    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        fun startShimmer() {
-//            ShimmerUtil.startShimmer(itemView)
-//        }
-//    }
-//}

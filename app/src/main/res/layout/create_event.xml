@@ -258,11 +258,42 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
+            <TextView
+                android:id="@+id/lblSelectCategory"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbTextCount"
+                android:layout_alignStart="@+id/txtTitle"
+                android:layout_marginTop="@dimen/fifteen"
+                android:text="Select Category"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crdSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSelectCategory"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:backgroundTint="@android:color/white"
+                app:cardCornerRadius="5dp">
+
+                <Spinner
+                    android:id="@+id/isCategorySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </Spinner>
+
+            </androidx.cardview.widget.CardView>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rytDesc"
+                android:layout_below="@+id/crdSpinner"
                 android:layout_alignStart="@+id/rytDesc"
                 android:layout_marginTop="@dimen/fifteen">
 
@@ -466,9 +497,7 @@
                                 android:orientation="vertical">
 
                             </androidx.recyclerview.widget.RecyclerView>
-
                         </RelativeLayout>
-
 
                         <TextView
                             android:id="@+id/btnNext"
@@ -523,6 +552,31 @@
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/noDataImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/nomessages"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/noDataText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No data found"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/noDataImage"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rytSearch323" />
 
     <ScrollView
         android:id="@+id/scroll_container"

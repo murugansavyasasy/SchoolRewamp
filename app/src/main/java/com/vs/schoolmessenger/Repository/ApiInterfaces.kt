@@ -17,8 +17,12 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
@@ -46,6 +50,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
@@ -62,6 +67,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
@@ -233,6 +239,12 @@ interface ApiInterfaces {
         @Query(APIKeyNames.academic_year_id) isAcademicYearId: Int,
     ): Call<AssignmentResponse?>
 
+    @GET(APIMethods.isEventCategories)
+    fun isEventCategories(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<EventCategoryResponse?>
+
+
     @PUT(APIMethods.isAssignmentDelete)
     fun isAssignmentDelete(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
@@ -242,6 +254,13 @@ interface ApiInterfaces {
     fun isHomeWorkUpdate(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<StatusMessageModel?>
+
+    @PUT(APIMethods.isEventUpdate)
+    fun isEventUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
+
 
     @PUT(APIMethods.isAttachmentUpdate)
     fun isAttachmentUpdate(
@@ -264,7 +283,6 @@ interface ApiInterfaces {
     fun isAttachmentDelete(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<StatusMessageModel?>
-
 
 
     @POST(APIMethods.isSendText)
@@ -321,8 +339,7 @@ interface ApiInterfaces {
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isHomeWorkComplete)
     fun isHomeWorkComplete(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body jsonObject: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<StatusMessageModel?>
 
     @GET(APIMethods.homework_list_archive)
@@ -528,8 +545,6 @@ interface ApiInterfaces {
     ): Call<AttachmentReportResponse?>
 
 
-
-
     @GET(APIMethods.attachmentListArchive)
     fun attachmentListArchive(
         @Header(APIKeyNames.Authorization) token: String
@@ -726,9 +741,8 @@ interface ApiInterfaces {
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isEventDelete)
     fun isEventDelete(
-        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<EventDeleteResponse?>
-
 
 
     @GET(APIMethods.isAssignmentSubmittedList)
@@ -738,5 +752,27 @@ interface ApiInterfaces {
         @Query(APIKeyNames.type) type: String
     ): Call<SubmissionResponse?>?
 
+    @GET(APIMethods.isleavecategories)
+    fun getleavecategories(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<GetLeaveCategoriesData?>?
+
+
+    @GET(APIMethods.isAssignmentlist)
+    fun isAssignmentlist(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ParentAssignmentResponse?>
+
+
+    @POST(APIMethods.isSubmitAssignment)
+    fun isSubmitAssignment(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: AssignmentModelRequest,
+    ): Call<AssignmentSubmitResponse?>?
+
+    @GET(APIMethods.isstudentstats)
+    fun getStudentStats(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<getStudentStats?>?
 
 }

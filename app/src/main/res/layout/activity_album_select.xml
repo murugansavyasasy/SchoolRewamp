@@ -26,5 +26,5 @@
         android:verticalSpacing="@dimen/five"
         android:gravity="center"
         android:stretchMode="columnWidth"
-        android:background="#ffffff"></GridView>
+        android:background="@color/bpWhite"></GridView>
 </RelativeLayout>

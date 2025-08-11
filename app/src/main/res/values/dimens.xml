@@ -11,6 +11,7 @@
     <dimen name="minus_twenty">-20dp</dimen>
     <dimen name="minus_nineteen">-19dp</dimen>
     <dimen name="minus_eighteen">-18dp</dimen>
+    <dimen name="minus_fifteen">-15dp</dimen>
     <dimen name="minus_fourteen">-14dp</dimen>
     <dimen name="minus_ten">-10dp</dimen>
     <dimen name="minus_five">-5dp</dimen>
@@ -43,6 +44,7 @@
     <dimen name="twenty_three">23dp</dimen>
     <dimen name="twenty_four">24dp</dimen>
     <dimen name="twenty_five">25dp</dimen>
+    <dimen name="twenty_six">26dp</dimen>
     <dimen name="twenty_seven">27dp</dimen>
     <dimen name="twenty_eight">28dp</dimen>
     <dimen name="thirty">30dp</dimen>
@@ -105,6 +107,7 @@
     <dimen name="seventeen_sp">17sp</dimen>
     <dimen name="eighteen_sp">18sp</dimen>
     <dimen name="twenty_sp">20sp</dimen>
+    <dimen name="twenty_two_sp">22sp</dimen>
     <dimen name="twenty_three_sp">23sp</dimen>
     <dimen name="twenty_five_sp">25sp</dimen>
     <dimen name="thirty_sp">30sp</dimen>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/five"
     android:fitsSystemWindows="true"
     tools:ignore="MissingDefaultResource">
@@ -19,7 +20,7 @@
             android:id="@+id/rlarelativelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="@dimen/ten">
 
             <TextView
                 android:id="@+id/lblStudentName"
@@ -31,8 +32,7 @@
                 android:layout_marginEnd="@dimen/twenty_five"
                 android:gravity="start"
                 android:text="Sathish"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+                >
 
             </TextView>
 
@@ -45,10 +45,102 @@
                 android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginTop="@dimen/ten"
                 android:text="I"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+               >
 
             </TextView>
+
+
+            <LinearLayout
+                android:id="@+id/rytList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sectionlabel"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginBottom="@dimen/two"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rytList2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:background="@drawable/bg_radiantwhite1"
+                    android:minHeight="@dimen/sixty"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcyAssignment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="@dimen/five"
+                        android:paddingEnd="@dimen/five" />
+
+                    <TextView
+                        android:id="@+id/total_numbers"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/minus_fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_marginBottom="@dimen/ten"
+                        android:layout_toEndOf="@id/rcyAssignment"
+                        android:background="@drawable/bg_image_background_white_coupon"
+                        android:gravity="center"
+                        android:padding="@dimen/ten"
+                        android:text=""
+                        android:textSize="15sp" />
+
+                </RelativeLayout>
+
+
+                <ImageView
+                    android:id="@+id/video_player"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:background="@drawable/bg_image_background_white_coupon"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/video_play"
+                    android:visibility="gone"
+                    app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+                <ProgressBar
+                    android:id="@+id/loadingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateDrawable="@drawable/progress_bar_white"
+                    android:indeterminateOnly="true"
+                    android:visibility="gone">
+
+                </ProgressBar>
+
+                <View
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="1" />
+
+
+                <ImageView
+                    android:id="@+id/arrow_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:background="@drawable/dark_pink_background"
+                    android:paddingStart="@dimen/ten"
+                    android:paddingTop="@dimen/eight"
+                    android:paddingEnd="@dimen/ten"
+                    android:paddingBottom="@dimen/eight"
+                    android:src="@drawable/arrow_right_white"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
 
         </RelativeLayout>

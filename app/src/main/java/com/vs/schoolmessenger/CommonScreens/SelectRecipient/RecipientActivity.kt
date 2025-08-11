@@ -1047,7 +1047,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 target_type = isTargetType,
                 target_code = selectedIds,
                 iframe = isIframe,
-                fileSize = isFileSize
+                fileSize = isFileSize,
+                isSelectedCategory = eventDetails.isCategory
             )
             Log.d("Object", jsonObject.toString())
             appViewModel!!.sendevent(isAccessToken!!, jsonObject, this)

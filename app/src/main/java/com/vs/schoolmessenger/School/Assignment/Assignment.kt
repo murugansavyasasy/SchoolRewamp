@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -16,11 +17,14 @@ import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.AdapterView
+import android.widget.LinearLayout
 import android.widget.MediaController
+import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -34,6 +38,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
+import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -50,14 +56,24 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
 import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
+import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.AssignmentBinding
+import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -66,11 +82,17 @@ import java.util.Locale
 
 
 class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, View.OnClickListener,
-    OnImageClickListener, TimeSelectedListener, OnDateSelectedListener {
+    OnImageClickListener, TimeSelectedListener, OnDateSelectedListener,VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): AssignmentBinding {
         return AssignmentBinding.inflate(layoutInflater)
     }
+
+    var isAssignmentId = ""
+    var isAssignmentPosition = 0
+    var isTotalSelectedItem = 0
+    val isVideoSelectedArrayList = mutableListOf<FileItem>()
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
     private val itemsCategory = listOf(
         "General", "Class Work", "Research Paper", "Project"
@@ -108,12 +130,12 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)
-        binding.btnCreate.setOnClickListener(this)
-        binding.btnHistory.setOnClickListener(this)
+        binding.lnrTabOneName.setOnClickListener(this)
+        binding.lnrTabTwoName.setOnClickListener(this)
         binding.lblTimePick.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-
+        isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
@@ -128,7 +150,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 )
             )
         }
-
+        binding.btnChooseRecipient.text = getString(R.string.NEXT)
         binding.rcyImages.visibility = View.VISIBLE
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
@@ -194,6 +216,19 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                     }
                 }
             }
+
+        appViewModel!!.isAssignmentDelete?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@Assignment)
+                    isAssignmentAdapter!!.removeItemAt(isAssignmentPosition)
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
 
 //        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
 //        binding.edtDescription.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
@@ -274,7 +309,11 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
 
             R.id.btnChooseRecipient -> {
-                isRedirectToSectionStudents()
+                if (binding.btnChooseRecipient.text.toString() == "Update Event") {
+                    showSendConfirmationDialog(true)
+                } else {
+                    isRedirectToSectionStudents()
+                }
             }
 
             R.id.lblTimePick -> {
@@ -285,18 +324,32 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 showDatePickerDialog(this, this)
             }
 
-            R.id.btnCreate -> {
-                binding.btnCreate.isEnabled = false
-                binding.btnHistory.isEnabled = true
-                isBackRoundChange(binding.btnCreate)
+            R.id.lnrTabOneName -> {
+//                binding.btnCreate.isEnabled = false
+//                binding.btnHistory.isEnabled = true
+//                isBackRoundChange(binding.btnCreate)
+
+                binding.btnChooseRecipient.text = getString(R.string.NEXT)
+                binding.line1.setBackgroundResource(R.color.iconBlue)
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.line2.setBackgroundResource(R.color.white)
+
                 binding.rlaAssignmentReport.visibility = View.GONE
                 binding.rytCreateAssignment.visibility = View.VISIBLE
             }
 
-            R.id.btnHistory -> {
-                binding.btnHistory.isEnabled = false
-                binding.btnCreate.isEnabled = true
-                isBackRoundChange(binding.btnHistory)
+            R.id.lnrTabTwoName -> {
+//                binding.btnHistory.isEnabled = false
+//                binding.btnCreate.isEnabled = true
+//                isBackRoundChange(binding.btnHistory)
+
+                binding.btnChooseRecipient.text = "Update Assignment"
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.line2.setBackgroundResource(R.color.iconBlue)
+                binding.line1.setBackgroundResource(R.color.white)
+
                 binding.rlaAssignmentReport.visibility = View.VISIBLE
                 binding.rytCreateAssignment.visibility = View.GONE
                 isAcademicYear = Constant.isAcademicYearList
@@ -322,6 +375,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         )
     }
 
+
     private fun loadAssignmentReportData() {
         binding.rcyAssignmentReport.visibility = View.VISIBLE
         isAssignmentAdapter = AssignmentAdapter(
@@ -333,24 +387,24 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
     }
 
-    private fun isBackRoundChange(isClickingId: TextView) {
-        binding.lytNoDataFound.visibility = View.GONE
-        if (isClickingId == binding.btnCreate) {
-            binding.btnHistory.background = null
-            binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-        }
-
-        if (isClickingId == binding.btnHistory) {
-            binding.btnCreate.background = null
-            binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-        }
-
-
-        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_light_blue)
-        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
-        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
-    }
+//    private fun isBackRoundChange(isClickingId: TextView) {
+//        binding.lytNoDataFound.visibility = View.GONE
+////        if (isClickingId == binding.line1) {
+////            binding.li.background = null
+////            binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
+////        }
+////
+////        if (isClickingId == binding.line3) {
+////            binding.btnCreate.background = null
+////            binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
+////        }
+//
+//
+//        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_light_blue)
+//        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
+//        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
+//        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
+//    }
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
@@ -709,14 +763,316 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         startActivity(intent)
     }
 
-
-    override fun onDeleteClick(data: AssignmentData) {
-        val jsonObject = JsonObject()
-        jsonObject.addProperty(APIKeyNames.id, data.id)
-        appViewModel?.isAssignmentDelete(
-            isAccessToken!!, jsonObject, this
-        )
+    override fun onEditAndDeleteClick(
+        data: AssignmentData,
+        anchorView: View,
+        adapterPosition: Int
+    ) {
+        isAssignmentId = data.id
+        isAssignmentPosition = adapterPosition
+        showEditDeletePopup(data, anchorView)
     }
+
+    fun showEditDeletePopup(data: AssignmentData, anchor: View) {
+        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+        layoutEdit.setOnClickListener {
+            isEditProcess(data)
+            popupWindow.dismiss()
+        }
+
+        layoutDelete.setOnClickListener {
+            showSendConfirmationDialog(false)
+            popupWindow.dismiss()
+        }
+        popupWindow.showAsDropDown(anchor, 0, 10)
+    }
+
+    fun showSendConfirmationDialog(isEventUpdate: Boolean) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+        if (isEventUpdate) {
+            alertMessage.text = "Are you sure want to update this assignment?"
+        } else {
+            alertMessage.text = "Are you sure want to delete?"
+        }
+
+        lblSelectTarget.visibility = View.GONE
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            if (isEventUpdate) {
+                ProgressDialogHelper.show(this)
+                ProgressDialogHelper.updateProgress(10)
+                isUploadFilesInServer("file")
+            } else {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty(APIKeyNames.id, isAssignmentId)
+                appViewModel?.isAssignmentDelete(isAccessToken!!, jsonObject, this)
+            }
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+
+    // Edit Update code
+    fun isUploadFilesInServer(isFileType: String?) {
+
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
+        }
+        ProgressDialogHelper.updateProgress(50)
+        isTotalSelectedItem = Constant.selectedFiles.size
+        isVideoSelectedArrayList.clear()
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val file = iterator.next()
+            if (file.type == FileType.VIDEO) {
+                isVideoSelectedArrayList.add(file)
+                iterator.remove()
+            }
+        }
+
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+        }
+        ProgressDialogHelper.updateProgress(80)
+    }
+
+
+    private fun isFileUploadInAws(
+        isFileType: String?
+    ) {
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("amazonaws.")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+
+        val isCountryId = SharedPreference.getCountryId(this)
+        if (Constant.selectedFiles.isEmpty()) {
+            if (isVideoSelectedArrayList.isEmpty()) {
+                ProgressDialogHelper.dismiss()
+             //   isUpdateEvent()
+            } else {
+                videoUploading()
+            }
+        } else {
+            val outputDir =
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            outputDir.mkdirs()
+            val newSelectedFiles = mutableListOf<FileItem>()
+            Constant.compressImageFilesOnly(
+                context = this,
+                files = Constant.selectedFiles,
+                outputDir = outputDir.absolutePath,
+                format = Bitmap.CompressFormat.JPEG,
+                quality = 80,
+                maxWidth = 1280,
+                maxHeight = 1280,
+                onEachProcessed = { original, outputPath, success ->
+                    if (success && outputPath != null) {
+                        val compressedFile = File(outputPath)
+                        val originalSizeKB = try {
+                            if (original.path.startsWith("content://")) {
+                                contentResolver.openFileDescriptor(
+                                    Uri.parse(original.path), "r"
+                                )?.statSize ?: 0
+                            } else {
+                                File(original.path).length()
+                            }
+                        } catch (e: Exception) {
+                            0L
+                        }
+
+                        Log.d(
+                            "Compressor",
+                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                        )
+
+                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                    } else {
+                        Log.e("Compressor", "Failed: ${original.path}")
+                    }
+                },
+                onComplete = {
+                    Constant.selectedFiles.clear()
+                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    val isAwsUploadingFile = ArrayList<String>()
+
+                    val isSelectedFileCount = Constant.selectedFiles.size
+                    for (i in Constant.selectedFiles.indices) {
+                        isAwsUploadingPreSigned?.getPreSignedUrl(
+                            Constant.selectedFiles[i].path,
+                            isStaffDetails!!.school_id,
+                            isFileType!!,
+                            this,
+                            isCountryId!!,
+                            true,
+                            false,
+                            object : UploadCallback {
+
+                                override fun onUploadSuccess(
+                                    response: String?, isFileUploaded: String?
+                                ) {
+                                    isAwsUploadingFile.add(isFileUploaded!!)
+                                    Constant.isAwsUploadedFiles.add(
+                                        AwsUploadedFiles(
+                                            isFileUrl = isFileUploaded,
+                                            isFileType = Constant.selectedFiles[i].type.name
+                                        )
+                                    )
+
+                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+                                        ProgressDialogHelper.dismiss()
+                                     //   isUpdateEvent()
+                                    } else {
+                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
+                                            videoUploading()
+                                        }
+                                    }
+                                }
+
+                                override fun onUploadError(error: String?) {
+                                    Log.d("isUploadIssue", error.toString())
+                                }
+                            })
+                    }
+
+                    Log.d("Compressor", "All files compressed and uploaded.")
+                })
+        }
+    }
+
+    private fun videoUploading() {
+        val iterator = isVideoSelectedArrayList.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("player.vimeo.com")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+        Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
+        if (isVideoSelectedArrayList.isNotEmpty()) {
+            for (i in isVideoSelectedArrayList.indices) {
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                )
+            }
+        } else {
+            ProgressDialogHelper.dismiss()
+          //  isUpdateEvent()
+        }
+    }
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            Log.d("link", link.toString())
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+                ProgressDialogHelper.dismiss()
+             //   isUpdateEvent()
+            }
+        }
+    }
+
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
+
+    fun isEditProcess(data: AssignmentData) {
+        Constant.isAwsUploadedFiles.clear()
+        Constant.selectedFiles.clear()
+        saveDrawableToCache(R.drawable.add_image)?.let {
+            Constant.selectedFiles.add(
+                FileItem(
+                    it, FileType.IMAGE
+                )
+            )
+        }
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.rytRecyclewview.visibility = View.VISIBLE
+        binding.line1.setBackgroundResource(R.color.iconBlue)
+        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.line3.setBackgroundResource(R.color.white)
+
+        binding.rytCreateAssignment.visibility = View.VISIBLE
+        binding.rlaAssignmentReport.visibility = View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.edtTitle.setText(data.title)
+        binding.edtDescription.setText(data.description)
+        binding.lblDatePick.text = Constant.covertDateFormate(data.created_date)
+        binding.lblTimePick.text = data.created_time
+
+        if (data.file_path.isNotEmpty()) {
+            val mappedList = data.file_path.map { filePath ->
+                val fileType = try {
+                    FileType.valueOf(filePath.type.uppercase())
+                } catch (e: IllegalArgumentException) {
+                    FileType.OTHER
+                }
+                FileItem(path = filePath.url, type = fileType)
+            }
+            Constant.selectedFiles.addAll(mappedList)
+        }
+        binding.rcyImages.visibility = View.VISIBLE
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+        binding.rcyImages.adapter = mAdapter
+    }
+
+
+//    override fun onDeleteClick(data: AssignmentData) {
+//        val jsonObject = JsonObject()
+//        jsonObject.addProperty(APIKeyNames.id, data.id)
+//        appViewModel?.isAssignmentDelete(
+//            isAccessToken!!, jsonObject, this
+//        )
+//    }
 
     override fun onNotSubmittedClick(data: AssignmentData) {
         val intent = Intent(this, AssignmentStudentList::class.java)

@@ -7,4 +7,5 @@ data class LeaveRequestUpdate (
     val reason: String,
     val f_session: String,
     val t_session: String,
+    val leave_type: String,
 )

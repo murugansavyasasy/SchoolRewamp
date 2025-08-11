@@ -21,7 +21,6 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-
 class CertificateRequestAdapter (
     private var itemList: List<CertificateListData>?,
     private var listener: CertificateListener,
@@ -64,14 +63,14 @@ class CertificateRequestAdapter (
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val certificate_value: TextView = itemView.findViewById(R.id.certificate_value)
-        private val reason_value: TextView = itemView.findViewById(R.id.reason_value)
-        private val created_value: TextView = itemView.findViewById(R.id.created_value)
-        private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
-        private val rytStatus: RelativeLayout = itemView.findViewById(R.id.rytStatus)
-        private val rytDownload: RelativeLayout = itemView.findViewById(R.id.rytDownload)
-
-        private val icon: ImageView = itemView.findViewById(R.id.icon)
+        private val lblCertificateTitle: TextView = itemView.findViewById(R.id.lblCertificateTitle)
+        private val lblCertificateReason: TextView = itemView.findViewById(R.id.lblCertificateReason)
+        private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
+//        private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
+//        private val rytStatus: RelativeLayout = itemView.findViewById(R.id.rytStatus)
+//        private val rytDownload: RelativeLayout = itemView.findViewById(R.id.rytDownload)
+//
+//        private val icon: ImageView = itemView.findViewById(R.id.icon)
 
         fun bind(
             data: CertificateListData,
@@ -79,32 +78,32 @@ class CertificateRequestAdapter (
             listener: CertificateListener,
             adapter: CertificateRequestAdapter
         ) {
-            certificate_value.text = data.type
-            reason_value.text = buildSpannedString {
+            lblCertificateTitle.text = data.type
+            lblCertificateReason.text = buildSpannedString {
                 bold { color(Color.BLACK) { append("Reason : ") } }
                 append(data.reason)
             }
 
-            created_value.text =  Constant.convertDateTimeFormat(data.requested_on)
-            lblStatus.text = data.status
-            lblStatus.text = data.status
+            lblDate.text =  Constant.convertDateTimeFormat(data.requested_on)
+//            lblStatus.text = data.status
+//            lblStatus.text = data.status
 
-            if(data.url.isNotEmpty()){
-                rytDownload.visibility = View.VISIBLE
-            }
-            else{
-                rytDownload.visibility = View.GONE
-            }
+//            if(data.url.isNotEmpty()){
+//                rytDownload.visibility = View.VISIBLE
+//            }
+//            else{
+//                rytDownload.visibility = View.GONE
+//            }
 
-            if(data.status.equals("Approved")) {
-                rytStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_approved))
-                icon.setImageResource(R.drawable.checkimage)
-            }
-            else {
-                rytStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_waiting))
-                icon.setImageResource(R.drawable.sandclockicon)
-                icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
-            }
+//            if(data.status.equals("Approved")) {
+//                rytStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_approved))
+//                icon.setImageResource(R.drawable.checkimage)
+//            }
+//            else {
+//                rytStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_waiting))
+//                icon.setImageResource(R.drawable.sandclockicon)
+//                icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
+//            }
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

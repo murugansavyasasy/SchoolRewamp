@@ -46,6 +46,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         super.setupViews()
         setupToolbarBlue()
 
+
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
@@ -84,15 +85,27 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                 10, centerOffset
             )
         }
+
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                mAdapter!!.filter(s.toString())
+                val query = s.toString()
+                mAdapter?.filter(query)
+
+                binding.recyclerView.post {
+                    if (mAdapter?.itemCount == 0) {
+                        binding.recyclerView.visibility = View.GONE
+                        binding.cytNoDataFound.visibility = View.VISIBLE
+                    } else {
+                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.cytNoDataFound.visibility = View.GONE
+                    }
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
+
 
         appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
             if (response!!.status) {

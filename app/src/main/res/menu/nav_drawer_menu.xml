@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/view_profile"
+        android:title="View Profile"
+        android:icon="@drawable/profile"/>
+    <item android:id="@+id/setting_click"
+        android:title="Settings"
+        android:icon="@drawable/ic_settings"/>
+    <item android:id="@+id/help_click"
+        android:title="Help"
+        android:icon="@drawable/ic_help"/>
+    <item android:id="@+id/role_click"
+        android:title="Switch Role"
+        android:icon="@drawable/switchrole"/>
+</menu>

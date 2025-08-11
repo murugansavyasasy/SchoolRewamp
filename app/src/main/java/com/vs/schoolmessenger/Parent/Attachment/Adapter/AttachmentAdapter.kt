@@ -77,8 +77,8 @@ class AttachmentAdapter(
                     fullList
                 } else {
                     fullList.filter {
-                        it.title.lowercase().contains(query) ||
-                                it.description.lowercase().contains(query)
+                        (it.title?.lowercase() ?: "").contains(query) ||
+                                (it.description?.lowercase() ?: "").contains(query)
                     }
                 }
                 val filterResults = FilterResults()

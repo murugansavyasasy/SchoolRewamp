@@ -7,5 +7,6 @@ data class EventDetails (
     val txtTitle: String,
     val txtDesc: String,
     val txtStartDate: String,
-    val txtStartTime: String
+    val txtStartTime: String,
+    val isCategory: String,
 ) : Serializable

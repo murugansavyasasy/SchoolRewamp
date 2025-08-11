@@ -249,7 +249,8 @@ object ApiCallRequest {
         target_type: Int?,
         target_code: MutableList<String>,
         iframe: String,
-        fileSize: String
+        fileSize: String,
+        isSelectedCategory: String,
     ): JsonObject {
         val jsonObject = JsonObject()
         val filePathArray = JsonArray()
@@ -270,6 +271,7 @@ object ApiCallRequest {
         jsonObject.addProperty(APIKeyNames.description, content)
         jsonObject.add("target_code", targetCodeArray)
         jsonObject.addProperty("venue", venue)
+        jsonObject.addProperty("category", isSelectedCategory)
         jsonObject.addProperty("event_date", event_date)
         jsonObject.addProperty("event_time", event_time)
         jsonObject.addProperty("target_type", target_type)
@@ -279,14 +281,4 @@ object ApiCallRequest {
 
         return jsonObject
     }
-
-
-
-
-
-
-
-
-
-
 }

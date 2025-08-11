@@ -47,7 +47,8 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/twenty_five"
-        android:src="@drawable/ic_more_vert"></ImageView>
+        android:src="@drawable/ic_more_vert">
+    </ImageView>
 
     <TextView
         android:id="@+id/lblTitle"
@@ -74,7 +75,7 @@
         android:text=""
         android:textColor="@color/light_gray"
         android:textSize="@dimen/thirteen_sp"
-        android:maxLines="3"
+        android:maxLines="10"
         android:ellipsize="end" />
 
     <TextView

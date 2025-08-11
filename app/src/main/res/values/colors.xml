@@ -2,13 +2,19 @@
 <resources>
 
     <color name="PrimaryColor">#4085ef</color>
+    <color name="PrimaryColor_80">#804085ef</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="lightyellow_color">#f6e7ad</color>
     <color name="black">#FF000000</color>
+    <color name="light_gray_4">#444</color>
+    <color name="light_red_2">#FF4444</color>
+    <color name="green_3">#00AA7F</color>
+    <color name="light_green_2">#8ED16B</color>
     <color name="light_green_1">#c2eecd</color>
     <color name="light_yellow_1">#fff0b2</color>
     <color name="light_red_1">#ffebea</color>
@@ -55,13 +61,15 @@
 
 
     <color name="light_gray">#616159</color>
-    <color name="mild_grey6">#656565</color>
     <color name="light_sky_blue_color">#bde6fc</color>
     <color name="gray_color">#f2f1f6</color>
     <color name="clr_green">#16C117</color>
     <color name="bpWhite">#ffffff</color>
     <color name="teacher_clr_grey_dark">#4B4B4D</color>
     <color name="white">#fff</color>
+    <color name="light_gray_2">#888888</color>
+    <color name="gray_white">#f2f2f7</color>
+    <color name="mild_grey6">#656565</color>
     <color name="light_purple1">#6467d2</color>
     <color name="very_light_purple1">#1A6467d2</color>
     <color name="light_yellow_color">#F0C743</color>
@@ -78,6 +86,7 @@
 
     <color name="grey">#ACACBA</color>
     <color name="grey_mild_color">#ededed</color>
+    <color name="grey_mild_color1">#E5E5EA</color>
     <color name="grey_mild">#E3E3E9</color>
     <color name="light_grey4">#E3E3E9</color>
     <color name="neon_green">#0FFF50</color>
@@ -98,8 +107,6 @@
 
 
     <color name="lightgreen1">#02C5BF</color>
-
-
     <color name="sky_blue_light">#d4e7eb</color>
     <color name="sky_blue0">#4eb7f1</color>
     <color name="system_blue1">#42CFFC</color>
@@ -156,6 +163,7 @@
     <color name="navi_blue5">#2972b6</color>
     <color name="navi_blue6">#3f87f2</color>
     <color name="gray">#e6e5eb</color>
+    <color name="stoke_gray">#DDDDDD</color>
 
     <color name="system_blue">#9DD6FD</color>
     <color name="light_violet">#E3F1FB</color>

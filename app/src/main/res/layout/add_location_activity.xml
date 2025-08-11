@@ -35,7 +35,7 @@
                 android:text="@string/allow_location_access_to_mark_your_attendance"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold" />
+                style="@style/CustomTextStylePoppinsBold" />
 
             <RelativeLayout
                 android:id="@+id/rytContetnt"
@@ -204,7 +204,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/fifteen"
                         android:text="@string/enter_location_name"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp" />
 
                     <EditText
@@ -227,7 +226,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
                         android:text="@string/distance"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp" />
 
 
@@ -283,7 +281,6 @@
                             android:layout_marginEnd="@dimen/ten"
                             android:gravity="center"
                             android:text="@string/meter_s"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp">
 
                         </TextView>

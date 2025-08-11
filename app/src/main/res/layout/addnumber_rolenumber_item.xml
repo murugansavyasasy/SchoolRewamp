@@ -16,10 +16,7 @@
             android:layout_width="match_parent"
             android:layout_weight="0.3"
             android:text="@string/admission_no"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_height="match_parent">
         </TextView>
 
@@ -39,9 +36,7 @@
             android:layout_weight="0.3"
             android:text="123456787654321"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal"
-            android:fontFamily="@font/poppins_regular"
+            style="@style/CustomTextStylePoppinsRegular"
             android:layout_height="match_parent">
         </TextView>
     </LinearLayout>
@@ -57,10 +52,7 @@
             android:layout_width="match_parent"
             android:layout_weight="0.3"
             android:text="@string/role_no"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_bold"
+           style="@style/CustomTextStylePoppinsBold"
             android:layout_height="match_parent">
         </TextView>
 
@@ -68,9 +60,7 @@
             android:layout_width="match_parent"
             android:layout_weight="0.4"
             android:text=":"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_height="match_parent">
         </TextView>
 
@@ -80,9 +70,8 @@
             android:layout_weight="0.3"
             android:text="123456787654321"
             android:textColor="@color/black"
+            style="@style/CustomTextStylePoppinsRegular"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal"
-            android:fontFamily="@font/poppins_regular"
             android:layout_height="match_parent">
         </TextView>
     </LinearLayout>

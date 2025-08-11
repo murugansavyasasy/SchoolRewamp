@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.RequestLeave
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
@@ -23,6 +22,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_New
 import com.vs.schoolmessenger.databinding.ActivityNewLeaveRequestBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -33,8 +33,10 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     private var fromDate: LocalDate? = null
     private var toDate: LocalDate? = null
+    private val leaveCategories = mutableListOf<String>()
     var isFromSession = ""
     var isToSession = ""
+    var isLeaveCategoryType = ""
     var RequestEdit=false
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -43,10 +45,9 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     private var originalReason: String = ""
     private var originalLeaveFrom: String = ""
     private var originalLeaveTo: String = ""
+    private var originalLeaveType: String = ""
     private var originalFromSession: String = ""
     private var originalToSession: String = ""
-
-
 
     private val Session = listOf(
         "First Half", "Second Half",
@@ -60,8 +61,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbarBlue()
-
-
 
         binding.imgBack.setOnClickListener(this)
         binding.btnupdate.setOnClickListener(this)
@@ -82,7 +81,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         loadFromCalendar()
         isFromSpinner()
         isToSpinner()
-        getIntentValuesIfEditing()
+        loadLeaveCategories()
         validateDateAndSession(showError = true)
 
         binding.etLeaveReason.addTextChangedListener(object : TextWatcher {
@@ -121,6 +120,22 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                 } else {
                     Constant.showDataValidation(
                         resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
+
+        appViewModel!!.getLeaveCategories?.observe(this) { response ->
+            Constant.hideLoading(this@NewLeaveRequest)
+            if (response != null) {
+                if (response.status) {
+                    leaveCategories.add("Select a leave type") // Default
+                    leaveCategories.addAll(response.data)
+                    isLeaveCategorySpinner()
+                    getIntentValuesIfEditing()
+                } else {
+                    Constant.showDataValidation(
+                        response.status.toString(), response.message, this
                     )
                 }
             }
@@ -225,13 +240,10 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     private fun isFromSpinner() {
 
-        val adapter = SpinnerLoadingAdapter(this, Session)
+        val adapter = SpinnerLoadingAdapter_New(this, Session)
         binding.isFromSession.adapter = adapter
-
-        // Set default selection to Session 1 (index 0)
         binding.isFromSession.setSelection(0)
         isFromSession = Session[0]
-
 
         binding.isFromSession.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -241,8 +253,34 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                 adapter.notifyDataSetChanged()
                 isFromSession = Session[position]
                 validateDateAndSession(showError = true)
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
 
+    private fun isLeaveCategorySpinner() {
+        val adapter = SpinnerLoadingAdapter_New(this, leaveCategories)
+
+        // hide first item from dropdown which we are using it as a hint
+        adapter.enableFirstItemAsHint()
+
+        binding.isLeaveCategories.adapter = adapter
+        binding.isLeaveCategories.setSelection(0)
+        isLeaveCategoryType = leaveCategories[0]
+        Log.d("isLeaveCategoryType",isLeaveCategoryType)
+
+        binding.isLeaveCategories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                adapter.selectedPosition = position
+                adapter.notifyDataSetChanged()
+
+                if (position > 0) {
+                    isLeaveCategoryType = leaveCategories[position]
+                    validateDateAndSession(showError = true)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -251,7 +289,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     private fun isToSpinner() {
 
-        val adapter = SpinnerLoadingAdapter(this, Session)
+        val adapter = SpinnerLoadingAdapter_New(this, Session)
         binding.isToSession.adapter = adapter
 
         // Set default selection to Session 2 (index 1 if exists)
@@ -322,6 +360,9 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             addProperty(APIKeyNames.reason,  binding.etLeaveReason.text.toString().trim())
             addProperty(APIKeyNames.f_session,  if (isFromSession == "First Half") "FH" else "SH")
             addProperty(APIKeyNames.t_session,if (isToSession == "First Half") "FH" else "SH")
+            addProperty(APIKeyNames.leave_type,isLeaveCategoryType)
+
+
         }
 
         Log.d("isApplyLeave",jsonObject.toString())
@@ -337,7 +378,8 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         leave_to = toDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: "",
         reason = binding.etLeaveReason.text.toString().trim(),
         f_session = if (isFromSession == "First Half") "FH" else "SH",
-        t_session = if (isToSession == "First Half") "FH" else "SH"
+        t_session = if (isToSession == "First Half") "FH" else "SH",
+        leave_type = isLeaveCategoryType
     )
     appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
 }
@@ -355,6 +397,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             originalReason = intent.getStringExtra("isReason") ?: ""
             originalLeaveFrom = intent.getStringExtra("isLeaveFrom") ?: ""
             originalLeaveTo = intent.getStringExtra("isLeaveTo") ?: ""
+            originalLeaveType = intent.getStringExtra("isLeaveType") ?: Session[0]
             originalFromSession = intent.getStringExtra("isFromSession") ?: Session[0]
             originalToSession = intent.getStringExtra("isToSession") ?: Session[1]
 
@@ -380,31 +423,35 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             val toSessionIndex = Session.indexOf(originalToSession)
             if (toSessionIndex != -1) binding.isToSession.setSelection(toSessionIndex)
 
+            Log.d("leaveCategories",leaveCategories.toString())
+            val leaveType = leaveCategories.indexOf(originalLeaveType)
+            Log.d("leaveType",leaveType.toString())
+            if (leaveType != -1) binding.isLeaveCategories.setSelection(leaveType)
+
             isFromSession = originalFromSession
             isToSession = originalToSession
+            isLeaveCategoryType = originalLeaveType
+            Log.d("isLeaveCategoryType",isLeaveCategoryType)
 
             validateDateAndSession(showError = true)
         }
     }
 
     private fun hasChangesMade(): Boolean {
-        val initialReason = intent.getStringExtra("isReason") ?: ""
-        val initialFrom = intent.getStringExtra("isLeaveFrom") ?: ""
-        val initialTo = intent.getStringExtra("isLeaveTo") ?: ""
-        val initialFSession = intent.getStringExtra("isFromSession") ?: Session[0]
-        val initialTSession = intent.getStringExtra("isToSession") ?: Session[1]
 
         val currentReason = binding.etLeaveReason.text.toString().trim()
         val currentFrom = fromDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: ""
         val currentTo = toDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: ""
         val currentFSession = isFromSession
         val currentTSession = isToSession
+        val currentLeaveCatoryType = isLeaveCategoryType
 
-        return initialReason != currentReason ||
-                initialFrom != currentFrom ||
-                initialTo != currentTo ||
-                initialFSession != currentFSession ||
-                initialTSession != currentTSession
+        return originalReason != currentReason ||
+                originalLeaveFrom != currentFrom ||
+                originalLeaveTo != currentTo ||
+                originalFromSession != currentFSession ||
+                originalToSession != currentTSession||
+                originalLeaveType != currentLeaveCatoryType
     }
 
 
@@ -412,33 +459,40 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         val errors = mutableListOf<String>()
         val reason = binding.etLeaveReason.text.toString().trim()
 
+        // Validate Leave Type
+        if (isLeaveCategoryType.isNullOrBlank() || isLeaveCategoryType == "Select a leave type") {
+            errors.add("Leave type is required.")
+        }
+
         // Validate Reason
         if (reason.isEmpty()) {
-            errors.add("Reason is Required")
+            errors.add("Reason is required.")
         }
 
-        //Validate From/To Dates
-        if (fromDate == null || toDate == null) {
-            if (showError) {
-                binding.lblErrorMessage.text = errors.joinToString("\n")
+        // Validate Dates
+        val isFromDateInvalid = fromDate == null || binding.tvFromDate.text == getString(R.string.select_date)
+        val isToDateInvalid = toDate == null || binding.tvToDate.text == getString(R.string.select_date)
+
+        if (isFromDateInvalid || isToDateInvalid) {
+            errors.add("Both From and To dates are required.")
+        }
+
+
+        // Validate Session (only if dates are valid)
+        if (!isFromDateInvalid && !isToDateInvalid && fromDate != null && toDate != null) {
+            if (toDate!!.isBefore(fromDate)) {
+                errors.add("To Date cannot be before From Date.")
             }
-            disableButtons()
-            return false
+
+            val fromIndex = Session.indexOf(isFromSession)
+            val toIndex = Session.indexOf(isToSession)
+
+            if (fromDate == toDate && fromIndex > toIndex) {
+                errors.add("From session cannot be after To session on the same day.")
+            }
         }
 
-        if (toDate!!.isBefore(fromDate)) {
-            errors.add("To Date cannot be before From Date.")
-        }
-
-        // Validate Session
-        val fromIndex = Session.indexOf(isFromSession)
-        val toIndex = Session.indexOf(isToSession)
-
-        if (fromDate == toDate && fromIndex > toIndex) {
-            errors.add("From session cannot be after To session on the same day.")
-        }
-
-        // Handle Error Message
+        // Show error if any
         if (errors.isNotEmpty()) {
             if (showError) {
                 binding.lblErrorMessage.text = errors.joinToString("\n")
@@ -447,10 +501,14 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             return false
         }
 
-        //  If all validations pass
+        // Clear error
         binding.lblErrorMessage.text = ""
 
+        // Calculate leave days
         var totalDays = 0f
+        val fromIndex = Session.indexOf(isFromSession)
+        val toIndex = Session.indexOf(isToSession)
+
         if (fromDate == toDate) {
             totalDays = if (fromIndex == toIndex) 0.5f else 1f
         } else {
@@ -472,6 +530,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     }
 
 
+
     private fun disableButtons() {
         val grayDrawable = ContextCompat.getDrawable(this, R.drawable.background_radius_button)?.mutate()
         grayDrawable?.setTint(Color.GRAY)
@@ -489,6 +548,10 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         binding.btnupdate.background = normalDrawable
         binding.btnApplyLeave.isEnabled = true
         binding.btnupdate.isEnabled = true
+    }
+
+    private fun loadLeaveCategories() {
+        appViewModel!!.getLeaveCategories(isAccessToken!!)
     }
 
 

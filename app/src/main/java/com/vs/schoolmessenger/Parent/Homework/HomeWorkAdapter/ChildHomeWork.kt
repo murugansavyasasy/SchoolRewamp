@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,12 +13,15 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ChildHomeworkActivityBinding
 
 class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClickListener {
-
     override fun getViewBinding(): ChildHomeworkActivityBinding {
         return ChildHomeworkActivityBinding.inflate(layoutInflater)
     }
@@ -25,7 +29,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     var isHomeworkId = ""
     var isHomeWorkDate: String? = ""
     private var appViewModel: App? = null
-
 
     override fun setupViews() {
         super.setupViews()
@@ -39,6 +42,25 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         binding.lbltitle.text = data!!.title
         binding.lblDescription.text = data.description
+
+        if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+            binding.lblviewSubmissions.visibility = View.VISIBLE
+        } else {
+            binding.lblviewSubmissions.visibility = View.GONE
+        }
+
+        binding.lblviewSubmissions.setOnClickListener(this)
+
+        binding.lblviewSubmissions .setOnClickListener {
+            val intent = Intent(this, AssignmentStudentList::class.java)
+            intent.putExtra("assignment_id", data.assignmentid)
+            intent.putExtra("submitted_count", data.submittedCount)
+            Log.d("submitted_count",data.submittedCount.toString())
+            intent.putExtra("Total_Count", data.totalCount)
+            Log.d("Total_Count",data.totalCount.toString())
+            intent.putExtra("type", "TOTAL")
+            startActivity(intent)
+        }
 
         if (data.isMenuType == Constant.M_HOMEWORK) {
             isHomeworkId = data.id
@@ -112,6 +134,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             R.id.lblClickComplete -> {
                 isCompleteHomeWork()
             }
+
         }
     }
 
@@ -136,4 +159,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         alertDialog.show()
 
     }
+
+
 }

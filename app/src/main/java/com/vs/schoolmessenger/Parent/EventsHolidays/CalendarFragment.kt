@@ -12,14 +12,18 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
+import android.text.style.StyleSpan
 import android.view.Gravity
 import android.util.Log
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter.HolidayAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.FragmentCalendarBinding
@@ -138,89 +142,99 @@ class CalendarFragment : Fragment() {
     private fun updateCalendar() {
         val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         val fullDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
         val currentMonthYear = monthFormat.format(calendar.time)
         binding.currentMonthText.text = currentMonthYear
 
         val dates = mutableListOf<CustomDateItem>()
+
         val firstDayOfMonth = calendar.clone() as Calendar
         firstDayOfMonth.set(Calendar.DAY_OF_MONTH, 1)
+
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         val firstDayOfWeek = firstDayOfMonth.get(Calendar.DAY_OF_WEEK)
 
-        for (i in 1 until firstDayOfWeek) {
-            dates.add(CustomDateItem(null, false))
-        }
+        val currentMonth = calendar.get(Calendar.MONTH) + 1  // 1-based
+        val currentYear = calendar.get(Calendar.YEAR)
 
-        for (i in 1..daysInMonth) {
-            val currentDate = calendar.clone() as Calendar
-            currentDate.set(Calendar.DAY_OF_MONTH, i)
-            val dateStr = fullDateFormat.format(currentDate.time)
-            val isSunday = isSunday(dateStr)  // returns true if it's a Sunday
-            Log.d("DayCheck", "Is Sunday? $isSunday")
-            val isHoliday = holidayList.any { it.date == dateStr }
+        for (i in 1 until firstDayOfWeek) {
             dates.add(
                 CustomDateItem(
-                    i, isSelectable = false, isHoliday = isHoliday, isSunday = isSunday
+                    day = null,
+                    month = currentMonth,
+                    year = currentYear,
+                    isSelectable = false
                 )
             )
         }
 
-        (binding.dateRecyclerView.adapter as? CustomDateAdapter)?.submitDates(dates)
 
-        val currentMonth = calendar.get(Calendar.MONTH)
-        val currentYear = calendar.get(Calendar.YEAR)
+        for (i in 1..daysInMonth) {
+            val currentDate = calendar.clone() as Calendar
+            currentDate.set(Calendar.DAY_OF_MONTH, i)
+
+            val dateStr = fullDateFormat.format(currentDate.time)
+            val isSunday = isSunday(dateStr)
+            val isHoliday = holidayList.any { it.date == dateStr }
+
+            dates.add(
+                CustomDateItem(
+                    day = i,
+                    month = currentMonth,
+                    year = currentYear,
+                    isSelectable = true,
+                    isHoliday = isHoliday,
+                    isSunday = isSunday
+                )
+            )
+        }
+
+        (binding.dateRecyclerView.adapter as? CustomDateAdapter)?.setDates(dates)
 
         val visibleHolidays = holidayList.filter {
             val parsedDate = fullDateFormat.parse(it.date)
             val cal = Calendar.getInstance().apply { time = parsedDate!! }
-            cal.get(Calendar.MONTH) == currentMonth && cal.get(Calendar.YEAR) == currentYear
+            cal.get(Calendar.MONTH) + 1 == currentMonth && cal.get(Calendar.YEAR) == currentYear
         }
 
+
         if (visibleHolidays.isNotEmpty()) {
-            val builder = SpannableStringBuilder()
-            builder.append("Holidays for $currentMonthYear\n\n")
-
-            val icon =
-                AppCompatResources.getDrawable(requireContext(), R.drawable.ic_holiday_dot_circle)
-            val iconSize = resources.getDimensionPixelSize(R.dimen.holiday_dot_size)
-            icon?.setBounds(0, 0, iconSize, iconSize)
-
             val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 
-            visibleHolidays.forEach { holiday ->
+            val holidayModels = visibleHolidays.map {
                 val formattedDate = try {
-                    val parsedDate = inputFormat.parse(holiday.date)
+                    val parsedDate = inputFormat.parse(it.date)
                     outputFormat.format(parsedDate!!)
                 } catch (e: Exception) {
-                    holiday.date
+                    it.date
                 }
 
-                val spanText = SpannableString("  ${holiday.name} ($formattedDate)\n\n")
-                icon?.let {
-                    val imageSpan = ImageSpan(it, ImageSpan.ALIGN_BOTTOM)
-                    spanText.setSpan(imageSpan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-                }
-                builder.append(spanText)
+                Holiday(it.name, it.year,formattedDate)
             }
 
+            Log.d("holidayModels",holidayModels.toString())
 
-            binding.holidaylabel.text = builder
-            binding.holidaylabel.gravity = Gravity.START
+            binding.holidayRecyclerView.visibility = View.VISIBLE
+            binding.holidaylabel.visibility = View.VISIBLE
+            binding.holidayRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.holidayRecyclerView.adapter = HolidayAdapter(holidayModels)
             binding.holidaylabel.setTextColor(
                 ContextCompat.getColor(requireContext(), android.R.color.black)
             )
-
-        } else {
-            binding.holidaylabel.text = "No holidays in $currentMonthYear"
-            binding.holidaylabel.gravity = Gravity.CENTER
+            binding.holidaylabel.text = "Holidays for $currentMonthYear"
+        }
+        else {
+            binding.holidayRecyclerView.visibility = View.GONE
+            binding.holidaylabel.visibility = View.VISIBLE
             binding.holidaylabel.setTextColor(
                 ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
             )
-
+            binding.holidaylabel.text = "No holidays in $currentMonthYear"
         }
 
     }
+
 
 
     override fun onDestroyView() {

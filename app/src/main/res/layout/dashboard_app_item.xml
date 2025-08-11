@@ -8,7 +8,7 @@
     android:layout_marginTop="@dimen/ten"
     android:layout_marginEnd="@dimen/five"
     android:layout_margin="8dp"
-    android:backgroundTint="@android:color/white"
+    android:backgroundTint="@color/white"
     android:elevation="@dimen/fifteen"
     app:cardElevation="@dimen/fifteen"
     app:cardCornerRadius="@dimen/five">

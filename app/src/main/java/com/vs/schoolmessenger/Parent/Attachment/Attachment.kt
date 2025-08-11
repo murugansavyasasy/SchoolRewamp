@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Parent.Attachment
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +9,9 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
 import com.vs.schoolmessenger.R
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.content.Context
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Attachment.AttachmentReportAdapter
@@ -49,23 +51,33 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (::mAdapter.isInitialized) {
-                    mAdapter.filter.filter(s)
-                }
+                mAttachmentReportAdapter?.filter?.filter(s)
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
 
+        binding.txtSearchMenu.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                // Trigger search
+                val query = binding.txtSearchMenu.text.toString()
+                mAttachmentReportAdapter?.filter?.filter(query)
+
+                // Hide keyboard
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
+
+                binding.txtSearchMenu.clearFocus()
+                true
+            } else {
+                false
+            }
+        }
+
+
+
+
         appViewModel?.isAttachmentResponse?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
-                Log.d("API_LOG", "Fetched ${response.data.size} attachment items")
-
-                response.data.forEach { attachment ->
-                    attachment.file_path.forEach { file ->
-                        Log.d("API_LOG", "Attachment ID: ${attachment.id}, Type: ${file.type}, URL: URL: ${file.url}\")")
-                    }
-                }
                 binding.txtNoData.visibility = View.GONE
                 binding.recycleracademic.visibility = View.VISIBLE
                 isLoadData(response.data)
@@ -73,32 +85,22 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 showEmptyState(response?.message ?: getString(R.string.no_data_found))
             }
         }
-
-
-        appViewModel?.isAttachmentResponseArchive?.observe(this) { response ->
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                response.data.forEach { attachment ->
-                    attachment.file_path.forEach { file ->
-                        Log.d("API_LOG", "Attachment ID: ${attachment.id}, Type: ${file.type}, URL: URL: ${file.url}\")")
-                    }
-                }
-                appendData(response.data)
-            }
-        }
         isGetAttachment()
     }
     fun isLoadData(data: List<AttachmentReportData>) {
-        mAttachmentReportAdapter =
-            AttachmentReportAdapter(
-                data,
-                this,
-                this,
-                Constant.isShimmerViewDisable
-            )
+        mAttachmentReportAdapter = AttachmentReportAdapter(
+            data,
+            this,
+            this,
+            Constant.isShimmerViewDisable,
+            binding.nomessage,
+            binding.txtNoData
+        )
         binding.recycleracademic.layoutManager = LinearLayoutManager(this)
         binding.recycleracademic.isNestedScrollingEnabled = false
         binding.recycleracademic.adapter = mAttachmentReportAdapter
     }
+
 
     private fun isGetAttachment() {
 
@@ -123,124 +125,9 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.txtNoData.visibility = View.VISIBLE
     }
 
-    private fun fetchInitialData() {
-        appViewModel?.getAttachment(isAccessToken.orEmpty(), this)
-        Log.d("API_LOG", "Calling getAttachment with token: $isAccessToken")
-    }
-
-    private fun fetchMoreData() {
-        appViewModel?.getAttachmentArchive(isAccessToken.orEmpty(), this)
-    }
-
-    private fun appendData(newData: List<AttachmentData>) {
-        allAttachmentData.addAll(newData)
-        filterAttachments(Constant.ALL)
-    }
-
-    private fun filterAttachments(filter: String) {
-        filteredAttachmentData = when (filter) {
-            Constant.IMAGE -> allAttachmentData.filter {
-                it.file_path.any { file ->
-                    file.type.equals(
-                        Constant.IMAGE, true
-                    )
-                }
-            }.toMutableList()
-
-            Constant.VIDEO -> allAttachmentData.filter {
-                it.file_path.any { file ->
-                    file.type.equals(
-                        Constant.VIDEO, true
-                    )
-                }
-            }.toMutableList()
-
-            Constant.DOCUMENT -> allAttachmentData.filter {
-                it.file_path.any { file ->
-                    file.type.equals(Constant.PDF, true) || file.type.equals(
-                        Constant.DOCX,
-                        true
-                    ) || file.type.equals(Constant.DOC, true) || file.type.equals(
-                        Constant.PPT,
-                        true
-                    ) || file.type.equals(Constant.PPTX, true) || file.type.equals(
-                        Constant.XLS,
-                        true
-                    ) || file.type.equals(Constant.XLSX, true) || file.type.equals(Constant.TXT, true)
-                }
-            }.toMutableList()
-
-            else -> allAttachmentData.toMutableList()
-        }
-
-        if (filteredAttachmentData.isEmpty()) {
-            showEmptyState(getString(R.string.no_matching_attachment_found))
-        } else {
-            binding.nomessage.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
-            binding.seeMoreLabel.visibility = View.GONE
-            binding.recycleracademic.visibility = View.VISIBLE
-            mAdapter =
-                AttachmentAdapter(
-                    filteredAttachmentData,
-                    this,
-                    this,
-                    this,
-                    isLoading = false,
-                    isSeeMoreClick
-                )
-            binding.recycleracademic.adapter = mAdapter
-        }
-=======
->>>>>>> 0c27ab3fda9e822291801b450000c9743ac758fe
-    }
-
     override fun onClick(v: View?) {
         when (v?.id) {
 
-<<<<<<< HEAD
-    override fun onItemClick(data: AttachmentData, holder: AttachmentAdapter.DataViewHolder) {
-        Log.d("isClickView", data.id)
-        val jsonObject = JsonObject().apply {
-            addProperty(APIKeyNames.type, Constant.ATTACHMENT)
-            addProperty(APIKeyNames.detail_id, data.id)
-        }
-        if (data.is_archive) {
-            isAccessToken?.let {
-                appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
-                Log.d("API_LOG", "Calling isUpdateStatusArchive with data: $jsonObject")
-            }
-        } else {
-            isAccessToken?.let {
-                appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
-                Log.d("API_LOG", "Calling isUpdateStatusCommunication with data: $jsonObject")
-            }
-        }
-    }
-
-    override fun onSeeMoreClick(
-        data: AttachmentData,
-        holder: AttachmentAdapter.DataViewHolder
-    ) {
-        if (!hasFetchedMore) {
-            hasFetchedMore = true
-            isSeeMoreClick=false
-            fetchMoreData()
-        }
-    }
-
-    override fun onSearchResultEmpty(isEmpty: Boolean) {
-        if (isEmpty) {
-            binding.nomessage.visibility = View.VISIBLE
-            binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = getString(R.string.no_matching_attachment_found)
-            binding.recycleracademic.visibility = View.GONE
-        } else {
-            binding.nomessage.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
-            binding.recycleracademic.visibility = View.VISIBLE
-=======
->>>>>>> 0c27ab3fda9e822291801b450000c9743ac758fe
         }
     }
 
@@ -261,6 +148,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             addProperty(APIKeyNames.type, Constant.ATTACHMENT)
             addProperty(APIKeyNames.detail_id, isData[isPosition].id)
         }
-            appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
     }
 }

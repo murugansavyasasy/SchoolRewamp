@@ -141,6 +141,7 @@ class SchoolEventAdapter (
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
 
+
             header.setOnClickListener {
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/five"
         android:padding="@dimen/fifteen"
-        android:text="hksjdsljdjlsdjks"
+        android:text=""
         android:layout_toStartOf="@+id/imageTick"
         android:textColor="@android:color/black"
         android:textSize="@dimen/thirteen_sp" />

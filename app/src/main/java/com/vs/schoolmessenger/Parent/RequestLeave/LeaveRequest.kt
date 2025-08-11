@@ -45,7 +45,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var toDateMillis: Long = 0L
     private var totalLeaveDays: Int = 0
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
     private var currentTab = TabType.LeaveRequest
 
 
@@ -165,10 +164,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             startActivity(intent)
             finish()
         }
-
-
-
-
 
             binding.rlaHistory.visibility = View.VISIBLE
             binding.tabLayoutStatus.visibility = View.VISIBLE
@@ -376,7 +371,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
     override fun onItemEditClick(data: LeaveData) {
-
         val intent = Intent(this,NewLeaveRequest::class.java);
             intent.putExtra("isReason",data.reason )
             intent.putExtra("isId", data.id)
@@ -384,6 +378,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             intent.putExtra("isLeaveFrom", data.leave_from)
             intent.putExtra("isFromSession", data.from_session)
             intent.putExtra("isToSession", data.to_session)
+            intent.putExtra("isLeaveType", data.leave_type)
             intent.putExtra("isRequestEdit", true)
             startActivity(intent);
     }

@@ -21,13 +21,12 @@
     <!-- Subject Name -->
     <TextView
         android:id="@+id/groupSubjectname"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/five"
         android:layout_marginEnd="@dimen/five"
         android:text="@string/subject_name"
         android:textSize="@dimen/thirteen_sp"
-        android:textColor="@color/black"
         style="@style/CustomTextStylePoppinsMedium"
         app:layout_constraintStart_toEndOf="@id/groupColourPercent"
         app:layout_constraintTop_toTopOf="@id/groupColourPercent"
@@ -42,7 +41,6 @@
         android:text=""
         android:gravity="end"
         android:textSize="@dimen/thirteen_sp"
-        android:textColor="@color/black"
         style="@style/CustomTextStylePoppinsMedium"
         app:layout_constraintTop_toTopOf="@id/groupSubjectname"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -50,7 +48,7 @@
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcGroupSplitMark"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/five"
@@ -61,7 +59,7 @@
 
     <!-- Divider Line -->
     <View
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="@dimen/one"
         android:layout_marginTop="@dimen/ten"
         android:background="@color/iron"
