@@ -100,7 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tabLayoutStatus"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/ten"
         >
 
         <androidx.recyclerview.widget.RecyclerView
@@ -140,7 +140,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/twenty"
                 android:text="@string/no_list_found"
-                android:textColor="@color/black"
                 android:textSize="@dimen/eighteen"
                 android:visibility="gone" />
 
@@ -180,9 +179,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/create_leave_request"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold" />
+                    />
 
 
                 <LinearLayout
@@ -204,8 +201,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardStart"
-                            android:layout_width="100dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/hundred"
+                            android:layout_height="@dimen/eighty"
                             app:cardCornerRadius="@dimen/ten">
 
                             <LinearLayout
@@ -230,8 +227,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginTop="@dimen/five"
-                                        android:layout_marginBottom="3dp"
-                                        android:text="From"
+                                        android:layout_marginBottom="@dimen/three"
+                                        android:text="@string/from"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/fifteen_sp" />
 
@@ -262,7 +259,7 @@
                                         android:layout_marginTop="3dp"
                                         android:text="Fri, Jun 2025"
                                         android:textColor="@color/grey"
-                                        android:textSize="12sp" />
+                                        android:textSize="@dimen/twele_sp" />
 
 
                                 </LinearLayout>
@@ -289,8 +286,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardEnd"
-                            android:layout_width="100dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/hundred"
+                            android:layout_height="@dimen/eighty"
                             app:cardCornerRadius="@dimen/ten">
 
                             <LinearLayout
@@ -315,9 +312,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginTop="@dimen/five"
-                                        android:layout_marginBottom="3dp"
-                                        android:text="To"
-
+                                        android:layout_marginBottom="@dimen/three"
+                                        android:text="@string/to"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/fifteen_sp" />
 
@@ -337,7 +333,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="28"
-                                        android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp" />
 
                                     <TextView
@@ -345,7 +340,7 @@
                                         style="@style/CustomTextStylePoppinsBold"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="3dp"
+                                        android:layout_marginTop="@dimen/three"
                                         android:text="Fri, Jun 2025"
                                         android:textColor="@color/grey"
                                         android:textSize="12sp" />
@@ -374,14 +369,10 @@
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/twenty"
-                        android:fontFamily="@font/poppins_bold"
                         android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold">
+                      >
 
                     </TextView>
 
@@ -392,10 +383,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblTotalDays"
                         android:layout_marginStart="@dimen/ten"
-                        android:text="Reason"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold" />
+                        android:text="@string/reason"
+                        />
 
 
                     <EditText
@@ -408,7 +397,7 @@
                         android:layout_marginEnd="@dimen/ten"
                         android:background="@drawable/bg_stroke_rect_black"
                         android:gravity="start"
-                        android:hint="Reason"
+                        android:hint="@string/reason"
                         android:padding="@dimen/ten"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp" />
@@ -471,11 +460,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lbTextCount"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/ten"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
+                        android:paddingTop="@dimen/eight"
+                        android:paddingBottom="@dimen/eight"
                         android:visibility="gone">
 
                         <TextView
@@ -483,28 +472,28 @@
                             style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="12dp"
+                            android:layout_marginEnd="@dimen/twele"
                             android:background="@drawable/bg_red_radious__all_side_same"
-                            android:padding="10dp"
+                            android:padding="@dimen/ten"
                             android:paddingStart="@dimen/eighteen_sp"
                             android:paddingEnd="@dimen/eighteen_sp"
-                            android:text="Cancel"
+                            android:text="@string/Cancel"
                             android:textColor="@color/white"
-                            android:textSize="13sp" />
+                            android:textSize="@dimen/thirteen_sp" />
 
                         <TextView
                             android:id="@+id/btnupdate"
                             style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
+                            android:layout_marginStart="@dimen/thirty"
                             android:background="@drawable/bg_green_radious"
-                            android:padding="10dp"
+                            android:padding="@dimen/ten"
                             android:paddingStart="@dimen/eighteen_sp"
                             android:paddingEnd="@dimen/eighteen_sp"
-                            android:text="Update"
+                            android:text="@string/Update"
                             android:textColor="@color/white"
-                            android:textSize="13sp" />
+                            android:textSize="@dimen/thirteen_sp" />
 
                     </LinearLayout>
 
@@ -515,19 +504,5 @@
         </androidx.cardview.widget.CardView>
 
     </ScrollView>
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imgAddLeave"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_margin="16dp"-->
-<!--        android:background="#6467D2"-->
-<!--        android:contentDescription="Add Leave"-->
-<!--        android:elevation="6dp"-->
-<!--        android:padding="10dp"-->
-<!--        android:src="@drawable/ic_plus" />-->
-
 
 </RelativeLayout>

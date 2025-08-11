@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="48dp"
-    android:layout_height="48dp"
-    android:layout_margin="4dp"
+    android:layout_width="@dimen/fourty_eight"
+    android:layout_height="@dimen/fourty_eight"
+    android:layout_margin="@dimen/four"
     android:background="@android:color/transparent">
 
     <TextView
@@ -11,8 +11,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="1"
-        android:textSize="16sp"
-        android:textColor="#000000"
+        android:textSize="@dimen/sixteen_sp"
+        android:textColor="@color/black"
         android:background="?attr/selectableItemBackgroundBorderless" />
 
 </FrameLayout>

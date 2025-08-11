@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_white"
-    android:layout_marginTop="0dp">
+    android:layout_marginTop="@dimen/zero">
 
     <LinearLayout
         android:id="@+id/lnrCaledar"
@@ -19,19 +19,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingVertical="8dp">
+            android:paddingVertical="@dimen/eight">
 
             <ImageView
                 android:id="@+id/prevMonthButton"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="@dimen/thirty_two"
+                android:layout_height="@dimen/thirty_two"
+                android:layout_marginStart="@dimen/eight"
                 android:src="@drawable/left_arrow"
                 android:contentDescription="Previous Month" />
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
                 android:layout_weight="1" />
 
             <TextView
@@ -40,19 +40,19 @@
                 android:layout_height="wrap_content"
                 android:text="January 2024"
                 android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
+                android:textSize="@dimen/sixteen_sp"
                 style="@style/CustomTextStylePoppinsBold" />
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/nextMonthButton"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginEnd="8dp"
+                android:layout_width="@dimen/thirty_two"
+                android:layout_height="@dimen/thirty_two"
+                android:layout_marginEnd="@dimen/eight"
                 android:src="@drawable/right_arrow"
                 android:contentDescription="Next Month" />
         </LinearLayout>
@@ -73,81 +73,81 @@
                 android:gravity="center"
                 android:text="Sun"
                 android:textColor="@color/red"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:textSize="13sp"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Mon"
+                android:text="@string/mon"
                 android:textColor="@color/black"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Tue"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:text="@string/tue"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Wed"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:text="@string/wed"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Thu"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:text="@string/thu"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Fri"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:text="@string/fri"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Sat"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:text="@string/sat"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
         </LinearLayout>`
 
@@ -164,12 +164,12 @@
         android:id="@+id/holidaylabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/twele"
         android:layout_marginStart="@dimen/five"
         android:visibility="gone"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="@dimen/fourteen_sp"
         style="@style/CustomTextStylePoppinsBold"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="@dimen/ten"

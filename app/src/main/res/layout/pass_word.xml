@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/happy_to_have_you_with_us"
-            android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             style="@style/CustomTextStylePoppinsBold">
 
@@ -39,10 +38,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
+            style="@style/CustomTextStylePoppinsRegular"
             android:text="@string/your_password_has_already_been_created_use_your_credentials_to_log_in_and_access_schoolchimes_for_seamless_school_communication_and_management"
-            android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            style="@style/CustomTextStylePoppinsRegular">
+            >
 
         </TextView>
 
@@ -71,6 +70,7 @@
                     android:id="@+id/lblPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:layout_below="@+id/lblLogin"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/twenty"
@@ -78,7 +78,7 @@
                     android:text="@string/lblPassword"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp"
-                    style="@style/CustomTextStylePoppinsRegular"/>
+                    />
 
 
 
@@ -141,13 +141,14 @@
                         android:layout_marginBottom="@dimen/ten"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
                         android:text="@string/lblValidate"
                         android:padding="@dimen/fifteen"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
-                        style="@style/CustomTextStylePoppinsBold"
+
                         />
 
             </RelativeLayout>

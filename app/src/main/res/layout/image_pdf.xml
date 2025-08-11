@@ -41,10 +41,8 @@
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
         android:text="@string/Description"
-        android:textColor="@color/black"
-        android:fontFamily="@font/poppins_bold"
-        android:textSize="@dimen/thirteen_sp"
-        android:textStyle="bold">
+        style="@style/CustomTextStylePoppinsBold"
+        >
 
     </TextView>
 
@@ -62,12 +60,11 @@
         android:focusableInTouchMode="true"
         android:gravity="start"
         android:hint="@string/Enterdescription"
+        style="@style/CustomTextStylePoppinsRegular"
         android:maxLength="100"
         android:padding="@dimen/ten"
-        android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp"
-        android:fontFamily="@font/poppins_regular"
-        android:textStyle="normal">
+       >
 
     </EditText>
 
@@ -86,10 +83,8 @@
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
             android:text="@string/AddPhoto"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:fontFamily="@font/poppins_bold"
-            android:textStyle="bold">
+            style="@style/CustomTextStylePoppinsBold"
+            >
 
         </TextView>
 

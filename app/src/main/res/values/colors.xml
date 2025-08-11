@@ -63,11 +63,16 @@
 
 
     <color name="light_gray">#616159</color>
+    <color name="amber_yellow">#FFC107</color>
     <color name="light_sky_blue_color">#bde6fc</color>
     <color name="gray_color">#f2f1f6</color>
+    <color name="light_gray_7">#847c81</color>
+    <color name="light_white_4">"#eae6e4"</color>
+    <color name="light_gray_8">#80000000</color>
     <color name="clr_green">#16C117</color>
     <color name="bpWhite">#ffffff</color>
     <color name="teacher_clr_grey_dark">#4B4B4D</color>
+    <color name="light_gray_6">#9E9E9E</color>
     <color name="white">#fff</color>
     <color name="light_gray_2">#888888</color>
     <color name="gray_white">#f2f2f7</color>
@@ -174,6 +179,7 @@
     <color name="card_blue">#EEE9F3</color>
     <color name="light_blue_1">#5DCBF5</color>
     <color name="dark_blue_1">#007aff</color>
+    <color name="dark_blue_2">#2196F3</color>
 
     <color name="light_orange">#F8ECE5</color>
     <color name="light_orange_1">#FB975C</color>
@@ -191,10 +197,12 @@
 
     <color name="light_bg_blue">#CFE8F6</color>
     <color name="light_bg_orange">#FAECE0</color>
+    <color name="white_smoke">#F9F9F9</color>
     <color name="light_bg_green">#BAE4DC</color>
     <color name="light_bg_purple">#ECE0F8</color>
     <color name="light_gray_">#747e85</color>
     <color name="light_gray2">#f2f2f2</color>
+    <color name="light_gray_3">#666</color>
 
     <color name="light_gray1">#F5F5F5</color>
     <color name="light_green_">#a6dadf</color>
@@ -204,6 +212,7 @@
     <color name="custom_yellow_light_color">#fcd48e</color>
     <color name="dark_green_2">#0f4d0f</color>
     <color name="light_green4">#50C878</color>
+    <color name="light_green_5">"#4CAF50"</color>
 
     <color name="light_orange4">#f5a961</color>
     <color name="light_orange5">#FFA726</color>

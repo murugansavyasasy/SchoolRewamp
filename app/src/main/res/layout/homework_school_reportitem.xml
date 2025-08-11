@@ -31,7 +31,7 @@
         android:layout_height="@dimen/thirty"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/twenty"
-        android:elevation="10dp"
+        android:elevation="@dimen/ten"
         android:src="@drawable/noticeboard_pin"
         android:visibility="gone">
 
@@ -43,7 +43,7 @@
         android:layout_height="@dimen/thirteen"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/eighteen"
-        android:elevation="10dp"
+        android:elevation="@dimen/ten"
         android:src="@drawable/circle_dark_blue"
         android:visibility="gone">
     </ImageView>
@@ -63,7 +63,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/ten"
             android:text="Annual Day celebrations"
-            android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp" />
 
         <LinearLayout
@@ -83,9 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/five"
                 android:text="15 Nov 2024"
-                android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp"
-                android:textStyle="normal" />
+                 />
 
             <TextView
                 android:id="@+id/lblTimeImage"
@@ -95,7 +93,7 @@
                 android:text="99:99 AM"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/twele_sp"
-                android:textStyle="normal" />
+                />
 
         </LinearLayout>
 
@@ -129,8 +127,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_toEndOf="@+id/imgSend"
-                android:fontFamily="@font/poppins_medium"
-                android:text="Forward"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:text="@string/forward"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold">
@@ -178,7 +176,7 @@
             android:layout_height="@dimen/twenty"
             android:layout_below="@+id/rytList"
             android:layout_centerInParent="true"
-            android:elevation="4dp"
+            android:elevation="@dimen/four"
             android:visibility="gone" />
 
         <TextView
@@ -190,8 +188,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:text="Annual Day celebrations"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+             />
 
         <TextView
             android:id="@+id/lblContentImage"
@@ -200,12 +197,11 @@
             android:layout_below="@+id/lblTitleImage"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/ten"
             android:maxLines="3"
             style="@style/CustomTextStylePoppinsMedium"
             android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+             />
 
         <TextView
             android:id="@+id/lblEventTimeImage"
@@ -215,10 +211,8 @@
             android:layout_below="@+id/tvView"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/ten"
             android:text="Event Starts at"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
             android:visibility="gone" />
 
 

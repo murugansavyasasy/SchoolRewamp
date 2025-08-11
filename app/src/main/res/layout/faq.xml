@@ -278,7 +278,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toStartOf="@+id/arrow_icon_5"
-                            android:text="What extracurricular activities are available?"
+                            android:text="@string/what_extracurricular_activities_are_available"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold" />

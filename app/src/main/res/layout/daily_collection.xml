@@ -32,8 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/ten"
                 android:text="@string/FromDate"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                 />
 
             <LinearLayout
                 android:id="@+id/linear_layout3"
@@ -57,8 +56,7 @@
                     android:layout_marginBottom="@dimen/five"
                     android:gravity="center"
                     android:text="Feb 13,2025"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
+                     />
 
 
                 <ImageView
@@ -89,8 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/ten"
                 android:text="@string/ToDate"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                 />
 
             <LinearLayout
                 android:id="@+id/linear_layout5"
@@ -114,14 +111,13 @@
                     android:layout_marginBottom="@dimen/five"
                     android:gravity="center"
                     android:text="Feb 13,2025"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
+                     />
 
 
                 <ImageView
                     android:id="@+id/image_view1"
-                    android:layout_width="13dp"
-                    android:layout_height="22dp"
+                    android:layout_width="@dimen/thirteen"
+                    android:layout_height="@dimen/twenty_two"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/three"
                     android:layout_marginEnd="@dimen/ten"
@@ -144,9 +140,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relative_layout"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="7dp"
+        android:layout_marginStart="@dimen/seven"
+        android:layout_marginTop="@dimen/thirteen"
+        android:layout_marginEnd="@dimen/seven"
         android:background="@drawable/bg_light_blue"
         android:gravity="center_vertical"
         android:weightSum="3">
@@ -157,16 +153,15 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginStart="@dimen/two"
+            android:layout_marginTop="@dimen/two"
+            android:layout_marginBottom="@dimen/two"
             android:layout_weight="1"
             android:background="@drawable/white_radious"
             android:gravity="center"
             android:padding="@dimen/eight"
             android:text="@string/DC_category"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+            >
 
         </TextView>
 
@@ -175,16 +170,15 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginStart="@dimen/two"
+            android:layout_marginTop="@dimen/two"
+            android:layout_marginEnd="@dimen/two"
+            android:layout_marginBottom="@dimen/two"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/eight"
             android:text="@string/DailyCollection_class"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+           >
 
         </TextView>
 
@@ -194,16 +188,15 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginStart="@dimen/two"
+            android:layout_marginTop="@dimen/two"
+            android:layout_marginEnd="@dimen/two"
+            android:layout_marginBottom="@dimen/two"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/eight"
             android:text="@string/mode"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+            >
 
         </TextView>
 
@@ -218,7 +211,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/relative_layout8"
         android:layout_centerInParent="true"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="@dimen/eight">
 
         <TextView
             android:id="@+id/totalcollectionlabel"
@@ -227,9 +220,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="TOTAL COLLECTION TODAY"
+            android:text="@string/total_collection_today"
             android:textColor="@color/grey"
-            android:textSize="13sp" />
+            android:textSize="@dimen/thirteen" />
 
         <TextView
             android:id="@+id/total_collection"
@@ -238,11 +231,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/totalcollectionlabel"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/five"
             android:gravity="center"
             android:text="88,000.00"
             android:textColor="@color/black"
-            android:textSize="35sp" />
+            android:textSize="@dimen/thirty_five_sp" />
     </RelativeLayout>
 
 
@@ -257,21 +250,21 @@
             android:id="@+id/paymenthistorylabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Payment history"
+            android:text="@string/payment_history"
             android:textColor="@color/light_gray"
             style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="13sp"
+            android:textSize="@dimen/thirteen_sp"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="@dimen/five"
             android:layout_centerVertical="true"/>
 
         <ImageView
             android:id="@+id/img_payment"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/twele"
             android:src="@drawable/transaction" />
     </RelativeLayout>
 
@@ -292,7 +285,7 @@
             android:id="@+id/totalsummary1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="@dimen/ten">
         </androidx.recyclerview.widget.RecyclerView>
 
 

@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/five"
-                    android:text="Cancel"
+                    android:text="@string/Cancel"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp"></TextView>
             </RelativeLayout>
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/five"
-                    android:text="Done"
+                    android:text="@string/done"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp"></TextView>
             </RelativeLayout>

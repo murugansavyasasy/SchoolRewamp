@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="@dimen/sixteen"
             android:text="January 2024"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/fifteen_sp"
@@ -48,11 +48,11 @@
         android:paddingVertical="@dimen/eight">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Sun"
+            android:text="@string/sun"
             android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/red"
             android:textStyle="bold" />
@@ -63,7 +63,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="@dimen/thirteen_sp"
-            android:text="Mon"
+            android:text="@string/mon"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -73,8 +73,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="@dimen/thirteen_sp"
-
-            android:text="Tue"
+            android:text="@string/tue"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -83,10 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Wed"
+            android:text="@string/wed"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-
             android:textStyle="bold" />
 
         <TextView
@@ -94,9 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Thu"
+            android:text="@string/thu"
             android:textSize="@dimen/thirteen_sp"
-
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -105,9 +102,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Fri"
+            android:text="@string/fri"
             android:textSize="@dimen/thirteen_sp"
-
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -117,8 +113,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="@dimen/thirteen_sp"
-
-            android:text="Sat"
+            android:text="@string/sat"
             android:textColor="@color/black"
             android:textStyle="bold" />
     </LinearLayout>

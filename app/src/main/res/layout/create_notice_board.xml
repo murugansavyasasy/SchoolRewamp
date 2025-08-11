@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Create"
+                android:text="@string/Create"
                 android:textColor="@color/iconBlue"></TextView>
 
             <View
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Reports"></TextView>
+                android:text="@string/Reports"></TextView>
 
             <View
                 android:id="@+id/line2"
@@ -88,18 +88,17 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="@dimen/ten">
 
             <TextView
                 android:id="@+id/lblEventTitle"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/twenty"
                 android:text="@string/Title"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                />
 
 
             <TextView
@@ -112,8 +111,7 @@
                 android:layout_toEndOf="@id/lblEventTitle"
                 android:text="@string/mandatory"
                 android:textColor="@color/red"
-                android:textSize="@dimen/thirteen_sp" />
-
+                />
 
             <EditText
                 android:id="@+id/txtTitle"
@@ -123,12 +121,11 @@
                 android:layout_below="@+id/lblEventTitle"
                 android:layout_alignStart="@+id/lblEventTitle"
                 android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/bg_edittext_view_line"
                 android:inputType="text"
                 android:paddingBottom="@dimen/ten"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                />
 
             <TextView
                 android:id="@+id/lbtitleTextCount"
@@ -138,9 +135,8 @@
                 android:layout_below="@+id/txtTitle"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:text="0 / 50"
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
@@ -152,8 +148,7 @@
                 android:layout_alignStart="@+id/txtTitle"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/Description"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                />
 
             <TextView
                 android:id="@+id/lblStar2"
@@ -189,8 +184,7 @@
                     android:background="@android:color/transparent"
                     android:gravity="top"
                     android:hint="@string/Description"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
+                    />
 
 
             </RelativeLayout>
@@ -203,10 +197,9 @@
                 android:layout_below="@+id/rytDesc"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:text="0 / 500"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                 />
 
 
             <RelativeLayout
@@ -232,9 +225,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="Notice Display Date Range"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp" />
+                        android:text="@string/notice_display_date_range"
+                         />
 
                     <TextView
                         android:id="@+id/lblStar3"
@@ -246,7 +238,7 @@
                         android:layout_toEndOf="@id/lblStart"
                         android:text="@string/mandatory"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/thirteen_sp" />
+                       />
 
 
                     <LinearLayout
@@ -254,7 +246,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/lblStart"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="@dimen/twenty"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="3">
@@ -268,8 +260,8 @@
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardStart"
-                                android:layout_width="100dp"
-                                android:layout_height="80dp"
+                                android:layout_width="@dimen/hundred"
+                                android:layout_height="@dimen/eighty"
                                 app:cardCornerRadius="@dimen/ten">
 
                                 <LinearLayout
@@ -294,8 +286,8 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_horizontal"
                                             android:layout_marginTop="@dimen/five"
-                                            android:layout_marginBottom="3dp"
-                                            android:text="From"
+                                            android:layout_marginBottom="@dimen/three"
+                                            android:text="@string/from"
                                             android:textColor="@color/white"
                                             android:textSize="@dimen/fifteen_sp" />
 
@@ -315,7 +307,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="12"
-                                            android:textColor="@color/black"
                                             android:textSize="@dimen/fifteen_sp" />
 
                                         <TextView
@@ -323,10 +314,10 @@
                                             style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="3dp"
+                                            android:layout_marginTop="@dimen/three"
                                             android:text="Fri, Jun 2025"
                                             android:textColor="@color/grey"
-                                            android:textSize="12sp" />
+                                            android:textSize="@dimen/twele" />
 
 
                                     </LinearLayout>
@@ -353,8 +344,8 @@
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardEnd"
-                                android:layout_width="100dp"
-                                android:layout_height="80dp"
+                                android:layout_width="@dimen/hundred"
+                                android:layout_height="@dimen/eighty"
                                 app:cardCornerRadius="@dimen/ten">
 
                                 <LinearLayout
@@ -379,9 +370,8 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_horizontal"
                                             android:layout_marginTop="@dimen/five"
-                                            android:layout_marginBottom="3dp"
-                                            android:text="To"
-
+                                            android:layout_marginBottom="@dimen/three"
+                                            android:text="@string/to"
                                             android:textColor="@color/white"
                                             android:textSize="@dimen/fifteen_sp" />
 
@@ -409,10 +399,10 @@
                                             style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="3dp"
+                                            android:layout_marginTop="@dimen/three"
                                             android:text="Fri, Jun 2025"
                                             android:textColor="@color/grey"
-                                            android:textSize="12sp" />
+                                            android:textSize="@dimen/twele" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -435,9 +425,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
-                            android:text="Add Attachment"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp">
+                            android:text="@string/add_attachment"
+                            >
 
                         </TextView>
 
@@ -445,7 +434,7 @@
                             android:id="@+id/lblOptional"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_marginStart="@dimen/eight"
                             android:layout_marginTop="@dimen/ten"
                             android:layout_toEndOf="@+id/lblAddPhoto"
                             android:text="@string/Optional"
@@ -497,7 +486,7 @@
                             android:padding="@dimen/ten"
                             android:text="@string/NEXT"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/thirteen_sp"></TextView>
+                            ></TextView>
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
@@ -513,8 +502,8 @@
         android:layout_height="@dimen/thirty_five"
         android:layout_below="@+id/toolbarLayout1"
         android:layout_margin="@dimen/ten"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:background="@drawable/rect_grey"
         android:visibility="gone">
 
@@ -533,8 +522,7 @@
             android:layout_toEndOf="@id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+            />
     </RelativeLayout>
 
 
@@ -543,10 +531,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytSearch323"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
         android:background="@drawable/spinner_bg"
-        android:padding="12dp"
+        android:padding="@dimen/twele"
         android:spinnerMode="dropdown"
         android:visibility="gone" />
 
@@ -555,10 +543,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/schoollistfilter"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/ten"
         android:clipToPadding="false"
         android:fadeScrollbars="false"
-        android:paddingHorizontal="10dp"
+        android:paddingHorizontal="@dimen/ten"
         android:scrollbars="none"
         android:visibility="gone" />
 
@@ -591,7 +579,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/no_list_found"
-            android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />
 

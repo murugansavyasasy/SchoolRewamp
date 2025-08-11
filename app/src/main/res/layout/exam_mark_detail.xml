@@ -51,8 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:text="I-B"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+                >
 
             </TextView>
         </LinearLayout>
@@ -97,12 +96,6 @@
                     android:id="@+id/scoreCircle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/imgCircleThreeRing"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:scaleType="fitCenter"></ImageView>-->
 
                 <View
                     android:id="@+id/centerCircle"

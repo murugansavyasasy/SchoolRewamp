@@ -31,11 +31,10 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/twenty"
                 android:text="@string/Title"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                />
 
 
             <TextView
@@ -48,7 +47,7 @@
                 android:layout_toEndOf="@id/lblEventTitle"
                 android:text="@string/mandatory"
                 android:textColor="@color/red"
-                android:textSize="@dimen/thirteen_sp" />
+                 />
 
 
             <EditText
@@ -61,11 +60,10 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_edittext_view_line"
-                android:hint="Title"
+                android:hint="@string/Title"
                 android:inputType="text"
                 android:paddingBottom="@dimen/ten"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                 />
 
             <TextView
                 android:id="@+id/lbtitleTextCount"
@@ -77,8 +75,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="15dp"
                 android:text="0 of 50"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                 />
 
             <TextView
                 android:id="@+id/lblEventDesc"
@@ -89,8 +86,7 @@
                 android:layout_alignStart="@+id/txtTitle"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/Description"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                 />
 
 
             <TextView
@@ -104,7 +100,7 @@
                 android:layout_toEndOf="@id/lblEventDesc"
                 android:text="@string/mandatory"
                 android:textColor="@color/red"
-                android:textSize="@dimen/thirteen_sp" />
+                />
 
 
             <RelativeLayout
@@ -141,10 +137,9 @@
                 android:layout_below="@+id/rytDesc"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:text="@string/_0_of_500"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                />
 
 
             <RelativeLayout
@@ -170,9 +165,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="Notice Display Date Range"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp" />
+                        android:text="@string/notice_display_date_range"
+                         />
 
                     <TextView
                         android:id="@+id/lblStar3"
@@ -184,7 +178,7 @@
                         android:layout_toEndOf="@id/lblStart"
                         android:text="@string/mandatory"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/thirteen_sp" />
+                       />
 
 
                     <LinearLayout
@@ -194,7 +188,7 @@
                         android:layout_below="@+id/lblStart"
                         android:weightSum="3"
                         android:gravity="center"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="@dimen/twenty"
                         android:orientation="horizontal">
 
                         <RelativeLayout
@@ -207,8 +201,8 @@
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardStart"
-                                android:layout_width="100dp"
-                                android:layout_height="80dp"
+                                android:layout_width="@dimen/hundred"
+                                android:layout_height="@dimen/eighty"
                                 app:cardCornerRadius="@dimen/ten">
 
                                 <LinearLayout
@@ -231,8 +225,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_horizontal"
                                             android:layout_marginTop="@dimen/five"
-                                            android:text="From"
-                                            android:textColor="@color/black"
+                                            android:text="@string/from"
                                             android:textSize="@dimen/fifteen_sp" />
 
                                     </LinearLayout>
@@ -250,7 +243,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="12"
-                                            android:textColor="@color/black"
                                             android:textSize="@dimen/fifteen_sp" />
 
                                         <TextView
@@ -260,7 +252,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="Fri, Jun 2025"
                                             android:textColor="@color/grey"
-                                            android:textSize="13sp" />
+                                             />
 
 
                                     </LinearLayout>
@@ -291,8 +283,8 @@
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardEnd"
-                                android:layout_width="100dp"
-                                android:layout_height="80dp"
+                                android:layout_width="@dimen/hundred"
+                                android:layout_height="@dimen/eighty"
                                 app:cardCornerRadius="@dimen/ten">
 
                                 <LinearLayout
@@ -315,7 +307,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_horizontal"
                                             android:layout_marginTop="@dimen/five"
-                                            android:text="To"
+                                            android:text="@string/to"
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/fifteen_sp" />
 
@@ -334,7 +326,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="28"
-                                            android:textColor="@color/black"
                                             android:textSize="@dimen/fifteen_sp" />
 
                                         <TextView
@@ -344,7 +335,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="Fri, Jun 2025"
                                             android:textColor="@color/grey"
-                                            android:textSize="13sp" />
+                                             />
 
 
                                     </LinearLayout>
@@ -364,7 +355,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rytStart"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="@dimen/twenty"
                         android:orientation="horizontal">
 
 
@@ -374,20 +365,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
-                            android:text="Add Attachment"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp" />
+                            android:text="@string/add_attachment"
+                          />
 
                         <TextView
                             android:id="@+id/optionallabel"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginStart="@dimen/five"
                             android:layout_marginTop="@dimen/ten"
                             android:text="(Optional)"
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/thirteen_sp" />
+                            />
 
 
                     </LinearLayout>
@@ -410,7 +400,7 @@
                         android:layout_height="@dimen/fourty"
                         android:layout_below="@+id/rcyImages"
                         android:layout_marginTop="@dimen/thirty"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="@dimen/twenty"
                         android:background="@drawable/rect_btn_orange"
                         android:gravity="center"
                         android:text="@string/NEXT"

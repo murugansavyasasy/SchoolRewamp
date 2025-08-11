@@ -52,16 +52,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-<!--                <com.masoudss.lib.WaveformSeekBar-->
-<!--                    android:id="@+id/waveformSeekBar"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="35dp"-->
-<!--                    android:layout_margin="16dp"-->
-<!--                    android:layout_marginTop="@dimen/thirty"-->
-<!--                    app:wave_width="4dp"-->
-<!--                    app:wave_gap="3dp"-->
-<!--                    app:wave_progress_color="@color/navi_blue0"-->
-<!--                    app:wave_background_color="@color/grey" />-->
 
                 <RelativeLayout
                     android:id="@+id/rytVideoUpload"
@@ -89,11 +79,10 @@
                         android:layout_below="@+id/imgVideo"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/ten"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:text="@string/Clicktochoosevideofromfile"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold" />
+                       />
 
                 </RelativeLayout>
 
@@ -105,12 +94,12 @@
                     android:layout_height="@dimen/fourty"
                     android:text="@string/ChangeVideo"
                     android:gravity="center"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_centerHorizontal="true"
                     android:paddingHorizontal="@dimen/thirty"
                     android:background="@drawable/rect_btn_orange"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textSize="@dimen/thirteen_sp"/>
+                    />
 
                 <EditText
                     android:id="@+id/txtTitle"
@@ -121,10 +110,9 @@
                     android:background="@drawable/bg_edittext_view_line"
                     android:hint="@string/Entervideotitle"
                     android:inputType="text"
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/ten"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/thirteen_sp" />
 
                 <RelativeLayout
@@ -145,8 +133,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:hint="@string/Description"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_regular"
+                       style="@style/CustomTextStylePoppinsRegular"
                         android:textSize="@dimen/thirteen_sp" />
 
                     <TextView
@@ -156,10 +143,7 @@
                         android:layout_below="@+id/txtDesc"
                         android:layout_alignParentEnd="true"
                         android:text="0 of 500"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold" />
+                        style="@style/CustomTextStylePoppinsBold" />
 
                 </RelativeLayout>
 
@@ -175,8 +159,8 @@
                     android:paddingHorizontal="@dimen/thirty"
                     android:background="@drawable/rect_btn_orange"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textSize="@dimen/thirteen_sp"/>
+                   style="@style/CustomTextStylePoppinsBold"
+                    />
 
 
 
