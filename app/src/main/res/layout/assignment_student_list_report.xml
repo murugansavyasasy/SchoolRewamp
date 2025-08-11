@@ -17,8 +17,8 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:gravity="center"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="@dimen/eight"
+        android:paddingBottom="@dimen/eight">
 
 
         <LinearLayout
@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="18sp"
+                android:textSize="@dimen/eighteen_sp"
                 android:layout_gravity="center"
                 android:textColor="@color/green"
                 style="@style/CustomTextStylePoppinsBold" />
@@ -39,18 +39,19 @@
             <TextView
                 android:id="@+id/submittedlabel"
                 android:layout_width="wrap_content"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_height="wrap_content"
-                android:text="Submitted"
-                android:textSize="18sp"
+                android:text="@string/submitted"
+                android:textSize="@dimen/eighteen_sp"
                 android:layout_gravity="center"
                 android:textColor="@color/green"
-                style="@style/CustomTextStylePoppinsBold" />
+                 />
         </LinearLayout>
 
 
         <View
-            android:layout_width="150dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/one_fifty"
+            android:layout_height="@dimen/zero"
             android:id="@+id/viewline"/>
 
 
@@ -66,21 +67,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_gravity="center"
-            android:textSize="18sp"
+            android:textSize="@dimen/eighteen_sp"
             android:textColor="@color/red"
-            style="@style/CustomTextStylePoppinsBold" />
+            />
 
 
         <TextView
             android:id="@+id/pendinglabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending"
-            android:textSize="18sp"
+            android:text="@string/pending"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textSize="@dimen/eighteen_sp"
             android:textColor="@color/red"
            android:layout_gravity="center"
-            style="@style/CustomTextStylePoppinsBold" />
+            />
     </LinearLayout>
 
 
@@ -112,7 +115,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/nomessages"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:visibility="gone" />
 
     <TextView
@@ -124,8 +127,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/no_list_found"
-        android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:layout_below="@+id/nomessage"
         android:gravity="center"
         android:visibility="gone" />

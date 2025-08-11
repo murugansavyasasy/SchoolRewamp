@@ -3,26 +3,26 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="12dp"
-    card_view:cardElevation="4dp"
-    android:layout_margin="8dp"
+    card_view:cardCornerRadius="@dimen/twele"
+    card_view:cardElevation="@dimen/four"
+    android:layout_margin="@dimen/eight"
     android:backgroundTint="@android:color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="@dimen/twele">
 
 \        <TextView
             android:id="@+id/avatarText"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/fourty_eight"
+            android:layout_height="@dimen/fourty_eight"
             android:layout_alignParentStart="true"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="@dimen/twenty_sp"
             android:textColor="@android:color/white"
             android:background="@drawable/default_profile"
-            android:layout_marginEnd="12dp" />
+            android:layout_marginEnd="@dimen/twele" />
 
         <!-- Top Name -->
         <TextView
@@ -33,7 +33,7 @@
             android:text="SARANRAJ SHANMUGAM"
             android:textColor="@android:color/black"
           style="@style/CustomTextStylePoppinsBold"
-            android:textSize="15sp" />
+            android:textSize="@dimen/fifteen_sp" />
 
         <!-- Section -->
         <TextView
@@ -43,10 +43,10 @@
             android:layout_below="@id/lblStudentName"
             android:layout_toEndOf="@id/avatarText"
             android:text="I - B"
-            android:textColor="#666666"
-            android:textSize="13sp"
+            android:textColor="@color/light_gray_5"
+            android:textSize="@dimen/thirteen_sp"
             style="@style/CustomTextStylePoppinsMedium"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="@dimen/two" />
 
         <!-- Submitted Label -->
         <TextView
@@ -57,9 +57,8 @@
             android:layout_toEndOf="@id/avatarText"
             android:text="Submitted:"
           style="@style/CustomTextStylePoppinsBold"
-            android:textSize="13sp"
-            android:layout_marginTop="6dp"
-            android:textColor="@android:color/black" />
+            android:layout_marginTop="@dimen/six"
+            />
 
         <!-- Date Text -->
         <TextView
@@ -68,30 +67,29 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/submittedLabel"
             android:layout_alignTop="@id/submittedLabel"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/four"
             android:text="Mon, 11"
-            android:textSize="13sp"
             style="@style/CustomTextStylePoppinsMedium"
-            android:textColor="@android:color/black" />
+            />
 
         <LinearLayout
             android:id="@+id/statusButton"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="@dimen/thirty_six"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:orientation="horizontal"
             android:background="@drawable/pending_button_bg"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            android:paddingStart="@dimen/twele"
+            android:paddingEnd="@dimen/twele"
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/sixteen"
                 android:id="@+id/cancelimage"
                 android:src="@drawable/close_red_color"
-                android:layout_marginEnd="6dp" />
+                android:layout_marginEnd="@dimen/six" />
 
             <TextView
                 android:id="@+id/statuslabel"
@@ -100,7 +98,7 @@
                 android:text="Pending"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@android:color/holo_red_dark"
-                android:textSize="13sp" />
+                />
         </LinearLayout>
 
     </RelativeLayout>

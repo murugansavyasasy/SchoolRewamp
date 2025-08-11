@@ -1,12 +1,12 @@
 <LinearLayout
     android:id="@+id/lnrTab"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="@dimen/fourty"
     android:layout_below="@+id/linearlayout"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="@dimen/five"
     android:background="@drawable/rect_btn_grey"
     android:orientation="horizontal"
-    android:padding="1dp"
+    android:padding="@dimen/one"
     android:layout_alignStart="@+id/linearlayout"
     android:layout_alignEnd="@+id/linearlayout"
     android:weightSum="2"
@@ -20,16 +20,15 @@
         android:layout_gravity="center"
         android:layout_weight="0.5"
         android:background="@drawable/green_radious"
-        android:fontFamily="@font/poppins_medium"
+        style="@style/CustomTextStylePoppinsMedium"
         android:gravity="center"
-        android:layout_marginTop="1dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:text="All"
+        android:layout_marginTop="@dimen/one"
+        android:layout_marginStart="@dimen/one"
+        android:layout_marginEnd="@dimen/one"
+        android:layout_marginBottom="@dimen/one"
+        android:text="@string/all"
         android:textColor="@color/bpWhite"
-        android:textSize="13sp"
-        android:textStyle="normal">
+       >
 
     </TextView>
 
@@ -39,16 +38,15 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="0.5"
-        android:fontFamily="@font/poppins_medium"
         android:gravity="center"
-        android:text="Active"
+        android:text="@string/active"
+        style="@style/CustomTextStylePoppinsMedium"
         android:textColor="@color/white"
-        android:textSize="13sp"
-        android:layout_marginTop="1dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:textStyle="normal">
+        android:layout_marginTop="@dimen/one"
+        android:layout_marginStart="@dimen/one"
+        android:layout_marginEnd="@dimen/one"
+        android:layout_marginBottom="@dimen/one"
+        >
     </TextView>
 
     <TextView
@@ -57,16 +55,15 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="0.5"
-        android:fontFamily="@font/poppins_medium"
         android:gravity="center"
-        android:text="Expired"
+        android:text="@string/expired"
         android:textColor="@color/white"
-        android:textSize="13sp"
-        android:layout_marginTop="1dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:textStyle="normal">
+        android:textSize="@dimen/thirteen_sp"
+        android:layout_marginTop="@dimen/one"
+        android:layout_marginStart="@dimen/one"
+        android:layout_marginEnd="@dimen/one"
+        android:layout_marginBottom="@dimen/one"
+       >
 
     </TextView>
 
@@ -76,16 +73,15 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="0.5"
-        android:fontFamily="@font/poppins_medium"
+        style="@style/CustomTextStylePoppinsMedium"
         android:gravity="center"
-        android:text="Redeemed"
+        android:text="@string/redeemed"
         android:textColor="@color/white"
-        android:textSize="13sp"
-        android:layout_marginTop="1dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:textStyle="normal">
+        android:layout_marginTop="@dimen/one"
+        android:layout_marginStart="@dimen/one"
+        android:layout_marginEnd="@dimen/one"
+        android:layout_marginBottom="@dimen/one"
+       >
 
     </TextView>
 

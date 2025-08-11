@@ -29,13 +29,13 @@
                     android:scaleType="fitStart" />
                 <ImageView
                     android:id="@+id/image_top_left"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="12dp"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_margin="@dimen/twele"
                     android:src="@drawable/left_arrow"
                     android:scaleType="centerInside"
                     android:background="@drawable/rounded_bg"
-                    android:padding="8dp"
+                    android:padding="@dimen/eight"
                     android:layout_gravity="top|start" />
             </FrameLayout>
 

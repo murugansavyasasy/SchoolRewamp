@@ -139,10 +139,8 @@
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+               style="@style/CustomTextStylePoppinsMedium"
+                >
 
             </EditText>
 
@@ -154,11 +152,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:fontFamily="@font/poppins_medium"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:text="0 / 50"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+                >
 
             </TextView>
 
@@ -206,11 +203,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:fontFamily="@font/poppins_medium"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:text="0 / 500"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+                >
 
             </TextView>
 
@@ -250,11 +246,9 @@
                 android:layout_toEndOf="@+id/imgCalender"
                 android:drawableEnd="@drawable/ic_down_arrow"
                 android:drawablePadding="@dimen/ten"
-                android:fontFamily="@font/poppins_medium"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+                >
 
             </TextView>
 
@@ -268,11 +262,9 @@
                 android:layout_marginEnd="@dimen/fifteen"
                 android:drawableEnd="@drawable/ic_down_arrow"
                 android:drawablePadding="@dimen/ten"
-                android:fontFamily="@font/poppins_medium"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:text="12:12 PM"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal"></TextView>
+                ></TextView>
 
 
             <RelativeLayout
@@ -362,10 +354,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbarLayout1"
-            android:layout_marginStart="@dimen/five"
+            android:layout_marginStart="5dp"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="@dimen/five"
-            android:visibility="gone">
+            android:layout_marginEnd="5dp">
 
             <LinearLayout
                 android:id="@+id/AcademicYear"
@@ -410,6 +402,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/AcademicYear"
                 android:layout_margin="@dimen/ten"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/gray_bg_radius"
                 android:gravity="center"
@@ -422,7 +415,7 @@
                     android:src="@drawable/search_icon"></ImageView>
 
                 <EditText
-                    android:id="@+id/edtSearch"
+                    android:id="@+id/txtSearchMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/five"
@@ -430,7 +423,6 @@
                     android:hint="@string/search"
                     android:text=""
                     android:textSize="@dimen/fifteen_sp">
-
                 </EditText>
 
 
@@ -449,6 +441,7 @@
                 android:id="@+id/rcyAssignmentReport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_below="@+id/line2">
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -463,6 +456,7 @@
                 android:visibility="gone">
 
                 <ImageView
+                    android:id="@+id/noDataImage"
                     android:layout_width="@dimen/two_hundred"
                     android:layout_height="@dimen/two_hundred"
                     android:layout_marginTop="@dimen/twenty_five"

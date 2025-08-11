@@ -1,51 +1,32 @@
 package com.vs.schoolmessenger.School.Event.Adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventFilePathAdapter
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import me.relex.circleindicator.CircleIndicator2
 
-class SchoolEventAdapter (
-    private var itemList: List<SchoolEventItem>?,
-    private var listener: SchoolEventClickListener,
-    private var context: Context,
+class SchoolEventAdapter(
+    private val originalList: MutableList<SchoolEventItem>,
+    private val listener: SchoolEventClickListener,
+    private val context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
+    private var filteredList: MutableList<SchoolEventItem> = originalList.toMutableList()
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
-    private var fullList: List<SchoolEventItem> = itemList ?: listOf()
-    private var filteredList: List<SchoolEventItem> = itemList ?: listOf()
-    init {
-        fullList = itemList ?: listOf()
-        filteredList = fullList
-    }
-
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -59,150 +40,82 @@ class SchoolEventAdapter (
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.event_ongoing_recyclerview, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            filteredList?.get(position)?.let {
-                holder.bind(it, position, listener, this)
-            }
+            holder.bind(filteredList[position], listener)
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) {
-            3
-        } else {
-            filteredList?.size ?: 0
-        }
+        return if (isLoading) 3 else filteredList.size
     }
 
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
-                val result = if (query.isEmpty()) {
-                    fullList
+                val query = constraint?.toString()?.trim()?.lowercase() ?: ""
+                val resultsList = if (query.isEmpty()) {
+                    originalList
                 } else {
-                    fullList.filter {
-                        it.title.lowercase().contains(query) ||
-                                it.description.lowercase().contains(query) ||
-                                it.venue.lowercase().contains(query)
+                    originalList.filter {
+                        it.title?.lowercase()?.contains(query) == true ||
+                                it.description?.lowercase()?.contains(query) == true
                     }
                 }
-                val filterResults = FilterResults()
-                filterResults.values = result
-                return filterResults
+                return FilterResults().apply { values = resultsList }
             }
 
+            @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as? List<SchoolEventItem> ?: listOf()
-                listener.onSearchResultEmpty("COMPLETED", filteredList.isEmpty())
+                filteredList.clear()
+                filteredList.addAll(results?.values as List<SchoolEventItem>)
                 notifyDataSetChanged()
+
+                (context as? Activity)?.runOnUiThread {
+                    val noResultsText = context.findViewById<TextView>(R.id.noDataText)
+                    val noResultsImage = context.findViewById<ImageView>(R.id.noDataImage)
+
+                    if (filteredList.isEmpty()) {
+                        noResultsText?.visibility = View.VISIBLE
+                        noResultsImage?.visibility = View.VISIBLE
+                    } else {
+                        noResultsText?.visibility = View.GONE
+                        noResultsImage?.visibility = View.GONE
+                    }
+                }
             }
         }
     }
 
-    fun updateList(newList: List<SchoolEventItem>?) {
-        this.itemList = newList
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newList: List<SchoolEventItem>) {
+        originalList.clear()
+        originalList.addAll(newList)
+        filteredList.clear()
+        filteredList.addAll(newList)
         notifyDataSetChanged()
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
-
+    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val event_header: TextView = itemView.findViewById(R.id.event_header)
         private val event_time: TextView = itemView.findViewById(R.id.event_time)
         private val event_location: TextView = itemView.findViewById(R.id.event_location)
         private val status_event: TextView = itemView.findViewById(R.id.status_event)
         private val eventdesc: TextView = itemView.findViewById(R.id.eventdesc)
-        private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
-        private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
-        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
-        private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
-        private val header: RelativeLayout = itemView.findViewById(R.id.header)
 
-        @SuppressLint("ClickableViewAccessibility")
-        fun bind(
-            data: SchoolEventItem, position: Int, listener: SchoolEventClickListener, adapter: SchoolEventAdapter
-        ) {
+        fun bind(data: SchoolEventItem, listener: SchoolEventClickListener) {
             event_header.text = data.title
-            event_time.text =
-                "Event started at" + " " + data.time + " - " + Constant.convertDateTimeFormat(data.date)
+            event_time.text = "Event started at ${data.time} - ${data.date}"
             event_location.text = data.venue
             status_event.text = "Today's Event"
             eventdesc.text = data.description
 
-            video_player.visibility = View.GONE
-            loadingBar.visibility = View.GONE
-
-
-            header.setOnClickListener {
-                val convertedList = data.file_path.map {
-                    GetFilePathDetails(
-                        type = it.type,
-                        url = it.url,
-                    )
-                }
-                val isHomeWorkData = FilePreview(
-                    id = "",
-                    title = data.title,
-                    description = data.description,
-                    subjectName = "",
-                    sentBy = "",
-                    thumbnail = data.thumbnail,
-                    isUnread = true,
-                    isCompleted = true,
-                    isMenuType = Constant.M_SCHOOL_CLASS_EVENTS,
-                    fileList = convertedList,
-                )
-
-                val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                context.startActivity(intent)
-            }
-
-            if (!data.iframe.isNullOrEmpty()) {
-                video_player.visibility = View.VISIBLE
-                rytList.visibility = View.VISIBLE
-                rcyImgPDF.visibility = View.GONE
-
-            } else {
-                if (data.file_path.isNullOrEmpty()) {
-//                    rytList.visibility = View.GONE
-//                    arrow_icon.visibility = View.VISIBLE
-                    rcyImgPDF.visibility = View.GONE
-                    total_numbers.visibility = View.GONE
-                    video_player.visibility = View.GONE
-                } else {
-                    rytList.visibility = View.VISIBLE
-//                    arrow_icon.visibility = View.VISIBLE
-                    rcyImgPDF.visibility = View.VISIBLE
-                    video_player.visibility = View.GONE
-
-                    val fileList = data.file_path
-                    val totalFiles = fileList.size
-
-                    val adapter =
-                        EventFilePathAdapter(fileList, context, Constant.isShimmerViewDisable)
-                    rcyImgPDF.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    rcyImgPDF.adapter = adapter
-
-                    if (totalFiles > 3) {
-                        total_numbers.text = "+${totalFiles - 3}"
-                        total_numbers.visibility = View.VISIBLE
-                    } else {
-                        total_numbers.visibility = View.GONE
-                    }
-                }
-            }
         }
     }
 }

@@ -13,6 +13,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import androidx.appcompat.widget.SearchView
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
@@ -27,6 +28,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.AdapterView
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -334,10 +336,35 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-
-            }
+            override fun afterTextChanged(s: Editable?) {}
         })
+
+
+        schooleventAdapter = SchoolEventAdapter(
+            mutableListOf(),
+            this,
+            this,
+            Constant.isShimmerViewDisable
+        )
+        binding.recyclerView.adapter = schooleventAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+
+        fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            schooleventAdapter.filter.filter(s)
+
+            binding.recyclerView.post {
+                if (schooleventAdapter.itemCount == 0) {
+                    binding.noDataImage.visibility = View.VISIBLE
+                    binding.noDataText.visibility = View.VISIBLE
+                    binding.recyclerView.visibility = View.GONE
+                } else {
+                    binding.noDataImage.visibility = View.GONE
+                    binding.noDataText.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }
 
         appViewModel?.isGetEventCategories(
             isAccessToken!!, this
@@ -393,27 +420,26 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     private fun loadeventdata() {
         Constant.showLoading(this)
-        schooleventAdapter = SchoolEventAdapter(null, this, this, Constant.isShimmerViewDisable)
+
+        schooleventAdapter = SchoolEventAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcyongoingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcyongoingevent.isNestedScrollingEnabled = false
-        binding.rcyongoingevent.adapter = mAdapter
+        binding.rcyongoingevent.adapter = schooleventAdapter
 
         eventupcomingadapter =
-            SchoolEventUpcomingAdapter(null, this, this, Constant.isShimmerViewDisable)
+            SchoolEventUpcomingAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcyupcomingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcyupcomingevent.isNestedScrollingEnabled = false
         binding.rcyupcomingevent.adapter = eventupcomingadapter
 
-
         eventcompletedadapter =
-            SchoolEventCompletedAdapter(null, this, this, Constant.isShimmerViewDisable)
+            SchoolEventCompletedAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcycompletedevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcycompletedevent.isNestedScrollingEnabled = false
         binding.rcycompletedevent.adapter = eventcompletedadapter
-
 
 
         appViewModel!!.IsGetEventSchoolReport(isAccessToken!!, this)
@@ -421,8 +447,13 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
 
     private fun isloadeventData(newData: List<SchoolEventItem>?) {
-        schooleventAdapter = SchoolEventAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcyongoingevent.adapter = schooleventAdapter
+        val list = newData?.toMutableList() ?: mutableListOf()
+        if (::schooleventAdapter.isInitialized) {
+            schooleventAdapter.updateData(list)
+        } else {
+            schooleventAdapter = SchoolEventAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
+            binding.rcyongoingevent.adapter = schooleventAdapter
+        }
     }
 
 
@@ -451,6 +482,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 if (isEmpty) View.GONE else View.VISIBLE
         }
     }
+
+
 
     fun showConfirmationDialog(
         title: String,

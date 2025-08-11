@@ -102,9 +102,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/ten"
                         android:text="@string/choose_academic_year"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp"
-                        android:textStyle="bold">
+                        >
                     </TextView>
 
 
@@ -150,9 +149,7 @@
                             android:layout_alignStart="@+id/cardStart"
                             android:layout_marginTop="@dimen/ten"
                             android:text="@string/select_date"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="bold" />
+                            />
 
 
                         <TextView
@@ -165,7 +162,7 @@
                             android:layout_toEndOf="@id/date_header"
                             android:text="@string/mandatory"
                             android:textColor="@color/red"
-                            android:textSize="@dimen/thirteen_sp" />
+                            />
 
 
                         <androidx.cardview.widget.CardView
@@ -192,9 +189,9 @@
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginTop="@dimen/two"
                                     android:text="Sun"
+                                    style="@style/CustomTextStylePoppinsBold"
                                     android:textColor="@color/grey"
-                                    android:textSize="@dimen/thirteen_sp"
-                                    android:textStyle="bold" />
+                                    />
 
                                 <TextView
                                     android:id="@+id/lblDate1"
@@ -203,9 +200,9 @@
                                     android:background="@color/primary_light"
                                     android:gravity="center"
                                     android:text="00"
-                                    android:textColor="@color/black"
+                                    style="@style/CustomTextStylePoppinsBold"
                                     android:textSize="@dimen/fifteen_sp"
-                                    android:textStyle="bold" />
+                                     />
 
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -224,11 +221,9 @@
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_marginTop="@dimen/ten"
                                 android:drawablePadding="@dimen/ten"
-                                android:fontFamily="@font/poppins_medium"
+                                style="@style/CustomTextStylePoppinsMedium"
                                 android:text="Thu 13 Feb 2025"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp"
-                                android:textStyle="normal"></TextView>
+                                ></TextView>
 
                             <ImageView
                                 android:id="@+id/image_downarrow"
@@ -261,9 +256,7 @@
                         android:layout_marginStart="@dimen/fifteen"
                         android:layout_marginTop="@dimen/twenty"
                         android:text="@string/select_standard_and_section"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold" />
+                        />
 
 
                     <TextView
@@ -277,7 +270,7 @@
                         android:layout_toEndOf="@id/selectClassSection"
                         android:text="@string/mandatory"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/thirteen_sp" />
+                         />
 
 
                     <LinearLayout
@@ -342,9 +335,6 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/fifteen"
                     android:text="@string/select_attendance_type"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"
                     android:visibility="visible" />
 
 
@@ -396,11 +386,9 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_toEndOf="@+id/radioButtonFullDay"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="@string/full_day"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="normal"></TextView>
+                            style="@style/CustomTextStylePoppinsMedium"
+                            ></TextView>
                     </RelativeLayout>
 
 
@@ -430,11 +418,9 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@+id/radioButtonHalfDay"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="@string/half_day"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="normal"></TextView>
+                            style="@style/CustomTextStylePoppinsMedium"
+                            ></TextView>
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -447,11 +433,8 @@
                     android:layout_below="@+id/lnrClasses1"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/fifteen"
-                    android:fontFamily="@font/poppins_bold"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:text="@string/select_session"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"
                     android:visibility="gone" />
 
 
@@ -491,11 +474,10 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_toEndOf="@+id/radioButtonFirstHalf"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="@string/first_half"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="normal"></TextView>
+                            style="@style/CustomTextStylePoppinsMedium"
+
+                            ></TextView>
                     </RelativeLayout>
 
 
@@ -527,11 +509,9 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@+id/radioButtonSecondHalf"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="@string/half_day"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="normal"></TextView>
+                            style="@style/CustomTextStylePoppinsMedium"
+                            ></TextView>
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -567,9 +547,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/fifteen"
                         android:text="Full day"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold">
+                        style="@style/CustomTextStylePoppinsBold"
+                       >
 
                     </TextView>
                 </RelativeLayout>
@@ -584,13 +563,11 @@
                     android:layout_marginEnd="@dimen/twenty"
                     android:background="@drawable/rect_shadow_gray"
                     android:enabled="false"
-                    android:fontFamily="@font/poppins_bold"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:gravity="center"
                     android:padding="@dimen/ten"
                     android:text="@string/MarkAllPresent2"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"
                     android:visibility="visible">
 
                 </TextView>
@@ -604,9 +581,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:text="@string/OR"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:visibility="visible">
 
                 </TextView>
@@ -621,13 +596,11 @@
                     android:layout_marginEnd="@dimen/twenty"
                     android:background="@drawable/rect_shadow_gray"
                     android:enabled="false"
-                    android:fontFamily="@font/poppins_bold"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:gravity="center"
                     android:padding="@dimen/ten"
                     android:text="@string/MarkAbsentees"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"
                     android:visibility="visible">
 
                 </TextView>
