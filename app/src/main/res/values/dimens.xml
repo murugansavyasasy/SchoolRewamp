@@ -15,6 +15,7 @@
     <dimen name="minus_fourteen">-14dp</dimen>
     <dimen name="minus_ten">-10dp</dimen>
     <dimen name="minus_five">-5dp</dimen>
+    <dimen name="minus_one">-1dp</dimen>
     <dimen name="zero">0dp</dimen>
     <dimen name="line_spacing">5dp</dimen>
     <dimen name="point_one">0.1dp</dimen>
@@ -66,6 +67,7 @@
     <dimen name="seventy">70dp</dimen>
     <dimen name="seventy_five">75dp</dimen>
     <dimen name="eighty">80dp</dimen>
+    <dimen name="eighty_five">85dp</dimen>
     <dimen name="ninety">90dp</dimen>
     <dimen name="hundred">100dp</dimen>
     <dimen name="one_ten">110dp</dimen>
@@ -76,14 +78,18 @@
     <dimen name="hundred_thirty">120dp</dimen>
     <dimen name="hundred_fifty">150dp</dimen>
     <dimen name="one_fifty">150dp</dimen>
+    <dimen name="one_sixty">160dp</dimen>
+    <dimen name="one_sixty_five">165dp</dimen>
     <dimen name="one_seventy">170dp</dimen>
     <dimen name="one_seventy_two">172dp</dimen>
     <dimen name="one_eighty">180dp</dimen>
     <dimen name="two_hundred">200dp</dimen>
+    <dimen name="two_hundred_thirty">230dp</dimen>
     <dimen name="two_fourty">240dp</dimen>
     <dimen name="two_fifty">250dp</dimen>
     <dimen name="two_sixty">260dp</dimen>
     <dimen name="three_hundred">300dp</dimen>
+    <dimen name="three_hundred_seventy_seven">377dp</dimen>
     <dimen name="four_hundred">400dp</dimen>
     <dimen name="four_fifty">450dp</dimen>
 
@@ -112,8 +118,10 @@
     <dimen name="twenty_sp">20sp</dimen>
     <dimen name="twenty_two_sp">22sp</dimen>
     <dimen name="twenty_three_sp">23sp</dimen>
+    <dimen name="twenty_four_sp">24sp</dimen>
     <dimen name="twenty_five_sp">25sp</dimen>
     <dimen name="thirty_sp">30sp</dimen>
+    <dimen name="thirty_five_sp">35sp</dimen>
     <dimen name="fourty_sp">40sp</dimen>
     <dimen name="fourty_five_sp">45sp</dimen>
     <dimen name="fifty_sp">50sp</dimen>

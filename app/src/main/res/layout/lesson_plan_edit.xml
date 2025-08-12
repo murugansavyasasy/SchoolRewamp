@@ -16,7 +16,7 @@
         android:id="@+id/rcyLessonPlanEdit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/five"
         android:layout_above="@+id/linear_layout"
         android:layout_below="@+id/toolbarLayout">
     </androidx.recyclerview.widget.RecyclerView>
@@ -26,24 +26,24 @@
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/ten"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:gravity="center"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="@dimen/eight"
+        android:paddingBottom="@dimen/eight">
 
         <TextView
             android:id="@+id/cancelbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:textSize="13sp"
+            android:text="@string/Cancel"
+            android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/white"
-            android:padding="10dp"
+            android:padding="@dimen/ten"
             android:paddingStart="@dimen/eighteen_sp"
             android:paddingEnd="@dimen/eighteen_sp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/bg_red_radious__all_side_same"
             style="@style/CustomTextStylePoppinsMedium" />
 
@@ -51,13 +51,13 @@
             android:id="@+id/updatebutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update"
-            android:textSize="13sp"
+            android:text="@string/Update"
+            android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/white"
-            android:padding="10dp"
+            android:padding="@dimen/ten"
             android:paddingStart="@dimen/eighteen_sp"
             android:paddingEnd="@dimen/eighteen_sp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="@dimen/thirty"
             android:background="@drawable/bg_green_radious"
             style="@style/CustomTextStylePoppinsMedium" />
 
@@ -73,7 +73,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/nomessages"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:visibility="gone" />
 
     <TextView
@@ -86,7 +86,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/no_list_found"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:layout_below="@+id/nomessage"
         android:visibility="gone" />
 

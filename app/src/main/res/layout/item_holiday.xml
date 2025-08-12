@@ -6,17 +6,17 @@
     android:gravity="center"
     android:layout_marginBottom="@dimen/ten"
     android:background="@drawable/white_bg_radius"
-    android:padding="12dp">
+    android:padding="@dimen/twele">
 
     <ImageView
         android:id="@+id/imgHolidayDot"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="@dimen/sixteen"
+        android:layout_height="@dimen/sixteen"
+        android:layout_marginEnd="@dimen/eight"
         android:src="@drawable/ic_holiday_dot_circle" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_height="wrap_content">

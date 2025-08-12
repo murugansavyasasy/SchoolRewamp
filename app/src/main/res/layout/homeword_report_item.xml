@@ -52,12 +52,12 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/ten"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_marginTop="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp"
-            android:textStyle="bold" />
+             />
 
 
         <TextView
@@ -68,11 +68,10 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:fontFamily="@font/poppins_regular"
             android:text="15 Nov 2024"
-            android:textColor="@color/black"
+            style="@style/CustomTextStylePoppinsRegular"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal" />
+            />
 
         <LinearLayout
             android:id="@+id/lytRecyclerwview"
@@ -98,7 +97,7 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/five"
-                android:elevation="4dp"
+                android:elevation="@dimen/four"
                 android:visibility="visible" />
 
         </LinearLayout>
@@ -111,11 +110,9 @@
             android:layout_below="@+id/lytRecyclerwview"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:text="Annual Day celebrations"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
+             />
 
 
         <TextView
@@ -128,8 +125,6 @@
             android:maxLines="3"
             style="@style/CustomTextStylePoppinsMedium"
             android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
           />
 
 

@@ -28,7 +28,7 @@
     <View
         android:layout_below="@+id/textViewItem"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/point_five"
         android:background="@color/grey_mild"/>
 
 </RelativeLayout>

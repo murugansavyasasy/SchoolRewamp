@@ -16,12 +16,12 @@
 
         <ProgressBar
             android:id="@+id/isProgressBar"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/fifty"
             android:visibility="visible"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="@dimen/fourty"
             android:layout_below="@+id/text_view"
-            android:layout_height="50dp">
+            android:layout_height="@dimen/fifty">
 
         </ProgressBar>
 
@@ -36,8 +36,8 @@
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_marginTop="@dimen/twenty"
                 android:src="@drawable/left_arrow" />
 
             <TextView
@@ -45,11 +45,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/back"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="1dp"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_marginTop="@dimen/one"
                 android:layout_toEndOf="@id/back"
                 android:gravity="center"
-                android:text="Pauket"
+                android:text="@string/pauket"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -61,11 +61,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/relative_layout"
             android:layout_alignStart="@+id/recyclerView"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
             app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="11dp"
-            app:cardElevation="8dp">
+            app:cardCornerRadius="@dimen/eleven"
+            app:cardElevation="@dimen/eight">
 
             <LinearLayout
                 android:id="@+id/lnrPoints"
@@ -73,23 +73,23 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="13dp">
+                android:padding="@dimen/thirteen">
 
                 <FrameLayout
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="@dimen/fourty_eight"
+                    android:layout_height="@dimen/fourty_eight"
+                    android:layout_marginEnd="@dimen/twele"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="36dp"
+                        android:layout_width="@dimen/twenty_six"
+                        android:layout_height="@dimen/thirty_six"
                         android:layout_gravity="center"
                         android:src="@drawable/dollarsymbol" />
                 </FrameLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -99,8 +99,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="54800"
-                        android:textColor="#000000"
-                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sixteen_sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -113,8 +113,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Used: 17000"
-                            android:textColor="#9E9E9E"
-                            android:textSize="14sp"
+                            android:textColor="@color/light_gray_6"
+                            android:textSize="@dimen/fourteen_sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -123,8 +123,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:text="Available: 37800"
-                            android:textColor="#9E9E9E"
-                            android:textSize="14sp"
+                            android:textColor="@color/light_gray_6"
+                            android:textSize="@dimen/fourteen_sp"
                             android:textStyle="normal" />
                     </LinearLayout>
 
@@ -135,34 +135,34 @@
         <LinearLayout
             android:id="@+id/linearlayout"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/thirty_five"
             android:layout_below="@+id/totalcoinscardview"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/bg_search"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="12dp">
+            android:paddingHorizontal="@dimen/twele">
 
             <ImageView
                 android:id="@+id/imgSearch"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
                 android:src="@drawable/search_icon" />
 
             <EditText
                 android:id="@+id/editSearch"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="Search"
+                android:hint="@string/search"
                 android:inputType="text"
-                android:textColor="#000000"
-                android:textColorHint="#847c81"
-                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_gray_7"
+                android:textSize="@dimen/sixteen_sp"
                 android:visibility="visible" />
         </LinearLayout>
 
@@ -173,7 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/linearlayout"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/fifteen_sp"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/ten"
                 android:scrollbars="none" />
         </LinearLayout>
 
@@ -192,11 +192,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/linear_layout1"
             android:layout_alignStart="@+id/recyclerView"
-            android:layout_marginStart="13dp"
-            android:layout_marginTop="5dp"
-            android:text="All Coupons"
+            android:layout_marginStart="@dimen/thirteen"
+            android:layout_marginTop="@dimen/five"
+            android:text="@string/all_coupons"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/eighteen_sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -204,10 +204,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/text_view"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/five"
             android:clipToPadding="false"
             android:scrollIndicators="none"
             android:scrollbars="vertical" />
@@ -219,11 +219,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="@dimen/hundred"
             android:gravity="center"
-            android:text="No records found."
+            android:text="@string/no_records_found"
             android:textColor="@color/black"
-            android:textSize="15dp"
+            android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold"
             android:visibility="gone">
 
@@ -241,7 +241,7 @@
             android:layout_marginTop="@dimen/twenty"
             android:src="@drawable/nomessages"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/eighteen_sp"
             android:visibility="gone" />
 
         <TextView
@@ -254,7 +254,7 @@
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/no_list_found"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/eighteen_sp"
             android:layout_below="@+id/nomessage"
             android:gravity="center"
             android:visibility="gone" />

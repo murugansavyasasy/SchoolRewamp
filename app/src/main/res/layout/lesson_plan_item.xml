@@ -17,10 +17,10 @@
             android:id="@+id/detailsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/ten"
             android:nestedScrollingEnabled="false"
-            android:paddingStart="13dp"
-            android:paddingEnd="13dp" />
+            android:paddingStart="@dimen/thirteen"
+            android:paddingEnd="@dimen/thirteen" />
 
 
         <LinearLayout
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/detailsRecyclerView"
             android:layout_margin="@dimen/ten"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten"
             android:gravity="center"
             android:orientation="horizontal"
             android:visibility="visible">
@@ -53,8 +53,8 @@
                     <ImageView
                         android:id="@+id/status_text1label"
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_height="@dimen/twenty_five"
+                        android:layout_marginTop="@dimen/five"
                         android:src="@drawable/correcticonsvg" />
 
                     <TextView
@@ -62,11 +62,11 @@
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="3dp"
-                        android:text="Completed"
+                        android:layout_marginTop="@dimen/five"
+                        android:layout_marginBottom="@dimen/three"
+                        android:text="@string/completed"
                         android:textColor="@color/green"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/fifteen_sp" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="@dimen/eight"
                 android:gravity="end"
                 android:orientation="horizontal">
 
@@ -93,19 +93,19 @@
                     android:id="@+id/btnEditContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/eight"
                     android:background="@drawable/rect_grey"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingStart="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="6dp">
+                    android:paddingStart="@dimen/twele_sp"
+                    android:paddingTop="@dimen/six"
+                    android:paddingEnd="@dimen/twele"
+                    android:paddingBottom="@dimen/six">
 
                     <ImageView
                         android:id="@+id/imgEditIcon"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="@dimen/sixteen"
+                        android:layout_height="@dimen/sixteen"
                         android:contentDescription="Edit Icon"
                         android:src="@drawable/edit_icon" />
 
@@ -114,29 +114,29 @@
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Edit"
-                        android:textColor="@color/black" />
+                        android:layout_marginStart="@dimen/eight"
+                        android:text="@string/edit"
+                         />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/btnDeleteContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/eight"
                     android:background="@drawable/bg_red_radoius_10dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingStart="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="6dp">
+                    android:paddingStart="@dimen/twele"
+                    android:paddingTop="@dimen/six"
+                    android:paddingEnd="@dimen/twele"
+                    android:paddingBottom="@dimen/six">
 
                     <ImageView
                         android:id="@+id/imgDeleteIcon"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:contentDescription="Edit Icon"
+                        android:layout_width="@dimen/sixteen"
+                        android:layout_height="@dimen/sixteen"
+                        android:contentDescription="Delete Icon"
                         android:src="@drawable/delete_bin" />
 
 
@@ -146,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Delete"
+                        android:text="@string/delete"
                         android:textColor="@color/black" />
 
                 </LinearLayout>

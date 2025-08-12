@@ -197,8 +197,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
         categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewDisable)
-        binding.rcycategoryEvent.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcycategoryEvent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcycategoryEvent.isNestedScrollingEnabled = false
         binding.rcycategoryEvent.adapter = categoryadapter
 

@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:id="@+id/lnrDate"
-            android:layout_width="85dp"
+            android:layout_width="@dimen/eighty_five"
             android:layout_height="wrap_content"
             android:weightSum="3"
             android:background="@drawable/start_rounded_background"
@@ -74,7 +74,7 @@
             android:background="@drawable/rounded_start_bottom_green"
             android:padding="@dimen/seven"
             style="@style/CustomTextStylePoppinsRegular"
-            android:text="FD"
+            android:text="@string/fd"
             android:textColor="@color/white"
             android:textSize="@dimen/twele_sp" />
 
@@ -103,7 +103,7 @@
             android:background="@drawable/rounded_start_bottom_red"
             android:gravity="center"
             android:padding="@dimen/seven"
-            android:text="FD"
+            android:text="@string/fd"
             android:textColor="@color/white"
             android:textSize="@dimen/twele_sp" />
 
@@ -152,8 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStaffName"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+               />
 
             <RelativeLayout
                 android:id="@+id/rytCheckInTime"
@@ -179,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblCheckInTime"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/five"
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
@@ -197,9 +196,8 @@
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginBottom="@dimen/twenty"
                 android:text=""
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal" />
+                 />
 
         </RelativeLayout>
 

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/sixteen">
 
         <TextView
             android:id="@+id/tvFullDate"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="Jul 1"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/tvYear"
@@ -28,7 +28,7 @@
             android:text="2025"
             android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:textSize="22sp" />
+            android:textSize="@dimen/twenty_two_sp" />
     </LinearLayout>
 
     <!-- Month navigation -->
@@ -37,12 +37,12 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="@dimen/twele">
 
         <ImageView
             android:id="@+id/btnPrevMonth"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/thirty_two"
+            android:layout_height="@dimen/thirty_two"
             android:contentDescription="Previous"
             android:src="@drawable/left_arrow" />
 
@@ -52,13 +52,13 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
             android:text="July 2025"
-            android:textSize="16sp"
+            android:textSize="@dimen/sixteen_sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/btnNextMonth"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/thirty_two"
+            android:layout_height="@dimen/thirty_two"
             android:contentDescription="Next"
             android:src="@drawable/rightarrrow" />
     </LinearLayout>
@@ -68,77 +68,77 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingHorizontal="8dp"
-        android:paddingBottom="4dp">
+        android:paddingHorizontal="@dimen/eight"
+        android:paddingBottom="@dimen/four">
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="S"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="bold"
-            android:textColor="#666" />
+            android:textColor="@color/light_gray_3" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="M"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="bold"
-            android:textColor="#666" />
+            android:textColor="@color/light_gray_3" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="T"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="bold"
-            android:textColor="#666" />
+            android:textColor="@color/light_gray_3" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="W"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="bold"
-            android:textColor="#666" />
+            android:textColor="@color/light_gray_3" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="T"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="bold"
-            android:textColor="#666" />
+            android:textColor="@color/light_gray_3" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="F"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="bold"
-            android:textColor="#666" />
+            android:textColor="@color/light_gray_3" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="S"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="bold"
-            android:textColor="#666" />
+            android:textColor="@color/light_gray_3" />
 
     </LinearLayout>
 
@@ -170,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="16dp"
-                android:text="CANCEL"
+                android:text="@string/cancel_2"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="16dp"
-                android:text="OK"
+                android:text="@string/OK_2"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
         </LinearLayout>

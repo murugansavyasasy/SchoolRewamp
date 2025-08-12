@@ -16,9 +16,8 @@
             android:id="@+id/month"
             android:layout_width="match_parent"
             android:text="Month"
+            style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/eighteen_sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_bold"
             android:layout_height="wrap_content">
         </TextView>
         <TextView
@@ -26,9 +25,9 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:text="00"
+            style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/eighteen_sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_bold"
+
             android:layout_height="wrap_content">
         </TextView>
         <LinearLayout

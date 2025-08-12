@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fifteen"
-            android:text="Pick your file type "
+            android:text="@string/pick_your_file_type"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone">
@@ -55,9 +55,8 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="Gallery"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    android:text="@string/gallery"
+                   >
 
                 </TextView>
 
@@ -87,9 +86,8 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="Camera"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    android:text="@string/camera"
+                   >
 
                 </TextView>
 
@@ -122,9 +120,8 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="Document"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    android:text="@string/document"
+                    >
 
                 </TextView>
             </RelativeLayout>
@@ -164,9 +161,8 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="Video"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    android:text="@string/video"
+                    >
 
                 </TextView>
             </RelativeLayout>
@@ -198,9 +194,8 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="Voice"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    android:text="@string/voice"
+                    >
 
                 </TextView>
             </RelativeLayout>

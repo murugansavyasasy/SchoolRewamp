@@ -92,7 +92,7 @@
 
             <TextView
                 android:gravity="center"
-                android:text="Exam Timetable"
+                android:text="@string/exam_timetable"
                 android:id="@+id/tabOneName"
                 android:layout_marginEnd="@dimen/five"
                 android:textColor="@color/iconBlue"
@@ -121,7 +121,7 @@
 
             <TextView
                 android:gravity="center"
-                android:text="Exam Marks"
+                android:text="@string/exam_marks"
                 android:layout_marginStart="@dimen/five"
                 style="@style/CustomTextStylePoppinsBold"
                 android:id="@+id/tabTwoName"

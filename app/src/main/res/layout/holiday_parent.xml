@@ -69,11 +69,10 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Holidays"
+        android:text="@string/HoliDay"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_below="@+id/rytHeader"
-        android:textColor="@color/black"
         android:textSize="@dimen/twenty">
 
     </TextView>
