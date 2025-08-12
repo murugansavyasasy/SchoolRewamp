@@ -127,7 +127,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //                binding.lblSchoolRegionalName.visibility = View.GONE
 //                binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
             } else {
-             //   binding.lblSchoolRegionalName.visibility = View.GONE
+                //   binding.lblSchoolRegionalName.visibility = View.GONE
             }
 
         } else {
@@ -153,7 +153,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgBurgerMenu.setOnClickListener {
             (activity as? SchoolDashboard)?.openDrawer()
         }
-
 
 
 
@@ -209,11 +208,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         return binding.root
     }
 
+
     private fun setupRecyclerView() {
         items = createSampleData()
-        layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        layoutManager =
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         adapter = AutoScrollAdapterWithDots(items) { position ->
-         //   updateDotsIndicator(position)
+            //   updateDotsIndicator(position)
         }
 
 
@@ -228,6 +229,17 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
 
+//    private fun updateDotsIndicator(position: Int) {
+//        if (position < dots.size && position != currentDotPosition) {
+//            if (currentDotPosition < dots.size) {
+//                dots[currentDotPosition].setImageDrawable(createDotDrawable(false))
+//            }
+//
+//            dots[position].setImageDrawable(createDotDrawable(true))
+//            currentDotPosition = position
+//        }
+//    }
+
 
     private fun createSampleData(): List<ScrollItem> {
         return listOf(
@@ -239,6 +251,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             ScrollItem(R.drawable.message_f_management, "Messages")
         )
     }
+
     private fun isLoadData() {
 
         isMenuAdapter = SchoolMenuAdapter(
@@ -314,9 +327,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onResume() {
         super.onResume()
-        Log.d("Loading","Dashboard Data is Loading")
+        Log.d("Loading", "Dashboard Data is Loading")
         isDashBoardData()
-        Log.d("Loading","Dashboard Data is Refreshed")
+        Log.d("Loading", "Dashboard Data is Refreshed")
 
         Log.d("Status", "onResume")
     }

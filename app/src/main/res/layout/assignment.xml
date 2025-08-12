@@ -354,10 +354,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbarLayout1"
-            android:layout_marginStart="@dimen/five"
+            android:layout_marginStart="5dp"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="@dimen/five"
-            android:visibility="gone">
+            android:layout_marginEnd="5dp">
 
             <LinearLayout
                 android:id="@+id/AcademicYear"
@@ -402,6 +402,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/AcademicYear"
                 android:layout_margin="@dimen/ten"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/gray_bg_radius"
                 android:gravity="center"
@@ -414,7 +415,7 @@
                     android:src="@drawable/search_icon"></ImageView>
 
                 <EditText
-                    android:id="@+id/edtSearch"
+                    android:id="@+id/txtSearchMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/five"
@@ -422,7 +423,6 @@
                     android:hint="@string/search"
                     android:text=""
                     android:textSize="@dimen/fifteen_sp">
-
                 </EditText>
 
 
@@ -441,6 +441,7 @@
                 android:id="@+id/rcyAssignmentReport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_below="@+id/line2">
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -455,6 +456,7 @@
                 android:visibility="gone">
 
                 <ImageView
+                    android:id="@+id/noDataImage"
                     android:layout_width="@dimen/two_hundred"
                     android:layout_height="@dimen/two_hundred"
                     android:layout_marginTop="@dimen/twenty_five"

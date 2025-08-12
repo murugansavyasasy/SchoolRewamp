@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!--    <string name="app_name">School Chimes</string>-->
     <string name="app_name">School Chimes-Beta</string>
     <string name="isPasswordMisMatching">Password is mismatching</string>
@@ -525,6 +525,7 @@
     <string name="choose_pre_recorded_file">Choose pre recorded file</string>
     <string name="isSuccess">Success!</string>
     <string name="no_student_found">No student found!</string>
+    <string name="no_certificate_found">No certificate found!</string>
     <string name="no_dsc">Admission No </string>
     <string name="no_asc">Admission No</string>
     <string name="admis_no_asc">AdmisNo ASC</string>
@@ -572,7 +573,6 @@
     <string name="no_matching_notices_found">No matching notices found</string>
     <string name="no_matching_attachment_found">No matching attachment found</string>
     <string name="event_holiday"><![CDATA[Event & Holiday]]></string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="past_date">Past date</string>
     <string name="assignmentdetails_missing">Assignment details is missing.</string>
@@ -706,6 +706,13 @@
     <string name="timetable">Timetable</string>
     <string name="sending_wait">Sending Wait....</string>
     <string name="are_you_sure_you_want_to_update_this_lesson_plan">Are you sure you want to update this lesson plan?</string>
-
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="requested_on">Requested On</string>
+    <string name="certificated_date">Certificated Date</string>
+    <string name="certificate">Certificate</string>
+    <string name="the_management_has_recived_your_request_and_it_is_currently_being_process">The Management has recived your request and it is currently being process...</string>
 
 </resources>

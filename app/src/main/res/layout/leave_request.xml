@@ -140,7 +140,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/twenty"
                 android:text="@string/no_list_found"
-                android:textSize="@dimen/eighteen"
+                android:textSize="18sp"
                 android:visibility="gone" />
 
 

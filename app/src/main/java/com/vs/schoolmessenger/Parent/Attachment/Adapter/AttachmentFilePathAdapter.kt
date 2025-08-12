@@ -67,6 +67,7 @@ class AttachmentFilePathAdapter (
             // Bind actual data when loading is complete
 
             holder.bind(GetFilePathDetailsData!![position], parentData, position, this)
+
         }
     }
 
@@ -77,11 +78,6 @@ class AttachmentFilePathAdapter (
     ) :
         RecyclerView.ViewHolder(itemView) {
         private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
-//        private val ImgOrDocumentType:ImageView=itemView.findViewById(R.id.imageOrDocumentType)
-//        private val WebViewThumbnail:WebView=itemView.findViewById(R.id.WVThumbnaildocument)
-
-        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
-
         private val fileItem: CardView = itemView.findViewById(R.id.fileItem)
 
         @SuppressLint("ClickableViewAccessibility")
@@ -103,12 +99,6 @@ class AttachmentFilePathAdapter (
                         .load(data.url)
                         .placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
-
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
-//                    WebViewThumbnail.visibility = View.GONE
-
-//                    WebViewThumbnail.visibility = View.GONE
-
                     DefaultImage.visibility = View.VISIBLE
                 }
 
@@ -257,8 +247,6 @@ class AttachmentFilePathAdapter (
 //
 //            WebViewThumbnail.loadUrl(googleDocsUrl)
         }
-
-
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val shimmerLayout: ShimmerFrameLayout =

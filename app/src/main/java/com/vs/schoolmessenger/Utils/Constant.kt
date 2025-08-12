@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
@@ -195,6 +196,7 @@ object Constant {
 
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
     var isLeaveData: LeaveData? = null
+    var isCertificateData: CertificateListData? = null
 
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null

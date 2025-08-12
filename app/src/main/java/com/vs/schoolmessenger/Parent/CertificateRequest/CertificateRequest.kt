@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.CertificateRequest
 
 import android.graphics.Color
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -45,7 +47,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.ivradio.setOnClickListener(this)
         binding.ivradio1.setOnClickListener(this)
 
-//        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
 //        binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
 //        binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
         binding.btnSendCertificateRequest.setOnClickListener(this)
@@ -55,8 +57,8 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
 //        binding.toolbarLayout.lblLeftSideBar.text = "Certificates"
 //        binding.toolbarLayout.lblRightSideBar.text = "Request"
         isChildDetails = SharedPreference.getChildDetails(this)
-//        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-//        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        binding.lblName.text = isChildDetails?.name ?: ""
+        binding.lblSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -64,6 +66,15 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         loadCertificateTypes()
         binding.ivradio.setImageResource(R.drawable.selected_radio_button)
         binding.ivradio1.setImageResource(R.drawable.unselected_radio_button)
+
+        binding.imgSearch.setOnClickListener{
+            if (binding.rlaSortSearch.visibility == View.VISIBLE) {
+                binding.rlaSortSearch.visibility = View.GONE
+            } else {
+                binding.rlaSortSearch.visibility = View.VISIBLE
+                binding.txtSearchMenu.text.clear()
+            }
+        }
 
         appViewModel!!.isCertificateRequestList?.observe(this) { response ->
             if (response != null && response.status) {
@@ -94,6 +105,62 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
             }
         }
         loadCertificateRequestData()
+
+
+
+        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+            }
+        })
+
+    }
+
+    private fun filter(text: String) {
+        val searchWords = text.trim().lowercase().split("\\s+".toRegex())
+
+        val filteredList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
+            certificateRequestList.orEmpty()
+        } else {
+            certificateRequestList.orEmpty().filter { student ->
+                val fieldsToSearch = listOf(
+                    student.requested_on?.lowercase().orEmpty(),
+                    student.status?.lowercase().orEmpty(),
+                    student.reason?.lowercase().orEmpty(),
+                    student.issued_on?.lowercase().orEmpty(),
+                    student.urgency_level?.lowercase().orEmpty(),
+                )
+
+                searchWords.all { word ->
+                    fieldsToSearch.any { field -> field.contains(word) }
+                }
+            }
+        }
+
+        if (filteredList.isNotEmpty()) {
+            ShowData()
+            adapter.updateData(filteredList)
+        } else {
+            binding.recyclerView.visibility = View.GONE
+            ErrorMessage(getString(R.string.no_certificate_found))
+        }
+    }
+
+    fun ShowData() {
+        binding.recyclerView.visibility = View.VISIBLE
+        binding.lnrNoRecords.visibility = View.GONE
+    }
+
+    fun ErrorMessage(ErrorMessage: String) {
+        binding.lnrNoRecords.visibility = View.VISIBLE
+        binding.txtNoData.text = ErrorMessage
     }
 
     private fun loadCertificates(certificateTypes: List<String>) {
