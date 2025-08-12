@@ -238,7 +238,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/eight"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
