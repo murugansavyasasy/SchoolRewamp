@@ -51,8 +51,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
                     android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    >
 
                 </TextView>
             </RelativeLayout>
@@ -269,9 +268,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/twenty"
-                                android:text="@string/from_time"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp">
+                                android:text="@string/from_time">
 
                             </TextView>
 
@@ -283,7 +280,7 @@
                                 android:layout_marginStart="@dimen/two"
                                 android:text="@string/mandatory"
                                 android:textColor="@color/red"
-                                android:textSize="@dimen/thirteen_sp" />
+                                />
                         </LinearLayout>
 
                         <TextView
@@ -716,7 +713,7 @@
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/ten"
                             android:text="ℹ️"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp" />
@@ -764,8 +761,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/ten"
                         android:text="00:00 / 03:00"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"></TextView>
+                       ></TextView>
 
 
                     <RelativeLayout
@@ -805,7 +801,7 @@
                             android:layout_height="@dimen/twenty_five"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/thirteen"
-                            android:elevation="10dp"
+                            android:elevation="@dimen/ten"
                             android:src="@drawable/close_red_color"></ImageView>
 
                         <RelativeLayout
@@ -956,7 +952,7 @@
                             android:layout_marginStart="@dimen/five"
                             android:text="@string/NEXT"
                             android:textColor="@color/white"
-                            android:textSize="14sp"></TextView>
+                            android:textSize="@dimen/fourteen_sp"></TextView>
 
 
                         <ImageView
@@ -964,7 +960,7 @@
                             android:layout_width="@dimen/twenty"
                             android:layout_height="@dimen/twenty"
                             android:layout_centerInParent="true"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/ten"
                             android:layout_toEndOf="@+id/lblSend"
                             android:src="@drawable/rightwhitearrow">
 

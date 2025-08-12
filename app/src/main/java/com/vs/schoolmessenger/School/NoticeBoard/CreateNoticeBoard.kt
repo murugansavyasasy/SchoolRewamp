@@ -1,5 +1,4 @@
 package com.vs.schoolmessenger.School.NoticeBoard
-
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -43,6 +42,7 @@ import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
@@ -86,15 +86,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     OnDateSelectedListener, NoticeBoardClickListener, View.OnClickListener,
     VimeoVideoUpload.UploadCompletionListener {
 
-
     override fun getViewBinding(): CreateNoticeBoardBinding {
         return CreateNoticeBoardBinding.inflate(layoutInflater)
     }
 
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
-
     private var cameraPermissionDeniedCount = 0
-
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
@@ -119,6 +116,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     var isTotalSelectedItem = 0
     var isNoticeBoardId = ""
     var isNoticeBoardPosition = 0
+    private var noticeList: List<NoticeStaffData> = emptyList()
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -178,6 +176,21 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
+
+
+        noticeboardadapter = SchoolNoticeBoardAdapter(noticeList, this, this, isLoading = false)
+        binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
+        binding.rcyNoticeBoard.adapter = noticeboardadapter
+
+        binding.txtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("SearchDebug", "Search query: '$s'")
+                noticeboardadapter.filter.filter(s)
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -266,8 +279,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount
         )
 
-
-
         appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
@@ -282,12 +293,20 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             }
         }
 
+
         val channel = NotificationChannel(
             "reminder_channel", "Reminders", NotificationManager.IMPORTANCE_HIGH
         )
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
 
+    }
+
+
+    private fun loadNoticeData(newData: List<NoticeStaffData>) {
+        Log.d("AdapterUpdate", "New data size: ${newData.size}")
+        noticeboardadapter.updateList(newData)
+        binding.txtSearch.setText("")
     }
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
@@ -309,7 +328,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                         "SpinnerSelection",
                         "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
                     )
-
                     isGetNoticeBoardList()
                 }
 
@@ -322,21 +340,51 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             Log.d("DefaultSelection", "Default token: $isAccessToken")
         }
     }
+//    private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
+//        noticeboardadapter =
+//            SchoolNoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
+//        binding.rcyNoticeBoard.adapter = noticeboardadapter
+//    }
+
+
+
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
-        noticeboardadapter =
-            SchoolNoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcyNoticeBoard.adapter = noticeboardadapter
+        Log.d("Debug", "Loading ${newData?.size ?: 0} items")
+        if (newData != null && newData.isNotEmpty()) {
+            noticeList = newData
+            noticeboardadapter.updateList(newData)
+            binding.txtSearch.setText("")
+            binding.rcyNoticeBoard.visibility = View.VISIBLE
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+        } else {
+            noticeList = emptyList()
+            noticeboardadapter.updateList(emptyList())
+            binding.rcyNoticeBoard.visibility = View.GONE
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No data found"
+        }
     }
 
+
+//    private fun isGetNoticeBoardList() {
+//        noticeboardadapter = SchoolNoticeBoardAdapter(null, this, this, true)
+//        binding.rcyNoticeBoard.layoutManager =
+//            LinearLayoutManager(this) // Changed from GridLayoutManager
+//        binding.rcyNoticeBoard.isNestedScrollingEnabled = false
+//        binding.rcyNoticeBoard.adapter = noticeboardadapter
+//        binding.txtSearch.setText("")
+//        appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
+//    }
+
     private fun isGetNoticeBoardList() {
-        noticeboardadapter = SchoolNoticeBoardAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
+        binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
-        binding.rcyNoticeBoard.adapter = noticeboardadapter
-        appViewModel!!.isNoticeBoardStaffReport(
-            isAccessToken!!, this
-        )
+        binding.txtSearch.setText("")
+        appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
     }
+
 
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -757,7 +805,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
     }
 
-
     override fun onDateSelected(date: String) {
         when (selectedDateField) {
             1 -> binding.txtStartDate.text = date
@@ -1047,6 +1094,22 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         isNoticeBoardPosition = adapterPosition
         showEditDeletePopup(data, anchorView)
     }
+
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        Log.d("SearchResult", "Search result empty? $isEmpty for query '${binding.txtSearch.text}'")
+        if (isEmpty) {
+            binding.rcyNoticeBoard.visibility = View.GONE
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No results found for '${binding.txtSearch.text}'"
+        } else {
+            binding.rcyNoticeBoard.visibility = View.VISIBLE
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+        }
+    }
+
+
 
     fun isEditProcess(data: NoticeStaffData) {
 

@@ -3,42 +3,42 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    card_view:cardCornerRadius="16dp"
-    card_view:cardElevation="4dp"
-    android:layout_marginHorizontal="4dp">
+    android:layout_marginBottom="@dimen/twele"
+    card_view:cardCornerRadius="@dimen/sixteen"
+    card_view:cardElevation="@dimen/four"
+    android:layout_marginHorizontal="@dimen/four">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:padding="@dimen/sixteen"
         android:gravity="center_vertical"
         android:background="@android:color/white">
 
         <LinearLayout
             android:id="@+id/lnrDateCircle"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="@dimen/sixty_four"
+            android:layout_height="@dimen/sixty_four"
             android:background="@drawable/bg_date_circle"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginEnd="12dp">
+            android:layout_marginEnd="@dimen/twele">
 
             <TextView
                 android:id="@+id/tvMonth"
                 android:text="Jun"
                 android:textSize="@dimen/twele_sp"
-                android:textColor="#000000"
+                android:textColor="@color/black_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tvDay"
                 android:text="17"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold"
-                android:textColor="#000000"
+                android:textColor="@color/black_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -46,7 +46,7 @@
         <!-- Center Info -->
         <LinearLayout
             android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -56,15 +56,16 @@
                 android:id="@+id/tvFullDate"
                 android:text="17 Jun"
                 android:textSize="@dimen/fifteen_sp"
-                android:textColor="#000000" />
+                android:textColor="@color/black_2" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvDayName"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:text="Wednesday"
                 android:textSize="@dimen/twele_sp"
-                android:textColor="#666666" />
+                android:textColor="@color/light_gray_5" />
         </LinearLayout>
 
         <!-- Status Badge -->
@@ -72,11 +73,11 @@
             android:id="@+id/tvStatus"
             android:text="Absent"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
             android:gravity="center"
+            style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/twele_sp"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="6dp"
+            android:paddingHorizontal="@dimen/twele"
+            android:paddingVertical="@dimen/six"
             android:background="@drawable/bg_status_badge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

@@ -19,7 +19,7 @@
             android:id="@+id/rlarelativelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="@dimen/ten">
 
             <TextView
                 android:id="@+id/lblStudentName"
@@ -31,8 +31,7 @@
                 android:layout_marginEnd="@dimen/twenty_five"
                 android:gravity="start"
                 android:text="Sathish"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+               >
 
             </TextView>
 
@@ -45,8 +44,7 @@
                 android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginTop="@dimen/ten"
                 android:text="I"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+               >
 
             </TextView>
 
@@ -61,8 +59,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_toEndOf="@+id/sectionlabel"
                 android:text=" - "
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+                >
 
             </TextView>
 
@@ -76,8 +73,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_toEndOf="@+id/dotsymbol"
                 android:text="B"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+               >
 
             </TextView>
 
@@ -89,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/sectionlabel"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="@dimen/twenty_four"
                 android:layout_marginTop="@dimen/ten"
                 android:text="SUBMITTED"
                 android:textColor="@color/clr_green"

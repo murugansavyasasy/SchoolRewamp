@@ -32,7 +32,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/nomessages"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:visibility="gone" />
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/no_list_found"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:layout_below="@+id/nomessage"
         android:gravity="center"
         android:visibility="gone" />

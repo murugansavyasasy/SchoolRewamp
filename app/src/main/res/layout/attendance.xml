@@ -89,10 +89,10 @@
             android:layout_width="match_parent"
             app:cardCornerRadius="@dimen/ten"
             android:id="@+id/cardCalendarDetails"
-            android:elevation="6dp"
+            android:elevation="@dimen/six"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="@dimen/minus_thirty"
             android:layout_height="wrap_content">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -153,9 +153,9 @@
                             android:gravity="center"
                             android:layout_width="match_parent"
                             android:text="August 2025"
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:textSize="@dimen/twele_sp"
                             android:textColor="@color/light_gray"
-                            style="@style/CustomTextStylePoppinsMedium"
                             android:layout_height="wrap_content">
                         </TextView>
                     </LinearLayout>
@@ -200,7 +200,7 @@
             android:layout_below="@+id/cardCalendarDetails"
             android:layout_width="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="16dp"
+            android:paddingBottom="@dimen/sixteen"
             android:layout_height="match_parent">
             <LinearLayout
                 android:paddingBottom="@dimen/thirty"
@@ -215,7 +215,7 @@
                     android:layout_width="match_parent"
                     app:cardCornerRadius="@dimen/ten"
                     android:id="@+id/cardDayDetails"
-                    android:elevation="6dp"
+                    android:elevation="@dimen/six"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:orientation="horizontal"
@@ -226,7 +226,7 @@
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/zero"
                             android:layout_height="wrap_content">
                             <FrameLayout
                                 android:id="@+id/attendanceContainer"
@@ -257,19 +257,19 @@
                                         android:layout_height="wrap_content"
                                         android:text="100"
                                         android:maxLength="3"
-                                        style="@style/CustomTextStylePoppinsMedium"
+                                        style="@style/CustomTextStylePoppinsBold"
                                         android:textSize="@dimen/twenty_sp"
                                         android:textColor="@color/PrimaryColor"
-                                        android:textStyle="bold" />
+                                        />
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="%"
                                         android:layout_marginTop="@dimen/three"
-                                        style="@style/CustomTextStylePoppinsMedium"
+                                        style="@style/CustomTextStylePoppinsBold"
                                         android:textSize="@dimen/sixteen_sp"
                                         android:textColor="@color/PrimaryColor"
-                                        android:textStyle="bold" />
+                                         />
                                 </LinearLayout>
                             </FrameLayout>
                             <TextView
@@ -283,12 +283,12 @@
                             </TextView>
                         </LinearLayout>
                         <View
-                            android:layout_width="1dp"
+                            android:layout_width="@dimen/one"
                             android:layout_height="match_parent"
                             android:background="@color/very_light_grey" />
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/zero"
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:layout_height="wrap_content">
@@ -321,7 +321,7 @@
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:textColor="@color/PrimaryColor"
                                     android:textSize="@dimen/twenty_sp"
-                                    android:textStyle="bold" />
+                                    />
                             </FrameLayout>
                             <TextView
                                 android:layout_width="match_parent"
@@ -335,11 +335,11 @@
                             </TextView>
                         </LinearLayout>
                         <View
-                            android:layout_width="1dp"
+                            android:layout_width="@dimen/one"
                             android:layout_height="match_parent"
                             android:background="@color/very_light_grey" />
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/zero"
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:layout_height="wrap_content">
@@ -390,7 +390,7 @@
                     android:layout_width="match_parent"
                     app:cardCornerRadius="@dimen/ten"
                     android:id="@+id/cardMenuDetails"
-                    android:elevation="6dp"
+                    android:elevation="@dimen/six"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginBottom="@dimen/ten"
                     android:layout_height="wrap_content">
@@ -412,7 +412,7 @@
                                 android:id="@+id/lnrLeaveRequest"
                                 android:padding="@dimen/twenty"
                                 android:gravity="center"
-                                android:layout_width="0dp"
+                                android:layout_width="@dimen/zero"
                                 android:layout_height="wrap_content">
                                 <ImageView
                                     android:id="@+id/imgAskLeave"
@@ -434,7 +434,7 @@
                             </LinearLayout>
 
                             <View
-                                android:layout_width="1dp"
+                                android:layout_width="@dimen/one"
                                 android:layout_height="match_parent"
                                 android:background="@color/very_light_grey" />
 
@@ -443,7 +443,7 @@
                                 android:orientation="vertical"
                                 android:id="@+id/lnrLeaveHistory"
                                 android:padding="@dimen/twenty"
-                                android:layout_width="0dp"
+                                android:layout_width="@dimen/zero"
                                 android:gravity="center"
                                 android:layout_height="wrap_content">
 
@@ -466,7 +466,7 @@
                             </LinearLayout>
 
                             <View
-                                android:layout_width="1dp"
+                                android:layout_width="@dimen/one"
                                 android:layout_height="match_parent"
                                 android:background="@color/very_light_grey" />
 
@@ -476,7 +476,7 @@
                                 android:id="@+id/lnrAttendanceReport"
                                 android:padding="@dimen/twenty"
                                 android:gravity="center"
-                                android:layout_width="0dp"
+                                android:layout_width="@dimen/zero"
                                 android:layout_height="wrap_content">
                                 <ImageView
                                     android:id="@+id/imgAttendanceReport"
@@ -500,7 +500,7 @@
                         </LinearLayout>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="@dimen/one"
                             android:background="@color/very_light_grey" />
                         <LinearLayout
                             android:orientation="horizontal"
@@ -513,7 +513,7 @@
                                 android:padding="@dimen/twenty"
                                 android:orientation="vertical"
                                 android:layout_weight="1"
-                                android:layout_width="0dp"
+                                android:layout_width="@dimen/zero"
                                 android:gravity="center"
                                 android:layout_height="wrap_content">
                                 <ImageView
@@ -534,7 +534,7 @@
                                 </TextView>
                             </LinearLayout>
                             <View
-                                android:layout_width="1dp"
+                                android:layout_width="@dimen/one"
                                 android:layout_height="match_parent"
                                 android:background="@color/very_light_grey" />
 

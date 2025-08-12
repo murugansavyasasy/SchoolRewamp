@@ -6,6 +6,8 @@ import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 interface NoticeBoardClickListener {
 //    fun onClickListener(data: CreateNoticeBoard)
     fun onClickListener(data: NoticeStaffData, anchorView: View, adapterPosition: Int)
+    fun onSearchResultEmpty(isEmpty: Boolean)
+
 
 
 //    fun onSearchResultEmpty(isEmpty: Boolean)

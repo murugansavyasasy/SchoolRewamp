@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/eight"
     android:backgroundTint="@android:color/white"
-    card_view:cardCornerRadius="12dp"
-    card_view:cardElevation="4dp">
+    card_view:cardCornerRadius="@dimen/twele"
+    card_view:cardElevation="@dimen/four">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="@dimen/twele">
 
         <TextView
             android:id="@+id/avatarText"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/fourty_eight"
+            android:layout_height="@dimen/fourty_eight"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/twele"
             android:background="@drawable/default_profile"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/twenty_sp" />
 
 
         <TextView
@@ -34,7 +33,7 @@
             android:layout_toEndOf="@id/avatarText"
             android:text="SARANRAJ SHANMUGAM"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/fifteen_sp" />
 
 
         <TextView
@@ -43,11 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lblStudentName"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="@dimen/two"
             android:layout_toEndOf="@id/avatarText"
             android:text="I - B"
-            android:textColor="#666666"
-            android:textSize="13sp" />
+            android:textColor="@color/light_gray_5"
+            android:textSize="@dimen/thirteen_sp" />
 
 
         <TextView
@@ -56,12 +55,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/sectionlabel"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/six"
             android:layout_toEndOf="@id/avatarText"
             android:text="Submitted:"
             android:textColor="@android:color/black"
             android:textSize="13sp" />
-
 
         <TextView
             android:id="@+id/submittedDate"
@@ -69,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/submittedLabel"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/four"
             android:layout_toEndOf="@id/submittedLabel"
             android:text="Mon, 11"
             android:textColor="@android:color/black"
@@ -78,7 +76,7 @@
         <LinearLayout
             android:id="@+id/statusButton"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="@dimen/thirty_six"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="@drawable/pending_button_bg"
@@ -89,10 +87,14 @@
 
             <ImageView
                 android:id="@+id/cancelimage"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/sixteen"
+                android:layout_marginEnd="@dimen/six"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/twele"
+                android:paddingEnd="@dimen/twele"
                 android:src="@drawable/close_red_color" />
+
 
             <TextView
                 android:id="@+id/statuslabel"
@@ -100,8 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pending"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="13sp" />
+                android:textColor="@android:color/holo_red_dark" />
         </LinearLayout>
 
     </RelativeLayout>

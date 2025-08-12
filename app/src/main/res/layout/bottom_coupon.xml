@@ -5,11 +5,11 @@
     android:layout_height="55dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_alignParentBottom="true"
-    android:layout_marginBottom="15dp"
-    android:layout_marginStart="25dp"
-    android:layout_marginEnd="25dp"
-    app:cardCornerRadius="35dp"
-    app:cardElevation="8dp"
+    android:layout_marginBottom="@dimen/fifteen"
+    android:layout_marginStart="@dimen/twenty_five"
+    android:layout_marginEnd="@dimen/twenty_five"
+    app:cardCornerRadius="@dimen/thirty_five"
+    app:cardElevation="@dimen/eight"
     app:cardBackgroundColor="@android:color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -25,10 +25,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
             android:background="@drawable/bg_selected"
             android:gravity="center">
 
@@ -36,27 +36,27 @@
                 android:id="@+id/btnHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="14dp"
+                android:padding="@dimen/fourteen"
                 android:src="@drawable/homeimage" />
         </RelativeLayout>
 
         <!-- Ticket Background -->
         <RelativeLayout
             android:id="@+id/ticketBackground"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/btnTicket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="14dp"
+                android:padding="@dimen/fourteen"
                 android:src="@drawable/ticketimage" />
         </RelativeLayout>
 
