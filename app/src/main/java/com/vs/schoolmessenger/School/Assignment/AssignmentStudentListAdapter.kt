@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
@@ -137,16 +139,17 @@ class AssignmentStudentListAdapter(
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
 
         private val sectionLabel: TextView = itemView.findViewById(R.id.sectionlabel)
-        private val standardLabel: TextView = itemView.findViewById(R.id.standardlabel)
+//        private val standardLabel: TextView = itemView.findViewById(R.id.standardlabel)
         private val statusLabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val layout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
-        private val arrowIcon: ImageView = itemView.findViewById(R.id.arrow_icon)
+//        private val arrowIcon: ImageView = itemView.findViewById(R.id.arrow_icon)
 
         private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
         private val statuslabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val submittedLabel: TextView = itemView.findViewById(R.id.submittedLabel)
         private val submittedDate: TextView = itemView.findViewById(R.id.submittedDate)
         private val cancelimage: ImageView = itemView.findViewById(R.id.cancelimage)
+        private val statusButton: LinearLayout = itemView.findViewById(R.id.statusButton)
 
 
 
@@ -160,10 +163,10 @@ class AssignmentStudentListAdapter(
             lblStudentName.text = data.student_name
 
             sectionLabel.text = data.standard
-            standardLabel.text = data.section
+//            standardLabel.text = data.section
             statusLabel.text = data.submit_status
 
-            arrowIcon.visibility = if (data.submit_status.equals("SUBMITTED", true)) View.VISIBLE else View.GONE
+//            arrowIcon.visibility = if (data.submit_status.equals("SUBMITTED", true)) View.VISIBLE else View.GONE
 
             layout.setOnClickListener {
                 if (data.submit_status.equals("SUBMITTED", true)) {
@@ -178,10 +181,17 @@ class AssignmentStudentListAdapter(
             if (data.submit_status == "SUBMITTED") {
                 statuslabel.text = "Submitted"
                 cancelimage.setBackgroundResource(R.drawable.correcticonsvg)
+                statuslabel.setTextColor(
+                    ContextCompat.getColor(context, R.color.clr_green)
+                )
             } else {
                 statuslabel.text = "Pending"
                 cancelimage.setBackgroundResource(R.drawable.close_red_color)
+                statuslabel.setTextColor(
+                    ContextCompat.getColor(context, android.R.color.holo_red_dark)
+                )
             }
+
 
 
 

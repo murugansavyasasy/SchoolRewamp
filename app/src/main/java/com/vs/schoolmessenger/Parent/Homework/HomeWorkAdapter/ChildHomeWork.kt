@@ -5,15 +5,18 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.Coupon.CouponFragment.TicketFragment
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
+import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
@@ -25,6 +28,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun getViewBinding(): ChildHomeworkActivityBinding {
         return ChildHomeworkActivityBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     var isHomeworkId = ""
     var isHomeWorkDate: String? = ""
@@ -44,20 +48,38 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lblDescription.text = data.description
 
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-            binding.lblviewSubmissions.visibility = View.VISIBLE
+            binding.lblviewSubmissions.visibility = View.GONE
+            binding.linearlayoutContainer.visibility = View.VISIBLE
+            binding.bottomLinearlayout.visibility = View.VISIBLE
+            binding.createdDate.text = data?.created_date ?: ""
+            binding.category.text = data?.category ?: ""
+            binding.subject.text = data?.assignmentsubject ?: ""
+            binding.fragmentContainer.visibility = View.VISIBLE
+            loadFragment(
+                StudentListFragment.newInstance(
+                    data.assignmentid ?: "",
+                    "TOTAL",
+                    data.submittedCount ?: 0,
+                    data.totalCount ?: 0
+                )
+            )
         } else {
             binding.lblviewSubmissions.visibility = View.GONE
+            binding.linearlayoutContainer.visibility = View.GONE
+            binding.bottomLinearlayout.visibility = View.GONE
+            binding.fragmentContainer.visibility = View.GONE
         }
+
 
         binding.lblviewSubmissions.setOnClickListener(this)
 
-        binding.lblviewSubmissions .setOnClickListener {
+        binding.lblviewSubmissions.setOnClickListener {
             val intent = Intent(this, AssignmentStudentList::class.java)
             intent.putExtra("assignment_id", data.assignmentid)
             intent.putExtra("submitted_count", data.submittedCount)
-            Log.d("submitted_count",data.submittedCount.toString())
+            Log.d("submitted_count", data.submittedCount.toString())
             intent.putExtra("Total_Count", data.totalCount)
-            Log.d("Total_Count",data.totalCount.toString())
+            Log.d("Total_Count", data.totalCount.toString())
             intent.putExtra("type", "TOTAL")
             startActivity(intent)
         }
@@ -98,8 +120,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         val adapter = HomeWorkChildAdapter(this, data.fileList, data.subjectName!!)
-        binding.rcChildHW.layoutManager =
-            GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+        binding.rcChildHW.layoutManager = GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
         binding.rcChildHW.adapter = adapter
 
         appViewModel?.isHomeWorkComplete?.observe(this) { response ->
@@ -131,6 +152,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             R.id.imgBack -> {
                 onBackPressed()
             }
+
             R.id.lblClickComplete -> {
                 isCompleteHomeWork()
             }
@@ -158,6 +180,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val alertDialog = builder.create()
         alertDialog.show()
 
+    }
+
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
     }
 
 

@@ -1,121 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true">
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
 
-    <LinearLayout
-        android:id="@+id/linearlayoutheader"
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingTop="@dimen/eight"
-        android:paddingBottom="@dimen/eight">
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearfooter"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/submittedvalue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="@dimen/eighteen_sp"
-                android:layout_gravity="center"
-                android:textColor="@color/green"
-                style="@style/CustomTextStylePoppinsBold" />
-
-            <TextView
-                android:id="@+id/submittedlabel"
-                android:layout_width="wrap_content"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_height="wrap_content"
-                android:text="@string/submitted"
-                android:textSize="@dimen/eighteen_sp"
-                android:layout_gravity="center"
-                android:textColor="@color/green"
-                 />
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="@dimen/one_fifty"
-            android:layout_height="@dimen/zero"
-            android:id="@+id/viewline"/>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearfooter1"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/pendinglabelvalue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_gravity="center"
-            android:textSize="@dimen/eighteen_sp"
-            android:textColor="@color/red"
-            />
-
-
-        <TextView
-            android:id="@+id/pendinglabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pending"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textSize="@dimen/eighteen_sp"
-            android:textColor="@color/red"
-           android:layout_gravity="center"
-            />
-    </LinearLayout>
-
-
-
-    </LinearLayout>
-
-
-
-
+        android:background="@color/white"
+        android:layout_marginTop="5dp"
+        app:tabIndicatorColor="@color/black"
+        app:tabTextColor="@color/gray"
+        app:tabSelectedTextColor="@color/black"
+        app:tabMode="fixed"
+        app:tabGravity="fill" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcystudentlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearlayoutheader"
+        android:layout_below="@id/tabLayout"
         android:layout_marginTop="@dimen/five"
-        android:visibility="visible">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-
+        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/nomessage"
         android:layout_width="@dimen/two_fifty"
         android:layout_height="@dimen/two_fifty"
         android:layout_centerInParent="true"
-        android:layout_gravity="center"
         android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/nomessages"
-        android:textColor="@color/black"
-        android:textSize="@dimen/eighteen_sp"
         android:visibility="gone" />
 
     <TextView
@@ -123,14 +43,12 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
+        android:layout_below="@id/nomessage"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/no_list_found"
         android:textSize="@dimen/eighteen_sp"
-        android:layout_below="@+id/nomessage"
         android:gravity="center"
         android:visibility="gone" />
-
 
 </RelativeLayout>
