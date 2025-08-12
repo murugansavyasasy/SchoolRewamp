@@ -1112,13 +1112,13 @@ object Constant {
     //Convert dd-MM-YYYY to dd MMM YYYY (12-02-2025 to 12 Feb 2025)
     fun convertToReadableDate(inputDateStr: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(inputDateStr)
             outputFormat.format(date!!)
         } catch (e: Exception) {
             e.printStackTrace()
-            inputDateStr // fallback: return input if format fails
+            inputDateStr
         }
     }
 
