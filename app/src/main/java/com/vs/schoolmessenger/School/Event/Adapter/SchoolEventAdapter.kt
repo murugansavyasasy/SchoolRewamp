@@ -1,33 +1,36 @@
 package com.vs.schoolmessenger.School.Event.Adapter
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventAdapter.DataViewHolder
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SchoolEventAdapter(
-    private val originalList: MutableList<SchoolEventItem>,
+    private var itemList: List<SchoolEventItem>?,
     private val listener: SchoolEventClickListener,
     private val context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private var filteredList: MutableList<SchoolEventItem> = originalList.toMutableList()
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+
+    private var fullList: List<SchoolEventItem> = itemList ?: listOf()
+    private var filteredList: List<SchoolEventItem> = itemList ?: listOf()
+
+    init {
+        fullList = itemList ?: listOf()
+        filteredList = fullList
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -35,19 +38,20 @@ class SchoolEventAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.event_ongoing_recyclerview)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.event_ongoing_recyclerview)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.event_ongoing_recyclerview, parent, false)
-            DataViewHolder(view)
+            DataViewHolder(view, context)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(filteredList[position], listener)
+            filteredList[position].let {
+                holder.bind(it, listener)
+            }
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
@@ -60,60 +64,36 @@ class SchoolEventAdapter(
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val query = constraint?.toString()?.trim()?.lowercase() ?: ""
-                Log.d("SearchFilter", "Filtering for: $query")
-
-                val resultsList = if (query.isEmpty()) {
-                    originalList
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val result = if (query.isEmpty()) {
+                    fullList
                 } else {
-                    originalList.filter {
-                        it.title?.lowercase()?.contains(query) == true ||
-                                it.description?.lowercase()?.contains(query) == true
+                    val filtered = fullList.filter {
+                        (it.title?.lowercase()?.contains(query) == true) ||
+                                (it.description?.lowercase()?.contains(query) == true) ||
+                                (it.venue?.lowercase()?.contains(query) == true)
                     }
+                    filtered
                 }
-
-                Log.d("SearchFilter", "Found ${resultsList.size} results")
-
-                return FilterResults().apply { values = resultsList }
+                return FilterResults().apply { values = result }
             }
 
-            @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList.clear()
-                if (results?.values != null) {
-                    filteredList.addAll(results.values as List<SchoolEventItem>)
-                }
+                filteredList = results?.values as? List<SchoolEventItem> ?: listOf()
+                listener.onSearchResultEmpty("ONGOING", filteredList.isEmpty())
                 notifyDataSetChanged()
-
-                Log.d("SearchFilter", "List updated, now showing ${filteredList.size} items")
-
-                (context as? Activity)?.runOnUiThread {
-                    val noResultsText = context.findViewById<TextView>(R.id.noDataText)
-                    val noResultsImage = context.findViewById<ImageView>(R.id.noDataImage)
-
-                    if (filteredList.isEmpty()) {
-                        noResultsText?.visibility = View.VISIBLE
-                        noResultsImage?.visibility = View.VISIBLE
-                    } else {
-                        noResultsText?.visibility = View.GONE
-                        noResultsImage?.visibility = View.GONE
-                    }
-                }
             }
         }
     }
 
 
-
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newList: List<SchoolEventItem>) {
-        originalList.clear()
-        originalList.addAll(newList)
-        filteredList.clear()
-        filteredList.addAll(newList)
+    fun updateList(newList: List<SchoolEventItem>?) {
+        this.itemList = newList ?: listOf()
+        fullList = this.itemList!!
+        filteredList = fullList
         notifyDataSetChanged()
     }
+
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val event_header: TextView = itemView.findViewById(R.id.event_header)
@@ -128,7 +108,6 @@ class SchoolEventAdapter(
             event_location.text = data.venue
             status_event.text = "Today's Event"
             eventdesc.text = data.description
-
         }
     }
 }

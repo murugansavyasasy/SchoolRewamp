@@ -184,18 +184,16 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             binding.txtNoData
         )
         binding.rcyNoticeBoard.adapter = noticeboardadapter
-
-
         binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
         binding.rcyNoticeBoard.adapter = noticeboardadapter
 
-        binding.txtSearch.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query = s?.toString()?.trim() ?: ""
-                Log.d("SearchDebug", "Search text changed: '$query'")
-                noticeboardadapter.filter.filter(query)
-            }
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::noticeboardadapter.isInitialized) {
+                    noticeboardadapter.filter.filter(s)
+                }
+            }
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -287,38 +285,20 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount
         )
 
-//        appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
-//            if (response?.status == true && !response.data.isNullOrEmpty()) {
-//                binding.rcyNoticeBoard.visibility = View.VISIBLE
-//                binding.nomessage.visibility = View.GONE
-//                binding.txtNoData.visibility = View.GONE
-//                isloadhomeworkData(response.data)
-//            } else {
-//                isloadhomeworkData(emptyList())
-//                binding.rcyNoticeBoard.visibility = View.GONE
-//                binding.nomessage.visibility = View.VISIBLE
-//                binding.txtNoData.visibility = View.VISIBLE
-//                binding.txtNoData.text = response?.message ?: "No data found"
-//            }
-//        }
-
         appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
-            Log.d("NoticeBoardObserve", "Response received: $response")
-            val dataList = response?.data ?: emptyList()
-            Log.d("NoticeBoardObserve", "Data list size: ${dataList.size}")
-
-            if (dataList.isEmpty()) {
-                binding.nomessage.visibility = View.VISIBLE
-                binding.txtNoData.visibility = View.VISIBLE
-                binding.rcyNoticeBoard.visibility = View.GONE
-            } else {
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                binding.rcyNoticeBoard.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
-                binding.rcyNoticeBoard.visibility = View.VISIBLE
+                isloadhomeworkData(response.data)
+            } else {
+                isloadhomeworkData(emptyList())
+                binding.rcyNoticeBoard.visibility = View.GONE
+                binding.nomessage.visibility = View.VISIBLE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.txtNoData.text = response?.message ?: "No data found"
             }
-            noticeboardadapter.updateList(dataList)
         }
-
 
         val channel = NotificationChannel(
             "reminder_channel", "Reminders", NotificationManager.IMPORTANCE_HIGH
@@ -378,7 +358,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             noticeboardadapter.updateList(newData, true)
 
             isUpdatingSearchText = true
-            binding.txtSearch.setText("")
+            binding.edtSearch.setText("")
             isUpdatingSearchText = false
 
             Log.d(
@@ -391,7 +371,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             noticeboardadapter.updateList(emptyList(), true)
 
             isUpdatingSearchText = true
-            binding.txtSearch.setText("")
+            binding.edtSearch.setText("")
             isUpdatingSearchText = false
 
             Log.d("SearchDebug", "Empty data loaded")
@@ -1111,12 +1091,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
-        Log.d("SearchResult", "Search result empty? $isEmpty for query '${binding.txtSearch.text}'")
+        Log.d("SearchResult", "Search result empty? $isEmpty for query '${binding.edtSearch.text}'")
         if (isEmpty) {
             binding.rcyNoticeBoard.visibility = View.GONE
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No results found for '${binding.txtSearch.text}'"
+            binding.txtNoData.text = "No results found for '${binding.edtSearch.text}'"
         } else {
             binding.rcyNoticeBoard.visibility = View.VISIBLE
             binding.nomessage.visibility = View.GONE
@@ -1201,5 +1181,4 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         appViewModel?.isNoticeBoardUpdate(isAccessToken!!, jsonObject, this)
 
     }
-
 }

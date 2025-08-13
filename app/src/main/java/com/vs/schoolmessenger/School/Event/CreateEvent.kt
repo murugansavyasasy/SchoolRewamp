@@ -128,8 +128,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-    lateinit var schooleventAdapter: SchoolEventAdapter
 
+    lateinit var schooleventAdapter: SchoolEventAdapter
     lateinit var eventupcomingadapter: SchoolEventUpcomingAdapter
     lateinit var eventcompletedadapter: SchoolEventCompletedAdapter
 
@@ -320,25 +320,50 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
         }
 
-
-        binding.txtSearch.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("FILTERING", "Filtering for: $s")
-                if (::schooleventAdapter.isInitialized) {
-                    schooleventAdapter.filter.filter(s)
-                }
-                if (::eventupcomingadapter.isInitialized) {
-                    eventupcomingadapter.filter.filter(s)
-                }
-                if (::eventcompletedadapter.isInitialized) {
-                    eventcompletedadapter.filter.filter(s)
-                }
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                if (::schooleventAdapter.isInitialized) schooleventAdapter.filter.filter(s)
+                if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(s)
+                if (::eventupcomingadapter.isInitialized) eventupcomingadapter.filter.filter(s)
+                val isAllEmpty = schooleventAdapter.itemCount == 0 &&
+                        eventupcomingadapter.itemCount == 0 &&
+                        eventcompletedadapter.itemCount == 0
+
+                    binding.noDataImage.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+                    binding.noDataText.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+
+                if (schooleventAdapter.itemCount > 0) {
+                    binding.rcyongoingevent.visibility = View.VISIBLE
+                    binding.headerview.visibility = View.VISIBLE
+                } else {
+                    binding.rcyongoingevent.visibility = View.GONE
+                    binding.headerview.visibility = View.GONE
+                }
+
+                if (eventupcomingadapter.itemCount > 0) {
+                    binding.rcyupcomingevent.visibility = View.VISIBLE
+                    binding.upcomingeventHeaderview.visibility = View.VISIBLE
+                } else {
+                    binding.rcyupcomingevent.visibility = View.GONE
+                    binding.upcomingeventHeaderview.visibility = View.GONE
+                }
+
+                if (eventcompletedadapter.itemCount > 0) {
+                    binding.rcycompletedevent.visibility = View.VISIBLE
+                    binding.completedeventHeaderview.visibility = View.VISIBLE
+                } else {
+                    binding.rcycompletedevent.visibility = View.GONE
+                    binding.completedeventHeaderview.visibility = View.GONE
+                }
+            }
+        })
 
         schooleventAdapter = SchoolEventAdapter(
             mutableListOf(),
@@ -449,9 +474,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     private fun isloadeventData(newData: List<SchoolEventItem>?) {
         val list = newData?.toMutableList() ?: mutableListOf()
         if (::schooleventAdapter.isInitialized) {
-            schooleventAdapter.updateData(list)
+            schooleventAdapter.updateList(list)
         } else {
-            schooleventAdapter = SchoolEventAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
+            schooleventAdapter = SchoolEventAdapter(list, this, this, Constant.isShimmerViewDisable)
             binding.rcyongoingevent.adapter = schooleventAdapter
         }
     }
@@ -471,6 +496,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
 
     override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
+        Log.d("isComing",adapterTag)
         when (adapterTag) {
             "ONGOING" -> binding.rcyongoingevent.visibility =
                 if (isEmpty) View.GONE else View.VISIBLE
