@@ -19,7 +19,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), View.OnClickListener
     lateinit var mAdapter: AssignmentAdapter
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Assignment)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE

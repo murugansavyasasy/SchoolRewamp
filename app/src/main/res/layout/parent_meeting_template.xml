@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/ten"
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:text="Parent Meeting"
+            android:text="@string/parent_meeting"
             android:textStyle="bold"
             android:textSize="@dimen/sixteen_sp"
             android:layout_height="wrap_content">
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:text="Staff And Subject Details"
             android:textStyle="bold"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:layout_height="wrap_content">
         </TextView>
         <TextView

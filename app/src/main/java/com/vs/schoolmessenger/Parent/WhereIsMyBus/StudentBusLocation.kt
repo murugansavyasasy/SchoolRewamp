@@ -18,7 +18,7 @@ class StudentBusLocation : BaseActivity<StudentBustLocationBinding>(), View.OnCl
     lateinit var mAdapter: FeeReceiptAdapter
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         binding.imgBack.setOnClickListener(this)
 
         val socket = IO.socket("http://YOUR_SERVER_IP:3000")

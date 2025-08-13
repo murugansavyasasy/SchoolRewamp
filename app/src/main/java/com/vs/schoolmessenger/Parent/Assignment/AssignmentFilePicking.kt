@@ -12,7 +12,7 @@ class AssignmentFilePicking : BaseActivity<ImagePdfBinding>(), View.OnClickListe
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
     }
 
     override fun onClick(p0: View?) {

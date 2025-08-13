@@ -46,7 +46,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 
@@ -223,8 +223,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
         categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewDisable)
-        binding.rcycategoryEvent.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcycategoryEvent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcycategoryEvent.isNestedScrollingEnabled = false
         binding.rcycategoryEvent.adapter = categoryadapter
 

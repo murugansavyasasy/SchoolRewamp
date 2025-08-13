@@ -123,7 +123,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
@@ -378,6 +378,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             noticeboardadapter.updateList(newData, true)
 
             isUpdatingSearchText = true
+            binding.txtSearch.setText("")
             isUpdatingSearchText = false
 
             Log.d(
@@ -390,11 +391,13 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             noticeboardadapter.updateList(emptyList(), true)
 
             isUpdatingSearchText = true
+            binding.txtSearch.setText("")
             isUpdatingSearchText = false
 
             Log.d("SearchDebug", "Empty data loaded")
         }
     }
+
 
     private fun isGetNoticeBoardList() {
         binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)

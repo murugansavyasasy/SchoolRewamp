@@ -18,7 +18,6 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:gravity="center_vertical"
-
         android:orientation="horizontal">
 
         <ImageView
@@ -26,9 +25,9 @@
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_marginStart="@dimen/fifteen"
+            android:visibility="gone"
             android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/filter_icon"
-            android:visibility="gone"/>
+            android:src="@drawable/filter_icon" />
 
         <RelativeLayout
             android:id="@+id/rytSearch"
@@ -36,7 +35,6 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_margin="@dimen/ten"
             android:layout_weight="1"
-            android:visibility="gone"
             android:background="@drawable/rect_grey">
 
             <ImageView
@@ -107,7 +105,8 @@
                     android:background="@drawable/bg_gray_radious"
                     android:gravity="center"
                     android:padding="@dimen/five"
-                    android:text="Image" />
+                    android:text="@string/image" />
+
                 <RadioButton
                     android:id="@+id/RdbVideo"
                     android:layout_width="wrap_content"
@@ -126,7 +125,7 @@
                     android:background="@drawable/bg_gray_radious"
                     android:gravity="center"
                     android:padding="@dimen/five"
-                    android:text="Document" />
+                    android:text="@string/document" />
 
             </RadioGroup>
         </HorizontalScrollView>

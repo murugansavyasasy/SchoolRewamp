@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
-            android:text="Important Info"
+            android:text="@string/important_info"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
             android:textStyle="bold">

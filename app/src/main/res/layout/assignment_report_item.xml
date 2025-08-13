@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/headerrelative_layout"
     android:layout_height="wrap_content"
     android:background="@drawable/rect_shadow_white"
     android:fitsSystemWindows="true">
@@ -100,39 +101,68 @@
     </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/lblassigned"
-        style="@style/CustomTextStylePoppinsBold"
+
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/linearassigned_layout"
         android:layout_below="@+id/lnrSendBy"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"
+        android:padding="@dimen/eight"
         android:background="@drawable/rect_shadow_light_green1"
-        android:padding="@dimen/eight"
-        android:text="Assigned - 03/07/2025"
-        android:textColor="@color/dark_blue_1"
-         />
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/calendar"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/lblassigned"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assigned - 03/07/2025"
+            android:textColor="@color/dark_blue_1"
+            android:layout_marginStart="10dp"
+            />
+
+    </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/lblCategory"
-        style="@style/CustomTextStylePoppinsBold"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@+id/lnrSendBy"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"
-        android:layout_toEndOf="@+id/lblassigned"
-        android:background="@drawable/rect_light_grey"
         android:padding="@dimen/eight"
-        android:text="GENERAL"
-        android:textColor="@color/clr_grey_dark"
-         />
+        android:layout_toEndOf="@+id/linearassigned_layout"
+        android:background="@drawable/rect_light_grey"
+        android:id="@+id/category_linear">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/categoryimagesvg"
+            android:layout_gravity="center"/>
 
+        <TextView
+            android:id="@+id/lblCategory"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GENERAL"
+            android:textColor="@color/clr_grey_dark"
+            android:layout_marginStart="10dp"
+            />
+
+    </LinearLayout>
 
 
 
@@ -140,39 +170,71 @@
         android:id="@+id/relative_layout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblCategory"
+        android:layout_below="@+id/category_linear"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/five"
         android:layout_marginBottom="@dimen/ten">
 
-        <TextView
-            android:id="@+id/lblSubject"
-            style="@style/CustomTextStylePoppinsBold"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/subject_linear"
             android:background="@drawable/rect_shadow_light_green1"
             android:gravity="center"
             android:padding="@dimen/eight"
-            android:text="TAMIL"
-            android:textColor="@color/dark_blue_1"
-            >
-        </TextView>
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/subjectimagesvgformat"/>
 
 
-        <TextView
-            android:id="@+id/lbldeadline"
-            style="@style/CustomTextStylePoppinsBold"
+            <TextView
+                android:id="@+id/lblSubject"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TAMIL"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/dark_blue_1"
+                >
+            </TextView>
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toEndOf="@+id/lblSubject"
+            android:id="@+id/lbldeadline_linear"
+            android:layout_toEndOf="@+id/subject_linear"
             android:background="@drawable/rect_shadow_light_yellow1"
             android:gravity="center"
             android:padding="@dimen/eight"
-            android:text="Deadline 04-07-2025"
-            android:textColor="@color/dark_orange"
-           >
-        </TextView>
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calendersvgformat"/>
+            <TextView
+                android:id="@+id/lbldeadline"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:text="Deadline 04-07-2025"
+                android:textColor="@color/dark_orange"
+                >
+            </TextView>
+        </LinearLayout>
+
+
+
     </RelativeLayout>
 
     <TextView
@@ -303,6 +365,7 @@
         android:layout_below="@+id/rytList"
         android:layout_centerHorizontal="false"
         android:layout_marginTop="@dimen/five"
+        android:visibility="gone"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginBottom="@dimen/ten">
 

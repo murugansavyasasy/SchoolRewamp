@@ -18,7 +18,7 @@ class LSRWSummary : BaseActivity<LsrwSummaryBinding>() ,
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        isToolBarPrimaryTheme()
         setupRecyclerView()
         loadHardcodedData()
     }

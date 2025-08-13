@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="@dimen/two_fifty"
     android:layout_gravity="center"
     android:gravity="center">
 
@@ -15,31 +15,31 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="165dp"
+            android:layout_height="@dimen/one_sixty_five"
             android:layout_gravity="center"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="15dp">
+            app:cardCornerRadius="@dimen/eight"
+            app:cardElevation="@dimen/fifteen">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="@dimen/fourteen"
                 android:gravity="center"
-                android:text="Quit Earning?"
+                android:text="@string/quit_earning"
                 android:textColor="@android:color/black"
-                android:textSize="20dp"
+                android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginEnd="@dimen/twenty"
+                android:layout_marginStart="@dimen/twenty"
                 android:gravity="center"
                 android:text="You are 400pts. away from \n unlocking rewards. quit Earning?"
-                android:textSize="18dp"
+                android:textSize="@dimen/eighteen_sp"
                 android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
@@ -50,12 +50,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/frmNo"
-        android:layout_marginRight="45dp"
-        android:layout_marginTop="75dp">
+        android:layout_marginEnd="@dimen/fourty_five"
+        android:layout_marginTop="@dimen/seventy_five">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/sixty"
+            android:layout_height="@dimen/sixty"
             android:src="@android:color/transparent"
             app:backgroundTint="@color/gray" />
 
@@ -63,8 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:elevation="6dp"
-            android:text="No"
+            android:elevation="@dimen/six"
+            android:text="@string/No"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
@@ -75,12 +75,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/frmOk"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="75dp">
+        android:layout_marginStart="@dimen/fifty"
+        android:layout_marginTop="@dimen/seventy_five">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/sixty"
+            android:layout_height="@dimen/sixty"
             android:src="@android:color/transparent"
             app:backgroundTint="@color/gray" />
 
@@ -88,8 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:elevation="6dp"
-            android:text="Ok"
+            android:elevation="@dimen/six"
+            android:text="@string/ok"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textStyle="bold" />

@@ -26,7 +26,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
 
 
         // Toolbar setup

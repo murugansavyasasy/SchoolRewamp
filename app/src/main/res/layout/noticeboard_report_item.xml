@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    android:padding="8dp">
+    android:padding="@dimen/eight">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,8 +13,8 @@
 
         <View
             android:id="@+id/pinHole"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="@dimen/twele"
+            android:layout_height="@dimen/twele"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/three"
             android:background="@drawable/circle_bg_black" />
@@ -41,8 +41,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:text="Annual Day celebrations"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+            />
 
 
         <RelativeLayout
@@ -63,9 +62,7 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Annual Day celebrations"
-                android:textColor="@color/black"
                 android:textSize="@dimen/eighteen_sp"
-                android:textStyle="bold"
                 android:visibility="gone" />
 
 
@@ -77,18 +74,17 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
-                android:fontFamily="@font/poppins_regular"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:text="15 Nov 2024"
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal" />
+                />
 
             <LinearLayout
                 android:id="@+id/lytRecyclerwview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/LblHWSubjectName"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -107,7 +103,7 @@
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/five"
-                    android:elevation="4dp"
+                    android:elevation="@dimen/four"
                     android:visibility="visible" />
 
 
@@ -144,11 +140,11 @@
 
     <ImageView
         android:id="@+id/imgPin"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/twenty_four"
+        android:layout_height="@dimen/twenty_four"
         android:layout_gravity="top|center_horizontal"
         android:contentDescription="Pin icon"
         android:src="@drawable/pin"
         android:layout_marginStart="@dimen/ten"
-        android:translationY="-1dp" />
+        android:translationY="@dimen/minus_one" />
 </FrameLayout>

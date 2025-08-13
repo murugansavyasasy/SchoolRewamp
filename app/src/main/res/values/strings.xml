@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!--    <string name="app_name">School Chimes</string>-->
     <string name="app_name">School Chimes-Beta</string>
     <string name="isPasswordMisMatching">Password is mismatching</string>
@@ -525,6 +525,7 @@
     <string name="choose_pre_recorded_file">Choose pre recorded file</string>
     <string name="isSuccess">Success!</string>
     <string name="no_student_found">No student found!</string>
+    <string name="no_certificate_found">No certificate found!</string>
     <string name="no_dsc">Admission No </string>
     <string name="no_asc">Admission No</string>
     <string name="admis_no_asc">AdmisNo ASC</string>
@@ -572,7 +573,6 @@
     <string name="no_matching_notices_found">No matching notices found</string>
     <string name="no_matching_attachment_found">No matching attachment found</string>
     <string name="event_holiday"><![CDATA[Event & Holiday]]></string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="past_date">Past date</string>
     <string name="assignmentdetails_missing">Assignment details is missing.</string>
@@ -630,10 +630,90 @@
     <string name="starts_on">Starts on</string>
     <string name="upcoming_events">Upcoming Events</string>
     <string name="ongoing_events">Ongoing Events</string>
-
+    <string name="notice_display_date_range">Notice Display Date Range</string>
+    <string name="quit_earning">Quit Earning?</string>
+    <string name="ok">Ok</string>
+    <string name="total_collection_today">TOTAL COLLECTION TODAY</string>
+    <string name="payment_history">Payment history</string>
+    <string name="cancel_2">CANCEL</string>
+    <string name="OK_2">OK</string>
+    <string name="sun">Sun</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="update_bus_location">Update Bus Location</string>
+    <string name="event_categories">Event Categories</string>
+    <string name="completed_events">Completed Events</string>
+    <string name="exam_timetable">Exam Timetable</string>
+    <string name="exam_marks">Exam Marks</string>
+    <string name="what_extracurricular_activities_are_available">What extracurricular activities are available?</string>
+    <string name="payment">Payment</string>
+    <string name="receipt">Receipt</string>
+    <string name="category_wise">CATEGORY WISE</string>
+    <string name="class_wise">CLASS WISE</string>
+    <string name="total_pending">TOTAL PENDING</string>
+    <string name="pick_your_file_type">Pick your file type</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="document">Document</string>
+    <string name="video">Video</string>
+    <string name="pauket">Pauket</string>
+    <string name="all_coupons">All Coupons</string>
+    <string name="no_records_found">No records found.</string>
+    <string name="my_coupons">My Coupons</string>
+    <string name="outpass">Outpass</string>
+    <string name="apply_on">Apply On</string>
+    <string name="from_date">From Date</string>
+    <string name="to_date">To Date</string>
+    <string name="no_of_day_s">No of Day(s)</string>
+    <string name="approved_by">Approved by</string>
+    <string name="reason_colon">Reason :</string>
+    <string name="fd">FD</string>
+    <string name="downloading">Downloading...</string>
+    <string name="important_info">Important Info</string>
+    <string name="replying">Replying</string>
+    <string name="close_reply">Close reply</string>
+    <string name="reply">Reply</string>
+    <string name="reply_all">Reply All</string>
+    <string name="type_your_message_here">Type your message here...</string>
+    <string name="delete">Delete</string>
+    <string name="yet_to_start">Yet to Start</string>
+    <string name="in_progress">In Progress</string>
+    <string name="your_locations">Your Locations</string>
+    <string name="use_fingerprint_or_mobile_number_to_login">Use Fingerprint or Mobile Number to login</string>
+    <string name="fd_full_day">FD: Full Day</string>
+    <string name="fh_first_half_morning_session">FH: First Half (morning session)</string>
+    <string name="sh_second_half_afternoon_session">SH: Second Half (afternoon session)</string>
+    <string name="no_internet_connection">No internet connection...</string>
+    <string name="reminder">Reminder</string>
+    <string name="set_a_otp">Set a OTP</string>
+    <string name="image">Image</string>
+    <string name="search_dot">Search...</string>
+    <string name="no_homework_found">No Homework Found!</string>
+    <string name="parent_meeting">Parent Meeting</string>
+    <string name="submitted_the_quiz_successfully">Submitted the Quiz Successfully</string>
+    <string name="student">Student</string>
+    <string name="school_needs">School Needs</string>
+    <string name="total_students">Total Students</string>
+    <string name="girls">Girls</string>
+    <string name="boys">Boys</string>
+    <string name="others">Others</string>
+    <string name="historical_data">Historical Data</string>
+    <string name="where_is_my_bus">Where is my bus</string>
+    <string name="timetable">Timetable</string>
+    <string name="sending_wait">Sending Wait....</string>
+    <string name="are_you_sure_you_want_to_update_this_lesson_plan">Are you sure you want to update this lesson plan?</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="requested_on">Requested On</string>
+    <string name="certificated_date">Certificated Date</string>
+    <string name="certificate">Certificate</string>
+    <string name="the_management_has_recived_your_request_and_it_is_currently_being_process">The Management has recived your request and it is currently being process...</string>
+    <string name="ADMIS_NO_">ADMIS NO: </string>
 
 </resources>

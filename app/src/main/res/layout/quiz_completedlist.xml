@@ -84,13 +84,13 @@
         android:clickable="true"
         android:gravity="center"
         android:minHeight="@dimen/fourty"
+        style="@style/CustomTextStylePoppinsMedium"
         android:text="Frankurt"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginEnd="@dimen/fifteen"
         android:textColor="@color/azure_radiance"
         android:layout_below="@+id/option2"
-        android:fontFamily="@font/poppins_medium"
-        android:textSize="@dimen/thirteen_sp" />
+        />
 
     <TextView
         android:id="@+id/option4"
@@ -104,11 +104,11 @@
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginEnd="@dimen/fifteen"
         android:text="Hamburg"
+        style="@style/CustomTextStylePoppinsMedium"
         android:textColor="@color/azure_radiance"
         android:layout_below="@+id/option3"
         android:layout_marginBottom="@dimen/fifteen"
-        android:fontFamily="@font/poppins_medium"
-        android:textSize="@dimen/thirteen_sp"/>
+       />
 
     </RelativeLayout>
 

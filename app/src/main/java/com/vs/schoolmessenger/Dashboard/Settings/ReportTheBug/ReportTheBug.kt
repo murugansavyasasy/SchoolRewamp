@@ -70,11 +70,11 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
         setupToolbar()
         if (Constant.isParentChoose) {
-            setUpGradientParent()
+            isToolBarPrimaryTheme()
             binding.rlaLblReportBug.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
         }
         else {
-            setUpGradientSchool()
+            setupToolbarBlue()
             binding.rlaLblReportBug.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
         }
 

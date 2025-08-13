@@ -21,8 +21,7 @@ class FeeReceiptViewActivity: BaseActivity<FeeReceiptViewActivityBinding>(), Vie
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)

@@ -32,7 +32,7 @@
 
                 <TextView
                     android:gravity="center"
-                    android:text="Create"
+                    android:text="@string/Create"
                     android:id="@+id/tabOneName"
                     android:textColor="@color/iconBlue"
                     style="@style/CustomTextStylePoppinsBold"
@@ -50,9 +50,6 @@
             </LinearLayout>
 
 
-
-
-
             <LinearLayout
                 android:id="@+id/lnrTabTwoName"
                 android:layout_weight="0.5"
@@ -62,7 +59,7 @@
 
                 <TextView
                     android:gravity="center"
-                    android:text="Reports"
+                    android:text="@string/Reports"
                     style="@style/CustomTextStylePoppinsBold"
                     android:id="@+id/tabTwoName"
                     android:layout_width="match_parent"
@@ -100,8 +97,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/Title"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    >
 
                 </TextView>
 
@@ -116,7 +112,7 @@
                     android:textColor="@color/red"
                     android:layout_marginStart="@dimen/two"
                     android:layout_marginTop="@dimen/eighteen"
-                    android:textSize="@dimen/thirteen_sp" />
+                     />
 
 
                 <EditText
@@ -128,8 +124,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    >
 
                 </EditText>
                 <TextView
@@ -143,8 +138,7 @@
                     android:layout_marginEnd="@dimen/fifteen"
                     android:text="0 / 50"
                     android:maxLength="50"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    >
 
                 </TextView>
 
@@ -157,8 +151,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/Description"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    >
 
                 </TextView>
 
@@ -192,8 +185,7 @@
                     android:gravity="start"
                     android:hint="@string/Description"
                     android:padding="@dimen/ten"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    >
 
                 </EditText>
 
@@ -209,8 +201,7 @@
                     android:layout_marginEnd="@dimen/fifteen"
                     android:text="0 / 500"
                     android:maxLength="500"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                   >
 
                 </TextView>
 
@@ -231,9 +222,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="Add Attachment"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
+                    android:text="@string/add_attachment"
+                    >
 
                 </TextView>
 
@@ -411,7 +401,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/eight"
-                        android:text="Select Date" />
+                        android:text="@string/select_date" />
                 </LinearLayout>
 
             </LinearLayout>

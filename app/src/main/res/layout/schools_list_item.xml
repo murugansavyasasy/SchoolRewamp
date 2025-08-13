@@ -51,8 +51,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Savyasasy software solution pvt ltd.,"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
                style="@style/CustomTextStylePoppinsBold" />
 
             <TextView
@@ -63,9 +61,8 @@
                 android:layout_below="@+id/lblSchoolName"
                 android:visibility="gone"
                 android:text=""
-                android:textColor="@color/black"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:textSize="@dimen/thirteen_sp">
+                >
 
             </TextView>
 

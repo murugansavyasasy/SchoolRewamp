@@ -70,10 +70,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/fifteen"
                 android:text="@string/select_standard"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_bold"
-                android:textStyle="bold">
+                style="@style/CustomTextStylePoppinsBold"
+                >
             </TextView>
         </RelativeLayout>
 
@@ -108,10 +106,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/fifteen"
                 android:text="@string/select_section"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_bold"
-                android:textStyle="bold">
+                style="@style/CustomTextStylePoppinsBold"
+                >
             </TextView>
         </RelativeLayout>
 
@@ -124,10 +120,9 @@
             android:layout_marginTop="@dimen/twenty_five"
             android:layout_marginEnd="@dimen/fifteen"
             android:hint="@string/enter_exam_title"
-            android:textColor="@color/black"
+            style="@style/CustomTextStylePoppinsRegular"
             android:textSize="@dimen/thirteen_sp"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal">
+            >
 
         </EditText>
 
@@ -147,10 +142,10 @@
             android:hint="@string/Enterdescription"
             android:maxLength="100"
             android:padding="@dimen/ten"
-            android:textColor="@color/black"
+            style="@style/CustomTextStylePoppinsRegular"
             android:textSize="@dimen/thirteen_sp"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal">
+
+            >
 
         </EditText>
 
@@ -164,10 +159,9 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
             android:text="@string/_0_500"
-            android:fontFamily="@font/poppins_regular"
+            style="@style/CustomTextStylePoppinsRegular"
             android:textColor="@color/light_gray"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal">
+            >
 
         </TextView>
 
@@ -183,11 +177,9 @@
             android:background="@drawable/rect_btn_orange"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:text="@string/select_exam"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
+            android:textColor="@color/white">
 
         </TextView>
     </RelativeLayout>

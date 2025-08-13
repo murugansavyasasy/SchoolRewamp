@@ -26,7 +26,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/ten"
             android:orientation="horizontal">
 
             <TextView
@@ -37,9 +37,9 @@
                 android:gravity="center"
                 android:paddingStart="@dimen/thirty_sp"
                 android:paddingEnd="@dimen/thirty_sp"
-                android:text="All"
+                android:text="@string/all"
                 android:textColor="@color/black"
-                android:textSize="12sp">
+                android:textSize="@dimen/twele_sp">
             </TextView>
 
             <TextView
@@ -48,15 +48,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/five"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="Yet to Start"
+                android:text="@string/yet_to_start"
                 android:paddingStart="@dimen/eighteen_sp"
                 android:paddingEnd="@dimen/eighteen_sp"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="@dimen/twele_sp" />
 
             <TextView
                 android:id="@+id/inprogressbutton"
@@ -70,9 +69,8 @@
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
                 android:paddingEnd="@dimen/eighteen_sp"
-                android:text="In Progress"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:text="@string/in_progress"
+                android:textSize="@dimen/twele_sp" />
 
 
             <TextView
@@ -81,15 +79,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
                 android:paddingEnd="@dimen/eighteen_sp"
-                android:text="Completed"
-                android:textColor="@color/black"
-                android:textSize="12sp">
+                android:text="@string/completed"
+                android:textSize="@dimen/twele_sp">
             </TextView>
 
 
@@ -121,8 +118,7 @@
             android:layout_toEndOf="@+id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
-            android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/black"
+           style="@style/CustomTextStylePoppinsRegular"
             android:textSize="@dimen/thirteen_sp" />
 
     </RelativeLayout>
@@ -133,7 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytSearch"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/ten"
         />
 
     <ImageView
@@ -145,7 +141,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/nomessages"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:visibility="gone" />
 
 
@@ -159,7 +155,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/no_list_found"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:layout_below="@+id/nomessage"
         android:visibility="gone" />
 

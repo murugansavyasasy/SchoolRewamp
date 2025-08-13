@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/five"
         android:gravity="center"
         android:text="Sunday"

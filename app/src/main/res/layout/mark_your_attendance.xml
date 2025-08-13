@@ -353,35 +353,35 @@
             android:layout_height="wrap_content"
             android:id="@+id/linearagendalayout"
             android:layout_below="@+id/lnrSpinners"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginStart="18dp"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
+            android:layout_marginStart="@dimen/eighteen"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/fdtextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FD: Full Day"
+                android:text="@string/fd_full_day"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 style="@style/CustomTextStylePoppinsBold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FH: First Half (morning session)"
+                android:text="@string/fh_first_half_morning_session"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:id="@+id/fhtextview"
                 style="@style/CustomTextStylePoppinsBold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SH: Second Half (afternoon session)"
+                android:text="@string/sh_second_half_afternoon_session"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 style="@style/CustomTextStylePoppinsBold" />
         </LinearLayout>
 

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/headerrelative_layout"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_shadow_white"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        android:id="@+id/lblTitle"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:text="Hello Title"
+        android:textSize="@dimen/twenty_sp" />
+
+
+    <ImageView
+        android:id="@+id/options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/ten"
+        android:contentDescription="Calendar icon"
+        android:src="@drawable/ic_more_vert" />
+
+    <TextView
+        android:id="@+id/createddate"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/options"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_toStartOf="@id/options"
+        android:text="21/05/2025"
+        android:textColor="@color/grey"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/lblDescription"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTitle"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:text="Experiment with solar power building and connection between them is the real power"
+        android:textColor="@color/clr_grey_dark"
+        android:textSize="@dimen/thirteen_sp" />
+
+
+    <LinearLayout
+        android:id="@+id/lnrSendBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblDescription"
+        android:layout_marginTop="@dimen/ten"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1">
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_weight="0.6"
+            android:text="@string/send_by"
+            android:textColor="@color/navi_blue3"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblSendby"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_weight="0.5"
+            android:text="Abi"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearassigned_layout"
+        android:layout_below="@+id/lnrSendBy"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:padding="@dimen/eight"
+        android:background="@drawable/rect_shadow_light_green1"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/subjectimagesvgformat"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/lblassigned"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TAMIL"
+            android:textColor="@color/dark_blue_1"
+            android:layout_marginStart="10dp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lnrSendBy"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:padding="@dimen/eight"
+        android:layout_toEndOf="@+id/linearassigned_layout"
+        android:background="@drawable/rect_light_grey"
+        android:id="@+id/category_linear">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/categoryimagesvg"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/lblCategory"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GENERAL"
+            android:textColor="@color/clr_grey_dark"
+            android:layout_marginStart="10dp"
+            />
+
+    </LinearLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/relative_layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category_linear"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginBottom="@dimen/ten">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbldeadline_linear"
+            android:background="@drawable/rect_shadow_light_yellow1"
+            android:gravity="center"
+            android:padding="@dimen/eight"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calendersvgformat"/>
+            <TextView
+                android:id="@+id/lbldeadline"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:text="Deadline 04-07-2025"
+                android:textColor="@color/dark_orange"
+                >
+            </TextView>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/rytList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative_layout1"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginBottom="@dimen/two"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rytList2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ten"
+            android:minHeight="@dimen/sixty"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyAssignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/five"
+                android:paddingEnd="@dimen/five" />
+
+            <TextView
+                android:id="@+id/total_numbers"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/minus_fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/ten"
+                android:layout_toEndOf="@id/rcyAssignment"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:gravity="center"
+                android:text=""
+                android:textSize="@dimen/fifteen_sp" />
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/video_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/bg_image_background_white_coupon"
+            android:scaleType="fitXY"
+            android:src="@drawable/video_play"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+        <ProgressBar
+            android:id="@+id/loadingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/progress_bar_white"
+            android:indeterminateOnly="true"
+            android:visibility="gone">
+
+        </ProgressBar>
+
+        <View
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1" />
+
+
+        <ImageView
+            android:id="@+id/arrow_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/dark_pink_background"
+            android:paddingStart="@dimen/ten"
+            android:paddingTop="@dimen/eight"
+            android:paddingEnd="@dimen/ten"
+            android:paddingBottom="@dimen/eight"
+            android:src="@drawable/arrow_right_white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytList"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="@dimen/five"
+        android:visibility="visible"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten">
+
+        <TextView
+            android:id="@+id/lblSubmitted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_radius_button"
+            android:gravity="center"
+            style="@style/CustomTextStylePoppinsBold"
+            android:padding="@dimen/eight"
+            android:text="My Submission"
+            android:textColor="@color/white"
+            android:textSize="13sp">
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/lblNotSubmitted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_green_radoius_10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:padding="@dimen/eight"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"
+            style="@style/CustomTextStylePoppinsBold">
+        </TextView>
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

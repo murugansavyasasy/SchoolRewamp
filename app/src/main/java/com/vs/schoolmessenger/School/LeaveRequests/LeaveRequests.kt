@@ -40,7 +40,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()

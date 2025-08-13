@@ -124,14 +124,21 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
 
-
     protected open fun setupToolbarBlue() {
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = Color.TRANSPARENT
-        window.navigationBarColor = Color.TRANSPARENT
+        window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
+        window.navigationBarColor = this.resources.getColor(R.color.PrimaryColor)
         window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
+
+//    protected open fun setupToolbarBlue() {
+//        val window = this.window
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//        window.statusBarColor = Color.TRANSPARENT
+//        window.navigationBarColor = Color.TRANSPARENT
+//        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
+//    }
 
     protected open fun setUpGradientParent() {
         val window = this.window
@@ -183,6 +190,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
             window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+
         }
     }
 
@@ -209,7 +218,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val isBottomMenu = binding.root.findViewById<LinearLayout>(isBottomMenu)
 
         if (Constant.isParentChoose) {
-            isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_parent)
+            isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_school)
             loadFragment(this,ParentHomeFragment())
         } else {
             loadFragment(this,SchoolHomeFragment())
@@ -567,10 +576,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                )
                 //    setupToolbar()
                 if (Constant.isParentChoose) {
-                    setUpGradientParent()
+                    setupToolbarBlue()
+                    window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+
                 } else {
-                    setUpGradientSchool()
-                }
+                    setupToolbarBlue()                }
             }
 
             R.id.icon_help -> {
@@ -587,9 +597,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                )
                 //      setupToolbar()
                 if (Constant.isParentChoose) {
-                    setUpGradientParent()
+                    setupToolbarBlue()
+                    window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+
                 } else {
-                    setUpGradientSchool()
+                    setupToolbarBlue()
                 }
             }
 
@@ -608,9 +620,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
                 //   setupToolbar()
                 if (Constant.isParentChoose) {
-                    setUpGradientParent()
+                    setupToolbarBlue()
+                    window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+
                 } else {
-                    setUpGradientSchool()
+                    setupToolbarBlue()
                 }
             }
 
@@ -629,9 +643,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
                 //    setupToolbar()
                 if (Constant.isParentChoose) {
-                    setUpGradientParent()
+                    setupToolbarBlue()
+                    window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+
                 } else {
-                    setUpGradientSchool()
+                    setupToolbarBlue()
                 }
             }
         }

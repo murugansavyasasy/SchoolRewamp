@@ -24,11 +24,11 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profileImage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
             android:src="@drawable/default_profile"
             android:scaleType="centerCrop"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="@dimen/three"
             app:shapeAppearanceOverlay="@style/CircleImageShape"
             android:layout_toEndOf="@+id/imgBack"/>
 
@@ -41,8 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/ten"
             android:layout_toEndOf="@+id/profileImage"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginStart="@dimen/five"
             android:orientation="vertical">
 
             <TextView
@@ -51,8 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SARAN"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+                >
 
             </TextView>
 
@@ -63,8 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:text="ENGLISH"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+               >
 
             </TextView>
 
@@ -90,24 +88,24 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="@dimen/ten">
 
         <ImageView
             android:id="@+id/btnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/ten"
             android:layout_gravity="bottom"
             android:visibility="gone"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/ten"
             android:contentDescription="Attachment"
             android:src="@drawable/ic_plus" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/ten"
             android:orientation="vertical">
 
             <LinearLayout
@@ -115,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="@dimen/five"
                 android:visibility="gone"
                 android:background="@drawable/bg_message_input">
 
@@ -124,27 +122,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="@dimen/five">
 
                     <TextView
                         android:id="@+id/txtReplyingTo"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/zero"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Replying"
+                        android:text="@string/replying"
                         android:textColor="@color/black"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/twele_sp"
                         style="@style/CustomTextStylePoppinsBold"
 
-                        android:paddingBottom="4dp" />
+                        android:paddingBottom="@dimen/four" />
 
                     <ImageView
                         android:id="@+id/imgCloseReply"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
                         android:src="@drawable/close_red_color"
-                        android:layout_marginEnd="8dp"
-                        android:contentDescription="Close reply" />
+                        android:layout_marginEnd="@dimen/eight"
+                        android:contentDescription="@string/close_reply" />
                 </LinearLayout>
 
 
@@ -153,11 +151,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Hi How are you"
-                    android:textColor="@color/black"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:textSize="12sp"
-                    android:layout_marginBottom="5dp"
-                    android:paddingBottom="4dp" />
+                    android:textSize="@dimen/twele_sp"
+                    android:layout_marginBottom="@dimen/five"
+                    android:paddingBottom="@dimen/four" />
 
 
                 <LinearLayout
@@ -166,35 +163,35 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:weightSum="2"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="@dimen/five">
 
 
                 <TextView
                     android:id="@+id/replytext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Reply"
+                    android:text="@string/reply"
                     android:gravity="center"
                     android:textColor="@color/iconBlue"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="5dp"
-                    android:paddingBottom="4dp" />
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_marginBottom="@dimen/five"
+                    android:paddingBottom="@dimen/four" />
 
 
                     <TextView
                         android:id="@+id/replyalltext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Reply All"
+                        android:text="@string/reply_all"
                         android:textColor="@color/iconBlue"
                         android:layout_weight="1"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/fifteen_sp"
                         android:gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:paddingBottom="4dp" />
+                        android:layout_marginBottom="@dimen/five"
+                        android:paddingBottom="@dimen/four" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -202,15 +199,15 @@
             <EditText
                 android:id="@+id/edtMessage"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/fourty"
                 android:background="@drawable/bg_message_input"
                 android:gravity="center_vertical"
                 android:visibility="gone"
-                android:hint="Type your message here..."
+                android:hint="@string/type_your_message_here"
                 android:inputType="textMultiLine"
-                android:paddingHorizontal="12dp"
+                android:paddingHorizontal="@dimen/twele"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -244,7 +241,6 @@
             android:layout_marginTop="@dimen/twenty"
             android:gravity="center"
             android:text="@string/no_list_found"
-            android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />
 

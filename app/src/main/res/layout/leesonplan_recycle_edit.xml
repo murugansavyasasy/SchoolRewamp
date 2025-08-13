@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:padding="@dimen/ten"
     android:layout_height="wrap_content">
 
     <TextView
@@ -11,8 +11,8 @@
         android:id="@+id/headerlabel"
         android:text="Month :"
         android:textColor="@color/black"
-        android:layout_marginStart="15dp"
-        android:textSize="15sp"
+        android:layout_marginStart="@dimen/fifteen"
+        android:textSize="@dimen/fifteen_sp"
         style="@style/CustomTextStylePoppinsBold"/>
 
     <EditText
@@ -23,13 +23,13 @@
         android:text="Value"
         android:textColor="@color/black"
         android:background="@drawable/gray_bg_radius"
-        android:padding="10dp"
+        android:padding="@dimen/ten"
         android:visibility="visible"
         android:gravity="start"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:textSize="@dimen/fifteen_sp"
+        android:layout_marginTop="@dimen/ten"
         style="@style/CustomTextStylePoppinsMedium"/>
 
     <TextView
@@ -38,15 +38,14 @@
         android:id="@+id/headerdatelabe1l"
         android:layout_below="@+id/headerlabe1l"
         android:text="Value"
-        android:textColor="@color/black"
         android:background="@drawable/gray_bg_radius"
-        android:padding="10dp"
+        android:padding="@dimen/ten"
         android:visibility="visible"
         android:gravity="start"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:textSize="@dimen/fifteen_sp"
+        android:layout_marginTop="@dimen/ten"
         style="@style/CustomTextStylePoppinsMedium"/>
 
 
@@ -57,17 +56,17 @@
         android:layout_below="@+id/headerdatelabe1l"
         android:background="@drawable/gray_bg_radius"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/ten"
         android:visibility="visible"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:weightSum="1">
 
         <RelativeLayout
             android:id="@+id/spinnerdropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="@dimen/eight"
             android:layout_weight="0.5"
             android:gravity="center">
 

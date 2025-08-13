@@ -41,7 +41,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
 
         binding.imgBack.setOnClickListener(this)
 

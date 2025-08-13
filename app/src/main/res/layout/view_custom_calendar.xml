@@ -4,19 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/sixteen">
 
     <TextView
         android:id="@+id/tvMonthYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="July 2025"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCalendarDays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="@dimen/eight" />
 </LinearLayout>

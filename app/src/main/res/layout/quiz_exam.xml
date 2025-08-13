@@ -47,7 +47,7 @@
                     android:shadowDx="2"
                     android:shadowDy="1"
                     android:shadowRadius="3"
-                    android:text="Submitted the Quiz Successfully"
+                    android:text="@string/submitted_the_quiz_successfully"
                     android:textColor="@color/neon_green"
                     android:textSize="@dimen/twenty_sp"
                     android:textStyle="bold">
@@ -106,7 +106,6 @@
                 android:background="@drawable/quiz_option_bg"
                 android:clickable="true"
                 android:gravity="center"
-
                 android:minHeight="@dimen/fourty_nine"
                 android:padding="10dp"
                 android:text="Option 1"

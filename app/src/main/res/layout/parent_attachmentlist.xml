@@ -10,16 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cardview"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        android:layout_marginEnd="20dp">
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/twenty"
+        android:layout_marginBottom="@dimen/twenty"
+        app:cardCornerRadius="@dimen/eight"
+        app:cardElevation="@dimen/four"
+        android:layout_marginEnd="@dimen/twenty">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/hundred"
             android:id="@+id/imagebanner"
             android:src="@drawable/biometric_security"/>
 
@@ -34,7 +34,7 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_below="@+id/cardview"
         android:layout_alignStart="@+id/cardview"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/sixteen_sp"/>
 
 
     <TextView
@@ -45,8 +45,8 @@
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_below="@+id/titletext"
         android:layout_alignStart="@+id/cardview"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"/>
+        android:layout_marginTop="@dimen/ten"
+        android:textSize="@dimen/sixteen_sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,8 +56,8 @@
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_below="@+id/desctext"
         android:layout_alignStart="@+id/cardview"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"/>
+        android:layout_marginTop="@dimen/ten"
+        android:textSize="@dimen/sixteen_sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_below="@+id/datetext"
         android:layout_alignStart="@+id/cardview"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"/>
+        android:layout_marginTop="@dimen/ten"
+        android:textSize="@dimen/sixteen_sp"/>
 
 </RelativeLayout>

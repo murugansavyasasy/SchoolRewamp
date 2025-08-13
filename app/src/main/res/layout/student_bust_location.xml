@@ -27,8 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/rlaStudentName"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="Where is my bus"
-            android:textColor="@color/black"
+            android:text="@string/where_is_my_bus"
             android:textSize="@dimen/fifteen_sp"
             style="@style/CustomTextStylePoppinsBold">
 
@@ -49,8 +48,7 @@
                 android:text=""
                 android:layout_gravity="end"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+          >
 
             </TextView>
 
@@ -61,9 +59,8 @@
                 android:layout_below="@+id/lblStudentName"
                 android:text=""
                 android:layout_gravity="end"
-                android:textColor="@color/black"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:textSize="@dimen/thirteen_sp">
+                >
 
             </TextView>
         </LinearLayout>

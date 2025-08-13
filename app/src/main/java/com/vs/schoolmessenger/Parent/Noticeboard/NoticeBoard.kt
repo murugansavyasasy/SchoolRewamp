@@ -34,7 +34,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
         val isChildDetails = SharedPreference.getChildDetails(this)

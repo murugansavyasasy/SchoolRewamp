@@ -71,7 +71,7 @@
             android:layout_marginTop="@dimen/ten"
             android:clipToPadding="false"
             android:overScrollMode="never"
-            android:padding="8dp"
+            android:padding="@dimen/eight"
             app:layout_constraintTop_toBottomOf="@+id/lblSection" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -119,7 +119,7 @@
             android:inputType="text"
             android:imeOptions="actionSearch"
             android:background="@null"
-            android:hint="Search...">
+            android:hint="@string/search_dot">
 
         </EditText>
     </LinearLayout>
@@ -165,8 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/twenty_five"
             android:gravity="center"
-            android:text="No Homework Found!"
-            android:textColor="@color/black"
+            android:text="@string/no_homework_found"
             android:textSize="@dimen/thirteen_sp"
             app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound">
 

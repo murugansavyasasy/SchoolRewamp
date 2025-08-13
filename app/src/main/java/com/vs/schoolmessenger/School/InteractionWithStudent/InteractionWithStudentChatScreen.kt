@@ -43,9 +43,9 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
         val staffDetails = SharedPreference.getStaffDetails(this)

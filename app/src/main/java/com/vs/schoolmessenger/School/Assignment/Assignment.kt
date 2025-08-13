@@ -90,8 +90,9 @@ import java.util.Date
 import java.util.Locale
 
 
-class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, View.OnClickListener,AssignmentStudentListClickListener,
-    OnImageClickListener, TimeSelectedListener,OnDateSelectedListener,VimeoVideoUpload.UploadCompletionListener {
+class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, View.OnClickListener,
+    AssignmentStudentListClickListener, OnImageClickListener, TimeSelectedListener,
+    OnDateSelectedListener, VimeoVideoUpload.UploadCompletionListener {
 
     private lateinit var adapter: AssignmentStudentListAdapter
 
@@ -145,7 +146,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
@@ -190,6 +191,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                     }
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -308,25 +310,17 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
         }
 
-//        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-//        binding.edtDescription.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-//        Constant.editTextCounter(this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount)
-//        Constant.editTextCounter(this, binding.edtTitle, Constant.isTitleLength, binding.lblT)
-
-
         appViewModel!!.isGetAssignmentReport?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
                     binding.search.visibility = View.VISIBLE
-                    binding.line2.visibility = View.VISIBLE
                     val isAssignmentReport = response.data
                     isAssignmentReportData = isAssignmentReport
                     loadAssignmentReportData()
                 } else {
                     binding.search.visibility = View.GONE
-                    binding.line2.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
                     binding.noDataFound.text = response.message
@@ -338,7 +332,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
-     val adapter = AcademicYearAdapter(this, isAcademicYear)
+        val adapter = AcademicYearAdapter(this, isAcademicYear)
         binding.isSpinner.adapter = adapter
         binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -380,7 +374,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
 
-
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
@@ -404,15 +397,11 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
 
             R.id.lnrTabOneName -> {
-//                binding.btnCreate.isEnabled = false
-//                binding.btnHistory.isEnabled = true
-//                isBackRoundChange(binding.btnCreate)
-
                 binding.btnChooseRecipient.text = getString(R.string.NEXT)
                 binding.line1.setBackgroundResource(R.color.iconBlue)
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-                binding.line2.setBackgroundResource(R.color.white)
+                binding.line3.setBackgroundResource(R.color.white)
 
                 binding.rlaAssignmentReport.visibility = View.GONE
                 binding.rytCreateAssignment.visibility = View.VISIBLE
@@ -426,7 +415,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 binding.btnChooseRecipient.text = "Update Assignment"
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-                binding.line2.setBackgroundResource(R.color.iconBlue)
+                binding.line3.setBackgroundResource(R.color.iconBlue)
                 binding.line1.setBackgroundResource(R.color.white)
 
                 binding.rlaAssignmentReport.visibility = View.VISIBLE
@@ -465,25 +454,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         binding.rcyAssignmentReport.adapter = isAssignmentAdapter
 
     }
-
-//    private fun isBackRoundChange(isClickingId: TextView) {
-//        binding.lytNoDataFound.visibility = View.GONE
-////        if (isClickingId == binding.line1) {
-////            binding.li.background = null
-////            binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-////        }
-////
-////        if (isClickingId == binding.line3) {
-////            binding.btnCreate.background = null
-////            binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-////        }
-//
-//
-//        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_light_blue)
-//        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-//        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
-//        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
-//    }
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
@@ -842,21 +812,19 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
     override fun onEditAndDeleteClick(
-        data: AssignmentData,
-        anchorView: View,
-        adapterPosition: Int
+        data: AssignmentData, anchorView: View, adapterPosition: Int
     ) {
         isAssignmentId = data.id
         isAssignmentPosition = adapterPosition
         showEditDeletePopup(data, anchorView)
     }
 
-       override fun onNotSubmittedClick(data: AssignmentData) {
-            val intent = Intent(this, AssignmentStudentList::class.java)
-            intent.putExtra("assignment_id", data.id)
-            intent.putExtra("type", "NOTSUBMITTED")
-            startActivity(intent)
-        }
+    override fun onNotSubmittedClick(data: AssignmentData) {
+        val intent = Intent(this, AssignmentStudentList::class.java)
+        intent.putExtra("assignment_id", data.id)
+        intent.putExtra("type", "NOTSUBMITTED")
+        startActivity(intent)
+    }
 
 
     fun showEditDeletePopup(data: AssignmentData, anchor: View) {
@@ -1152,14 +1120,4 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
 
-//    override fun onDeleteClick(data: AssignmentData) {
-//        val jsonObject = JsonObject()
-//        jsonObject.addProperty(APIKeyNames.id, data.id)
-//        appViewModel?.isAssignmentDelete(
-//            isAccessToken!!, jsonObject, this
-//        )
-//    }
-
-
-
-    }
+}

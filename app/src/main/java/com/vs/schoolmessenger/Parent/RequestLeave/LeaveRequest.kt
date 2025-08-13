@@ -58,8 +58,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-//        setUpGradientParent()
-        setupToolbarBlue()
+        isToolBarPrimaryTheme()
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 

@@ -123,8 +123,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale")
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        setUpGradientSchool()
+        setupToolbarBlue()
 
         binding.lblHistoryList.paintFlags =
             binding.lblHistoryList.paintFlags or Paint.UNDERLINE_TEXT_FLAG

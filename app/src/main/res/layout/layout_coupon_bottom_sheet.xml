@@ -26,11 +26,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/relative_layout"
         android:layout_below="@+id/dotindicator"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="@dimen/eighteen"
+        android:layout_marginEnd="@dimen/eighteen"
+        android:layout_marginTop="@dimen/thirty"
         android:background="@drawable/rounded_bg"
-        android:padding="15dp"
+        android:padding="@dimen/fifteen"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -42,19 +42,19 @@
             android:text="Saloon &amp; Spa"
             android:textStyle="normal"
             style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/fourteen_sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/eight">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/thumbnail"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
                 android:src="@drawable/small_postercoupon"
                 app:shapeAppearanceOverlay="@style/ImageMediumRoundedCorners" />
             <LinearLayout
@@ -71,7 +71,7 @@
                    style="@style/CustomTextStylePoppinsMedium"
                     android:text="Rs.300 Off"
                     android:textColor="@color/black"
-                    android:textSize="17sp"
+                    android:textSize="@dimen/seventeen_sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -80,8 +80,8 @@
                     android:id="@+id/offer_text1"
                     android:text="TONI&amp;GUY"
                     android:textStyle="normal"
-                    android:textSize="13sp"
-                    android:layout_marginStart="5dp"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_marginStart="@dimen/five"
                     style="@style/CustomTextStylePoppinsMedium"/>
 
             </LinearLayout>
@@ -92,15 +92,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="7dp">
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/seven">
 
             <ImageView
-                android:layout_width="13dp"
-                android:layout_height="13dp"
+                android:layout_width="@dimen/thirteen"
+                android:layout_height="@dimen/thirteen"
                 android:id="@+id/location_imag2"
                 android:layout_gravity="center"
-                android:layout_marginStart="9dp"
+                android:layout_marginStart="@dimen/nine"
                 android:src="@drawable/clockloadericon"/>
 
             <TextView
@@ -109,9 +109,9 @@
                 android:id="@+id/offer_text4"
                 android:text="Valid till 01.01.2024"
                 android:textStyle="normal"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:layout_marginStart="5dp"/>
+                android:layout_marginStart="@dimen/five"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -121,9 +121,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="@dimen/ten"
         android:layout_below="@+id/relative_layout"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="@dimen/twenty">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,14 +131,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:id="@+id/remember"
                 android:text="How to Use"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="@dimen/fifteen_sp"
                 android:layout_weight="1"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten"
                 android:textStyle="normal"
                 style="@style/CustomTextStylePoppinsMedium"/>
 
@@ -148,8 +148,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/remember_symbol"
                 android:src="@drawable/ic_down_black"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="5dp"/>
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginStart="@dimen/five"/>
 
         </LinearLayout>
 
@@ -159,10 +159,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Here are some important thakdjnkasjdn jkansjdknkjnadksad nkajndkjnkjasnkjasndkings to remember..."
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="normal"
-            android:padding="10dp"
-            android:layout_marginEnd="40dp"
+            android:padding="@dimen/ten"
+            android:layout_marginEnd="@dimen/fourty"
             android:visibility="gone"
             style="@style/CustomTextStylePoppinsMedium"
             android:textColor="@color/grey"/>
@@ -171,11 +171,11 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/one"
         android:id="@+id/view"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/twenty"
         android:layout_below="@+id/linear_layout3"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="@dimen/twenty"
         android:background="@color/grey"
         />
 
@@ -186,8 +186,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_below="@+id/view"
-        android:padding="10dp"
-        android:layout_marginTop="10dp">
+        android:padding="@dimen/ten"
+        android:layout_marginTop="@dimen/ten">
 
 
         <LinearLayout
@@ -196,15 +196,15 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:id="@+id/remember1"
                 android:text="Terms &amp; Conditions"
                 android:textColor="@color/black"
                 android:textStyle="normal"
-                android:textSize="15sp"
+                android:textSize="@dimen/fifteen_sp"
                 android:layout_weight="1"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten"
                style="@style/CustomTextStylePoppinsMedium"/>
 
             <ImageView
@@ -212,8 +212,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/remember_symbol1"
                 android:src="@drawable/ic_down_black"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="5dp"/>
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginStart="@dimen/five"/>
         </LinearLayout>
 
         <!-- Hidden TextView to be expanded -->
@@ -222,10 +222,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Here are some important thakdjnkasjdn jkansjdknkjnadksad nkajndkjnkjasnkjasndkings to remember..."
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             android:textStyle="normal"
-            android:padding="10dp"
-            android:layout_marginEnd="40dp"
+            android:padding="@dimen/ten"
+            android:layout_marginEnd="@dimen/fourty"
             style="@style/CustomTextStylePoppinsMedium"
             android:visibility="gone"
             android:textColor="@color/grey"/>
@@ -235,20 +235,20 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_height="@dimen/one"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
         android:layout_below="@+id/linear_layout4"
         android:background="@color/grey"
         />
 
     <ProgressBar
         android:id="@+id/isProgressBar"
-        android:layout_width="50dp"
+        android:layout_width="@dimen/fifty"
         android:visibility="gone"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/fifty"
         android:layout_centerInParent="true"
-        android:layout_height="50dp">
+        android:layout_height="@dimen/fifty">
 
     </ProgressBar>
 
