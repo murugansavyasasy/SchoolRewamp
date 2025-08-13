@@ -54,7 +54,7 @@ class AssignmentAdapter(
             ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.assignment_report_item, parent, false)
+                .inflate(R.layout.assignment_parent_report_item, parent, false)
             DataViewHolder(view, context)
         }
     }
@@ -63,7 +63,7 @@ class AssignmentAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             itemList?.get(position)?.let {
-                holder.bind(it, position, this,listener)
+                holder.bind(it, position, this, listener)
             }
         } else if (holder is SchoolNoticeBoardAdapter.ShimmerViewHolder) {
             holder.startShimmer()
@@ -93,6 +93,7 @@ class AssignmentAdapter(
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblassigned: TextView = itemView.findViewById(R.id.lblassigned)
         private val lblCategory: TextView = itemView.findViewById(R.id.lblCategory)
+
         //        private val lblSubmissionDue: TextView = itemView.findViewById(R.id.lblSubmissionDue)
         private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
@@ -102,6 +103,7 @@ class AssignmentAdapter(
         private val lblSendby: TextView = itemView.findViewById(R.id.lblSendby)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
+
         //        private val webView: WebView = itemView.findViewById(R.id.webView)
         private val progressBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
@@ -111,7 +113,11 @@ class AssignmentAdapter(
         private val options: ImageView = itemView.findViewById(R.id.options)
         private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
-        private val progressBarAssignment: ProgressBar = itemView.findViewById(R.id.progressBarAssignment)
+        private val progressBarAssignment: ProgressBar =
+            itemView.findViewById(R.id.progressBarAssignment)
+        private val headerrelative_layout: RelativeLayout =
+            itemView.findViewById(R.id.headerrelative_layout)
+
         @SuppressLint("ClickableViewAccessibility", "SetJavaScriptEnabled")
         fun bind(
             data: AssignmentData,
@@ -123,14 +129,16 @@ class AssignmentAdapter(
             lblDescription.text = data.description
             lblTitle.text = data.title
             lblCategory.text = data.category
-            lblassigned.text = "Assigned" + " - " + Constant.convertToReadableDate(data.created_date)
+            lblassigned.text =
+                "Assigned" + " - " + Constant.convertToReadableDate(data.created_date)
             createddate.text = Constant.convertToReadableDate(data.created_date)
             lblSubject.text = data.subject
-            lbldeadline.text = "Submission date" +" "+ Constant.convertToReadableDate(data.end_date)
+            lbldeadline.text =
+                "Submission date" + " " + Constant.convertToReadableDate(data.end_date)
             lblSendby.text = data.created_date
 
-            lblSubmitted.text ="Submitted"+" - "+ data.submitted_count
-            lblNotSubmitted.text ="Not Submitted"+" - "+ data.total_count
+            lblSubmitted.text = "Submitted" + " - " + data.submitted_count
+            lblNotSubmitted.text = "Not Submitted" + " - " + data.total_count
 
 
             val submittedCount = data.submitted_count ?: 0
@@ -165,7 +173,39 @@ class AssignmentAdapter(
                     isCompleted = true,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
-                    submittedCount =  data.submitted_count,
+                    submittedCount = data.submitted_count,
+                    totalCount = data.total_count,
+                    assignmentid = data.id,
+                    created_date = data.created_date,
+                    category = data.category,
+                    assignmentsubject = data.subject
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
+            }
+
+            headerrelative_layout.setOnClickListener {
+                val convertedList = data.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
+                }
+                val isHomeWorkData = FilePreview(
+                    id = "",
+                    title = data.title,
+                    description = data.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = data.thumbnail,
+                    isUnread = true,
+                    isCompleted = true,
+                    isMenuType = Constant.M_ASSIGNMENT,
+                    fileList = convertedList,
+                    submittedCount = data.submitted_count,
                     totalCount = data.total_count,
                     assignmentid = data.id,
                     created_date = data.created_date,
@@ -202,7 +242,7 @@ class AssignmentAdapter(
                                 isCompleted = true,
                                 isMenuType = Constant.M_ASSIGNMENT,
                                 fileList = convertedList,
-                                submittedCount =  data.submitted_count,
+                                submittedCount = data.submitted_count,
                                 totalCount = data.total_count,
                                 assignmentid = data.id,
                                 created_date = data.created_date,
@@ -250,7 +290,7 @@ class AssignmentAdapter(
             lblSubmitted.setOnClickListener { listener.onSubmittedClick(data) }
             lblNotSubmitted.setOnClickListener { listener.onNotSubmittedClick(data) }
             options.setOnClickListener {
-                listener.onEditAndDeleteClick(data,it,adapterPosition)
+                listener.onEditAndDeleteClick(data, it, adapterPosition)
             }
         }
 
@@ -260,6 +300,7 @@ class AssignmentAdapter(
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shimmerLayout: ShimmerFrameLayout =
             itemView.findViewById(R.id.shimmer_view_container)
+
         init {
             shimmerLayout.startShimmer()
         }
