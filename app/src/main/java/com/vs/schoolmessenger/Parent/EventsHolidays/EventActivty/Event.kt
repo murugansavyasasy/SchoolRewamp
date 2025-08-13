@@ -81,9 +81,36 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
                     binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                    binding.rcyongoingevent.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.rcyupcomingevent.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.rcycompletedevent.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    if(mAdapter.itemCount > 0){
+                        binding.rcyongoingevent.visibility=View.VISIBLE
+                        binding.headerview.visibility=View.VISIBLE
+                    }
+                    else{
+                        binding.rcyongoingevent.visibility=View.GONE
+                        binding.headerview.visibility=View.GONE
+                    }
+
+                    if(eventupcomingadapter.itemCount > 0){
+                        binding.rcyupcomingevent.visibility=View.VISIBLE
+                        binding.upcomingeventHeaderview.visibility=View.VISIBLE
+                    }
+                    else{
+                        binding.rcyupcomingevent.visibility=View.GONE
+                        binding.upcomingeventHeaderview.visibility=View.GONE
+                    }
+
+                    if(eventcompletedadapter.itemCount > 0){
+                        binding.rcycompletedevent.visibility=View.VISIBLE
+                        binding.completedeventHeaderview.visibility=View.VISIBLE
+                    }
+                    else{
+                        binding.rcycompletedevent.visibility=View.GONE
+                        binding.completedeventHeaderview.visibility=View.GONE
+                    }
+
+//                    binding.rcyongoingevent.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+//                    binding.rcyupcomingevent.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
+//                    binding.rcycompletedevent.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
                 }, 100)
             }
 
