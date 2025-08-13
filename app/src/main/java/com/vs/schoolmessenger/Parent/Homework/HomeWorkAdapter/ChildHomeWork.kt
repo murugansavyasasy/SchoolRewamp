@@ -50,7 +50,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
-            binding.bottomLinearlayout.visibility = View.VISIBLE
             binding.createdDate.text = data?.created_date ?: ""
             binding.category.text = data?.category ?: ""
             binding.subject.text = data?.assignmentsubject ?: ""
@@ -66,7 +65,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         } else {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.GONE
-            binding.bottomLinearlayout.visibility = View.GONE
             binding.fragmentContainer.visibility = View.GONE
         }
 
@@ -136,6 +134,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.lblPostedBy.layoutParams = params
             binding.rcChildHW.visibility = View.GONE
             binding.lblAttachments.visibility = View.GONE
+            binding.imgAttachmentIcon.visibility = View.GONE
         } else {
             val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
             params.topToBottom = binding.rcChildHW.id
@@ -143,6 +142,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.lblPostedBy.layoutParams = params
             binding.rcChildHW.visibility = View.VISIBLE
             binding.lblAttachments.visibility = View.VISIBLE
+            binding.imgAttachmentIcon.visibility = View.VISIBLE
         }
 
     }

@@ -36,7 +36,6 @@ class CertificateRequestAdapter (
     private val TYPE_DATA = 1
     private var selectedPosition = RecyclerView.NO_POSITION
 
-
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }

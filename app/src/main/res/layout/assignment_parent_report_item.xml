@@ -117,7 +117,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/calendar"
+            android:src="@drawable/subjectimagesvgformat"
             android:layout_gravity="center"/>
 
         <TextView
@@ -125,7 +125,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assigned - 03/07/2025"
+            android:text="TAMIL"
             android:textColor="@color/dark_blue_1"
             android:layout_marginStart="10dp"
             />
@@ -175,43 +175,10 @@
         android:layout_marginTop="@dimen/five"
         android:layout_marginBottom="@dimen/ten">
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/subject_linear"
-            android:background="@drawable/rect_shadow_light_green1"
-            android:gravity="center"
-            android:padding="@dimen/eight"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/subjectimagesvgformat"/>
-
-
-            <TextView
-                android:id="@+id/lblSubject"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TAMIL"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/dark_blue_1"
-                >
-            </TextView>
-        </LinearLayout>
-
-
-
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lbldeadline_linear"
-            android:layout_toEndOf="@+id/subject_linear"
             android:background="@drawable/rect_shadow_light_yellow1"
             android:gravity="center"
             android:padding="@dimen/eight"
@@ -232,36 +199,8 @@
                 >
             </TextView>
         </LinearLayout>
-
-
-
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblassignmentprogress"
-        android:text="@string/assignment_progress"
-        android:textColor="@color/black"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_below="@+id/relative_layout1"
-        android:layout_marginStart="@dimen/ten"
-        android:textSize="@dimen/fifteen_sp"/>
-
-
-    <ProgressBar
-        android:id="@+id/progressBarAssignment"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:progressDrawable="@drawable/progress_bar_assignment"
-        android:progress="30"
-        android:max="100"
-        android:layout_below="@+id/lblassignmentprogress"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:layout_marginBottom="@dimen/eight"/>
 
 
 
@@ -269,7 +208,7 @@
         android:id="@+id/rytList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBarAssignment"
+        android:layout_below="@+id/relative_layout1"
         android:layout_marginStart="@dimen/five"
         android:layout_marginBottom="@dimen/two"
         android:orientation="horizontal">
@@ -365,7 +304,7 @@
         android:layout_below="@+id/rytList"
         android:layout_centerHorizontal="false"
         android:layout_marginTop="@dimen/five"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginBottom="@dimen/ten">
 
@@ -373,13 +312,13 @@
             android:id="@+id/lblSubmitted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rect_shadow_light_yellow1"
+            android:background="@drawable/background_radius_button"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsBold"
             android:padding="@dimen/eight"
-            android:text="@string/submitted"
-            android:textColor="@color/dark_orange"
-            android:textSize="@dimen/thirteen_sp">
+            android:text="My Submission"
+            android:textColor="@color/white"
+            android:textSize="13sp">
         </TextView>
 
 
@@ -387,13 +326,12 @@
             android:id="@+id/lblNotSubmitted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toEndOf="@+id/lblSubmitted"
-            android:background="@drawable/rect_shadow_light_yellow1"
-            android:gravity="center"
+            android:background="@drawable/bg_green_radoius_10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
             android:padding="@dimen/eight"
-            android:text="NotSubmitted : 1"
-            android:textColor="@color/dark_orange"
+            android:text="Submit"
+            android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
             style="@style/CustomTextStylePoppinsBold">
         </TextView>

@@ -349,6 +349,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
 
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
+        noticeboardadapter =
+            SchoolNoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
+        binding.rcyNoticeBoard.isNestedScrollingEnabled = false
+        binding.rcyNoticeBoard.adapter = noticeboardadapter
         Log.d("Debug", "Loading ${newData?.size ?: 0} items")
         if (newData != null && newData.isNotEmpty()) {
             noticeList = newData
