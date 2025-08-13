@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.Assignment
+package com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,34 +8,37 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
+import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
+import com.vs.schoolmessenger.Parent.Assignment.AssignmentParentAdapter
+import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
+
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
 import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import com.vs.schoolmessenger.Utils.Constant
 
-class AssignmentAdapter(
-    var itemList: MutableList<AssignmentData>,
+class MySubmissionAdapter  (
+    var itemList: MutableList<SubmittedAssignment>,
     private val listener: AssignmentClickListener,
     private val context: Context,
-    private val isLoading: Boolean
+    private val isLoading: Boolean,
+    private val title: String?,
+    private val subject: String?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var fullList: List<AssignmentData> = itemList ?: listOf()
-    private var filteredList: List<AssignmentData> = itemList ?: listOf()
+    private var fullList: List<SubmittedAssignment> = itemList ?: listOf()
+    private var filteredList: List<SubmittedAssignment> = itemList ?: listOf()
 
     init {
         fullList = itemList ?: listOf()
@@ -54,21 +57,21 @@ class AssignmentAdapter(
             ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.assignment_report_item, parent, false)
+                .inflate(R.layout.mysubmission_assignment_detail, parent, false)
             DataViewHolder(view, context)
         }
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            itemList?.get(position)?.let {
-                holder.bind(it, position, this, listener)
+            itemList.getOrNull(position)?.let {
+                holder.bind(it, position, this, listener, title, subject)
             }
         } else if (holder is SchoolNoticeBoardAdapter.ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
+
 
     fun removeItemAt(position: Int) {
         if (position in filteredList.indices) {
@@ -90,62 +93,32 @@ class AssignmentAdapter(
         RecyclerView.ViewHolder(itemView) {
 
         private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
+        private val lblDescription1: TextView = itemView.findViewById(R.id.lblDescription1)
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
-        private val lblassigned: TextView = itemView.findViewById(R.id.lblassigned)
-        private val lblCategory: TextView = itemView.findViewById(R.id.lblCategory)
 
-        //        private val lblSubmissionDue: TextView = itemView.findViewById(R.id.lblSubmissionDue)
-        private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
-        private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
-        private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
-        private val lbldeadline: TextView = itemView.findViewById(R.id.lbldeadline)
-        private val createddate: TextView = itemView.findViewById(R.id.createddate)
-        private val lblSendby: TextView = itemView.findViewById(R.id.lblSendby)
-        private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
+
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
 
-        //        private val webView: WebView = itemView.findViewById(R.id.webView)
-        private val progressBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
 
-        //        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
-//        private val imgDelete: ImageView = itemView.findViewById(R.id.imgDelete)
-        private val options: ImageView = itemView.findViewById(R.id.options)
         private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
-        private val progressBarAssignment: ProgressBar =
-            itemView.findViewById(R.id.progressBarAssignment)
+
         private val headerrelative_layout: RelativeLayout =
             itemView.findViewById(R.id.headerrelative_layout)
 
         @SuppressLint("ClickableViewAccessibility", "SetJavaScriptEnabled")
         fun bind(
-            data: AssignmentData,
+            data: SubmittedAssignment,
             position: Int,
-            adapter: AssignmentAdapter,
-            listener: AssignmentClickListener
+            adapter: MySubmissionAdapter,
+            listener: AssignmentClickListener,
+            title: String?,
+            subject: String?
         ) {
-
-            lblDescription.text = data.description
-            lblTitle.text = data.title
-            lblCategory.text = data.category
-            lblassigned.text =
-                "Assigned" + " - " + Constant.convertToReadableDate(data.created_date)
-            createddate.text = Constant.convertToReadableDate(data.created_date)
-            lblSubject.text = data.subject
-            lbldeadline.text =
-                "Submission date" + " " + Constant.convertToReadableDate(data.end_date)
-            lblSendby.text = data.created_date
-
-            lblSubmitted.text = "Submitted" + " - " + data.submitted_count
-            lblNotSubmitted.text = "Not Submitted" + " - " + data.total_count
-
-
-            val submittedCount = data.submitted_count ?: 0
-            val totalCount = data.total_count ?: 1
-
-            progressBarAssignment.max = totalCount
-            progressBarAssignment.progress = submittedCount
+            lblDescription1.text = data.description
+            lblTitle.text = title
+            lblDescription.text= subject
 
             val hasIframe = !data.iframe.isNullOrEmpty()
             val hasFiles = !data.file_path.isNullOrEmpty()
@@ -163,8 +136,8 @@ class AssignmentAdapter(
                     )
                 }
                 val isHomeWorkData = FilePreview(
-                    id = "",
-                    title = data.title,
+                    id = data.id,
+                    title = title.toString(),
                     description = data.description,
                     subjectName = "",
                     sentBy = "",
@@ -173,12 +146,10 @@ class AssignmentAdapter(
                     isCompleted = true,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
-                    submittedCount = data.submitted_count,
-                    totalCount = data.total_count,
+                    submittedCount = 0,
                     assignmentid = data.id,
-                    created_date = data.created_date,
-                    category = data.category,
-                    assignmentsubject = data.subject
+                    category = "",
+                    assignmentsubject = ""
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -195,8 +166,8 @@ class AssignmentAdapter(
                     )
                 }
                 val isHomeWorkData = FilePreview(
-                    id = "",
-                    title = data.title,
+                    id = data.id,
+                    title = title.toString(),
                     description = data.description,
                     subjectName = "",
                     sentBy = "",
@@ -205,13 +176,11 @@ class AssignmentAdapter(
                     isCompleted = true,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
-                    submittedCount = data.submitted_count,
-                    totalCount = data.total_count,
+                    submittedCount = 0,
                     assignmentid = data.id,
-                    created_date = data.created_date,
-                    category = data.category,
-                    assignmentsubject = data.subject,
-                    isParentAssignment = false
+                    category ="",
+                    assignmentsubject = "",
+                    isParentAssignment = true
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -234,7 +203,7 @@ class AssignmentAdapter(
                             }
                             val isHomeWorkData = FilePreview(
                                 id = "",
-                                title = data.title,
+                                title = "",
                                 description = data.description,
                                 subjectName = "",
                                 sentBy = "",
@@ -243,13 +212,11 @@ class AssignmentAdapter(
                                 isCompleted = true,
                                 isMenuType = Constant.M_ASSIGNMENT,
                                 fileList = convertedList,
-                                submittedCount = data.submitted_count,
-                                totalCount = data.total_count,
+                                submittedCount = 0,
                                 assignmentid = data.id,
-                                created_date = data.created_date,
-                                category = data.category,
-                                assignmentsubject = data.subject,
-                                isParentAssignment = false
+                                category = "",
+                                assignmentsubject = "",
+                                isParentAssignment = true
                             )
 
                             val intent = Intent(context, ChildHomeWork::class.java)
@@ -261,6 +228,8 @@ class AssignmentAdapter(
                     }
                 }
             )
+
+
 
 
             if (hasFiles) {
@@ -279,7 +248,7 @@ class AssignmentAdapter(
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
                 val fileAdapter = ImageSliderAdapter(
-                    subjectName = data.subject ?: "",
+                    subjectName = "",
                     fullList = fileList,
                     visibleList = visibleList,
                     context = context,
@@ -289,11 +258,6 @@ class AssignmentAdapter(
                 rcyAssignment.adapter = fileAdapter
             }
 
-            lblSubmitted.setOnClickListener { listener.onSubmittedClick(data) }
-            lblNotSubmitted.setOnClickListener { listener.onNotSubmittedClick(data) }
-            options.setOnClickListener {
-                listener.onEditAndDeleteClick(data, it, adapterPosition)
-            }
         }
 
 

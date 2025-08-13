@@ -9,6 +9,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationRespon
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
+import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
@@ -29,6 +30,7 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
+import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import retrofit2.Call
@@ -61,6 +63,7 @@ class ParentServices {
     var isAssignmentlist: MutableLiveData<ParentAssignmentResponse?>
     var isSubmitAssignment: MutableLiveData<AssignmentSubmitResponse?>
     var isStudentStats: MutableLiveData<getStudentStats?>
+    var getassignmentmysubmissionlist: MutableLiveData<MySubmittedAssignmentsResponse?>
 
     init {
         client_auth = RestClient()
@@ -88,6 +91,7 @@ class ParentServices {
         isAssignmentlist = MutableLiveData()
         isSubmitAssignment = MutableLiveData()
         isStudentStats = MutableLiveData()
+        getassignmentmysubmissionlist = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1078,6 +1082,50 @@ class ParentServices {
 
     val isStudentStatsLiveData: LiveData<getStudentStats?>
         get() = isStudentStats
+
+
+
+
+    fun getassignmentmysubmissionlist(
+        isToken: String,
+        id: String
+    ) {
+        RestClient.apiInterfaces.getassignmentmysubmissionlist(isToken,id)
+            ?.enqueue(object : Callback<MySubmittedAssignmentsResponse?> {
+                override fun onResponse(
+                    call: Call<MySubmittedAssignmentsResponse?>,
+                    response: Response<MySubmittedAssignmentsResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getassignmentmysubmissionlist.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getassignmentmysubmissionlist.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<MySubmittedAssignmentsResponse?>,
+                    t: Throwable
+                ) {
+                    getassignmentmysubmissionlist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getassignmentmysubmissionlistLiveData: LiveData<MySubmittedAssignmentsResponse?>
+        get() = getassignmentmysubmissionlist
 
 
 

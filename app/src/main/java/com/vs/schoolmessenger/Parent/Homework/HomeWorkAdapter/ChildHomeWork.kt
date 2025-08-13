@@ -47,7 +47,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lbltitle.text = data!!.title
         binding.lblDescription.text = data.description
 
-        if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+        if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data.isParentAssignment == false) {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
             binding.createdDate.text = data?.created_date ?: ""
@@ -62,6 +62,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     data.totalCount ?: 0
                 )
             )
+        } else if(SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data.isParentAssignment == true) {
+            binding.lblviewSubmissions.visibility = View.GONE
+            binding.linearlayoutContainer.visibility = View.VISIBLE
+            binding.createdDate.text = data?.created_date ?: ""
+            binding.category.text = data?.category ?: ""
+            binding.subject.text = data?.assignmentsubject ?: ""
+            binding.fragmentContainer.visibility = View.GONE
         } else {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.GONE

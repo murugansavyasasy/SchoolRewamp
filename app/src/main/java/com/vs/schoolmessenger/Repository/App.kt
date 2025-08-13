@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationRespon
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
+import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
@@ -294,6 +295,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isAssignmentlist: LiveData<ParentAssignmentResponse?>? = null
     var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
     var isStudentStats: LiveData<getStudentStats?>? = null
+    var getassignmentmysubmissionlist: LiveData<MySubmittedAssignmentsResponse?>? = null
 
 
 
@@ -409,6 +411,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isAssignmentlist = apiParentRepositories.isAssignmentlistLiveData
         isSubmitAssignment = apiParentRepositories.isSubmitAssignmentLiveData
         isStudentStats = apiParentRepositories.isStudentStatsLiveData
+        getassignmentmysubmissionlist = apiParentRepositories.getassignmentmysubmissionlistLiveData
 
     }
 
@@ -946,6 +949,14 @@ class App(application: Application) : AndroidViewModel(application) {
     }
     fun isNotificationList(isToken: String) {
         apiParentRepositories.isNotifications(isToken)
+    }
+
+
+    fun getassignmentmysubmissionlist(
+        isToken: String,
+        id: String
+    ) {
+        apiParentRepositories.getassignmentmysubmissionlist(isToken,id)
     }
 }
 

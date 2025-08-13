@@ -21,5 +21,6 @@ data class FilePreview(
     val subject_name: String? = null,
     val category: String? = null,
     val assignmentsubject: String? = null,
+    val isParentAssignment: Boolean? = null,
     val fileList: List<GetFilePathDetails> = emptyList(),
 ): Parcelable

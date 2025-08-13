@@ -1,52 +1,58 @@
-package com.vs.schoolmessenger.Parent.Assignment
+package com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
+import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
+import com.vs.schoolmessenger.Parent.Assignment.AssignmentParentAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.AssignmentParentBinding
+import com.vs.schoolmessenger.databinding.MysubmissionAssignmentBinding
 
-class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListener,
+class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentClickListener,
     View.OnClickListener {
 
-    override fun getViewBinding(): AssignmentParentBinding {
-        return AssignmentParentBinding.inflate(layoutInflater)
+    override fun getViewBinding(): MysubmissionAssignmentBinding {
+        return MysubmissionAssignmentBinding.inflate(layoutInflater)
     }
 
-
-    var isAssignmentAdapter: AssignmentParentAdapter? = null
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    private var isAssignmentReportData: List<ParentAssignmentData>? = null
 
-    lateinit var mAdapter: AssignmentAdapter
+    private var assignmentId: String? = null
+    private var titleName: String? = null
+    private var subjectName: String? = null
+
+
+    lateinit var mAdapter: MySubmissionAdapter
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Assignment)
         binding.toolbarLayout.rytSearch.visibility = View.GONE
-        binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
-        binding.toolbarLayout.lblStudentSection.text = "XII - B"
+
 
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+        assignmentId = intent.getStringExtra("assignment_id")
+        titleName = intent.getStringExtra("title")
+        subjectName = intent.getStringExtra("subject")
+
 
         binding.rcyAssignment.layoutManager = LinearLayoutManager(this)
 
-        appViewModel?.isAssignmentlist?.observe(this) { response ->
+        appViewModel?.getassignmentmysubmissionlist?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
-                isAssignmentReportData = response.data
-                loadAssignmentReportData()
+
             } else {
                 binding.rcyAssignment.visibility = View.GONE
             }
@@ -57,20 +63,31 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
     private fun fetchAssignmentReportData() {
         binding.rcyAssignment.visibility = View.VISIBLE
-        isAssignmentAdapter = AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewShow)
-        binding.rcyAssignment.adapter = isAssignmentAdapter
-
-        appViewModel?.isAssignmentlist(isAccessToken!!)
-    }
-
-    private fun loadAssignmentReportData() {
-        binding.rcyAssignment.visibility = View.VISIBLE
-        isAssignmentAdapter = AssignmentParentAdapter(
-            isAssignmentReportData!!.toMutableList(), this, this, Constant.isShimmerViewDisable
+        mAdapter = MySubmissionAdapter(
+            mutableListOf(),
+            this,
+            this,
+            Constant.isShimmerViewShow,
+            titleName,
+            subjectName
         )
-        binding.rcyAssignment.adapter = isAssignmentAdapter
+
+        binding.rcyAssignment.adapter = mAdapter
+
+        if (!assignmentId.isNullOrEmpty() && !isAccessToken.isNullOrEmpty()) {
+            appViewModel?.getassignmentmysubmissionlist(isAccessToken!!, assignmentId!!)
+        } else {
+           Log.d("Assignment Id","Issue in API Call")
+        }
+
     }
 
+
+
+
+    override fun onClick(v: View?) {
+        TODO("Not yet implemented")
+    }
 
     override fun onSubmittedClick(data: AssignmentData) {
         TODO("Not yet implemented")
@@ -85,10 +102,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     }
 
     override fun onNotSubmittedClick(data: AssignmentData) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onClick(v: View?) {
         TODO("Not yet implemented")
     }
 }

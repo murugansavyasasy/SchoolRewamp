@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationRespon
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
+import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
@@ -780,5 +781,13 @@ interface ApiInterfaces {
     fun getStudentStats(
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<getStudentStats?>?
+
+
+
+    @GET(APIMethods.isAssignmentMySubmission)
+    fun getassignmentmysubmissionlist(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: String
+    ): Call<MySubmittedAssignmentsResponse?>?
 
 }
