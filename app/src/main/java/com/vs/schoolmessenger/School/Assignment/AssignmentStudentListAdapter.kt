@@ -90,6 +90,7 @@ class AssignmentStudentListAdapter(
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
+                Log.d("NoticeBoardFilter", "originalList size: ${originalList.size}")
                 val charString =
                     constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
 
@@ -107,7 +108,7 @@ class AssignmentStudentListAdapter(
                                     ?.contains(charString) == true
                     }
                 }
-
+                Log.d("NoticeBoardFilter", "Filtered list size: ${resultList.size}")
                 val filterResults = FilterResults()
                 filterResults.values = resultList
                 return filterResults
@@ -137,10 +138,10 @@ class AssignmentStudentListAdapter(
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
 
         private val sectionLabel: TextView = itemView.findViewById(R.id.sectionlabel)
-        private val standardLabel: TextView = itemView.findViewById(R.id.standardlabel)
+//        private val standardLabel: TextView = itemView.findViewById(R.id.standardlabel)
         private val statusLabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val layout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
-        private val arrowIcon: ImageView = itemView.findViewById(R.id.arrow_icon)
+//        private val arrowIcon: ImageView = itemView.findViewById(R.id.arrow_icon)
 
         private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
         private val statuslabel: TextView = itemView.findViewById(R.id.statuslabel)
@@ -160,10 +161,10 @@ class AssignmentStudentListAdapter(
             lblStudentName.text = data.student_name
 
             sectionLabel.text = data.standard
-            standardLabel.text = data.section
+//            standardLabel.text = data.section
             statusLabel.text = data.submit_status
 
-            arrowIcon.visibility = if (data.submit_status.equals("SUBMITTED", true)) View.VISIBLE else View.GONE
+//            arrowIcon.visibility = if (data.submit_status.equals("SUBMITTED", true)) View.VISIBLE else View.GONE
 
             layout.setOnClickListener {
                 if (data.submit_status.equals("SUBMITTED", true)) {

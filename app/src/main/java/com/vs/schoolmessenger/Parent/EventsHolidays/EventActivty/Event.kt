@@ -28,7 +28,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         return EventRewampBinding.inflate(layoutInflater)
     }
 
-
     lateinit var mAdapter: EventAdapter
     lateinit var categoryadapter: EventCategoryAdapter
     lateinit var eventupcomingadapter: EventUpcomingAdapter

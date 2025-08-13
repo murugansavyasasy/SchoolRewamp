@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.School.NoticeBoard
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -96,7 +97,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val MAX_FILES = 10
-
     }
 
     private var cameraImageFilePath: String? = null
@@ -117,6 +117,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     var isNoticeBoardId = ""
     var isNoticeBoardPosition = 0
     private var noticeList: List<NoticeStaffData> = emptyList()
+    private var isUpdatingSearchText = false
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -177,17 +178,24 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
+        noticeboardadapter = SchoolNoticeBoardAdapter(
+            emptyList(), this, this, false,
+            binding.nomessage,
+            binding.txtNoData
+        )
+        binding.rcyNoticeBoard.adapter = noticeboardadapter
 
-        noticeboardadapter = SchoolNoticeBoardAdapter(noticeList, this, this, isLoading = false)
+
         binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
         binding.rcyNoticeBoard.adapter = noticeboardadapter
 
         binding.txtSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("SearchDebug", "Search query: '$s'")
-                noticeboardadapter.filter.filter(s)
+                val query = s?.toString()?.trim() ?: ""
+                Log.d("SearchDebug", "Search text changed: '$query'")
+                noticeboardadapter.filter.filter(query)
             }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -279,18 +287,36 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount
         )
 
+//        appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
+//            if (response?.status == true && !response.data.isNullOrEmpty()) {
+//                binding.rcyNoticeBoard.visibility = View.VISIBLE
+//                binding.nomessage.visibility = View.GONE
+//                binding.txtNoData.visibility = View.GONE
+//                isloadhomeworkData(response.data)
+//            } else {
+//                isloadhomeworkData(emptyList())
+//                binding.rcyNoticeBoard.visibility = View.GONE
+//                binding.nomessage.visibility = View.VISIBLE
+//                binding.txtNoData.visibility = View.VISIBLE
+//                binding.txtNoData.text = response?.message ?: "No data found"
+//            }
+//        }
+
         appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                binding.rcyNoticeBoard.visibility = View.VISIBLE
-                binding.nomessage.visibility = View.GONE
-                binding.txtNoData.visibility = View.GONE
-                isloadhomeworkData(response.data)
-            } else {
-                binding.rcyNoticeBoard.visibility = View.GONE
+            Log.d("NoticeBoardObserve", "Response received: $response")
+            val dataList = response?.data ?: emptyList()
+            Log.d("NoticeBoardObserve", "Data list size: ${dataList.size}")
+
+            if (dataList.isEmpty()) {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
+                binding.rcyNoticeBoard.visibility = View.GONE
+            } else {
+                binding.nomessage.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.rcyNoticeBoard.visibility = View.VISIBLE
             }
+            noticeboardadapter.updateList(dataList)
         }
 
 
@@ -302,11 +328,13 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
     }
 
-
     private fun loadNoticeData(newData: List<NoticeStaffData>) {
         Log.d("AdapterUpdate", "New data size: ${newData.size}")
+
         noticeboardadapter.updateList(newData)
-        binding.txtSearch.setText("")
+        binding.rcyNoticeBoard.visibility = View.VISIBLE
+        binding.nomessage.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
     }
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
@@ -340,51 +368,42 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             Log.d("DefaultSelection", "Default token: $isAccessToken")
         }
     }
-//    private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
-//        noticeboardadapter =
-//            SchoolNoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
-//        binding.rcyNoticeBoard.adapter = noticeboardadapter
-//    }
-
-
 
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
-        Log.d("Debug", "Loading ${newData?.size ?: 0} items")
+        Log.d("SearchDebug", "isloadhomeworkData called with ${newData?.size ?: 0} items")
+
         if (newData != null && newData.isNotEmpty()) {
             noticeList = newData
-            noticeboardadapter.updateList(newData)
-            binding.txtSearch.setText("")
-            binding.rcyNoticeBoard.visibility = View.VISIBLE
-            binding.nomessage.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
+            noticeboardadapter.isLoading = false
+            noticeboardadapter.updateList(newData, true)
+
+            isUpdatingSearchText = true
+            isUpdatingSearchText = false
+
+            Log.d(
+                "SearchDebug",
+                "Data loaded successfully, adapter item count: ${noticeboardadapter.itemCount}"
+            )
         } else {
             noticeList = emptyList()
-            noticeboardadapter.updateList(emptyList())
-            binding.rcyNoticeBoard.visibility = View.GONE
-            binding.nomessage.visibility = View.VISIBLE
-            binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No data found"
+            noticeboardadapter.isLoading = false
+            noticeboardadapter.updateList(emptyList(), true)
+
+            isUpdatingSearchText = true
+            isUpdatingSearchText = false
+
+            Log.d("SearchDebug", "Empty data loaded")
         }
     }
 
-
-//    private fun isGetNoticeBoardList() {
-//        noticeboardadapter = SchoolNoticeBoardAdapter(null, this, this, true)
-//        binding.rcyNoticeBoard.layoutManager =
-//            LinearLayoutManager(this) // Changed from GridLayoutManager
-//        binding.rcyNoticeBoard.isNestedScrollingEnabled = false
-//        binding.rcyNoticeBoard.adapter = noticeboardadapter
-//        binding.txtSearch.setText("")
-//        appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
-//    }
-
     private fun isGetNoticeBoardList() {
-        binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
+        binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
-        binding.txtSearch.setText("")
+        noticeboardadapter.isLoading = true
+        noticeboardadapter.notifyDataSetChanged()
+
         appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
     }
-
 
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -394,7 +413,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         ) {
             openCameraIntent()
         } else {
-            // Show rationale if user has denied permission before
             if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
                     this, Manifest.permission.CAMERA
                 )
@@ -531,13 +549,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 isGetNoticeBoardList()
             }
 
-
             R.id.imgSearchToolBar -> if (binding.rytSearch323.isVisible) {
                 binding.rytSearch323.visibility = View.GONE
             } else {
                 binding.rytSearch323.visibility = View.VISIBLE
             }
-
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
@@ -569,7 +585,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 }
             }
 
-
             R.id.btnNext -> {
 
                 if (binding.btnNext.text.toString() == "Update NoticeBoard") {
@@ -587,7 +602,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             showBottomDialog()
         }
     }
-
 
     private fun showBottomDialog() {
         val dialog = Dialog(this)
@@ -649,7 +663,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
         dialog.show()
     }
-
 
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -1078,7 +1091,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
     }
 
-
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
@@ -1108,7 +1120,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             binding.txtNoData.visibility = View.GONE
         }
     }
-
 
 
     fun isEditProcess(data: NoticeStaffData) {
