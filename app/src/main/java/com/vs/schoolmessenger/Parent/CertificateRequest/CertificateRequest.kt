@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.CertificateRequest
 
-import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
-
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
@@ -27,9 +25,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
-
     private lateinit var certificateRequestList: List<CertificateListData>
-    private lateinit var certificateTypes: List<CertificateTypesData>
     private var isSelectedCertificateName: String? = null
     private var urgency_level: String? = "Not Urgent"
 

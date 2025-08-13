@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
@@ -41,6 +42,7 @@ class ParentServices {
     var isAttachmentResponseArchive: MutableLiveData<AttachmentResponse?>
     var isLeaveRequestApplyResponse: MutableLiveData<LeaveRequestApplyResponse?>
     var isCertificatetypes: MutableLiveData<CertificatesTypesResponse?>
+    var isNotificationResponse: MutableLiveData<NotificationResponse?>
     var isSendCertificateRequest: MutableLiveData<StatusMessageModel?>
     var isCertificateRequestList: MutableLiveData<CertificatesListResponse?>
     var isTimeTable: MutableLiveData<TimeTableResponse?>
@@ -67,6 +69,7 @@ class ParentServices {
         isAttachmentResponseArchive = MutableLiveData()
         isLeaveRequestApplyResponse = MutableLiveData()
         isCertificatetypes = MutableLiveData()
+        isNotificationResponse = MutableLiveData()
         isSendCertificateRequest = MutableLiveData()
         isCertificateRequestList = MutableLiveData()
         isTimeTable = MutableLiveData()
@@ -246,6 +249,48 @@ class ParentServices {
 
     val leaveRequestLiveData: LiveData<LeaveRequestApplyResponse?>
         get() = isLeaveRequestApplyResponse
+
+
+    fun isNotifications(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isNotifications(isToken)
+            ?.enqueue(object : Callback<NotificationResponse?> {
+                override fun onResponse(
+                    call: Call<NotificationResponse?>,
+                    response: Response<NotificationResponse?>
+                ) {
+                    Log.d(
+                        "GetCertificate Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isNotificationResponse.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isNotificationResponse.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+
+                    call: Call<NotificationResponse?>,
+                    t: Throwable
+                ) {
+                    isNotificationResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isNotificationResponseLiveData: LiveData<NotificationResponse?>
+        get() = isNotificationResponse
 
 
     fun getCertificateTypes(
