@@ -54,7 +54,7 @@ class AssignmentAdapter(
             ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.assignment_parent_report_item, parent, false)
+                .inflate(R.layout.assignment_report_item, parent, false)
             DataViewHolder(view, context)
         }
     }
