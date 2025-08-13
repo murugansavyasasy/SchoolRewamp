@@ -30,17 +30,18 @@ import java.util.*
 
 class SchoolNoticeBoardAdapter(
     private var itemList: List<NoticeStaffData>?,
-    private var listener: NoticeBoardClickListener,
-    private var context: Context,
-    private var isLoading: Boolean,
+    private val listener: NoticeBoardClickListener,
+    private val context: Context,
+    var isLoading: Boolean,
+    private val noDataImage: ImageView?,
+    private val noDataText: TextView?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var originalList: List<NoticeStaffData> = itemList ?: emptyList()
-    private var filteredList: List<NoticeStaffData> = itemList ?: emptyList()
-
+    private var originalList: MutableList<NoticeStaffData> = mutableListOf()
+    private var filteredList: MutableList<NoticeStaffData> = mutableListOf()
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -58,7 +59,6 @@ class SchoolNoticeBoardAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.d("Adapter", "onBindViewHolder position: $position")
         if (holder is DataViewHolder) {
             filteredList.getOrNull(position)?.let {
                 holder.bind(it, position, this)
@@ -69,73 +69,102 @@ class SchoolNoticeBoardAdapter(
     }
 
     override fun getItemCount(): Int {
-        val count = if (isLoading) 3 else filteredList.size
-        Log.d("Adapter", "getItemCount: $count")
-        return count
+        return if (isLoading) 3 else filteredList.size
     }
+
 
     override fun getFilter(): Filter {
         return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val query = constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
-                Log.d("Filter", "Filtering for query: '$query'")
+            override fun performFiltering(query: CharSequence?): FilterResults {
+                val results = FilterResults()
+                if (originalList.isEmpty()) {
+                    Log.d("NoticeBoardFilter", "Original list empty → returning empty filtered list")
+                    results.values = emptyList<NoticeStaffData>()
+                    return results
+                }
 
-                val filtered = if (query.isEmpty()) {
-                    originalList
+                val filteredList = if (query.isNullOrBlank()) {
+                    Log.d("NoticeBoardFilter", "Query is empty → Returning full list (${originalList.size} items)")
+                    originalList.toList()
                 } else {
-                    originalList.filter { notice ->
-                        val title = notice.title?.lowercase(Locale.getDefault()) ?: ""
-                        val desc = notice.description?.lowercase(Locale.getDefault()) ?: ""
-                        val createdOn = notice.created_on?.lowercase(Locale.getDefault()) ?: ""
-                        title.contains(query) || desc.contains(query) || createdOn.contains(query)
+                    val searchStr = query.toString().trim().lowercase()
+                    Log.d("NoticeBoardFilter", "Searching in original list of size: ${originalList.size}")
+                    originalList.filter { item ->
+                        item.title.lowercase().contains(searchStr) ||
+                                item.description.lowercase().contains(searchStr)
                     }
                 }
-                Log.d("Filter", "Filtered count: ${filtered.size}")
 
-                val results = FilterResults()
-                results.values = filtered
-                results.count = filtered.size
+                results.values = filteredList
                 return results
             }
 
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = if (results?.values is List<*>) {
+            override fun publishResults(query: CharSequence?, results: FilterResults?) {
+                filteredList.clear()
+                if (results?.values is List<*>) {
                     @Suppress("UNCHECKED_CAST")
-                    results.values as List<NoticeStaffData>
-                } else {
-                    emptyList()
+                    filteredList.addAll(results.values as List<NoticeStaffData>)
                 }
-                Log.d("Filter", "Publishing results count: ${filteredList.size}")
+                Log.d("NoticeBoardFilter", "Publishing results → ${filteredList.size} items displayed")
+
+                handleEmptyState(filteredList.isEmpty(), query?.toString() ?: "")
+
                 notifyDataSetChanged()
-                listener.onSearchResultEmpty(filteredList.isEmpty())
             }
         }
     }
 
-    fun updateList(newData: List<NoticeStaffData>) {
-        Log.d("AdapterUpdate", "updateList called with size: ${newData.size}")
-        originalList = newData
-        filteredList = newData.toList()
+
+
+    private fun handleEmptyState(isEmpty: Boolean, query: String) {
+        if (isEmpty && query.isNotEmpty()) {
+            noDataImage?.visibility = View.VISIBLE
+            noDataText?.visibility = View.VISIBLE
+            noDataText?.text = "No results found for '$query'"
+        } else if (isEmpty && query.isEmpty() && originalList.isEmpty()) {
+            noDataImage?.visibility = View.VISIBLE
+            noDataText?.visibility = View.VISIBLE
+            noDataText?.text = "No notices available"
+        } else {
+            noDataImage?.visibility = View.GONE
+            noDataText?.visibility = View.GONE
+        }
+    }
+
+
+    fun updateList(newList: List<NoticeStaffData>, isFullList: Boolean = true) {
+        Log.d("AdapterUpdate", "updateList called with ${newList.size} items")
+        if (isFullList) {
+            originalList.clear()
+            originalList.addAll(newList)
+            Log.d("AdapterUpdate", "originalList size after update: ${originalList.size}")
+
+        }
+        filteredList.clear()
+        filteredList.addAll(newList)
         isLoading = false
         notifyDataSetChanged()
-        listener.onSearchResultEmpty(filteredList.isEmpty())
+        filter.filter("")
     }
+
+
 
     fun removeItemAt(position: Int) {
         if (position in filteredList.indices) {
-            val mutable = filteredList.toMutableList()
-            val removedItem = mutable.removeAt(position)
-            filteredList = mutable
-            originalList = originalList.filter { it != removedItem }
+            val removedItem = filteredList.removeAt(position)
+            originalList.remove(removedItem)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, filteredList.size)
+
+            if (filteredList.isEmpty()) {
+                handleEmptyState(true, "")
+            }
         }
     }
 
     class DataViewHolder(
         itemView: View,
         private val context: Context,
-
         private val listener: NoticeBoardClickListener
     ) : RecyclerView.ViewHolder(itemView) {
 
@@ -157,14 +186,17 @@ class SchoolNoticeBoardAdapter(
             lblTitleImage.text = noticeData.title
             lblContentImage.text = noticeData.description
 
-            // Date formatting logic
             val dateTime = noticeData.created_on ?: ""
             val parts = dateTime.split(" ")
             val date = parts.getOrNull(0) ?: ""
             val time = (parts.getOrNull(1) ?: "") + " " + (parts.getOrNull(2) ?: "")
 
             val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val parsedDate = try { inputFormat.parse(date) } catch (e: Exception) { null }
+            val parsedDate = try {
+                inputFormat.parse(date)
+            } catch (_: Exception) {
+                null
+            }
 
             val calendar = Calendar.getInstance()
             val today = calendar.time
@@ -180,6 +212,7 @@ class SchoolNoticeBoardAdapter(
                         else -> Constant.CustomisedconvertDateTimeFormat(date)
                     }
                 }
+
                 else -> Constant.CustomisedconvertDateTimeFormat(date)
             }
 
@@ -187,7 +220,8 @@ class SchoolNoticeBoardAdapter(
             lblTimeImage.text = time
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
-            options.visibility = if (noticeData.can_edit || noticeData.can_delete) View.VISIBLE else View.GONE
+            options.visibility =
+                if (noticeData.can_edit || noticeData.can_delete) View.VISIBLE else View.GONE
 
             options.setOnClickListener {
                 listener.onClickListener(noticeData, it, adapterPosition)
@@ -244,15 +278,27 @@ class SchoolNoticeBoardAdapter(
 
         private fun showReminderPicker(context: Context) {
             val calendar = Calendar.getInstance()
-            DatePickerDialog(context, { _, y, m, d ->
-                calendar.set(y, m, d)
-                TimePickerDialog(context, { _, h, min ->
-                    calendar.set(Calendar.HOUR_OF_DAY, h)
-                    calendar.set(Calendar.MINUTE, min)
-                    calendar.set(Calendar.SECOND, 0)
-                    scheduleNotification(context, calendar.timeInMillis)
-                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show()
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
+            DatePickerDialog(
+                context,
+                { _, y, m, d ->
+                    calendar.set(y, m, d)
+                    TimePickerDialog(
+                        context,
+                        { _, h, min ->
+                            calendar.set(Calendar.HOUR_OF_DAY, h)
+                            calendar.set(Calendar.MINUTE, min)
+                            calendar.set(Calendar.SECOND, 0)
+                            scheduleNotification(context, calendar.timeInMillis)
+                        },
+                        calendar.get(Calendar.HOUR_OF_DAY),
+                        calendar.get(Calendar.MINUTE),
+                        false
+                    ).show()
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
 
         private fun scheduleNotification(context: Context, triggerTime: Long) {
@@ -263,7 +309,11 @@ class SchoolNoticeBoardAdapter(
                         data = Uri.parse("package:${context.packageName}")
                     }
                     context.startActivity(intent)
-                    Toast.makeText(context, "Please allow exact alarm permission", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        "Please allow exact alarm permission",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
@@ -273,3 +323,4 @@ class SchoolNoticeBoardAdapter(
         fun startShimmer() = ShimmerUtil.startShimmer(itemView)
     }
 }
+

@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.Event.Adapter
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,8 @@ class SchoolEventAdapter(
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val query = constraint?.toString()?.trim()?.lowercase() ?: ""
+                Log.d("SearchFilter", "Filtering for: $query")
+
                 val resultsList = if (query.isEmpty()) {
                     originalList
                 } else {
@@ -68,14 +71,21 @@ class SchoolEventAdapter(
                                 it.description?.lowercase()?.contains(query) == true
                     }
                 }
+
+                Log.d("SearchFilter", "Found ${resultsList.size} results")
+
                 return FilterResults().apply { values = resultsList }
             }
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList.clear()
-                filteredList.addAll(results?.values as List<SchoolEventItem>)
+                if (results?.values != null) {
+                    filteredList.addAll(results.values as List<SchoolEventItem>)
+                }
                 notifyDataSetChanged()
+
+                Log.d("SearchFilter", "List updated, now showing ${filteredList.size} items")
 
                 (context as? Activity)?.runOnUiThread {
                     val noResultsText = context.findViewById<TextView>(R.id.noDataText)
@@ -92,6 +102,9 @@ class SchoolEventAdapter(
             }
         }
     }
+
+
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<SchoolEventItem>) {

@@ -90,6 +90,7 @@ class AssignmentStudentListAdapter(
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
+                Log.d("NoticeBoardFilter", "originalList size: ${originalList.size}")
                 val charString =
                     constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
 
@@ -107,7 +108,7 @@ class AssignmentStudentListAdapter(
                                     ?.contains(charString) == true
                     }
                 }
-
+                Log.d("NoticeBoardFilter", "Filtered list size: ${resultList.size}")
                 val filterResults = FilterResults()
                 filterResults.values = resultList
                 return filterResults
