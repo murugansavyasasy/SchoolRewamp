@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -73,7 +74,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 if (::mAdapter.isInitialized) mAdapter.filter.filter(s)
                 if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(s)
                 if (::eventupcomingadapter.isInitialized) eventupcomingadapter.filter.filter(s)
-
                 binding.root.postDelayed({
                     val isAllEmpty = mAdapter.itemCount == 0 &&
                             eventupcomingadapter.itemCount == 0 &&
@@ -117,10 +117,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
         })
-
-
-
-
 
 
         appViewModel?.IsGetEventReport?.observe(this) { response ->
@@ -241,7 +237,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcycompletedevent.isNestedScrollingEnabled = false
         binding.rcycompletedevent.adapter = eventcompletedadapter
-
 
 
         appViewModel!!.IsGetEventReport(isAccessToken!!, this)

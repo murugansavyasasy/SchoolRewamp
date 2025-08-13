@@ -36,12 +36,18 @@ class SchoolNoticeBoardAdapter(
     private val noDataImage: ImageView?,
     private val noDataText: TextView?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var originalList: MutableList<NoticeStaffData> = mutableListOf()
-    private var filteredList: MutableList<NoticeStaffData> = mutableListOf()
+    private var originalList: MutableList<NoticeStaffData> =
+        (itemList ?: emptyList()).toMutableList()
+    private var filteredList: MutableList<NoticeStaffData> =
+        (itemList ?: emptyList()).toMutableList()
+
+    init {
+        originalList = (itemList ?: emptyList()).toMutableList()
+        filteredList = originalList.toMutableList()
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -69,52 +75,38 @@ class SchoolNoticeBoardAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 3 else filteredList.size
+        return if (isLoading) {
+            3
+        } else {
+            filteredList.size
+        }
     }
-
 
     override fun getFilter(): Filter {
         return object : Filter() {
-            override fun performFiltering(query: CharSequence?): FilterResults {
-                val results = FilterResults()
-                if (originalList.isEmpty()) {
-                    Log.d("NoticeBoardFilter", "Original list empty → returning empty filtered list")
-                    results.values = emptyList<NoticeStaffData>()
-                    return results
-                }
-
-                val filteredList = if (query.isNullOrBlank()) {
-                    Log.d("NoticeBoardFilter", "Query is empty → Returning full list (${originalList.size} items)")
-                    originalList.toList()
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val result = if (query.isEmpty()) {
+                    originalList
                 } else {
-                    val searchStr = query.toString().trim().lowercase()
-                    Log.d("NoticeBoardFilter", "Searching in original list of size: ${originalList.size}")
-                    originalList.filter { item ->
-                        item.title.lowercase().contains(searchStr) ||
-                                item.description.lowercase().contains(searchStr)
+                    originalList.filter {
+                        it.title.lowercase().contains(query) ||
+                                it.description.lowercase().contains(query)
                     }
                 }
-
-                results.values = filteredList
-                return results
+                val filterResults = FilterResults()
+                filterResults.values = result
+                return filterResults
             }
 
-            override fun publishResults(query: CharSequence?, results: FilterResults?) {
-                filteredList.clear()
-                if (results?.values is List<*>) {
-                    @Suppress("UNCHECKED_CAST")
-                    filteredList.addAll(results.values as List<NoticeStaffData>)
-                }
-                Log.d("NoticeBoardFilter", "Publishing results → ${filteredList.size} items displayed")
-
-                handleEmptyState(filteredList.isEmpty(), query?.toString() ?: "")
-
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList =
+                    (results?.values as? List<NoticeStaffData>)?.toMutableList() ?: mutableListOf()
+                listener.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }
     }
-
-
 
     private fun handleEmptyState(isEmpty: Boolean, query: String) {
         if (isEmpty && query.isNotEmpty()) {
@@ -131,14 +123,12 @@ class SchoolNoticeBoardAdapter(
         }
     }
 
-
     fun updateList(newList: List<NoticeStaffData>, isFullList: Boolean = true) {
         Log.d("AdapterUpdate", "updateList called with ${newList.size} items")
         if (isFullList) {
             originalList.clear()
             originalList.addAll(newList)
             Log.d("AdapterUpdate", "originalList size after update: ${originalList.size}")
-
         }
         filteredList.clear()
         filteredList.addAll(newList)
@@ -146,8 +136,6 @@ class SchoolNoticeBoardAdapter(
         notifyDataSetChanged()
         filter.filter("")
     }
-
-
 
     fun removeItemAt(position: Int) {
         if (position in filteredList.indices) {
@@ -212,7 +200,6 @@ class SchoolNoticeBoardAdapter(
                         else -> Constant.CustomisedconvertDateTimeFormat(date)
                     }
                 }
-
                 else -> Constant.CustomisedconvertDateTimeFormat(date)
             }
 
@@ -323,4 +310,5 @@ class SchoolNoticeBoardAdapter(
         fun startShimmer() = ShimmerUtil.startShimmer(itemView)
     }
 }
+
 

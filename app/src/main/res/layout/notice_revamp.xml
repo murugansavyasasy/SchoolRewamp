@@ -98,7 +98,7 @@
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/ten"
         android:background="@drawable/rect_grey"
-        android:visibility="gone">
+        android:visibility="visible">
 
 
         <ImageView

@@ -207,7 +207,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/twenty_five"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/sixteen"
         android:background="@drawable/bg_btn_blue"
         android:gravity="center"
         android:padding="@dimen/eight">

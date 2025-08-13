@@ -60,7 +60,7 @@
         <RelativeLayout
             android:id="@+id/rytSearch"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/thirty_five"
+            android:layout_height="wrap_content"
             android:layout_alignTop="@id/imgBack"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/twenty"
