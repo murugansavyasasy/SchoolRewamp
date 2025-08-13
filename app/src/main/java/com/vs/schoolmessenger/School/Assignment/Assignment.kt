@@ -146,7 +146,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)

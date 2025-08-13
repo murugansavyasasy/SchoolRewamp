@@ -44,7 +44,7 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         binding.imgBack.setOnClickListener(this)
 
         isChildDetails = SharedPreference.getChildDetails(this)

@@ -29,7 +29,7 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
 
         // Toolbar setup
         binding.toolbarLayout.imgBack.setOnClickListener(this)

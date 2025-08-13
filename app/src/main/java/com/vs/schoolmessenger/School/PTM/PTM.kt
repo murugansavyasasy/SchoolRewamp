@@ -14,7 +14,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
     }
 
     override fun onClick(p0: View?) {

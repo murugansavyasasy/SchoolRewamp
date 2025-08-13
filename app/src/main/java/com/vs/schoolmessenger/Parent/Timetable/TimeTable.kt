@@ -42,7 +42,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        isToolBarPrimaryTheme()
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token

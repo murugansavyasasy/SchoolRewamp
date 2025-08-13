@@ -15,8 +15,7 @@ class ImportantInfo : BaseActivity<ImportantInfoBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        setUpGradientSchool()
+        setupToolbarBlue()
         binding.imgBack.setOnClickListener(this)
 
         Constant.loadWebView(

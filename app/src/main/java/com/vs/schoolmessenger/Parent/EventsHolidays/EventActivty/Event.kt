@@ -47,7 +47,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 

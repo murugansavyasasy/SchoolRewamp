@@ -49,10 +49,10 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
 //        }
 
         if (Constant.isParentChoose) {
-            setUpGradientParent()
+            isToolBarPrimaryTheme()
         }
         else {
-            setUpGradientSchool()
+            setupToolbarBlue()
         }
 
         binding.lblAppUi.setOnClickListener(this)

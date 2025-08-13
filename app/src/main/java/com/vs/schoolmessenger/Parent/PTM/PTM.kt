@@ -15,7 +15,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener  {
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        isToolBarPrimaryTheme()
         binding.smtext.setOnClickListener(this)
         binding.mhtext.setOnClickListener(this)
     }

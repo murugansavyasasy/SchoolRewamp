@@ -18,10 +18,10 @@ class TermsAndConditions  : BaseActivity<TermsAndConditionsBinding>(), View.OnCl
         // Enable JavaScript
         binding.imgBack.setOnClickListener(this)
         if (Constant.isParentChoose) {
-            setUpGradientParent()
+            isToolBarPrimaryTheme()
         }
         else {
-            setUpGradientSchool()
+            setupToolbarBlue()
         }
 
         Constant.loadWebView(

@@ -714,5 +714,6 @@
     <string name="certificated_date">Certificated Date</string>
     <string name="certificate">Certificate</string>
     <string name="the_management_has_recived_your_request_and_it_is_currently_being_process">The Management has recived your request and it is currently being process...</string>
+    <string name="ADMIS_NO_">ADMIS NO: </string>
 
 </resources>

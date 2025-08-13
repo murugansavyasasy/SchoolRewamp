@@ -31,8 +31,7 @@ class Holidays : BaseActivity<HolidayParentBinding>(), View.OnClickListener{
 
     override fun setupViews() {
         super.setupViews()
-//        setUpGradientParent()
-        setupToolbarBlue()
+        isToolBarPrimaryTheme()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 

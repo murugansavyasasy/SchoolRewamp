@@ -12,6 +12,6 @@ class ExamTest : BaseActivity<ExamTestParentBinding>() {
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        isToolBarPrimaryTheme()
     }
 }

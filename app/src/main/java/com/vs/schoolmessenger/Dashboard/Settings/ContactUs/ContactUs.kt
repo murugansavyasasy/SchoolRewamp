@@ -18,11 +18,11 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
         binding.rytPhone.setOnClickListener(this)
         binding.rytMail.setOnClickListener(this)
         if (Constant.isParentChoose) {
-            setUpGradientParent()
+            isToolBarPrimaryTheme()
             binding.rlaLblContactSupport.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
         }
         else {
-            setUpGradientSchool()
+            setupToolbarBlue()
             binding.rlaLblContactSupport.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
         }
     }

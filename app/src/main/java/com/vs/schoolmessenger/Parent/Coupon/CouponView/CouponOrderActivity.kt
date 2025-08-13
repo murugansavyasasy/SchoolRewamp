@@ -52,7 +52,7 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        isToolBarPrimaryTheme()
 
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_FULLSCREEN or

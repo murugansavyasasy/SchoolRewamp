@@ -116,7 +116,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         authViewModel!!.init()
 
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
-        setUpGradientSchool()
+        setupToolbarBlue()
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navigationView

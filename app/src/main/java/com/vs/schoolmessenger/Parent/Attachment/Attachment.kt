@@ -34,7 +34,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        isToolBarPrimaryTheme()
 
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token

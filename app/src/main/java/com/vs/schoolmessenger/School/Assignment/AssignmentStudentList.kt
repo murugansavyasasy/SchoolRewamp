@@ -39,7 +39,7 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         isStaffDetails = SharedPreference.getStaffDetails(this)
