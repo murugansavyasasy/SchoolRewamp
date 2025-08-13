@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relative_layout"
-    android:padding="10dp"
-    android:layout_marginTop="5dp"
+    android:padding="@dimen/ten"
+    android:layout_marginTop="@dimen/five"
     android:background="@color/AthensGray"
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/fourty"
+        android:layout_height="@dimen/fourty"
         android:src="@drawable/default_profile"
         android:scaleType="centerCrop"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="@dimen/three"
         android:layout_alignParentStart="true"
         app:shapeAppearanceOverlay="@style/CircleImageShape" />
 
@@ -26,7 +26,7 @@
         android:text="Saran Raj"
         android:textColor="@color/black"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/ten"
         android:layout_toEndOf="@id/profileImage" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:textColor="@color/Emerald1"
         android:visibility="gone"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/ten"
         android:layout_alignParentEnd="true" />
 
     <TextView
@@ -47,32 +47,32 @@
         android:text="TAMIL"
         android:textColor="@color/black"
         style="@style/CustomTextStylePoppinsMedium"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/eight"
         android:layout_below="@id/nameheader"
         android:layout_toEndOf="@id/profileImage" />
 
 
     <TextView
         android:id="@+id/unreadcount"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="@dimen/twenty"
+        android:layout_height="@dimen/twenty"
+        android:layout_marginTop="@dimen/ten"
         android:text="1"
         android:textColor="@color/white"
         android:scaleType="centerCrop"
         android:visibility="gone"
         android:gravity="center"
         android:layout_below="@+id/yesterdayheader"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="@dimen/ten"
         android:layout_alignParentEnd="true"
         android:background="@drawable/circle_background_green" />
 
     <View
         android:id="@+id/viewline"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/one"
         android:layout_below="@id/subjectheader"
-        android:background="#eae6e4"
-        android:layout_marginTop="15dp"/>
+        android:background="@color/light_white_4"
+        android:layout_marginTop="@dimen/fifteen"/>
 </RelativeLayout>

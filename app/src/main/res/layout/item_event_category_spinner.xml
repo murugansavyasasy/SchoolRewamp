@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imgIcon"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="@dimen/thirty_five"
+        android:layout_height="@dimen/thirty_five"
         android:scaleType="centerCrop"
         />
 
@@ -20,5 +20,5 @@
         android:layout_marginStart="@dimen/fifteen"
         android:text=""
         android:textSize="@dimen/thirteen_sp"
-        android:textColor="#000" />
+        android:textColor="@color/black" />
 </LinearLayout>

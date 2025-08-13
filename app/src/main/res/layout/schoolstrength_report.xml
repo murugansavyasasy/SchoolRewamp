@@ -8,38 +8,38 @@
         android:id="@+id/cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginTop="8dp"
-        card_view:cardCornerRadius="8dp"
-        android:layout_marginBottom="5dp"
-        card_view:cardElevation="4dp">
+        android:layout_marginStart="@dimen/eighteen"
+        android:layout_marginEnd="@dimen/eighteen"
+        android:layout_marginTop="@dimen/eight"
+        card_view:cardCornerRadius="@dimen/eight"
+        android:layout_marginBottom="@dimen/five"
+        card_view:cardElevation="@dimen/four">
 
         <LinearLayout
             android:id="@+id/linear_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp"
+            android:padding="@dimen/eight"
             android:gravity="center_vertical"
             android:background="@color/light_blue1">
 
 
             <TextView
                 android:id="@+id/header1"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
                 android:gravity="center"
                 android:text="I"
                 android:textColor="@android:color/white"
                 android:background="@drawable/bg_purple_circle"
-                android:textSize="16sp"
-                android:layout_marginEnd="8dp"
+                android:textSize="@dimen/sixteen_sp"
+                android:layout_marginEnd="@dimen/eight"
                 style="@style/CustomTextStylePoppinsBold"/>
 
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="2">
@@ -49,8 +49,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Boys : 0"
-                    android:textSize="13sp"
-                    android:textColor="@android:color/black"
                     style="@style/CustomTextStylePoppinsMedium" />
 
                 <TextView
@@ -58,9 +56,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Girls : 0"
-                    android:textSize="13sp"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_marginTop="@dimen/five"
                     style="@style/CustomTextStylePoppinsMedium"/>
             </LinearLayout>
 
@@ -70,24 +67,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total: 0"
-                android:textSize="13sp"
-                android:textColor="@android:color/black"
                 style="@style/CustomTextStylePoppinsBold"
                 android:background="@drawable/bg_cyan_pill"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="9dp"
-                android:paddingBottom="9dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp" />
+                android:paddingLeft="@dimen/twenty"
+                android:paddingRight="@dimen/twenty"
+                android:paddingTop="@dimen/nine"
+                android:paddingBottom="@dimen/nine"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_marginEnd="@dimen/eight" />
 
 
             <ImageView
                 android:id="@+id/header2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
                 android:src="@drawable/downarrow"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="@dimen/eight"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
 
@@ -97,9 +92,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear_layout2"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="@dimen/sixty_five"
             android:visibility="gone"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="@dimen/ten">
         </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.cardview.widget.CardView>

@@ -30,7 +30,6 @@
             android:layout_centerInParent="true"
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
-            android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="visible" />
     </RelativeLayout>
@@ -53,7 +52,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/indicator"
         android:layout_below="@+id/rytHeader"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/eight"
         android:layout_marginBottom="@dimen/ten"
         android:orientation="horizontal"
         android:overScrollMode="never"
@@ -67,7 +66,7 @@
         android:layout_height="@dimen/thirty"
         android:layout_above="@+id/lnrPrevious"
         android:layout_centerInParent="true"
-        android:elevation="4dp"
+        android:elevation="@dimen/four"
         android:visibility="gone" />
 
     <LinearLayout
@@ -76,7 +75,7 @@
         android:layout_height="@dimen/seventy"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/sixteen"
         android:background="@drawable/bg_round_radious_white"
         android:gravity="center"
         android:paddingStart="@dimen/fifteen"
@@ -98,7 +97,7 @@
         android:layout_height="@dimen/seventy"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/sixteen"
         android:background="@drawable/bg_round_radious_white"
         android:gravity="center"
         android:paddingStart="@dimen/twenty_five"
@@ -120,19 +119,19 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginEnd="@dimen/twenty_five"
-        android:background="#80000000"
-        android:elevation="10dp"
+        android:background="@color/light_gray_8"
+        android:elevation="@dimen/ten"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="12dp"
+        android:padding="@dimen/twele"
         android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="@dimen/thirty_two"
+            android:layout_height="@dimen/thirty_two"
+            android:layout_marginEnd="@dimen/eight"
             android:indeterminate="true"
             android:visibility="visible" />
 
@@ -140,9 +139,9 @@
             android:id="@+id/lblDownloading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Downloading..."
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:text="@string/downloading"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sixteen_sp"
             android:visibility="visible" />
     </LinearLayout>
 

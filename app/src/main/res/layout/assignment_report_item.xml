@@ -303,6 +303,7 @@
         android:layout_below="@+id/rytList"
         android:layout_centerHorizontal="false"
         android:layout_marginTop="@dimen/five"
+        android:visibility="gone"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginBottom="@dimen/ten">
 

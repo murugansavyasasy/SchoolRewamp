@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/horizonatal_linearlayout"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/eight"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical"
     app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="@dimen/ten"
+    app:cardElevation="@dimen/four">
 
     <LinearLayout
         android:id="@+id/linear_layout90"
@@ -25,8 +25,8 @@
             android:id="@+id/linear_layout91"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten">
 
            <LinearLayout
                android:layout_toStartOf="@+id/options"
@@ -46,7 +46,7 @@
                 android:id="@+id/image_view99"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/eight"
                 android:src="@drawable/file_noticeboard" />
 
             <TextView
@@ -55,13 +55,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten"
                 android:ellipsize="end"
                 android:layout_gravity="center_vertical"
                 android:maxLines="1"
                 android:text="21 Jul 25"
                 android:textColor="@color/grey"
-                android:textSize="12sp" />
+                android:textSize="@dimen/twele" />
 
            </LinearLayout>
 
@@ -71,7 +71,7 @@
                 android:id="@+id/options"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="@dimen/ten"
                 android:visibility="gone"
                 android:src="@drawable/ic_more_vert" />
 
@@ -84,15 +84,15 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="3dp"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/three"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingTop="4dp"
+            android:paddingTop="@dimen/four"
             android:text="🎉 Annual Sports Meet"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/fifteen_sp" />
 
 
         <TextView
@@ -100,31 +100,31 @@
             style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/four"
             android:ellipsize="end"
             android:lines="5"
             android:maxLines="5"
-            android:paddingTop="4dp"
+            android:paddingTop="@dimen/four"
             android:text="Our Annual Sports Meet is scheduled for Thursday, 8th August 2025 at the school ground. All students are encouraged to participate.\n➤ Participants must register with the Sports Coordinator by 1st August.\n➤ House t-shirts must be worn."
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/fifteen_sp" />
 
 
         <LinearLayout
             android:id="@+id/rytList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginBottom="@dimen/two"
             android:orientation="horizontal">
 
             <RelativeLayout
                 android:id="@+id/rytList2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:minHeight="60dp"
+                android:layout_marginBottom="@dimen/ten"
+                android:minHeight="@dimen/sixty"
                 android:background="@drawable/bg_radiantwhite1"
                 android:orientation="horizontal"
                 android:visibility="invisible">
@@ -134,8 +134,8 @@
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp" />
+                    android:paddingStart="@dimen/five"
+                    android:paddingEnd="@dimen/five" />
 
                 <TextView
                     android:layout_toEndOf="@id/rcyImgPDF"
@@ -144,16 +144,16 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="@dimen/minus_fifteen"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_marginBottom="@dimen/ten"
                     android:background="@drawable/bg_image_background_white_coupon"
                     android:gravity="center"
                     android:text=""
-                    android:padding="10dp"
+                    android:padding="@dimen/ten"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/fifteen"
                     />
 
             </RelativeLayout>
@@ -165,8 +165,8 @@
                 android:id="@+id/video_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_image_background_white_coupon"
                 android:scaleType="fitXY"
                 android:src="@drawable/video_play"
@@ -184,8 +184,8 @@
             </ProgressBar>
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
                 android:layout_weight="1" />
 
 
@@ -193,14 +193,14 @@
                 android:id="@+id/arrow_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/dark_pink_background"
-                android:paddingStart="10dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="8dp"
+                android:paddingStart="@dimen/ten"
+                android:paddingTop="@dimen/eight"
+                android:paddingEnd="@dimen/ten"
+                android:paddingBottom="@dimen/eight"
                 android:src="@drawable/arrow_right_white"
                 android:visibility="gone" />
 
@@ -213,16 +213,16 @@
             android:layout_height="@dimen/twenty"
             android:layout_below="@+id/rytList"
             android:layout_centerInParent="true"
-            android:elevation="4dp"
+            android:elevation="@dimen/four"
             android:visibility="gone" />
 
 
         <View
             android:id="@+id/viewline"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="@dimen/one"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
             android:background="@color/grey" />
 
 
@@ -232,9 +232,9 @@
             android:id="@+id/lnrDataTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/ten"
             android:weightSum="2">
 
             <TextView
@@ -245,12 +245,12 @@
                 android:layout_weight="1"
                 android:text="99:99 AM"
                 android:textColor="@color/grey"
-                android:textSize="13sp"
-                android:textStyle="normal" />
+                android:textSize="@dimen/thirteen"
+                 />
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/one"
                 android:layout_weight="1" />
 
             <TextView
@@ -260,9 +260,9 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/notification_bell"
                 android:gravity="center_vertical"
-                android:text="Reminder"
+                android:text="@string/reminder"
                 android:textColor="@color/grey"
-                android:textSize="12sp"
+                android:textSize="@dimen/twele"
                 android:textStyle="normal" />
 
         </LinearLayout>

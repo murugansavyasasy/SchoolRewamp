@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifteen"
         android:gravity="center"
-        android:text="Confirm"
-        android:textColor="#000"
+        android:text="@string/lblConfirm"
+        android:textColor="@color/black"
         android:visibility="visible"
         android:textSize="@dimen/eighteen_sp"
         android:textStyle="bold" />
@@ -27,12 +27,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/fifteen_sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
         android:gravity="center"
         style="@style/CustomTextStylePoppinsMedium"
         android:text="Are you sure you want to delete this lesson plan?"
-        android:textColor="#444"
+        android:textColor="@color/light_gray_4"
         android:textSize="@dimen/fifteen_sp" />
 
     <View

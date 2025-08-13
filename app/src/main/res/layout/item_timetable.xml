@@ -8,7 +8,6 @@
     android:layout_marginBottom="@dimen/eight"
     android:backgroundTint="@android:color/white"
     android:elevation="@dimen/two"
-    android:padding="0dp"
     android:radius="@dimen/sixteen"
     app:cardCornerRadius="@dimen/fifteen">
 
@@ -41,12 +40,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/twele"
+                style="@style/CustomTextStylePoppinsBold"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="10:30 am"
-                android:textColor="@color/black"
                 android:textSize="@dimen/fourteen_sp"
-                android:textStyle="bold" />
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +63,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"

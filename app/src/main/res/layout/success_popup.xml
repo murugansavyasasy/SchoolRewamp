@@ -16,10 +16,10 @@
         android:layout_marginTop="@dimen/fifteen"
         android:gravity="center"
         android:text="@string/isSuccess"
-        android:textColor="#000"
+        android:textColor="@color/black"
         style="@style/CustomTextStylePoppinsBold"
         android:textSize="@dimen/eighteen_sp"
-        android:textStyle="bold" />
+         />
 
     <TextView
         android:id="@+id/alertMessage"
@@ -32,7 +32,7 @@
         android:layout_marginEnd="@dimen/fifteen"
         android:gravity="center"
         android:text=""
-        android:textColor="#444"
+        android:textColor="@color/light_gray_4"
         android:textSize="@dimen/fifteen_sp" />
 
     <View

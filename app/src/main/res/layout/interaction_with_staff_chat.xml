@@ -14,10 +14,10 @@
         android:text="How are you doing tokieodhasndjsandjnaskjdnkjsandjknsjkdnkjndkjnsakjdnkjnadkjnakjsdnkjansdday ?"
         android:textColor="@color/black"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:padding="10dp"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:padding="@dimen/ten"
         android:background="@drawable/circle_background"/>
 
 
@@ -28,10 +28,10 @@
         android:text="Im doing wadkjnajkdnjkandkjnakjdnkjndkjnkjdnjkndjnkjdnkjndkjsndkjnskjadnkjsndkjnskjdnkjsndkjsndkjnkjdnkjsdell"
         android:textColor="@color/black"
         android:layout_below="@+id/questionText"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:padding="10dp"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:padding="@dimen/ten"
         android:background="@drawable/circle_answer_background"/>
 
 

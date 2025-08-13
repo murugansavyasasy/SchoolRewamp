@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             style="@style/CustomTextStylePoppinsBold"
             android:gravity="center"
-            android:text="Set a OTP"
+            android:text="@string/set_a_otp"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_five_sp"/>
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             style="@style/CustomTextStylePoppinsRegular"
             android:layout_margin="@dimen/ten"
-            android:gravity="left"
+            android:gravity="start"
             android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
@@ -162,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/ten"
-                android:gravity="left">
+                android:gravity="start">
 
                 <TextView
                     android:id="@+id/lblDidNot"
@@ -170,7 +170,6 @@
                     style="@style/CustomTextStylePoppinsRegular"
                     android:layout_height="wrap_content"
                     android:text="@string/lblDidntreceive"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
                 <TextView
@@ -207,10 +206,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/ten"
-                android:gravity="left"
+                android:gravity="start"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -224,7 +222,6 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:gravity="center"
                 android:text="@string/contact_us"
-                android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>

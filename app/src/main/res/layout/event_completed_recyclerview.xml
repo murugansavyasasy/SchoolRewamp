@@ -11,18 +11,18 @@
         android:id="@+id/linear_layout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/five"
         android:background="@drawable/black_background"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="@dimen/ten">
 
         <LinearLayout
             android:id="@+id/linearlayout_upcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="@dimen/five"
             android:orientation="horizontal">
 
             <TextView
@@ -32,19 +32,19 @@
                 android:layout_height="wrap_content"
                 android:text="Annual Day"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/eighteen_sp" />
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/going91001"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="@dimen/twenty"
+                android:layout_marginBottom="@dimen/twenty"
                 android:src="@drawable/ic_notification"
                 android:visibility="gone" />
 
@@ -55,28 +55,28 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/five"
             android:ellipsize="end"
             android:maxLines="3"
             android:text="Festival 10:00 AM -17/07"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="@dimen/fifteen_sp" />
 
 
         <LinearLayout
             android:id="@+id/datelinear_layout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/calender_imageview1"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="2dp"
+                android:layout_width="@dimen/eighteen"
+                android:layout_height="@dimen/eighteen"
+                android:layout_marginTop="@dimen/two"
                 android:src="@drawable/white_calender_icon" />
 
             <TextView
@@ -84,10 +84,10 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten"
                 android:text="Festival 10:00 AM -17/07"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="@dimen/fifteen_sp" />
 
         </LinearLayout>
 
@@ -95,16 +95,16 @@
             android:id="@+id/location_linearlayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/location_imageview1"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="2dp"
+                android:layout_width="@dimen/eighteen"
+                android:layout_height="@dimen/eighteen"
+                android:layout_marginTop="@dimen/two"
                 android:src="@drawable/ic_location_white" />
 
 
@@ -113,10 +113,10 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten"
                 android:text="City Grounds"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="@dimen/fifteen_sp" />
 
         </LinearLayout>
 
@@ -124,39 +124,39 @@
             android:id="@+id/rytList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/rytList2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_radiantwhite1"
                 android:orientation="horizontal">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcyImgPDF"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
+                android:paddingStart="@dimen/five"
+                android:paddingEnd="@dimen/five"
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/total_numbers"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_image_background_white_coupon"
                 android:text="+9"
                 android:gravity="center"
-                android:textSize="15sp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/fifteen_sp"
                 android:visibility="gone"
-                android:layout_marginStart="-15dp"
-                android:layout_marginEnd="5dp"
-                android:textColor="@color/black"
-                style="@style/CustomTextStylePoppinsBold"/>
+                android:layout_marginStart="@dimen/minus_fifteen"
+                android:layout_marginEnd="@dimen/five"
+                />
 
             </LinearLayout>
 
@@ -171,10 +171,10 @@
 
             <ImageView
                 android:id="@+id/video_player"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_image_background_white_coupon"
                 android:scaleType="fitXY"
                 android:src="@drawable/video_play"
@@ -192,8 +192,8 @@
             </ProgressBar>
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
                 android:layout_weight="1" />
 
 
@@ -201,14 +201,14 @@
                 android:id="@+id/arrow_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/dark_pink_background"
-                android:paddingStart="10dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="8dp"
+                android:paddingStart="@dimen/ten"
+                android:paddingTop="@dimen/eight"
+                android:paddingEnd="@dimen/ten"
+                android:paddingBottom="@dimen/eight"
                 android:src="@drawable/arrow_right_white" />
 
         </LinearLayout>
@@ -220,7 +220,7 @@
             android:layout_height="@dimen/twenty"
             android:layout_below="@+id/rytList"
             android:layout_centerInParent="true"
-            android:elevation="4dp"
+            android:elevation="@dimen/four"
             android:visibility="gone" />
 
     </LinearLayout>

@@ -148,6 +148,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             addProperty(APIKeyNames.type, Constant.ATTACHMENT)
             addProperty(APIKeyNames.detail_id, isData[isPosition].id)
         }
-            appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
     }
 }

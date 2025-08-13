@@ -32,7 +32,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+                >
 
             </TextView>
 
@@ -43,7 +43,6 @@
                 android:gravity="center"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:text="@string/seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times"
-                android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
@@ -155,7 +154,6 @@
                             android:hint="@string/star"
                             android:inputType="textPassword"
                             android:paddingHorizontal="@dimen/ten"
-                            android:textColor="@color/black"
                             android:textColorHint="@color/grey"
                             android:textSize="@dimen/thirteen_sp" />
 
@@ -190,7 +188,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblForgetPassword"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/fifteen"
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
                         android:padding="@dimen/fifteen"

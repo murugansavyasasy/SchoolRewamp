@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:id="@+id/header"
     android:background="@drawable/dark_pink_background"
-    android:padding="5dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginEnd="5dp"
+    android:padding="@dimen/five"
+    android:layout_marginStart="@dimen/five"
+    android:layout_marginTop="@dimen/five"
+    android:layout_marginEnd="@dimen/five"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
 
@@ -28,32 +28,32 @@
             android:layout_marginTop="@dimen/five"
             android:text="Christmas Day Celebration"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/twenty_sp" />
 
         <TextView
             android:id="@+id/eventdesc"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/five"
             android:ellipsize="end"
             android:maxLines="3"
             android:text="Festival 10:00 AM -17/07"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="@dimen/fifteen_sp" />
 
         <LinearLayout
             android:id="@+id/datelinear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/calender_imageview"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="2dp"
+                android:layout_width="@dimen/eighteen"
+                android:layout_height="@dimen/eighteen"
+                android:layout_marginTop="@dimen/two"
                 android:src="@drawable/white_calender_icon" />
 
 
@@ -62,10 +62,10 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten"
                 android:text="Meetup 10:00AM - 17/07"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="@dimen/fifteen_sp" />
         </LinearLayout>
 
 
@@ -73,14 +73,14 @@
             android:id="@+id/location_linearlayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/location_imageview"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="2dp"
+                android:layout_width="@dimen/eighteen"
+                android:layout_height="@dimen/eighteen"
+                android:layout_marginTop="@dimen/two"
                 android:src="@drawable/ic_location_white" />
 
             <TextView
@@ -88,10 +88,10 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten"
                 android:text="Chennai Arumbakkam"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="@dimen/fifteen_sp" />
 
         </LinearLayout>
 
@@ -99,15 +99,15 @@
             android:id="@+id/rytList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/rytList2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_radiantwhite1"
                 android:orientation="horizontal">
 
@@ -115,23 +115,23 @@
                     android:id="@+id/rcyImgPDF"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingStart="@dimen/ten"
+                    android:paddingEnd="@dimen/ten"
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/total_numbers"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="-10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_marginStart="@dimen/minus_ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten"
                     android:background="@drawable/bg_image_background_white_coupon"
                     android:gravity="center"
                     android:text="+9"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/fifteen_sp"
                     android:visibility="gone" />
 
             </LinearLayout>
@@ -147,10 +147,10 @@
 
             <ImageView
                 android:id="@+id/video_player"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_image_background_white_coupon"
                 android:scaleType="fitXY"
                 android:src="@drawable/video_play"
@@ -168,8 +168,8 @@
             </ProgressBar>
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
                 android:layout_weight="1" />
 
             <TextView
@@ -177,16 +177,16 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_background_white_coupon"
-                android:paddingStart="10dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="8dp"
+                android:paddingStart="@dimen/ten"
+                android:paddingTop="@dimen/eight"
+                android:paddingEnd="@dimen/ten"
+                android:paddingBottom="@dimen/eight"
                 android:text="Today's Event"
-                android:textColor="@color/black" />
+                 />
 
         </LinearLayout>
 
@@ -195,7 +195,7 @@
             style="@style/IndicatorStyle"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/twenty"
-            android:elevation="4dp"
+            android:elevation="@dimen/four"
             android:visibility="gone" />
 
 

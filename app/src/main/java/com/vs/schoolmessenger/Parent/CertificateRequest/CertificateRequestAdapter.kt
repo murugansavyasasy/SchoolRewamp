@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.CertificateRequest
 
 import android.R.id.bold
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
@@ -17,7 +18,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.text.buildSpannedString
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.Parent.RequestLeave.OutPass
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -59,12 +63,17 @@ class CertificateRequestAdapter (
         else itemList?.size ?: 0
     }
 
+    fun updateData(newList: List<CertificateListData>) {
+        itemList = newList
+        notifyDataSetChanged()
+    }
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val lblCertificateTitle: TextView = itemView.findViewById(R.id.lblCertificateTitle)
         private val lblCertificateReason: TextView = itemView.findViewById(R.id.lblCertificateReason)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
+        private val rytCertificate: RelativeLayout = itemView.findViewById(R.id.rytCertificate)
 //        private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
 //        private val rytStatus: RelativeLayout = itemView.findViewById(R.id.rytStatus)
 //        private val rytDownload: RelativeLayout = itemView.findViewById(R.id.rytDownload)
@@ -84,6 +93,24 @@ class CertificateRequestAdapter (
             }
 
             lblDate.text =  Constant.convertDateTimeFormat(data.requested_on)
+
+            rytCertificate.setOnClickListener {
+
+                val context = it.context
+                val myIntent = Intent(context, CertificateViewActivity::class.java)
+                val saveCertificateData = CertificateListData(
+                    url=data.url,
+                    type=data.type,
+                    reason=data.reason,
+                    urgency_level=data.urgency_level,
+                    requested_on=data.requested_on,
+                    status=data.status,
+                    issued_on=data.issued_on,
+                )
+                Constant.isCertificateData = saveCertificateData
+                context.startActivity(myIntent)
+            }
+
 //            lblStatus.text = data.status
 //            lblStatus.text = data.status
 

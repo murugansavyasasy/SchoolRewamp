@@ -11,8 +11,8 @@
         android:layout_height="@dimen/one_twenty"
         android:layout_gravity="center"
         card_view:cardBackgroundColor="@android:color/white"
-        card_view:cardCornerRadius="16dp"
-        card_view:cardElevation="8dp">
+        card_view:cardCornerRadius="@dimen/sixteen"
+        card_view:cardElevation="@dimen/eight">
 
         <com.vs.schoolmessenger.Utils.CircularProgressView
             android:id="@+id/circularProgressView"

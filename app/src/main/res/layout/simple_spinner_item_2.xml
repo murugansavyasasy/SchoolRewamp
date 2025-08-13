@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:paddingHorizontal="0dp"
-    android:paddingVertical="0dp">
+    android:paddingHorizontal="@dimen/zero"
+    android:paddingVertical="@dimen/zero">
 
     <TextView
         android:id="@+id/lblTextItem"
@@ -15,12 +15,12 @@
         android:textColor="@android:color/black"
         android:textSize="@dimen/thirteen_sp"
         style="@style/CustomTextStylePoppinsMedium"
-        android:layout_marginEnd="4dp" />
+        android:layout_marginEnd="@dimen/four" />
 
     <ImageView
         android:id="@+id/dropDownArrow"
         android:layout_width="@dimen/fifteen"
         android:layout_height="@dimen/ten"
         android:src="@drawable/down_arrow_3"
-        android:layout_marginEnd="0dp" />
+        android:layout_marginEnd="@dimen/zero" />
 </LinearLayout>

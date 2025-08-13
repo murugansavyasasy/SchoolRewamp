@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="@dimen/eight">
 
     <!-- Total header layout -->
     <RelativeLayout
@@ -9,16 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/fourty"
         android:background="@color/custom_blue"
-        android:padding="4dp">
+        android:padding="@dimen/four">
 
         <TextView
             android:id="@+id/total_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
+            android:text="@string/total"
             style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/fifteen_sp"
             android:layout_alignParentStart="true" />
 
         <TextView
@@ -26,9 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="37,515"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
             style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/fifteen_sp"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
@@ -38,7 +36,7 @@
         android:layout_below="@id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fourty"
-        android:paddingTop="8dp">
+        android:paddingTop="@dimen/eight">
 
         <TextView
             android:id="@+id/fee_type"
@@ -58,45 +56,3 @@
             android:textSize="@dimen/fifteen_sp" />
     </RelativeLayout>
 </RelativeLayout>
-
-    <!--existing design-->
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:fitsSystemWindows="true">-->
-
-<!--    <RelativeLayout-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="@dimen/fourty"-->
-<!--        android:id="@+id/linear_layout"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/total"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="@dimen/fifteen_sp"-->
-<!--            android:layout_marginStart="@dimen/eight"-->
-<!--            android:layout_marginTop="@dimen/five"-->
-<!--            android:layout_marginBottom="@dimen/five"-->
-<!--            style="@style/CustomTextStylePoppinsMedium"-->
-<!--            android:id="@+id/total_label"/>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="37,515"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="@dimen/fifteen_sp"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginTop="@dimen/five"-->
-<!--            android:layout_marginBottom="@dimen/five"-->
-<!--            android:layout_marginEnd="@dimen/eight"-->
-<!--            style="@style/CustomTextStylePoppinsMedium"-->
-<!--            android:id="@+id/total_value"/>-->
-<!--    </RelativeLayout>-->
-
-<!--</RelativeLayout>-->

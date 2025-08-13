@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/gray_white"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/twenty">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:id="@+id/lblSubject"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text="@string/certificate"
+            android:layout_marginStart="@dimen/five"
+            android:layout_toStartOf="@+id/imgMoreOptions"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/imgMoreOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="@dimen/five"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_more_vert"
+            android:visibility="gone" />
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_below="@+id/rytHeader">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/ten"
+            android:paddingStart="@dimen/ten"
+            android:paddingEnd="@dimen/ten"
+            android:background="@drawable/white_bg_radius">
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <WebView
+                    android:id="@+id/wvCertificatePdf"
+                    android:visibility="gone"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/two_hundred" />
+
+                <ProgressBar
+                    android:id="@+id/loadingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:indeterminateDrawable="@drawable/progress_bar_white"
+                    android:indeterminateOnly="true"
+                    android:visibility="gone">
+
+                </ProgressBar>
+
+                <RelativeLayout
+
+                    android:id="@+id/rytWaitingProcess"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/waiting_for_approval"
+                        android:id="@+id/imgTimimg"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty">
+                    </ImageView>
+                    <TextView
+                        android:gravity="center"
+                        android:layout_below="@+id/imgTimimg"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/dark_orange"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="@string/the_management_has_recived_your_request_and_it_is_currently_being_process"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgRequeston"
+                        android:src="@drawable/calendar_icon_4"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty">
+                    </ImageView>
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_toEndOf="@+id/imgRequeston"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:id="@+id/lblRequestedOn"
+                        android:text="@string/requested_on"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                </RelativeLayout>
+                <TextView
+                    android:layout_marginStart="@dimen/fourty"
+                    android:layout_marginEnd="@dimen/five"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:id="@+id/lblRequestedOnDate"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+                <RelativeLayout
+                    android:id="@+id/rytCertificate"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgCertificate"
+                        android:src="@drawable/calendar_icon_3"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty">
+                    </ImageView>
+                    <TextView
+                        android:text="@string/certificated_date"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_toEndOf="@+id/imgCertificate"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:id="@+id/lblCerticate"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                </RelativeLayout>
+                <TextView
+                    android:layout_marginStart="@dimen/fourty"
+                    android:layout_marginEnd="@dimen/five"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:id="@+id/lblCertificateDate"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgCertificateType"
+                        android:src="@drawable/pin_icon_2"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty">
+                    </ImageView>
+                    <TextView
+                        android:text="@string/certificate_type"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_toEndOf="@+id/imgCertificateType"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:id="@+id/lblCerticateType"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                </RelativeLayout>
+                <TextView
+                    android:layout_marginStart="@dimen/fourty"
+                    android:layout_marginEnd="@dimen/five"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:id="@+id/lblCerticateTypeValue"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgReason"
+                        android:src="@drawable/edit_icon_3"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty">
+                    </ImageView>
+                    <TextView
+                        android:text="@string/reason"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_toEndOf="@+id/imgReason"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:id="@+id/lblCerticateReason"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                </RelativeLayout>
+                <TextView
+                    android:layout_marginStart="@dimen/fourty"
+                    android:layout_marginEnd="@dimen/five"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:id="@+id/lblReasonValue"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/lnrDownloadStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="@dimen/twenty_five"
+        android:background="@color/light_gray_8"
+        android:elevation="@dimen/ten"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/twele"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="@dimen/thirty_two"
+            android:layout_height="@dimen/thirty_two"
+            android:layout_marginEnd="@dimen/eight"
+            android:indeterminate="true"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/lblDownloading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/downloading"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sixteen_sp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

@@ -31,8 +31,7 @@
             android:padding="@dimen/ten"
             style="@style/CustomTextStylePoppinsBold"
             android:text="01 Apr 2004"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+            >
         </TextView>
 
     </RelativeLayout>

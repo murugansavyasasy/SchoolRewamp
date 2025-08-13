@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_mild_color1"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +54,9 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 app:layout_constraintStart_toEndOf="@+id/imgBack"
-                app:layout_constraintTop_toBottomOf="@+id/lblName"></TextView>
+                app:layout_constraintTop_toBottomOf="@+id/lblName">
+
+            </TextView>
 
             <ImageView
                 android:id="@+id/imgSearch"
@@ -67,6 +69,41 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+
+            android:id="@+id/rlaSortSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            app:layout_constraintTop_toBottomOf="@+id/cltDateSelection"
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/imgSearch1"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:alpha="0.34"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:layout_marginStart="@dimen/five"
+                android:id="@+id/txtSearchMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:layout_toEndOf="@+id/imgSearch1"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/header_text3"
@@ -78,7 +115,7 @@
             android:text="@string/request_for_certificate"
             android:textSize="@dimen/eighteen_sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cltDateSelection" />
+            app:layout_constraintTop_toBottomOf="@+id/rlaSortSearch" />
 
         <RelativeLayout
             android:id="@+id/rytRequestTap"

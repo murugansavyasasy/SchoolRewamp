@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@color/white">
 
-
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imgBack"
@@ -17,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/lblSubjectName"
         style="@style/CustomTextStylePoppinsBold"
@@ -24,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/ten"
         android:text="Sathish"
-        android:visibility="gone"
         android:textSize="@dimen/twenty_five_sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/lblPostedDate"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/imgBack"
@@ -36,10 +39,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/ten"
-        android:visibility="gone"
         android:text="Posted on : Today"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/lblSubjectName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/lblSubjectName" />
@@ -58,6 +61,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgBack" />
 
+
+    <LinearLayout
+        android:id="@+id/linearlayout_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbltitle">
+
+        <TextView
+            android:id="@+id/created_date"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/five"
+            android:text="05-07-2025"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+
+        <TextView
+            android:id="@+id/subject"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/five"
+            android:text="TAMIL"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+
+        <TextView
+            android:id="@+id/category"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/five"
+            android:text="General"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/lblDescription"
         style="@style/CustomTextStylePoppinsMedium"
@@ -70,7 +126,7 @@
         android:textSize="@dimen/fifteen_sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lbltitle" />
+        app:layout_constraintTop_toBottomOf="@id/linearlayout_container" />
 
     <TextView
         android:id="@+id/lblClickComplete"
@@ -89,9 +145,9 @@
         android:id="@+id/thumbContainer"
         android:layout_width="@dimen/fifty"
         android:layout_height="@dimen/fifty"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lblDescription">
 
@@ -121,7 +177,7 @@
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/fifteen"
         android:text="Attachments"
-        android:textSize="@dimen/twenty"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lblClickComplete" />
@@ -134,30 +190,90 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginBottom="@dimen/ten"
-        app:layout_constraintTop_toBottomOf="@id/lblAttachments"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/lblAttachments" />
+
+
+    <View
+        android:id="@+id/viewline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_grey4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rcChildHW" />
+
+
+
+
 
     <TextView
         android:id="@+id/lblviewSubmissions"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rect_shadow_light_primary"
-        android:gravity="center"
-        style="@style/CustomTextStylePoppinsBold"
-        android:padding="@dimen/eight"
         android:layout_marginStart="@dimen/thirty"
+        android:layout_marginTop="@dimen/twenty"
         android:layout_marginEnd="@dimen/thirty"
         android:layout_marginBottom="@dimen/ten"
-        android:visibility="gone"
+        android:background="@drawable/rect_shadow_light_primary"
+        android:gravity="center"
+        android:padding="@dimen/eight"
         android:text="View Submissions"
         android:textColor="@color/white"
-        android:layout_marginTop="@dimen/twenty"
         android:textSize="@dimen/thirteen_sp"
-        app:layout_constraintTop_toBottomOf="@id/rcChildHW"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/viewline" />
 
+
+    <LinearLayout
+        android:id="@+id/bottom_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twenty"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/eight"
+        android:visibility="gone"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblviewSubmissions">
+
+        <TextView
+            android:id="@+id/headerstudentsubmission"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="Student Submissions"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/icon_studentsubmission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_linearlayout"/>
 
 
     <TextView
@@ -169,14 +285,22 @@
         android:layout_marginBottom="@dimen/ten"
         android:text="SathishKumar G"
         android:textColor="@color/black"
-        android:visibility="gone"
         android:textSize="@dimen/thirteen_sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rcChildHW">
 
     </TextView>
 
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>
+
+
+
+
+
+
+
+

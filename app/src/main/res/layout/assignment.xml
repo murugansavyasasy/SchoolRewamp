@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -39,7 +40,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/Create"
-                    android:textColor="@color/iconBlue"></TextView>
+                    android:textColor="@color/iconBlue">
+                </TextView>
 
                 <View
                     android:id="@+id/line1"
@@ -47,7 +49,8 @@
                     android:layout_height="@dimen/three"
                     android:layout_below="@+id/groupheading"
                     android:layout_marginTop="@dimen/five"
-                    android:background="@color/iconBlue"></View>
+                    android:background="@color/iconBlue">
+                </View>
             </LinearLayout>
 
 
@@ -64,7 +67,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/Reports"></TextView>
+                    android:text="@string/Reports">
+                </TextView>
 
                 <View
                     android:id="@+id/line3"
@@ -72,7 +76,8 @@
                     android:layout_height="@dimen/three"
                     android:layout_below="@+id/groupheading"
                     android:layout_marginTop="@dimen/five"
-                    android:background="@color/white"></View>
+                    android:background="@color/white">
+                </View>
             </LinearLayout>
 
         </LinearLayout>
@@ -354,10 +359,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbarLayout1"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
             android:visibility="gone"
             android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="5dp">
+            android:layout_marginEnd="10dp">
 
             <LinearLayout
                 android:id="@+id/AcademicYear"
@@ -412,7 +417,8 @@
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
                     android:alpha="0.4"
-                    android:src="@drawable/search_icon"></ImageView>
+                    android:src="@drawable/search_icon">
+                </ImageView>
 
                 <EditText
                     android:id="@+id/txtSearchMenu"
@@ -428,21 +434,14 @@
 
             </LinearLayout>
 
-            <View
-                android:id="@+id/line2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/one"
-                android:layout_below="@+id/search"
-                android:background="@color/gray">
-
-            </View>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcyAssignmentReport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:layout_below="@+id/line2">
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/search">
             </androidx.recyclerview.widget.RecyclerView>
 
 

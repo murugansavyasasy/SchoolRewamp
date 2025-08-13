@@ -30,10 +30,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/lblAttachment"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/sky_blue0"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins_bold" />
+                />
 
             <TextView
                 android:id="@+id/attachment_value"
@@ -41,10 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text=": Image"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins_bold"
+                style="@style/CustomTextStylePoppinsBold"
                 android:gravity="start"
                 android:maxLines="3"
                 android:ellipsize="end" />
@@ -66,10 +62,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/reason"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/sky_blue0"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins_bold" />
+                 />
 
             <TextView
                 android:id="@+id/reason_value"
@@ -77,10 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text=": Text"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins_bold"
+                style="@style/CustomTextStylePoppinsBold"
                 android:gravity="start"
                 android:maxLines="100"
                 android:ellipsize="end" />

@@ -126,7 +126,7 @@ class AssignmentAdapter(
             lblassigned.text = "Assigned" + " - " + Constant.convertToReadableDate(data.created_date)
             createddate.text = Constant.convertToReadableDate(data.created_date)
             lblSubject.text = data.subject
-            lbldeadline.text = "Submission date" +" "+ data.end_date
+            lbldeadline.text = "Submission date" +" "+ Constant.convertToReadableDate(data.end_date)
             lblSendby.text = data.created_date
 
             lblSubmitted.text ="Submitted"+" - "+ data.submitted_count
@@ -167,7 +167,10 @@ class AssignmentAdapter(
                     fileList = convertedList,
                     submittedCount =  data.submitted_count,
                     totalCount = data.total_count,
-                    assignmentid = data.id
+                    assignmentid = data.id,
+                    created_date = data.created_date,
+                    category = data.category,
+                    assignmentsubject = data.subject
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -201,7 +204,10 @@ class AssignmentAdapter(
                                 fileList = convertedList,
                                 submittedCount =  data.submitted_count,
                                 totalCount = data.total_count,
-                                assignmentid = data.id
+                                assignmentid = data.id,
+                                created_date = data.created_date,
+                                category = data.category,
+                                assignmentsubject = data.subject
                             )
 
                             val intent = Intent(context, ChildHomeWork::class.java)

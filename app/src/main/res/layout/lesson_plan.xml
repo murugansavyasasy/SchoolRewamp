@@ -58,9 +58,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnrParent"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="@dimen/five"
         android:gravity="center">
 
 
@@ -89,8 +89,7 @@
                 android:layout_toEndOf="@+id/imgSearch"
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
-                android:fontFamily="@font/poppins_regular"
-                android:textColor="@color/black"
+               style="@style/CustomTextStylePoppinsRegular"
                 android:textSize="@dimen/thirteen_sp" />
 
         </RelativeLayout>
@@ -114,7 +113,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/nomessages"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:visibility="gone" />
 
     <TextView
@@ -127,7 +126,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/no_list_found"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:layout_below="@+id/nomessage"
         android:visibility="gone" />
 </RelativeLayout>

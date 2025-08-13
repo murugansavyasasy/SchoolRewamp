@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblTitle"
-                android:layout_marginStart="48dp"
+                android:layout_marginStart="@dimen/fourty_eight"
                 android:layout_marginTop="@dimen/three"
                 android:layout_marginBottom="@dimen/ten"
                 android:textSize="@dimen/thirteen_sp"
