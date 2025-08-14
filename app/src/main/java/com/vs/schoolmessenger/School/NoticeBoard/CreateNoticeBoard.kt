@@ -520,9 +520,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 }
             }
 
-
             R.id.btnNext -> {
-
                 if (binding.btnNext.text.toString() == "Update NoticeBoard") {
                     showSendConfirmationDialog(true)
                 } else {
