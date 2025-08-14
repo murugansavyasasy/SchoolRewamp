@@ -135,6 +135,11 @@
             android:name=".Parent.Attachment.Attachment"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".Parent.Assignment.MyAssignmentSubmission.MyAssignmentSubmit"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.QuizExam.Quiz"
             android:theme="@style/AppTheme"

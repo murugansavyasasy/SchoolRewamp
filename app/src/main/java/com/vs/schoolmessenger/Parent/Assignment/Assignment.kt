@@ -35,6 +35,10 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
         binding.toolbarLayout.lblStudentSection.text = "XII - B"
 
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
+        }
+
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
@@ -73,7 +77,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
 
     override fun onSubmittedClick(data: AssignmentData) {
-        TODO("Not yet implemented")
     }
 
     override fun onEditAndDeleteClick(
@@ -81,14 +84,14 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         anchorView: View,
         adapterPosition: Int
     ) {
-        TODO("Not yet implemented")
     }
 
     override fun onNotSubmittedClick(data: AssignmentData) {
-        TODO("Not yet implemented")
     }
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+        when (v?.id) {
+
+        }
     }
 }
