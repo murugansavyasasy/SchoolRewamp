@@ -1,27 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/one_twenty"
-    android:padding="@dimen/one">
-
-    <ImageView
-        android:id="@+id/imgView"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="@dimen/one_twenty"
+        android:padding="@dimen/one">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="@dimen/fourty"
-        android:layout_height="@dimen/fourty"
-        android:indeterminateDrawable="@drawable/progress_bar_white"
-        android:indeterminateOnly="true"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="visible"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:indeterminateDrawable="@drawable/progress_bar_white"
+            android:indeterminateOnly="true"
+            android:visibility="visible"
+            android:layout_centerInParent="true" />
+
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:background="@drawable/bg_file_item"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/imgFileType"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/image_file"
+        android:scaleType="centerInside"
+        android:background="@drawable/bg_icon_round"
+        android:layout_alignParentStart="true" />
+
+
+        <TextView
+            android:id="@+id/txtFileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgFileType"
+            android:layout_marginStart="12dp"
+            android:text="BD84A0BAB151.jpg"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:ellipsize="end"
+            android:singleLine="true" />
+
+        <!-- File size -->
+        <TextView
+            android:id="@+id/txtFileSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtFileName"
+            android:layout_alignStart="@id/txtFileName"
+            android:text="2.1 MB, IMAGE"
+            android:textColor="#888888"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

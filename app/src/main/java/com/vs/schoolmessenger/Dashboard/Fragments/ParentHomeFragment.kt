@@ -22,7 +22,9 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
@@ -101,6 +103,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.init()
         isDashBoardData()
         setupRecyclerView()
+
+        binding.imgBurgerMenu.setOnClickListener(this)
+
+        binding.imgBurgerMenu.setOnClickListener {
+            (activity as? ParentDashboard)?.openDrawer()
+        }
+
 
 //        if (userDetails!!.is_parent && userDetails!!.is_staff) {
 //            binding.lblChangeRoll.visibility = View.VISIBLE

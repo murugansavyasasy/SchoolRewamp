@@ -24,7 +24,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import com.vs.schoolmessenger.Utils.Constant
 
-class AssignmentParentAdapter (
+class AssignmentParentAdapter(
     var itemList: MutableList<ParentAssignmentData>,
     private val listener: AssignmentClickListener,
     private val context: Context,
@@ -123,7 +123,6 @@ class AssignmentParentAdapter (
             lbldeadline.text = data.end_date
 
 
-
             val hasIframe = !data.iframe.isNullOrEmpty()
             val hasFiles = !data.file_path.isNullOrEmpty()
 
@@ -193,45 +192,43 @@ class AssignmentParentAdapter (
                 context.startActivity(intent)
             }
 
-            rcyAssignment.addOnItemTouchListener(
-                object : RecyclerView.SimpleOnItemTouchListener() {
-                    override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                        val child = rv.findChildViewUnder(e.x, e.y)
-                        if (child != null && e.action == MotionEvent.ACTION_UP) {
-                            val position = rv.getChildAdapterPosition(child)
-                            val convertedList = data.file_path.map {
-                                GetFilePathDetails(
-                                    type = it.type,
-                                    url = it.url,
-                                )
-                            }
-                            val isHomeWorkData = FilePreview(
-                                id = "",
-                                title = data.title,
-                                description = data.description,
-                                subjectName = "",
-                                sentBy = "",
-                                thumbnail = data.thumbnail,
-                                isUnread = true,
-                                isCompleted = true,
-                                isMenuType = Constant.M_ASSIGNMENT,
-                                fileList = convertedList,
-                                submittedCount = data.submitted_count,
-                                assignmentid = data.id,
-                                category = data.category,
-                                assignmentsubject = data.subject,
-                                isParentAssignment = true
+            rcyAssignment.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    val child = rv.findChildViewUnder(e.x, e.y)
+                    if (child != null && e.action == MotionEvent.ACTION_UP) {
+                        val position = rv.getChildAdapterPosition(child)
+                        val convertedList = data.file_path.map {
+                            GetFilePathDetails(
+                                type = it.type,
+                                url = it.url,
                             )
-
-                            val intent = Intent(context, ChildHomeWork::class.java)
-                            intent.putExtra("isPreViewData", isHomeWorkData)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            context.startActivity(intent)
                         }
-                        return false
+                        val isHomeWorkData = FilePreview(
+                            id = "",
+                            title = data.title,
+                            description = data.description,
+                            subjectName = "",
+                            sentBy = "",
+                            thumbnail = data.thumbnail,
+                            isUnread = true,
+                            isCompleted = true,
+                            isMenuType = Constant.M_ASSIGNMENT,
+                            fileList = convertedList,
+                            submittedCount = data.submitted_count,
+                            assignmentid = data.id,
+                            category = data.category,
+                            assignmentsubject = data.subject,
+                            isParentAssignment = true
+                        )
+
+                        val intent = Intent(context, ChildHomeWork::class.java)
+                        intent.putExtra("isPreViewData", isHomeWorkData)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        context.startActivity(intent)
                     }
+                    return false
                 }
-            )
+            })
 
             lblSubmitted.setOnClickListener {
                 val intent = Intent(context, Mysubmission::class.java)
