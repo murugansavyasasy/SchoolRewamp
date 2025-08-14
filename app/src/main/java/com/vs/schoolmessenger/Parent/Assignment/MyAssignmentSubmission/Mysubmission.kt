@@ -52,12 +52,11 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentCli
 
         appViewModel?.getassignmentmysubmissionlist?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
-
+                binding.rcyAssignment.visibility = View.VISIBLE
             } else {
-                binding.rcyAssignment.visibility = View.GONE
+                showEmptyState(response?.message ?: getString(R.string.no_data_found))
             }
         }
-
         fetchAssignmentReportData()
     }
 
@@ -82,6 +81,13 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentCli
 
     }
 
+
+    private fun showEmptyState(message: String) {
+        binding.rcyAssignment.visibility = View.GONE
+        binding.nomessage.visibility = View.VISIBLE
+        binding.txtNoData.text = message
+        binding.txtNoData.visibility = View.VISIBLE
+    }
 
 
 

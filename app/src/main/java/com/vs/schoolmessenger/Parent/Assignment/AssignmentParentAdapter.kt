@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
+import com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission.MyAssignmentSubmit
 import com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission.Mysubmission
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
@@ -102,6 +103,7 @@ class AssignmentParentAdapter (
         private val lblassigned: TextView = itemView.findViewById(R.id.lblassigned)
         private val lbldeadline: TextView = itemView.findViewById(R.id.lbldeadline)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
+        private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
 
         private val headerrelative_layout: RelativeLayout =
             itemView.findViewById(R.id.headerrelative_layout)
@@ -236,6 +238,10 @@ class AssignmentParentAdapter (
                 intent.putExtra("assignment_id", data.id)
                 intent.putExtra("title", data.title)
                 intent.putExtra("subject", data.subject)
+                context.startActivity(intent)
+            }
+            lblNotSubmitted.setOnClickListener {
+                val intent = Intent(context, MyAssignmentSubmit::class.java)
                 context.startActivity(intent)
             }
 
