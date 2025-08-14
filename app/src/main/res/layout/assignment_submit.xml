@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true">
-
-
 
     <RelativeLayout
         android:id="@+id/rytHeader"
@@ -47,16 +44,14 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                />
+                android:text="" />
 
             <TextView
                 android:id="@+id/lblStudentSection"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                />
+                android:text="" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -70,64 +65,60 @@
         android:visibility="visible">
 
 
-
         <TextView
             android:id="@+id/lblTitle"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
             android:text="@string/Title"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textSize="@dimen/fifteen_sp"
-            >
+            android:textSize="@dimen/fifteen_sp">
 
         </TextView>
 
         <EditText
             android:id="@+id/edtTitle"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/fifteen"
-            style="@style/CustomTextStylePoppinsMedium"
-            >
+            android:layout_marginEnd="@dimen/fifteen">
 
         </EditText>
 
         <TextView
             android:id="@+id/lblTitleTextCount"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/edtTitle"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/five"
             android:layout_marginEnd="@dimen/fifteen"
-            style="@style/CustomTextStylePoppinsMedium"
             android:text="0 / 50"
-            android:textColor="@color/light_gray"
-            >
+            android:textColor="@color/light_gray">
 
         </TextView>
 
         <TextView
             android:id="@+id/lblDescription"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblTitleTextCount"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
             android:text="@string/Description"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textSize="@dimen/fifteen_sp"
-            >
+            android:textSize="@dimen/fifteen_sp">
 
         </TextView>
 
         <EditText
             android:id="@+id/edtDescription"
+            style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="match_parent"
             android:layout_height="@dimen/hundred"
             android:layout_below="@+id/lblDescription"
@@ -141,28 +132,24 @@
             android:gravity="start"
             android:hint="@string/Description"
             android:padding="@dimen/ten"
-            style="@style/CustomTextStylePoppinsRegular"
-            android:textSize="@dimen/thirteen_sp"
-            >
+            android:textSize="@dimen/thirteen_sp">
 
         </EditText>
 
 
         <TextView
             android:id="@+id/lblTextCount"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/edtDescription"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
-            style="@style/CustomTextStylePoppinsMedium"
             android:text="0 / 500"
-            android:textColor="@color/light_gray"
-            >
+            android:textColor="@color/light_gray">
 
         </TextView>
-
 
 
         <RelativeLayout
@@ -180,8 +167,7 @@
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/add_attachment"
-                android:textColor="@color/black"
-                >
+                android:textColor="@color/black">
 
             </TextView>
 
