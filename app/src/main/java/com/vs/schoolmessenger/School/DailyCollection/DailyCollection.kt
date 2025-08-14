@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.DailyCollection
 import android.graphics.Color
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.ReportFragment.Companion.reportFragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -32,6 +33,11 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     private var from_Date: String? = null
     private var mAdapter: DcfAdapter? = null
     private var isStaffDetails: StaffDetails? = null
+    private var fromDateMillis: Long = 0L
+    private var toDateMillis: Long = 0L
+    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+
     override fun getViewBinding(): DailyCollectionBinding {
         return DailyCollectionBinding.inflate(layoutInflater)
     }
@@ -51,7 +57,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
-        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val calendar = Calendar.getInstance()
 
         val currentDate = dateFormat.format(calendar.time)
@@ -60,6 +65,15 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
         from_Date = currentDate
         binding.fromDate2.text =Constant.convertToReadableDate(currentDate)
+
+
+        // Convert currentDate string into millis
+        val parsedDate = dateFormat.parse(currentDate)
+        val currentMillis = parsedDate?.time ?: calendar.timeInMillis
+
+        // Initialize fromDateMillis and toDateMillis
+        fromDateMillis = currentMillis
+        toDateMillis = currentMillis
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
@@ -140,7 +154,11 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             binding.totalsummary1.adapter = mAdapter
 
             val totalCollectionSum = data.sumOf {
-                it.total_collection.replace("₹", "").toDoubleOrNull() ?: 0.0
+                it.total_collection
+                    .replace("₹", "")
+                    .replace(",", "")
+                    .trim()
+                    .toDoubleOrNull() ?: 0.0
             }
             binding.totalCollection.text = "₹ %.2f".format(totalCollectionSum)
 
@@ -228,6 +246,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             R.id.linear_layout3 -> {
                 selectedDateTarget = R.id.linear_layout3
                 showDatePickerDialog(this, this)
+
+
             }
 
             R.id.linear_layout5 -> {

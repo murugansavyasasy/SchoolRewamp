@@ -365,12 +365,16 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btnHistory -> {
+                binding.btnHistory.isEnabled=false
+                binding.btnCreate.isEnabled=true
                 isLoadYear(Constant.isAcademicYearList)
                 isTodayList = false
                 isBackgroundChange(binding.btnHistory)
             }
 
             R.id.btnCreate -> {
+                binding.btnHistory.isEnabled=true
+                binding.btnCreate.isEnabled=false
                 isTodayList = true
                 isBackgroundChange(binding.btnCreate)
             }
