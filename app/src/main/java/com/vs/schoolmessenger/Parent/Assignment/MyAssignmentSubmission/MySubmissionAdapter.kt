@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -24,6 +25,8 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDeta
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import com.vs.schoolmessenger.Utils.Constant
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class MySubmissionAdapter  (
     var itemList: MutableList<SubmittedAssignment>,
@@ -96,14 +99,12 @@ class MySubmissionAdapter  (
         private val lblDescription1: TextView = itemView.findViewById(R.id.lblDescription1)
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
 
-
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
-
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
-
         private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
-
+        private val submitteddetails: TextView = itemView.findViewById(R.id.submitteddetails)
+        private val datevalue: TextView = itemView.findViewById(R.id.datevalue)
         private val headerrelative_layout: RelativeLayout =
             itemView.findViewById(R.id.headerrelative_layout)
 
@@ -118,7 +119,33 @@ class MySubmissionAdapter  (
         ) {
             lblDescription1.text = data.description
             lblTitle.text = title
-            lblDescription.text= subject
+            lblDescription.text = subject
+
+
+            try {
+                val apiFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+                val parsedDate = apiFormat.parse(data.submitted_on)
+
+                if (parsedDate != null) {
+
+                    submitteddetails.text = "submitted: " + DateUtils.getRelativeTimeSpanString(
+                        parsedDate.time,
+                        System.currentTimeMillis(),
+                        DateUtils.MINUTE_IN_MILLIS
+                    )
+
+
+                    val shortDateFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
+                    datevalue.text = shortDateFormat.format(parsedDate)
+                } else {
+                    submitteddetails.text = data.submitted_on
+                    datevalue.text = data.submitted_on
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                submitteddetails.text = data.submitted_on
+                datevalue.text = data.submitted_on
+            }
 
             val hasIframe = !data.iframe.isNullOrEmpty()
             val hasFiles = !data.file_path.isNullOrEmpty()
@@ -151,8 +178,7 @@ class MySubmissionAdapter  (
                     category = "",
                     assignmentsubject = ""
                 )
-
-                val intent = Intent(context, ChildHomeWork::class.java)
+               val intent = Intent(context, ChildHomeWork::class.java)
                 intent.putExtra("isPreViewData", isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)

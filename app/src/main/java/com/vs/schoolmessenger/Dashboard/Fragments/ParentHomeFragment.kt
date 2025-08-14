@@ -18,11 +18,14 @@ import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsDisplayOptions
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.FrequentlyUsedMenu
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
@@ -56,6 +59,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private lateinit var aditems: List<AdItem>
     private var isSearchVisible = false
     var childDetails: ChildDetails? = null
+    var FrequentlyUsedMenuItems: List<FrequentlyUsedMenu>? = null
     var userDetails: UserDetails? = null
     private var appViewModel: App? = null
     var isDashBoardData: List<DashboardData>? = null
@@ -70,6 +74,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private lateinit var layoutManager: LinearLayoutManager
 
     private var currentPosition = 0
+    private var mobile_number = ""
+
 
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
@@ -84,6 +90,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //        binding.imgSearchCancel.setOnClickListener(this)
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
+        mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
+
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         val formattedDate = dateFormat.format(currentDate)
@@ -100,7 +108,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isDashBoardData()
-        setupRecyclerView()
+
+        binding.imgBurgerMenu.setOnClickListener(this)
+
+        binding.imgBurgerMenu.setOnClickListener {
+            (activity as? ParentDashboard)?.openDrawer()
+        }
+
 
 //        if (userDetails!!.is_parent && userDetails!!.is_staff) {
 //            binding.lblChangeRoll.visibility = View.VISIBLE
@@ -176,10 +190,14 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isDashBoardData = isDashboardResponse
                     isContactDetails = isDashBoardData!![0].contactDetails
-                    isMenuDetails = isDashBoardData!![0].menuDetails
+                    isMenuDetails = isDashBoardData!![0].menus
+                    FrequentlyUsedMenuItems = isDashBoardData!![0].frequently_used
                     allMenuItems = isMenuDetails!!
+
                     Log.d("isMenuDetails", isMenuDetails!!.size.toString())
                     isGetAds()
+                    setupRecyclerView()
+
                 }
             }
         }
@@ -206,21 +224,33 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
     private fun setupRecyclerView() {
-        items = createSampleData()
-        layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        adapter = AutoScrollAdapterWithDots(items) { position ->
-            //   updateDotsIndicator(position)
+
+        if (FrequentlyUsedMenuItems!!.size>1){
+            binding.autoScrollRecyclerView.visibility=View.VISIBLE
+            //        items = createSampleData()
+
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!) { position ->
+                //   updateDotsIndicator(position)
+            }
+
+
+            binding.autoScrollRecyclerView.layoutManager = layoutManager
+            binding.autoScrollRecyclerView.adapter = adapter
+
+            val snapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(binding.autoScrollRecyclerView)
+
+            currentPosition = adapter.getMiddlePosition()
+            layoutManager.scrollToPosition(currentPosition)
+        }
+        else{
+            binding.autoScrollRecyclerView.visibility=View.GONE
+
         }
 
 
-        binding.autoScrollRecyclerView.layoutManager = layoutManager
-        binding.autoScrollRecyclerView.adapter = adapter
-
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(binding.autoScrollRecyclerView)
-
-        currentPosition = adapter.getMiddlePosition()
-        layoutManager.scrollToPosition(currentPosition)
     }
 
 
@@ -273,7 +303,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         Log.d("isToken", childDetails!!.access_token)
         appViewModel!!.isDashBoardData(
-            childDetails!!.access_token, Constant.parent, requireActivity()
+            childDetails!!.access_token, Constant.parent,mobile_number, requireActivity()
         )
     }
 

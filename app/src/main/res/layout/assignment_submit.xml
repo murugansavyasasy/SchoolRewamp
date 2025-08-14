@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/AthensGray"
+        android:paddingVertical="@dimen/fifteen">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_centerVertical="true"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:id="@+id/lblParentToolBar"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/rlaStudentName"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+
+        <LinearLayout
+            android:id="@+id/rlaStudentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lblStudentName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/lblStudentSection"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rytCreateAssignment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rytHeader"
+        android:layout_marginTop="@dimen/ten"
+        android:visibility="visible">
+
+
+        <TextView
+            android:id="@+id/lblTitle"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:text="@string/Title"
+            android:textSize="@dimen/fifteen_sp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/edtTitle"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitle"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen">
+
+        </EditText>
+
+        <TextView
+            android:id="@+id/lblTitleTextCount"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtTitle"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:text="0 / 50"
+            android:textColor="@color/light_gray">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblDescription"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitleTextCount"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:text="@string/Description"
+            android:textSize="@dimen/fifteen_sp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/edtDescription"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hundred"
+            android:layout_below="@+id/lblDescription"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:background="@drawable/bg_stroke_rect_black"
+            android:editable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="start"
+            android:hint="@string/Description"
+            android:padding="@dimen/ten"
+            android:textSize="@dimen/thirteen_sp">
+
+        </EditText>
+
+
+        <TextView
+            android:id="@+id/lblTextCount"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtDescription"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:text="0 / 500"
+            android:textColor="@color/light_gray">
+
+        </TextView>
+
+
+        <RelativeLayout
+            android:id="@+id/rlaFilePicking"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/lblTextCount"
+            android:layout_marginTop="@dimen/five">
+
+            <TextView
+                android:id="@+id/lblAddPhoto"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/add_attachment"
+                android:textColor="@color/black">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblOptional"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_toEndOf="@+id/lblAddPhoto"
+                android:text="@string/Optional"
+                android:textColor="@color/mild_grey1"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <ImageView
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
+                android:src="@drawable/ic_attach_file">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:id="@+id/rytRecyclewview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblAddPhoto">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="vertical">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/btnChooseRecipient"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rytRecyclewview"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/fifty"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:layout_marginBottom="@dimen/thirty"
+                android:background="@drawable/rect_btn_orange"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

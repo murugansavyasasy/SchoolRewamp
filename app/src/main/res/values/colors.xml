@@ -256,6 +256,7 @@
     <color name="light_gray_8">#80000000</color>
     <color name="light_white_4">#EAE6E4</color>
     <color name="amber_yellow">#FFC107</color>
+    <color name="light_white_3">#F8F9FA</color>
 
 
 </resources>

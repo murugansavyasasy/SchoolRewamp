@@ -1,13 +1,21 @@
 package com.vs.schoolmessenger.Dashboard.Parent
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
+import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.databinding.ChildDashboardBinding
@@ -18,13 +26,42 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         return ChildDashboardBinding.inflate(layoutInflater)
     }
     var authViewModel: Auth? = null
-
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlue()
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
+
+
+        drawerLayout = binding.drawerLayout
+        navigationView = binding.navigationView
+
+        binding.navigationView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.view_profile -> {
+                    BaseActivity.loadFragment(this, ProfileFragment())
+                    updateNavBar(R.id.icon_profile)
+                }
+                R.id.setting_click -> {
+                    BaseActivity.loadFragment(this, SettingsFragment())
+                    updateNavBar(R.id.icon_settings)
+                }
+                R.id.help_click -> {
+                    BaseActivity.loadFragment(this, HelpFragment())
+                    updateNavBar(R.id.icon_help)
+                }
+                R.id.role_click -> {
+                    val intent = Intent(this, PrioritySelection::class.java)
+                    startActivity(intent)
+                }
+            }
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
+
 
         accessChildView(
             binding,
@@ -74,5 +111,13 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
+
+    fun openDrawer() {
+        if (::drawerLayout.isInitialized) {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+    }
+
+
 
 }

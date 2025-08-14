@@ -25,6 +25,7 @@ import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsDisplayOptions
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.FrequentlyUsedMenu
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
@@ -68,13 +69,14 @@ import java.util.Locale
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding
-    private lateinit var items: List<ScrollItem>
+//    private lateinit var items: List<ScrollItem>
     lateinit var isMenuAdapter: SchoolMenuAdapter
     private var isSearchVisible = false
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
     var staffDetails: StaffDetails? = null
     var isDashBoardData: List<DashboardData>? = null
+    var FrequentlyUsedMenuItems: List<FrequentlyUsedMenu>? = null
     var isContactDetails: ContactDetails? = null
     var isMenuDetails: List<MenuDetail>? = null
     var isAdItem: List<AdItem>? = null
@@ -92,6 +94,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var isUserScrolling = false
     private var isAutoScrollEnabled = true
     private var currentDotPosition = 0
+    private var mobile_number = ""
 
 
     companion object {
@@ -113,9 +116,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //        binding.changeroll.paintFlags = binding.changeroll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         Constant.checkBiometricSupport(requireActivity())
-        setupRecyclerView()
+
+        mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
         userDetails = SharedPreference.getUserDetails(requireActivity())
         staffDetails = SharedPreference.getStaffDetails(requireActivity())
+
+
         Log.d("school_logo", staffDetails!!.school_logo)
 
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
@@ -164,9 +170,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isDashBoardData = isDashboardResponse
                     isContactDetails = isDashBoardData!![0].contactDetails
-                    isMenuDetails = isDashBoardData!![0].menuDetails
+                    isMenuDetails = isDashBoardData!![0].menus
+                    FrequentlyUsedMenuItems = isDashBoardData!![0].frequently_used
                     allMenuItems = isMenuDetails!!
                     isGetAds()
+                    setupRecyclerView()
+
                 }
             }
         }
@@ -210,22 +219,29 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
     private fun setupRecyclerView() {
-        items = createSampleData()
-        layoutManager =
-            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        adapter = AutoScrollAdapterWithDots(items) { position ->
-            //   updateDotsIndicator(position)
+        if (FrequentlyUsedMenuItems!!.size>1){
+            binding.autoScrollRecyclerView.visibility=View.VISIBLE
+            //        items = createSampleData()
+
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!) { position ->
+                //   updateDotsIndicator(position)
+            }
+
+            binding.autoScrollRecyclerView.layoutManager = layoutManager
+            binding.autoScrollRecyclerView.adapter = adapter
+
+            val snapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(binding.autoScrollRecyclerView)
+
+            currentPosition = adapter.getMiddlePosition()
+            layoutManager.scrollToPosition(currentPosition)
         }
+        else{
+            binding.autoScrollRecyclerView.visibility=View.GONE
 
-
-        binding.autoScrollRecyclerView.layoutManager = layoutManager
-        binding.autoScrollRecyclerView.adapter = adapter
-
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(binding.autoScrollRecyclerView)
-
-        currentPosition = adapter.getMiddlePosition()
-        layoutManager.scrollToPosition(currentPosition)
+        }
     }
 
 
@@ -314,9 +330,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.gridRecyclerView.adapter = isMenuAdapter
 
         appViewModel!!.isDashBoardData(
-            access_token, Constant.staff_, requireActivity()
+            access_token, Constant.staff_,mobile_number,requireActivity()
         )
     }
+
 
     private fun isGetAds() {
         activity?.let { safeActivity ->

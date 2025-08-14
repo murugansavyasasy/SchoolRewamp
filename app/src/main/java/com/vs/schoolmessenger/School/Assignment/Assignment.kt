@@ -139,10 +139,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     private var isStaffDetails: StaffDetails? = null
 
 
-    private lateinit var rcyAssignmentReport: RecyclerView
-    private lateinit var txtSearchMenu: EditText
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -181,9 +177,8 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 adapter.filter.filter(s)
                 binding.rcyAssignmentReport.post {
-
                     if (adapter.itemCount == 0) {
-                        binding.rcyAssignmentReport.visibility = View.VISIBLE
+                        binding.rcyAssignmentReport.visibility = View.GONE
                         binding.noDataFound.visibility = View.VISIBLE
                     } else {
                         binding.rcyAssignmentReport.visibility = View.VISIBLE
@@ -195,6 +190,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
         })
+
 
 
 

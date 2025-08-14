@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -25,23 +27,17 @@ import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import com.vs.schoolmessenger.Utils.Constant
 
 class AssignmentAdapter(
-    var itemList: MutableList<AssignmentData>,
+    itemList: MutableList<AssignmentData>,
     private val listener: AssignmentClickListener,
     private val context: Context,
     private val isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var fullList: List<AssignmentData> = itemList ?: listOf()
-    private var filteredList: List<AssignmentData> = itemList ?: listOf()
-
-    init {
-        fullList = itemList ?: listOf()
-        filteredList = fullList
-    }
-
+    private var fullList: MutableList<AssignmentData> = ArrayList(itemList)
+    private var filteredList: MutableList<AssignmentData> = ArrayList(itemList)
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -59,32 +55,64 @@ class AssignmentAdapter(
         }
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            itemList?.get(position)?.let {
+            filteredList[position].let {
                 holder.bind(it, position, this, listener)
             }
-        } else if (holder is SchoolNoticeBoardAdapter.ShimmerViewHolder) {
+        }else if (holder is SchoolNoticeBoardAdapter.ShimmerViewHolder) {
             holder.startShimmer()
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return if (isLoading) 20 else filteredList.size
+    }
+
+    fun updateList(newList: List<AssignmentData>) {
+        fullList.clear()
+        fullList.addAll(newList)
+        filteredList.clear()
+        filteredList.addAll(newList)
+        notifyDataSetChanged()
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.trim()?.lowercase() ?: ""
+                val resultList = if (query.isEmpty()) {
+                    fullList
+                } else {
+                    fullList.filter {
+                        (it.title?.lowercase()?.contains(query) == true) ||
+                                (it.description?.lowercase()?.contains(query) == true) ||
+                                (it.subject?.lowercase()?.contains(query) == true)
+                    }.toMutableList()
+                }
+                return FilterResults().apply { values = resultList }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = (results?.values as? MutableList<AssignmentData>) ?: mutableListOf()
+                notifyDataSetChanged()
+            }
         }
     }
 
     fun removeItemAt(position: Int) {
         if (position in filteredList.indices) {
             val removedNotice = filteredList[position]
-            filteredList = filteredList.toMutableList().apply {
-                removeAt(position)
-            }
-            fullList = fullList.filterNot { it.id == removedNotice.id }
+            filteredList.removeAt(position)
+            fullList = fullList.filterNot { it.id == removedNotice.id }.toMutableList()
+
             notifyItemRemoved(position)
         }
     }
 
 
-    override fun getItemCount(): Int {
-        return if (isLoading) 20 else itemList.size
-    }
+
+
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
+import com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission.MyAssignmentSubmit
 import com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission.Mysubmission
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
@@ -23,7 +24,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import com.vs.schoolmessenger.Utils.Constant
 
-class AssignmentParentAdapter (
+class AssignmentParentAdapter(
     var itemList: MutableList<ParentAssignmentData>,
     private val listener: AssignmentClickListener,
     private val context: Context,
@@ -102,6 +103,7 @@ class AssignmentParentAdapter (
         private val lblassigned: TextView = itemView.findViewById(R.id.lblassigned)
         private val lbldeadline: TextView = itemView.findViewById(R.id.lbldeadline)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
+        private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
 
         private val headerrelative_layout: RelativeLayout =
             itemView.findViewById(R.id.headerrelative_layout)
@@ -119,7 +121,6 @@ class AssignmentParentAdapter (
             lblCategory.text = data.category
             lblassigned.text = data.subject
             lbldeadline.text = data.end_date
-
 
 
             val hasIframe = !data.iframe.isNullOrEmpty()
@@ -191,51 +192,53 @@ class AssignmentParentAdapter (
                 context.startActivity(intent)
             }
 
-            rcyAssignment.addOnItemTouchListener(
-                object : RecyclerView.SimpleOnItemTouchListener() {
-                    override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                        val child = rv.findChildViewUnder(e.x, e.y)
-                        if (child != null && e.action == MotionEvent.ACTION_UP) {
-                            val position = rv.getChildAdapterPosition(child)
-                            val convertedList = data.file_path.map {
-                                GetFilePathDetails(
-                                    type = it.type,
-                                    url = it.url,
-                                )
-                            }
-                            val isHomeWorkData = FilePreview(
-                                id = "",
-                                title = data.title,
-                                description = data.description,
-                                subjectName = "",
-                                sentBy = "",
-                                thumbnail = data.thumbnail,
-                                isUnread = true,
-                                isCompleted = true,
-                                isMenuType = Constant.M_ASSIGNMENT,
-                                fileList = convertedList,
-                                submittedCount = data.submitted_count,
-                                assignmentid = data.id,
-                                category = data.category,
-                                assignmentsubject = data.subject,
-                                isParentAssignment = true
+            rcyAssignment.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    val child = rv.findChildViewUnder(e.x, e.y)
+                    if (child != null && e.action == MotionEvent.ACTION_UP) {
+                        val position = rv.getChildAdapterPosition(child)
+                        val convertedList = data.file_path.map {
+                            GetFilePathDetails(
+                                type = it.type,
+                                url = it.url,
                             )
-
-                            val intent = Intent(context, ChildHomeWork::class.java)
-                            intent.putExtra("isPreViewData", isHomeWorkData)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            context.startActivity(intent)
                         }
-                        return false
+                        val isHomeWorkData = FilePreview(
+                            id = "",
+                            title = data.title,
+                            description = data.description,
+                            subjectName = "",
+                            sentBy = "",
+                            thumbnail = data.thumbnail,
+                            isUnread = true,
+                            isCompleted = true,
+                            isMenuType = Constant.M_ASSIGNMENT,
+                            fileList = convertedList,
+                            submittedCount = data.submitted_count,
+                            assignmentid = data.id,
+                            category = data.category,
+                            assignmentsubject = data.subject,
+                            isParentAssignment = true
+                        )
+
+                        val intent = Intent(context, ChildHomeWork::class.java)
+                        intent.putExtra("isPreViewData", isHomeWorkData)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        context.startActivity(intent)
                     }
+                    return false
                 }
-            )
+            })
 
             lblSubmitted.setOnClickListener {
                 val intent = Intent(context, Mysubmission::class.java)
                 intent.putExtra("assignment_id", data.id)
                 intent.putExtra("title", data.title)
                 intent.putExtra("subject", data.subject)
+                context.startActivity(intent)
+            }
+            lblNotSubmitted.setOnClickListener {
+                val intent = Intent(context, MyAssignmentSubmit::class.java)
                 context.startActivity(intent)
             }
 
