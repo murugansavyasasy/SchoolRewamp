@@ -20,7 +20,7 @@
     <!-- Subject Name -->
     <TextView
         android:id="@+id/subjectname"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/five"
         android:text="@string/subject_name"
@@ -49,7 +49,7 @@
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcSplitMark"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:nestedScrollingEnabled="false"
         android:layout_marginTop="@dimen/five"
@@ -60,7 +60,7 @@
 
     <!-- Divider Line -->
     <View
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="@dimen/one"
         android:background="@color/iron"
         android:layout_marginTop="@dimen/ten"

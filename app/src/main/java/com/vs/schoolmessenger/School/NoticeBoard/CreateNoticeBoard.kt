@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.School.NoticeBoard
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -42,6 +43,7 @@ import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
@@ -54,6 +56,8 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.R
+import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.RestClient
@@ -85,26 +89,21 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     OnDateSelectedListener, NoticeBoardClickListener, View.OnClickListener,
     VimeoVideoUpload.UploadCompletionListener {
 
-
     override fun getViewBinding(): CreateNoticeBoardBinding {
         return CreateNoticeBoardBinding.inflate(layoutInflater)
     }
 
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
-
     private var cameraPermissionDeniedCount = 0
-
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val MAX_FILES = 10
-
     }
 
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
-
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
@@ -118,12 +117,14 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     var isTotalSelectedItem = 0
     var isNoticeBoardId = ""
     var isNoticeBoardPosition = 0
+    private var noticeList: List<NoticeStaffData> = emptyList()
+    private var isUpdatingSearchText = false
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
@@ -177,6 +178,27 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
+
+        noticeboardadapter = SchoolNoticeBoardAdapter(
+            emptyList(), this, this, false,
+            binding.nomessage,
+            binding.txtNoData
+        )
+        binding.rcyNoticeBoard.adapter = noticeboardadapter
+        binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
+        binding.rcyNoticeBoard.adapter = noticeboardadapter
+
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::noticeboardadapter.isInitialized) {
+                    noticeboardadapter.filter.filter(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -265,8 +287,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount
         )
 
-
-
         appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
@@ -274,10 +294,10 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
             } else {
+                isloadhomeworkData(emptyList())
                 binding.rcyNoticeBoard.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
             }
         }
 
@@ -287,6 +307,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
 
+    }
+
+    private fun loadNoticeData(newData: List<NoticeStaffData>) {
+        Log.d("AdapterUpdate", "New data size: ${newData.size}")
+
+        noticeboardadapter.updateList(newData)
+        binding.rcyNoticeBoard.visibility = View.VISIBLE
+        binding.nomessage.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
     }
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
@@ -308,7 +337,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                         "SpinnerSelection",
                         "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
                     )
-
                     isGetNoticeBoardList()
                 }
 
@@ -321,20 +349,44 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             Log.d("DefaultSelection", "Default token: $isAccessToken")
         }
     }
+
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
-        noticeboardadapter =
-            SchoolNoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcyNoticeBoard.adapter = noticeboardadapter
+        Log.d("SearchDebug", "isloadhomeworkData called with ${newData?.size ?: 0} items")
+
+        if (newData != null && newData.isNotEmpty()) {
+            noticeList = newData
+            noticeboardadapter.isLoading = false
+            noticeboardadapter.updateList(newData, true)
+
+            isUpdatingSearchText = true
+            binding.edtSearch.setText("")
+            isUpdatingSearchText = false
+
+            Log.d(
+                "SearchDebug",
+                "Data loaded successfully, adapter item count: ${noticeboardadapter.itemCount}"
+            )
+        } else {
+            noticeList = emptyList()
+            noticeboardadapter.isLoading = false
+            noticeboardadapter.updateList(emptyList(), true)
+
+            isUpdatingSearchText = true
+            binding.edtSearch.setText("")
+            isUpdatingSearchText = false
+
+            Log.d("SearchDebug", "Empty data loaded")
+        }
     }
 
+
     private fun isGetNoticeBoardList() {
-        noticeboardadapter = SchoolNoticeBoardAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
-        binding.rcyNoticeBoard.adapter = noticeboardadapter
-        appViewModel!!.isNoticeBoardStaffReport(
-            isAccessToken!!, this
-        )
+        noticeboardadapter.isLoading = true
+        noticeboardadapter.notifyDataSetChanged()
+
+        appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
     }
 
 
@@ -345,7 +397,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         ) {
             openCameraIntent()
         } else {
-            // Show rationale if user has denied permission before
             if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
                     this, Manifest.permission.CAMERA
                 )
@@ -482,13 +533,20 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 isGetNoticeBoardList()
             }
 
-
-            R.id.imgSearchToolBar -> if (binding.rytSearch323.isVisible) {
-                binding.rytSearch323.visibility = View.GONE
-            } else {
-                binding.rytSearch323.visibility = View.VISIBLE
+            R.id.imgSearchToolBar -> {
+                if (binding.rytSearch323.isVisible) {
+                    binding.rytSearch323.visibility = View.GONE
+                    binding.edtSearch.setText("")
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+                } else {
+                    binding.rytSearch323.visibility = View.VISIBLE
+                    binding.edtSearch.setText("")
+                    binding.edtSearch.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
+                }
             }
-
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
@@ -536,7 +594,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             showBottomDialog()
         }
     }
-
 
     private fun showBottomDialog() {
         val dialog = Dialog(this)
@@ -598,7 +655,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
         dialog.show()
     }
-
 
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -753,7 +809,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
     }
-
 
     override fun onDateSelected(date: String) {
         when (selectedDateField) {
@@ -1028,7 +1083,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
     }
 
-
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
@@ -1045,8 +1099,20 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         showEditDeletePopup(data, anchorView)
     }
 
-    fun isEditProcess(data: NoticeStaffData) {
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        Log.d("SearchResult", "Search result empty? $isEmpty for query '${binding.edtSearch.text}'")
+        if (isEmpty) {
+            binding.rcyNoticeBoard.visibility = View.GONE
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+        } else {
+            binding.rcyNoticeBoard.visibility = View.VISIBLE
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+        }
+    }
 
+    fun isEditProcess(data: NoticeStaffData) {
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
         saveDrawableToCache(R.drawable.add_image)?.let {
@@ -1121,5 +1187,4 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         appViewModel?.isNoticeBoardUpdate(isAccessToken!!, jsonObject, this)
 
     }
-
 }

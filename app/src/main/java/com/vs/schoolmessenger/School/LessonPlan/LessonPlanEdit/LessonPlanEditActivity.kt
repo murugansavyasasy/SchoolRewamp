@@ -51,7 +51,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)

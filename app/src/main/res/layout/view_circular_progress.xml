@@ -7,8 +7,8 @@
     <ProgressBar
         android:id="@+id/circularProgressbar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/sixty"
+        android:layout_height="@dimen/sixty"
         android:layout_centerHorizontal="true"
         android:indeterminate="false"
         android:max="100"
@@ -19,22 +19,22 @@
     <TextView
         android:id="@+id/lblPresentStatus"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/sixty"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="0%"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="12sp" />
+        android:textSize="@dimen/twele_sp" />
 
     <TextView
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/circularProgressbar"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/twele"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Sending Wait...."
+        android:text="@string/sending_wait"
         android:textColor="@color/black"
-        android:textSize="12sp" />
+        android:textSize="@dimen/twele_sp" />
 </RelativeLayout>

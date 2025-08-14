@@ -3,10 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-
-
-
+    android:background="@color/white"
+    android:fillViewport="true">
 
     <ImageView
         android:id="@+id/imgBack"
@@ -17,166 +15,300 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/lblSubjectName"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:text="Sathish"
-        android:visibility="gone"
-        android:textSize="@dimen/twenty_five_sp"
-        app:layout_constraintEnd_toStartOf="@+id/lblPostedDate"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@id/imgBack"
-        app:layout_constraintTop_toTopOf="@id/imgBack" />
-
-    <TextView
-        android:id="@+id/lblPostedDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/ten"
-        android:visibility="gone"
-        android:text="Posted on : Today"
-        android:textColor="@color/black"
-        android:textSize="@dimen/fifteen_sp"
-        app:layout_constraintBottom_toBottomOf="@id/lblSubjectName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/lblSubjectName" />
-
-    <TextView
-        android:id="@+id/lbltitle"
-        style="@style/CustomTextStylePoppinsBold"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/twenty"
-        android:layout_marginEnd="@dimen/twenty"
-        android:text="Mahatma Gandhi: The Peaceful Revolutionary Who Freed a Nation"
-        android:textSize="@dimen/twenty_sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/imgBack"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgBack" />
-
-    <TextView
-        android:id="@+id/lblDescription"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/twenty"
-        android:layout_marginEnd="@dimen/twenty"
-        android:text="Mahatma Gandhi, born Mohandas Karamchand Gandhi on October 2, 1869, was a prominent leader of the Indian independence movement..."
-        android:textSize="@dimen/fifteen_sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lbltitle" />
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <TextView
-        android:id="@+id/lblClickComplete"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/thirty"
-        android:layout_marginEnd="@dimen/ten"
-        android:text=""
-        android:textColor="@color/dark_blue_1"
-        android:textSize="@dimen/fifteen_sp"
-        app:layout_constraintEnd_toStartOf="@+id/thumbContainer"
-        app:layout_constraintTop_toBottomOf="@id/lblDescription" />
-
-    <FrameLayout
-        android:id="@+id/thumbContainer"
-        android:layout_width="@dimen/fifty"
-        android:layout_height="@dimen/fifty"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/fifteen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblDescription">
-
-        <ImageView
-            android:id="@+id/imgThumbsUp"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/thumbs_up"
-            android:visibility="visible" />
+            android:layout_height="wrap_content">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:lottie_autoPlay="false"
-            app:lottie_fileName="thumbs_up.json"
-            app:lottie_loop="true" />
-    </FrameLayout>
+            <TextView
+                android:id="@+id/lblSubjectName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:text="Sathish"
+                android:textSize="@dimen/twenty_five_sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/lblPostedDate"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/lblAttachments"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/fifteen"
-        android:text="Attachments"
-        android:textSize="@dimen/twenty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblClickComplete" />
+            <TextView
+                android:id="@+id/lblPostedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="Posted on : Today"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/lblSubjectName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/lblSubjectName" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcChildHW"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/fifteen"
-        android:layout_marginBottom="@dimen/ten"
-        app:layout_constraintTop_toBottomOf="@id/lblAttachments"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/lbltitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
+                android:text="Mahatma Gandhi: The Peaceful Revolutionary Who Freed a Nation"
+                android:textSize="@dimen/twenty_sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblSubjectName" />
 
-    <TextView
-        android:id="@+id/lblviewSubmissions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rect_shadow_light_primary"
-        android:gravity="center"
-        style="@style/CustomTextStylePoppinsBold"
-        android:padding="@dimen/eight"
-        android:layout_marginStart="@dimen/thirty"
-        android:layout_marginEnd="@dimen/thirty"
-        android:layout_marginBottom="@dimen/ten"
-        android:visibility="gone"
-        android:text="View Submissions"
-        android:textColor="@color/white"
-        android:layout_marginTop="@dimen/twenty"
-        android:textSize="@dimen/thirteen_sp"
-        app:layout_constraintTop_toBottomOf="@id/rcChildHW"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <LinearLayout
+                android:id="@+id/linearlayout_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lbltitle">
 
+                <LinearLayout
+                    android:id="@+id/createddate_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/calendar" />
 
-    <TextView
-        android:id="@+id/lblPostedBy"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/ten"
-        android:layout_marginBottom="@dimen/ten"
-        android:text="SathishKumar G"
-        android:textColor="@color/black"
-        android:visibility="gone"
-        android:textSize="@dimen/thirteen_sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcChildHW">
+                    <TextView
+                        android:id="@+id/created_date"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/five"
+                        android:text="05-07-2025"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp" />
+                </LinearLayout>
 
-    </TextView>
+                <LinearLayout
+                    android:id="@+id/subject_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/bookimage" />
 
+                    <TextView
+                        android:id="@+id/subject"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/five"
+                        android:text="TAMIL"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/category_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/copyimagesvg" />
+
+                    <TextView
+                        android:id="@+id/category"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/five"
+                        android:text="General"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblDescription"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
+                android:text="Mahatma Gandhi, born Mohandas Karamchand Gandhi on October 2, 1869, was a prominent leader of the Indian independence movement..."
+                android:textSize="@dimen/fifteen_sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearlayout_container" />
+
+            <TextView
+                android:id="@+id/lblClickComplete"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/thirty"
+                android:layout_marginEnd="@dimen/ten"
+                android:text=""
+                android:textColor="@color/dark_blue_1"
+                android:textSize="@dimen/fifteen_sp"
+                app:layout_constraintEnd_toStartOf="@+id/thumbContainer"
+                app:layout_constraintTop_toBottomOf="@id/lblDescription" />
+
+            <FrameLayout
+                android:id="@+id/thumbContainer"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblDescription">
+
+                <ImageView
+                    android:id="@+id/imgThumbsUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/thumbs_up"
+                    android:visibility="visible" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottieView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="false"
+                    app:lottie_fileName="thumbs_up.json"
+                    app:lottie_loop="true" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/attachments_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblClickComplete">
+
+                <ImageView
+                    android:id="@+id/imgAttachmentIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_attach_file" />
+
+                <TextView
+                    android:id="@+id/lblAttachments"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Attachments"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcChildHW"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginBottom="@dimen/ten"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/attachments_container" />
+
+            <View
+                android:id="@+id/viewline"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/light_grey4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rcChildHW" />
+
+            <TextView
+                android:id="@+id/lblviewSubmissions"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginEnd="@dimen/thirty"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/rect_shadow_light_primary"
+                android:gravity="center"
+                android:padding="@dimen/eight"
+                android:text="View Submissions"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewline" />
+
+            <FrameLayout
+                android:id="@+id/fragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblviewSubmissions" />
+
+            <TextView
+                android:id="@+id/lblPostedBy"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:text="SathishKumar G"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragmentContainer" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

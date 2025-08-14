@@ -26,11 +26,11 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
 
 
         if (Constant.isParentChoose) {
-            setUpGradientParent()
+            isToolBarPrimaryTheme()
             binding.rlaLblNotification.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
         }
         else {
-            setUpGradientSchool()
+            setupToolbarBlue()
             binding.rlaLblNotification.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
         }
 

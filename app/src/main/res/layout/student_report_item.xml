@@ -244,7 +244,6 @@
                         android:layout_weight="0.3"
                         style="@style/CustomTextStylePoppinsMedium1"
                         android:text="@string/Fathername"
-                        android:textColor="@color/black"
                         >
 
                     </TextView>
@@ -254,9 +253,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=" : "
-
                         style="@style/CustomTextStylePoppinsMedium1"
-                        android:textColor="@color/black"
                         >
 
                     </TextView>
@@ -269,7 +266,6 @@
                         android:layout_weight="0.22"
                         style="@style/CustomTextStylePoppinsMedium1"
                         android:text="Ganesan"
-                        android:textColor="@color/black"
                         >
 
                     </TextView>
@@ -293,7 +289,6 @@
                         android:layout_weight="0.3"
                         style="@style/CustomTextStylePoppinsMedium1"
                         android:text="@string/roll_no"
-                        android:textColor="@color/black"
                         >
 
                     </TextView>
@@ -304,7 +299,6 @@
                         android:text=" : "
                         android:layout_weight="0.48"
                         style="@style/CustomTextStylePoppinsMedium1"
-                        android:textColor="@color/black"
                         >
 
                     </TextView>
@@ -317,7 +311,6 @@
                         android:layout_weight="0.22"
                         style="@style/CustomTextStylePoppinsMedium1"
                         android:text="21"
-                        android:textColor="@color/black"
                         >
 
                     </TextView>
@@ -341,7 +334,6 @@
                         android:layout_weight="0.3"
                         style="@style/CustomTextStylePoppinsMedium1"
                         android:text="@string/class_teacher_2"
-                        android:textColor="@color/black"
                         >
 
                     </TextView>
@@ -352,7 +344,6 @@
                         android:text=" : "
                         android:layout_weight="0.48"
                         style="@style/CustomTextStylePoppinsMedium1"
-                        android:textColor="@color/black"
                       >
 
                     </TextView>
@@ -365,7 +356,6 @@
                         android:layout_weight="0.22"
                         style="@style/CustomTextStylePoppinsMedium1"
                         android:text="Abi"
-                        android:textColor="@color/black"
                         >
 
                     </TextView>

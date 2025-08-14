@@ -15,8 +15,7 @@ class SchoolNeeds : BaseActivity<SchoolNeedsBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        setUpGradientSchool()
+        setupToolbarBlue()
         binding.imgBack.setOnClickListener(this)
 
 

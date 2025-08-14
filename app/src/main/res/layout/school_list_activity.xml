@@ -151,7 +151,7 @@
             android:text="Select target :"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/ten"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
 
         <RadioGroup
@@ -165,32 +165,32 @@
                 android:id="@+id/radioAll"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:layout_height="wrap_content"
-                android:text="All"
+                android:text="@string/all"
                 android:layout_width="match_parent"
-                android:textColor="#007AFF"
+                android:textColor="@color/dark_blue_1"
                 android:layout_weight="1"
-                android:buttonTint="#007AFF"
+                android:buttonTint="@color/dark_blue_1"
                 android:textSize="@dimen/thirteen_sp" />
 
             <RadioButton
                 android:id="@+id/radioStaff"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:layout_height="wrap_content"
-                android:text="Staff"
-                android:textColor="#007AFF"
+                android:text="@string/staff"
+                android:textColor="@color/dark_blue_1"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:buttonTint="#007AFF" />
+                android:buttonTint="@color/dark_blue_1" />
 
             <RadioButton
                 android:id="@+id/radioStudent"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:layout_height="wrap_content"
-                android:text="Student"
+                android:text="@string/student"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:textColor="#007AFF"
-                android:buttonTint="#007AFF"/>
+                android:textColor="@color/dark_blue_1"
+                android:buttonTint="@color/dark_blue_1"/>
         </RadioGroup>
     </LinearLayout>
 

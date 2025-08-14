@@ -33,7 +33,7 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()

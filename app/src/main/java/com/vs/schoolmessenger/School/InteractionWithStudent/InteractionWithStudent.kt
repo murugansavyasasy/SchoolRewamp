@@ -37,7 +37,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
         binding.imgBack.setOnClickListener { onBackPressed() }
         isStaffDetails = SharedPreference.getStaffDetails(this)
         appViewModel = ViewModelProvider(this).get(App::class.java)

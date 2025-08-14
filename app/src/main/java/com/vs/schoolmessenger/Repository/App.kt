@@ -12,9 +12,11 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
+import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
@@ -232,6 +234,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSendAbsenteeSMS: LiveData<SendAbsenteeSMSResponse?>? = null
     var isChildAttendanceReport: LiveData<ChildAttendanceResponse?>? = null
     var isCertificateType: LiveData<CertificatesTypesResponse?>? = null
+    var isNotificationResponse: LiveData<NotificationResponse?>? = null
     var isSendCertificateRequest: LiveData<StatusMessageModel?>? = null
     var isCertificateRequestList: LiveData<CertificatesListResponse?>? = null
     var isTimeTabletList: LiveData<TimeTableResponse?>? = null
@@ -292,6 +295,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isAssignmentlist: LiveData<ParentAssignmentResponse?>? = null
     var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
     var isStudentStats: LiveData<getStudentStats?>? = null
+    var getassignmentmysubmissionlist: LiveData<MySubmittedAssignmentsResponse?>? = null
 
 
 
@@ -353,6 +357,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
         isChildAttendanceReport = apiParentRepositories.isChildAttendanceReportLiveData
         isCertificateType = apiParentRepositories.isCertificateTypesLiveData
+        isNotificationResponse = apiParentRepositories.isNotificationResponseLiveData
         isCertificateRequestList = apiParentRepositories.isCertificateRequestListLiveData
         isSendCertificateRequest = apiParentRepositories.isSendCertificateLiveData
         isTimeTabletList = apiParentRepositories.isTimeTableListLiveData
@@ -406,6 +411,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isAssignmentlist = apiParentRepositories.isAssignmentlistLiveData
         isSubmitAssignment = apiParentRepositories.isSubmitAssignmentLiveData
         isStudentStats = apiParentRepositories.isStudentStatsLiveData
+        getassignmentmysubmissionlist = apiParentRepositories.getassignmentmysubmissionlistLiveData
 
     }
 
@@ -940,6 +946,17 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isStudentStats(isToken: String) {
         apiParentRepositories.isStudentStats(isToken)
+    }
+    fun isNotificationList(isToken: String) {
+        apiParentRepositories.isNotifications(isToken)
+    }
+
+
+    fun getassignmentmysubmissionlist(
+        isToken: String,
+        id: String
+    ) {
+        apiParentRepositories.getassignmentmysubmissionlist(isToken,id)
     }
 }
 

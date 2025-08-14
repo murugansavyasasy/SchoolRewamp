@@ -20,6 +20,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -97,6 +98,7 @@ class AttachmentAdapter(
         if (!isLoading && holder is DataViewHolder) {
             holder.bind(filteredList[position], position, listener, this)
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -132,6 +134,7 @@ class AttachmentAdapter(
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val lblSeeMoreClick: TextView = itemView.findViewById(R.id.lblSeeMoreClick)
+
 
 
         @SuppressLint("ClickableViewAccessibility")
@@ -229,11 +232,11 @@ class AttachmentAdapter(
 
                 webView.loadUrl(item.file_path.firstOrNull()?.url ?: "")
             } else {
-                indicator.visibility = if (item.file_path.size > 1) View.VISIBLE else View.GONE
+//                indicator.visibility = if (item.file_path.size > 1) View.VISIBLE else View.GONE
                 webView.visibility = View.GONE
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.VISIBLE
-                rcyImgPDF.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rcyImgPDF.layoutManager = GridLayoutManager(context, 3)
 
                 rcyImgPDF.adapter = AttachmentFilePathAdapter(
                     item.file_path, item, object : OnChildItemClickListener {
@@ -252,6 +255,7 @@ class AttachmentAdapter(
                 indicator.attachToRecyclerView(rcyImgPDF)
             }
         }
+
 
         private fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
             val adapter = recyclerView.adapter ?: return

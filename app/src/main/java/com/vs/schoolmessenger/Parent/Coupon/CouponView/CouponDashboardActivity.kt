@@ -19,7 +19,7 @@ class CouponDashboardActivity : BaseActivity<FragmentCouponDashboardBinding>(), 
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        isToolBarPrimaryTheme()
         binding = FragmentCouponDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnHome.setOnClickListener(this)

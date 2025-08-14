@@ -28,7 +28,7 @@ class MycouponViewActivity : BaseActivity<MycouponViewBinding>(), View.OnClickLi
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        isToolBarPrimaryTheme()
         binding = MycouponViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.back.setOnClickListener(this)

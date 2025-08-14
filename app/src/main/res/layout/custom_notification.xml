@@ -2,16 +2,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:elevation="4dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp">
+    android:elevation="@dimen/four"
+    android:layout_marginStart="@dimen/five"
+    android:layout_marginEnd="@dimen/five">
 
     <TextView
         android:id="@+id/notification_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="@dimen/sixteen_sp"
         android:text="Coupon Features"
         style="@style/CustomTextStylePoppinsBold"
         android:maxLines="2"
@@ -22,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="@dimen/fourteen_sp"
         style="@style/CustomTextStylePoppinsMedium"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/eight"
         android:text="Coupon Features Has Been Enabled on your device kindly check and engoy the feature"
         android:maxLines="3"
         android:ellipsize="end" />
@@ -36,6 +36,6 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         android:visibility="gone"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="@dimen/eight" />
 
 </LinearLayout>

@@ -62,6 +62,8 @@ class AutoScrollAdapterWithDots(
 
         fun bind(item: ScrollItem, position: Int) {
             itemImage.setImageResource(item.imageRes)
+            itemImage.background = null
+            itemImage.setBackgroundColor(Color.TRANSPARENT)
             itemText.text = item.text
 
             try {

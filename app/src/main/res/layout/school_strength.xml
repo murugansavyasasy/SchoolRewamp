@@ -33,8 +33,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_height="wrap_content"
                 android:text="@string/choose_academic_year"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
                 style="@style/CustomTextStylePoppinsBold"></TextView>
 
             <RelativeLayout
@@ -104,9 +102,7 @@
                         android:id="@+id/staffCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Staff"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
+                        android:text="@string/staff"
                         style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/twele_sp"/>
                 </LinearLayout>
@@ -130,9 +126,7 @@
                         android:id="@+id/totalStudentCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Students"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
+                        android:text="@string/total_students"
                         style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/twele_sp"/>
                 </LinearLayout>
@@ -155,9 +149,7 @@
                         android:id="@+id/girlsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Girls"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
+                        android:text="@string/girls"
                         style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/twele_sp"/>
                 </LinearLayout>
@@ -180,9 +172,7 @@
                         android:id="@+id/boysCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Boys"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
+                        android:text="@string/boys"
                         style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/twele_sp"/>
                 </LinearLayout>
@@ -205,9 +195,7 @@
                         android:id="@+id/othersCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Others"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
+                        android:text="@string/others"
                         style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/twele_sp"/>
                 </LinearLayout>
@@ -226,10 +214,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaPieChartCount"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_marginBottom="@dimen/ten">
         </androidx.recyclerview.widget.RecyclerView>
 
 

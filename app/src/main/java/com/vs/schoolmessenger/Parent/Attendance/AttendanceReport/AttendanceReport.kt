@@ -30,8 +30,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
 
     override fun setupViews() {
         super.setupViews()
-//        setUpGradientParent()
-        setupToolbarBlue()
+        isToolBarPrimaryTheme()
 
         // Toolbar setup
         binding.imgBack.setOnClickListener(this)

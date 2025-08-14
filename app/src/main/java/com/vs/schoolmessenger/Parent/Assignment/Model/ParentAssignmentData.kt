@@ -1,6 +1,8 @@
 package com.vs.schoolmessenger.Parent.Assignment.Model
 
-data class AssignmentData(
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
+
+data class ParentAssignmentData(
     val id: String,
     val header_id: String,
     val title: String,

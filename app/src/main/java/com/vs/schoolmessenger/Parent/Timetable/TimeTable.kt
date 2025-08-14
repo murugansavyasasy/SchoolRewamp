@@ -33,6 +33,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
     private lateinit var recyclerViewSchedule: RecyclerView
     private lateinit var dayHeader: TextView
 
+
     private val allDays =
         listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
@@ -42,16 +43,16 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
-
+        isToolBarPrimaryTheme()
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
         recyclerViewDays = binding.recyclerViewDays
         dayHeader = binding.bottomsheettimetable.dayHeader
+        binding.tvClass.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        binding.tvName.text = isChildDetails?.name ?: ""
         recyclerViewSchedule = binding.bottomsheettimetable.recyclerViewSchedule
-
         setupRecyclerViewDays()
 
         val today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)

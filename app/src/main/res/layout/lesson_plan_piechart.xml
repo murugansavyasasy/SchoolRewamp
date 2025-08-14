@@ -75,8 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:text="Principles of  Management"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
+                      >
 
                     </TextView>
 
@@ -87,10 +86,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblSubject"
                         android:layout_marginStart="@dimen/ten"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="@dimen/four"
                         android:text="XII - A"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
+                      >
 
                     </TextView>
 
@@ -101,10 +99,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblSection"
                         android:layout_marginStart="@dimen/ten"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="@dimen/four"
                         android:text="Sathish"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
+                        >
 
                     </TextView>
 
@@ -114,8 +111,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblStaffName"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/four"
                         android:gravity="start"
                         android:text="Items completed : 0/0"
                         android:textColor="@color/black"

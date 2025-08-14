@@ -5,7 +5,7 @@
     android:id="@+id/header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/eight"
     android:orientation="vertical"
     android:clipChildren="false"
     android:clipToPadding="false">
@@ -20,9 +20,9 @@
 
         <ProgressBar
             android:id="@+id/isProgressBarImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_marginTop="@dimen/fourty"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,9 +32,9 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgProduct"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:padding="5dp"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/one_fifty"
+            android:padding="@dimen/five"
             android:scaleType="centerCrop"
             android:src="@drawable/imagebanner"
             app:shapeAppearanceOverlay="@style/RoundedSquare"
@@ -45,13 +45,13 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgOverlay"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="-20dp"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/minus_twenty"
             android:background="@drawable/bg_rect_white"
-            android:elevation="6dp"
-            android:padding="5dp"
+            android:elevation="@dimen/six"
+            android:padding="@dimen/five"
             android:src="@drawable/school_chimes"
             app:shapeAppearanceOverlay="@style/RoundedSquare"
             app:layout_constraintBottom_toBottomOf="@id/imgProduct"
@@ -60,12 +60,12 @@
 
         <ImageView
             android:id="@+id/imgUser"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/rounded_bg"
-            android:padding="5dp"
+            android:padding="@dimen/five"
             android:src="@drawable/group_user"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -75,14 +75,14 @@
 
         <TextView
             android:id="@+id/lblProductName"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:text="The Amazon Product"
             android:textStyle="normal"
-            android:textSize="12sp"
-            android:paddingTop="4dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="4dp"
+            android:textSize="@dimen/twele"
+            android:paddingTop="@dimen/four"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/four"
             app:layout_constraintTop_toBottomOf="@id/imgProduct"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/imgOverlay" />
@@ -96,10 +96,10 @@
         android:layout_height="wrap_content"
         android:text="20% Off"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@color/black"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="3dp" />
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/three" />
 
 
     <TextView
@@ -108,10 +108,9 @@
         android:layout_height="wrap_content"
         android:text="MGM Dizzee World"
         android:textStyle="normal"
-        android:textSize="16sp"
+        android:textSize="@dimen/sixteen_sp"
         android:textColor="@color/clr_grey_dark"
-
-        android:layout_marginStart="10dp" />
+        android:layout_marginStart="@dimen/ten" />
 
 
     <LinearLayout
@@ -119,8 +118,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="@dimen/three"
+        android:layout_marginTop="@dimen/six"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -131,12 +130,12 @@
             android:gravity="center"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_marginStart="5dp">
+            android:layout_marginStart="@dimen/five">
 
             <ImageView
                 android:id="@+id/location_imag2"
-                android:layout_width="13dp"
-                android:layout_height="13dp"
+                android:layout_width="@dimen/thirteen"
+                android:layout_height="@dimen/thirteen"
                 android:src="@drawable/clockloader" />
 
             <TextView
@@ -145,8 +144,8 @@
                 android:layout_height="wrap_content"
                 android:text="5 days"
                 android:textStyle="normal"
-                android:layout_marginStart="3dp"
-                android:textSize="11sp"
+                android:layout_marginStart="@dimen/three"
+                android:textSize="@dimen/eleven_sp"
                 android:textColor="@color/bpDarker_red" />
         </LinearLayout>
     </LinearLayout>

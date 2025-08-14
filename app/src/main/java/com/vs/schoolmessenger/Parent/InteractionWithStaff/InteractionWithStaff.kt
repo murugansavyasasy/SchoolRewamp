@@ -18,6 +18,8 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWi
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.R
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
@@ -44,7 +46,7 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         binding.imgBack.setOnClickListener(this)
 
         isChildDetails = SharedPreference.getChildDetails(this)
@@ -121,14 +123,21 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
 
-            R.id.rytSearch -> if (binding.rytsearch.isVisible) {
-                binding.rytsearch.visibility = View.GONE
-            } else {
-                binding.rytsearch.visibility = View.VISIBLE
+            R.id.rytSearch -> {
+                if (binding.rytsearch.isVisible) {
+                    binding.rytsearch.visibility = View.GONE
+                    binding.txtVideoMenu.setText("")
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
+                } else {
+                    binding.rytsearch.visibility = View.VISIBLE
+                    binding.txtVideoMenu.setText("")
+                    binding.txtVideoMenu.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                }
             }
         }
-
-
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {

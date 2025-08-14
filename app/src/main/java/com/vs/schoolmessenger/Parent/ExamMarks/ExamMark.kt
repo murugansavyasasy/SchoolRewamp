@@ -44,7 +44,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()

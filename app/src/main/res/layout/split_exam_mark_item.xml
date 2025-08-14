@@ -9,13 +9,12 @@
     <TextView
         android:id="@+id/lblSplitSubjectName"
         style="@style/CustomTextStylePoppinsMedium"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/five"
         android:layout_marginEnd="@dimen/five"
         android:layout_weight="0.8"
         android:text="@string/subject_name"
-        android:textColor="@color/black"
         android:textSize="@dimen/twele_sp">
 
     </TextView>
@@ -28,7 +27,6 @@
         android:layout_weight="0.2"
         android:gravity="end"
         android:text=""
-        android:textColor="@color/black"
         android:textSize="@dimen/twele_sp">
 
     </TextView>

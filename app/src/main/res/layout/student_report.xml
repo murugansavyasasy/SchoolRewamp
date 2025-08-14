@@ -184,7 +184,6 @@
                     android:gravity="center"
                     android:padding="@dimen/eight"
                     android:text="@string/nameasc"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/ten_sp">
                 </TextView>
 
@@ -196,11 +195,9 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
-                    android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
                     android:padding="@dimen/ten"
                     android:text="@string/namedsc"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/ten_sp" />
 
                 <TextView
@@ -216,7 +213,6 @@
                     android:padding="@dimen/ten"
                     android:text="@string/no_asc"
                     android:drawableEnd="@drawable/arrow_down2"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/ten_sp" />
 
 
@@ -233,7 +229,6 @@
                     android:padding="@dimen/ten"
                     android:drawableEnd="@drawable/arrow_up"
                     android:text="@string/no_dsc"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/ten_sp">
                 </TextView>
 

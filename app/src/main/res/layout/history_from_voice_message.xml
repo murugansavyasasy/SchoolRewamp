@@ -62,8 +62,8 @@
 
                     <ImageView
                         android:id="@+id/imgVoicePlay"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
                         android:layout_marginTop="@dimen/seven"
                         android:src="@drawable/video_play">
 
@@ -74,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/twenty_five"
                         android:layout_marginStart="@dimen/ten"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="@dimen/twele"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_toEndOf="@+id/imgVoicePlay" />
 
@@ -87,8 +87,7 @@
                         android:layout_marginStart="@dimen/ten"
                         android:layout_toEndOf="@+id/imgVoicePlay"
                         android:text="00:00"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
+                        >
 
                     </TextView>
 
@@ -115,8 +114,7 @@
                         android:layout_below="@+id/imgVoicePlay"
                         android:layout_toEndOf="@+id/lblSlash"
                         android:text="00:00"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
+                        >
 
                     </TextView>
 
@@ -139,7 +137,7 @@
                         android:layout_marginEnd="@dimen/sixteen"
                         android:text="10:56 AM"
                         android:textColor="@color/grey"
-                        android:textSize="12sp">
+                        android:textSize="@dimen/twele_sp">
                     </TextView>
 
                     <TextView
@@ -151,7 +149,7 @@
                         android:layout_toStartOf="@id/lblTime"
                         android:text="01 Apr 2024"
                         android:textColor="@color/black"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/twele_sp"
                         android:visibility="visible">
                     </TextView>
                 </RelativeLayout>
@@ -187,10 +185,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_medium"
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:text="@string/select"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </RelativeLayout>

@@ -18,8 +18,7 @@ class DriverBusLocationUpdate : BaseActivity<DriverLocationUpdateScreenBinding>(
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        setUpGradientSchool()
+        setupToolbarBlue()
         binding.imgBack.setOnClickListener(this)
 
 

@@ -45,7 +45,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
@@ -54,25 +53,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                 />
         </LinearLayout>
 
 
         <RelativeLayout
             android:id="@+id/rytSearch"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/thirty_five"
+            android:layout_height="wrap_content"
             android:layout_alignTop="@id/imgBack"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="@dimen/twenty"
             android:visibility="visible">
 
 
             <ImageView
                 android:id="@+id/imgSearch"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_search" />
 
@@ -91,18 +89,17 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp">
+            android:paddingBottom="@dimen/sixteen">
 
             <TextView
                 android:id="@+id/headerview"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Ongoing Events"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="@string/ongoing_events"
+                android:textSize="@dimen/eighteen_sp" />
 
 
             <RelativeLayout
@@ -110,9 +107,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thirty_five"
                 android:layout_below="@id/headerview"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="@dimen/fifteen_sp"
                 android:background="@drawable/rect_grey"
                 android:visibility="gone">
 
@@ -145,9 +142,9 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:layout_below="@+id/rytSearch1"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/ten"
                 android:scrollbars="none" />
 
 
@@ -157,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rcyongoingevent"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/twenty"
                 android:src="@drawable/dotindicator" />
 
 
@@ -167,11 +164,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dotindicator"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Event Categories"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="@string/event_categories"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/eighteen_sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -180,9 +177,9 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:layout_below="@+id/category_headerview"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/ten"
                 android:scrollbars="none" />
 
 
@@ -193,11 +190,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rcycategory_event"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Upcoming Events"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="@string/upcoming_events"
+                android:textSize="@dimen/eighteen_sp" />
 
             <LinearLayout
                 android:id="@+id/lytNoDataFound"
@@ -220,10 +216,10 @@
                     android:id="@+id/txtNoDataFound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="No data found"
+                    android:layout_marginTop="@dimen/eight"
+                    android:text="@string/no_data_found"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/fourteen_sp"
                     android:textStyle="bold"/>
             </LinearLayout>
 
@@ -234,9 +230,9 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:layout_below="@+id/upcomingevent_headerview"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/ten"
                 android:scrollbars="none" />
 
 
@@ -247,11 +243,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rcyupcomingevent"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Completed Events"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="@string/completed_events"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/eighteen_sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -260,9 +256,9 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:layout_below="@+id/completedevent_headerview"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/ten"
                 android:scrollbars="none" />
 
 

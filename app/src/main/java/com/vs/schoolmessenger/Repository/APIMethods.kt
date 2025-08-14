@@ -15,6 +15,7 @@ object APIMethods {
     const val isGlobalVariables = "app/api/global/global-variables"
     const val isGetDashBoard = "dashboard/api/dashboard/get-dashboard-details"
     const val isGetAds = "dashboard/api/dashboard/get-ads"
+    const val isNotifications = "dashboard/api/dashboard/notifications"
     const val getStaffList = "comm/api/recipient/get-staff-list"
     const val getSubjectList = "comm/api/recipient/get-subject-list"
     const val getStandard = "comm/api/recipient/get-standards"
@@ -128,6 +129,7 @@ object APIMethods {
     const val isAssignmentlist = "comm/api/assignment/list"
     const val isSubmitAssignment = "comm/api/assignment/submit-assignment"
     const val isstudentstats = "stud-attd/api/attendance/student-stats"
+    const val isAssignmentMySubmission = "comm/api/assignment/my-submissions"
 
 
 }

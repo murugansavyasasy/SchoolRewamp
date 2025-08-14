@@ -33,6 +33,7 @@
 
 
     <color name="azure_radiance">#0079fd</color>
+    <color name="dark_blue_backgrund">#09199d</color>
     <color name="AthensGray">#f2f2f7</color>
     <color name="athens_gray">#efeff0</color>
     <color name="emerald">#57cd76</color>
@@ -109,8 +110,6 @@
 
 
     <color name="lightgreen1">#02C5BF</color>
-
-
     <color name="sky_blue_light">#d4e7eb</color>
     <color name="sky_blue0">#4eb7f1</color>
     <color name="system_blue1">#42CFFC</color>
@@ -247,8 +246,16 @@
     <color name="lightyellow">#fcf1ce</color>
     <color name="light_gray4">#f4f5fa</color>
 
-
-
+    <color name="light_gray_3">#666666</color>
+    <color name="white_smoke">#F9F9F9</color>
+    <color name="yellow_color">#f6e7ad</color>
+    <color name="light_green_5">#4CAF50</color>
+    <color name="dark_blue_2">#2196F3</color>
+    <color name="light_gray_6">#9E9E9E</color>
+    <color name="light_gray_7">#847c81</color>
+    <color name="light_gray_8">#80000000</color>
+    <color name="light_white_4">#EAE6E4</color>
+    <color name="amber_yellow">#FFC107</color>
 
 
 </resources>

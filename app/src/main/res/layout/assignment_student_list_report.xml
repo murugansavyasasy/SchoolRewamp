@@ -5,117 +5,101 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true">
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
+
 
     <LinearLayout
-        android:id="@+id/linearlayoutheader"
+        android:id="@+id/bottom_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingTop="@dimen/eight"
-        android:paddingBottom="@dimen/eight">
+        android:padding="@dimen/eight"
+        android:visibility="visible">
 
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/headerstudentsubmission"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="🧑‍🎓Student Submissions"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/icon_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/linearfooter"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/submittedvalue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="@dimen/eighteen_sp"
-                android:layout_gravity="center"
-                android:textColor="@color/green"
-                style="@style/CustomTextStylePoppinsBold" />
+            android:src="@drawable/ic_search" />
 
-            <TextView
-                android:id="@+id/submittedlabel"
-                android:layout_width="wrap_content"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_height="wrap_content"
-                android:text="@string/submitted"
-                android:textSize="@dimen/eighteen_sp"
-                android:layout_gravity="center"
-                android:textColor="@color/green"
-                 />
-        </LinearLayout>
+    </LinearLayout>
 
 
-        <View
-            android:layout_width="@dimen/one_fifty"
-            android:layout_height="@dimen/zero"
-            android:id="@+id/viewline"/>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearfooter1"
-        android:orientation="vertical">
+        android:layout_below="@+id/bottom_linearlayout"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/black"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/iconBlue"
+        app:tabTextColor="@color/black" />
 
 
-        <TextView
-            android:id="@+id/pendinglabelvalue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_gravity="center"
-            android:textSize="@dimen/eighteen_sp"
-            android:textColor="@color/red"
-            />
+    <RelativeLayout
+        android:id="@+id/rytSearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@id/tabLayout"
+        android:layout_margin="@dimen/ten"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
 
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search" />
 
-        <TextView
-            android:id="@+id/pendinglabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pending"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textSize="@dimen/eighteen_sp"
-            android:textColor="@color/red"
-           android:layout_gravity="center"
-            />
-    </LinearLayout>
-
-
-
-    </LinearLayout>
-
-
-
+        <EditText
+            android:id="@+id/txtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcystudentlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearlayoutheader"
+        android:layout_below="@id/rytSearch"
         android:layout_marginTop="@dimen/five"
-        android:visibility="visible">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-
+        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/nomessage"
         android:layout_width="@dimen/two_fifty"
         android:layout_height="@dimen/two_fifty"
+        android:layout_below="@+id/rytSearch"
         android:layout_centerInParent="true"
-        android:layout_gravity="center"
         android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/nomessages"
-        android:textColor="@color/black"
-        android:textSize="@dimen/eighteen_sp"
         android:visibility="gone" />
 
     <TextView
@@ -123,14 +107,12 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
+        android:layout_below="@id/nomessage"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/twenty"
+        android:gravity="center"
         android:text="@string/no_list_found"
         android:textSize="@dimen/eighteen_sp"
-        android:layout_below="@+id/nomessage"
-        android:gravity="center"
         android:visibility="gone" />
-
 
 </RelativeLayout>

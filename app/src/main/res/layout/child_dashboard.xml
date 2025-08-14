@@ -9,7 +9,8 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/customBottomNav" />
+        android:layout_above="@+id/customBottomNav"
+        android:layout_marginBottom="0dp" />
 
     <LinearLayout
         android:id="@+id/customBottomNav"
@@ -40,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lblHome"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
 
@@ -64,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lblHelp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
 
@@ -87,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/permission_settings"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
 
@@ -112,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lblProfile"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
     </LinearLayout>

@@ -28,7 +28,7 @@ class NoticeBoardViewScreen : BaseActivity<HomeworkViewImageDocumentBinding>() {
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
 
 //        try {
 //            filePath = intent.getStringExtra(Constant.SelectedDocumentPath) ?: ""

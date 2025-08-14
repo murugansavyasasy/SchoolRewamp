@@ -6,20 +6,7 @@
     android:background="@color/PrimaryColor"
     android:fitsSystemWindows="true">
 
-<!--    <RelativeLayout-->
-<!--        android:layout_margin="@dimen/ten"-->
-<!--        android:layout_width="@dimen/fifty"-->
-<!--        android:layout_height="@dimen/fifty"-->
-<!--        android:background="@drawable/bg_circle_white"-->
-<!--        android:orientation="vertical">-->
 
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:src="@drawable/ic_arrow_back_black" />-->
-
-<!--    </RelativeLayout>-->
 
     <LinearLayout
         android:layout_marginTop="@dimen/eighty"
@@ -33,11 +20,11 @@
             android:layout_marginTop="@dimen/twenty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="start"
             android:textSize="@dimen/twenty_sp"
             android:text="@string/welcome_aboard"
             style="@style/CustomTextStylePoppinsBold"
-            android:textStyle="bold">
+           >
 
         </TextView>
 
@@ -47,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
-            android:gravity="left"
+            android:gravity="start"
             android:textSize="@dimen/thirteen_sp"
             android:text="@string/seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times"
             style="@style/CustomTextStylePoppinsRegular">
@@ -79,12 +66,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/twenty_five"
-                    android:gravity="left"
-                    android:textStyle="bold"
+                    android:gravity="start"
                     android:text="@string/let_s_get_started"
                     style="@style/CustomTextStylePoppinsBold"
                     android:textSize="@dimen/eighteen_sp"
-                    android:textColor="@color/black"
                     />
 
                 <TextView
@@ -96,9 +81,8 @@
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/ten"
                     android:text="@string/lblMobileNumber"
-                    android:textColor="@color/black"
                     style="@style/CustomTextStylePoppinsRegular"
-                    android:textSize="@dimen/thirteen_sp" />
+                    />
 
                 <RelativeLayout
                     android:id="@+id/rytMobile"
@@ -138,7 +122,6 @@
                         android:inputType="number"
                         android:maxLength="10"
                         android:paddingHorizontal="@dimen/ten"
-                        android:textColor="@color/black"
                         style="@style/CustomTextStylePoppinsRegular"
                         android:textColorHint="@color/light_gray_"
                         android:textSize="@dimen/thirteen_sp" />
@@ -162,7 +145,7 @@
                     android:text="@string/next"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp"
-                    android:textStyle="bold" />
+                    />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

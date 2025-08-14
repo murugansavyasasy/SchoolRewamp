@@ -459,6 +459,8 @@ dependencies {
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
     implementation("androidx.lifecycle:lifecycle-process:2.7.0")
 
+    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
+
 
 
 

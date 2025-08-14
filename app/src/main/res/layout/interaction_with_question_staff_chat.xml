@@ -15,9 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/linear_layout"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
         android:background="@drawable/circle_answer_background"
           android:orientation="horizontal">
 
@@ -28,7 +28,7 @@
             android:text="How are you doing ?"
             android:textColor="@color/black"
 
-            android:padding="10dp"/>
+            android:padding="@dimen/ten"/>
 
 
         <ImageView
@@ -51,10 +51,10 @@
         android:textColor="@color/black"
         android:layout_below="@+id/linear_layout"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:padding="10dp"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:padding="@dimen/ten"
         android:background="@drawable/circle_background"/>
 
 

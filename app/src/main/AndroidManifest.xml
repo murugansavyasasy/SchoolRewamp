@@ -124,6 +124,13 @@
             android:name=".Parent.QuizExam.QuizExam"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".Parent.Assignment.MyAssignmentSubmission.Mysubmission"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+
         <activity
             android:name=".Parent.Attachment.Attachment"
             android:theme="@style/AppTheme"
@@ -152,6 +159,9 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".Parent.RequestLeave.OutPass"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
+        <activity android:name=".Parent.CertificateRequest.CertificateViewActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity

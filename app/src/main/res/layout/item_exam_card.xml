@@ -25,9 +25,9 @@
             android:layout_marginTop="@dimen/fifteen"
             android:gravity="center"
             android:text="Half Yearly Exam"
-            android:textColor="@color/black"
+            style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/seventeen_sp"
-           style="@style/CustomTextStylePoppinsBold"/>
+           />
 
         <Button
             android:id="@+id/btnViewMarks"
@@ -37,7 +37,7 @@
            style="@style/CustomTextStylePoppinsBold"
             android:textColor="@color/white"
             android:background="@drawable/bg_orange"
-            android:textSize="12sp"
+            android:textSize="@dimen/twele_sp"
             android:gravity="center"
             android:layout_marginTop="@dimen/twenty_five"/>
 
@@ -49,7 +49,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:textColor="@color/white"
             android:background="@drawable/bg_orange"
-            android:textSize="12sp"
+            android:textSize="@dimen/twele_sp"
             android:gravity="center"
             android:layout_marginTop="@dimen/eight"/>
     </LinearLayout>

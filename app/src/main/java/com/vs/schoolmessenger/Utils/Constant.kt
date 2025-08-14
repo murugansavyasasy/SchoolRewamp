@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
@@ -195,6 +196,7 @@ object Constant {
 
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
     var isLeaveData: LeaveData? = null
+    var isCertificateData: CertificateListData? = null
 
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null
@@ -1110,13 +1112,13 @@ object Constant {
     //Convert dd-MM-YYYY to dd MMM YYYY (12-02-2025 to 12 Feb 2025)
     fun convertToReadableDate(inputDateStr: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(inputDateStr)
             outputFormat.format(date!!)
         } catch (e: Exception) {
             e.printStackTrace()
-            inputDateStr // fallback: return input if format fails
+            inputDateStr
         }
     }
 

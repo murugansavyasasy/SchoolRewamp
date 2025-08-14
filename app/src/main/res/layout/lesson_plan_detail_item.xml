@@ -1,14 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="@dimen/ten"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/namelabel"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/one_fifty"
         android:layout_height="wrap_content"
         android:text="Name"
         android:textColor="@color/dark_blue_1"
@@ -19,10 +19,9 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="@dimen/thirty_five"
+        android:layout_marginEnd="@dimen/four"
         android:text=":"
-        android:textColor="@color/black"
         android:textSize="@dimen/fourteen_sp" />
 
     <TextView
@@ -30,8 +29,7 @@
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/eight"
         android:text="Value"
-        android:textColor="@color/black"
         android:textSize="@dimen/fourteen_sp" />
 </LinearLayout>

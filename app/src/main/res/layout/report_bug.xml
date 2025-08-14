@@ -95,7 +95,7 @@
             android:background="@drawable/bg_edittext"
             android:gravity="top"
             android:hint="@string/lblEntertheBug"
-            android:padding="10dp"
+            android:padding="@dimen/ten"
             android:textSize="@dimen/thirteen_sp">
 
         </EditText>

@@ -39,11 +39,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/happy_to_have_you_with_us"
-                android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold">
+                >
 
             </TextView>
 
@@ -53,10 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/your_password_has_already_been_created_use_your_credentials_to_log_in_and_access_schoolchimes_for_seamless_school_communication_and_management"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+               >
 
             </TextView>
 
@@ -89,7 +87,6 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:layout_marginEnd="@dimen/ten"
                         android:text="@string/lblPassword"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp" />
 
 

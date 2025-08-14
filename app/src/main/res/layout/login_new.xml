@@ -6,20 +6,6 @@
     android:background="@color/PrimaryColor"
     android:fitsSystemWindows="true">
 
-<!--    <RelativeLayout-->
-<!--        android:layout_margin="@dimen/ten"-->
-<!--        android:layout_width="@dimen/fifty"-->
-<!--        android:layout_height="@dimen/fifty"-->
-<!--        android:background="@drawable/bg_circle_white"-->
-<!--        android:orientation="vertical">-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:src="@drawable/ic_arrow_back_black" />-->
-
-<!--    </RelativeLayout>-->
 
     <ScrollView
         android:layout_marginTop="@dimen/eighty"
@@ -40,11 +26,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/welcome_back"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold">
+                >
 
             </TextView>
 
@@ -53,10 +39,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:gravity="left"
+                android:gravity="start"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:text="@string/seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times"
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -142,7 +127,6 @@
                         android:layout_below="@+id/rytMobile"
                         android:layout_marginTop="@dimen/ten"
                         android:text="@string/lblPassword"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp" />
 
 
@@ -232,7 +216,7 @@
                             android:textSize="@dimen/thirteen_sp"
                             android:layout_centerVertical="true"
                             android:textColor="@color/black"
-                            android:text="Use Fingerprint or Mobile Number to login"/>
+                            android:text="@string/use_fingerprint_or_mobile_number_to_login"/>
 
                     </RelativeLayout>
 

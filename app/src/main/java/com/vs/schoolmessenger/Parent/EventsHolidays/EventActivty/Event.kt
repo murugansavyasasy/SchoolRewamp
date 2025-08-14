@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,8 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClic
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.R
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -27,7 +30,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     override fun getViewBinding(): EventRewampBinding {
         return EventRewampBinding.inflate(layoutInflater)
     }
-
 
     lateinit var mAdapter: EventAdapter
     lateinit var categoryadapter: EventCategoryAdapter
@@ -47,7 +49,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        isToolBarPrimaryTheme()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 
@@ -74,7 +76,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 if (::mAdapter.isInitialized) mAdapter.filter.filter(s)
                 if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(s)
                 if (::eventupcomingadapter.isInitialized) eventupcomingadapter.filter.filter(s)
-
                 binding.root.postDelayed({
                     val isAllEmpty = mAdapter.itemCount == 0 &&
                             eventupcomingadapter.itemCount == 0 &&
@@ -82,19 +83,42 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
                     binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                    binding.rcyongoingevent.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.rcyupcomingevent.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.rcycompletedevent.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    if(mAdapter.itemCount > 0){
+                        binding.rcyongoingevent.visibility=View.VISIBLE
+                        binding.headerview.visibility=View.VISIBLE
+                    }
+                    else{
+                        binding.rcyongoingevent.visibility=View.GONE
+                        binding.headerview.visibility=View.GONE
+                    }
+
+                    if(eventupcomingadapter.itemCount > 0){
+                        binding.rcyupcomingevent.visibility=View.VISIBLE
+                        binding.upcomingeventHeaderview.visibility=View.VISIBLE
+                    }
+                    else{
+                        binding.rcyupcomingevent.visibility=View.GONE
+                        binding.upcomingeventHeaderview.visibility=View.GONE
+                    }
+
+                    if(eventcompletedadapter.itemCount > 0){
+                        binding.rcycompletedevent.visibility=View.VISIBLE
+                        binding.completedeventHeaderview.visibility=View.VISIBLE
+                    }
+                    else{
+                        binding.rcycompletedevent.visibility=View.GONE
+                        binding.completedeventHeaderview.visibility=View.GONE
+                    }
+
+//                    binding.rcyongoingevent.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+//                    binding.rcyupcomingevent.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
+//                    binding.rcycompletedevent.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
                 }, 100)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
         })
-
-
-
-
 
 
         appViewModel?.IsGetEventReport?.observe(this) { response ->
@@ -197,8 +221,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
         categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewDisable)
-        binding.rcycategoryEvent.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcycategoryEvent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcycategoryEvent.isNestedScrollingEnabled = false
         binding.rcycategoryEvent.adapter = categoryadapter
 
@@ -216,7 +239,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcycompletedevent.isNestedScrollingEnabled = false
         binding.rcycompletedevent.adapter = eventcompletedadapter
-
 
 
         appViewModel!!.IsGetEventReport(isAccessToken!!, this)
@@ -248,10 +270,20 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> onBackPressed()
-            R.id.rytSearch -> if (binding.rytSearch1.isVisible) {
-                binding.rytSearch1.visibility = View.GONE
-            } else {
-                binding.rytSearch1.visibility = View.VISIBLE
+
+            R.id.rytSearch -> {
+                if (binding.rytSearch1.isVisible) {
+                    binding.rytSearch1.visibility = View.GONE
+                    binding.txtVideoMenu.setText("")
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
+                } else {
+                    binding.rytSearch1.visibility = View.VISIBLE
+                    binding.txtVideoMenu.setText("")
+                    binding.txtVideoMenu.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                }
             }
         }
     }

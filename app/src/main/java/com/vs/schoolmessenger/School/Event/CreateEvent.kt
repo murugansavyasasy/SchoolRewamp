@@ -57,6 +57,8 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.RestClient
@@ -128,8 +130,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-    lateinit var schooleventAdapter: SchoolEventAdapter
 
+    lateinit var schooleventAdapter: SchoolEventAdapter
     lateinit var eventupcomingadapter: SchoolEventUpcomingAdapter
     lateinit var eventcompletedadapter: SchoolEventCompletedAdapter
 
@@ -141,7 +143,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -320,25 +322,50 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
         }
 
-
-        binding.txtSearch.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("FILTERING", "Filtering for: $s")
-                if (::schooleventAdapter.isInitialized) {
-                    schooleventAdapter.filter.filter(s)
-                }
-                if (::eventupcomingadapter.isInitialized) {
-                    eventupcomingadapter.filter.filter(s)
-                }
-                if (::eventcompletedadapter.isInitialized) {
-                    eventcompletedadapter.filter.filter(s)
-                }
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                if (::schooleventAdapter.isInitialized) schooleventAdapter.filter.filter(s)
+                if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(s)
+                if (::eventupcomingadapter.isInitialized) eventupcomingadapter.filter.filter(s)
+                val isAllEmpty = schooleventAdapter.itemCount == 0 &&
+                        eventupcomingadapter.itemCount == 0 &&
+                        eventcompletedadapter.itemCount == 0
+
+                    binding.noDataImage.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+                    binding.noDataText.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+
+                if (schooleventAdapter.itemCount > 0) {
+                    binding.rcyongoingevent.visibility = View.VISIBLE
+                    binding.headerview.visibility = View.VISIBLE
+                } else {
+                    binding.rcyongoingevent.visibility = View.GONE
+                    binding.headerview.visibility = View.GONE
+                }
+
+                if (eventupcomingadapter.itemCount > 0) {
+                    binding.rcyupcomingevent.visibility = View.VISIBLE
+                    binding.upcomingeventHeaderview.visibility = View.VISIBLE
+                } else {
+                    binding.rcyupcomingevent.visibility = View.GONE
+                    binding.upcomingeventHeaderview.visibility = View.GONE
+                }
+
+                if (eventcompletedadapter.itemCount > 0) {
+                    binding.rcycompletedevent.visibility = View.VISIBLE
+                    binding.completedeventHeaderview.visibility = View.VISIBLE
+                } else {
+                    binding.rcycompletedevent.visibility = View.GONE
+                    binding.completedeventHeaderview.visibility = View.GONE
+                }
+            }
+        })
 
         schooleventAdapter = SchoolEventAdapter(
             mutableListOf(),
@@ -449,9 +476,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     private fun isloadeventData(newData: List<SchoolEventItem>?) {
         val list = newData?.toMutableList() ?: mutableListOf()
         if (::schooleventAdapter.isInitialized) {
-            schooleventAdapter.updateData(list)
+            schooleventAdapter.updateList(list)
         } else {
-            schooleventAdapter = SchoolEventAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
+            schooleventAdapter = SchoolEventAdapter(list, this, this, Constant.isShimmerViewDisable)
             binding.rcyongoingevent.adapter = schooleventAdapter
         }
     }
@@ -470,19 +497,29 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     }
 
 
-    override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
-        when (adapterTag) {
-            "ONGOING" -> binding.rcyongoingevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
-
-            "COMPLETED" -> binding.rcycompletedevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
-
-            "UPCOMING" -> binding.rcyupcomingevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
+    override fun onSearchResultEmpty(type: String, isEmpty: Boolean) {
+        when (type) {
+            "ONGOING" -> {
+                binding.rcyongoingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.headerview.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            }
+            "UPCOMING" -> {
+                binding.rcyupcomingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.upcomingeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            }
+            "COMPLETED" -> {
+                binding.rcycompletedevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.completedeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            }
         }
-    }
+        val isAllEmpty =
+            schooleventAdapter.itemCount == 0 &&
+                    eventupcomingadapter.itemCount == 0 &&
+                    eventcompletedadapter.itemCount == 0
 
+        binding.noDataImage.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+        binding.noDataText.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+    }
 
 
     fun showConfirmationDialog(
@@ -743,11 +780,21 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 }
             }
 
-            R.id.imgSearchToolBar -> if (binding.rytSearch323.isVisible) {
-                binding.rytSearch323.visibility = View.GONE
-            } else {
-                binding.rytSearch323.visibility = View.VISIBLE
+            R.id.imgSearchToolBar -> {
+                if (binding.rytSearch323.visibility == View.VISIBLE) {
+                    binding.rytSearch323.visibility = View.GONE
+                    binding.edtSearch.setText("")
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+                } else {
+                    binding.rytSearch323.visibility = View.VISIBLE
+                    binding.edtSearch.setText("")
+                    binding.edtSearch.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
+                }
             }
+
         }
     }
 
@@ -836,7 +883,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         }
         dialog.show()
     }
-
 
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)

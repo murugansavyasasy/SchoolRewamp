@@ -14,7 +14,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
 
 
     }

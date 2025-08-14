@@ -87,9 +87,8 @@
                 android:layout_alignParentStart="true"
                 android:text="01 Apr 2024"
                 android:layout_marginStart="@dimen/five"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textStyle="bold"
-                android:fontFamily="@font/poppins_regular"
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
@@ -101,7 +100,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:text="10:56 AM"
                 android:textColor="@color/grey"
-                android:textSize="12sp">
+                android:textSize="@dimen/twele_sp">
             </TextView>
 
             <RelativeLayout
