@@ -139,10 +139,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     private var isStaffDetails: StaffDetails? = null
 
 
-    private lateinit var rcyAssignmentReport: RecyclerView
-    private lateinit var txtSearchMenu: EditText
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
