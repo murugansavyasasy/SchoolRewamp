@@ -13,7 +13,6 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearRes
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
-import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
@@ -41,6 +40,9 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithS
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.StaffSlotResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
@@ -86,6 +88,9 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationR
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
@@ -298,6 +303,17 @@ class App(application: Application) : AndroidViewModel(application) {
     var isStudentStats: LiveData<getStudentStats?>? = null
     var getassignmentmysubmissionlist: LiveData<MySubmittedAssignmentsResponse?>? = null
     var islsrwskillsreport: LiveData<lsrwskillresponse?>? = null
+    var isPtmSlotCreate: LiveData<StatusMessageModel?>? = null
+    var isPtmSlotResponse: LiveData<SlotResponse?>? = null
+    var isPtmSlotCancelReOpen: LiveData<StatusMessageModel?>? = null
+    var isPtmSlotCancelClose: LiveData<StatusMessageModel?>? = null
+    var isDateWiseSlot: LiveData<SlotBookingResponse?>? = null
+    var isSlotBookingForStudent: LiveData<StatusMessageModel?>? = null
+    var isStaffSlotResponse: LiveData<StaffSlotResponse?>? = null
+    var isAvailableSlotsResponse: LiveData<AvailableSlotsResponse?>? = null
+    var isSlotCancelByStudent: LiveData<StatusMessageModel?>? = null
+    var isSlotValidation: LiveData<SlotValidationResponse?>? = null
+    var isSlotDetailsHistory: LiveData<SlotDetailsResponse?>? = null
 
 
     fun init() {
@@ -413,6 +429,19 @@ class App(application: Application) : AndroidViewModel(application) {
         isStudentStats = apiParentRepositories.isStudentStatsLiveData
         getassignmentmysubmissionlist = apiParentRepositories.getassignmentmysubmissionlistLiveData
         islsrwskillsreport = apiSchoolRepositories.islsrwskillsreportLiveData
+
+        isPtmSlotCreate = apiSchoolRepositories.isPtmSlotCreateLiveData
+        isPtmSlotResponse = apiSchoolRepositories.isPtmSlotResponseLiveData
+        isPtmSlotCancelReOpen = apiSchoolRepositories.isPtmSlotCancelReOpenLiveData
+        isPtmSlotCancelClose = apiSchoolRepositories.isPtmSlotCancelCloseLiveData
+        isDateWiseSlot = apiSchoolRepositories.isDateWiseSlotLiveData
+        isSlotBookingForStudent = apiParentRepositories.isSlotBookingStudentLiveData
+        isStaffSlotResponse = apiParentRepositories.isStaffSlotResponseLiveData
+        isAvailableSlotsResponse = apiParentRepositories.isAvailableSlotsResponseLiveData
+        isSlotCancelByStudent = apiParentRepositories.isSlotCancelByStudentLiveData
+        isSlotValidation = apiSchoolRepositories.isSlotValidationLiveData
+        isSlotDetailsHistory = apiParentRepositories.isSlotDetailsHistoryLiveData
+
 
     }
 
@@ -930,9 +959,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getassignmentlist(
-        isToken: String,
-        id: String,
-        type: String
+        isToken: String, id: String, type: String
     ) {
         apiSchoolRepositories.getassignmentlist(isToken, id, type)
     }
@@ -951,9 +978,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun isSubmitAssignment(
-        isToken: String, request: AssignmentModelRequest
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
-        apiParentRepositories.isSubmitAssignment(isToken, request)
+        apiParentRepositories.isSubmitAssignment(isToken, jsonObject, activity)
     }
 
     fun isStudentStats(isToken: String) {
@@ -966,10 +993,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun getassignmentmysubmissionlist(
-        isToken: String,
-        id: String
+        isToken: String, id: String
     ) {
         apiParentRepositories.getassignmentmysubmissionlist(isToken, id)
+
     }
 
 
@@ -977,7 +1004,86 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String
     ) {
         apiSchoolRepositories.islsrwskillsreport(isToken)
+
     }
+
+
+    // PTM
+
+
+    fun isSlotCreating(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isPtmSlotCreating(isToken, jsonObject)
+    }
+
+    fun isSlotForStaff(
+        isToken: String, isEventDate: String
+    ) {
+        apiSchoolRepositories.isPtmSlotForStaff(isToken, isEventDate)
+    }
+
+    fun isSlotCancelReOpen(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isSlotCancelReOpen(isToken, jsonObject)
+    }
+
+    fun isSlotCancelClose(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isSlotCancelAndClose(isToken, jsonObject)
+    }
+
+    fun isSlotDateWiseSlots(
+        isToken: String, isEventDate: String
+    ) {
+        apiSchoolRepositories.isDatewiseBookedSlots(isToken, isEventDate)
+    }
+
+    fun isSlotBookingStudent(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiParentRepositories.isSlotBookingStudent(isToken, jsonObject)
+    }
+
+
+    fun isSlotAvailableForStudent(
+        isToken: String,
+        isEventDate: String,
+        isSubjectId: String,
+        isClassTeacherId: String,
+    ) {
+        apiParentRepositories.isSlotAvailableForStudent(
+            isToken, isEventDate, isSubjectId, isClassTeacherId
+        )
+    }
+
+    fun isSlotAvailableForStudent(
+        isToken: String
+    ) {
+        apiParentRepositories.isAvailableSlotsCountForStudent(isToken)
+    }
+
+    fun isSlotAvailableForStudent(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiParentRepositories.isASlotCancelByStudent(isToken, jsonObject)
+    }
+
+    fun isSlotValidationForStaff(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isSlotValidationForStaff(isToken, jsonObject)
+    }
+
+    fun isSlotHistoryStudent(
+        isToken: String
+    ) {
+        apiParentRepositories.isSlotHistoryForStudent(isToken)
+    }
+
+
 }
 
 

@@ -5,62 +5,15 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/AthensGray"
-        android:paddingVertical="@dimen/fifteen">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_centerVertical="true"
-            android:src="@drawable/left_arrow" />
-
-        <TextView
-            android:id="@+id/lblParentToolBar"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/rlaStudentName"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp" />
-
-        <LinearLayout
-            android:id="@+id/rlaStudentName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/lblStudentName"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="" />
-
-            <TextView
-                android:id="@+id/lblStudentSection"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="" />
-        </LinearLayout>
-    </RelativeLayout>
-
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar" />
 
     <RelativeLayout
         android:id="@+id/rytCreateAssignment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_marginTop="@dimen/ten"
         android:visibility="visible">
 

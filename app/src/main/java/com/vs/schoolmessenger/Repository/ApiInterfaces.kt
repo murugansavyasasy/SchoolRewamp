@@ -18,7 +18,6 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearRes
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
-import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
@@ -51,6 +50,9 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithS
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.StaffSlotResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
@@ -96,6 +98,9 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationR
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
@@ -784,7 +789,7 @@ interface ApiInterfaces {
     @POST(APIMethods.isSubmitAssignment)
     fun isSubmitAssignment(
         @Header(APIKeyNames.Authorization) token: String,
-        @Body request: AssignmentModelRequest,
+        @Body jsonObject: JsonObject,
     ): Call<AssignmentSubmitResponse?>?
 
     @GET(APIMethods.isstudentstats)
@@ -800,9 +805,84 @@ interface ApiInterfaces {
     ): Call<MySubmittedAssignmentsResponse?>?
 
 
+
     @GET(APIMethods.islsrwskillsreport)
     fun islsrwskillsreport(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<lsrwskillresponse?>?
+    // PTM
+
+    @POST(APIMethods.isCreateSlots)
+    fun isCreateSlots(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<StatusMessageModel?>?
+
+    @GET(APIMethods.isSlotDetailsForStaff)
+    fun isSlotDetailsForStaff(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("event_date") event_date: String
+    ): Call<SlotResponse?>?
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isSlotCancelAndReOpen)
+    fun isSlotCancelAndReOpen(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isSlotCancelAndClose)
+    fun isSlotCancelAndClose(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
+
+    @GET(APIMethods.isDatewiseBookedSlots)
+    fun isDatewiseBookedSlots(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("event_date") event_date: String
+    ): Call<SlotBookingResponse?>?
+
+
+    @POST(APIMethods.isBookingForStudent)
+    fun isBookingForStudent(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<StatusMessageModel?>?
+
+    @GET(APIMethods.isSlotsAvailabilityForStudent)
+    fun isSlotsAvailabilityForStudent(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("event_date") event_date: String,
+        @Query("subject_id") subject_id: String,
+        @Query("class_teacher_id") class_teacher_id: String
+    ): Call<StaffSlotResponse?>?
+
+    @GET(APIMethods.isAvailableSlotsCountForStudent)
+    fun isAvailableSlotsCountForStudent(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<AvailableSlotsResponse?>?
+
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isCancelByStudent)
+    fun isCancelByStudent(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<StatusMessageModel?>?
+
+
+    @POST(APIMethods.isValidateForStaffToSlot)
+    fun isSlotValidationForStaff(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<SlotValidationResponse?>?
+
+
+    @GET(APIMethods.isSlotHistoryForStudent)
+    fun isSlotHistoryForStudent(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<SlotDetailsResponse?>?
+
 
 }
