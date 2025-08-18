@@ -67,7 +67,10 @@ class SchoolStrengthDetailAdapter (
             adapter: SchoolStrengthDetailAdapter
         ) {
             sectionname.text =  data.name
-            totalcount.text = "Total :"+ data.total_students
+            val studentCount = data.total_students.toIntOrNull() ?: 0
+
+            totalcount.text = "$studentCount " +
+                    if (studentCount <= 1) "student" else "students"
 
 
 

@@ -13,6 +13,7 @@ import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
@@ -172,6 +173,13 @@ interface ApiInterfaces {
         @Query(APIKeyNames.member_type) isMemberType: String,  // Pass isMemberType as a query parameter
         @Query(APIKeyNames.mobile_number) isMobileNumber: String  // Pass isMemberType as a query parameter
     ): Call<DashboardResponse?>
+
+
+    @GET(APIMethods.isGetDashBoardCount)
+    fun isDashBoardCount(
+        @Header(APIKeyNames.Authorization) token: String,  // Pass token as a header
+        @Query(APIKeyNames.member_type) isMemberType: String,  // Pass isMemberType as a query parameter
+    ): Call<DashboardCountResponse?>
 
     @GET(APIMethods.isGetAds)
     fun isGetAds(

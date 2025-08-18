@@ -485,6 +485,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.lnrTabOneName -> {
+                binding.lnrTabTwoName.isEnabled=true
+                binding.lnrTabOneName.isEnabled=false
                 binding.edtTitle.setText("")
                 binding.edtDescription.setText("")
                 Constant.selectedFiles.clear()
@@ -518,7 +520,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.lnrTabTwoName -> {
-
+                binding.lnrTabTwoName.isEnabled=false
+                binding.lnrTabOneName.isEnabled=true
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.line4.setBackgroundResource(R.color.iconBlue)

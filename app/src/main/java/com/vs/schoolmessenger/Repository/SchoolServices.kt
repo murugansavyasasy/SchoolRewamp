@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
@@ -81,6 +82,7 @@ class SchoolServices {
 
     var client_auth: RestClient
     var isDashBoard: MutableLiveData<DashboardResponse?>
+    var isDashBoardCount: MutableLiveData<DashboardCountResponse?>
     var isGetAds: MutableLiveData<AdsResponse?>
     var isGetGlobalVariables: MutableLiveData<GlobalVariableResponse?>
     var isGetStaffList: MutableLiveData<NameAndIdsResponse?>
@@ -169,6 +171,7 @@ class SchoolServices {
     init {
         client_auth = RestClient()
         isDashBoard = MutableLiveData()
+        isDashBoardCount = MutableLiveData()
         isGetAds = MutableLiveData()
         isGetGlobalVariables = MutableLiveData()
         isGetStaffList = MutableLiveData()
@@ -316,6 +319,42 @@ class SchoolServices {
 
     val isDashBoardLiveData: LiveData<DashboardResponse?>
         get() = isDashBoard
+
+
+
+    fun isDashBoardCount(isToken: String, isMemberType: String, activity: Activity) {
+        RestClient.apiInterfaces.isDashBoardCount(isToken, isMemberType)
+            ?.enqueue(object : Callback<DashboardCountResponse?> {
+                override fun onResponse(
+                    call: Call<DashboardCountResponse?>, response: Response<DashboardCountResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isDashBoardCount.postValue(response.body())
+                            } else {
+                                isDashBoardCount.postValue(response.body())
+                            }
+                        }
+                    } else {
+
+
+                    }
+                }
+
+                override fun onFailure(call: Call<DashboardCountResponse?>, t: Throwable) {
+                    isDashBoardCount.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isDashBoardCountLiveData: LiveData<DashboardCountResponse?>
+        get() = isDashBoardCount
 
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {

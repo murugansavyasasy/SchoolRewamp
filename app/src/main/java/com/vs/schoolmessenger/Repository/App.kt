@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
@@ -96,6 +97,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     var isDashBoardData: LiveData<DashboardResponse?>? = null
+        private set
+
+    var isDashBoardCountData: LiveData<DashboardCountResponse?>? = null
         private set
 
     var isGetAds: LiveData<AdsResponse?>? = null
@@ -299,8 +303,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
 
+
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
+        isDashBoardCountData =apiSchoolRepositories.isDashBoardCountLiveData
+
         isGetAds = apiSchoolRepositories.isGetAdsLiveData
         isGlobalVariables = apiSchoolRepositories.isGetGlobalVariablesLiveData
         isGetStaffList = apiSchoolRepositories.isGetStaffListLiveData
@@ -422,6 +429,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isDashBoardData(isToken: String, isMemberType: String,isMobileNumber: String, activity: Activity) {
         apiSchoolRepositories.isDashBoard(isToken, isMemberType,isMobileNumber,activity)
+    }
+
+    fun isDashBoardCountData(isToken: String, isMemberType: String, activity: Activity) {
+        apiSchoolRepositories.isDashBoardCount(isToken, isMemberType,activity)
     }
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {

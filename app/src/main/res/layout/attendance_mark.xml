@@ -566,7 +566,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:gravity="center"
                     android:padding="@dimen/ten"
-                    android:text="@string/MarkAllPresent2"
+                    android:text="@string/select_all_as_present"
                     android:textColor="@color/white"
                     android:visibility="visible">
 

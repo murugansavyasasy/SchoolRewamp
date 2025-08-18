@@ -17,10 +17,12 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsDisplayOptions
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
-import com.vs.schoolmessenger.CommonScreens.MenuDetails.FrequentlyUsedMenu
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
@@ -44,6 +46,23 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.Communication.CommunicationSchool
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
+import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
+import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
+import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
+import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
+import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
+import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
+import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
+import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
+import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
+import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ScrollItem
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -59,17 +78,22 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private lateinit var aditems: List<AdItem>
     private var isSearchVisible = false
     var childDetails: ChildDetails? = null
-    var FrequentlyUsedMenuItems: List<FrequentlyUsedMenu>? = null
+    var FrequentlyUsedMenuItems: List<MenuDetail>? = null
     var userDetails: UserDetails? = null
     private var appViewModel: App? = null
+    var isDashBoardCountData: List<DashboardCountData>? = null
+    var isMenuCountDetails: ArrayList<MenuCountDetail>? = null
     var isDashBoardData: List<DashboardData>? = null
     private lateinit var items: List<ScrollItem>
     var isContactDetails: ContactDetails? = null
     var isMenuDetails: List<MenuDetail>? = null
     var isAdItem: List<AdItem>? = null
+    var access_token = ""
+
     var isAdsDisplayOptions: AdsDisplayOptions? = null
     private lateinit var allMenuItems: List<MenuDetail>
     private val isMenuItems = mutableListOf<MenuDetail>()
+    private val snapHelper = PagerSnapHelper()
     private lateinit var adapter: AutoScrollAdapterWithDots
     private lateinit var layoutManager: LinearLayoutManager
 
@@ -91,6 +115,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
+        access_token = childDetails!!.access_token
+
+
 
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
@@ -194,10 +221,26 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     FrequentlyUsedMenuItems = isDashBoardData!![0].frequently_used
                     allMenuItems = isMenuDetails!!
 
+                    appViewModel!!.isDashBoardCountData(
+                        access_token, Constant.parent,requireActivity()
+                    )
+
                     Log.d("isMenuDetails", isMenuDetails!!.size.toString())
-                    isGetAds()
                     setupRecyclerView()
 
+                }
+            }
+        }
+
+        appViewModel!!.isDashBoardCountData?.observe(requireActivity()) { response ->
+            if (response != null) {
+                val status = response.status
+                response.message
+                if (status) {
+                    val isDashboardResponse = response.data
+                    isDashBoardCountData = isDashboardResponse
+                    isMenuCountDetails = isDashBoardCountData!![0].menu_details
+                    isGetAds()
                 }
             }
         }
@@ -225,31 +268,25 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun setupRecyclerView() {
 
-        if (FrequentlyUsedMenuItems!!.size>1){
-            binding.autoScrollRecyclerView.visibility=View.VISIBLE
-            //        items = createSampleData()
+        if (!FrequentlyUsedMenuItems.isNullOrEmpty()) {
+            binding.autoScrollRecyclerView.visibility = View.VISIBLE
 
-            layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!) { position ->
-                //   updateDotsIndicator(position)
-            }
-
-
+            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
+
+            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!,this)
             binding.autoScrollRecyclerView.adapter = adapter
 
-            val snapHelper = PagerSnapHelper()
-            snapHelper.attachToRecyclerView(binding.autoScrollRecyclerView)
+            if (binding.autoScrollRecyclerView.onFlingListener == null) {
+                snapHelper.attachToRecyclerView(binding.autoScrollRecyclerView)
+            }
 
             currentPosition = adapter.getMiddlePosition()
             layoutManager.scrollToPosition(currentPosition)
-        }
-        else{
-            binding.autoScrollRecyclerView.visibility=View.GONE
 
+        } else {
+            binding.autoScrollRecyclerView.visibility = View.GONE
         }
-
 
     }
 
@@ -268,7 +305,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private fun isLoadData() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         isMenuAdapter = ChildMenuAdapter(
-            requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
+            requireActivity(), this, isMenuDetails,isMenuCountDetails, isAdItem, Constant.isShimmerViewDisable
         )
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -285,7 +322,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private fun isDashBoardData() {
 
         val adapter =
-            ChildMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
+            ChildMenuAdapter(requireActivity(), this, null,null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 
         // Adjust span count for special layout
