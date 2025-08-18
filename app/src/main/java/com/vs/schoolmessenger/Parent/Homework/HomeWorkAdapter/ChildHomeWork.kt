@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Parent.Coupon.CouponFragment.TicketFragment
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -19,7 +18,6 @@ import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
-import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ChildHomeworkActivityBinding
@@ -124,9 +122,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             Log.d("isComingFilePath", data.fileList[i].url)
         }
 
-        val adapter = HomeWorkChildAdapter(this, data.fileList, data.subjectName!!)
-        binding.rcChildHW.layoutManager = GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-        binding.rcChildHW.adapter = adapter
+        val adapter = HomeWorkChildAdapter(
+            this,
+            data.fileList,
+            data.subjectName!!,
+            SELECTED_SCHOOL_MENU
+        )
+        if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+            binding.rcChildHW.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+            binding.rcChildHW.adapter = adapter
+        }  else {
+            binding.rcChildHW.layoutManager = GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+            binding.rcChildHW.adapter = adapter
+
+        }
 
         appViewModel?.isHomeWorkComplete?.observe(this) { response ->
             if (response!!.status) {

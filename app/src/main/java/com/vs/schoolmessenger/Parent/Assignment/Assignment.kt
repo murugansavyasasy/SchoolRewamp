@@ -51,8 +51,12 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 isAssignmentReportData = response.data
                 loadAssignmentReportData()
+                binding.rcyAssignment.visibility = View.VISIBLE
+                binding.lytNoDataFound.visibility = View.GONE
             } else {
                 binding.rcyAssignment.visibility = View.GONE
+                binding.lytNoDataFound.visibility = View.VISIBLE
+                binding.noDataFound.text = response?.message
             }
         }
 

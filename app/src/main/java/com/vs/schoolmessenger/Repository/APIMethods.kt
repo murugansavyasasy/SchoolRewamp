@@ -131,6 +131,7 @@ object APIMethods {
     const val isSubmitAssignment = "comm/api/assignment/submit-assignment"
     const val isstudentstats = "stud-attd/api/attendance/student-stats"
     const val isAssignmentMySubmission = "comm/api/assignment/my-submissions"
+    const val islsrwskillsreport = "lms/api/lsrw/skills-report"
 
 
 }

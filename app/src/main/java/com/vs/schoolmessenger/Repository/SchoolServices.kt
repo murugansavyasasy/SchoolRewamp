@@ -54,6 +54,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -164,6 +165,7 @@ class SchoolServices {
     var isEventDelete: MutableLiveData<EventDeleteResponse?>
     var isAttachmentResponse: MutableLiveData<AttachmentReportResponse?>
     var getassignmentlist: MutableLiveData<SubmissionResponse?>
+    var islsrwskillsreport: MutableLiveData<lsrwskillresponse?>
 
 
     init {
@@ -244,6 +246,7 @@ class SchoolServices {
         isNoticeBoardStaffReport = MutableLiveData()
         isAttachmentResponse = MutableLiveData()
         getassignmentlist = MutableLiveData()
+        islsrwskillsreport = MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -3027,6 +3030,49 @@ class SchoolServices {
 
     val getassignmentlistLiveData: LiveData<SubmissionResponse?>
         get() = getassignmentlist
+
+
+
+
+    fun islsrwskillsreport(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.islsrwskillsreport(isToken)
+            ?.enqueue(object : Callback<lsrwskillresponse?> {
+                override fun onResponse(
+                    call: Call<lsrwskillresponse?>,
+                    response: Response<lsrwskillresponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwskillsreport.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwskillsreport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<lsrwskillresponse?>,
+                    t: Throwable
+                ) {
+                    islsrwskillsreport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val islsrwskillsreportLiveData: LiveData<lsrwskillresponse?>
+        get() = islsrwskillsreport
 
 
 }

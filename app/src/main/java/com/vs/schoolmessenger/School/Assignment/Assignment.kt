@@ -143,7 +143,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlue()
-
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)
