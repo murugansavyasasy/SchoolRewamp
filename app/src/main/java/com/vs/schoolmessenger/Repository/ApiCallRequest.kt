@@ -166,6 +166,32 @@ object ApiCallRequest {
         return jsonObject
     }
 
+    fun isSubmitAssignment(
+        id: String,
+        description: String,
+        iframe: String,
+        file_size: String): JsonObject {
+
+        val jsonObject = JsonObject()
+        val filePathArray = JsonArray()
+
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.type,
+                Constant.isAwsUploadedFiles[i].isFileType.toString()
+            )
+            filePathArray.add(isSelectedObject)
+        }
+        jsonObject.addProperty(APIKeyNames.id, id)
+        jsonObject.addProperty(APIKeyNames.iframe, iframe)
+        jsonObject.addProperty(APIKeyNames.file_size, file_size)
+        jsonObject.addProperty(APIKeyNames.description, description)
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+        return jsonObject
+    }
+
     fun isSendAttachment(
         isAcademicYearId: Int,
         selectedIds: MutableList<String>,

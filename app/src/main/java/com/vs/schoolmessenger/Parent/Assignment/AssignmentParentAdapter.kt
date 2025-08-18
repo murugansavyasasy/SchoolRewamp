@@ -232,13 +232,16 @@ class AssignmentParentAdapter(
 
             lblSubmitted.setOnClickListener {
                 val intent = Intent(context, Mysubmission::class.java)
-                intent.putExtra("assignment_id", data.id)
+                intent.putExtra("assignment_id", data.header_id)
                 intent.putExtra("title", data.title)
                 intent.putExtra("subject", data.subject)
                 context.startActivity(intent)
             }
             lblNotSubmitted.setOnClickListener {
                 val intent = Intent(context, MyAssignmentSubmit::class.java)
+                intent.putExtra("assignment_id", data.header_id)
+                intent.putExtra("title", data.title)
+                intent.putExtra("subject", data.subject)
                 context.startActivity(intent)
             }
 
