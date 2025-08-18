@@ -86,6 +86,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     }
 
     override fun onNotSubmittedClick(data: AssignmentData) {
+
     }
 
     override fun onClick(v: View?) {
