@@ -82,6 +82,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelReq
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -171,7 +172,7 @@ interface ApiInterfaces {
 //    ): Call<DashboardResponse?>
 
     //Current Dashboard Api
-        @GET(APIMethods.isGetDashBoard)
+    @GET(APIMethods.isGetDashBoard)
     fun isDashBoard(
         @Header(APIKeyNames.Authorization) token: String,  // Pass token as a header
         @Query(APIKeyNames.member_type) isMemberType: String,  // Pass isMemberType as a query parameter
@@ -804,6 +805,11 @@ interface ApiInterfaces {
     ): Call<MySubmittedAssignmentsResponse?>?
 
 
+
+    @GET(APIMethods.islsrwskillsreport)
+    fun islsrwskillsreport(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<lsrwskillresponse?>?
     // PTM
 
     @POST(APIMethods.isCreateSlots)

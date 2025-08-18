@@ -72,6 +72,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelReq
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -301,6 +302,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
     var isStudentStats: LiveData<getStudentStats?>? = null
     var getassignmentmysubmissionlist: LiveData<MySubmittedAssignmentsResponse?>? = null
+    var islsrwskillsreport: LiveData<lsrwskillresponse?>? = null
     var isPtmSlotCreate: LiveData<StatusMessageModel?>? = null
     var isPtmSlotResponse: LiveData<SlotResponse?>? = null
     var isPtmSlotCancelReOpen: LiveData<StatusMessageModel?>? = null
@@ -421,12 +423,13 @@ class App(application: Application) : AndroidViewModel(application) {
         isEventDelete = apiSchoolRepositories.isEventDeleteLiveData
         isAttachmentReportResponse = apiSchoolRepositories.isAttachmentResponseLiveData
         getassignmentlist = apiSchoolRepositories.getassignmentlistLiveData
-
         getLeaveCategories = apiParentRepositories.getLeaveCategoriesLiveData
         isAssignmentlist = apiParentRepositories.isAssignmentlistLiveData
         isSubmitAssignment = apiParentRepositories.isSubmitAssignmentLiveData
         isStudentStats = apiParentRepositories.isStudentStatsLiveData
         getassignmentmysubmissionlist = apiParentRepositories.getassignmentmysubmissionlistLiveData
+        islsrwskillsreport = apiSchoolRepositories.islsrwskillsreportLiveData
+
         isPtmSlotCreate = apiSchoolRepositories.isPtmSlotCreateLiveData
         isPtmSlotResponse = apiSchoolRepositories.isPtmSlotResponseLiveData
         isPtmSlotCancelReOpen = apiSchoolRepositories.isPtmSlotCancelReOpenLiveData
@@ -439,6 +442,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isSlotValidation = apiSchoolRepositories.isSlotValidationLiveData
         isSlotDetailsHistory = apiParentRepositories.isSlotDetailsHistoryLiveData
 
+
     }
 
     //Old Dashboard
@@ -446,8 +450,13 @@ class App(application: Application) : AndroidViewModel(application) {
 //        apiSchoolRepositories.isDashBoard(isToken, isMemberType, activity)
 //    }
 
-    fun isDashBoardData(isToken: String, isMemberType: String,isMobileNumber: String, activity: Activity) {
-        apiSchoolRepositories.isDashBoard(isToken, isMemberType,isMobileNumber,activity)
+    fun isDashBoardData(
+        isToken: String,
+        isMemberType: String,
+        isMobileNumber: String,
+        activity: Activity
+    ) {
+        apiSchoolRepositories.isDashBoard(isToken, isMemberType, isMobileNumber, activity)
     }
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {
@@ -987,6 +996,15 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String, id: String
     ) {
         apiParentRepositories.getassignmentmysubmissionlist(isToken, id)
+
+    }
+
+
+    fun islsrwskillsreport(
+        isToken: String
+    ) {
+        apiSchoolRepositories.islsrwskillsreport(isToken)
+
     }
 
 
