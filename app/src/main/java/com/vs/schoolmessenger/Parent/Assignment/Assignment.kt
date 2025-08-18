@@ -19,7 +19,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         return AssignmentParentBinding.inflate(layoutInflater)
     }
 
-
     var isAssignmentAdapter: AssignmentParentAdapter? = null
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
@@ -29,11 +28,8 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Assignment)
         binding.toolbarLayout.rytSearch.visibility = View.GONE
-        binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
-        binding.toolbarLayout.lblStudentSection.text = "XII - B"
 
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
@@ -41,6 +37,9 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
+
+        binding.toolbarLayout.lblStudentName.text = childDetails!!.name
+        binding.toolbarLayout.lblStudentSection.text = childDetails.standard_name + " - " + childDetails.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()

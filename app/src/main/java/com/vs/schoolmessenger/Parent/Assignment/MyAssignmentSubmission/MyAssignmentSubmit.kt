@@ -36,20 +36,15 @@ import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
-import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
-import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
-import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
-import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
@@ -73,16 +68,13 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     private var mAdapter: ImagePickingAdapter? = null
-
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var cameraPermissionDeniedCount = 0
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
-
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
-    private var isStaffDetails: StaffDetails? = null
-
+    private var isChildDetails: ChildDetails? = null
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
@@ -90,23 +82,51 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         private const val MAX_FILES = 10
     }
 
+    var assignmentId: String? = null
+    var titleName: String? = null
+    var subjectName: String? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        isToolBarPrimaryTheme()
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+        binding.btnChooseRecipient.setOnClickListener(this)
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
-        isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails!!.access_token
+        isChildDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = isChildDetails!!.access_token
+        assignmentId = intent.getStringExtra("assignment_id")
+        titleName = intent.getStringExtra("title")
+        subjectName = intent.getStringExtra("subject")
 
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = "Submit your assignment"
+        binding.toolbarLayout.rytSearch.visibility = View.GONE
+
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
+        }
+        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
+        binding.toolbarLayout.lblStudentSection.text = isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
+
+        binding.edtTitle.setText(titleName)
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
                 )
             )
+        }
+
+        appViewModel!!.isSubmitAssignment?.observe(this) { response ->
+            Constant.hideLoading(this@MyAssignmentSubmit)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+
+            }
         }
 
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
@@ -254,10 +274,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     }
 
     fun isUploadFilesInServer(isFileType: String?) {
-
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
-            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
-        }
+        Constant.selectedFiles.removeAt(0)
         ProgressDialogHelper.updateProgress(50)
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
@@ -299,7 +316,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
                 ProgressDialogHelper.dismiss()
-                //   isUpdateEvent()
+                isAssignmentSend()
             } else {
                 videoUploading()
             }
@@ -350,7 +367,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                     for (i in Constant.selectedFiles.indices) {
                         isAwsUploadingPreSigned?.getPreSignedUrl(
                             Constant.selectedFiles[i].path,
-                            isStaffDetails!!.school_id,
+                            isChildDetails!!.school_id,
                             isFileType!!,
                             this,
                             isCountryId!!,
@@ -371,7 +388,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
-                                        //   isUpdateEvent()
+                                        isAssignmentSend()
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
                                             videoUploading()
@@ -412,7 +429,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             }
         } else {
             ProgressDialogHelper.dismiss()
-            //  isUpdateEvent()
+            isAssignmentSend()
         }
     }
 
@@ -429,7 +446,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
             if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()
-                //   isUpdateEvent()
+                isAssignmentSend()
             }
         }
     }
@@ -703,5 +720,16 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             }
         }
         mAdapter?.notifyDataSetChanged()
+    }
+
+    fun isAssignmentSend() {
+
+        val jsonObject = ApiCallRequest.isSubmitAssignment(
+            id = assignmentId!!,
+            description = binding.edtDescription.text.toString(),
+            iframe = "",
+            file_size = ""
+        )
+        appViewModel!!.isSubmitAssignment(isAccessToken!!, jsonObject, this)
     }
 }

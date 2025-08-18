@@ -132,6 +132,24 @@ object APIMethods {
     const val isAssignmentMySubmission = "comm/api/assignment/my-submissions"
 
 
+
+
+    // PTM API CALLS
+
+    const val isCreateSlots= "ptm/api/ptm-schedule/create-slots"
+    const val isSlotDetailsForStaff= "ptm/api/ptm-schedule/slot-details-for-staff"
+    const val isSlotCancelAndReOpen= "ptm/api/ptm-schedule/cancel-and-reopen-slot"
+    const val isSlotCancelAndClose= "ptm/api/ptm-schedule/cancel-and-close-slot"
+    const val isDatewiseBookedSlots= "ptm/api/ptm-schedule/datewise-booked-slots"
+    const val isBookingForStudent= "ptm/api/ptm-schedule/book-slots-for-student"
+    const val isSlotsAvailabilityForStudent= "ptm-schedule/teacherwise-slots-availability-for-student"
+    const val isAvailableSlotsCountForStudent= "ptm/api/ptm-schedule/available-slots-count-for-student"
+    const val isCancelByStudent= "ptm/api/ptm-schedule/cancel-slot-by-student"
+    const val isValidateForStaffToSlot= "ptm/api/ptm-schedule/validate-slots-for-staff"
+    const val isSlotHistoryForStudent= "ptm/api/ptm-schedule/slot-history-for-student"
+
+
+
 }
 
 
