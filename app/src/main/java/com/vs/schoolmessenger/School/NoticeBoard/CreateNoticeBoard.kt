@@ -56,6 +56,8 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.R
+import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.RestClient
@@ -102,7 +104,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
-
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
@@ -196,6 +197,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+
 
 
         albumResultLauncher =
@@ -296,7 +298,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 binding.rcyNoticeBoard.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
             }
         }
 
@@ -532,10 +533,19 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 isGetNoticeBoardList()
             }
 
-            R.id.imgSearchToolBar -> if (binding.rytSearch323.isVisible) {
-                binding.rytSearch323.visibility = View.GONE
-            } else {
-                binding.rytSearch323.visibility = View.VISIBLE
+            R.id.imgSearchToolBar -> {
+                if (binding.rytSearch323.isVisible) {
+                    binding.rytSearch323.visibility = View.GONE
+                    binding.edtSearch.setText("")
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+                } else {
+                    binding.rytSearch323.visibility = View.VISIBLE
+                    binding.edtSearch.setText("")
+                    binding.edtSearch.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
+                }
             }
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar -> {
@@ -569,7 +579,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             }
 
             R.id.btnNext -> {
-
                 if (binding.btnNext.text.toString() == "Update NoticeBoard") {
                     showSendConfirmationDialog(true)
                 } else {
@@ -1096,7 +1105,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             binding.rcyNoticeBoard.visibility = View.GONE
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No results found for '${binding.edtSearch.text}'"
         } else {
             binding.rcyNoticeBoard.visibility = View.VISIBLE
             binding.nomessage.visibility = View.GONE
@@ -1104,9 +1112,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
     }
 
-
     fun isEditProcess(data: NoticeStaffData) {
-
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
         saveDrawableToCache(R.drawable.add_image)?.let {

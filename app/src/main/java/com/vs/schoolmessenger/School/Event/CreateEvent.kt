@@ -57,6 +57,8 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.RestClient
@@ -495,20 +497,29 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     }
 
 
-    override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
-        Log.d("isComing",adapterTag)
-        when (adapterTag) {
-            "ONGOING" -> binding.rcyongoingevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
-
-            "COMPLETED" -> binding.rcycompletedevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
-
-            "UPCOMING" -> binding.rcyupcomingevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
+    override fun onSearchResultEmpty(type: String, isEmpty: Boolean) {
+        when (type) {
+            "ONGOING" -> {
+                binding.rcyongoingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.headerview.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            }
+            "UPCOMING" -> {
+                binding.rcyupcomingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.upcomingeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            }
+            "COMPLETED" -> {
+                binding.rcycompletedevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.completedeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            }
         }
-    }
+        val isAllEmpty =
+            schooleventAdapter.itemCount == 0 &&
+                    eventupcomingadapter.itemCount == 0 &&
+                    eventcompletedadapter.itemCount == 0
 
+        binding.noDataImage.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+        binding.noDataText.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+    }
 
 
     fun showConfirmationDialog(
@@ -769,11 +780,21 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 }
             }
 
-            R.id.imgSearchToolBar -> if (binding.rytSearch323.isVisible) {
-                binding.rytSearch323.visibility = View.GONE
-            } else {
-                binding.rytSearch323.visibility = View.VISIBLE
+            R.id.imgSearchToolBar -> {
+                if (binding.rytSearch323.visibility == View.VISIBLE) {
+                    binding.rytSearch323.visibility = View.GONE
+                    binding.edtSearch.setText("")
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+                } else {
+                    binding.rytSearch323.visibility = View.VISIBLE
+                    binding.edtSearch.setText("")
+                    binding.edtSearch.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
+                }
             }
+
         }
     }
 
@@ -862,7 +883,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         }
         dialog.show()
     }
-
 
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)

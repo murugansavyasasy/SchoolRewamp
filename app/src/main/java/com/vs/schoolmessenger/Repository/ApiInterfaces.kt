@@ -162,10 +162,20 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String  // Pass token as a header
     ): Call<GlobalVariableResponse?>
 
-    @GET(APIMethods.isGetDashBoard)
+
+    //Old Dashboard api call
+//    @GET(APIMethods.isGetDashBoard)
+//    fun isDashBoard(
+//        @Header(APIKeyNames.Authorization) token: String,  // Pass token as a header
+//        @Query(APIKeyNames.member_type) isMemberType: String  // Pass isMemberType as a query parameter
+//    ): Call<DashboardResponse?>
+
+    //Current Dashboard Api
+        @GET(APIMethods.isGetDashBoard)
     fun isDashBoard(
         @Header(APIKeyNames.Authorization) token: String,  // Pass token as a header
-        @Query(APIKeyNames.member_type) isMemberType: String  // Pass isMemberType as a query parameter
+        @Query(APIKeyNames.member_type) isMemberType: String,  // Pass isMemberType as a query parameter
+        @Query(APIKeyNames.mobile_number) isMobileNumber: String  // Pass isMemberType as a query parameter
     ): Call<DashboardResponse?>
 
     @GET(APIMethods.isGetAds)

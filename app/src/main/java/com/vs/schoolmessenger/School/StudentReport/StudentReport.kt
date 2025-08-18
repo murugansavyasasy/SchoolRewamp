@@ -19,6 +19,9 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardDropDownListAdapter
 import com.vs.schoolmessenger.R
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
@@ -437,6 +440,11 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
             R.id.imgDelete -> {
                 binding.rytSearchBar.visibility = View.GONE
+
+                binding.txtSearchMenu.setText("")
+
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
             }
 
             R.id.tapNoAsc -> {
@@ -460,6 +468,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             }
         }
     }
+
 
 
     private fun setupFilerCatoryTypeSpinner(forceTrigger: Boolean = false) {

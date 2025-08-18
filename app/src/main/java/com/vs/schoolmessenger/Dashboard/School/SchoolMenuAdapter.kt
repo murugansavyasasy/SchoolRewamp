@@ -103,7 +103,7 @@ class SchoolMenuAdapter(
 
         fun bind(data: MenuDetail, position: Int, listener: MenuClickListener) {
             itemTitle.text = data.name
-//
+
 //            imgReadCount.visibility=View.GONE
 //            if(data.unreadCount>=1){
 //                imgReadCount.visibility=View.VISIBLE

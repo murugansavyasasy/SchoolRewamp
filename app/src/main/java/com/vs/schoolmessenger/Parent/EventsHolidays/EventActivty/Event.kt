@@ -18,6 +18,8 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClic
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.R
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -268,10 +270,20 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> onBackPressed()
-            R.id.rytSearch -> if (binding.rytSearch1.isVisible) {
-                binding.rytSearch1.visibility = View.GONE
-            } else {
-                binding.rytSearch1.visibility = View.VISIBLE
+
+            R.id.rytSearch -> {
+                if (binding.rytSearch1.isVisible) {
+                    binding.rytSearch1.visibility = View.GONE
+                    binding.txtVideoMenu.setText("")
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
+                } else {
+                    binding.rytSearch1.visibility = View.VISIBLE
+                    binding.txtVideoMenu.setText("")
+                    binding.txtVideoMenu.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                }
             }
         }
     }

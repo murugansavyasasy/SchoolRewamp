@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.R
+import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -98,18 +99,24 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     }
 
     override fun onClick(p0: View?) {
-
         when (p0?.id) {
             R.id.imgBack -> onBackPressed()
-            R.id.rytSearch -> if (binding.rytsearch.isVisible) {
-                binding.rytsearch.visibility = View.GONE
-            } else {
-                binding.rytsearch.visibility = View.VISIBLE
+
+            R.id.rytSearch -> {
+                if (binding.rytsearch.visibility == View.VISIBLE) {
+                    binding.rytsearch.visibility = View.GONE
+                    binding.txtVideoMenu.setText("")
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
+                } else {
+                    binding.rytsearch.visibility = View.VISIBLE
+                    binding.txtVideoMenu.setText("")
+                    binding.txtVideoMenu.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                }
             }
         }
-
-
-
     }
 
 

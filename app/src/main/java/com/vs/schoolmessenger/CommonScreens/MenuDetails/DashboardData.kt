@@ -6,5 +6,6 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 
 data class DashboardData(
     @SerializedName(APIKeyNames.contact_details) val contactDetails: ContactDetails,
-    @SerializedName(APIKeyNames.menu_details) val menuDetails: List<MenuDetail>
-)
+    @SerializedName(APIKeyNames.frequently_used) val frequently_used: List<FrequentlyUsedMenu>,
+    @SerializedName(APIKeyNames.menus) val menus: List<MenuDetail>
+    )

@@ -441,8 +441,13 @@ class App(application: Application) : AndroidViewModel(application) {
 
     }
 
-    fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
-        apiSchoolRepositories.isDashBoard(isToken, isMemberType, activity)
+    //Old Dashboard
+//    fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
+//        apiSchoolRepositories.isDashBoard(isToken, isMemberType, activity)
+//    }
+
+    fun isDashBoardData(isToken: String, isMemberType: String,isMobileNumber: String, activity: Activity) {
+        apiSchoolRepositories.isDashBoard(isToken, isMemberType,isMobileNumber,activity)
     }
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {

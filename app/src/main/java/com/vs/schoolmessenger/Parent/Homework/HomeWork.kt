@@ -19,6 +19,8 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -162,15 +164,25 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgBack -> {
-                onBackPressed()
-            }
+            R.id.imgBack -> onBackPressed()
 
             R.id.imgSearch -> {
-                binding.lytSearch.visibility = View.VISIBLE
+                if (binding.lytSearch.visibility == View.VISIBLE) {
+                    binding.lytSearch.visibility = View.GONE
+                    binding.edtSearch.setText("")
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+                } else {
+                    binding.lytSearch.visibility = View.VISIBLE
+                    binding.edtSearch.setText("")
+                    binding.edtSearch.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
+                }
             }
         }
     }
+
 
     fun isHomeWorkList() {
         mAdapter = HomeworkParentAdapter(
