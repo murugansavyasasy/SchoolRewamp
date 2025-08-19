@@ -49,6 +49,7 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.PTM.PTM
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
@@ -561,13 +562,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_PTM -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to ptm page
-                    LessonPlan::class.java
+                    PTM::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
                         //go to ptm page
-                        LessonPlan::class.java
+                        PTM::class.java
                     }
                 }
             }

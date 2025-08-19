@@ -37,7 +37,7 @@ class DashBoardWaveDesign @JvmOverloads constructor(
 
         val totalHeight = height.toFloat()
         val waveLength = width.toFloat() * 1.99f
-        val waveHeight = 35f
+        val waveHeight = 20f
 
         drawWave(
             canvas,
@@ -84,7 +84,6 @@ class DashBoardWaveDesign @JvmOverloads constructor(
         }
         path.lineTo(viewWidth, viewHeight)
         path.close()
-
         canvas.drawPath(path, paint)
     }
 }

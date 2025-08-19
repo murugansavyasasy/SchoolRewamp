@@ -108,6 +108,7 @@ class ChildMenuAdapter(
             itemCountList: ArrayList<MenuCountDetail>?
         ) {
             itemTitle.text = data.name
+            itemDescription.text = data.description
 
             if (itemCountList!![position].unread_count != 0) {
                 imgReadCount.visibility = View.VISIBLE
