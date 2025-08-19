@@ -9,7 +9,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FeeReceiptViewActivityBinding
 
-class FeeReceiptViewActivity: BaseActivity<FeeReceiptViewActivityBinding>(), View.OnClickListener {
+class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): FeeReceiptViewActivityBinding {
         return FeeReceiptViewActivityBinding.inflate(layoutInflater)
@@ -28,9 +28,11 @@ class FeeReceiptViewActivity: BaseActivity<FeeReceiptViewActivityBinding>(), Vie
         isAccessToken = isChildDetails?.access_token
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
         binding.toolbarLayout.lblParentToolBar.text = "Fee Receipt"
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
-        val pdfUrl = "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf"
+        val pdfUrl =
+            "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf"
         val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$pdfUrl"
         Constant.loadWebView(
             this,

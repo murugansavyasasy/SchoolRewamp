@@ -4,13 +4,12 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import com.vs.schoolmessenger.Utils.Constant
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -19,6 +18,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
 import com.vs.schoolmessenger.School.Assignment.Model.StudentSubmission
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AssignmentStudentListReportBinding
 
@@ -85,6 +85,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
                     2 -> showPending()
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
@@ -97,6 +98,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
                     assignmentstudentlistadapter.filter.filter(s)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -127,12 +129,14 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
     }
 
     private fun showSubmitted() {
-        val filteredList = allStudentsList.filter { it.submit_status.equals("SUBMITTED", ignoreCase = true) }
+        val filteredList =
+            allStudentsList.filter { it.submit_status.equals("SUBMITTED", ignoreCase = true) }
         isloadassignmentdata(filteredList)
     }
 
     private fun showPending() {
-        val filteredList = allStudentsList.filter { it.submit_status.equals("NOTSUBMITTED", ignoreCase = true) }
+        val filteredList =
+            allStudentsList.filter { it.submit_status.equals("NOTSUBMITTED", ignoreCase = true) }
         isloadassignmentdata(filteredList)
     }
 
@@ -151,8 +155,10 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     private fun updateTabTitles() {
         val allCount = allStudentsList.size
-        val submittedCount = allStudentsList.count { it.submit_status.equals("SUBMITTED", ignoreCase = true) }
-        val pendingCount = allStudentsList.count { it.submit_status.equals("NOTSUBMITTED", ignoreCase = true) }
+        val submittedCount =
+            allStudentsList.count { it.submit_status.equals("SUBMITTED", ignoreCase = true) }
+        val pendingCount =
+            allStudentsList.count { it.submit_status.equals("NOTSUBMITTED", ignoreCase = true) }
 
         binding.tabLayout.getTabAt(0)?.text = "All Students ($allCount)"
         binding.tabLayout.getTabAt(1)?.text = "Submitted ($submittedCount)"

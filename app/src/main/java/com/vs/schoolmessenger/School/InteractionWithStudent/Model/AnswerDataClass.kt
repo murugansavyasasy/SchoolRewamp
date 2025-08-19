@@ -1,8 +1,6 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent.Model
 
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.FilePath
-
-data class AnswerDataClass (
+data class AnswerDataClass(
     val question_id: String,
     val answer: String,
     val answer_on: String,

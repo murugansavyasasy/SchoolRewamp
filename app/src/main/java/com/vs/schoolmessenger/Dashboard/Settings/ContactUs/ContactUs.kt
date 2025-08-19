@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Dashboard.Settings.ContactUs
+
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -19,11 +20,10 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
         binding.rytMail.setOnClickListener(this)
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
-            binding.rlaLblContactSupport.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
-        }
-        else {
+            binding.rlaLblContactSupport.setBackgroundResource(R.drawable.gradient_theme_parent)
+        } else {
             setupToolbarBlue()
-            binding.rlaLblContactSupport.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+            binding.rlaLblContactSupport.setBackgroundResource(R.drawable.gradient_theme_school)
         }
     }
 
@@ -32,11 +32,13 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
             R.id.imgBack -> {
                 onBackPressed()
             }
+
             R.id.rytPhone -> {
-                Constant.redirectToDialPad(this,binding.lblContactNo.text.toString())
+                Constant.redirectToDialPad(this, binding.lblContactNo.text.toString())
             }
+
             R.id.rytMail -> {
-                Constant.redirectToMail(this,binding.lblContacttMail.text.toString(),"","")
+                Constant.redirectToMail(this, binding.lblContacttMail.text.toString(), "", "")
             }
         }
     }

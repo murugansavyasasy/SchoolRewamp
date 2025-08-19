@@ -30,7 +30,8 @@ class StandardDropDownListAdapter(
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick, parent, false)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick, parent, false)
         val textView = view.findViewById<TextView>(R.id.textViewItem)
         val tick = view.findViewById<ImageView>(R.id.imageTick)
 

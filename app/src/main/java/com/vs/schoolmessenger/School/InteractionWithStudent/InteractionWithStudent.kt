@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionwithStaffChatScreen
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
@@ -20,7 +18,6 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.Interaction
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.IntrectionWithStudentBinding
-import kotlin.String
 
 class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), View.OnClickListener,
     InteractionWithStudentListener {
@@ -133,7 +130,8 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
     }
 
     override fun onClickItem(data: StudentChatData) {
-        val intent = Intent(this@InteractionWithStudent, InteractionWithStudentChatScreen::class.java)
+        val intent =
+            Intent(this@InteractionWithStudent, InteractionWithStudentChatScreen::class.java)
 
         val saveStaffQuestionData = QuestionDataSending(
             id = data.id,

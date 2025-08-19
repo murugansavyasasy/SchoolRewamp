@@ -25,12 +25,14 @@ class YearLoadingAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = LayoutInflater.from(context).inflate(R.layout.simple_spinner_item, parent, false)
         val textView = view.findViewById<TextView>(R.id.lblTextItem)
-        textView.text = items?.get(position)?.toString() ?: "" // Make sure this is the correct field
+        textView.text =
+            items?.get(position)?.toString() ?: "" // Make sure this is the correct field
         return view
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick, parent, false)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick, parent, false)
         val textView = view.findViewById<TextView>(R.id.textViewItem)
         val tick = view.findViewById<ImageView>(R.id.imageTick)
 

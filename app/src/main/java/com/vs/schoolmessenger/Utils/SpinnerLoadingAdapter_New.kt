@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.AbsListView
 import com.vs.schoolmessenger.R
+
 class SpinnerLoadingAdapter_New(
     private val context: Context,
     private val items: List<String>
@@ -31,7 +31,8 @@ class SpinnerLoadingAdapter_New(
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(R.layout.simple_spinner_item_2, parent, false)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.simple_spinner_item_2, parent, false)
         val textView = view.findViewById<TextView>(R.id.lblTextItem)
         val arrow = view.findViewById<ImageView>(R.id.dropDownArrow)
 
@@ -49,7 +50,8 @@ class SpinnerLoadingAdapter_New(
             return hiddenView
         }
 
-        val view = LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick_2, parent, false)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick_2, parent, false)
         val textView = view.findViewById<TextView>(R.id.textViewItem)
         val tick = view.findViewById<ImageView>(R.id.imageTick)
 

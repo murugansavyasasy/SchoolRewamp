@@ -1,11 +1,12 @@
 package com.vs.schoolmessenger.Auth.TermsConditions
+
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.TermsAndConditionsBinding
 
-class TermsAndConditions  : BaseActivity<TermsAndConditionsBinding>(), View.OnClickListener {
+class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): TermsAndConditionsBinding {
         return TermsAndConditionsBinding.inflate(layoutInflater)
@@ -19,8 +20,7 @@ class TermsAndConditions  : BaseActivity<TermsAndConditionsBinding>(), View.OnCl
         binding.imgBack.setOnClickListener(this)
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
-        }
-        else {
+        } else {
             setupToolbarBlue()
         }
 
@@ -35,7 +35,7 @@ class TermsAndConditions  : BaseActivity<TermsAndConditionsBinding>(), View.OnCl
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
-               finish()
+                finish()
             }
         }
     }

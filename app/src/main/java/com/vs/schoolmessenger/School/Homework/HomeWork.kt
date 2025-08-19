@@ -340,7 +340,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
-                    val selectedOption = isStandard!![position]
+                    isStandard!![position]
                     Log.d(
                         "DropdownMenu",
                         "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
@@ -392,7 +392,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
         }
 
-        mHomeWorkReportAdapter = HomeWorkReportAdapter(this,filteredList, this, false)
+        mHomeWorkReportAdapter = HomeWorkReportAdapter(this, filteredList, this, false)
         binding.rcyHomeWorkReport.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.rcyHomeWorkReport.setHasFixedSize(true)
@@ -485,8 +485,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.lnrTabOneName -> {
-                binding.lnrTabTwoName.isEnabled=true
-                binding.lnrTabOneName.isEnabled=false
+                binding.lnrTabTwoName.isEnabled = true
+                binding.lnrTabOneName.isEnabled = false
                 binding.edtTitle.setText("")
                 binding.edtDescription.setText("")
                 Constant.selectedFiles.clear()
@@ -520,8 +520,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.lnrTabTwoName -> {
-                binding.lnrTabTwoName.isEnabled=false
-                binding.lnrTabOneName.isEnabled=true
+                binding.lnrTabTwoName.isEnabled = false
+                binding.lnrTabOneName.isEnabled = true
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.line4.setBackgroundResource(R.color.iconBlue)
@@ -550,7 +550,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     private fun fetchHomeWorkReportData() {
         binding.rcyHomeWorkReport.visibility = View.VISIBLE
         mHomeWorkReportAdapter =
-            HomeWorkReportAdapter(this,emptyList(), this, Constant.isShimmerViewShow)
+            HomeWorkReportAdapter(this, emptyList(), this, Constant.isShimmerViewShow)
         binding.rcyHomeWorkReport.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.rcyHomeWorkReport.setHasFixedSize(true)
@@ -564,7 +564,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     private fun loadHomeWorkReportData(isHomeWorkReportDetails: List<HomeWorkReport>) {
         binding.rcyHomeWorkReport.visibility = View.VISIBLE
         mHomeWorkReportAdapter = HomeWorkReportAdapter(
-            this,isHomeWorkReportDetails, this, Constant.isShimmerViewDisable
+            this, isHomeWorkReportDetails, this, Constant.isShimmerViewDisable
         )
         binding.rcyHomeWorkReport.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)

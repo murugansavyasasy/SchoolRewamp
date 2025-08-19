@@ -1,18 +1,25 @@
 package com.vs.schoolmessenger.Dashboard.Settings.Notification
+
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.NotificationBinding
 
 class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
 
     private lateinit var isNotificationAdapter: NotificationAdapter
-    private lateinit var items: List<NotificationDataClass>
+    private var items: MutableList<NotificationDataClass> = mutableListOf()
     private var isNotificationItems: MutableList<NotificationDataClass> = mutableListOf()
+    private var appViewModel: App? = null
+    private var isAccessToken: String? = null
 
     override fun getViewBinding(): NotificationBinding {
         return NotificationBinding.inflate(layoutInflater)
@@ -21,47 +28,48 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
 
-        setupToolbar()
+        setupToolbarBlue()
         binding.imgBack.setOnClickListener(this)
 
+        val childDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = childDetails?.access_token
 
-        if (Constant.isParentChoose) {
-            isToolBarPrimaryTheme()
-            binding.rlaLblNotification.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
+
+        isNotificationAdapter = NotificationAdapter(isNotificationItems, this, true)
+        binding.rcyNotification.layoutManager = LinearLayoutManager(this)
+        binding.rcyNotification.adapter = isNotificationAdapter
+
+
+        loadNotifications()
+
+        appViewModel!!.apiParentRepositories.isNotificationResponseLiveData.observe(this) { response ->
+            Constant.hideLoading(this@Notification)
+            if (response != null && response.status) {
+                isNotificationItems.clear()
+
+                response.data.forEach { item ->
+                    isNotificationItems.add(
+                        NotificationDataClass(
+                            type = item.type ?: "",
+                            title = item.name ?: "",
+                            content = item.message ?: "",
+                            sendBy = item.member_id ?: ""
+                        )
+                    )
+            }
+
+                isNotificationAdapter = NotificationAdapter(isNotificationItems, this, false)
+                binding.rcyNotification.adapter = isNotificationAdapter
+            } else {
+                Constant.showDataValidation(
+                    response?.status.toString(),
+                    response?.message ?: "Unknown error",
+                    this
+                )
+            }
         }
-        else {
-            setupToolbarBlue()
-            binding.rlaLblNotification.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
-        }
-
-        items = listOf(
-            NotificationDataClass("text", "Text Message", "Come to school", "Sathish"),
-            NotificationDataClass("voice", "Voice Message", "Come to office", "Murugan"),
-            NotificationDataClass(
-                "Assignment",
-                "Assignment Message",
-                "Complete the Assignment",
-                "Saran"
-            ),
-            NotificationDataClass("Image", "Image Message", "Drawing the Image", "Gayathri"),
-            NotificationDataClass(
-                "NoticeBoard",
-                "Notice Board Message",
-                "Follow the NoticeBoard",
-                "Narayanan"
-            ),
-            NotificationDataClass(
-                "HomeWork",
-                "HomeWork Message",
-                "Complete the HomeWork",
-                "Rakesh"
-            ),
-            NotificationDataClass("Attendance", "Attendance Message", "Your Absent today", "Priya"),
-            NotificationDataClass("Exam", "Exam Message", "Physics Exam", "Dinesh"),
-            NotificationDataClass("Event", "Event Message", "Tomorrow function", "Swathi"),
-            NotificationDataClass("Video", "Video Message", "View the Video", "Ganesh"),
-
-            )
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -78,16 +86,6 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-
-        isNotificationAdapter = NotificationAdapter(null, this, Constant.isShimmerViewShow)
-        binding.rcyNotification.layoutManager = LinearLayoutManager(this)
-        binding.rcyNotification.adapter = isNotificationAdapter
-        Constant.executeAfterDelay {
-            isNotificationAdapter =
-                NotificationAdapter(isNotificationItems, this, Constant.isShimmerViewDisable)
-            // Set GridLayoutManager (2 columns in this case)
-            binding.rcyNotification.adapter = isNotificationAdapter
-        }
     }
 
 
@@ -95,6 +93,14 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
         super.onPause()
         Constant.stopDelay()
     }
+
+    private fun loadNotifications() {
+        Constant.showLoading(this)
+        appViewModel!!.isNotificationList(isAccessToken ?: "", "Android")
+    }
+
+
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -105,16 +111,15 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
     }
 
     private fun filter(text: String) {
-        isNotificationItems.clear()
-        if (text.isEmpty()) {
-            isNotificationItems.addAll(items)  // If search is empty, show all items
+        val filteredList = if (text.isEmpty()) {
+            isNotificationItems
         } else {
-            for (item in items) {
-                if (item.title.toLowerCase().contains(text.toLowerCase())) {
-                    isNotificationItems.add(item)  // Add the matching GridItem to filteredList
-                }
+            isNotificationItems.filter {
+                it.title.contains(text, ignoreCase = true)
             }
         }
-        isNotificationAdapter.notifyDataSetChanged()
+        isNotificationAdapter = NotificationAdapter(filteredList.toMutableList(), this, false)
+        binding.rcyNotification.adapter = isNotificationAdapter
     }
+
 }

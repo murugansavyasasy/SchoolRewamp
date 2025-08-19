@@ -47,7 +47,7 @@ class LeaveRequestAdapter(
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.leave_request_list_item, parent, false)
-            DataViewHolder(view, context,listener)
+            DataViewHolder(view, context, listener)
         }
 
 
@@ -58,7 +58,7 @@ class LeaveRequestAdapter(
         if (holder is DataViewHolder) {
             holder.bind(filteredList[position], position)
 
-        }  else if (holder is ShimmerViewHolder) {
+        } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
@@ -69,16 +69,14 @@ class LeaveRequestAdapter(
     }
 
 
-
     fun updateData(newList: List<LeaveData>) {
         this.fullList = newList
         notifyDataSetChanged()
     }
 
 
-
-
-    class DataViewHolder(itemView: View, private val context: Context,    private val listener: SchoolLRClickListener
+    class DataViewHolder(
+        itemView: View, private val context: Context, private val listener: SchoolLRClickListener
     ) :
         RecyclerView.ViewHolder(itemView) {
 
@@ -96,14 +94,17 @@ class LeaveRequestAdapter(
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: LeaveData, position: Int) {
             textName.text = data.student_name
-            textDate.text = "${Constant.convertDateTimeFormat(data.leave_from ?: "")} - ${Constant.convertDateTimeFormat(data.leave_to ?: "")}"
-            textNoOfDays.text = "${data.no_of_days} ${if (data.no_of_days == "1") "Day" else "Days"} Application"
+            textDate.text = "${Constant.convertDateTimeFormat(data.leave_from ?: "")} - ${
+                Constant.convertDateTimeFormat(data.leave_to ?: "")
+            }"
+            textNoOfDays.text =
+                "${data.no_of_days} ${if (data.no_of_days == "1") "Day" else "Days"} Application"
             textReason.text = data.reason
 
             if (data.status == Constant.rejected) {
-                lnrButtons.visibility=View.GONE
-                btnStatus.text ="Rejected"
-                btnStatus.visibility=View.VISIBLE
+                lnrButtons.visibility = View.GONE
+                btnStatus.text = "Rejected"
+                btnStatus.visibility = View.VISIBLE
                 applyTintedBackground(btnStatus, R.drawable.bg_leave_approved, R.color.light_red_1)
                 btnStatus.setTextColor(Color.parseColor("#D32F2F"))
 
@@ -112,34 +113,42 @@ class LeaveRequestAdapter(
 //                btnApprove.visibility = View.GONE
 
             } else if (data.status == Constant.approved) {
-                lnrButtons.visibility=View.GONE
-                btnStatus.text ="Approved"
-                btnStatus.visibility=View.VISIBLE
-                applyTintedBackground(btnStatus, R.drawable.bg_leave_approved, R.color.light_green_1)
-               btnStatus.setTextColor(Color.parseColor("#2E7D32"))
+                lnrButtons.visibility = View.GONE
+                btnStatus.text = "Approved"
+                btnStatus.visibility = View.VISIBLE
+                applyTintedBackground(
+                    btnStatus,
+                    R.drawable.bg_leave_approved,
+                    R.color.light_green_1
+                )
+                btnStatus.setTextColor(Color.parseColor("#2E7D32"))
 
 //                btnCancel.visibility = View.GONE
 //                btnApprove.visibility = View.VISIBLE
 
             } else if (data.status == Constant.waiting_for_approval) {
-                btnStatus.visibility=View.GONE
-                lnrButtons.visibility=View.VISIBLE
-                applyTintedBackground(btnApprove, R.drawable.bg_leave_approved, R.color.light_green_2)
+                btnStatus.visibility = View.GONE
+                lnrButtons.visibility = View.VISIBLE
+                applyTintedBackground(
+                    btnApprove,
+                    R.drawable.bg_leave_approved,
+                    R.color.light_green_2
+                )
 
-                btnCancel.text ="Reject"
+                btnCancel.text = "Reject"
                 btnApprove.text = "Approve"
 
             }
-            if (data.leave_type==""){
-                textLeaveType.visibility=View.GONE
-            }else{
-                textLeaveType.visibility=View.VISIBLE
-                textLeaveType.text=data.leave_type
+            if (data.leave_type == "") {
+                textLeaveType.visibility = View.GONE
+            } else {
+                textLeaveType.visibility = View.VISIBLE
+                textLeaveType.text = data.leave_type
             }
 
             btnApprove.setOnClickListener {
                 if (data.status.equals(Constant.waiting_for_approval)) {
-                    listener.onApproveClicked(data, position,true) { isApproved ->
+                    listener.onApproveClicked(data, position, true) { isApproved ->
                         if (isApproved) {
                             data.status = Constant.approved
                             listener.onUpdateStatus(data)
@@ -150,9 +159,9 @@ class LeaveRequestAdapter(
 
 
             btnCancel.setOnClickListener {
-                if(data.status.equals(Constant.waiting_for_approval)) {
+                if (data.status.equals(Constant.waiting_for_approval)) {
 
-                    listener.onApproveClicked(data, position,false) { isApproved ->
+                    listener.onApproveClicked(data, position, false) { isApproved ->
                         if (isApproved) {
                             data.status = Constant.rejected
                             listener.onUpdateStatus(data)

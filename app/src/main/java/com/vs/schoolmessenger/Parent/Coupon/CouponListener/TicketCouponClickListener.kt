@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponListener
 
-import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummary
 
 interface TicketCouponClickListener {

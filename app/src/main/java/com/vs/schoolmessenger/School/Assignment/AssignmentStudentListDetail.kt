@@ -31,7 +31,8 @@ class AssignmentStudentListDetail : BaseActivity<AssignmentStudentDetailreportBi
         val submissionList = intent.getParcelableArrayListExtra<SubmissionDetail>("submission_list")
 
 
-        submissionAdapter = AssignmentStudentListDetailAdapter(submissionList ?: emptyList(), this, false)
+        submissionAdapter =
+            AssignmentStudentListDetailAdapter(submissionList ?: emptyList(), this, false)
         binding.rcystudentlistdetail.apply {
             layoutManager = LinearLayoutManager(this@AssignmentStudentListDetail)
             adapter = submissionAdapter

@@ -2,11 +2,10 @@ package com.vs.schoolmessenger.School.Assignment.Model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.io.Serializable
 
 
 @Parcelize
-data class SubmissionDetail (
+data class SubmissionDetail(
     val id: String,
     val description: String,
     val submitted_on: String,

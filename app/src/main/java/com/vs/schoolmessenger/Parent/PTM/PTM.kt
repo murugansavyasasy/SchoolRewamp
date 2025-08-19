@@ -4,10 +4,9 @@ import android.graphics.Color
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.databinding.AssignmentParentBinding
 import com.vs.schoolmessenger.databinding.PtmBinding
 
-class PTM : BaseActivity<PtmBinding>(), View.OnClickListener  {
+class PTM : BaseActivity<PtmBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): PtmBinding {
         return PtmBinding.inflate(layoutInflater)

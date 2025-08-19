@@ -171,14 +171,14 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
     private fun expandhowtouse() {
 
         if (!isExpanded) {
-            binding.bottomLayout.expandableText.setVisibility(View.VISIBLE)
+            binding.bottomLayout.expandableText.visibility = View.VISIBLE
             binding.bottomLayout.rememberSymbol.setImageResource(R.drawable.ic_up_arrow)
 
-            binding.bottomLayout.expandableText1.setVisibility(View.GONE)
+            binding.bottomLayout.expandableText1.visibility = View.GONE
             binding.bottomLayout.rememberSymbol1.setImageResource(R.drawable.ic_down_black)
             isExpanded1 = false
         } else {
-            binding.bottomLayout.expandableText.setVisibility(View.GONE)
+            binding.bottomLayout.expandableText.visibility = View.GONE
             binding.bottomLayout.rememberSymbol.setImageResource(R.drawable.ic_down_black)
         }
         isExpanded = !isExpanded
@@ -188,14 +188,14 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
     private fun expandtermsandcondition() {
 
         if (!isExpanded1) {
-            binding.bottomLayout.expandableText1.setVisibility(View.VISIBLE)
+            binding.bottomLayout.expandableText1.visibility = View.VISIBLE
             binding.bottomLayout.rememberSymbol1.setImageResource(R.drawable.ic_up_arrow)
 
-            binding.bottomLayout.expandableText.setVisibility(View.GONE)
+            binding.bottomLayout.expandableText.visibility = View.GONE
             binding.bottomLayout.rememberSymbol.setImageResource(R.drawable.ic_down_black)
             isExpanded = false
         } else {
-            binding.bottomLayout.expandableText1.setVisibility(View.GONE)
+            binding.bottomLayout.expandableText1.visibility = View.GONE
             binding.bottomLayout.rememberSymbol1.setImageResource(R.drawable.ic_down_black)
         }
         isExpanded1 = !isExpanded1
@@ -230,8 +230,8 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
                 Color.parseColor("#FF69B4") // pink
             )
             val particleCount = 120
-            val screenWidth = container.getWidth()
-            val screenHeight = container.getHeight()
+            val screenWidth = container.width
+            val screenHeight = container.height
 
             for (i in 0..<particleCount) {
                 val particle = View(this)
@@ -247,12 +247,12 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
                 shape.setSize(size, size)
                 val color = colors[Random().nextInt(colors.size)]
                 shape.setColor(color)
-                particle.setBackground(shape)
+                particle.background = shape
 
                 val startX = getRandom(0, screenWidth).toFloat()
                 val startY = getRandom(-300, -100).toFloat() // start from above screen
-                particle.setX(startX)
-                particle.setY(startY)
+                particle.x = startX
+                particle.y = startY
 
                 container.addView(particle)
 
@@ -274,6 +274,7 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
             )
         })
     }
+
     private fun getDaySuffix(day: Int): String {
         if (day >= 11 && day <= 13) {
             return "th"

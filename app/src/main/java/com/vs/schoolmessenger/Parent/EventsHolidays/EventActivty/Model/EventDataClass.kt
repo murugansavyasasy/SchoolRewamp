@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model
 
-data class EventDataClass (
+data class EventDataClass(
     val title: String,
     val description: String,
     val date: String,

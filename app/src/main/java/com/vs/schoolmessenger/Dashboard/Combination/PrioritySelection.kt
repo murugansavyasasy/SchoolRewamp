@@ -33,6 +33,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     override fun getViewBinding(): RoleSelecionBinding {
         return RoleSelecionBinding.inflate(layoutInflater)
     }
+
     private var userDetails: UserDetails? = null
 
 

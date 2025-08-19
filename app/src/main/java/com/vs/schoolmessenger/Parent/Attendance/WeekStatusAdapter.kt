@@ -1,14 +1,9 @@
 package com.vs.schoolmessenger.Parent.Attendance
 
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.Attendance.Model.GetWeekStatusData
 import com.vs.schoolmessenger.R
@@ -32,7 +27,7 @@ class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
         val status = item.status.trim()
         holder.lblDay.text = item.day
 
-        if (status == "x"||status == "X") {
+        if (status == "x" || status == "X") {
             holder.lnrBackground.setBackgroundResource(R.drawable.present_icon)
         } else if (status == "A") {
             holder.lnrBackground.setBackgroundResource(R.drawable.absent_icon)

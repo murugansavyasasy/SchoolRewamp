@@ -48,7 +48,8 @@ class GroupExamMarkResultsAdapter(
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblSplitSubjectName: TextView = itemView.findViewById(R.id.lblSplitSubjectName)
-        private val lblSplitmarkoutof100: TextView = itemView.findViewById(R.id.lblSplitmarkoutof100)
+        private val lblSplitmarkoutof100: TextView =
+            itemView.findViewById(R.id.lblSplitmarkoutof100)
 
 
         fun bind(subGroupExamMark: Subgroup) {
@@ -56,6 +57,7 @@ class GroupExamMarkResultsAdapter(
             lblSplitmarkoutof100.text = subGroupExamMark.mark
         }
     }
+
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)

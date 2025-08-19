@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/eight"
+    android:backgroundTint="@android:color/white"
+    card_view:cardCornerRadius="@dimen/twele"
+    card_view:cardElevation="@dimen/four">
+
+    <RelativeLayout
+        android:id="@+id/rlarelativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/twele">
+
+        <TextView
+            android:id="@+id/avatarText"
+            android:layout_width="@dimen/fourty_eight"
+            android:layout_height="@dimen/fourty_eight"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/twele"
+            android:background="@drawable/default_profile"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/twenty_sp" />
+
+
+        <TextView
+            android:id="@+id/lblStudentName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/avatarText"
+            android:text="SARANRAJ SHANMUGAM"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/fifteen_sp" />
+
+
+        <TextView
+            android:id="@+id/sectionlabel"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblStudentName"
+            android:layout_marginTop="@dimen/two"
+            android:layout_toEndOf="@id/avatarText"
+            android:text="I - B"
+            android:textColor="@color/light_gray_5"
+            android:textSize="@dimen/thirteen_sp" />
+
+
+        <TextView
+            android:id="@+id/submittedLabel"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sectionlabel"
+            android:layout_marginTop="@dimen/six"
+            android:layout_toEndOf="@id/avatarText"
+            android:text="Submitted:"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/submittedDate"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/submittedLabel"
+            android:layout_marginStart="@dimen/four"
+            android:layout_toEndOf="@id/submittedLabel"
+            android:text="Mon, 11"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:id="@+id/statusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/thirty_six"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/pending_button_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
+
+            <ImageView
+                android:id="@+id/cancelimage"
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/sixteen"
+                android:layout_marginEnd="@dimen/six"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/twele"
+                android:paddingEnd="@dimen/twele"
+                android:src="@drawable/close_red_color" />
+
+
+            <TextView
+                android:id="@+id/statuslabel"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending"
+                android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/rytList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/submittedLabel"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginBottom="@dimen/two"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:id="@+id/rytList2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ten"
+                android:minHeight="@dimen/sixty"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyAssignment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="@dimen/five"
+                    android:paddingEnd="@dimen/five" />
+
+                <TextView
+                    android:id="@+id/total_numbers"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/minus_fifteen"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:layout_toEndOf="@id/rcyAssignment"
+                    android:background="@drawable/bg_image_background_white_coupon"
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="@dimen/fifteen_sp" />
+
+            </RelativeLayout>
+
+
+            <ImageView
+                android:id="@+id/video_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:scaleType="fitXY"
+                android:src="@drawable/video_play"
+                android:visibility="gone"
+                app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+            <ProgressBar
+                android:id="@+id/loadingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateDrawable="@drawable/progress_bar_white"
+                android:indeterminateOnly="true"
+                android:visibility="gone">
+
+            </ProgressBar>
+
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
+                android:layout_weight="1" />
+
+
+            <ImageView
+                android:id="@+id/arrow_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/dark_pink_background"
+                android:paddingStart="@dimen/ten"
+                android:paddingTop="@dimen/eight"
+                android:paddingEnd="@dimen/ten"
+                android:paddingBottom="@dimen/eight"
+                android:src="@drawable/arrow_right_white"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/right_arrow"
+            android:contentDescription="arrow" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

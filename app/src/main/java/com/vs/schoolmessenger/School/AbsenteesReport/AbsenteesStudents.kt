@@ -10,10 +10,10 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListAdapter
-import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentDetailClickListener
+import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentClickListener
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentDetailClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.Student
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -64,6 +64,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
                     absenteesstudentdatedetailadapter.filter.filter(s)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -89,7 +90,8 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
 
 
         val absent_on = Constant.isAbsenteesReportDataSending?.date ?: ""
-        val section_id = Constant.isAbsenteesReportDataSending?.section_wise?.firstOrNull()?.section_id ?: ""
+        val section_id =
+            Constant.isAbsenteesReportDataSending?.section_wise?.firstOrNull()?.section_id ?: ""
 
         Log.d("API_CALL", "Fetching for date: $absent_on, section: $section_id")
 

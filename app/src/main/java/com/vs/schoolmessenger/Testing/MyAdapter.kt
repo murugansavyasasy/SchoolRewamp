@@ -29,7 +29,8 @@ class MyAdapter(
                 }
             )
         } else {
-            val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            val binding =
+                ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             DataViewHolder(binding)
         }
     }
@@ -40,11 +41,13 @@ class MyAdapter(
         }
     }
 
-    override fun getItemCount(): Int = if (isLoading) 5 else dataList.size // Show 5 shimmer items while loading
+    override fun getItemCount(): Int =
+        if (isLoading) 5 else dataList.size // Show 5 shimmer items while loading
 
     class ShimmerViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    class DataViewHolder(private val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    class DataViewHolder(private val binding: ItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
             binding.textView.text = item
         }

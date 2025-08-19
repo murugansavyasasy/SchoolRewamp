@@ -78,6 +78,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModel
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
+import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -103,7 +104,8 @@ import okhttp3.RequestBody
 class App(application: Application) : AndroidViewModel(application) {
 
     private var apiSchoolRepositories: SchoolServices = SchoolServices()
-    private var apiParentRepositories: ParentServices = ParentServices()
+
+    var apiParentRepositories: ParentServices = ParentServices()
 
 
     var isDashBoardData: LiveData<DashboardResponse?>? = null
@@ -309,7 +311,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isAssignmentlist: LiveData<ParentAssignmentResponse?>? = null
     var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
     var isStudentStats: LiveData<getStudentStats?>? = null
-    var getassignmentmysubmissionlist: LiveData<MySubmittedAssignmentsResponse?>? = null
+    var getassignmentmysubmission: LiveData<MySubmittedAssignmentsResponse?>? = null
     var islsrwskillsreport: LiveData<lsrwskillresponse?>? = null
     var isPtmSlotCreate: LiveData<StatusMessageModel?>? = null
     var isPtmSlotResponse: LiveData<SlotResponse?>? = null
@@ -326,12 +328,12 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetQuestion: LiveData<GetQuizQuestions?>? = null
     var isSubmitQuiz: LiveData<SubmitQuizResponse?>? = null
     var isGetMySubmission: LiveData<GetMySubmission?>? = null
-
+    var islsrwStudentlist: LiveData<StudentSubmissionLsrwResponse?>? = null
 
 
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
-        isDashBoardCountData =apiSchoolRepositories.isDashBoardCountLiveData
+        isDashBoardCountData = apiSchoolRepositories.isDashBoardCountLiveData
 
         isGetAds = apiSchoolRepositories.isGetAdsLiveData
         isGlobalVariables = apiSchoolRepositories.isGetGlobalVariablesLiveData
@@ -442,8 +444,9 @@ class App(application: Application) : AndroidViewModel(application) {
         isAssignmentlist = apiParentRepositories.isAssignmentlistLiveData
         isSubmitAssignment = apiParentRepositories.isSubmitAssignmentLiveData
         isStudentStats = apiParentRepositories.isStudentStatsLiveData
-        getassignmentmysubmissionlist = apiParentRepositories.getassignmentmysubmissionlistLiveData
+        getassignmentmysubmission = apiParentRepositories.getassignmentmysubmissionlistLiveData
         islsrwskillsreport = apiSchoolRepositories.islsrwskillsreportLiveData
+        islsrwStudentlist = apiSchoolRepositories.islsrwStudentlistLiveData
 
         isPtmSlotCreate = apiSchoolRepositories.isPtmSlotCreateLiveData
         isPtmSlotResponse = apiSchoolRepositories.isPtmSlotResponseLiveData
@@ -479,7 +482,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isDashBoardCountData(isToken: String, isMemberType: String, activity: Activity) {
-        apiSchoolRepositories.isDashBoardCount(isToken, isMemberType,activity)
+        apiSchoolRepositories.isDashBoardCount(isToken, isMemberType, activity)
     }
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {
@@ -1010,12 +1013,12 @@ class App(application: Application) : AndroidViewModel(application) {
         apiParentRepositories.isStudentStats(isToken)
     }
 
-    fun isNotificationList(isToken: String) {
-        apiParentRepositories.isNotifications(isToken)
+    fun isNotificationList(token: String, deviceType: String) {
+        apiParentRepositories.isNotifications(token, deviceType)
     }
 
 
-    fun getassignmentmysubmissionlist(
+    fun isGetAssignmentSubList(
         isToken: String, id: String
     ) {
         apiParentRepositories.getassignmentmysubmissionlist(isToken, id)
@@ -1027,6 +1030,13 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String
     ) {
         apiSchoolRepositories.islsrwskillsreport(isToken)
+
+    }
+    fun islsrwStudentlist(
+        isToken: String,
+        id: String
+    ) {
+        apiSchoolRepositories.islsrwStudentlist(isToken,id)
 
     }
 
@@ -1139,7 +1149,6 @@ class App(application: Application) : AndroidViewModel(application) {
         ) {
         apiParentRepositories.isGetMySubmission(isToken,id)
     }
-
 
 
 }

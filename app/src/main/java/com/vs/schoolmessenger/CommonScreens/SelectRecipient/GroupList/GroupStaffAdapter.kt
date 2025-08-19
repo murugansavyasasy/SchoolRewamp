@@ -12,7 +12,8 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class GroupStaffAdapter(private var isGroup: Boolean,
+class GroupStaffAdapter(
+    private var isGroup: Boolean,
     var itemList: List<NameAndIds>?,
     private var listener: GroupListClickListener,
     private var context: Context,
@@ -60,7 +61,7 @@ class GroupStaffAdapter(private var isGroup: Boolean,
         fun bind(data: NameAndIds, position: Int) {
             lblGroupName.text = data.name
 
-            if (isGroup){
+            if (isGroup) {
                 data.created_on.takeIf { it.isNotEmpty() }?.let {
                     lblCreated.visibility = View.VISIBLE
                     lblCreated.text = Constant.convertDateTimeFormat(it)

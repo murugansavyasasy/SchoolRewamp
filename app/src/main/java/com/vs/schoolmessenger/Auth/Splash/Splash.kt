@@ -12,17 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.biometric.BiometricPrompt
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -82,6 +79,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
     override fun getViewBinding(): SplashBinding {
         return SplashBinding.inflate(layoutInflater)
     }
+
     private var authViewModel: Auth? = null
 
     override fun setupViews() {
@@ -119,7 +117,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             Constant.hideLoading(this@Splash)
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser
@@ -204,7 +202,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         authViewModel!!.isVersionCheck?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
                     val isVersionCheckData = response.data
                     isVersionData = isVersionCheckData
@@ -264,18 +262,16 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         Log.d("mobile_number", mobile_number.toString())
         Log.d("password", password.toString())
         if (!mobile_number.equals("") && !password.equals("")) {
-           // isValidateUser()
+            // isValidateUser()
             if (SharedPreference.isFingerprintEnabled(this)) {
-                if (SharedPreference.isLoggedIn(this)){
-                    Constant.setupBiometricPrompt(this,this)
+                if (SharedPreference.isLoggedIn(this)) {
+                    Constant.setupBiometricPrompt(this, this)
                     Constant.authenticate(this)
-                }
-                else{
+                } else {
                     val intent = Intent(this@Splash, Login::class.java)
                     startActivity(intent)
                 }
-            }
-            else{
+            } else {
                 isValidateUser()
             }
         } else {
@@ -409,9 +405,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
     fun isNoInterNet() {
         val dialogView =
             LayoutInflater.from(this).inflate(R.layout.no_internet_connection, null)
-        val lottieView =
-            dialogView.findViewById<LottieAnimationView>(R.id.lottieAnimationView)
-        val tvMessage = dialogView.findViewById<TextView>(R.id.tvMessage)
+        dialogView.findViewById<LottieAnimationView>(R.id.lottieAnimationView)
+        dialogView.findViewById<TextView>(R.id.tvMessage)
         val btnCreate = dialogView.findViewById<CardView>(R.id.btnCreate)
 
         val alertDialog = AlertDialog.Builder(this)

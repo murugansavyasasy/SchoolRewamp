@@ -150,12 +150,13 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
     private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {
 //        Constant.executeAfterDelay {
-            isStaffAttendanceReportAdapter = StaffAttendanceReportAdapter(
-                isStaffReport, this, this, Constant.isShimmerViewDisable
-            )
-            binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
-       // }
+        isStaffAttendanceReportAdapter = StaffAttendanceReportAdapter(
+            isStaffReport, this, this, Constant.isShimmerViewDisable
+        )
+        binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
+        // }
     }
+
     private fun isLoadYear(isAcademicYear: List<AcademicYear>?) {
         val uniqueYears =
             isAcademicYear!!.mapNotNull { it.year.split("-").firstOrNull() }.distinct()
@@ -214,9 +215,9 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                     adapter.notifyDataSetChanged()
 
                     isMonthLoaded = reorderedMonths[position]
-                binding.lytNoRecordFound.visibility = View.GONE
-                selectedMonthNumber = String.format("%02d", months.indexOf(isMonthLoaded) + 1)
-                isGetStaffList()
+                    binding.lytNoRecordFound.visibility = View.GONE
+                    selectedMonthNumber = String.format("%02d", months.indexOf(isMonthLoaded) + 1)
+                    isGetStaffList()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -352,7 +353,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
-                    val selectedOption = isGetStaffListData!![position]
+                    isGetStaffListData!![position]
                     isStaffId = isGetStaffListData!!.get(position).id
                     getStaffAttendanceReport("", isSelectedYear!!, selectedMonthNumber!!)
                 }
@@ -365,16 +366,16 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btnHistory -> {
-                binding.btnHistory.isEnabled=false
-                binding.btnCreate.isEnabled=true
+                binding.btnHistory.isEnabled = false
+                binding.btnCreate.isEnabled = true
                 isLoadYear(Constant.isAcademicYearList)
                 isTodayList = false
                 isBackgroundChange(binding.btnHistory)
             }
 
             R.id.btnCreate -> {
-                binding.btnHistory.isEnabled=true
-                binding.btnCreate.isEnabled=false
+                binding.btnHistory.isEnabled = true
+                binding.btnCreate.isEnabled = false
                 isTodayList = true
                 isBackgroundChange(binding.btnCreate)
             }

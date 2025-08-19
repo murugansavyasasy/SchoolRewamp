@@ -25,11 +25,10 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
 
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
-            binding.header.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
-        }
-        else {
+            binding.header.setBackgroundResource(R.drawable.gradient_theme_parent)
+        } else {
             setupToolbarBlue()
-            binding.header.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+            binding.header.setBackgroundResource(R.drawable.gradient_theme_school)
         }
     }
 

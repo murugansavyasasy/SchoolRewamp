@@ -1,7 +1,5 @@
 package com.vs.schoolmessenger.Repository
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Utils.Constant
@@ -28,7 +26,8 @@ object ApiCallRequest {
         jsonObject.addProperty(APIKeyNames.target_type, targetType)
         jsonObject.addProperty(APIKeyNames.circular_type, circularType)
         jsonObject.addProperty(
-            APIKeyNames.duration, Constant.getAudioDurationInSeconds(Constant.isAwsUploadedFiles[0].isFileUrl.toString())
+            APIKeyNames.duration,
+            Constant.getAudioDurationInSeconds(Constant.isAwsUploadedFiles[0].isFileUrl.toString())
         )
 
         val startTime: String
@@ -90,7 +89,8 @@ object ApiCallRequest {
         selectedIds: MutableList<String>,
         title: String,
         description: String,
-        subjectId: Int): JsonObject {
+        subjectId: Int
+    ): JsonObject {
 
         val jsonObject = JsonObject()
         val sectionArray = JsonArray()
@@ -100,7 +100,10 @@ object ApiCallRequest {
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
             isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
-            isSelectedObject.addProperty(APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType.toString())
+            isSelectedObject.addProperty(
+                APIKeyNames.type,
+                Constant.isAwsUploadedFiles[i].isFileType.toString()
+            )
             filePathArray.add(isSelectedObject)
         }
 
@@ -170,7 +173,8 @@ object ApiCallRequest {
         id: String,
         description: String,
         iframe: String,
-        file_size: String): JsonObject {
+        file_size: String
+    ): JsonObject {
 
         val jsonObject = JsonObject()
         val filePathArray = JsonArray()
@@ -244,7 +248,10 @@ object ApiCallRequest {
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
             isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
-            isSelectedObject.addProperty(APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType.toString())
+            isSelectedObject.addProperty(
+                APIKeyNames.type,
+                Constant.isAwsUploadedFiles[i].isFileType.toString()
+            )
             filePathArray.add(isSelectedObject)
         }
 
@@ -284,7 +291,10 @@ object ApiCallRequest {
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
             isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
-            isSelectedObject.addProperty(APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType.toString())
+            isSelectedObject.addProperty(
+                APIKeyNames.type,
+                Constant.isAwsUploadedFiles[i].isFileType.toString()
+            )
             filePathArray.add(isSelectedObject)
         }
 

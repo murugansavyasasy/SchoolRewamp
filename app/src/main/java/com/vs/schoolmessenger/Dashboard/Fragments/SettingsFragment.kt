@@ -16,7 +16,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.masoudss.lib.utils.Utils
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
@@ -71,27 +70,27 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrChangePassword.setOnClickListener(this)
         binding.lnrSignalCheck.setOnClickListener(this)
 
-        if(Constant.checkBiometricSupport(requireActivity())){
-           binding.lnrEnableFingerPrint.visibility = View.VISIBLE
-        }
-        else{
+        if (Constant.checkBiometricSupport(requireActivity())) {
+            binding.lnrEnableFingerPrint.visibility = View.VISIBLE
+        } else {
             binding.lnrEnableFingerPrint.visibility = View.GONE
         }
 
-        binding.switchFingerprint.isChecked = SharedPreference.isFingerprintEnabled(requireActivity())
+        binding.switchFingerprint.isChecked =
+            SharedPreference.isFingerprintEnabled(requireActivity())
         binding.switchFingerprint.setOnCheckedChangeListener { _, isChecked ->
-                SharedPreference.setFingerprintEnabled(requireActivity(), isChecked)
-                Toast.makeText(
-                    requireActivity(),
-                    "Fingerprint login ${if (isChecked) "enabled" else "disabled"}",
-                    Toast.LENGTH_SHORT
-                ).show()
+            SharedPreference.setFingerprintEnabled(requireActivity(), isChecked)
+            Toast.makeText(
+                requireActivity(),
+                "Fingerprint login ${if (isChecked) "enabled" else "disabled"}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         if (Constant.isParentChoose) {
-            binding.rlaLblSettings.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
+            binding.rlaLblSettings.setBackgroundResource(R.drawable.gradient_theme_parent)
         } else {
-            binding.rlaLblSettings.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+            binding.rlaLblSettings.setBackgroundResource(R.drawable.gradient_theme_school)
         }
 
         return binding.root

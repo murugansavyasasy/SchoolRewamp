@@ -1,23 +1,21 @@
 package com.vs.schoolmessenger.Parent.QuizExam
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 
-class QuizCompletedAdapter (
+class QuizCompletedAdapter(
     private var itemList: List<QuizCompletedData>?,
     private var listener: QuizCompletedListener,
     private var context: Context,
     private var isLoading: Boolean
 
-) : RecyclerView.Adapter<RecyclerView.ViewHolder> () {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private var selectedPosition = RecyclerView.NO_POSITION
@@ -52,8 +50,6 @@ class QuizCompletedAdapter (
     }
 
 
-
-
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val questionText: TextView = itemView.findViewById(R.id.questionText)
@@ -61,7 +57,6 @@ class QuizCompletedAdapter (
         private val option2: TextView = itemView.findViewById(R.id.option2)
         private val option3: TextView = itemView.findViewById(R.id.option3)
         private val option4: TextView = itemView.findViewById(R.id.option4)
-
 
 
         fun bind(
@@ -82,6 +77,7 @@ class QuizCompletedAdapter (
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val shimmerLayout: ShimmerFrameLayout =
                 itemView.findViewById(R.id.shimmer_view_container)
+
             init {
                 shimmerLayout.startShimmer() // Start shimmer effect
             }

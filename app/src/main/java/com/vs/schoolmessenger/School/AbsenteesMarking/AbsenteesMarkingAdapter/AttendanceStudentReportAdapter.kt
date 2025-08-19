@@ -8,15 +8,13 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
-import com.vs.schoolmessenger.School.StudentReport.StudentReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttendanceStudentReportAdapter(
-    private var itemList: List<StudentAttendanceReportData>?= emptyList(),
+    private var itemList: List<StudentAttendanceReportData>? = emptyList(),
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -30,7 +28,8 @@ class AttendanceStudentReportAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.attendance_student_report_item)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.attendance_student_report_item)
             ShimmerViewHolder(
                 shimmerView
             )
@@ -65,18 +64,17 @@ class AttendanceStudentReportAdapter(
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StudentAttendanceReportData, position: Int) {
             lblStudentName.text = data.student_name
-            lblAdmissionValue.text =": "+ data.admission_no
+            lblAdmissionValue.text = ": " + data.admission_no
             lblAttendanceStatus.text = data.att_status
 
             if (data.att_status == Constant.school) {
-                lblAttendanceStatus.text= Constant.Absent
+                lblAttendanceStatus.text = Constant.Absent
                 lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
-            } else if(data.att_status == Constant.P) {
-                lblAttendanceStatus.text= Constant.Present
+            } else if (data.att_status == Constant.P) {
+                lblAttendanceStatus.text = Constant.Present
                 lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
-            }
-            else{
-                lblAttendanceStatus.text=data.att_status
+            } else {
+                lblAttendanceStatus.text = data.att_status
                 lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_orange))
             }
         }

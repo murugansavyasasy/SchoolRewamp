@@ -1,16 +1,13 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponAdapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.content.Intent
-import android.util.Log
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.Filterable
+import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,7 +16,6 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickLis
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponActivateActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -127,7 +123,7 @@ class CouponSummaryAdapter(
                 val expiryDate = sdf.parse(expiryDateStr)
                 val currentDate = Date()
 
-                val diffInMillies = expiryDate!!.getTime() - currentDate.getTime()
+                val diffInMillies = expiryDate!!.time - currentDate.time
                 val daysLeft = TimeUnit.MILLISECONDS.toDays(diffInMillies)
 
                 if (daysLeft >= 0) {

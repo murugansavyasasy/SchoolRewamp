@@ -13,11 +13,11 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 
 import com.vs.schoolmessenger.Parent.Quiz.Adapter.QuizUpcomingAdapter
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamListData
+
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-
 
 class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
@@ -275,6 +275,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 //                binding.recyclerView.visibility = View.VISIBLE
 //                isUpcoming()
 //            }
+
 
             R.id.imgBack -> onBackPressed()
 

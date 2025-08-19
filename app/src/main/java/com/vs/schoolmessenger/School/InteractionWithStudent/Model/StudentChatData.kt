@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent.Model
 
-data class StudentChatData (
+data class StudentChatData(
     val id: String,
     val name: String,
     val section_id: String,

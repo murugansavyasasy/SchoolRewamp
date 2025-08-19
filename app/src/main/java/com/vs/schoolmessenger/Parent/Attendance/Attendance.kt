@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.Attendance
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.PopupMenu
@@ -14,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.AttendanceReport
-import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStatsData
 import com.vs.schoolmessenger.Parent.Attendance.Model.GetWeekStatusData
+import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStatsData
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Holidays
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.NewLeaveRequest
@@ -26,7 +25,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendanceBinding
 
 
-class Attendance : BaseActivity<AttendanceBinding>(){
+class Attendance : BaseActivity<AttendanceBinding>() {
 
     override fun getViewBinding(): AttendanceBinding {
         return AttendanceBinding.inflate(layoutInflater)
@@ -42,16 +41,23 @@ class Attendance : BaseActivity<AttendanceBinding>(){
         setupToolbarBlue()
         Constant
 
-        binding.imgBack.setOnClickListener{
+        binding.imgBack.setOnClickListener {
             onBackPressed()
         }
-        binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+        binding.imgBack.setColorFilter(
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_IN
+        )
 
-        binding.imgInfo.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
+        binding.imgInfo.setColorFilter(
+            ContextCompat.getColor(this, R.color.PrimaryColor),
+            PorterDuff.Mode.SRC_IN
+        )
 
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.lblStudentSection.text = isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
+        binding.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -59,11 +65,11 @@ class Attendance : BaseActivity<AttendanceBinding>(){
 
         val dateDetails = Constant.getCurrentDateDetails()
         binding.lblDate.text = dateDetails["day"]
-        binding.lblDateSuffix.text =Constant.getDaySuffix(dateDetails["day"]?.toIntOrNull() ?:1)
+        binding.lblDateSuffix.text = Constant.getDaySuffix(dateDetails["day"]?.toIntOrNull() ?: 1)
         binding.lblDay.text = dateDetails["weekday"]
         binding.lblMonthYear.text = dateDetails["monthYear"]
         loadStudentStats()
-        binding.imgInfo.setOnClickListener{
+        binding.imgInfo.setOnClickListener {
             val popupMenu = PopupMenu(this, binding.imgInfo)
             popupMenu.menuInflater.inflate(R.menu.attendance_leave_status_menu, popupMenu.menu)
             forcePopupMenuIcons(popupMenu)
@@ -75,7 +81,7 @@ class Attendance : BaseActivity<AttendanceBinding>(){
             Constant.hideLoading(this@Attendance)
             if (response != null) {
                 if (response.status) {
-                    isStudentStatsData= response.data.firstOrNull()
+                    isStudentStatsData = response.data.firstOrNull()
                     isLoadStudentStats(isStudentStatsData!!)
 
 
@@ -88,22 +94,22 @@ class Attendance : BaseActivity<AttendanceBinding>(){
         }
 
 
-        binding.lnrLeaveRequest.setOnClickListener{
+        binding.lnrLeaveRequest.setOnClickListener {
             val myIntent = Intent(this@Attendance, NewLeaveRequest::class.java)
             this@Attendance.startActivity(myIntent)
         }
 
-        binding.lnrAttendanceReport.setOnClickListener{
+        binding.lnrAttendanceReport.setOnClickListener {
             val myIntent = Intent(this@Attendance, AttendanceReport::class.java)
             this@Attendance.startActivity(myIntent)
         }
 
-        binding.lnrHoliday.setOnClickListener{
+        binding.lnrHoliday.setOnClickListener {
             val myIntent = Intent(this@Attendance, Holidays::class.java)
             this@Attendance.startActivity(myIntent)
         }
 
-        binding.lnrLeaveHistory.setOnClickListener{
+        binding.lnrLeaveHistory.setOnClickListener {
             val myIntent = Intent(this@Attendance, LeaveRequest::class.java)
             this@Attendance.startActivity(myIntent)
         }
@@ -114,16 +120,24 @@ class Attendance : BaseActivity<AttendanceBinding>(){
         binding.lblAttendancePercentage.text = data.attendance_percentage
         binding.lblLeaveTakenPercentage.text = data.absent_days.toString()
         binding.lblOngoingDaysPercentage.text = data.completed_working_days.toString()
-        animateProgress(binding.attendanceProgressBar,data.attendance_percentage.toIntOrNull() ?: 0, 100)
-        animateProgress(binding.leaveTakenProgressBar, data.absent_days,20)
-        animateProgress(binding.ongoingDaysProgressBar, data.completed_working_days,data.total_working_days)
+        animateProgress(
+            binding.attendanceProgressBar,
+            data.attendance_percentage.toIntOrNull() ?: 0,
+            100
+        )
+        animateProgress(binding.leaveTakenProgressBar, data.absent_days, 20)
+        animateProgress(
+            binding.ongoingDaysProgressBar,
+            data.completed_working_days,
+            data.total_working_days
+        )
 
         val attList = data.weekly_status.att_list
 
         val days = listOf("M", "T", "W", "T", "F", "S", "S")
 
         if (attList.isNotEmpty()) {
-            binding.rcWeekStatus.visibility=View.VISIBLE
+            binding.rcWeekStatus.visibility = View.VISIBLE
 
             val weekList = days.mapIndexed { index, day ->
                 GetWeekStatusData(day, attList.getOrElse(index) { "" })
@@ -131,9 +145,8 @@ class Attendance : BaseActivity<AttendanceBinding>(){
             binding.rcWeekStatus.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.rcWeekStatus.adapter = WeekStatusAdapter(weekList)
-        }
-        else{
-            binding.rcWeekStatus.visibility=View.GONE
+        } else {
+            binding.rcWeekStatus.visibility = View.GONE
         }
     }
 

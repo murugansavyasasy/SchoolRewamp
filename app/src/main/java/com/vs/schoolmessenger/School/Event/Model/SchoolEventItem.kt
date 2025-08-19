@@ -2,7 +2,7 @@ package com.vs.schoolmessenger.School.Event.Model
 
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.FilePath
 
-data class SchoolEventItem (
+data class SchoolEventItem(
     val id: String,
     val title: String,
     val category: String,

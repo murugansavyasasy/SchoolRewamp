@@ -88,6 +88,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModel
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
+import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -529,9 +530,10 @@ interface ApiInterfaces {
     ): Call<CertificatesListResponse?>
 
     @GET(APIMethods.isNotifications)
-    fun isNotifications(
-        @Header(APIKeyNames.Authorization) token: String
-    ): Call<NotificationResponse?>
+    fun getNotifications(
+        @Header("Authorization") token: String,
+        @Query("device_type") deviceType: String
+    ): Call<NotificationResponse>
 
 
     @GET(APIMethods.get_time_table)
@@ -817,11 +819,18 @@ interface ApiInterfaces {
     ): Call<MySubmittedAssignmentsResponse?>?
 
 
-
     @GET(APIMethods.islsrwskillsreport)
     fun islsrwskillsreport(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<lsrwskillresponse?>?
+
+    @GET(APIMethods.islsrwStudentlist)
+    fun islsrwStudentlist(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: String
+    ): Call<StudentSubmissionLsrwResponse?>?
+
+
     // PTM
 
     @POST(APIMethods.isCreateSlots)

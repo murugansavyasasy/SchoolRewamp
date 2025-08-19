@@ -1,14 +1,12 @@
 package com.vs.schoolmessenger.Dashboard.Settings.Notification
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import de.hdodenhof.circleimageview.CircleImageView
@@ -65,10 +63,11 @@ class NotificationAdapter(
 
         fun bind(data: NotificationDataClass, position: Int) {
 
-            lblSendBy.text = data.sendBy
+            lblSendBy.text = "Posted by : ${data.sendBy}"
             lblTitle.text = data.title
             lblContent.text = data.content
-            first_letter.text = data.sendBy.first().toString()
+            first_letter.text = data.sendBy.firstOrNull()?.toString() ?: "?"
+
             when (position) {
                 1 -> {
                     lblNotification.visibility = View.VISIBLE
@@ -79,6 +78,7 @@ class NotificationAdapter(
                     lblNotification.visibility = View.VISIBLE
                     imgRoundCard.setImageResource(R.drawable.phone_icon)
                 }
+
                 3 -> {
                     lblNotification.visibility = View.GONE
                     imgRoundCard.setImageResource(R.drawable.mail_icon)
@@ -109,6 +109,7 @@ class NotificationAdapter(
                     lblNotification.visibility = View.GONE
                     imgRoundCard.setImageResource(R.drawable.text_notification)
                 }
+
                 9 -> {
                     lblNotification.visibility = View.VISIBLE
                     imgRoundCard.setImageResource(R.drawable.voice)
@@ -118,7 +119,9 @@ class NotificationAdapter(
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
+        private val shimmerLayout: ShimmerFrameLayout =
+            itemView.findViewById(R.id.shimmer_view_container)
+
         init {
             shimmerLayout.startShimmer() // Start shimmer effect
         }

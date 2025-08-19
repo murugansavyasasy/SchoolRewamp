@@ -74,7 +74,7 @@ class ChildMenuAdapter(
             is DataViewHolder -> {
                 val actualPosition = if (showAd && position > 9) position - 1 else position
                 itemList?.getOrNull(actualPosition)?.let { menuDetail ->
-                    holder.bind(menuDetail, actualPosition, listener,itemCountList)
+                    holder.bind(menuDetail, actualPosition, listener, itemCountList)
                 }
             }
 
@@ -108,6 +108,7 @@ class ChildMenuAdapter(
             itemCountList: ArrayList<MenuCountDetail>?
         ) {
             itemTitle.text = data.name
+            itemDescription.text = data.description
 
             if (itemCountList!![position].unread_count != 0) {
                 imgReadCount.visibility = View.VISIBLE
@@ -215,7 +216,7 @@ class ChildMenuAdapter(
             }
 
             rlaMenu.setOnClickListener {
-                Constant.isSchoolMenuName=data.name
+                Constant.isSchoolMenuName = data.name
                 Constant.SELECTED_SCHOOL_MENU = data.id
                 listener.onClick(data)
             }
@@ -243,29 +244,6 @@ class ChildMenuAdapter(
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //class ChildMenuAdapter(

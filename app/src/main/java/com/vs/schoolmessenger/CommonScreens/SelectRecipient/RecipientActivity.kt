@@ -573,7 +573,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
-                    val selectedOption = isSubject!![position]
+                    isSubject!![position]
                     Log.d(
                         "DropdownMenu",
                         "Clicked Standard Year: ID = ${isSubject!![position].id}, Year = ${isSubject[position].name}"
@@ -598,7 +598,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
-                    val selectedOption = isStandard!![position]
+                    isStandard!![position]
                     Log.d(
                         "DropdownMenu",
                         "Clicked Standard Year: ID = ${isStandard!![position].id}, Year = ${isStandard[position].name}"
@@ -842,7 +842,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.chAllSelect.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
                 binding.subjectlabel.visibility = View.GONE
-                if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
                     binding.btnSpecificStudent.visibility = View.VISIBLE
                 } else {
                     binding.btnSpecificStudent.visibility = View.GONE
@@ -1031,7 +1031,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
-
 
 
     fun eventsendapi() {

@@ -17,13 +17,13 @@ import com.vs.schoolmessenger.School.Assignment.Model.FilePath
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class AssignmentFilePathAdapter (
+class AssignmentFilePathAdapter(
 
     private var visibleList: List<FilePath>,
     private var fullList: List<FilePath>,
     private var context: Context,
     private var isLoading: Boolean
-):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
@@ -32,9 +32,11 @@ class AssignmentFilePathAdapter (
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.attachement_rewamp_recycler)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.attachement_rewamp_recycler)
             ShimmerViewHolder(shimmerView)
         } else {
             val view =
@@ -124,7 +126,6 @@ class AssignmentFilePathAdapter (
 
             DefaultImage.visibility = View.VISIBLE
         }
-
 
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -70,6 +70,7 @@ class AttachmentFileView(
                         .placeholder(R.drawable.image_placeholder)
                         .into(imgAttachment)
                 }
+
                 Constant.PDF -> imgAttachment.setBackgroundResource(R.drawable.hw_pdf_img)
                 Constant.DOC, Constant.DOCX -> imgAttachment.setBackgroundResource(R.drawable.microsoft_word_img)
                 Constant.TXT -> imgAttachment.setBackgroundResource(R.drawable.txt_file_img)

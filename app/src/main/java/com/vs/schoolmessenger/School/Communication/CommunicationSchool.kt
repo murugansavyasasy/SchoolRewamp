@@ -30,7 +30,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
@@ -49,7 +48,6 @@ import com.vs.schoolmessenger.School.Communication.DataClass.VoiceHistoryDetails
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.Communication.Interface.TextHistoryClickListener
 import com.vs.schoolmessenger.School.Communication.Interface.VoiceHistoryClickListener
-import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomDatePicker
 import com.vs.schoolmessenger.Utils.FileExtensionFromContentUri
@@ -172,11 +170,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         isFileExtensionFromContentUri = FileExtensionFromContentUri()
 
-        if (isUserDetails!!.staff_details.size > 1) {
-            isMultipleSchool = true
-        } else {
-            isMultipleSchool = false
-        }
+        isMultipleSchool = isUserDetails!!.staff_details.size > 1
 
         binding.lblStartTime.text = Constant.getCurrentTime()
         binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
@@ -1272,7 +1266,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
         mTextAdapter = TextHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
-        binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false;
+        binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false
         binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
 
         appViewModel!!.isGetTextHistory(isAccessToken!!, this)

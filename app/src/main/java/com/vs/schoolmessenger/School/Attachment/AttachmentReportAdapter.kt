@@ -7,7 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.*
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -15,8 +19,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 class AttachmentReportAdapter(
     private var attachmentList: List<AttachmentReportData>?,
@@ -76,15 +79,18 @@ class AttachmentReportAdapter(
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val charString = constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
+                val charString =
+                    constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
 
                 val resultList = if (charString.isEmpty()) {
                     originalList
                 } else {
                     originalList.filter {
                         it.title?.lowercase(Locale.getDefault())?.contains(charString) == true ||
-                                it.description?.lowercase(Locale.getDefault())?.contains(charString) == true ||
-                                it.sent_by?.lowercase(Locale.getDefault())?.contains(charString) == true
+                                it.description?.lowercase(Locale.getDefault())
+                                    ?.contains(charString) == true ||
+                                it.sent_by?.lowercase(Locale.getDefault())
+                                    ?.contains(charString) == true
                     }
                 }
 
@@ -149,7 +155,8 @@ class AttachmentReportAdapter(
             lblDescription.ellipsize = null
             lblDescription.text = data.description
 
-            lblDescription.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            lblDescription.viewTreeObserver.addOnPreDrawListener(object :
+                ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
                     lblDescription.viewTreeObserver.removeOnPreDrawListener(this)
 

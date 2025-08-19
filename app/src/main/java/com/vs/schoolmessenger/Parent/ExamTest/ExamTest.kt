@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.ExamTest
 
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.databinding.AssignmentParentBinding
 import com.vs.schoolmessenger.databinding.ExamTestParentBinding
 
 class ExamTest : BaseActivity<ExamTestParentBinding>() {

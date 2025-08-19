@@ -43,28 +43,26 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        getWindow().getDecorView().setSystemUiVisibility(
-            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        )
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 
         bottomSheetBehavior = BottomSheetBehavior.from<View?>(binding.bottomLayout.bottomSheet)
 
-        val screenHeight = getResources().getDisplayMetrics().heightPixels
+        val screenHeight = getResources().displayMetrics.heightPixels
         val topGap = 230
 
 
-        val params: ViewGroup.LayoutParams = binding.imageBanner.getLayoutParams()
+        val params: ViewGroup.LayoutParams = binding.imageBanner.layoutParams
         params.height = screenHeight / 2
         binding.imageBanner.setLayoutParams(params)
 
         val bottomSheetParams: ViewGroup.LayoutParams =
-            binding.bottomLayout.bottomSheet.getLayoutParams()
+            binding.bottomLayout.bottomSheet.layoutParams
         bottomSheetParams.height = screenHeight - topGap
         binding.bottomLayout.bottomSheet.setLayoutParams(bottomSheetParams)
 
 
         bottomSheetBehavior?.setFitToContents(true)
-        bottomSheetBehavior?.setPeekHeight((screenHeight * 0.6).toInt())
+        bottomSheetBehavior?.peekHeight = (screenHeight * 0.6).toInt()
 
         binding.bottomLayout.remember.setOnClickListener(this)
         binding.bottomLayout.remember1.setOnClickListener(this)
@@ -89,7 +87,7 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
 
         coupon_status = intent.getStringExtra("coupon_status") ?: ""
 
-        Log.d("coupon_status",coupon_status)
+        Log.d("coupon_status", coupon_status)
         if ("activated".equals(coupon_status, ignoreCase = true)) {
             binding.btnActivateCoupon.visibility = View.GONE
         } else {
@@ -192,14 +190,14 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
     private fun expandhowtouse() {
 
         if (!isExpanded) {
-            binding.bottomLayout.expandableText.setVisibility(View.VISIBLE)
+            binding.bottomLayout.expandableText.visibility = View.VISIBLE
             binding.bottomLayout.rememberSymbol.setImageResource(R.drawable.ic_up_arrow)
 
-            binding.bottomLayout.expandableText1.setVisibility(View.GONE)
+            binding.bottomLayout.expandableText1.visibility = View.GONE
             binding.bottomLayout.rememberSymbol1.setImageResource(R.drawable.ic_down_black)
             isExpanded1 = false
         } else {
-            binding.bottomLayout.expandableText.setVisibility(View.GONE)
+            binding.bottomLayout.expandableText.visibility = View.GONE
             binding.bottomLayout.rememberSymbol.setImageResource(R.drawable.ic_down_black)
         }
         isExpanded = !isExpanded
@@ -209,14 +207,14 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
     private fun expandtermsandcondition() {
 
         if (!isExpanded1) {
-            binding.bottomLayout.expandableText1.setVisibility(View.VISIBLE)
+            binding.bottomLayout.expandableText1.visibility = View.VISIBLE
             binding.bottomLayout.rememberSymbol1.setImageResource(R.drawable.ic_up_arrow)
 
-            binding.bottomLayout.expandableText.setVisibility(View.GONE)
+            binding.bottomLayout.expandableText.visibility = View.GONE
             binding.bottomLayout.rememberSymbol.setImageResource(R.drawable.ic_down_black)
             isExpanded = false
         } else {
-            binding.bottomLayout.expandableText1.setVisibility(View.GONE)
+            binding.bottomLayout.expandableText1.visibility = View.GONE
             binding.bottomLayout.rememberSymbol1.setImageResource(R.drawable.ic_down_black)
         }
         isExpanded1 = !isExpanded1

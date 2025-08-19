@@ -2,13 +2,13 @@ package com.vs.schoolmessenger.Utils
 
 import android.app.Activity
 import android.content.Context
+import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import androidx.core.content.edit
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 
 object SharedPreference {
 
@@ -43,7 +43,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putBoolean(KEY_FINGER_PRINT_SETUP_SKIP, enabled) }
+        sharedPreferences.edit { putBoolean(KEY_FINGER_PRINT_SETUP_SKIP, enabled) }
     }
 
     fun isFingerprintSetupSkip(activity: Activity): Boolean {
@@ -65,7 +65,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putBoolean(KEY_FINGERPRINT_ENABLED, enabled) }
+        sharedPreferences.edit { putBoolean(KEY_FINGERPRINT_ENABLED, enabled) }
     }
 
     fun isFingerprintEnabled(activity: Activity): Boolean {
@@ -88,7 +88,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putBoolean(KEY_LOGGED_IN, loggedIn) }
+        sharedPreferences.edit { putBoolean(KEY_LOGGED_IN, loggedIn) }
     }
 
     fun isLoggedIn(activity: Activity): Boolean {
@@ -111,7 +111,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putBoolean(KEY_FINGER_PRINT_SKIPPED, loggedIn) }
+        sharedPreferences.edit { putBoolean(KEY_FINGER_PRINT_SKIPPED, loggedIn) }
     }
 
     fun isFingerPrintSkipped(activity: Activity): Boolean {
@@ -133,8 +133,8 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putString(SH_MOBILE_NUMBER, isMobileNumber) }
-        sharedPreferences.edit() { putString(SH_PASSWORD, isPassWord) }
+        sharedPreferences.edit { putString(SH_MOBILE_NUMBER, isMobileNumber) }
+        sharedPreferences.edit { putString(SH_PASSWORD, isPassWord) }
     }
 
     fun getMobileNumber(activity: Context): String? {
@@ -169,7 +169,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putInt(SH_COUNTRY_ID, isCountryId!!) }
+        sharedPreferences.edit { putInt(SH_COUNTRY_ID, isCountryId!!) }
     }
 
     fun getCountryId(activity: Context): Int? {
@@ -193,7 +193,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putBoolean(SH_LOGOUT, isLogout!!) }
+        sharedPreferences.edit { putBoolean(SH_LOGOUT, isLogout!!) }
     }
 
     fun getLogout(activity: Context): Boolean? {
@@ -217,7 +217,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putString(SH_AGREE, isAppLanguage) }
+        sharedPreferences.edit { putString(SH_AGREE, isAppLanguage) }
     }
 
     fun getLanguage(activity: Context): String? {
@@ -242,7 +242,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putString(SH_USER_DETAILS, userJson) }
+        sharedPreferences.edit { putString(SH_USER_DETAILS, userJson) }
     }
 
 
@@ -260,7 +260,7 @@ object SharedPreference {
             val gson = Gson()
             userDetails = gson.fromJson(userJson, UserDetails::class.java)
         }
-        return userDetails;
+        return userDetails
     }
 
     fun putChildDetails(activity: Context, isChildDetails: ChildDetails) {
@@ -273,7 +273,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putString(SH_CHILD_DETAILS, userJson) }
+        sharedPreferences.edit { putString(SH_CHILD_DETAILS, userJson) }
     }
 
     fun getChildDetails(activity: Context): ChildDetails? {
@@ -291,7 +291,7 @@ object SharedPreference {
             val gson = Gson()
             isChildDetails = gson.fromJson(userJson, ChildDetails::class.java)
         }
-        return isChildDetails;
+        return isChildDetails
     }
 
     fun putStaffDetails(activity: Context, isChildDetails: StaffDetails) {
@@ -304,7 +304,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putString(SH_STAFF_DETAILS, userJson) }
+        sharedPreferences.edit { putString(SH_STAFF_DETAILS, userJson) }
     }
 
     fun getStaffDetails(activity: Context): StaffDetails? {
@@ -322,7 +322,7 @@ object SharedPreference {
             val gson = Gson()
             isChildDetails = gson.fromJson(userJson, StaffDetails::class.java)
         }
-        return isChildDetails;
+        return isChildDetails
     }
 
 
@@ -334,7 +334,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putString(SH_BASEURL, isBaseUrl) }
+        sharedPreferences.edit { putString(SH_BASEURL, isBaseUrl) }
     }
 
     fun getBaseUrl(activity: Context): String? {
@@ -349,7 +349,7 @@ object SharedPreference {
         return sharedPreferences.getString(SH_BASEURL, "")
     }
 
-    fun putBiometricEnabled(activity: Activity, isEnable : Boolean) {
+    fun putBiometricEnabled(activity: Activity, isEnable: Boolean) {
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
             masterKeyAlias,
@@ -357,7 +357,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putBoolean(SH_BIOMETRIC_ENABLED, isEnable) }
+        sharedPreferences.edit { putBoolean(SH_BIOMETRIC_ENABLED, isEnable) }
     }
 
     fun getBiometricEnabled(activity: Context): Boolean? {
@@ -372,7 +372,7 @@ object SharedPreference {
         return sharedPreferences.getBoolean(SH_BIOMETRIC_ENABLED, false)
     }
 
-    fun putBiometricSkip(activity: Activity, isEnable : Boolean) {
+    fun putBiometricSkip(activity: Activity, isEnable: Boolean) {
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
             masterKeyAlias,
@@ -380,7 +380,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putBoolean(SH_BIOMETRIC_SKIP, isEnable) }
+        sharedPreferences.edit { putBoolean(SH_BIOMETRIC_SKIP, isEnable) }
     }
 
     fun getBiometricSkip(activity: Context): Boolean? {

@@ -12,7 +12,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.SchoolStrength.Model.Section
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class SchoolStrengthDetailAdapter (
+class SchoolStrengthDetailAdapter(
     private var itemList: List<Section>,
     private var context: Context,
     private var isLoading: Boolean,
@@ -28,7 +28,8 @@ class SchoolStrengthDetailAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.schoolstrength_report_detail)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.schoolstrength_report_detail)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -66,7 +67,7 @@ class SchoolStrengthDetailAdapter (
             position: Int,
             adapter: SchoolStrengthDetailAdapter
         ) {
-            sectionname.text =  data.name
+            sectionname.text = data.name
             val studentCount = data.total_students.toIntOrNull() ?: 0
 
             totalcount.text = "$studentCount " +
@@ -75,13 +76,19 @@ class SchoolStrengthDetailAdapter (
 
 
             boyscount.text = HtmlCompat.fromHtml(
-                "<font color='#808080'>\uD83D\uDC66 Boys :</font> ${data.boys_count}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                "<font color='#808080'>\uD83D\uDC66 Boys :</font> ${data.boys_count}",
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
 
             girlscount.text = HtmlCompat.fromHtml(
-                "<font color='#808080'>\uD83D\uDC67 Girls :</font> ${data.girls_count}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                "<font color='#808080'>\uD83D\uDC67 Girls :</font> ${data.girls_count}",
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
 
             otherscount.text = HtmlCompat.fromHtml(
-                "<font color='#808080'>Others :</font> ${data.other_count}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                "<font color='#808080'>Others :</font> ${data.other_count}",
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
 
 
         }

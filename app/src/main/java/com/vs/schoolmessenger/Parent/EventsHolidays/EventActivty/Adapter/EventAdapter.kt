@@ -38,6 +38,7 @@ class EventAdapter(
 
     private var fullList: List<EventItem> = itemList ?: listOf()
     private var filteredList: List<EventItem> = itemList ?: listOf()
+
     init {
         fullList = itemList ?: listOf()
         filteredList = fullList
@@ -110,7 +111,6 @@ class EventAdapter(
         this.itemList = newList
         notifyDataSetChanged()
     }
-
 
 
     class DataViewHolder(itemView: View, private val context: Context) :

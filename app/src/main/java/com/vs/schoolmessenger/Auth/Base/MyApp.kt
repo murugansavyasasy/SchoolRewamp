@@ -11,7 +11,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlin.system.exitProcess
 
-class MyApp  : Application(), LifecycleObserver {
+class MyApp : Application(), LifecycleObserver {
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
@@ -31,16 +31,16 @@ class MyApp  : Application(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onAppBackgrounded() {
         // App goes to background
-        Log.d("AppStatus","onAppBackgrounded")
-        val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        Log.d("AppStatus", "onAppBackgrounded")
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         prefs.edit().putLong("last_close_time", System.currentTimeMillis()).apply()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForegrounded() {
         // Optional: app comes to foreground, calculate difference
-        Log.d("AppStatus","onAppForegrounded")
-        val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        Log.d("AppStatus", "onAppForegrounded")
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         val lastCloseTime = prefs.getLong("last_close_time", -1)
         if (lastCloseTime != -1L) {
             val diff = System.currentTimeMillis() - lastCloseTime

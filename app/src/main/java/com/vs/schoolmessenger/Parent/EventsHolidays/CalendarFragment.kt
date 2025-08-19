@@ -2,30 +2,21 @@ package com.vs.schoolmessenger.Parent.EventsHolidays
 
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import android.graphics.Paint
-import android.graphics.Typeface
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.style.ImageSpan
-import android.text.style.StyleSpan
-import android.view.Gravity
-import android.util.Log
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter.HolidayAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.FragmentCalendarBinding
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -210,10 +201,10 @@ class CalendarFragment : Fragment() {
                     it.date
                 }
 
-                Holiday(it.name, it.year,formattedDate)
+                Holiday(it.name, it.year, formattedDate)
             }
 
-            Log.d("holidayModels",holidayModels.toString())
+            Log.d("holidayModels", holidayModels.toString())
 
             binding.holidayRecyclerView.visibility = View.VISIBLE
             binding.holidaylabel.visibility = View.VISIBLE
@@ -223,8 +214,7 @@ class CalendarFragment : Fragment() {
                 ContextCompat.getColor(requireContext(), android.R.color.black)
             )
             binding.holidaylabel.text = "Holidays for $currentMonthYear"
-        }
-        else {
+        } else {
             binding.holidayRecyclerView.visibility = View.GONE
             binding.holidaylabel.visibility = View.VISIBLE
             binding.holidaylabel.setTextColor(
@@ -234,7 +224,6 @@ class CalendarFragment : Fragment() {
         }
 
     }
-
 
 
     override fun onDestroyView() {

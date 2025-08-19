@@ -8,7 +8,6 @@ import android.util.AttributeSet
 import android.view.View
 
 
-
 class CustomGraphView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -55,7 +54,7 @@ class CustomGraphView @JvmOverloads constructor(
         canvas.drawLine(padding, graphHeight - padding, padding, padding, paint)
 
         // Y-axis labels
-        for ((index, yValue) in yLabels.withIndex()) {
+        for ((_, yValue) in yLabels.withIndex()) {
             val yPosition = graphHeight - padding - (yValue / maxYValue.toFloat()) * maxBarHeight
 
             // Draw labels and ticks
@@ -83,7 +82,12 @@ class CustomGraphView @JvmOverloads constructor(
 
             // Draw X-axis labels
             if (i < xLabels.size) {
-                canvas.drawText(xLabels[i], left + barWidth * 0.4f, graphHeight - padding + 40, paint)
+                canvas.drawText(
+                    xLabels[i],
+                    left + barWidth * 0.4f,
+                    graphHeight - padding + 40,
+                    paint
+                )
             }
         }
     }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -12,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 
-class TimeTableDayAdapter  (
+class TimeTableDayAdapter(
     private var itemList: List<TimeTableDayData>?,
     private var listener: TimeTableDayListener,
     private var context: Context,
     private var isLoading: Boolean
 
-) : RecyclerView.Adapter<RecyclerView.ViewHolder> () {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private var selectedPosition = 0
@@ -86,6 +85,7 @@ class TimeTableDayAdapter  (
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val shimmerLayout: ShimmerFrameLayout =
                 itemView.findViewById(R.id.shimmer_view_container)
+
             init {
                 shimmerLayout.startShimmer()
             }

@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
+
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
@@ -9,16 +10,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-
-
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -34,7 +31,6 @@ import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
-import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
@@ -48,16 +44,17 @@ import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
+import com.vs.schoolmessenger.School.LSRW.LsrwMain
 import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.PTM.PTM
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
-import com.vs.schoolmessenger.Testing.MainActivity
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ScrollItem
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -70,7 +67,8 @@ import java.util.Locale
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding
-//    private lateinit var items: List<ScrollItem>
+
+    //    private lateinit var items: List<ScrollItem>
     lateinit var isMenuAdapter: SchoolMenuAdapter
     private var isSearchVisible = false
     private var appViewModel: App? = null
@@ -113,7 +111,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
-        val formattedDate = dateFormat.format(currentDate)
+        dateFormat.format(currentDate)
 //        binding.lblDate.text = formattedDate
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -176,7 +174,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isContactDetails = isDashBoardData!![0].contactDetails
 
                     appViewModel!!.isDashBoardCountData(
-                        access_token, Constant.staff_,requireActivity()
+                        access_token, Constant.staff_, requireActivity()
                     )
 
                     isMenuDetails = isDashBoardData!![0].menus
@@ -221,7 +219,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
 
 
-
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (userDetails!!.is_parent && userDetails!!.is_staff) {
@@ -243,10 +240,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         if (!FrequentlyUsedMenuItems.isNullOrEmpty()) {
             binding.autoScrollRecyclerView.visibility = View.VISIBLE
 
-            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
-            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!,this)
+            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!, this)
             binding.autoScrollRecyclerView.adapter = adapter
 
             if (binding.autoScrollRecyclerView.onFlingListener == null) {
@@ -287,9 +285,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
 
-        Log.d("isMenuCountDetails",isMenuCountDetails!!.size.toString())
+        Log.d("isMenuCountDetails", isMenuCountDetails!!.size.toString())
         isMenuAdapter = SchoolMenuAdapter(
-            requireActivity(), this, isMenuDetails,isMenuCountDetails, isAdItem, Constant.isShimmerViewDisable
+            requireActivity(),
+            this,
+            isMenuDetails,
+            isMenuCountDetails,
+            isAdItem,
+            Constant.isShimmerViewDisable
         )
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 
@@ -331,7 +334,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private fun isDashBoardData() {
 
         isMenuAdapter =
-            SchoolMenuAdapter(requireActivity(), this, null,null, null, Constant.isShimmerViewShow)
+            SchoolMenuAdapter(requireActivity(), this, null, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 
         // Adjust span count for special layout
@@ -348,7 +351,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.gridRecyclerView.adapter = isMenuAdapter
 
         appViewModel!!.isDashBoardData(
-            access_token, Constant.staff_,mobile_number,requireActivity()
+            access_token, Constant.staff_, mobile_number, requireActivity()
         )
     }
 
@@ -560,13 +563,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_PTM -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to ptm page
-                    LessonPlan::class.java
+                    PTM::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
                         //go to ptm page
-                        LessonPlan::class.java
+                        PTM::class.java
                     }
                 }
             }
@@ -581,7 +584,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
-            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
+//            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
+            Constant.M_SCHOOL_NEEDS -> LsrwMain::class.java
             else -> null
         }
 

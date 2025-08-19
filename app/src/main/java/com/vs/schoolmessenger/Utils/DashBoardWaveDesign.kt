@@ -37,11 +37,32 @@ class DashBoardWaveDesign @JvmOverloads constructor(
 
         val totalHeight = height.toFloat()
         val waveLength = width.toFloat() * 1.99f
-        val waveHeight = 35f
+        val waveHeight = 20f
 
-        drawWave(canvas, wavePaint1, waveLength, waveHeight, offsetY = totalHeight - 90, phaseShift = 150f)
-        drawWave(canvas, wavePaint2, waveLength, waveHeight, offsetY = totalHeight - 65, phaseShift = 450f)
-        drawWave(canvas, wavePaint3, waveLength, waveHeight, offsetY = totalHeight - 45, phaseShift = 700f)
+        drawWave(
+            canvas,
+            wavePaint1,
+            waveLength,
+            waveHeight,
+            offsetY = totalHeight - 90,
+            phaseShift = 150f
+        )
+        drawWave(
+            canvas,
+            wavePaint2,
+            waveLength,
+            waveHeight,
+            offsetY = totalHeight - 65,
+            phaseShift = 450f
+        )
+        drawWave(
+            canvas,
+            wavePaint3,
+            waveLength,
+            waveHeight,
+            offsetY = totalHeight - 45,
+            phaseShift = 700f
+        )
     }
 
     private fun drawWave(
@@ -63,7 +84,6 @@ class DashBoardWaveDesign @JvmOverloads constructor(
         }
         path.lineTo(viewWidth, viewHeight)
         path.close()
-
         canvas.drawPath(path, paint)
     }
 }

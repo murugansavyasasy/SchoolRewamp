@@ -1,7 +1,8 @@
 package com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel
+
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 
-data class SubmittedAssignment (
+data class SubmittedAssignment(
     val id: String,
     val description: String,
     val submitted_on: String,

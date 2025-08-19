@@ -191,7 +191,6 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.btnAdd.visibility = View.VISIBLE
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
-        this.type = type
         selectedQuestionId = chat.id
         Log.d("Selected Question ID", selectedQuestionId.toString())
     }

@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.ExamMarks.Model
 
-data class ExamSubjectDetail (
+data class ExamSubjectDetail(
     val id: String,
     val subject_name: String,
     val exam_date: String,

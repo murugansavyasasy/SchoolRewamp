@@ -2,10 +2,8 @@ package com.vs.schoolmessenger.School.MarkYourAttendance
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Dialog
 import android.app.KeyguardManager
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
@@ -391,8 +389,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             }
 
             R.id.btnHistory -> {
-                binding.btnCreate.isEnabled=true
-                binding.btnHistory.isEnabled=false
+                binding.btnCreate.isEnabled = true
+                binding.btnHistory.isEnabled = false
                 isLoadYear(Constant.isAcademicYearList)
                 binding.rytAddLocation.visibility = View.GONE
                 binding.rytProgressBar.visibility = View.GONE
@@ -400,8 +398,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             }
 
             R.id.btnCreate -> {
-                binding.btnCreate.isEnabled=false
-                binding.btnHistory.isEnabled=true
+                binding.btnCreate.isEnabled = false
+                binding.btnHistory.isEnabled = true
 
                 if (isStaffDetails!!.biometric_enable) {
                     binding.rytAddLocation.visibility = View.VISIBLE

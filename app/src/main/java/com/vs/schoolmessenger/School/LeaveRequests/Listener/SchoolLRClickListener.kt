@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.LeaveRequests.Listener
 
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestHistoryData
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 
 interface SchoolLRClickListener {

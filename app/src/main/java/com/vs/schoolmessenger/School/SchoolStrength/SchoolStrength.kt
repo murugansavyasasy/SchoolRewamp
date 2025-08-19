@@ -83,9 +83,8 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
                     binding.rlaabsenteesreport2.visibility = View.VISIBLE
                     //isLoadSchoolStrengthData(response.data)
                     setupPieChart(response.data)
-                }
-                else{
-                    binding.txtNoData.text=response.message
+                } else {
+                    binding.txtNoData.text = response.message
                     binding.nomessage.visibility = View.VISIBLE
                     binding.txtNoData.visibility = View.VISIBLE
                     binding.rlaPieChartCount.visibility = View.GONE
@@ -149,21 +148,21 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         val total =
             totalBoysStrength + totalGirlsStrength + totalStaffStrength + totalothersStrength // 22
         binding.customPieChart.setUsePercentValues(true)
-        binding.customPieChart.getDescription().setEnabled(false)
+        binding.customPieChart.description.isEnabled = false
         binding.customPieChart.setExtraOffsets(5f, 10f, 5f, 5f)
 
         // on below line we are setting drag for our pie chart
         binding.customPieChart.setDragDecelerationFrictionCoef(0.95f)
         // on below line we are setting hole
         // and hole color for pie chart
-        binding.customPieChart.setDrawHoleEnabled(true)
+        binding.customPieChart.isDrawHoleEnabled = true
         binding.customPieChart.setHoleColor(Color.WHITE)
         // on below line we are setting circle color and alpha
         binding.customPieChart.setTransparentCircleColor(Color.WHITE)
         binding.customPieChart.setTransparentCircleAlpha(110)
         // on  below line we are setting hole radius
-        binding.customPieChart.setHoleRadius(58f)
-        binding.customPieChart.setTransparentCircleRadius(61f)
+        binding.customPieChart.holeRadius = 58f
+        binding.customPieChart.transparentCircleRadius = 61f
         // on below line we are setting center text
         binding.customPieChart.setDrawCenterText(true)
         binding.customPieChart.centerText = "${total.toInt()}\nTotal"
@@ -172,8 +171,8 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         // rotation for our pie chart
         binding.customPieChart.setRotationAngle(0f)
         // enable rotation of the pieChart by touch
-        binding.customPieChart.setRotationEnabled(true)
-        binding.customPieChart.setHighlightPerTapEnabled(true)
+        binding.customPieChart.isRotationEnabled = true
+        binding.customPieChart.isHighlightPerTapEnabled = true
         // on below line we are setting animation for our pie chart
         binding.customPieChart.animateY(1400, Easing.EaseInOutQuad)
         // on below line we are disabling our legend for pie chart

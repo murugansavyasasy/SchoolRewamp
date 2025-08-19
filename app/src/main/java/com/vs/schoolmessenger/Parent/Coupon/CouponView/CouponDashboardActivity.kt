@@ -10,7 +10,8 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponFragment.TicketFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.FragmentCouponDashboardBinding
 
-class CouponDashboardActivity : BaseActivity<FragmentCouponDashboardBinding>(), View.OnClickListener {
+class CouponDashboardActivity : BaseActivity<FragmentCouponDashboardBinding>(),
+    View.OnClickListener {
 
 
     override fun getViewBinding(): FragmentCouponDashboardBinding {

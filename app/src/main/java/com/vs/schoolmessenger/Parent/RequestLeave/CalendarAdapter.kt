@@ -1,5 +1,3 @@
-
-
 ////Working code for opening both schools
 package com.vs.schoolmessenger.Parent.RequestLeave
 
@@ -10,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import java.time.LocalDate
@@ -23,6 +20,7 @@ class CalendarAdapter(
 
     private var days: List<LocalDate?> = emptyList()
     private var selectedDate: LocalDate? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     private var today: LocalDate = LocalDate.now()
 
@@ -85,10 +83,12 @@ class CalendarAdapter(
                         dateBox.setBackgroundResource(R.drawable.bg_circle_selecto)
                         dateBox.setTextColor(Color.WHITE)
                     }
+
                     date == today -> {
                         dateBox.setBackgroundResource(R.drawable.circle_today)
                         dateBox.setTextColor(Color.BLUE)
                     }
+
                     else -> {
                         dateBox.setBackgroundResource(0)
                         dateBox.setTextColor(Color.BLACK)

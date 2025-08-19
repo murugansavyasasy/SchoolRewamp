@@ -128,7 +128,6 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
     }
 
 
-
     private fun showErrorUI(message: String) {
         binding.nomessage.visibility = View.VISIBLE
         binding.txtNoData.text = message

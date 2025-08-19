@@ -8,8 +8,8 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
-import java.text.DecimalFormat
 import com.vs.schoolmessenger.R
+import java.text.DecimalFormat
 
 
 class NetworkSpeedMonitor(private val context: Context) {
@@ -39,7 +39,7 @@ class NetworkSpeedMonitor(private val context: Context) {
             override fun run() {
                 val speed = getNetworkSpeed()
                 downloadText.text = context.getString(R.string.download_speed) + speed.first
-                uploadText.text = context.getString(R.string.upload_speed)+ speed.second
+                uploadText.text = context.getString(R.string.upload_speed) + speed.second
                 handler.postDelayed(this, 1000) // Update every second
             }
         }

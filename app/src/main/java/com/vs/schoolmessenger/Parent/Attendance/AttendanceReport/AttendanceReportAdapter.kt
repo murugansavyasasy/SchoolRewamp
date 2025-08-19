@@ -4,18 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import java.text.SimpleDateFormat
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.util.Locale
-import java.text.ParseException
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AttendanceReportAdapter(
     private var itemList: List<AttendanceReportStudentData>?,
@@ -37,7 +37,6 @@ class AttendanceReportAdapter(
     }
 
 
-
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
@@ -46,7 +45,7 @@ class AttendanceReportAdapter(
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
                 ShimmerUtil.wrapWithShimmer(parent, R.layout.attendance_report_student)
-           ShimmerViewHolder(shimmerView)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
@@ -58,7 +57,7 @@ class AttendanceReportAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(filteredList[position], position, this)
-        }  else if (holder is ShimmerViewHolder) {
+        } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
@@ -107,7 +106,11 @@ class AttendanceReportAdapter(
 
 
         @SuppressLint("UseCompatLoadingForDrawables")
-        fun bind(data: AttendanceReportStudentData, position: Int, adapter: AttendanceReportAdapter) {
+        fun bind(
+            data: AttendanceReportStudentData,
+            position: Int,
+            adapter: AttendanceReportAdapter
+        ) {
 
             if (data.type == "Absent") {
                 lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle))
@@ -131,11 +134,10 @@ class AttendanceReportAdapter(
                     tvDay.text = ""
                 }
 
-            }
-            else {
+            } else {
                 lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle_light_green))
                 tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge_green))
-                }
+            }
 
 
         }

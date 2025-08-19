@@ -4,9 +4,9 @@ package com.vs.schoolmessenger.Utils
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.ProgressBar
 import com.vs.schoolmessenger.R
 
 class CircularProgressView @JvmOverloads constructor(

@@ -27,8 +27,8 @@ class QuizUpcomingAdapter(
     private var itemList: List<GetQuizExamListData>?,
     private var context: Context,
     private var isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
@@ -70,13 +70,13 @@ class QuizUpcomingAdapter(
         private val rlaAttendance: RelativeLayout = itemView.findViewById(R.id.rlaAttendance)
         private val lblAttendanceStatus: TextView = itemView.findViewById(R.id.lblAttendanceStatus)
 
-        fun bind(data: GetQuizExamListData,position: Int) {
+        fun bind(data: GetQuizExamListData, position: Int) {
             lblTitle.text = data.title
             lblQuizDescription.text = data.description
             subjectvalue.text = data.subject
-            lblAttendanceStatus.text = "Level "+data.level.toString()
-            lblPostedBy.text = "Posted By: "+data.SentBy
-            lblCreatedOn.text =  "Created On "+Constant.convertDateFormatType(data.created_on)
+            lblAttendanceStatus.text = "Level " + data.level.toString()
+            lblPostedBy.text = "Posted By: " + data.SentBy
+            lblCreatedOn.text = "Created On " + Constant.convertDateFormatType(data.created_on)
 
             val images = listOf(
                 R.drawable.quiz1,
@@ -90,6 +90,7 @@ class QuizUpcomingAdapter(
             } else {
                 images[position % 3]   // loop 0,1,2
             }
+
 
             Glide.with(itemView.context)
                 .load(imageRes)
@@ -108,10 +109,11 @@ class QuizUpcomingAdapter(
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)
+
         }
     }
-}
 
+}
 
 //package com.vs.schoolmessenger.Parent.QuizExam
 //

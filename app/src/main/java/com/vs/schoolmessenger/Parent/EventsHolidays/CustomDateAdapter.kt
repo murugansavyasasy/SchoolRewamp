@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Parent.EventsHolidays
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
-import kotlin.collections.contains
 
 class CustomDateAdapter(
     private val context: Context,
@@ -47,7 +42,8 @@ class CustomDateAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_date_box, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_date_box, parent, false)
         return DateViewHolder(view)
     }
 

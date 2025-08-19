@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.InteractionWithStaff.Model
 
-data class Staff (
+data class Staff(
     val id: String,
     val name: String,
     val subject_id: String,

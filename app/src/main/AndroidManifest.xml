@@ -181,6 +181,11 @@
             android:name=".School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".School.LSRW.LsrwMain"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CommonScreens.WebView"
             android:theme="@style/AppTheme"

@@ -10,7 +10,6 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordCreationResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordResetResponse
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PasswordUpdateResponse
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetailsResponse
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationResponse
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
@@ -18,9 +17,7 @@ import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -232,9 +229,9 @@ class AuthServices {
                     } else {
                         isPasswordChange.postValue(null)
                         val errorBodyString = response.errorBody()?.string()
-                            val gson = Gson()
-                            val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
-                            Constant.errorAlert(activity, "", errorModel.message)
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Constant.errorAlert(activity, "", errorModel.message)
 
                     }
                 }
@@ -401,7 +398,6 @@ class AuthServices {
 
     val isUpdateDeviceTokenLiveData: LiveData<DeviceToken?>
         get() = isDeviceTokenUpdate
-
 
 
 }

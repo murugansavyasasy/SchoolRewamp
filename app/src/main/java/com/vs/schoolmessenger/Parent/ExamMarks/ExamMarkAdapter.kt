@@ -4,23 +4,19 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamData
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResults
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+
 class ExamMarkAdapter(
     private var itemList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData>,
     private var listener: ExamMarkListener,
@@ -30,8 +26,10 @@ class ExamMarkAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var fullList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> = itemList ?: listOf()
-    private var filteredList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> = itemList ?: listOf()
+    private var fullList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> =
+        itemList ?: listOf()
+    private var filteredList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> =
+        itemList ?: listOf()
 
     init {
         fullList = itemList ?: listOf()
@@ -84,7 +82,9 @@ class ExamMarkAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as? List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> ?: listOf()
+                filteredList =
+                    results?.values as? List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData>
+                        ?: listOf()
                 listener.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
@@ -98,8 +98,13 @@ class ExamMarkAdapter(
         private val btnViewMarks: Button = itemView.findViewById(R.id.btnViewMarks)
         private val btnViewProgress: Button = itemView.findViewById(R.id.btnViewProgress)
         private val rootHeader: LinearLayout = itemView.findViewById(R.id.rootHeader)
+
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(exam: com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData, position: Int, adapter: ExamMarkAdapter) {
+        fun bind(
+            exam: com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData,
+            position: Int,
+            adapter: ExamMarkAdapter
+        ) {
             rootHeader.background.alpha = (0.2f * 255).toInt()
             textExamTitle.text = exam.name
             btnViewMarks.setOnClickListener {

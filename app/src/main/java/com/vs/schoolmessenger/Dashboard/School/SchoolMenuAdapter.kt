@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.School
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -108,6 +107,7 @@ class SchoolMenuAdapter(
             itemCountList: ArrayList<MenuCountDetail>?
         ) {
             itemTitle.text = data.name
+            itemDescription.text = data.description
 
             if (itemCountList!![position].unread_count != 0) {
                 imgReadCount.visibility = View.VISIBLE

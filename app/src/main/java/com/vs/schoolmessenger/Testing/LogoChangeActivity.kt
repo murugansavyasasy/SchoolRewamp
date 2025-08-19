@@ -69,7 +69,8 @@ class LogoChangeActivity : BaseActivity<LogoChangeBinding>(), View.OnClickListen
         val shortcutManager = getSystemService(ShortcutManager::class.java)
 
         if (shortcutManager == null || !shortcutManager.isRequestPinShortcutSupported) {
-            Toast.makeText(this, "Shortcuts not supported on this device", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Shortcuts not supported on this device", Toast.LENGTH_SHORT)
+                .show()
             return
         }
 

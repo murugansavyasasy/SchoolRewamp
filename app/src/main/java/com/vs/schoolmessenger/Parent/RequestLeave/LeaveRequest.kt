@@ -1,12 +1,10 @@
 package com.vs.schoolmessenger.Parent.RequestLeave
 
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -14,9 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -27,7 +23,6 @@ import com.vs.schoolmessenger.databinding.LeaveRequestBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import kotlin.String
 
 class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     LeaveRequestClickListener {
@@ -39,14 +34,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     lateinit var mAdapter: MonthWiseLeaveHistoryAdapter
-    var isDeletedId=""
+    var isDeletedId = ""
 
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
     private var totalLeaveDays: Int = 0
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     private var currentTab = TabType.LeaveRequest
-
 
 
     private enum class TabType {
@@ -75,9 +69,12 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.btnNext.setOnClickListener(this)
         binding.btnupdate.setOnClickListener(this)
         binding.btncancel.setOnClickListener(this)
-        binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+        binding.imgBack.setColorFilter(
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_IN
+        )
 
-        val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
+        val (dayOnly, _, _, _, _) = Constant.getCurrentDateInfo()
 
         val today = Calendar.getInstance()
         val formattedToday = dateFormat.format(today.time)
@@ -164,53 +161,52 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             finish()
         }
 
-            binding.rlaHistory.visibility = View.VISIBLE
-            binding.tabLayoutStatus.visibility = View.VISIBLE
-            binding.rlaCreateLeaveRequest.visibility = View.GONE
+        binding.rlaHistory.visibility = View.VISIBLE
+        binding.tabLayoutStatus.visibility = View.VISIBLE
+        binding.rlaCreateLeaveRequest.visibility = View.GONE
 
 
-            binding.tabLayoutStatus.removeAllTabs()
+        binding.tabLayoutStatus.removeAllTabs()
 
-            val tabTitles = listOf("All", "Approved", "Rejected", "Waiting")
+        val tabTitles = listOf("All", "Approved", "Rejected", "Waiting")
 
-            val tabStatusMap = mapOf(
-                "All" to "All",
-                "Approved" to Constant.approved,
-                "Rejected" to Constant.rejected,
-                "Waiting" to Constant.waiting_for_approval
-            )
+        val tabStatusMap = mapOf(
+            "All" to "All",
+            "Approved" to Constant.approved,
+            "Rejected" to Constant.rejected,
+            "Waiting" to Constant.waiting_for_approval
+        )
 
-            tabTitles.forEach { title ->
-                binding.tabLayoutStatus.addTab(binding.tabLayoutStatus.newTab().setText(title))
+        tabTitles.forEach { title ->
+            binding.tabLayoutStatus.addTab(binding.tabLayoutStatus.newTab().setText(title))
+        }
+
+        binding.tabLayoutStatus.clearOnTabSelectedListeners()
+
+        binding.tabLayoutStatus.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                val selectedTitle = tab.text.toString()
+                val filterStatus = tabStatusMap[selectedTitle] ?: "All"
+                mAdapter.filterByStatus(filterStatus)
+
+                if (mAdapter.itemCount == 0) {
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.VISIBLE
+                    binding.rcyLeaveRequestHistory.visibility = View.GONE
+                } else {
+                    binding.txtNoData.visibility = View.GONE
+                    binding.nomessage.visibility = View.GONE
+                    binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
+                }
             }
 
-            binding.tabLayoutStatus.clearOnTabSelectedListeners()
-
-            binding.tabLayoutStatus.addOnTabSelectedListener(object :
-                TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    val selectedTitle = tab.text.toString()
-                    val filterStatus = tabStatusMap[selectedTitle] ?: "All"
-                    mAdapter.filterByStatus(filterStatus)
-
-                    if (mAdapter.itemCount == 0) {
-                        binding.txtNoData.visibility = View.VISIBLE
-                        binding.nomessage.visibility = View.VISIBLE
-                        binding.rcyLeaveRequestHistory.visibility = View.GONE
-                    } else {
-                        binding.txtNoData.visibility = View.GONE
-                        binding.nomessage.visibility = View.GONE
-                        binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
-                    }
-                }
-
-                override fun onTabUnselected(tab: TabLayout.Tab?) {}
-                override fun onTabReselected(tab: TabLayout.Tab?) {}
-            })
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
 //        isGetLeaveRequestList()
 
 //        }
-
 
 
         Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
@@ -261,7 +257,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                     binding.txtStartDate.text = Constant.covertDateFormate(selectedDate)
                     val fromDate = dateFormat.parse(selectedDate)
                     fromDateMillis = fromDate?.time ?: 0L
-                    val result = getDayAndDate(selectedDate, dateFormat)
+                    getDayAndDate(selectedDate, dateFormat)
                     val dayOfMonth = getDayAndDate(selectedDate, dateFormat)
                     dayOfMonth?.let {
                         binding.lblDay.text = it
@@ -321,14 +317,14 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
     private fun isloadleaverequestData(newData: List<MonthWiseLeaveData>?) {
         mAdapter = MonthWiseLeaveHistoryAdapter(
-            newData,this,this, Constant.isShimmerViewDisable
+            newData, this, this, Constant.isShimmerViewDisable
         )
         binding.rcyLeaveRequestHistory.adapter = mAdapter
     }
 
     private fun isGetLeaveRequestList() {
         mAdapter = MonthWiseLeaveHistoryAdapter(
-            null,this,this, Constant.isShimmerViewDisable
+            null, this, this, Constant.isShimmerViewDisable
         )
         binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
         binding.rcyLeaveRequestHistory.isNestedScrollingEnabled = false
@@ -362,7 +358,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         ) { confirmed ->
             if (confirmed) {
                 Constant.showLoading(this)
-                isDeletedId=data.id
+                isDeletedId = data.id
                 appViewModel?.isleaverequestdelete(isAccessToken!!, request, this)
             }
         }
@@ -370,15 +366,15 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
     override fun onItemEditClick(data: LeaveData) {
-        val intent = Intent(this,NewLeaveRequest::class.java);
-            intent.putExtra("isReason",data.reason )
-            intent.putExtra("isId", data.id)
-            intent.putExtra("isLeaveTo", data.leave_to)
-            intent.putExtra("isLeaveFrom", data.leave_from)
-            intent.putExtra("isFromSession", data.from_session)
-            intent.putExtra("isToSession", data.to_session)
-            intent.putExtra("isLeaveType", data.leave_type)
-            intent.putExtra("isRequestEdit", true)
-            startActivity(intent);
+        val intent = Intent(this, NewLeaveRequest::class.java)
+        intent.putExtra("isReason", data.reason)
+        intent.putExtra("isId", data.id)
+        intent.putExtra("isLeaveTo", data.leave_to)
+        intent.putExtra("isLeaveFrom", data.leave_from)
+        intent.putExtra("isFromSession", data.from_session)
+        intent.putExtra("isToSession", data.to_session)
+        intent.putExtra("isLeaveType", data.leave_type)
+        intent.putExtra("isRequestEdit", true)
+        startActivity(intent)
     }
 }

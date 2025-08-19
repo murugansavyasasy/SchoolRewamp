@@ -2,12 +2,10 @@ package com.vs.schoolmessenger.Testing
 
 import android.view.View
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.CalendarAdapter
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeworkParentAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.CalendarDate
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.HomeWorkParentData
 import com.vs.schoolmessenger.databinding.ParentHomeworkActivityBinding
@@ -52,7 +50,7 @@ class Testing : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickListe
             )
         }
 
-        val homeworkList = listOf(
+        listOf(
             HomeWorkParentData("Science", "HW: Newton's Laws", 40),
             HomeWorkParentData("Math", "HW: Algebra Basics", 100),
             HomeWorkParentData("Geography", "HW: Climate Zones", 100),
@@ -93,7 +91,7 @@ class Testing : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickListe
                 CalendarDate(
                     dayFormatter.format(date),
                     dateFormatter.format(date),
-                    fullFormatter.format(date),""
+                    fullFormatter.format(date), ""
                 )
             )
             calendar.add(Calendar.DATE, 1)

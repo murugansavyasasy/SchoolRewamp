@@ -1,13 +1,15 @@
 package com.vs.schoolmessenger.Parent.PTM.DataClass
 
-data class StaffSlot(    val id: String,
-                         val slot_from: String,
-                         val slot_to: String,
-                         val is_booked: Int,
-                         val staff_id: String,
-                         val staff_name: String,
-                         val subject_name: String,
-                         val event_name: String,
-                         val event_mode: String,
-                         val event_link: String,
-                         val my_booking: Int)
+data class StaffSlot(
+    val id: String,
+    val slot_from: String,
+    val slot_to: String,
+    val is_booked: Int,
+    val staff_id: String,
+    val staff_name: String,
+    val subject_name: String,
+    val event_name: String,
+    val event_mode: String,
+    val event_link: String,
+    val my_booking: Int
+)

@@ -33,7 +33,8 @@ class AbsenteesStudentListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_student_headerlist)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_student_headerlist)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -45,7 +46,7 @@ class AbsenteesStudentListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && itemList != null) {
             holder.bind(itemList!![position], position, listener, this)
-        }   else if (holder is ShimmerViewHolder) {
+        } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
@@ -83,17 +84,26 @@ class AbsenteesStudentListAdapter(
             Log.d("BindViewHolder", "Binding student at position $position: ${data.student_name}")
 
             Constant.isAbsenteesReportDataSending?.let { report ->
-                val sectionNamesCombined = report.section_wise?.joinToString(", ") { it.section_name } ?: ""
+                val sectionNamesCombined =
+                    report.section_wise?.joinToString(", ") { it.section_name } ?: ""
                 val combinedText = "${report.class_name ?: ""} - $sectionNamesCombined"
 
                 section_values.text = combinedText
                 badge_count.text = report.total_absentees ?: "0"
 
-                Log.d("BindViewHolder", "Class: ${report.class_name}, Date: ${report.date}, Sections: $sectionNamesCombined, Absentees: ${report.total_absentees}")
+                Log.d(
+                    "BindViewHolder",
+                    "Class: ${report.class_name}, Date: ${report.date}, Sections: $sectionNamesCombined, Absentees: ${report.total_absentees}"
+                )
             }
 
             if (adapter.selectedPosition == position) {
-                cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_blue_light))
+                cardview.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.holo_blue_light
+                    )
+                )
                 section_values.setTextColor(ContextCompat.getColor(context, R.color.black))
             } else {
                 cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.white))

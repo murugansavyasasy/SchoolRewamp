@@ -17,6 +17,7 @@ class MycouponViewActivity : BaseActivity<MycouponViewBinding>(), View.OnClickLi
     override fun getViewBinding(): MycouponViewBinding {
         return MycouponViewBinding.inflate(layoutInflater)
     }
+
     private var merchant_name: String = ""
     private var offer_to_show: String = ""
     private var how_to_use: String = ""
@@ -51,11 +52,11 @@ class MycouponViewActivity : BaseActivity<MycouponViewBinding>(), View.OnClickLi
         }
 
 
-        binding.header.setText(merchant_name)
-        binding.offer.setText(offer_to_show)
-        binding.description.setText(convertHtmlToBullets(how_to_use))
-        binding.couponCode.setText(coupon_code)
-        binding.lblLocationName.setText(merchant_name)
+        binding.header.text = merchant_name
+        binding.offer.text = offer_to_show
+        binding.description.text = convertHtmlToBullets(how_to_use)
+        binding.couponCode.text = coupon_code
+        binding.lblLocationName.text = merchant_name
 
         Glide.with(this@MycouponViewActivity).load(merchant_logo).into(binding.logo)
 

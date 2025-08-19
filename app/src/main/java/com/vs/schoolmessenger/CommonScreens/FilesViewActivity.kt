@@ -330,7 +330,8 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                     binding.lnrDownloadStatus.visibility = View.GONE
                     Constant.showValidationAlertPopup(
                         "Successfully Download...✅",
-                        "File saved to Downloads/$baseFolderName/$subFolderPath/$fileName", this@FilesViewActivity
+                        "File saved to Downloads/$baseFolderName/$subFolderPath/$fileName",
+                        this@FilesViewActivity
                     )
                 }
 
@@ -347,6 +348,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             }
         }
     }
+
     private fun shareFileFromUrl(url: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -446,10 +448,12 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 .create(VimeoApiService::class.java)
         }
     }
+
     fun extractVimeoVideoId(url: String): String? {
         val regex = Regex("vimeo.com/video/(\\d+)")
         return regex.find(url)?.groupValues?.get(1)
     }
+
     private fun fetchAndShareVimeoVideoFromUrl(vimeoUrl: String) {
         val videoId = extractVimeoVideoId(vimeoUrl)
         if (videoId.isNullOrEmpty()) {

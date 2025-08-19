@@ -33,16 +33,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         if (Constant.isParentChoose) {
             binding.rytEdit.visibility = View.VISIBLE
-            binding.rytHeader.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
+            binding.rytHeader.setBackgroundResource(R.drawable.gradient_theme_parent)
             setupStudentDetails()
 
-        }
-        else {
+        } else {
             binding.rytEdit.visibility = View.GONE
             binding.lblSchoolName.visibility = View.GONE
             binding.lblRegisterNo.visibility = View.GONE
             binding.lnrStandardDetails.visibility = View.GONE
-            binding.rytHeader.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+            binding.rytHeader.setBackgroundResource(R.drawable.gradient_theme_school)
             setupStaffDetails()
 
         }
@@ -53,13 +52,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         val profileUrl: String? = staffDetails!!.staff_profile
         val name: String? = staffDetails!!.name
-        val school_name: String? = staffDetails!!.school_name
-        val school_city: String? = staffDetails!!.school_address
-        val school_logo: String? = staffDetails!!.school_logo
-        val contact_no: String? = staffDetails!!.mobile_no
-        val email: String? = staffDetails!!.email
-        val staff_address: String? = staffDetails!!.address
-        val blood_group: String? = staffDetails!!.blood_group
+        staffDetails!!.school_name
+        staffDetails!!.school_address
+        staffDetails!!.school_logo
+        staffDetails!!.mobile_no
+        staffDetails!!.email
+        staffDetails!!.address
+        staffDetails!!.blood_group
 
         val defaultProfileRes = R.drawable.default_profile
         if (!profileUrl.isNullOrEmpty()) {
@@ -73,7 +72,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 .load(defaultProfileRes)
                 .into(binding.imgStudentProfile)
         }
-        binding.lblName.setText(name)
+        binding.lblName.text = name
     }
 
     private fun setupStudentDetails() {
@@ -81,20 +80,20 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         val profileUrl: String? = childDetails!!.profile
         val name: String? = childDetails!!.name
         val school_name: String? = childDetails!!.school_name
-        val school_city: String? = childDetails!!.school_city
-        val school_logo: String? = childDetails!!.school_logo_url
+        childDetails!!.school_city
+        childDetails!!.school_logo_url
         val standard: String? = childDetails!!.standard_name
         val section: String? = childDetails!!.section_name
         val roll_no: String? = childDetails!!.roll_number
-        val student_address: String? = childDetails!!.student_address
-        val contact_no: String? = childDetails!!.secondary_mobile
-        val whatsapp_no: String? = childDetails!!.whatsapp_number
-        val email: String? = childDetails!!.email
-        val blood_group: String? = childDetails!!.blood_group
-        val father_name: String? = childDetails!!.father_name
-        val father_occupation: String? = childDetails!!.father_occupation
-        val mother_name: String? = childDetails!!.mother_name
-        val mother_occupation: String? = childDetails!!.mother_occupation
+        childDetails!!.student_address
+        childDetails!!.secondary_mobile
+        childDetails!!.whatsapp_number
+        childDetails!!.email
+        childDetails!!.blood_group
+        childDetails!!.father_name
+        childDetails!!.father_occupation
+        childDetails!!.mother_name
+        childDetails!!.mother_occupation
 
         val defaultProfileRes = R.drawable.default_profile
         if (!profileUrl.isNullOrEmpty()) {
@@ -109,11 +108,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 .into(binding.imgStudentProfile)
         }
 
-        binding.lblName.setText(name)
-        binding.lblSchoolName.setText(school_name)
-        binding.lblRegisterNo.setText(roll_no)
-        binding.lblStandard.setText("Standard : "+standard)
-        binding.lblSection.setText("Section : "+section)
+        binding.lblName.text = name
+        binding.lblSchoolName.text = school_name
+        binding.lblRegisterNo.text = roll_no
+        binding.lblStandard.text = "Standard : " + standard
+        binding.lblSection.text = "Section : " + section
     }
 
     override fun onClick(v: View?) {

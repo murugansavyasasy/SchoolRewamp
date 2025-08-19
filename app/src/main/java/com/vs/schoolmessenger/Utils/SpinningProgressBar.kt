@@ -1,13 +1,11 @@
 package com.vs.schoolmessenger.Utils
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import android.animation.ValueAnimator
-import android.graphics.Color
-import android.graphics.RectF
 import android.view.animation.LinearInterpolator
 import kotlin.math.PI
 import kotlin.math.cos
@@ -45,7 +43,8 @@ class SpinningProgressBar @JvmOverloads constructor(
             val x = (width / 2 + circleRadius * cos(currentAngle)).toFloat()
             val y = (height / 2 + circleRadius * sin(currentAngle)).toFloat()
 
-            val alpha = (0.2f + 0.8f * (i.toFloat() / visibleDots)).coerceIn(0f, 1f) // Fading effect
+            val alpha =
+                (0.2f + 0.8f * (i.toFloat() / visibleDots)).coerceIn(0f, 1f) // Fading effect
             paint.alpha = (alpha * 255).toInt()
 
             canvas.drawCircle(x, y, dotRadius, paint)

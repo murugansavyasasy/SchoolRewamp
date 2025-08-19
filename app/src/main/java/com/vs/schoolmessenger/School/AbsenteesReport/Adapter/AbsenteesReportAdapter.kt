@@ -92,7 +92,12 @@ class AbsenteesReportAdapter(
             totalcount.text = data.total_absentees
 
             if (adapter.selectedPosition == position) {
-                linearLayout1.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_blue))
+                linearLayout1.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.custom_blue
+                    )
+                )
                 datetextview.setTextColor(ContextCompat.getColor(context, R.color.black))
                 daytextview.setTextColor(ContextCompat.getColor(context, R.color.black))
             } else {

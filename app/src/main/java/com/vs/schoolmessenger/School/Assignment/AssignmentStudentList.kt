@@ -65,6 +65,7 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
                     2 -> showPending()
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
@@ -93,12 +94,14 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
     }
 
     private fun showSubmitted() {
-        val filteredList = allStudentsList.filter { it.submit_status.equals("SUBMITTED", ignoreCase = true) }
+        val filteredList =
+            allStudentsList.filter { it.submit_status.equals("SUBMITTED", ignoreCase = true) }
         isloadassignmentdata(filteredList)
     }
 
     private fun showPending() {
-        val filteredList = allStudentsList.filter { it.submit_status.equals("NOTSUBMITTED", ignoreCase = true) }
+        val filteredList =
+            allStudentsList.filter { it.submit_status.equals("NOTSUBMITTED", ignoreCase = true) }
         isloadassignmentdata(filteredList)
     }
 

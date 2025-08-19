@@ -54,7 +54,8 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
 //        binding.toolbarLayout.lblRightSideBar.text = "Request"
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.lblName.text = isChildDetails?.name ?: ""
-        binding.lblSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        binding.lblSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -63,7 +64,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.ivradio.setImageResource(R.drawable.selected_radio_button)
         binding.ivradio1.setImageResource(R.drawable.unselected_radio_button)
 
-        binding.imgSearch.setOnClickListener{
+        binding.imgSearch.setOnClickListener {
             if (binding.rlaSortSearch.visibility == View.VISIBLE) {
                 binding.rlaSortSearch.visibility = View.GONE
             } else {
@@ -171,6 +172,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 isSelectedCertificateName = certificateTypes[position]
                 Log.d("isSelectedCertificateName", isSelectedCertificateName!!)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
@@ -185,7 +187,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
             }
         }, this, Constant.isShimmerViewDisable)
 
-        binding.recyclerView.layoutManager = GridLayoutManager(this,2)
+        binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerView.adapter = adapter
     }
 
@@ -205,14 +207,14 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
     }
 
     private fun loadCertificateRequestData() {
-      //  showShimmer()
+        //  showShimmer()
         appViewModel?.getCertificateRequestList(
             isAccessToken.orEmpty(), activity = this
         )
     }
 
     private fun loadCertificateTypes() {
-      //  showShimmer()
+        //  showShimmer()
         appViewModel?.getCertificateTypes(
             isAccessToken.orEmpty(), activity = this
         )

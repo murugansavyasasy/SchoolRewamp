@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
-import com.google.android.play.core.review.ReviewManagerFactory
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -30,8 +29,6 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         setupToolbar()
 
 
-
-
         //In app rating page
 //        val manager = ReviewManagerFactory.create(this@RateUs)
 //        val request = manager.requestReviewFlow()
@@ -50,8 +47,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
 
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
-        }
-        else {
+        } else {
             setupToolbarBlue()
         }
 
@@ -136,7 +132,10 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
             context.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
             // Play Store not installed, open in browser
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+            )
             context.startActivity(intent)
         }
 

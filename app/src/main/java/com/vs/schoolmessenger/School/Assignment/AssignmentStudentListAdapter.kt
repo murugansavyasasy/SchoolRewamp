@@ -18,8 +18,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
 import com.vs.schoolmessenger.School.Assignment.Model.StudentSubmission
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 class AssignmentStudentListAdapter(
     private var itemList: List<StudentSubmission>?,
@@ -86,7 +85,6 @@ class AssignmentStudentListAdapter(
     }
 
 
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -113,6 +111,7 @@ class AssignmentStudentListAdapter(
                 filterResults.values = resultList
                 return filterResults
             }
+
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = ArrayList(results?.values as? List<StudentSubmission> ?: emptyList())
                 notifyDataSetChanged()
@@ -138,7 +137,8 @@ class AssignmentStudentListAdapter(
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
 
         private val sectionLabel: TextView = itemView.findViewById(R.id.sectionlabel)
-//        private val standardLabel: TextView = itemView.findViewById(R.id.standardlabel)
+
+        //        private val standardLabel: TextView = itemView.findViewById(R.id.standardlabel)
         private val statusLabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val layout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
 //        private val arrowIcon: ImageView = itemView.findViewById(R.id.arrow_icon)
@@ -149,7 +149,6 @@ class AssignmentStudentListAdapter(
         private val submittedDate: TextView = itemView.findViewById(R.id.submittedDate)
         private val cancelimage: ImageView = itemView.findViewById(R.id.cancelimage)
         private val statusButton: LinearLayout = itemView.findViewById(R.id.statusButton)
-
 
 
         fun bind(data: StudentSubmission, position: Int, adapter: AssignmentStudentListAdapter) {
@@ -170,7 +169,10 @@ class AssignmentStudentListAdapter(
             layout.setOnClickListener {
                 if (data.submit_status.equals("SUBMITTED", true)) {
                     val intent = Intent(context, AssignmentStudentListDetail::class.java)
-                    intent.putParcelableArrayListExtra("submission_list", ArrayList(data.submissions_details))
+                    intent.putParcelableArrayListExtra(
+                        "submission_list",
+                        ArrayList(data.submissions_details)
+                    )
                     context.startActivity(intent)
                 } else {
                     Log.d("AssignmentAdapter", "No Redirection Available")
@@ -190,8 +192,6 @@ class AssignmentStudentListAdapter(
                     ContextCompat.getColor(context, android.R.color.holo_red_dark)
                 )
             }
-
-
 
 
         }

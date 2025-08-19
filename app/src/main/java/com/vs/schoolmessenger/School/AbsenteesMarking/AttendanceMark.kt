@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
 import android.content.Intent
-import android.icu.util.Calendar
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
@@ -28,14 +27,11 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter.AttendanceStudentReportAdapter
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendanceMarkBinding
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     View.OnClickListener {

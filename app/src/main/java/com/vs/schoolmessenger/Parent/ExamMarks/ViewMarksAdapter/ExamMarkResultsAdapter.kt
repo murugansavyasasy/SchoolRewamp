@@ -74,19 +74,21 @@ class ExamMarkResultsAdapter(
             colourPercent.background = bgDrawable
 
 
-            if (examMark.split.size<=1) {
+            if (examMark.split.size <= 1) {
                 rcSplitMark.visibility = View.GONE
-            }
-            else{
-                rcSplitMark.visibility=View.VISIBLE
-                rcSplitMark.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
-                splitExamMarkResultAdapter = SplitExamMarkResultsAdapter(examMark.split, itemView.context, false)
+            } else {
+                rcSplitMark.visibility = View.VISIBLE
+                rcSplitMark.layoutManager =
+                    LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
+                splitExamMarkResultAdapter =
+                    SplitExamMarkResultsAdapter(examMark.split, itemView.context, false)
                 rcSplitMark.isNestedScrollingEnabled = false
                 rcSplitMark.adapter = splitExamMarkResultAdapter
             }
         }
     }
-        inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)
         }

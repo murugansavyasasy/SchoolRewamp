@@ -46,7 +46,13 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         optionsArray = arrayOf(binding.option1, binding.option2, binding.option3, binding.option4)
 
         questionList = listOf(
-            QuestionData("Which planet is known as the Red Planet?", "Venus", "Mars", "Jupiter", "Saturn"),
+            QuestionData(
+                "Which planet is known as the Red Planet?",
+                "Venus",
+                "Mars",
+                "Jupiter",
+                "Saturn"
+            ),
             QuestionData("Which element has the symbol 'O'?", "Oxygen", "Ozone", "Osmium", "Opium"),
             QuestionData("What is 2+2?", "2", "3", "4", "5"),
             QuestionData("What is 5+3?", "6", "7", "8", "9"),
@@ -74,12 +80,14 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                     showSubmitDialog()
                 }
             }
+
             R.id.prevButton -> {
                 if (currentQuestionIndex > 0) {
                     currentQuestionIndex--
                     displayQuestion()
                 }
             }
+
             R.id.imgBack -> {
                 onBackPressed()
             }
@@ -87,7 +95,7 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
     }
 
     private fun displayQuestion() {
-        val q = questionList[currentQuestionIndex]
+        questionList[currentQuestionIndex]
 
 
         resetOptionColors()
@@ -104,7 +112,8 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
         updateProgressBar()
         binding.prevButton.isEnabled = currentQuestionIndex > 0
-        binding.nextButton.text = if (currentQuestionIndex == questionList.size - 1) "Submit" else "Next"
+        binding.nextButton.text =
+            if (currentQuestionIndex == questionList.size - 1) "Submit" else "Next"
     }
 
     private fun selectOption(index: Int) {

@@ -64,7 +64,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
-    
+
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -237,6 +237,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             isSelectedId[0].toString(), isAcademicYearId, this
         )
     }
+
     private fun isFileUploadInAws(
         isFileType: String?
     ) {
@@ -260,9 +261,9 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             if (isVideoSelectedArrayList.isEmpty()) {
                 ProgressDialogHelper.dismiss()
                 if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
-                voiceSendApi()
+                    voiceSendApi()
                 } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
-                attachmentSendApi()
+                    attachmentSendApi()
                 }
             } else {
                 videoUploading()
@@ -338,9 +339,9 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
-                                        if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                                        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                                             voiceSendApi()
-                                        } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                                        } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
                                             attachmentSendApi()
                                         }
                                     } else {
@@ -361,6 +362,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             )
         }
     }
+
     fun voiceSendApi() {
         val isVoiceData = Constant.isVoiceSendingData
 
@@ -425,7 +427,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         ProgressDialogHelper.updateProgress(80)
     }
 
-    
+
     fun showSendConfirmationDialog(isSelectTarget: String, isMessage: String) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val builder = AlertDialog.Builder(this)
@@ -443,7 +445,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         var isCircularType: String? = null
         isTargetType = Constant.isStudent
         isCircularType = Constant.student
-        val isTextData = Constant.isTextSendingData
+        Constant.isTextSendingData
 
         alertMessage.text = isMessage
         lblSelectTarget.text = isSelectTarget
@@ -482,6 +484,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             alertDialog.dismiss()
         }
     }
+
     private fun videoUploading() {
 
         val iterator = isVideoSelectedArrayList.iterator()
@@ -526,11 +529,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
             if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()
-                if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
-                attachmentSendApi()
+                if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                    attachmentSendApi()
+                }
             }
         }
-    }
     }
 
     override fun onFailure(errorMessage: String?) {
@@ -548,7 +551,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         Constant.stopDelay()
     }
 
-    
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
@@ -574,11 +577,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     }
 
                     showSendConfirmationDialog(
-                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + resources.getString(
-                                R.string.Student_s
-                            ),
-                            isAcademicYearNote.toString()
-                        )
+                        resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + resources.getString(
+                            R.string.Student_s
+                        ),
+                        isAcademicYearNote.toString()
+                    )
                 } else {
                     Constant.showValidationAlertPopup(
                         getString(

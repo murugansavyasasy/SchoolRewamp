@@ -14,7 +14,6 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.MobileNumberBinding
 import com.vs.schoolmessenger.databinding.MobileNumberNewBinding
 
 class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListener {
@@ -42,7 +41,9 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
             } else {
                 Toast.makeText(
                     this,
-                    resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(R.string.digit_mobile_number), Toast.LENGTH_SHORT
+                    resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(
+                        R.string.digit_mobile_number
+                    ), Toast.LENGTH_SHORT
                 ).show()
 
             }

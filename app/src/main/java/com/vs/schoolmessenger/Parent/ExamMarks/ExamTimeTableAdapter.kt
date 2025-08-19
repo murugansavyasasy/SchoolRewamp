@@ -12,8 +12,9 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable.ExamSubjectAdapter
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData
 import com.vs.schoolmessenger.R
 
-class ExamTimeTableAdapter(private var fullList: List<ExamData>,
-                           private val listener: ExamMarkListener
+class ExamTimeTableAdapter(
+    private var fullList: List<ExamData>,
+    private val listener: ExamMarkListener
 ) :
     RecyclerView.Adapter<ExamTimeTableAdapter.ExamTimeTableViewHolder>(), Filterable {
 
@@ -21,7 +22,8 @@ class ExamTimeTableAdapter(private var fullList: List<ExamData>,
 
     inner class ExamTimeTableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val subjectName: TextView = itemView.findViewById(R.id.subjectName)
-        private val subjectRecyclerView: RecyclerView = itemView.findViewById(R.id.subjectRecyclerView)
+        private val subjectRecyclerView: RecyclerView =
+            itemView.findViewById(R.id.subjectRecyclerView)
 
         fun bind(examTimeTable: ExamData) {
             subjectName.text = examTimeTable.name

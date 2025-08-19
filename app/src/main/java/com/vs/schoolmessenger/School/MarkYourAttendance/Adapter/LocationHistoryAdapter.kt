@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.Adapter.TextHistoryAdapter
-import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.LocationHistoryClickListener
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryData
+import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.LocationHistoryClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 

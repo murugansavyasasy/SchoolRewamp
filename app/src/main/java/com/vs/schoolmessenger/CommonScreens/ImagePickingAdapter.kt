@@ -45,14 +45,17 @@ class ImagePickingAdapter(
         Log.d("isFilePath", item.path.toString())
 
         if (item.type.toString() == Constant.VIDEO) {
-            holder.imgVideoPlay.visibility = View.VISIBLE
+            holder.imgVideoPlay.visibility = VISIBLE
         } else {
-            holder.imgVideoPlay.visibility = View.GONE
+            holder.imgVideoPlay.visibility = GONE
         }
 
         val filePath = item.path
         val fileUri = when {
-            filePath.startsWith("content://") || filePath.startsWith("file://") -> Uri.parse(filePath)
+            filePath.startsWith("content://") || filePath.startsWith("file://") -> Uri.parse(
+                filePath
+            )
+
             filePath.startsWith("http://") || filePath.startsWith("https://") -> filePath
             else -> File(filePath)
         }
@@ -77,7 +80,7 @@ class ImagePickingAdapter(
 
         holder.del.visibility = if (pos == 0) GONE else VISIBLE
         holder.del.setOnClickListener {
-            Log.d("isPosition",pos.toString())
+            Log.d("isPosition", pos.toString())
             items.removeAt(pos)
             notifyItemRemoved(pos)
             notifyItemRangeChanged(pos, items.size)
@@ -111,7 +114,10 @@ class ImagePickingAdapter(
                             setDataAndType(uri, mimeType)
                             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         }
-                        val activities = context.packageManager.queryIntentActivities(openIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                        val activities = context.packageManager.queryIntentActivities(
+                            openIntent,
+                            PackageManager.MATCH_DEFAULT_ONLY
+                        )
                         if (activities.isNotEmpty()) {
                             context.startActivity(Intent.createChooser(openIntent, "Open with"))
                         } else {

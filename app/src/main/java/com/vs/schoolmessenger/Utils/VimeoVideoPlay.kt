@@ -124,7 +124,11 @@ class VimeoVideoPlay : BaseActivity<VimeoVideoPlayBinding>(), View.OnClickListen
                 downloadVideo(this, finalDownloadUrl)
             } else {
                 runOnUiThread {
-                    Toast.makeText(this, getString(R.string.Video_already_downloaded), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.Video_already_downloaded),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -282,7 +286,8 @@ class VimeoVideoPlay : BaseActivity<VimeoVideoPlayBinding>(), View.OnClickListen
         if (requestCode == 100) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted
-                Toast.makeText(this, getString(R.string.Permission_granted), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.Permission_granted), Toast.LENGTH_SHORT)
+                    .show()
                 // Call your download function here since permission is granted
                 // downloadVideo()
             } else {

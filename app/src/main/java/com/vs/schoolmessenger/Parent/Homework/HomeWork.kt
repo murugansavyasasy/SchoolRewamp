@@ -1,10 +1,12 @@
 package com.vs.schoolmessenger.Parent.Homework
 
+import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,9 +21,6 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
-import android.content.Context
-import android.util.Log
-import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -171,13 +170,13 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                 if (binding.lytSearch.visibility == View.VISIBLE) {
                     binding.lytSearch.visibility = View.GONE
                     binding.edtSearch.setText("")
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
                 } else {
                     binding.lytSearch.visibility = View.VISIBLE
                     binding.edtSearch.setText("")
                     binding.edtSearch.requestFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
                 }
             }
@@ -223,7 +222,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         val intent = Intent(this@HomeWork, ChildHomeWork::class.java)
         intent.putExtra("isPreViewData", isHomeWorkData)
         intent.putExtra("isHomeWorkDate", isHomeWorkDate)
-        Log.d("samekkeaaaaa",isHomeWorkDate)
+        Log.d("samekkeaaaaa", isHomeWorkDate)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }

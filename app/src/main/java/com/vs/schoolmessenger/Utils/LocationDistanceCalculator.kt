@@ -4,7 +4,12 @@ import android.location.Location
 
 class LocationDistanceCalculator {
 
-    fun calculateDistance(isStaffCurrentLatitude: Double, isStaffCurrentLongitude: Double, isSchoolLocationLatitude: Double, isSchoolLocationLongitude: Double): Float {
+    fun calculateDistance(
+        isStaffCurrentLatitude: Double,
+        isStaffCurrentLongitude: Double,
+        isSchoolLocationLatitude: Double,
+        isSchoolLocationLongitude: Double
+    ): Float {
         // Create a Location object for the first location
         val isCurrentLocation = Location(Constant.Location_1)
         isCurrentLocation.latitude = isStaffCurrentLatitude

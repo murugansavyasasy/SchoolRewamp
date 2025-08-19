@@ -52,7 +52,6 @@ class StudentDetailAdapter(
             1 -> {
 
 
-
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
                         context, R.color.dark_bg_purple
@@ -85,17 +84,17 @@ class StudentDetailAdapter(
 
         holder.binding.lblRegisterNumber.text = "Roll No : " + item.roll_number
         holder.binding.lblClassTeacher.text = "Class Teacher : " + item.class_teacher
-        if (item.school_name_regional == ""){
-            holder.binding.lblSchoolRegionalName.visibility= View.GONE
-        }else{
-            holder.binding.lblSchoolRegionalName.visibility= View.VISIBLE
+        if (item.school_name_regional == "") {
+            holder.binding.lblSchoolRegionalName.visibility = View.GONE
+        } else {
+            holder.binding.lblSchoolRegionalName.visibility = View.VISIBLE
         }
-        holder.binding.lblSchoolRegionalName.text=item.school_name_regional
+        holder.binding.lblSchoolRegionalName.text = item.school_name_regional
         holder.binding.lblName.text = item.name
         holder.binding.lblClass.text = item.standard_name + " - " + item.section_name
         holder.binding.lblSchoolName.text = item.school_name
         holder.binding.lblSchoolPlace.text = item.school_city
-        holder.binding.lblacademicyear.text = "Academic Year : "+item.academic_year_name
+        holder.binding.lblacademicyear.text = "Academic Year : " + item.academic_year_name
 
 
         Glide.with(context)

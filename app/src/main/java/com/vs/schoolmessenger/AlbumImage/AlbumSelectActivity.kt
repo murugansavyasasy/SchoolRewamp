@@ -190,6 +190,7 @@ class AlbumSelectActivity : AppCompatActivity() {
                 }
             }
     }
+
     private fun checkAndRequestPermissionsForDocuments() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (android.os.Environment.isExternalStorageManager()) {
@@ -332,14 +333,17 @@ class AlbumSelectActivity : AppCompatActivity() {
             "application/msword",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
+
         "ppt" -> listOf(
             "application/vnd.ms-powerpoint",
             "application/vnd.openxmlformats-officedocument.presentationml.presentation"
         )
+
         "xls" -> listOf(
             "application/vnd.ms-excel",
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+
         "txt" -> listOf("text/plain")
         else -> emptyList()
     }

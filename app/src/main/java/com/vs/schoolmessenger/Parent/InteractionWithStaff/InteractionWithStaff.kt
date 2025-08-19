@@ -1,29 +1,25 @@
 package com.vs.schoolmessenger.Parent.InteractionWithStaff
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Adapter.InteractionWithStaffAdapter
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.R
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportAdapter
-import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.IntectionWithStaffBinding
@@ -127,13 +123,13 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
                 if (binding.rytsearch.isVisible) {
                     binding.rytsearch.visibility = View.GONE
                     binding.txtVideoMenu.setText("")
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
                 } else {
                     binding.rytsearch.visibility = View.VISIBLE
                     binding.txtVideoMenu.setText("")
                     binding.txtVideoMenu.requestFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
                 }
             }

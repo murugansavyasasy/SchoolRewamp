@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.QuizExam
 
-data class QuizUpcomingData (
+data class QuizUpcomingData(
 
     val quizname: String,
     val quizdescription: String,

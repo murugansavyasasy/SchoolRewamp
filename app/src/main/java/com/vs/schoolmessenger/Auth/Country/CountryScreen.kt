@@ -5,15 +5,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.Spinner
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
-import com.vs.schoolmessenger.Dashboard.Combination.StudentDetailAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RestClient
@@ -22,7 +18,8 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.ToastManager
 import com.vs.schoolmessenger.databinding.CountryListScreenBinding
 
-class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickListener,CountryClickListener {
+class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickListener,
+    CountryClickListener {
 
     override fun getViewBinding(): CountryListScreenBinding {
         return CountryListScreenBinding.inflate(layoutInflater)
@@ -60,7 +57,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         authViewModel!!.isCountryList?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
                     val isCountryList = response.data
 
@@ -86,10 +83,10 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
 
     private fun loadCountry(countryList: List<Country>) {
         val updatedList = countryList.toMutableList()
-        updatedList.add(3, Country(0, "",0,0,"","","",""))
+        updatedList.add(3, Country(0, "", 0, 0, "", "", "", ""))
         mAdapter = CountryListAdapter(this, updatedList) { selectedCountry ->
-          isCountrySelected = true
-          Constant.country_details = selectedCountry
+            isCountrySelected = true
+            Constant.country_details = selectedCountry
 
 //            Toast.makeText(this, "Selected: ${selectedCountry.name}", Toast.LENGTH_SHORT).show()
         }
@@ -97,13 +94,11 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         binding.recycleCountry.adapter = mAdapter
 
 
-
     }
 
     private fun isCountry() {
         authViewModel!!.isCountryList()
     }
-
 
 
 //    private fun isLoadCountry(countryList: List<Country>) {
@@ -147,16 +142,16 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
             R.id.btnContinue -> {
                 if (isCountrySelected == true) {
 //                    if (isAgree) {
-                        ToastManager.cancelToast()
-                        SharedPreference.putCountryId(
-                            this,
-                            Constant.country_details!!.id
-                        )
-                        SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
-                        RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
-                        val intent = Intent(this@CountryScreen, MobileNumber::class.java)
-                        startActivity(intent)
-                   // }
+                    ToastManager.cancelToast()
+                    SharedPreference.putCountryId(
+                        this,
+                        Constant.country_details!!.id
+                    )
+                    SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
+                    RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
+                    val intent = Intent(this@CountryScreen, MobileNumber::class.java)
+                    startActivity(intent)
+                    // }
 //                    else {
 //                        ToastManager.showToast(this, R.string.AgreeTermsConditions)
 //                    }
@@ -165,7 +160,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                 }
             }
 
-            R.id.rytBack ->{
+            R.id.rytBack -> {
                 onBackPressed()
             }
 

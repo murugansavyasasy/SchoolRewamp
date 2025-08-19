@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.AbsenteesReport.Adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesDetailCli
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import kotlin.String
 
 
 class AbsenteesReportDetailAdapter(
@@ -52,20 +50,16 @@ class AbsenteesReportDetailAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(itemList!![position], position, listener, this, selectedDate)
-        }  else if (holder is ShimmerViewHolder) {
+        } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
-
-
-
 
 
     override fun getItemCount(): Int {
         return if (isLoading) 20
         else itemList?.size ?: 0
     }
-
 
 
     class DataViewHolder(itemView: View, private val context: Context) :
@@ -90,7 +84,7 @@ class AbsenteesReportDetailAdapter(
             relative_layout.setOnClickListener {
                 val intent = Intent(context, AbsenteesStudents::class.java).apply {
                 }
-                isSaveAbsenteesReportDetails(data,selectedDate)
+                isSaveAbsenteesReportDetails(data, selectedDate)
                 context.startActivity(intent)
             }
         }

@@ -48,7 +48,8 @@ class SplitExamMarkResultsAdapter(
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblSplitSubjectName: TextView = itemView.findViewById(R.id.lblSplitSubjectName)
-        private val lblSplitmarkoutof100: TextView = itemView.findViewById(R.id.lblSplitmarkoutof100)
+        private val lblSplitmarkoutof100: TextView =
+            itemView.findViewById(R.id.lblSplitmarkoutof100)
 
 
         fun bind(splitExamMark: SplitMark) {
@@ -58,6 +59,7 @@ class SplitExamMarkResultsAdapter(
             lblSplitmarkoutof100.text = markString
         }
     }
+
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)

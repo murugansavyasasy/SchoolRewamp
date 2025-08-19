@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Auth.Country
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
@@ -48,16 +47,16 @@ class CountryListAdapter(
             }
         }
 
-        fun bind(pos : Int,country: Country, isSelected: Boolean) {
+        fun bind(pos: Int, country: Country, isSelected: Boolean) {
 
-                if (pos == 3) {
-                    lblAllCountry.visibility = View.VISIBLE
-                    rytCountry.visibility = View.GONE
-                    isAllCountryVisible = false
-                } else {
-                    lblAllCountry.visibility = View.GONE
-                    rytCountry.visibility = View.VISIBLE
-                }
+            if (pos == 3) {
+                lblAllCountry.visibility = View.VISIBLE
+                rytCountry.visibility = View.GONE
+                isAllCountryVisible = false
+            } else {
+                lblAllCountry.visibility = View.GONE
+                rytCountry.visibility = View.VISIBLE
+            }
 
             nameText.text = country.name
 
@@ -88,13 +87,14 @@ class CountryListAdapter(
                 })
                 .into(imgCountryLogo)
 
-            if(isSelected){
+            if (isSelected) {
                 lnrRadio.visibility = View.VISIBLE
-                rytCountry.background = ContextCompat.getDrawable(context, R.drawable.edittext_background_focused)
-            }
-            else{
+                rytCountry.background =
+                    ContextCompat.getDrawable(context, R.drawable.edittext_background_focused)
+            } else {
                 lnrRadio.visibility = View.GONE
-                rytCountry.background = ContextCompat.getDrawable(context, R.drawable.login_bg_rect_grey)
+                rytCountry.background =
+                    ContextCompat.getDrawable(context, R.drawable.login_bg_rect_grey)
             }
         }
     }
@@ -106,7 +106,7 @@ class CountryListAdapter(
     }
 
     override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
-        holder.bind(position,filteredList[position], position == selectedPosition)
+        holder.bind(position, filteredList[position], position == selectedPosition)
 
     }
 

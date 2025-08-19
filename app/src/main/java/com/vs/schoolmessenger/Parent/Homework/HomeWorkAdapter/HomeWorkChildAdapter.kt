@@ -21,7 +21,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDeta
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.databinding.FileviewItemBinding
 import java.net.HttpURLConnection
 import java.net.URL
@@ -69,7 +69,89 @@ class HomeWorkChildAdapter(
             binding.imgView.visibility = View.VISIBLE
             binding.imgView.setBackgroundColor(Color.TRANSPARENT)
             if (selectedSchoolMenu == M_ASSIGNMENT) {
-                Log.d("selectedschoolmenu adaptervalue",selectedSchoolMenu.toString())
+                Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
+                binding.imgView.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
+                binding.relativelayoutHeader.visibility = View.GONE
+                binding.childrelativeLayout.visibility = View.VISIBLE
+                when (item.type.uppercase()) {
+                    Constant.IMAGE -> {
+                        binding.imgFileType.setImageResource(R.drawable.imagesvgformar)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.VIDEO -> {
+                        binding.imgFileType.setImageResource(R.drawable.videosvgformat)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.PDF -> {
+                        binding.imgFileType.setImageResource(R.drawable.pdfsvgformatter)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.DOC, Constant.DOCX -> {
+                        binding.imgFileType.setImageResource(R.drawable.docxsvgformatter)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.TXT -> {
+                        binding.imgFileType.setImageResource(R.drawable.txtsvgformat)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.PPT, Constant.PPTX -> {
+                        binding.imgFileType.setImageResource(R.drawable.pptsvgformat)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.EXCEL -> {
+                        binding.imgFileType.setImageResource(R.drawable.excelsvgformat)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    else -> {
+                        binding.imgView.setImageResource(R.drawable.excel_icon)
+                        binding.progressBar.visibility = View.GONE
+                    }
+                }
+            }else if  (selectedSchoolMenu == M_SCHOOL_NEEDS) {
+                Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
                 binding.imgView.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
                 binding.relativelayoutHeader.visibility = View.GONE

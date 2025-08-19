@@ -5,16 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.ImageView
-import android.widget.ProgressBar
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -29,7 +22,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class AttachmentFilePathAdapter (
+class AttachmentFilePathAdapter(
 
     private var GetFilePathDetailsData: List<AttachmentFile>?,
     private val parentData: AttachmentData,
@@ -37,13 +30,14 @@ class AttachmentFilePathAdapter (
     private var context: Context,
     private var isLoading: Boolean
 
-):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_img_pdf_item)
@@ -131,7 +125,7 @@ class AttachmentFilePathAdapter (
             fileItem.setOnClickListener {
                 data?.let {
                     if (item.is_unread) {
-                        item.is_unread=false
+                        item.is_unread = false
                         listener.onChildItemClick(it, item)
                     }
                     Constant.commonFileList.isEmpty()
@@ -144,8 +138,6 @@ class AttachmentFilePathAdapter (
                     context.startActivity(intent)
                 }
             }
-
-
 
 
 //            WebViewThumbnail.setOnTouchListener(object : OnTouchListener {

@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Settings.RateUs
 
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.RatingSuccessBinding

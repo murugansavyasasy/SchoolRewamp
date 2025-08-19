@@ -1,8 +1,8 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent
 
-data class InteractionStudentData (
+data class InteractionStudentData(
 
-val isName:String,
-val isSubject:String,
+    val isName: String,
+    val isSubject: String,
 
-)
+    )
