@@ -153,6 +153,17 @@ object APIMethods {
 
 
 
+
+    const val isGetQuizExamList= "lms/api/quiz/quiz-exam-list"
+    const val isGetQuestion= "lms/api/quiz/get-questions"
+    const val isSubmitQuiz= "lms/api/quiz/submit"
+    const val isGetMySubmission= "lms/api/quiz/my-submissions"
+
+
+
+
+
+
 }
 
 

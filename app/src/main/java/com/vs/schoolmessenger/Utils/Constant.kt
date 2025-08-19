@@ -1129,6 +1129,22 @@ object Constant {
     }
 
 
+    // Convert dd-MM-yyyy hh:mm a("16-07-2025 04:24 PM" ) to dd, MMM yyyy hh:mm a ("16, Jul 2025 04:24 PM")
+
+    fun convertDateFormatType(inputDateStr: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd, MMM yyyy hh:mm a", Locale.ENGLISH)
+            val date = inputFormat.parse(inputDateStr)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            inputDateStr
+        }
+    }
+
+
+
     //Convert dd-MM-yyyy hh:mm a to dd MMM yyyy (12-02-2025 10:58 AM to 12 Feb 2025)
     fun convertToReadableDateformat(inputDate: String): String {
         return try {

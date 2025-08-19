@@ -54,6 +54,10 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.StaffSlotResponse
+import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
+import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
+import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamList
+import com.vs.schoolmessenger.Parent.QuizExam.Model.SubmitQuiz.SubmitQuizResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
@@ -892,5 +896,28 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String
     ): Call<SlotDetailsResponse?>?
 
+    @GET(APIMethods.isGetQuizExamList)
+    fun isQuizExamList(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.type) type: String,
+        @Query(APIKeyNames.status_type) status_type: String,
+    ): Call<GetQuizExamList?>?
+
+    @GET(APIMethods.isGetQuestion)
+    fun isGetQuestion(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: String,
+    ): Call<GetQuizQuestions?>?
+
+    @PUT(APIMethods.isSubmitQuiz)
+    fun isSubmitQuiz(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<SubmitQuizResponse?>
+
+    @GET(APIMethods.isGetMySubmission)
+    fun isGetMySubmission(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: String,
+    ): Call<GetMySubmission?>?
 
 }

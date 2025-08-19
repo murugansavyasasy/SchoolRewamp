@@ -1,0 +1,25 @@
+package com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList
+
+class GetQuizExamListData (
+    val id: String,
+    val quiz_id: String,
+    val title: String,
+    val description: String,
+    val max_mark:Int,
+    val subject_id: Int,
+    val level: Int,
+    val subject: String,
+    val submitted_on: String,
+    val created_on: String,
+    val is_submitted: Boolean,
+    val is_unread: Boolean,
+    val SentBy: String,
+    val start_time: String,
+    val end_time: String,
+    val question_read_time: String,
+    val date: String,
+    val no_of_questions: Int,
+    val right_answer: Int,
+    val wrong_answer: Int,
+    val total_mark: String,
+)

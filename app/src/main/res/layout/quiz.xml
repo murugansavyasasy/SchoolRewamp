@@ -11,50 +11,124 @@
         layout="@layout/parent_side_tool_bar" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Correct Answers: 2/10"
-        android:id="@+id/correctanswers"
-        style="@style/CustomTextStylePoppinsBold"
+    <LinearLayout
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:layout_below="@+id/toolbarLayout"
-        android:textColor="@color/black"
-        android:textSize="@dimen/thirteen_sp"
-        android:visibility="gone"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/ten"/>
+        android:id="@+id/toolbarLayout2"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/lnrTabOneName"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Incorrect Answers: 8/10"
-        android:id="@+id/incorrectanswers"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_below="@+id/correctanswers"
-        android:textColor="@color/black"
-        android:textSize="@dimen/thirteen_sp"
-        android:visibility="gone"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/eight"/>
+            <TextView
+                android:gravity="center"
+                android:text="@string/upcoming"
+                android:id="@+id/tabOneName"
+                android:layout_marginEnd="@dimen/five"
+                android:textColor="@color/iconBlue"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/iconBlue">
+            </View>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnrTabTwoName"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:gravity="center"
+                android:text="@string/completed"
+                android:layout_marginStart="@dimen/five"
+                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/tabTwoName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_marginStart="@dimen/five"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                >
+            </View>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rcUpcoming"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/toolbarLayout2"
         android:visibility="gone"
         android:layout_marginTop="@dimen/fifteen" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView1"
+        android:id="@+id/rcCompleted"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/incorrectanswers"
+        android:layout_below="@+id/toolbarLayout2"
         android:visibility="gone"
         android:layout_marginTop="@dimen/fifteen" />
+
+
+    <LinearLayout
+        android:id="@+id/lytList"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/nomessages"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty"
+            android:gravity="center"
+            android:text="@string/no_list_found"
+            android:textSize="@dimen/fifteen_sp" />
+    </LinearLayout>
 
 
 

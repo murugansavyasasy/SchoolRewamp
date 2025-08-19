@@ -44,6 +44,10 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.StaffSlotResponse
+import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
+import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
+import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamList
+import com.vs.schoolmessenger.Parent.QuizExam.Model.SubmitQuiz.SubmitQuizResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
@@ -318,6 +322,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSlotCancelByStudent: LiveData<StatusMessageModel?>? = null
     var isSlotValidation: LiveData<SlotValidationResponse?>? = null
     var isSlotDetailsHistory: LiveData<SlotDetailsResponse?>? = null
+    var isQuizExamList: LiveData<GetQuizExamList?>? = null
+    var isGetQuestion: LiveData<GetQuizQuestions?>? = null
+    var isSubmitQuiz: LiveData<SubmitQuizResponse?>? = null
+    var isGetMySubmission: LiveData<GetMySubmission?>? = null
 
 
 
@@ -448,6 +456,10 @@ class App(application: Application) : AndroidViewModel(application) {
         isSlotCancelByStudent = apiParentRepositories.isSlotCancelByStudentLiveData
         isSlotValidation = apiSchoolRepositories.isSlotValidationLiveData
         isSlotDetailsHistory = apiParentRepositories.isSlotDetailsHistoryLiveData
+        isQuizExamList = apiParentRepositories.isQuizExamListLiveData
+        isGetQuestion = apiParentRepositories.isGetQuestionLiveData
+        isSubmitQuiz = apiParentRepositories.isSubmitQuizLiveData
+        isGetMySubmission = apiParentRepositories.isMySubmissionLiveData
 
 
     }
@@ -1093,6 +1105,41 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiParentRepositories.isSlotHistoryForStudent(isToken)
     }
+
+
+    fun isQuizExamList(
+        isToken: String,
+        type: String,
+        status_type: String,
+
+    ) {
+        apiParentRepositories.isQuizExamList(isToken,type,status_type)
+    }
+
+    fun isGetQuestions(
+        isToken: String,
+        id: String,
+
+
+        ) {
+        apiParentRepositories.isGetQuestions(isToken,id)
+    }
+
+    fun isSubmitQuiz(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiParentRepositories.isSubmitQuiz(
+            isToken, jsonObject,
+        )
+    }
+
+    fun isGetMySubmission(
+        isToken: String,
+        id: String,
+        ) {
+        apiParentRepositories.isGetMySubmission(isToken,id)
+    }
+
 
 
 }
