@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.PTM
 
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.databinding.LeaveRequestsBinding
 import com.vs.schoolmessenger.databinding.PtmStaffBinding
 
 class PTM : BaseActivity<PtmStaffBinding>(),

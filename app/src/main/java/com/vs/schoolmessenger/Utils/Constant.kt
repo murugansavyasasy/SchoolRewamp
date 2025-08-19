@@ -34,7 +34,6 @@ import android.widget.FrameLayout
 import android.widget.GridView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -62,8 +61,6 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSe
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import java.io.File
 import java.io.FileOutputStream
-import java.net.HttpURLConnection
-import java.net.URL
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -478,7 +475,7 @@ object Constant {
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                counterLabel.setText(editable!!.length.toString() + " of " + maxLength.toString())
+                counterLabel.text = editable!!.length.toString() + " of " + maxLength.toString()
                 if (editable != null && editable.length > maxLength) {
                     // Restrict to the max length by trimming the input
                     editable.delete(maxLength, editable.length)
@@ -506,7 +503,7 @@ object Constant {
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                counterLabel.setText(editable!!.length.toString() + " of " + maxLength.toString())
+                counterLabel.text = editable!!.length.toString() + " of " + maxLength.toString()
                 if (editable != null && editable.length > maxLength) {
                     // Restrict to the max length by trimming the input
                     editable.delete(maxLength, editable.length)
@@ -551,7 +548,7 @@ object Constant {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                Constant.showLoading(context as Activity)
+                showLoading(context as Activity)
             }
 
             override fun onReceivedError(
@@ -560,12 +557,12 @@ object Constant {
                 description: String?,
                 failingUrl: String?
             ) {
-                Constant.hideLoading(context as Activity)
+                hideLoading(context as Activity)
 
             }
 
             override fun onPageFinished(view: WebView, url: String) {
-                Constant.hideLoading(context as Activity)
+                hideLoading(context as Activity)
 
             }
         }
@@ -651,14 +648,10 @@ object Constant {
 
         val isStaffRole = isUserDetails!!.staff_role
         var isMultipleSchool = false
-        if (isUserDetails.staff_details.size > 1) {
-            isMultipleSchool = true
-        } else {
-            isMultipleSchool = false
-        }
+        isMultipleSchool = isUserDetails.staff_details.size > 1
         if (isMultipleSchool) {
-            if (isStaffRole.equals(Constant.isGroupHeadRole) || isStaffRole.equals(Constant.isPrincipalRole) || isStaffRole.equals(
-                    Constant.isAdminRole
+            if (isStaffRole.equals(isGroupHeadRole) || isStaffRole.equals(isPrincipalRole) || isStaffRole.equals(
+                    isAdminRole
                 )
             ) {
                 val intent = Intent(activity, SchoolList::class.java)
@@ -673,7 +666,7 @@ object Constant {
         }
     }
 
-    
+
     fun showTopAlertPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -755,9 +748,6 @@ object Constant {
     }
 
 
-
-
-
     //Leave Request
     fun handleRestrictDatePicker(
         context: Context,
@@ -831,7 +821,6 @@ object Constant {
     }
 
 
-    
     fun showDataValidation(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -924,7 +913,7 @@ object Constant {
         }
     }
 
-    
+
     fun showValidationAlertPopup(isTitle: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -974,7 +963,7 @@ object Constant {
         }
     }
 
-    
+
     fun showSendConfirmationDialog(
         activity: Activity,
         istitle: String,
@@ -1082,14 +1071,14 @@ object Constant {
         }
     }
 
-    
+
     fun getCurrentTime(): String {
         val currentTime = LocalTime.now()
         val formatter = DateTimeFormatter.ofPattern(hh_mm_a)
         return currentTime.format(formatter)
     }
 
-    
+
     fun getCurrentDate(): String {
         val currentDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern(ddMMyyyy)
@@ -1140,7 +1129,6 @@ object Constant {
             inputDate
         }
     }
-
 
 
     fun getCurrentDateInfo(): List<String> {
@@ -1257,8 +1245,8 @@ object Constant {
     }
 
     fun getDeviceName(): String {
-        val manufacturer = android.os.Build.MANUFACTURER
-        val model = android.os.Build.MODEL
+        val manufacturer = Build.MANUFACTURER
+        val model = Build.MODEL
         return if (model.startsWith(manufacturer, ignoreCase = true)) {
             model
         } else {
@@ -1266,7 +1254,7 @@ object Constant {
         }
     }
 
-//Return the suffix of the Day like 11 means th,1 means st,2 means nd,3 means rd etc
+    //Return the suffix of the Day like 11 means th,1 means st,2 means nd,3 means rd etc
     fun getDaySuffix(day: Int): String {
         return if (day in 11..13) "th" else when (day % 10) {
             1 -> "st"
@@ -1291,8 +1279,6 @@ object Constant {
             "monthYear" to monthYear
         )
     }
-
-
 
 
     fun getVideoSizeInMB(videoPath: String): Long {
@@ -1383,7 +1369,6 @@ object Constant {
 
         return Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, true)
     }
-
 
 
     fun scaleBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {

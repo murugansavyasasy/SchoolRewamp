@@ -1,14 +1,14 @@
 package com.vs.schoolmessenger.Auth.Country
 
 import android.content.Context
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.graphics.createBitmap
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.R  // Change based on your package name
+import com.vs.schoolmessenger.R
 
 class CountrySpinnerAdapter(
     private val context: Context,

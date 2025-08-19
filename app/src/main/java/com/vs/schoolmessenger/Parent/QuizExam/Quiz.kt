@@ -2,30 +2,15 @@ package com.vs.schoolmessenger.Parent.QuizExam
 
 
 import android.graphics.Color
-import com.vs.schoolmessenger.databinding.QuizBinding
-
-
-import android.os.Bundle
 import android.view.View
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
-import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListener
-import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestAdapter
-import com.vs.schoolmessenger.Parent.LSRW.LSRWAdapter
-import com.vs.schoolmessenger.Parent.LSRW.LSRWClickListener
-import com.vs.schoolmessenger.Parent.LSRW.LSRWData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.CertificateRequestParentBinding
-import com.vs.schoolmessenger.databinding.LsrwBinding
-import com.vs.schoolmessenger.databinding.QuizExamBinding
+import com.vs.schoolmessenger.databinding.QuizBinding
 
 class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
@@ -202,7 +187,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.lblLeftSideBar ->{
+            R.id.lblLeftSideBar -> {
 
                 binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
                 binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
@@ -210,7 +195,8 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
                 binding.recyclerView.visibility = View.VISIBLE
                 isCompleted()
             }
-            R.id.lblRightSideBar ->{
+
+            R.id.lblRightSideBar -> {
                 binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
                 binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
                 binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)

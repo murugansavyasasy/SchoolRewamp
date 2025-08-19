@@ -29,7 +29,10 @@ class TimePickerAdapter(
         holder.textView.textSize = 18f
         holder.textView.setTextColor(
             if (position == selectedItem) {
-                ContextCompat.getColor(holder.itemView.context, R.color.dark_blue_and_green_) // Retrieve the color value
+                ContextCompat.getColor(
+                    holder.itemView.context,
+                    R.color.dark_blue_and_green_
+                ) // Retrieve the color value
             } else {
                 ContextCompat.getColor(holder.itemView.context, R.color.black)
             }

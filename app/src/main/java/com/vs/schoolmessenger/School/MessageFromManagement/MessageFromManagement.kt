@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.MessageFromManagement
 
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.databinding.LeaveRequestsBinding
 import com.vs.schoolmessenger.databinding.MessageFromManagementBinding
 
 class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),

@@ -9,7 +9,7 @@ import com.vs.schoolmessenger.databinding.StudentBustLocationBinding
 import io.socket.client.IO
 import org.json.JSONObject
 
-class StudentBusLocation : BaseActivity<StudentBustLocationBinding>(), View.OnClickListener{
+class StudentBusLocation : BaseActivity<StudentBustLocationBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): StudentBustLocationBinding {
         return StudentBustLocationBinding.inflate(layoutInflater)
@@ -29,10 +29,11 @@ class StudentBusLocation : BaseActivity<StudentBustLocationBinding>(), View.OnCl
             val lng = data.getDouble("lng")
 
             runOnUiThread {
-                val latLng = LatLng(lat, lng)
+                LatLng(lat, lng)
             }
         }
     }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()

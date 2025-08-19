@@ -813,7 +813,6 @@ interface ApiInterfaces {
     ): Call<MySubmittedAssignmentsResponse?>?
 
 
-
     @GET(APIMethods.islsrwskillsreport)
     fun islsrwskillsreport(
         @Header(APIKeyNames.Authorization) token: String

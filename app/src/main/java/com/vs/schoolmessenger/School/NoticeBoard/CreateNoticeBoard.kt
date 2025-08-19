@@ -27,6 +27,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
@@ -56,8 +57,6 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.R
-import android.view.inputmethod.InputMethodManager
-import androidx.core.view.isVisible
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.RestClient
@@ -149,7 +148,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.lnrTabTwoName.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.btnNext.text = getString(R.string.NEXT)
-        val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
+        val (dayOnly, _, fullDate, _, _) = Constant.getCurrentDateInfo()
         binding.lblDay.text = dayOnly
         binding.lblEndDay.text = dayOnly
 
@@ -195,6 +194,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     noticeboardadapter.filter.filter(s)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -304,7 +304,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val channel = NotificationChannel(
             "reminder_channel", "Reminders", NotificationManager.IMPORTANCE_HIGH
         )
-        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
 
     }
@@ -537,13 +537,13 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 if (binding.rytSearch323.isVisible) {
                     binding.rytSearch323.visibility = View.GONE
                     binding.edtSearch.setText("")
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
                 } else {
                     binding.rytSearch323.visibility = View.VISIBLE
                     binding.edtSearch.setText("")
                     binding.edtSearch.requestFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
                 }
             }

@@ -1,28 +1,20 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponMenuAdapter
-import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponSummaryAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.TicketCouponAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
-import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponMenuClickListener
-import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.TicketCouponClickListener
-import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummary
-import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.databinding.FragmentHomeBinding
 import com.vs.schoolmessenger.databinding.FragmentTicketBinding
 
 
@@ -145,12 +137,10 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
     }
 
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
 
     override fun onticketCouponSummaryClick(ticketSummary: TicketSummary?) {

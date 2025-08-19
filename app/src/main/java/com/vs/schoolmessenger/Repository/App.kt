@@ -320,10 +320,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSlotDetailsHistory: LiveData<SlotDetailsResponse?>? = null
 
 
-
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
-        isDashBoardCountData =apiSchoolRepositories.isDashBoardCountLiveData
+        isDashBoardCountData = apiSchoolRepositories.isDashBoardCountLiveData
 
         isGetAds = apiSchoolRepositories.isGetAdsLiveData
         isGlobalVariables = apiSchoolRepositories.isGetGlobalVariablesLiveData
@@ -467,7 +466,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isDashBoardCountData(isToken: String, isMemberType: String, activity: Activity) {
-        apiSchoolRepositories.isDashBoardCount(isToken, isMemberType,activity)
+        apiSchoolRepositories.isDashBoardCount(isToken, isMemberType, activity)
     }
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {

@@ -1,9 +1,9 @@
 package com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
+
 import android.graphics.PorterDuff
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,12 +42,19 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.lblStudentName.text = isChildDetails?.name ?: ""
         binding.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.lblStudentSection.text = isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
+        binding.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
         binding.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
-        binding.imgSearchBtn.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+        binding.imgBack.setColorFilter(
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_IN
+        )
+        binding.imgSearchBtn.setColorFilter(
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_IN
+        )
 
-        binding.imgSearchBtn.setOnClickListener{
+        binding.imgSearchBtn.setOnClickListener {
             if (binding.rytSearch.visibility == View.VISIBLE) {
                 binding.rytSearch.visibility = View.GONE
             } else {
@@ -71,6 +78,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                     mAdapter.filter.filter(s)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 

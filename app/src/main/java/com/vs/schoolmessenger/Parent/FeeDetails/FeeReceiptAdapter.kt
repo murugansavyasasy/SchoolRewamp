@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Parent.FeeDetails
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
@@ -41,7 +42,7 @@ class FeeReceiptAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position],listener, position, this)
+            holder.bind(itemList!![position], listener, position, this)
 
         }
     }
@@ -61,15 +62,20 @@ class FeeReceiptAdapter(
 
 
         @SuppressLint("UseCompatLoadingForDrawables")
-        fun bind(data: InvoiceDetails,listener: InvoiceClickListener, position: Int, adapter: FeeReceiptAdapter) {
+        fun bind(
+            data: InvoiceDetails,
+            listener: InvoiceClickListener,
+            position: Int,
+            adapter: FeeReceiptAdapter
+        ) {
             lblInvoiceNo.text = data.lblInvoiceNo
             lblInvoiceDate.text = data.lblInvoiceDate
             lblInvoiceAmount.text = data.lblInvoiceAmount
             lblInvoiceTime.text = data.lblInvoiceTime
             rytView.setOnClickListener {
-            listener.onItemClick(data, this@DataViewHolder)
+                listener.onItemClick(data, this@DataViewHolder)
 
-         }
+            }
 
         }
     }

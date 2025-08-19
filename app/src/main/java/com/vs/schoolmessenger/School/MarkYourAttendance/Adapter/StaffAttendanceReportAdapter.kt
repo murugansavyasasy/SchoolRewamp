@@ -129,7 +129,7 @@ class StaffAttendanceReportAdapter(
             lblDay.text = result.third
 
             rytParentCard.setOnClickListener {
-                attendanceMap.forEach { (key, value) ->
+                attendanceMap.forEach { (_, value) ->
                     if (value == Constant.Present) {
                         listener.onItemClick(data)
                     } else if (value == Constant.Absent) {

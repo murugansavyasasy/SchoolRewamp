@@ -2,7 +2,7 @@ package com.vs.schoolmessenger.School.Event.Model
 
 import java.io.Serializable
 
-data class EventDetails (
+data class EventDetails(
     val txtLocation: String,
     val txtTitle: String,
     val txtDesc: String,

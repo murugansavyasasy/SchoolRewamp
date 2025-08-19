@@ -15,6 +15,6 @@ enum class FileType {
 }
 
 data class FileItem(
-    val path:   String,
-    val type:   FileType
+    val path: String,
+    val type: FileType
 )

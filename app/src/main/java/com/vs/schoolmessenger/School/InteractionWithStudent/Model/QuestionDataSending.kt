@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent.Model
 
-data class QuestionDataSending (
+data class QuestionDataSending(
     val id: String,
     val name: String,
     val section_id: String,

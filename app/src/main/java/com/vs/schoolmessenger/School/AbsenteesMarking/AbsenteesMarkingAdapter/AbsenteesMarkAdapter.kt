@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudentSelectClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesSelectionListener
-import com.vs.schoolmessenger.School.StudentReport.StudentReportData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AbsenteesMarkAdapter(
@@ -44,7 +42,13 @@ class AbsenteesMarkAdapter(
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.attendance_student_list, parent, false)
-            DataViewHolder(view, context, studentIdList,selectionListener,listener) // Pass context to DataViewHolder
+            DataViewHolder(
+                view,
+                context,
+                studentIdList,
+                selectionListener,
+                listener
+            ) // Pass context to DataViewHolder
         }
     }
 
@@ -81,15 +85,14 @@ class AbsenteesMarkAdapter(
         fun bind(data: NameAndIds, position: Int) {
 
             lblName.text = data.name
-            if(data.roll_no!=""){
+            if (data.roll_no != "") {
                 lblRollNo.text = data.roll_no
                 lnrRollno.setBackgroundResource(R.drawable.rect_light_blue)
-            }
-            else{
+            } else {
                 lblRollNo.text = ""
                 lnrRollno.setBackgroundResource(0)
             }
-            lblAdmisNo.text = context.getString(R.string.ADMIS_NO_)+data.admission_no
+            lblAdmisNo.text = context.getString(R.string.ADMIS_NO_) + data.admission_no
 
             val id = data.id.toString()
 
@@ -135,8 +138,7 @@ class AbsenteesMarkAdapter(
             itemList?.forEach {
                 studentIdList.add(it.id.toString())
             }
-        }
-        else {
+        } else {
             studentIdList.clear()
         }
 
@@ -149,7 +151,6 @@ class AbsenteesMarkAdapter(
         itemList = newList
         notifyDataSetChanged()
     }
-
 
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -1,4 +1,3 @@
-
 //Last Working Code
 package com.vs.schoolmessenger.School.LeaveRequests
 
@@ -10,7 +9,6 @@ import android.widget.Filter
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestAdapter
 import com.vs.schoolmessenger.Parent.RequestLeave.MonthWiseLeaveData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LeaveRequests.Listener.SchoolLRClickListener
@@ -35,7 +33,8 @@ class MonthwiseLeaveAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.monthwise_leave_history_item)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.monthwise_leave_history_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -77,7 +76,6 @@ class MonthwiseLeaveAdapter(
     }
 
 
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -90,8 +88,11 @@ class MonthwiseLeaveAdapter(
                         val filteredDetails = monthData.details.filter {
                             it.student_name.lowercase().contains(query) ||
                                     it.section_name.lowercase().contains(query) ||
-                                    it.reason.lowercase().contains(query)||it.no_of_days.lowercase().contains(query)
-                                    ||it.leave_type.lowercase().contains(query)||it.class_name.lowercase().contains(query)
+                                    it.reason.lowercase()
+                                        .contains(query) || it.no_of_days.lowercase()
+                                .contains(query)
+                                    || it.leave_type.lowercase()
+                                .contains(query) || it.class_name.lowercase().contains(query)
 
                         }
                         if (filteredDetails.isNotEmpty()) {
@@ -117,7 +118,8 @@ class MonthwiseLeaveAdapter(
         RecyclerView.ViewHolder(itemView) {
 
         private val lblMonthName: TextView = itemView.findViewById(R.id.lblMonthName)
-        private val rvMonthWiseHistory: RecyclerView = itemView.findViewById(R.id.rvMonthWiseHistory)
+        private val rvMonthWiseHistory: RecyclerView =
+            itemView.findViewById(R.id.rvMonthWiseHistory)
 
 
         fun bind(

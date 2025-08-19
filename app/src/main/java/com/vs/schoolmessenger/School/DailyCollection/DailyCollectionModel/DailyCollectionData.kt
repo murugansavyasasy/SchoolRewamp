@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel
 
-data class DailyCollectionData (
+data class DailyCollectionData(
     val type_name: String,
     val amount: String
 )

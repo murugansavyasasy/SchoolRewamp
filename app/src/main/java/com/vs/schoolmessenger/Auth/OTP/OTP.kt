@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Auth.OTP
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Paint
@@ -16,22 +15,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PassWord
-import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.MySMSBroadcastReceiver
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.OtpScreenBinding
-import com.google.android.gms.auth.api.phone.SmsRetriever
-import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.databinding.OtpNewBinding
 
 class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
@@ -68,7 +65,7 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
             Constant.hideLoading(this@OTP)
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
 
 //                    SharedPreference.putMobileNumberPassWord(
@@ -299,7 +296,7 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                 isForgetPassword()
             }
 
-            R.id.rytBack ->{
+            R.id.rytBack -> {
                 onBackPressed()
             }
 

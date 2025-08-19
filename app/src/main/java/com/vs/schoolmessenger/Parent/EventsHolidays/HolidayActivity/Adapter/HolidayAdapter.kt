@@ -3,10 +3,8 @@ package com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R
 import java.text.SimpleDateFormat

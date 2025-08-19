@@ -1,37 +1,28 @@
 package com.vs.schoolmessenger.Parent.CertificateRequest
 
-import android.R.id.bold
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.text.buildSpannedString
-import androidx.core.text.bold
-import androidx.core.text.color
-
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
+import androidx.core.text.color
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
-import com.vs.schoolmessenger.Parent.RequestLeave.OutPass
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class CertificateRequestAdapter (
+class CertificateRequestAdapter(
     private var itemList: List<CertificateListData>?,
     private var listener: CertificateListener,
     private var context: Context,
     private var isLoading: Boolean
 
-) : RecyclerView.Adapter<RecyclerView.ViewHolder> () {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private var selectedPosition = RecyclerView.NO_POSITION
@@ -46,7 +37,8 @@ class CertificateRequestAdapter (
                 ShimmerUtil.wrapWithShimmer(parent, R.layout.item_certificaterequest)
             DataViewHolder.ShimmerViewHolder(shimmerView)
         } else {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_certificaterequest, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_certificaterequest, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
@@ -71,7 +63,8 @@ class CertificateRequestAdapter (
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val lblCertificateTitle: TextView = itemView.findViewById(R.id.lblCertificateTitle)
-        private val lblCertificateReason: TextView = itemView.findViewById(R.id.lblCertificateReason)
+        private val lblCertificateReason: TextView =
+            itemView.findViewById(R.id.lblCertificateReason)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val rytCertificate: RelativeLayout = itemView.findViewById(R.id.rytCertificate)
 //        private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
@@ -92,20 +85,20 @@ class CertificateRequestAdapter (
                 append(data.reason)
             }
 
-            lblDate.text =  Constant.convertDateTimeFormat(data.requested_on)
+            lblDate.text = Constant.convertDateTimeFormat(data.requested_on)
 
             rytCertificate.setOnClickListener {
 
                 val context = it.context
                 val myIntent = Intent(context, CertificateViewActivity::class.java)
                 val saveCertificateData = CertificateListData(
-                    url=data.url,
-                    type=data.type,
-                    reason=data.reason,
-                    urgency_level=data.urgency_level,
-                    requested_on=data.requested_on,
-                    status=data.status,
-                    issued_on=data.issued_on,
+                    url = data.url,
+                    type = data.type,
+                    reason = data.reason,
+                    urgency_level = data.urgency_level,
+                    requested_on = data.requested_on,
+                    status = data.status,
+                    issued_on = data.issued_on,
                 )
                 Constant.isCertificateData = saveCertificateData
                 context.startActivity(myIntent)

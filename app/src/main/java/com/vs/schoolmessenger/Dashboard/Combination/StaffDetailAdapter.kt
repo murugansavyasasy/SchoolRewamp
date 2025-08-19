@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Visibility
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -101,12 +100,12 @@ class StaffDetailAdapter(
         holder.binding.lblStaffName.text = item.name
         holder.binding.lblSchoolAddress.text = item.school_address
 
-        if (item.school_name_regional.equals("")){
-            holder.binding.lblSchoolRegionalName.visibility= View.GONE
-        }else{
-            holder.binding.lblSchoolRegionalName.visibility= View.VISIBLE
+        if (item.school_name_regional.equals("")) {
+            holder.binding.lblSchoolRegionalName.visibility = View.GONE
+        } else {
+            holder.binding.lblSchoolRegionalName.visibility = View.VISIBLE
         }
-        holder.binding.lblSchoolRegionalName.text=item.school_name_regional
+        holder.binding.lblSchoolRegionalName.text = item.school_name_regional
 
         if (!item.city.isNullOrBlank()) {
             holder.binding.lblCity.text = item.city

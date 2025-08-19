@@ -11,7 +11,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.Group
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class ExamGroupActivity (
+class ExamGroupActivity(
     private var itemList: List<Group>?,
     private var context: Context,
     private var isLoading: Boolean
@@ -57,19 +57,21 @@ class ExamGroupActivity (
             groupSubjectname.text = groupExamMark.name
             mark.text = groupExamMark.mark
 
-            if (groupExamMark.sub_groups.size<=1) {
+            if (groupExamMark.sub_groups.size <= 1) {
                 rcGroupSplitMark.visibility = View.GONE
-            }
-            else{
-                rcGroupSplitMark.visibility=View.VISIBLE
-                rcGroupSplitMark.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
-                groupExamMarkResultsAdapter = GroupExamMarkResultsAdapter(groupExamMark.sub_groups, itemView.context, false)
+            } else {
+                rcGroupSplitMark.visibility = View.VISIBLE
+                rcGroupSplitMark.layoutManager =
+                    LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
+                groupExamMarkResultsAdapter =
+                    GroupExamMarkResultsAdapter(groupExamMark.sub_groups, itemView.context, false)
                 rcGroupSplitMark.isNestedScrollingEnabled = false
                 rcGroupSplitMark.adapter = groupExamMarkResultsAdapter
             }
         }
 
     }
+
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)

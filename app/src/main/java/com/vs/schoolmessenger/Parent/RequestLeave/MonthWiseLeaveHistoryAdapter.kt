@@ -29,7 +29,8 @@ class MonthWiseLeaveHistoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.monthwise_leave_history_item)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.monthwise_leave_history_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -84,7 +85,8 @@ class MonthWiseLeaveHistoryAdapter(
         RecyclerView.ViewHolder(itemView) {
 
         private val lblMonthName: TextView = itemView.findViewById(R.id.lblMonthName)
-        private val rvMonthWiseHistory: RecyclerView = itemView.findViewById(R.id.rvMonthWiseHistory)
+        private val rvMonthWiseHistory: RecyclerView =
+            itemView.findViewById(R.id.rvMonthWiseHistory)
 
         fun bind(
             data: MonthWiseLeaveData,

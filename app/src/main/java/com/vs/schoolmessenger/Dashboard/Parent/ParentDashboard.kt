@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonObject
-import com.vs.schoolmessenger.Repository.Auth
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
@@ -18,6 +16,8 @@ import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.Auth
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ChildDashboardBinding
 
 class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListener {
@@ -25,6 +25,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     override fun getViewBinding(): ChildDashboardBinding {
         return ChildDashboardBinding.inflate(layoutInflater)
     }
+
     var authViewModel: Auth? = null
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -42,17 +43,20 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.view_profile -> {
-                    BaseActivity.loadFragment(this, ProfileFragment())
+                    loadFragment(this, ProfileFragment())
                     updateNavBar(R.id.icon_profile)
                 }
+
                 R.id.setting_click -> {
-                    BaseActivity.loadFragment(this, SettingsFragment())
+                    loadFragment(this, SettingsFragment())
                     updateNavBar(R.id.icon_settings)
                 }
+
                 R.id.help_click -> {
-                    BaseActivity.loadFragment(this, HelpFragment())
+                    loadFragment(this, HelpFragment())
                     updateNavBar(R.id.icon_help)
                 }
+
                 R.id.role_click -> {
                     val intent = Intent(this, PrioritySelection::class.java)
                     startActivity(intent)
@@ -88,8 +92,8 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
         authViewModel!!.isDeviceToken?.observe(this) { response ->
             if (response != null) {
-                val status = response.status
-                val message = response.message
+                response.status
+                response.message
             }
         }
     }
@@ -117,7 +121,6 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
             drawerLayout.openDrawer(GravityCompat.START)
         }
     }
-
 
 
 }

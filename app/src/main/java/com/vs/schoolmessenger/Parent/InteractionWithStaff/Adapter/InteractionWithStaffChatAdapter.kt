@@ -51,6 +51,7 @@ class InteractionWithStaffChatAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val questionText: TextView = itemView.findViewById(R.id.questionText)
         private val answerText: TextView = itemView.findViewById(R.id.answerText)
+
         @SuppressLint("ClickableViewAccessibility")
         fun bind(chat: AnswerData, position: Int) {
             questionText.text = chat.question

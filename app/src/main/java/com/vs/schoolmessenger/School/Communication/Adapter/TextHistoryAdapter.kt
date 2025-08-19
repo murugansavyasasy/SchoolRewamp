@@ -31,7 +31,8 @@ class TextHistoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.history_from_text_message)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.history_from_text_message)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)

@@ -33,7 +33,8 @@ object AwsFileUploader {
         ProgressDialogHelper.show(context)
 
         // Create an output directory for compressed images.
-        val outputDir = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+        val outputDir =
+            File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
         outputDir.mkdirs()
 
         // Prepare lists and counters.
@@ -55,7 +56,10 @@ object AwsFileUploader {
                     val compressedFile = File(outputPath)
                     val originalSizeKB = try {
                         if (original.path.startsWith("content://")) {
-                            context.contentResolver.openFileDescriptor(Uri.parse(original.path), "r")?.statSize ?: 0
+                            context.contentResolver.openFileDescriptor(
+                                Uri.parse(original.path),
+                                "r"
+                            )?.statSize ?: 0
                         } else {
                             File(original.path).length()
                         }
@@ -80,10 +84,14 @@ object AwsFileUploader {
 
                 // Upload each file one by one.
                 for (i in selectedFiles.indices) {
-                    getPresignedUrlCallback.invoke(selectedFiles[i].path,
+                    getPresignedUrlCallback.invoke(
+                        selectedFiles[i].path,
                         object : UploadCallback {
                             @RequiresApi(Build.VERSION_CODES.O)
-                            override fun onUploadSuccess(response: String?, isFileUploaded: String?) {
+                            override fun onUploadSuccess(
+                                response: String?,
+                                isFileUploaded: String?
+                            ) {
                                 uploadedFiles++
                                 val percent = (uploadedFiles * 100) / isSelectedFileListSize
                                 ProgressDialogHelper.updateProgress(percent)
@@ -118,7 +126,6 @@ object AwsFileUploader {
         )
     }
 }
-
 
 
 //package com.vs.schoolmessenger.Utils

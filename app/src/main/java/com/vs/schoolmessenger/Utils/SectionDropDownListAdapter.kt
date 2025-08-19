@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.R
 
-class SectionDropDownListAdapter (
+class SectionDropDownListAdapter(
     private val context: Context,
     private val items: List<Section>?
 ) : BaseAdapter() {
@@ -31,7 +31,8 @@ class SectionDropDownListAdapter (
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick, parent, false)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick, parent, false)
         val textView = view.findViewById<TextView>(R.id.textViewItem)
         val tick = view.findViewById<ImageView>(R.id.imageTick)
 

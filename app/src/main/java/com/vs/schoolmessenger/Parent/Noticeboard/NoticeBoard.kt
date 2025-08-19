@@ -7,19 +7,16 @@ import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.R
-import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.NoticeBoardBinding
 import com.vs.schoolmessenger.databinding.NoticeRevampBinding
 
 class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
@@ -32,6 +29,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     lateinit var mAdapter: NoticeBoardAdapter
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -60,6 +58,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                     mAdapter.filter.filter(s)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -85,11 +84,10 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
             "Reminders",
             NotificationManager.IMPORTANCE_HIGH
         )
-        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
 
     }
-
 
 
     private fun isloadhomeworkData(newData: List<Notice>?) {
@@ -106,13 +104,13 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                 if (binding.rytsearch.visibility == View.VISIBLE) {
                     binding.rytsearch.visibility = View.GONE
                     binding.txtVideoMenu.setText("")
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
                 } else {
                     binding.rytsearch.visibility = View.VISIBLE
                     binding.txtVideoMenu.setText("")
                     binding.txtVideoMenu.requestFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
                 }
             }

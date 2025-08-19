@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent.Model
 
-data class AnswerModelRequestFilePath (
+data class AnswerModelRequestFilePath(
     val url: String,
     val type: String
 )

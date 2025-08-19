@@ -2,19 +2,14 @@ package com.vs.schoolmessenger.School.InteractionWithStudent
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.Filterable
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Adapter.InteractionWithStaffAdapter
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentListener
@@ -97,6 +92,7 @@ class InteractionWithStudentAdapter(
         private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
         private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
+
         @SuppressLint("ClickableViewAccessibility")
         fun bind(student: StudentChatData, position: Int, adapter: InteractionWithStudentAdapter) {
             nameheader.text = student.name
@@ -104,7 +100,7 @@ class InteractionWithStudentAdapter(
 //            unreadcount.text = student.unread_count
 
             relative_layout.setOnClickListener {
-                    listener.onClickItem(student)
+                listener.onClickItem(student)
             }
 
         }

@@ -6,30 +6,24 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
-import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.DatePicker
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -37,17 +31,13 @@ import android.widget.ListView
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
@@ -65,11 +55,8 @@ import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
-import java.util.TimeZone
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
@@ -214,36 +201,36 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val nav_help = binding.root.findViewById<LinearLayout>(nav_help)
         val nav_settings = binding.root.findViewById<LinearLayout>(nav_settings)
         val nav_profile = binding.root.findViewById<LinearLayout>(nav_profile)
-        val frm = binding.root.findViewById<FrameLayout>(frm)
+        binding.root.findViewById<FrameLayout>(frm)
         val isBottomMenu = binding.root.findViewById<LinearLayout>(isBottomMenu)
 
         if (Constant.isParentChoose) {
             isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_school)
-            loadFragment(this,ParentHomeFragment())
+            loadFragment(this, ParentHomeFragment())
         } else {
-            loadFragment(this,SchoolHomeFragment())
+            loadFragment(this, SchoolHomeFragment())
             isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_school)
         }
         updateNavBar(icon_home)
 
         nav_home.setOnClickListener {
             if (Constant.isParentChoose) {
-                loadFragment(this,ParentHomeFragment())
+                loadFragment(this, ParentHomeFragment())
             } else {
-                loadFragment(this,SchoolHomeFragment())
+                loadFragment(this, SchoolHomeFragment())
             }
             updateNavBar(icon_home)
         }
         nav_help.setOnClickListener {
-            loadFragment(this,HelpFragment())
+            loadFragment(this, HelpFragment())
             updateNavBar(icon_help)
         }
         nav_settings.setOnClickListener {
-            loadFragment(this,SettingsFragment())
+            loadFragment(this, SettingsFragment())
             updateNavBar(icon_settings)
         }
         nav_profile.setOnClickListener {
-            loadFragment(this,ProfileFragment())
+            loadFragment(this, ProfileFragment())
             updateNavBar(icon_profile)
         }
 
@@ -511,7 +498,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val window = this.window
         val layoutParams = window.attributes
         layoutParams.alpha = 0.4f // Lower alpha to dim the background
-        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         window.attributes = layoutParams
     }
 
@@ -519,11 +506,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val window = this.window
         val layoutParams = window.attributes
         layoutParams.alpha = 1.0f
-        window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         window.attributes = layoutParams
     }
 
-     fun updateNavBar(selectedItemId: Int) {
+    fun updateNavBar(selectedItemId: Int) {
 //        // Reset all icons
         findViewById<ImageView>(R.id.icon_home).setColorFilter(
             ContextCompat.getColor(
@@ -580,7 +567,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                     window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
 
                 } else {
-                    setupToolbarBlue()                }
+                    setupToolbarBlue()
+                }
             }
 
             R.id.icon_help -> {
@@ -710,7 +698,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     companion object {
         @JvmStatic
         fun loadFragment(activity: FragmentActivity, fragment: Fragment) {
-            val currentFragment = activity.supportFragmentManager.findFragmentById(R.id.fragment_container)
+            val currentFragment =
+                activity.supportFragmentManager.findFragmentById(R.id.fragment_container)
             if (currentFragment != null && currentFragment::class == fragment::class) {
                 return
             }
@@ -719,9 +708,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 .commit()
         }
     }
-
-
-
 
 
     fun showTimePickerDialog(context: Context, listener: TimeSelectedListener) {
@@ -769,9 +755,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         )
         datePickerDialog.show()
     }
-
-
-
 
 
     //Homework report sender
@@ -895,7 +878,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         dialog.show()
     }
-
 
 
 //    fun validateTimeWithAmPmLegacy(fromTime: String, toTime: String): String {

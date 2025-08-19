@@ -34,7 +34,8 @@ class CouponMenuAdapter(
             val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.coupon_menu)
             ShimmerViewHolder(shimmerView)
         } else {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.coupon_menu, parent, false)
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.coupon_menu, parent, false)
             DataViewHolder(view)
         }
     }
@@ -45,7 +46,6 @@ class CouponMenuAdapter(
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
-
 
 
     }

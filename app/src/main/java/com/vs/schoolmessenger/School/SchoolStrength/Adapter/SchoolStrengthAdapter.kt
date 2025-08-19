@@ -14,7 +14,7 @@ import com.vs.schoolmessenger.School.SchoolStrength.Model.Standard
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 
-class SchoolStrengthAdapter (
+class SchoolStrengthAdapter(
     private var itemList: List<Standard>,
     private var context: Context,
     private var isLoading: Boolean,
@@ -81,7 +81,8 @@ class SchoolStrengthAdapter (
             val detailAdapter = SchoolStrengthDetailAdapter(data.sections, context, false)
             detailRecyclerView.adapter = detailAdapter
 
-            detailRecyclerView.visibility = if (adapter.expandedPosition == position) View.VISIBLE else View.GONE
+            detailRecyclerView.visibility =
+                if (adapter.expandedPosition == position) View.VISIBLE else View.GONE
 
             expandableLayout.setOnClickListener {
                 val previousExpandedPosition = adapter.expandedPosition

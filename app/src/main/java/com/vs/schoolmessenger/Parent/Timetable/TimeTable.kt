@@ -7,15 +7,15 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.text.SimpleDateFormat
-import java.util.*
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.TimeTableBinding
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 
 class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
@@ -192,7 +192,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         val calendar = Calendar.getInstance()
         val todayIndex = calendar.get(Calendar.DAY_OF_WEEK)
         val todayDayId = if (todayIndex == 1) 7 else todayIndex - 1
-        val todayName = getDayNameFromId(todayDayId)
+        getDayNameFromId(todayDayId)
         day_id = todayDayId
         loadTimeTable(day_id)
     }
@@ -223,7 +223,8 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
                 binding.bottomsheettimetable.lnrNoRecords.visibility = View.VISIBLE
                 binding.bottomsheettimetable.imgNoData.visibility = View.VISIBLE
                 binding.bottomsheettimetable.txtNoData.visibility = View.VISIBLE
-                binding.bottomsheettimetable.txtNoData.text = response?.message ?: "No timetable available."
+                binding.bottomsheettimetable.txtNoData.text =
+                    response?.message ?: "No timetable available."
             }
         }
     }

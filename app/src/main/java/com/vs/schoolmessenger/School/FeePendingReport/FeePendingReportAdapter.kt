@@ -8,11 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionDisplayItem
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingCollectionDisplayItem
 
 
-class FeePendingReportAdapter (
+class FeePendingReportAdapter(
     private var itemList: List<FeePendingCollectionDisplayItem>,
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -35,10 +34,10 @@ class FeePendingReportAdapter (
                     .inflate(R.layout.item_fee_header, parent, false)
                 HeaderViewHolder(view)
             }
+
             else -> throw IllegalArgumentException("Unknown view type")
         }
     }
-
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -55,9 +54,6 @@ class FeePendingReportAdapter (
         itemList = emptyList()
         notifyDataSetChanged()
     }
-
-
-
 
 
     inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

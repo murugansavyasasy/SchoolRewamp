@@ -12,8 +12,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingCollectionDisplayItem
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeeData
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingCollectionDisplayItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -72,10 +72,10 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility=View.GONE
+                binding.relativeLayout6.visibility = View.GONE
             } else {
                 showNoDataMessage(response?.message ?: "No fee pending data available.")
-                binding.relativeLayout6.visibility=View.GONE
+                binding.relativeLayout6.visibility = View.GONE
             }
         }
 
@@ -87,10 +87,10 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility=View.GONE
+                binding.relativeLayout6.visibility = View.GONE
             } else {
                 showNoDataMessage(response?.message ?: "No fee pending data available.")
-                binding.relativeLayout6.visibility=View.GONE
+                binding.relativeLayout6.visibility = View.GONE
             }
         }
     }

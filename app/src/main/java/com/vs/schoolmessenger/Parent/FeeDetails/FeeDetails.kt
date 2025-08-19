@@ -28,7 +28,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FeeDetailsBinding
 import java.util.Stack
 
-class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,InvoiceClickListener {
+class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, InvoiceClickListener {
 
     override fun getViewBinding(): FeeDetailsBinding {
         return FeeDetailsBinding.inflate(layoutInflater)
@@ -37,7 +37,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
 
-     lateinit var mAdapter: FeeReceiptAdapter
+    lateinit var mAdapter: FeeReceiptAdapter
     private lateinit var invoiceList: List<InvoiceDetails>
 
     private var appViewModel: App? = null
@@ -59,7 +59,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
         binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -69,43 +70,43 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
         binding.payWebview.loadUrl("https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063/app")
 
         invoiceList = listOf(
-                InvoiceDetails(
-                    1,
+            InvoiceDetails(
+                1,
                 "Invoice No: INV001",
                 "Invoice Date : 01-05-2025",
                 "Invoice Amount : 1200",
                 "10:45 AM 234 KB"
-                ),
-                InvoiceDetails(
-                    2,
-                    "Invoice No: INV001",
-                    "Invoice Date : 01-05-2025",
-                    "Invoice Amount : 1200",
-                    "10:45 AM 234 KB"
+            ),
+            InvoiceDetails(
+                2,
+                "Invoice No: INV001",
+                "Invoice Date : 01-05-2025",
+                "Invoice Amount : 1200",
+                "10:45 AM 234 KB"
 
-                ),
-                InvoiceDetails(
-                    3,
-                    "Invoice No: INV001",
-                    "Invoice Date : 01-05-2025",
-                    "Invoice Amount : 1200",
-                    "10:45 AM 234 KB"
-                 ),
-                InvoiceDetails(
-                    4,
-                    "Invoice No: INV001",
-                    "Invoice Date : 01-05-2025",
-                    "Invoice Amount : 1200",
-                    "10:45 AM 234 KB"
-                ),
-                InvoiceDetails(
-                    5,
-                    "Invoice No: INV001",
-                    "Invoice Date : 01-05-2025",
-                    "Invoice Amount : 1200",
-                    "10:45 AM 234 KB"
-                )
+            ),
+            InvoiceDetails(
+                3,
+                "Invoice No: INV001",
+                "Invoice Date : 01-05-2025",
+                "Invoice Amount : 1200",
+                "10:45 AM 234 KB"
+            ),
+            InvoiceDetails(
+                4,
+                "Invoice No: INV001",
+                "Invoice Date : 01-05-2025",
+                "Invoice Amount : 1200",
+                "10:45 AM 234 KB"
+            ),
+            InvoiceDetails(
+                5,
+                "Invoice No: INV001",
+                "Invoice Date : 01-05-2025",
+                "Invoice Amount : 1200",
+                "10:45 AM 234 KB"
             )
+        )
     }
 
     override fun onClick(v: View?) {
@@ -121,6 +122,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
                 loadPaymentPage(binding.payWebview)
 
             }
+
             R.id.btnReceipt -> {
                 binding.payWebview.visibility = View.GONE
                 binding.rvReceipts.visibility = View.VISIBLE
@@ -188,12 +190,16 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
         }
 
         webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                request: WebResourceRequest
+            ): Boolean {
                 val uri = request.url
                 return handleUri(view, uri)
             }
+
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                Log.d("WebView","Navigating to: $url")
+                Log.d("WebView", "Navigating to: $url")
                 val uri = Uri.parse(url)
                 return handleUri(view, uri)
             }
@@ -203,10 +209,16 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
                 Constant.showLoading(this@FeeDetails)
             }
 
-            override fun onReceivedError(view: WebView, errorCode: Int, description: String?, failingUrl: String?) {
+            override fun onReceivedError(
+                view: WebView,
+                errorCode: Int,
+                description: String?,
+                failingUrl: String?
+            ) {
                 Constant.hideLoading(this@FeeDetails)
 
             }
+
             override fun onPageFinished(view: WebView, url: String) {
                 Constant.hideLoading(this@FeeDetails)
                 Log.d("callbackURL", url)
@@ -215,6 +227,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
                     url.contains("/#/paymentsucccess/success") -> {
 //                        showAlert("Payment Done!!", "Payment Successful. View/Download Receipt on Receipt Tab.")
                     }
+
                     url.contains("/#/paymentsucccess/failed") -> {
 //                        showAlert("Payment failed..", "Please try again later!!")
                     }
@@ -265,9 +278,9 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
     }
 
     override fun onBackPressed() {
-     if(handleBackPressed()){
-         return
-     }
+        if (handleBackPressed()) {
+            return
+        }
         super.onBackPressed()
     }
 
@@ -296,8 +309,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
     }
 
     override fun onItemClick(data: InvoiceDetails, holder: FeeReceiptAdapter.DataViewHolder) {
-        Log.d("InvoiceID",data.id.toString())
-        val intent =  Intent(this@FeeDetails, FeeReceiptViewActivity::class.java)
+        Log.d("InvoiceID", data.id.toString())
+        val intent = Intent(this@FeeDetails, FeeReceiptViewActivity::class.java)
         startActivity(intent)
 
     }

@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Dashboard.Settings.Notification
+
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -27,11 +28,10 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
 
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
-            binding.rlaLblNotification.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
-        }
-        else {
+            binding.rlaLblNotification.setBackgroundResource(R.drawable.gradient_theme_parent)
+        } else {
             setupToolbarBlue()
-            binding.rlaLblNotification.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+            binding.rlaLblNotification.setBackgroundResource(R.drawable.gradient_theme_school)
         }
 
         items = listOf(

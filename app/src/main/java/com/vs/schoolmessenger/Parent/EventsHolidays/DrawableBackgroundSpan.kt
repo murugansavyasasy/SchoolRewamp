@@ -1,12 +1,9 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays
 
-import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import android.text.style.ReplacementSpan
-import androidx.core.content.ContextCompat
 
 class DrawableBackgroundSpan(private val drawable: Drawable) : ReplacementSpan() {
 

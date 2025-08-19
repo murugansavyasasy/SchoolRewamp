@@ -9,7 +9,6 @@ import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Environment
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.webkit.WebChromeClient
@@ -21,16 +20,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CertificateViewActivityBinding
-import com.vs.schoolmessenger.databinding.GatePassBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,7 +34,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(), View.OnClickListener{
+class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
+    View.OnClickListener {
 
     override fun getViewBinding(): CertificateViewActivityBinding {
         return CertificateViewActivityBinding.inflate(layoutInflater)
@@ -55,20 +49,37 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(), 
         binding.imgBack.setOnClickListener(this)
         binding.imgMoreOptions.setOnClickListener(this)
 
-        binding.imgTimimg.setColorFilter(ContextCompat.getColor(this, R.color.dark_orange), PorterDuff.Mode.SRC_IN)
-        binding.imgRequeston.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
-        binding.imgCertificate.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
-        binding.imgCertificateType.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
-        binding.imgReason.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
+        binding.imgTimimg.setColorFilter(
+            ContextCompat.getColor(this, R.color.dark_orange),
+            PorterDuff.Mode.SRC_IN
+        )
+        binding.imgRequeston.setColorFilter(
+            ContextCompat.getColor(this, R.color.PrimaryColor),
+            PorterDuff.Mode.SRC_IN
+        )
+        binding.imgCertificate.setColorFilter(
+            ContextCompat.getColor(this, R.color.PrimaryColor),
+            PorterDuff.Mode.SRC_IN
+        )
+        binding.imgCertificateType.setColorFilter(
+            ContextCompat.getColor(
+                this,
+                R.color.PrimaryColor
+            ), PorterDuff.Mode.SRC_IN
+        )
+        binding.imgReason.setColorFilter(
+            ContextCompat.getColor(this, R.color.PrimaryColor),
+            PorterDuff.Mode.SRC_IN
+        )
 
-        binding.lblRequestedOnDate.text= Constant.isCertificateData?.requested_on ?:""
-        if (Constant.isCertificateData!!.url!="" && Constant.isCertificateData!!.issued_on!=""){
-            binding.rytCertificate.visibility=View.VISIBLE
-            binding.wvCertificatePdf.visibility=View.VISIBLE
-            binding.lblCertificateDate.visibility=View.VISIBLE
-            binding.imgMoreOptions.visibility=View.VISIBLE
-            binding.rytWaitingProcess.visibility=View.GONE
-            binding.lblCertificateDate.text= Constant.isCertificateData?.issued_on ?:""
+        binding.lblRequestedOnDate.text = Constant.isCertificateData?.requested_on ?: ""
+        if (Constant.isCertificateData!!.url != "" && Constant.isCertificateData!!.issued_on != "") {
+            binding.rytCertificate.visibility = View.VISIBLE
+            binding.wvCertificatePdf.visibility = View.VISIBLE
+            binding.lblCertificateDate.visibility = View.VISIBLE
+            binding.imgMoreOptions.visibility = View.VISIBLE
+            binding.rytWaitingProcess.visibility = View.GONE
+            binding.lblCertificateDate.text = Constant.isCertificateData?.issued_on ?: ""
 
             binding.loadingBar.visibility = View.VISIBLE
             binding.wvCertificatePdf.apply {
@@ -98,17 +109,16 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(), 
 
             }
 
-        }
-        else{
-            binding.wvCertificatePdf.visibility=View.GONE
-            binding.rytCertificate.visibility=View.GONE
-            binding.imgMoreOptions.visibility=View.GONE
+        } else {
+            binding.wvCertificatePdf.visibility = View.GONE
+            binding.rytCertificate.visibility = View.GONE
+            binding.imgMoreOptions.visibility = View.GONE
             binding.loadingBar.visibility = View.GONE
-            binding.rytWaitingProcess.visibility=View.VISIBLE
-            binding.lblCertificateDate.visibility=View.GONE
+            binding.rytWaitingProcess.visibility = View.VISIBLE
+            binding.lblCertificateDate.visibility = View.GONE
         }
-        binding.lblCerticateTypeValue.text= Constant.isCertificateData?.type ?:""
-        binding.lblReasonValue.text= Constant.isCertificateData?.reason ?:""
+        binding.lblCerticateTypeValue.text = Constant.isCertificateData?.type ?: ""
+        binding.lblReasonValue.text = Constant.isCertificateData?.reason ?: ""
     }
 
     override fun onClick(p0: View?) {
@@ -117,7 +127,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(), 
                 onBackPressed()
             }
 
-            R.id.imgMoreOptions -> showFileOptions(Constant.isCertificateData?.url ?:"")
+            R.id.imgMoreOptions -> showFileOptions(Constant.isCertificateData?.url ?: "")
 
         }
 
@@ -210,7 +220,8 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(), 
                     binding.lnrDownloadStatus.visibility = View.GONE
                     Constant.showValidationAlertPopup(
                         "Successfully Download...✅",
-                        "File saved to Downloads/$baseFolderName/$subFolderPath/$fileName", this@CertificateViewActivity
+                        "File saved to Downloads/$baseFolderName/$subFolderPath/$fileName",
+                        this@CertificateViewActivity
                     )
                 }
 

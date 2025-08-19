@@ -94,6 +94,7 @@ class InteractionWithStaffAdapter(
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
         private val yesterdayheader: TextView = itemView.findViewById(R.id.yesterdayheader)
         private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
+
         @SuppressLint("ClickableViewAccessibility")
         fun bind(staff: Staff, position: Int, adapter: InteractionWithStaffAdapter) {
             nameheader.text = staff.name

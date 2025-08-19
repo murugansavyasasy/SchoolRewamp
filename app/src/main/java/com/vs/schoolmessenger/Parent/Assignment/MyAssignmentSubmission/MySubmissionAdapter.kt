@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
-import com.vs.schoolmessenger.Parent.Assignment.AssignmentParentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
-
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
@@ -28,7 +26,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class MySubmissionAdapter  (
+class MySubmissionAdapter(
     var itemList: MutableList<SubmittedAssignment>,
     private val listener: AssignmentClickListener,
     private val context: Context,
@@ -178,7 +176,7 @@ class MySubmissionAdapter  (
                     category = "",
                     assignmentsubject = ""
                 )
-               val intent = Intent(context, ChildHomeWork::class.java)
+                val intent = Intent(context, ChildHomeWork::class.java)
                 intent.putExtra("isPreViewData", isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
@@ -204,7 +202,7 @@ class MySubmissionAdapter  (
                     fileList = convertedList,
                     submittedCount = 0,
                     assignmentid = data.id,
-                    category ="",
+                    category = "",
                     assignmentsubject = "",
                     isParentAssignment = true
                 )
@@ -220,7 +218,7 @@ class MySubmissionAdapter  (
                     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                         val child = rv.findChildViewUnder(e.x, e.y)
                         if (child != null && e.action == MotionEvent.ACTION_UP) {
-                            val position = rv.getChildAdapterPosition(child)
+                            rv.getChildAdapterPosition(child)
                             val convertedList = data.file_path.map {
                                 GetFilePathDetails(
                                     type = it.type,

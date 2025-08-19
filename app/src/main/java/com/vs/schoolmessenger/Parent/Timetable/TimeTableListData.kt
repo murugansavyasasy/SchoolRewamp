@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.Timetable
 
-data class TimeTableListData (
+data class TimeTableListData(
     val name: String,
     val start_time: String,
     val end_time: String,

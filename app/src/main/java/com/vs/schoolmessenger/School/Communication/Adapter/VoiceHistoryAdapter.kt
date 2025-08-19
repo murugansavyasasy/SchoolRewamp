@@ -229,7 +229,7 @@ class VoiceHistoryAdapter(
         private fun formatTime(milliseconds: Int): String {
             val adjustedDuration = ceil(milliseconds / 1000.0).toInt()
             val seconds = adjustedDuration % 60
-            val minutes = adjustedDuration /60
+            val minutes = adjustedDuration / 60
             return String.format(Constant.dateForMate, minutes, seconds)
 //            val seconds = (milliseconds / 1000) % 60
 //            val minutes = (milliseconds / (1000 * 60)) % 60

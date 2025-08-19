@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.AbsenteesReport.Model
 
-data class Student (
+data class Student(
     val student_id: String,
     val student_name: String,
     val admission_no: String,

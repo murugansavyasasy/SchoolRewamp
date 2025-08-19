@@ -4,23 +4,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.PieChartView
 
-class PieChartAdapter (private val context: Context, private val item: List<Int>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PieChartAdapter(private val context: Context, private val item: List<Int>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-//        private const val VIEW_TYPE_PIE_CHART = 0
+        //        private const val VIEW_TYPE_PIE_CHART = 0
         private const val VIEW_TYPE_REGULAR_ITEM = 1
     }
 
     override fun getItemViewType(position: Int): Int {
 //        return if (position == 0) VIEW_TYPE_PIE_CHART else VIEW_TYPE_REGULAR_ITEM
-        return  VIEW_TYPE_REGULAR_ITEM
+        return VIEW_TYPE_REGULAR_ITEM
     }
 
 //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -34,7 +32,8 @@ class PieChartAdapter (private val context: Context, private val item: List<Int>
 //    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.autoscrolling_message, parent, false)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.autoscrolling_message, parent, false)
         return BannerViewHolder(view)
     }
 
@@ -44,7 +43,7 @@ class PieChartAdapter (private val context: Context, private val item: List<Int>
 //            // Customize PieChartView at 0th position
 //            holder.bind()
 //        } else
-            if (holder is BannerViewHolder) {
+        if (holder is BannerViewHolder) {
             val url = item[position % item.size]
             holder.bind(url)
 

@@ -15,7 +15,6 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.PasswordGenerationBinding
 import com.vs.schoolmessenger.databinding.PasswordGenerationNewBinding
 
 class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.OnClickListener {
@@ -41,13 +40,12 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
         authViewModel!!.init()
 
         screen_type = intent.getStringExtra("type")
-        if(screen_type.equals("change")){
+        if (screen_type.equals("change")) {
             binding.lblTitle.text = getString(R.string.lblChangePassword)
             binding.lblCreatePassword.text = getString(R.string.lblOldPassword)
             binding.lblPassword.text = getString(R.string.lblNewPassword)
             binding.btnCreate.text = getString(R.string.lblChange)
-        }
-        else {
+        } else {
             if (Constant.isPasswordCreation!!) {
                 binding.lblTitle.text = getString(R.string.lblCreateNewPassword)
                 binding.lblCreatePassword.text = getString(R.string.lblCreateNewPassword)
@@ -139,7 +137,8 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
                     SharedPreference.putMobileNumberPassWord(
                         this@PasswordGeneration,
                         Constant.isMobileNumber,
-                        binding.txtConfirmPassword.text.toString())
+                        binding.txtConfirmPassword.text.toString()
+                    )
                     Constant.isForgotPassword = false
                     val intent = Intent(this@PasswordGeneration, Login::class.java)
                     startActivity(intent)
@@ -157,7 +156,8 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
                     SharedPreference.putMobileNumberPassWord(
                         this@PasswordGeneration,
                         Constant.isMobileNumber,
-                        binding.txtConfirmPassword.text.toString())
+                        binding.txtConfirmPassword.text.toString()
+                    )
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@PasswordGeneration, Login::class.java)
                     startActivity(intent)
@@ -245,19 +245,18 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
             R.id.imgHide1 -> {
                 isPasswordViewAndHide1()
             }
+
             R.id.rytBack -> {
                 onBackPressed()
             }
 
             R.id.btnCreate -> {
 
-                if(screen_type.equals("change")) {
-                    if(binding.txtCreatePassword.text.toString() != "" && binding.txtConfirmPassword.text.toString() != "")
-                    {
+                if (screen_type.equals("change")) {
+                    if (binding.txtCreatePassword.text.toString() != "" && binding.txtConfirmPassword.text.toString() != "") {
                         isPasswordChange()
                     }
-                }
-                else {
+                } else {
                     if (Constant.isPasswordCreation!!) {
                         if (isPassWordNotEmpty()) {
                             isCreatePassword()

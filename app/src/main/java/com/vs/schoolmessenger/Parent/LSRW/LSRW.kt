@@ -35,7 +35,8 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         setupRecyclerView()
         loadHardcodedData()

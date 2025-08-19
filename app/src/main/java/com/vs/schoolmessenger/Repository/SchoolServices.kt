@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
-import android.util.JsonToken
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,12 +27,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequ
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
@@ -179,7 +173,6 @@ class SchoolServices {
     var isSlotValidation: MutableLiveData<SlotValidationResponse?>
 
 
-
     init {
         client_auth = RestClient()
         isDashBoard = MutableLiveData()
@@ -306,8 +299,13 @@ class SchoolServices {
 
 
     //New Dashboard Api
-    fun isDashBoard(isToken: String, isMemberType: String,isMobileNumber:String, activity: Activity) {
-        RestClient.apiInterfaces.isDashBoard(isToken, isMemberType,isMobileNumber)
+    fun isDashBoard(
+        isToken: String,
+        isMemberType: String,
+        isMobileNumber: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.isDashBoard(isToken, isMemberType, isMobileNumber)
             ?.enqueue(object : Callback<DashboardResponse?> {
                 override fun onResponse(
                     call: Call<DashboardResponse?>, response: Response<DashboardResponse?>
@@ -339,7 +337,6 @@ class SchoolServices {
 
     val isDashBoardLiveData: LiveData<DashboardResponse?>
         get() = isDashBoard
-
 
 
     fun isDashBoardCount(isToken: String, isMemberType: String, activity: Activity) {
@@ -725,7 +722,7 @@ class SchoolServices {
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
-                            val status = response.body()!!.status
+                            response.body()!!.status
 
                             isGetTextHistory.postValue(response.body())
 
@@ -3255,8 +3252,6 @@ class SchoolServices {
 
     val isSlotValidationLiveData: LiveData<SlotValidationResponse?>
         get() = isSlotValidation
-
-
 
 
     fun islsrwskillsreport(

@@ -23,7 +23,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamMarkBinding
 
-class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMarkListener{
+class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMarkListener {
     override fun getViewBinding(): ExamMarkBinding {
         return ExamMarkBinding.inflate(layoutInflater)
     }
@@ -34,7 +34,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
     private var appViewModel: App? = null
-    var examTitle=""
+    var examTitle = ""
 
     private var currentTab = TabType.EXAM_TIMETABLE
 
@@ -74,7 +74,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
         binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int){
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val query = s?.toString() ?: ""
                 when (currentTab) {
                     TabType.EXAM_MARKS -> {
@@ -132,14 +132,14 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             }
 
             if (response.status) {
-                Constant.commonFileList.add(0,
-                    CommonFileData(response.data[0],Constant.PDF)
+                Constant.commonFileList.add(
+                    0,
+                    CommonFileData(response.data[0], Constant.PDF)
                 )
                 val intent = Intent(this, FilesViewActivity::class.java)
                 intent.putExtra(Constant.subjectName, examTitle)
                 this.startActivity(intent)
-            }
-            else {
+            } else {
                 Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
             }
         }
@@ -196,6 +196,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                     binding.exammarkrecyclerview.visibility = View.VISIBLE
                     binding.rcExamTimeTable.visibility = View.GONE
                 }
+
                 TabType.EXAM_TIMETABLE -> {
                     binding.rcExamTimeTable.visibility = View.VISIBLE
                     binding.exammarkrecyclerview.visibility = View.GONE
@@ -205,8 +206,8 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
     }
 
     override fun onExamSelected(examid: String, examName: String) {
-        appViewModel?.getProgressMarks(isAccessToken ?: "",examid)
-        examTitle=examName
+        appViewModel?.getProgressMarks(isAccessToken ?: "", examid)
+        examTitle = examName
     }
 
 
@@ -253,7 +254,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
         binding.rcExamTimeTable.apply {
             layoutManager = LinearLayoutManager(this@ExamMark)
-            examAdapter = ExamTimeTableAdapter(data,this@ExamMark)
+            examAdapter = ExamTimeTableAdapter(data, this@ExamMark)
             binding.rcExamTimeTable.adapter = examAdapter
         }
     }

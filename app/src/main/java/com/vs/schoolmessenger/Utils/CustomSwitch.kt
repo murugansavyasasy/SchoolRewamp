@@ -67,10 +67,6 @@ class CustomSwitch @JvmOverloads constructor(
         return true
     }
 
-    override fun performClick(): Boolean {
-        return super.performClick()
-    }
-
     fun setChecked(checked: Boolean) {
         isChecked = checked
         backgroundPaint.color = if (isChecked) activeColor else inactiveColor

@@ -212,7 +212,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             }
         }
 
-        adapter?.updateList(filteredList,isSeeMoreClick)
+        adapter?.updateList(filteredList, isSeeMoreClick)
         checkAndShowNoData(filteredList)
     }
 
@@ -253,7 +253,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             R.id.seeMoreLabel -> {
                 if (!hasFetchedMore) {
                     hasFetchedMore = true
-                    isSeeMoreClick=false
+                    isSeeMoreClick = false
                     binding.seeMoreLabel.visibility = View.GONE
                     fetchMoreData()
                 }
@@ -273,7 +273,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     private fun appendData(newData: List<VoiceData>?, archiveFlag: Boolean) {
         if (isInitialLoad) allVoiceData.clear()
-        Log.d("isSeeMoreClick",isSeeMoreClick.toString())
+        Log.d("isSeeMoreClick", isSeeMoreClick.toString())
         newData.let {
             val processedData = it!!.map { item -> item.copy(is_archive = archiveFlag) }
             allVoiceData.addAll(processedData)
@@ -294,7 +294,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 binding.recyclerInitial.adapter = adapter
             } else {
                 adapter?.setIsFromArchive(archiveFlag)
-                adapter?.updateList(allVoiceData,isSeeMoreClick)
+                adapter?.updateList(allVoiceData, isSeeMoreClick)
             }
             applyCombinedFilter()
         }

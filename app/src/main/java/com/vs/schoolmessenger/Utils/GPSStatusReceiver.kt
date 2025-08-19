@@ -10,7 +10,8 @@ class GPSStatusReceiver(private val listener: GPSStatusListener) : BroadcastRece
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == LocationManager.PROVIDERS_CHANGED_ACTION) {
-            val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val locationManager =
+                context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             val isGPSenabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
             listener.onGPSStatusChanged(isGPSenabled)

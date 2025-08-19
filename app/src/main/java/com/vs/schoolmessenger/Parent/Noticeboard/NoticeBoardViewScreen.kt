@@ -1,17 +1,8 @@
 package com.vs.schoolmessenger.Parent.Noticeboard
 
-import android.util.Log
-import android.view.View
-import android.webkit.WebViewClient
-import androidx.viewpager2.widget.ViewPager2
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeViewerPagerAdapter
-import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentBinding
-import java.io.File
 
 class NoticeBoardViewScreen : BaseActivity<HomeworkViewImageDocumentBinding>() {
 

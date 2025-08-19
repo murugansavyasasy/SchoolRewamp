@@ -8,14 +8,11 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordCreationResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordResetResponse
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PasswordUpdateResponse
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetailsResponse
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationResponse
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
-import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 
 class Auth(application: Application) : AndroidViewModel(application) {
 
@@ -50,7 +47,6 @@ class Auth(application: Application) : AndroidViewModel(application) {
 
     var isDeviceToken: LiveData<DeviceToken?>? = null
         private set
-
 
 
     fun init() {

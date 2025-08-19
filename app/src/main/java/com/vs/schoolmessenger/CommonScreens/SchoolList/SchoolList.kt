@@ -216,7 +216,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
-                    val selectedOption = isAcademicYear!![position]
+                    isAcademicYear!![position]
                     Log.d(
                         "DropdownMenu",
                         "Clicked Academic Year: ID = ${isAcademicYear[position].id}, Year = ${isAcademicYear[position].year}, Current = ${isAcademicYear[position].current_academic_year}"
@@ -550,6 +550,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
     }
+
     fun voiceSendApi() {
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(

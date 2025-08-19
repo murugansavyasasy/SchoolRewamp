@@ -45,7 +45,7 @@ class SchoolListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(itemList!![position], position, listener, isMultipleSchool, selectedIds)
-        }else if (holder is SchoolListAdapter.ShimmerViewHolder) {
+        } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }

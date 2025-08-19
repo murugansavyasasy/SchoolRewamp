@@ -1,9 +1,10 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,8 +19,6 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClic
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.R
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -83,31 +82,28 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
                     binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                    if(mAdapter.itemCount > 0){
-                        binding.rcyongoingevent.visibility=View.VISIBLE
-                        binding.headerview.visibility=View.VISIBLE
-                    }
-                    else{
-                        binding.rcyongoingevent.visibility=View.GONE
-                        binding.headerview.visibility=View.GONE
-                    }
-
-                    if(eventupcomingadapter.itemCount > 0){
-                        binding.rcyupcomingevent.visibility=View.VISIBLE
-                        binding.upcomingeventHeaderview.visibility=View.VISIBLE
-                    }
-                    else{
-                        binding.rcyupcomingevent.visibility=View.GONE
-                        binding.upcomingeventHeaderview.visibility=View.GONE
+                    if (mAdapter.itemCount > 0) {
+                        binding.rcyongoingevent.visibility = View.VISIBLE
+                        binding.headerview.visibility = View.VISIBLE
+                    } else {
+                        binding.rcyongoingevent.visibility = View.GONE
+                        binding.headerview.visibility = View.GONE
                     }
 
-                    if(eventcompletedadapter.itemCount > 0){
-                        binding.rcycompletedevent.visibility=View.VISIBLE
-                        binding.completedeventHeaderview.visibility=View.VISIBLE
+                    if (eventupcomingadapter.itemCount > 0) {
+                        binding.rcyupcomingevent.visibility = View.VISIBLE
+                        binding.upcomingeventHeaderview.visibility = View.VISIBLE
+                    } else {
+                        binding.rcyupcomingevent.visibility = View.GONE
+                        binding.upcomingeventHeaderview.visibility = View.GONE
                     }
-                    else{
-                        binding.rcycompletedevent.visibility=View.GONE
-                        binding.completedeventHeaderview.visibility=View.GONE
+
+                    if (eventcompletedadapter.itemCount > 0) {
+                        binding.rcycompletedevent.visibility = View.VISIBLE
+                        binding.completedeventHeaderview.visibility = View.VISIBLE
+                    } else {
+                        binding.rcycompletedevent.visibility = View.GONE
+                        binding.completedeventHeaderview.visibility = View.GONE
                     }
 
 //                    binding.rcyongoingevent.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
@@ -221,7 +217,8 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
         categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewDisable)
-        binding.rcycategoryEvent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcycategoryEvent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcycategoryEvent.isNestedScrollingEnabled = false
         binding.rcycategoryEvent.adapter = categoryadapter
 
@@ -275,13 +272,13 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 if (binding.rytSearch1.isVisible) {
                     binding.rytSearch1.visibility = View.GONE
                     binding.txtVideoMenu.setText("")
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
                 } else {
                     binding.rytSearch1.visibility = View.VISIBLE
                     binding.txtVideoMenu.setText("")
                     binding.txtVideoMenu.requestFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
                 }
             }
@@ -291,9 +288,14 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
         when (adapterTag) {
-            "ONGOING" -> binding.rcyongoingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
-            "COMPLETED" -> binding.rcycompletedevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
-            "UPCOMING" -> binding.rcyupcomingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            "ONGOING" -> binding.rcyongoingevent.visibility =
+                if (isEmpty) View.GONE else View.VISIBLE
+
+            "COMPLETED" -> binding.rcycompletedevent.visibility =
+                if (isEmpty) View.GONE else View.VISIBLE
+
+            "UPCOMING" -> binding.rcyupcomingevent.visibility =
+                if (isEmpty) View.GONE else View.VISIBLE
         }
 
         val isAllEmpty = mAdapter.itemCount == 0 &&

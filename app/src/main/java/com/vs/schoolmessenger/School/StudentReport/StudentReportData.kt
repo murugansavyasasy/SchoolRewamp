@@ -7,7 +7,7 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 enum class SortType { NO_ASC, NO_DESC, NAME_ASC, NAME_DESC }
 enum class GenderType { ALL, MALE, FEMALE, OTHERS }
 
-data class StudentReportData (
+data class StudentReportData(
 
     @SerializedName(APIKeyNames.id) val id: Int,
     @SerializedName(APIKeyNames.name) val name: String,
@@ -24,8 +24,6 @@ data class StudentReportData (
     @SerializedName(APIKeyNames.section_name) val section_name: String,
     @SerializedName(APIKeyNames.father_name) val father_name: String,
     @SerializedName(APIKeyNames.class_teacher) val class_teacher: String,
-
-
 
 
 //existing code

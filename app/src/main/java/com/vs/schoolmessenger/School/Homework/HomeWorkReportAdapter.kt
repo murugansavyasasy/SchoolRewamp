@@ -48,7 +48,7 @@ class HomeWorkReportAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading && position < isHomeWorkData.size) {
             val item = isHomeWorkData[position]
-            holder.bind(item, listener,context)
+            holder.bind(item, listener, context)
         }
     }
 

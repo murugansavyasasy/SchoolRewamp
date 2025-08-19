@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
@@ -31,7 +30,7 @@ import com.vs.schoolmessenger.Utils.fetchVimeoThumbnail
 import me.relex.circleindicator.CircleIndicator
 import kotlin.math.max
 
-class HomeWorkItemAdapter (
+class HomeWorkItemAdapter(
     private var itemList: List<HomeWorkList>?,
     private var context: Context,
     private var isLoading: Boolean
@@ -189,7 +188,7 @@ class HomeWorkItemAdapter (
                     }
 
                     imgVoicePlay.setOnClickListener {
-                        isVoiceProgress.visibility= View.VISIBLE
+                        isVoiceProgress.visibility = View.VISIBLE
 
                         if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
                             adapter.currentlyPlayingHolder?.stopAudioPlayback()
@@ -286,7 +285,7 @@ class HomeWorkItemAdapter (
                     isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
 
 
-                    val imageUrls = listOf(
+                    listOf(
                         "https://picsum.photos/600/400?random=1", // Random Image 1
                         "https://picsum.photos/600/400?random=2", // Random Image 2
                         "https://picsum.photos/600/400?random=3", // Random Image 3
@@ -368,7 +367,7 @@ class HomeWorkItemAdapter (
                 setOnPreparedListener {
                     isPrepared = true
                     startAudioProgressUpdate()
-                    isVoiceProgress.visibility= View.GONE
+                    isVoiceProgress.visibility = View.GONE
                     start()
                     isPlayingVoice = true
                     updatePlayPauseIcon(isPlaying = true)
@@ -381,7 +380,7 @@ class HomeWorkItemAdapter (
 
         // Pause audio playback
         private fun pauseAudio() {
-            isVoiceProgress.visibility= View.GONE
+            isVoiceProgress.visibility = View.GONE
             mediaPlayer.pause()
             lastPosition = mediaPlayer.currentPosition
             isPlayingVoice = false
@@ -391,7 +390,7 @@ class HomeWorkItemAdapter (
 
         // Resume audio playback
         private fun resumeAudio() {
-            isVoiceProgress.visibility= View.GONE
+            isVoiceProgress.visibility = View.GONE
             mediaPlayer.seekTo(lastPosition)
             mediaPlayer.start()
             isPlayingVoice = true
@@ -401,7 +400,7 @@ class HomeWorkItemAdapter (
 
         // Stop audio playback
         private fun stopAudioPlayback() {
-            isVoiceProgress.visibility= View.GONE
+            isVoiceProgress.visibility = View.GONE
             if (::mediaPlayer.isInitialized) {
                 if (mediaPlayer.isPlaying) {
                     mediaPlayer.stop()

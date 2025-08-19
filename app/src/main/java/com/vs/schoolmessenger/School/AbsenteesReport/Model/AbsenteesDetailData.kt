@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.AbsenteesReport.Model
 
-class AbsenteesDetailData (
+class AbsenteesDetailData(
     var Grade: String,
     var Date: String
-    )
+)

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -13,7 +14,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
-import androidx.appcompat.widget.SearchView
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
@@ -27,8 +27,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
-import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -41,7 +41,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,8 +56,6 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.RestClient
@@ -177,7 +174,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
-        val (dayOnly, dayOfWeek, fullDate, slashDate) = Constant.getCurrentDateInfo()
+        val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo()
         binding.lblDate.text = dayOnly
         binding.lblDay.text = dayOfWeek
 
@@ -338,8 +335,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         eventupcomingadapter.itemCount == 0 &&
                         eventcompletedadapter.itemCount == 0
 
-                    binding.noDataImage.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
-                    binding.noDataText.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+                binding.noDataImage.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+                binding.noDataText.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
                 if (schooleventAdapter.itemCount > 0) {
                     binding.rcyongoingevent.visibility = View.VISIBLE
@@ -448,7 +445,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     private fun loadeventdata() {
         Constant.showLoading(this)
 
-        schooleventAdapter = SchoolEventAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
+        schooleventAdapter =
+            SchoolEventAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcyongoingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcyongoingevent.isNestedScrollingEnabled = false
@@ -503,13 +501,17 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 binding.rcyongoingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
                 binding.headerview.visibility = if (isEmpty) View.GONE else View.VISIBLE
             }
+
             "UPCOMING" -> {
                 binding.rcyupcomingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
-                binding.upcomingeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.upcomingeventHeaderview.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
             }
+
             "COMPLETED" -> {
                 binding.rcycompletedevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
-                binding.completedeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.completedeventHeaderview.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
             }
         }
         val isAllEmpty =
@@ -591,7 +593,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         ) {
             val json = JSONObject()
             json.put("id", id)
-            val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
+            json.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
 //            appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
 
@@ -784,13 +786,13 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 if (binding.rytSearch323.visibility == View.VISIBLE) {
                     binding.rytSearch323.visibility = View.GONE
                     binding.edtSearch.setText("")
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
                 } else {
                     binding.rytSearch323.visibility = View.VISIBLE
                     binding.edtSearch.setText("")
                     binding.edtSearch.requestFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
                 }
             }

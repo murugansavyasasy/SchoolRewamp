@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
-import com.vs.schoolmessenger.Parent.Assignment.AssignmentParentAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
@@ -14,7 +13,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MysubmissionAssignmentBinding
 
-class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentClickListener,
+class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentClickListener,
     View.OnClickListener {
 
     override fun getViewBinding(): MysubmissionAssignmentBinding {
@@ -76,7 +75,7 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentCli
         if (!assignmentId.isNullOrEmpty() && !isAccessToken.isNullOrEmpty()) {
             appViewModel?.getassignmentmysubmissionlist(isAccessToken!!, assignmentId!!)
         } else {
-           Log.d("Assignment Id","Issue in API Call")
+            Log.d("Assignment Id", "Issue in API Call")
         }
 
     }
@@ -88,7 +87,6 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentCli
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
     }
-
 
 
     override fun onClick(v: View?) {

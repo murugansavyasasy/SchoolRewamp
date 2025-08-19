@@ -79,7 +79,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
 
-                val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     val channel = NotificationChannel(
                         channelId,

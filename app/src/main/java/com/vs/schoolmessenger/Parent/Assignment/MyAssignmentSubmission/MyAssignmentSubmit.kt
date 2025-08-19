@@ -58,7 +58,7 @@ import java.util.Date
 import java.util.Locale
 
 class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClickListener,
-    OnImageClickListener,VimeoVideoUpload.UploadCompletionListener  {
+    OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): AssignmentSubmitBinding {
         return AssignmentSubmitBinding.inflate(layoutInflater)
@@ -75,6 +75,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
@@ -109,7 +110,8 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             onBackPressed()
         }
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         binding.edtTitle.setText(titleName)
         saveDrawableToCache(R.drawable.add_image)?.let {

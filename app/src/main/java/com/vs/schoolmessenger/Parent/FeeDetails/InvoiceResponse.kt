@@ -2,7 +2,8 @@ package com.vs.schoolmessenger.Parent.FeeDetails
 
 import com.google.gson.annotations.SerializedName
 import com.vs.schoolmessenger.Repository.APIKeyNames
-data class InvoiceResponse (
+
+data class InvoiceResponse(
     @SerializedName(APIKeyNames.status) val status: Boolean,
     @SerializedName(APIKeyNames.message) val message: String,
     @SerializedName(APIKeyNames.data) val data: List<InvoiceDetails>

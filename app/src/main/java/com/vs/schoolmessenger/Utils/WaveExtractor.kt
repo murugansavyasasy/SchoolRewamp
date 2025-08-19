@@ -7,6 +7,8 @@ class WaveExtractor {
         // This is a simplified placeholder; implement your extraction logic here.
 
         // Example: Return dummy wave heights for demonstration
-        return FloatArray(numberOfSamples) { (Math.random().toFloat() * 2 - 1) * 100 } // Random heights for demo
+        return FloatArray(numberOfSamples) {
+            (Math.random().toFloat() * 2 - 1) * 100
+        } // Random heights for demo
     }
 }

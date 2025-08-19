@@ -4,20 +4,20 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
-import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
-import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponMenuAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponSummaryAdapter
+import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponMenuClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickListener
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.databinding.FragmentHomeBinding
 

@@ -4,12 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.Noticeboard.FilePath
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 
 class NoticeViewerPagerAdapter(
     private val fileList: ArrayList<FilePath>,
@@ -24,7 +21,7 @@ class NoticeViewerPagerAdapter(
     }
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-        val file = fileList[position]
+        fileList[position]
 //        when (file.type.uppercase()) {
 //            Constant.IMAGE -> {
 //                Glide.with(context)
@@ -40,6 +37,6 @@ class NoticeViewerPagerAdapter(
     override fun getItemCount(): Int = fileList.size
 
     inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-       // val imageView: ImageView = itemView.findViewById(R.id.fullScreenImageView)
+        // val imageView: ImageView = itemView.findViewById(R.id.fullScreenImageView)
     }
 }

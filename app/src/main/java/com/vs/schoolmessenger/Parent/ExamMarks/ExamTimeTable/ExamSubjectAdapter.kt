@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamSubjectDetail
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.Constant.content
 
 class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
     RecyclerView.Adapter<ExamSubjectAdapter.SubjectViewHolder>() {
@@ -31,7 +30,7 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
 
         fun bind(subject: ExamSubjectDetail) {
             subjectname.text = subject.subject_name
-            datevalue.text =  Constant.convertToReadableDate(subject.exam_date)
+            datevalue.text = Constant.convertToReadableDate(subject.exam_date)
             syllabusvalue.text = subject.syllabus
             lblTime.text = subject.start_time
             maxmarkvalue.text = "Marks : ${subject.max_mark}"
@@ -51,11 +50,13 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
                     val context = rootHeader.context
 
                     // Parse the date: "dd-MM-yyyy"
-                    val dateFormat = java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault())
+                    val dateFormat =
+                        java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault())
                     val date = dateFormat.parse(subject.exam_date)
 
                     // Parse start and end time: "hh:mm a"
-                    val timeFormat = java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault())
+                    val timeFormat =
+                        java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault())
                     val startTime = timeFormat.parse(subject.start_time)
                     val endTime = timeFormat.parse(subject.end_time)
 
@@ -65,37 +66,75 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
 
                         // Set date + start time
                         startCal.time = date
-                        val startHourMin = java.util.Calendar.getInstance().apply { time = startTime }
-                        startCal.set(java.util.Calendar.HOUR_OF_DAY, startHourMin.get(java.util.Calendar.HOUR_OF_DAY))
-                        startCal.set(java.util.Calendar.MINUTE, startHourMin.get(java.util.Calendar.MINUTE))
+                        val startHourMin =
+                            java.util.Calendar.getInstance().apply { time = startTime }
+                        startCal.set(
+                            java.util.Calendar.HOUR_OF_DAY,
+                            startHourMin.get(java.util.Calendar.HOUR_OF_DAY)
+                        )
+                        startCal.set(
+                            java.util.Calendar.MINUTE,
+                            startHourMin.get(java.util.Calendar.MINUTE)
+                        )
 
                         // Set date + end time
                         endCal.time = date
                         val endHourMin = java.util.Calendar.getInstance().apply { time = endTime }
-                        endCal.set(java.util.Calendar.HOUR_OF_DAY, endHourMin.get(java.util.Calendar.HOUR_OF_DAY))
-                        endCal.set(java.util.Calendar.MINUTE, endHourMin.get(java.util.Calendar.MINUTE))
+                        endCal.set(
+                            java.util.Calendar.HOUR_OF_DAY,
+                            endHourMin.get(java.util.Calendar.HOUR_OF_DAY)
+                        )
+                        endCal.set(
+                            java.util.Calendar.MINUTE,
+                            endHourMin.get(java.util.Calendar.MINUTE)
+                        )
 
                         // Launch Google Calendar intent
-                        val intent = android.content.Intent(android.content.Intent.ACTION_INSERT).apply {
-                            data = android.provider.CalendarContract.Events.CONTENT_URI
-                            putExtra(android.provider.CalendarContract.Events.TITLE, subject.subject_name)
-                            putExtra(android.provider.CalendarContract.Events.DESCRIPTION, "Exam Reminder: ${subject.subject_name}")
-                            putExtra(android.provider.CalendarContract.EXTRA_EVENT_BEGIN_TIME, startCal.timeInMillis)
-                            putExtra(android.provider.CalendarContract.EXTRA_EVENT_END_TIME, endCal.timeInMillis)
-                        }
+                        val intent =
+                            android.content.Intent(android.content.Intent.ACTION_INSERT).apply {
+                                data = android.provider.CalendarContract.Events.CONTENT_URI
+                                putExtra(
+                                    android.provider.CalendarContract.Events.TITLE,
+                                    subject.subject_name
+                                )
+                                putExtra(
+                                    android.provider.CalendarContract.Events.DESCRIPTION,
+                                    "Exam Reminder: ${subject.subject_name}"
+                                )
+                                putExtra(
+                                    android.provider.CalendarContract.EXTRA_EVENT_BEGIN_TIME,
+                                    startCal.timeInMillis
+                                )
+                                putExtra(
+                                    android.provider.CalendarContract.EXTRA_EVENT_END_TIME,
+                                    endCal.timeInMillis
+                                )
+                            }
 
                         if (intent.resolveActivity(context.packageManager) != null) {
                             context.startActivity(intent)
                         } else {
-                            android.widget.Toast.makeText(context, "No Calendar app found!", android.widget.Toast.LENGTH_SHORT).show()
+                            android.widget.Toast.makeText(
+                                context,
+                                "No Calendar app found!",
+                                android.widget.Toast.LENGTH_SHORT
+                            ).show()
                         }
                     } else {
-                        android.widget.Toast.makeText(context, "Invalid time/date", android.widget.Toast.LENGTH_SHORT).show()
+                        android.widget.Toast.makeText(
+                            context,
+                            "Invalid time/date",
+                            android.widget.Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    android.widget.Toast.makeText(rootHeader.context, "Error creating calendar event", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(
+                        rootHeader.context,
+                        "Error creating calendar event",
+                        android.widget.Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 

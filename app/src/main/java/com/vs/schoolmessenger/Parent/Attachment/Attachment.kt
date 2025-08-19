@@ -1,17 +1,17 @@
 package com.vs.schoolmessenger.Parent.Attachment
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
 import com.vs.schoolmessenger.R
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.content.Context
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Attachment.AttachmentReportAdapter
@@ -21,7 +21,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentAttachmentBinding
 
-class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener,OnAttachmentReportClickListener{
+class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener,
+    OnAttachmentReportClickListener {
 
     override fun getViewBinding(): ParentAttachmentBinding {
         return ParentAttachmentBinding.inflate(layoutInflater)
@@ -53,6 +54,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mAttachmentReportAdapter?.filter?.filter(s)
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -63,7 +65,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 mAttachmentReportAdapter?.filter?.filter(query)
 
                 // Hide keyboard
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
 
                 binding.txtSearchMenu.clearFocus()
@@ -87,6 +89,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         }
         isGetAttachment()
     }
+
     fun isLoadData(data: List<AttachmentReportData>) {
         mAttachmentReportAdapter = AttachmentReportAdapter(
             data,

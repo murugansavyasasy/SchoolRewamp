@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -28,7 +27,6 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ReportBugBinding
-import java.io.File
 
 class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
@@ -71,11 +69,10 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         setupToolbar()
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
-            binding.rlaLblReportBug.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
-        }
-        else {
+            binding.rlaLblReportBug.setBackgroundResource(R.drawable.gradient_theme_parent)
+        } else {
             setupToolbarBlue()
-            binding.rlaLblReportBug.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+            binding.rlaLblReportBug.setBackgroundResource(R.drawable.gradient_theme_school)
         }
 
         loadMenu()
@@ -177,8 +174,8 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.filepick_bottom_sheet)
         val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
-        val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
-        val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
+        dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
+        dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
 
         rlaGallery.setOnClickListener {
             openAlbumSelectActivity("DOCUMENT")

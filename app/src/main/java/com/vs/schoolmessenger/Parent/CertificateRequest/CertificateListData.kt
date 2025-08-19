@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.CertificateRequest
 
-data class CertificateListData (
+data class CertificateListData(
     val url: String,
     val type: String,
     val reason: String,

@@ -27,6 +27,7 @@ class MySMSBroadcastReceiver : BroadcastReceiver() {
             }
         }
     }
+
     private fun extractOTP(message: String): String {
         val otpRegex = Regex("\\d{4,6}") // Adjust if your OTP is 6 digits
         return otpRegex.find(message)?.value ?: ""

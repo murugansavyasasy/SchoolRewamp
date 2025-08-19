@@ -60,7 +60,8 @@ class AttachmentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -136,7 +137,6 @@ class AttachmentAdapter(
         private val lblSeeMoreClick: TextView = itemView.findViewById(R.id.lblSeeMoreClick)
 
 
-
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
             item: AttachmentData,
@@ -163,7 +163,7 @@ class AttachmentAdapter(
             }
 
             lblSeeMoreClick.setOnClickListener {
-                lblSeeMoreClick.visibility= View.GONE
+                lblSeeMoreClick.visibility = View.GONE
                 listener.onSeeMoreClick(item, this@DataViewHolder)
             }
 
@@ -171,7 +171,7 @@ class AttachmentAdapter(
             lblTitleImage.text = item.title
             lblContentImage.text = item.description
             lblDateImage.text = Constant.convertDateTimeFormat(item.date)
-            lblTimeImage.text =item.time
+            lblTimeImage.text = item.time
             isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
             tvSeeMoreImage.setOnClickListener {
                 isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
@@ -214,7 +214,11 @@ class AttachmentAdapter(
 
 
                 webView.webViewClient = object : WebViewClient() {
-                    override fun onPageStarted(view: android.webkit.WebView, url: String, favicon: Bitmap?) {
+                    override fun onPageStarted(
+                        view: android.webkit.WebView,
+                        url: String,
+                        favicon: Bitmap?
+                    ) {
                         loadingBar.visibility = View.VISIBLE
                     }
 
@@ -223,7 +227,9 @@ class AttachmentAdapter(
                     }
 
                     override fun onReceivedError(
-                        view: android.webkit.WebView?, request: WebResourceRequest?, error: WebResourceError?
+                        view: android.webkit.WebView?,
+                        request: WebResourceRequest?,
+                        error: WebResourceError?
                     ) {
                         loadingBar.visibility = View.GONE
                         Log.e("WebViewError", "Error loading: ${error?.description}")

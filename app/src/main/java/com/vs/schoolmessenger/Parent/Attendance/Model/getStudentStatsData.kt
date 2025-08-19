@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.Attendance.Model
 
-data class getStudentStatsData (
+data class getStudentStatsData(
     val total_working_days: Int,
     val present_days: Int,
     val absent_days: Int,
@@ -10,7 +10,7 @@ data class getStudentStatsData (
     val weekly_status: getWeeekStatusData
 )
 
-data class getWeeekStatusData (
+data class getWeeekStatusData(
     val start: String,
     val end: String,
     val student_name: String,

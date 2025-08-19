@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.StudentReport
 
+import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -7,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
@@ -19,9 +21,6 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardDropDownListAdapter
 import com.vs.schoolmessenger.R
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
-import androidx.core.view.isVisible
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
@@ -104,7 +103,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
 
 
-        isLoadAcademicYear(Constant.isAcademicYearList)
+        isLoadAcademicYear(isAcademicYearList)
         isValidAcademicYear =
             isAcademicYearList?.any { it.current_academic_year == true } == true
         isAcademicYearId = isAcademicYearList!![0].id
@@ -443,7 +442,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
                 binding.txtSearchMenu.setText("")
 
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
             }
 
@@ -468,7 +467,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             }
         }
     }
-
 
 
     private fun setupFilerCatoryTypeSpinner(forceTrigger: Boolean = false) {

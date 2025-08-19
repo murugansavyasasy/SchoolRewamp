@@ -6,27 +6,22 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
-import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -36,7 +31,6 @@ import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Utils.ToastManager.showToast
 import com.vs.schoolmessenger.databinding.SchoolDashboardBinding
 
 class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickListener {
@@ -75,7 +69,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 //            Log.d("menuIcon", "Menu icon clicked. Opening navigation drawer.")
 //            drawerLayout.openDrawer(GravityCompat.START)
 //        }
-
 
 
 //        navigationView.setNavigationItemSelectedListener { menuItem ->
@@ -124,17 +117,20 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.view_profile -> {
-                    BaseActivity.loadFragment(this, ProfileFragment())
+                    loadFragment(this, ProfileFragment())
                     updateNavBar(R.id.icon_profile)
                 }
+
                 R.id.setting_click -> {
-                    BaseActivity.loadFragment(this, SettingsFragment())
+                    loadFragment(this, SettingsFragment())
                     updateNavBar(R.id.icon_settings)
                 }
+
                 R.id.help_click -> {
-                    BaseActivity.loadFragment(this, HelpFragment())
+                    loadFragment(this, HelpFragment())
                     updateNavBar(R.id.icon_help)
                 }
+
                 R.id.role_click -> {
                     val intent = Intent(this, PrioritySelection::class.java)
                     startActivity(intent)
@@ -173,16 +169,16 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
         authViewModel!!.isDeviceToken?.observe(this) { response ->
             if (response != null) {
-                val status = response.status
-                val message = response.message
+                response.status
+                response.message
             }
         }
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             response?.data?.let { academicList ->
-              val data = academicList.sortedByDescending { it.current_academic_year }
+                val data = academicList.sortedByDescending { it.current_academic_year }
                 if (isAcademicYearList == data) return@observe
-                  isAcademicYearList = data
+                isAcademicYearList = data
             }
         }
 
@@ -204,7 +200,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     }
 
 
-
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
@@ -214,7 +209,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         appViewModel!!.isGetAcademicYear(access_token, this)
 
     }
-
 
 
     private fun requestContactPermission() {

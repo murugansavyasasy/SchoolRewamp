@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model
 
 import com.google.gson.annotations.SerializedName
-import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.Repository.APIKeyNames
 
 data class HolidayResponse(

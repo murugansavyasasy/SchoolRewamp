@@ -41,7 +41,8 @@ class AbsenteesStudentListDetailAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_student_footerlist)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_student_footerlist)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -104,7 +105,7 @@ class AbsenteesStudentListDetailAdapter(
         private val registerNumber: TextView = itemView.findViewById(R.id.register_number)
         private val imageView: ImageView = itemView.findViewById(R.id.Image_value)
         private val mobile_number: TextView = itemView.findViewById(R.id.mobile_number)
-        private  val linearlayout: LinearLayout = itemView.findViewById(R.id.linearlayout)
+        private val linearlayout: LinearLayout = itemView.findViewById(R.id.linearlayout)
 
         fun bind(data: Student, position: Int, listener: AbsenteesStudentDetailClickListener) {
             studentName.text = data.student_name
@@ -117,7 +118,8 @@ class AbsenteesStudentListDetailAdapter(
                 .into(imageView)
 
             Constant.isAbsenteesReportDataSending?.let { report ->
-                val sectionNamesCombined = report.section_wise?.joinToString(", ") { it.section_name } ?: ""
+                val sectionNamesCombined =
+                    report.section_wise?.joinToString(", ") { it.section_name } ?: ""
                 sectionValue.text = "${report.class_name ?: ""} - $sectionNamesCombined"
             }
 

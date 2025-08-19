@@ -226,7 +226,7 @@ class UnifiedVoiceAdapter(
                         lblContentText.maxLines = 3
                         lblContentText.ellipsize = TextUtils.TruncateAt.END
                         lblSeeMore.text = "see more"
-                    }else{
+                    } else {
                         lblSeeMore.visibility = View.GONE
                     }
                 }

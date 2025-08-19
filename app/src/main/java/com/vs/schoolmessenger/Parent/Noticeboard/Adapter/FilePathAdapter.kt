@@ -2,41 +2,28 @@ package com.vs.schoolmessenger.Parent.Noticeboard.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.imageview.ShapeableImageView
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventFilePathAdapter
 import com.vs.schoolmessenger.Parent.Noticeboard.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class FilePathAdapter (
+class FilePathAdapter(
 
     private var visibleList: List<FilePath>,
     private var fullList: List<FilePath>,
     private var context: Context,
     private var isLoading: Boolean
-):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
@@ -45,9 +32,11 @@ class FilePathAdapter (
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.attachement_rewamp_recycler)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.attachement_rewamp_recycler)
             ShimmerViewHolder(shimmerView)
         } else {
             val view =
@@ -90,7 +79,7 @@ class FilePathAdapter (
             position: Int,
             fullList: List<FilePath>,
             context: Context
-            ) {
+        ) {
 
             Log.d("GetFileDetails", data.toString())
             if (data?.url.isNullOrEmpty()) {
@@ -142,7 +131,6 @@ class FilePathAdapter (
 
             DefaultImage.visibility = View.VISIBLE
         }
-
 
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -8,7 +8,6 @@ import android.util.Base64
 import android.util.Log
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.util.ArrayList
 
 class AppSignatureHelper(private val context: Context) {
 

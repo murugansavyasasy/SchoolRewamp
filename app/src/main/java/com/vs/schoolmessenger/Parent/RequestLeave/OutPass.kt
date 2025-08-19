@@ -16,11 +16,12 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.GatePassBinding
 
 
-class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener{
+class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): GatePassBinding {
         return GatePassBinding.inflate(layoutInflater)
     }
+
     private var isChildDetails: ChildDetails? = null
     private var appViewModel: App? = null
 
@@ -33,8 +34,14 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener{
         appViewModel?.init()
         val childDetails = SharedPreference.getChildDetails(this)
         binding.imgBack.setOnClickListener(this)
-        binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
-        binding.btnOk.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+        binding.imgBack.setColorFilter(
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_IN
+        )
+        binding.btnOk.setColorFilter(
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_IN
+        )
 
 
         Glide.with(this)
@@ -43,19 +50,20 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener{
             .error(R.drawable.user_vector_icon)
             .into(binding.profileImage1)
 
-        binding.tvName.text=Constant.isLeaveData!!.student_name
-        binding.isLeaveApplyOn.text=Constant.convertToReadableDateformat(Constant.isLeaveData!!.applied_on)
-        binding.tvStandard.text=Constant.isLeaveData!!.class_name+" - "+Constant.isLeaveData!!.section_name
-        binding.lblFromDate.text=Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
-        binding.lblToDate.text=Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
-        if (Constant.isLeaveData!!.no_of_days=="1"){
-            binding.lblDays.text=Constant.isLeaveData!!.no_of_days+" Day"
+        binding.tvName.text = Constant.isLeaveData!!.student_name
+        binding.isLeaveApplyOn.text =
+            Constant.convertToReadableDateformat(Constant.isLeaveData!!.applied_on)
+        binding.tvStandard.text =
+            Constant.isLeaveData!!.class_name + " - " + Constant.isLeaveData!!.section_name
+        binding.lblFromDate.text = Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
+        binding.lblToDate.text = Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
+        if (Constant.isLeaveData!!.no_of_days == "1") {
+            binding.lblDays.text = Constant.isLeaveData!!.no_of_days + " Day"
+        } else {
+            binding.lblDays.text = Constant.isLeaveData!!.no_of_days + " Days"
         }
-        else{
-            binding.lblDays.text=Constant.isLeaveData!!.no_of_days+" Days"
-        }
-        binding.lblApprovalBy.text=Constant.isLeaveData!!.approved_by
-        binding.lblReason.text=Constant.isLeaveData!!.reason
+        binding.lblApprovalBy.text = Constant.isLeaveData!!.approved_by
+        binding.lblReason.text = Constant.isLeaveData!!.reason
     }
 
     override fun onClick(p0: View?) {

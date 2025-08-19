@@ -1,8 +1,6 @@
 package com.vs.schoolmessenger.School.StudentReport
 
 import android.content.Context
-import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -58,7 +55,8 @@ class StudentReportAdapter(
         else itemList?.size ?: 0
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
+    class DataViewHolder(itemView: View, private val context: Context) :
+        RecyclerView.ViewHolder(itemView) {
         private val lblAdmissionNumber: TextView = itemView.findViewById(R.id.lblAdmisionNumber)
         private val lblGender: TextView = itemView.findViewById(R.id.lblGender)
         private val lblDOB: TextView = itemView.findViewById(R.id.lblDOB)
@@ -66,7 +64,8 @@ class StudentReportAdapter(
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val lblFatherName: TextView = itemView.findViewById(R.id.lblFatherName)
         private val lblTeacherName: TextView = itemView.findViewById(R.id.lblTeacherName)
-        private val lblStandardAndSection: TextView = itemView.findViewById(R.id.lblStandardAndSection)
+        private val lblStandardAndSection: TextView =
+            itemView.findViewById(R.id.lblStandardAndSection)
         private val profileImage: ImageView = itemView.findViewById(R.id.imgStudent)
         private val lnrPhoneNumber: LinearLayout = itemView.findViewById(R.id.lnrMobileNumber)
         private val lnrSms: LinearLayout = itemView.findViewById(R.id.lnrSMS)
@@ -81,25 +80,25 @@ class StudentReportAdapter(
             lblStudentName.text = data.name
             lblFatherName.text = data.father_name
             lblTeacherName.text = data.class_teacher
-            lblStandardAndSection.text = data.class_name +"-"+data.section_name
-            if(data.primary_mobile!=""){
-                lnrPhoneNumber.visibility=View.VISIBLE
-                lnrSms.visibility=View.VISIBLE
+            lblStandardAndSection.text = data.class_name + "-" + data.section_name
+            if (data.primary_mobile != "") {
+                lnrPhoneNumber.visibility = View.VISIBLE
+                lnrSms.visibility = View.VISIBLE
 
-            }else{
-                lnrPhoneNumber.visibility=View.GONE
-                lnrSms.visibility=View.GONE
+            } else {
+                lnrPhoneNumber.visibility = View.GONE
+                lnrSms.visibility = View.GONE
             }
-            if(data.email!=""){
-                lnrMail.visibility=View.VISIBLE
-            }else{
-                lnrMail.visibility=View.GONE
+            if (data.email != "") {
+                lnrMail.visibility = View.VISIBLE
+            } else {
+                lnrMail.visibility = View.GONE
             }
             Glide.with(context)
                 .load(data.profile)
                 .placeholder(R.drawable.image_placeholder)
                 .error(R.drawable.default_profile)
-                .into(profileImage);
+                .into(profileImage)
 
 
             lnrMail.setOnClickListener {

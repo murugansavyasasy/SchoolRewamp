@@ -6,7 +6,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.databinding.LsrwSummaryBinding
 
 
-class LSRWSummary : BaseActivity<LsrwSummaryBinding>() ,
+class LSRWSummary : BaseActivity<LsrwSummaryBinding>(),
     View.OnClickListener {
 
     private lateinit var adapter: LSRWSummaryAdapter
@@ -38,9 +38,6 @@ class LSRWSummary : BaseActivity<LsrwSummaryBinding>() ,
             LinearLayoutManager(this)
         binding.rcLsrw.adapter = adapter
     }
-
-
-
 
 
     private fun loadHardcodedData() {

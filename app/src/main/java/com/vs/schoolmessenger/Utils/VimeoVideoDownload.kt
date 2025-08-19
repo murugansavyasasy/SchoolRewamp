@@ -48,8 +48,10 @@ object VimeoVideoDownload {
                             val jsonObject = JsonParser.parseString(jsonResponse).asJsonObject
                             if (jsonObject.has(APIKeyNames.download)) {
                                 for (download in jsonObject[APIKeyNames.download].asJsonArray) {
-                                    val quality = download.asJsonObject[APIKeyNames.quality].asString
-                                    val downloadUrl = download.asJsonObject[APIKeyNames.link].asString
+                                    val quality =
+                                        download.asJsonObject[APIKeyNames.quality].asString
+                                    val downloadUrl =
+                                        download.asJsonObject[APIKeyNames.link].asString
 
                                     Log.d("downloadUrl", downloadUrl)
 

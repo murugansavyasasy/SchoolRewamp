@@ -43,7 +43,7 @@ class InteractionWithQuestionAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(itemList[position],listener, position)
+            holder.bind(itemList[position], listener, position)
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
@@ -60,31 +60,33 @@ class InteractionWithQuestionAdapter(
         private val linear_layout: LinearLayout = itemView.findViewById(R.id.linear_layout)
 
 
-
-
         @SuppressLint("ClickableViewAccessibility")
         fun bind(chat: QuestionData, listener: ReplyClickListener, position: Int) {
             questionText.text = chat.question
             answerText.text = chat.answer
-            answerText.visibility = if (chat.answer == "Not answered yet") View.GONE else View.VISIBLE
+            answerText.visibility =
+                if (chat.answer == "Not answered yet") View.GONE else View.VISIBLE
 
 
             val popupHandler = View.OnClickListener {
-                showPopup(it, chat, listener,position)
+                showPopup(it, chat, listener, position)
             }
             questionText.setOnClickListener(popupHandler)
             questionText.setOnLongClickListener {
                 popupHandler.onClick(it)
                 true
             }
-            more_options.setOnClickListener (popupHandler)
-            linear_layout.setOnClickListener (popupHandler)
+            more_options.setOnClickListener(popupHandler)
+            linear_layout.setOnClickListener(popupHandler)
         }
 
 
-
-
-        private fun showPopup(view: View, chat: QuestionData, listener: ReplyClickListener, position: Int) {
+        private fun showPopup(
+            view: View,
+            chat: QuestionData,
+            listener: ReplyClickListener,
+            position: Int
+        ) {
             val popup = PopupMenu(view.context, view)
             popup.menuInflater.inflate(R.menu.question_popup_menu, popup.menu)
 

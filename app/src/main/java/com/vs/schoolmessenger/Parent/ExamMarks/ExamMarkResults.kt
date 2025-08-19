@@ -5,16 +5,12 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.gif.GifDrawable
-import com.bumptech.glide.request.target.ImageViewTarget
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarkData
 import com.vs.schoolmessenger.Parent.ExamMarks.ViewMarksAdapter.ExamGroupActivity
 import com.vs.schoolmessenger.Parent.ExamMarks.ViewMarksAdapter.ExamMarkResultsAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamMarkDetailBinding
 
@@ -39,8 +35,6 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
         appViewModel?.init()
 
 
-
-
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
@@ -53,7 +47,7 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
 
         exam_id = intent.getStringExtra("exam_id") ?: ""
         exam_title = intent.getStringExtra("exam_title") ?: ""
-        binding.lblexamTitle.text=exam_title
+        binding.lblexamTitle.text = exam_title
 
         appViewModel?.getviewmarks?.observe(this) { response ->
             Log.d("response++", response.toString())
@@ -91,10 +85,10 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
             return
         }
 
-        binding.lblTotalObtainaed.text=data.get(0).assessments.get(0).total_obtained
-        binding.lblTotalMark.text="Out of "+ data.get(0).assessments.get(0).total_mark
-        binding.lblRemark.text=data.get(0).assessments.get(0).Remarks
-        binding.lblGrade.text="Overall Grade: "+data.get(0).assessments.get(0).Rank
+        binding.lblTotalObtainaed.text = data.get(0).assessments.get(0).total_obtained
+        binding.lblTotalMark.text = "Out of " + data.get(0).assessments.get(0).total_mark
+        binding.lblRemark.text = data.get(0).assessments.get(0).Remarks
+        binding.lblGrade.text = "Overall Grade: " + data.get(0).assessments.get(0).Rank
 
 
         binding.nomessage.visibility = View.GONE

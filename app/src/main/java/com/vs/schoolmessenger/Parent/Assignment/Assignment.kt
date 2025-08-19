@@ -39,7 +39,8 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         isAccessToken = childDetails?.access_token
 
         binding.toolbarLayout.lblStudentName.text = childDetails!!.name
-        binding.toolbarLayout.lblStudentSection.text = childDetails.standard_name + " - " + childDetails.section_name
+        binding.toolbarLayout.lblStudentSection.text =
+            childDetails.standard_name + " - " + childDetails.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -64,7 +65,8 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
     private fun fetchAssignmentReportData() {
         binding.rcyAssignment.visibility = View.VISIBLE
-        isAssignmentAdapter = AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewShow)
+        isAssignmentAdapter =
+            AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewShow)
         binding.rcyAssignment.adapter = isAssignmentAdapter
 
         appViewModel?.isAssignmentlist(isAccessToken!!)

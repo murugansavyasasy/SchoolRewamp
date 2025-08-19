@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -17,13 +16,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventFilePathAdapter
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventUpcomingAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
@@ -34,7 +28,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
-class SchoolEventUpcomingAdapter (
+class SchoolEventUpcomingAdapter(
     private var itemList: List<SchoolEventItem>?,
     private var listener: SchoolEventClickListener,
     private var context: Context,
@@ -127,7 +121,6 @@ class SchoolEventUpcomingAdapter (
     }
 
 
-
     fun updateList(newList: List<SchoolEventItem>?) {
         this.itemList = newList
         notifyDataSetChanged()
@@ -153,7 +146,6 @@ class SchoolEventUpcomingAdapter (
         private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
 
 
-
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
             data: SchoolEventItem,
@@ -172,7 +164,7 @@ class SchoolEventUpcomingAdapter (
 
             if (data.can_edit && data.can_delete) {
                 imgEditAndDelete.visibility = View.VISIBLE
-            }else{
+            } else {
                 imgEditAndDelete.visibility = View.GONE
             }
 

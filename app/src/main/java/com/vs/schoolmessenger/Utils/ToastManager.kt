@@ -8,7 +8,8 @@ object ToastManager {
 
     fun showToast(context: Context, resId: Int) {
         currentToast?.cancel()
-        currentToast = Toast.makeText(context, context.getResources().getText(resId), Toast.LENGTH_SHORT)
+        currentToast =
+            Toast.makeText(context, context.resources.getText(resId), Toast.LENGTH_SHORT)
         currentToast?.show()
     }
 

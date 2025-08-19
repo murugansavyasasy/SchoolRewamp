@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.LSRW.Model
 
-data class lsrwskilldata (
+data class lsrwskilldata(
     val id: String,
     val title: String,
     val description: String,

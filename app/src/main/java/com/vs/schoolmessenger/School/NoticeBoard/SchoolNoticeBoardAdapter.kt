@@ -13,7 +13,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +32,8 @@ import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class SchoolNoticeBoardAdapter(
     private var itemList: List<NoticeStaffData>?,
@@ -200,6 +207,7 @@ class SchoolNoticeBoardAdapter(
                         else -> Constant.CustomisedconvertDateTimeFormat(date)
                     }
                 }
+
                 else -> Constant.CustomisedconvertDateTimeFormat(date)
             }
 

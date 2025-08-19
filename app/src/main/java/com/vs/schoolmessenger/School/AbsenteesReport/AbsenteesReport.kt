@@ -22,7 +22,6 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
 
 
-
 class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener,
     AbsenteesClickListener,
     AbsenteesDetailClickListener {

@@ -60,7 +60,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     data.totalCount ?: 0
                 )
             )
-        } else if(SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data.isParentAssignment == true) {
+        } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data.isParentAssignment == true) {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
             binding.createdDate.text = data?.created_date ?: ""
@@ -90,7 +90,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (data.isMenuType == Constant.M_HOMEWORK) {
             isHomeworkId = data.id
             isHomeWorkDate = intent.getStringExtra("isHomeWorkDate")
-            Log.d("isHomeWorkDate2",isHomeWorkDate.toString())
+            Log.d("isHomeWorkDate2", isHomeWorkDate.toString())
 
             if (data.subjectName != "") {
                 binding.lblSubjectName.visibility = View.VISIBLE
@@ -131,10 +131,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             SELECTED_SCHOOL_MENU
         )
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-            binding.rcChildHW.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+            binding.rcChildHW.layoutManager =
+                GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
             binding.rcChildHW.adapter = adapter
-        }  else {
-            binding.rcChildHW.layoutManager = GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+        } else {
+            binding.rcChildHW.layoutManager =
+                GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
             binding.rcChildHW.adapter = adapter
 
         }

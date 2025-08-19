@@ -3,25 +3,15 @@ package com.vs.schoolmessenger.Parent.Noticeboard.Adapter
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.DatePickerDialog
-import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebViewClient
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
@@ -33,9 +23,6 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.imageview.ShapeableImageView
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
@@ -165,37 +152,37 @@ class NoticeBoardAdapter(
             val hasFiles = !noticeData.file_path.isNullOrEmpty()
 
             video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyImgPDF.visibility = if(hasIframe) View.GONE else View.VISIBLE
+            rcyImgPDF.visibility = if (hasIframe) View.GONE else View.VISIBLE
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.INVISIBLE
             total_numbers.visibility = View.GONE
 
-                header.setOnClickListener {
+            header.setOnClickListener {
 
-                    val convertedList = noticeData.file_path.map {
-                        GetFilePathDetails(
-                            type = it.type,
-                            url = it.url,
-                        )
-                    }
-
-                    val isHomeWorkData = FilePreview(
-                        id = "",
-                        title = noticeData.title,
-                        description = noticeData.description,
-                        subjectName = "",
-                        sentBy = "",
-                        thumbnail = "",
-                        isUnread = true,
-                        isCompleted = true,
-                        isMenuType = Constant.M_NOTICEBOARD,
-                        fileList = convertedList,
+                val convertedList = noticeData.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
                     )
-
-                    val intent = Intent(context, ChildHomeWork::class.java)
-                    intent.putExtra("isPreViewData", isHomeWorkData)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    context.startActivity(intent)
                 }
+
+                val isHomeWorkData = FilePreview(
+                    id = "",
+                    title = noticeData.title,
+                    description = noticeData.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = "",
+                    isUnread = true,
+                    isCompleted = true,
+                    isMenuType = Constant.M_NOTICEBOARD,
+                    fileList = convertedList,
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
+            }
 
             if (hasFiles) {
                 val fileList = noticeData.file_path!!
@@ -207,8 +194,10 @@ class NoticeBoardAdapter(
                     total_numbers.visibility = View.VISIBLE
                 }
 
-                rcyImgPDF.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                rcyImgPDF.adapter = FilePathAdapter(visibleList, fileList, context, Constant.isShimmerViewDisable)
+                rcyImgPDF.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rcyImgPDF.adapter =
+                    FilePathAdapter(visibleList, fileList, context, Constant.isShimmerViewDisable)
             }
 
             remaindertag.setOnClickListener {

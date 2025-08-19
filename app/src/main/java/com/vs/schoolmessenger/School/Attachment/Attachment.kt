@@ -80,8 +80,10 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     override fun getViewBinding(): AttachmentBinding {
         return AttachmentBinding.inflate(layoutInflater)
     }
+
     private var cameraPermissionDeniedCount = 0
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
@@ -132,11 +134,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         isUserDetails = SharedPreference.getUserDetails(this)
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        if (isUserDetails!!.staff_details.size > 1) {
-            isMultipleSchool = true
-        } else {
-            isMultipleSchool = false
-        }
+        isMultipleSchool = isUserDetails!!.staff_details.size > 1
 
         appViewModel!!.isDeleteAttachment?.observe(this) { response ->
             if (response != null) {
@@ -657,7 +655,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             }
 
             R.id.imgSearchToolBar -> {
-                if(binding.search.isVisible) {
+                if (binding.search.isVisible) {
                     binding.search.visibility = View.GONE
                 } else {
                     binding.search.visibility = View.VISIBLE
@@ -742,7 +740,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
         val isStaffRole = isUserDetails!!.staff_role
         if (isMultipleSchool) {
-            if (isStaffRole ==   Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole
+            if (isStaffRole == Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole
             ) {
                 val intent = Intent(this, SchoolList::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

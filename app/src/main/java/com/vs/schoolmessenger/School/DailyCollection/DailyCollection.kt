@@ -1,22 +1,20 @@
 package com.vs.schoolmessenger.School.DailyCollection
+
 import android.graphics.Color
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
-
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.databinding.DailyCollectionBinding
-import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyData
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionDisplayItem
-
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.databinding.DailyCollectionBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -61,10 +59,10 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
         val currentDate = dateFormat.format(calendar.time)
         to_Date = currentDate
-        binding.fromDate3.text =Constant.convertToReadableDate(currentDate)
+        binding.fromDate3.text = Constant.convertToReadableDate(currentDate)
 
         from_Date = currentDate
-        binding.fromDate2.text =Constant.convertToReadableDate(currentDate)
+        binding.fromDate2.text = Constant.convertToReadableDate(currentDate)
 
 
         // Convert currentDate string into millis
@@ -94,10 +92,10 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
             if (response.status) {
                 isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility=View.GONE
+                binding.relativeLayout6.visibility = View.GONE
             } else {
                 showErrorUI(response.message ?: "No data available")
-                binding.relativeLayout6.visibility=View.GONE
+                binding.relativeLayout6.visibility = View.GONE
             }
         }
     }
@@ -110,8 +108,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.relativeLayout5.visibility = View.GONE
 
     }
-
-
 
 
     private fun isLoadDailyCollectionData(data: List<DailyData>?) {
@@ -129,10 +125,19 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             collectionData.collections.forEach { item ->
                 if (!item.category.isNullOrEmpty()) {
                     val feeList = item.fee_data?.map { fee ->
-                        DailyCollectionDisplayItem.Fee(fee.type_name ?: "Unknown", fee.amount ?: "0")
+                        DailyCollectionDisplayItem.Fee(
+                            fee.type_name ?: "Unknown",
+                            fee.amount ?: "0"
+                        )
                     } ?: emptyList()
 
-                    flatList.add(DailyCollectionDisplayItem.Header(item.category ?: "Unknown", item.total ?: "0", feeList))
+                    flatList.add(
+                        DailyCollectionDisplayItem.Header(
+                            item.category ?: "Unknown",
+                            item.total ?: "0",
+                            feeList
+                        )
+                    )
                 }
 
             }
@@ -182,19 +187,20 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.totalsummary1.adapter = mAdapter
 
 
-        if (selectedType=="1"){
-            binding.categoryName.isEnabled=false
-            binding.className.isEnabled=true
-            binding.modeName.isEnabled=true}
-        if (selectedType=="2"){
-            binding.className.isEnabled=false
-            binding.categoryName.isEnabled=true
-            binding.modeName.isEnabled=true
+        if (selectedType == "1") {
+            binding.categoryName.isEnabled = false
+            binding.className.isEnabled = true
+            binding.modeName.isEnabled = true
         }
-        if (selectedType=="3"){
-            binding.modeName.isEnabled=false
-            binding.categoryName.isEnabled=true
-            binding.className.isEnabled=true
+        if (selectedType == "2") {
+            binding.className.isEnabled = false
+            binding.categoryName.isEnabled = true
+            binding.modeName.isEnabled = true
+        }
+        if (selectedType == "3") {
+            binding.modeName.isEnabled = false
+            binding.categoryName.isEnabled = true
+            binding.className.isEnabled = true
         }
 
         Constant.showLoading(this@DailyCollection)

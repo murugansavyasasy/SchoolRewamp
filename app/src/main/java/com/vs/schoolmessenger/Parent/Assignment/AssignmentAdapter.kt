@@ -60,7 +60,7 @@ class AssignmentAdapter(
             filteredList[position].let {
                 holder.bind(it, position, this, listener)
             }
-        }else if (holder is SchoolNoticeBoardAdapter.ShimmerViewHolder) {
+        } else if (holder is SchoolNoticeBoardAdapter.ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
@@ -109,9 +109,6 @@ class AssignmentAdapter(
             notifyItemRemoved(position)
         }
     }
-
-
-
 
 
     class DataViewHolder(itemView: View, private val context: Context) :
@@ -253,7 +250,7 @@ class AssignmentAdapter(
                     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                         val child = rv.findChildViewUnder(e.x, e.y)
                         if (child != null && e.action == MotionEvent.ACTION_UP) {
-                            val position = rv.getChildAdapterPosition(child)
+                            rv.getChildAdapterPosition(child)
                             val convertedList = data.file_path.map {
                                 GetFilePathDetails(
                                     type = it.type,

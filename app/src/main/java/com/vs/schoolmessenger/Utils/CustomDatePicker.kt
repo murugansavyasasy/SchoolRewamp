@@ -25,7 +25,7 @@ class CustomDatePicker(
     private val preSelectedDates: List<String>,
     private var dateAdapter: DateAdapter?, // Nullable
     private val onDatesConfirmed: (List<String>) -> Unit
-){
+) {
 
     private val calendar = Calendar.getInstance()
 

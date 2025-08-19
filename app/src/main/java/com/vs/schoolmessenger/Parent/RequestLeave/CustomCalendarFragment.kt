@@ -16,7 +16,7 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
-import java.util.*
+import java.util.Locale
 
 class CustomCalendarFragment : Fragment() {
 
@@ -64,9 +64,12 @@ class CustomCalendarFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            minDate = it.getString(ARG_MIN_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
-            maxDate = it.getString(ARG_MAX_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
-            selectedDate = it.getString(ARG_SELECTED_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
+            minDate =
+                it.getString(ARG_MIN_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
+            maxDate =
+                it.getString(ARG_MAX_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
+            selectedDate = it.getString(ARG_SELECTED_DATE)
+                ?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
             calendarTag = it.getString(ARG_TAG)
         }
 

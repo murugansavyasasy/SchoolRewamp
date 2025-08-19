@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel
 
-class GetLeaveCategoriesData (
+class GetLeaveCategoriesData(
     val status: Boolean,
     val message: String,
     val data: List<String>

@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Dashboard.School
 
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.ScrollItem
 
 class AutoScrollAdapterWithDots(
     private var items: List<MenuDetail>,
@@ -34,7 +32,7 @@ class AutoScrollAdapterWithDots(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.bind(item,listener)
+        holder.bind(item, listener)
     }
 
     fun getMiddlePosition(): Int {
@@ -48,7 +46,7 @@ class AutoScrollAdapterWithDots(
         private val itemImage: ImageView = itemView.findViewById(R.id.itemImage)
         private val itemText: TextView = itemView.findViewById(R.id.itemText)
 
-        fun bind(item: MenuDetail,listener: MenuClickListener) {
+        fun bind(item: MenuDetail, listener: MenuClickListener) {
             itemText.text = item.name
 
             when (item.id) {
@@ -86,12 +84,13 @@ class AutoScrollAdapterWithDots(
                     cornerRadius = 24f
                 }
                 itemImage.background = drawable
-            } catch (_: Exception) { }
+            } catch (_: Exception) {
+            }
 
             // safe click listener
             itemView.setOnClickListener {
                 it.bounceAnimation()
-                Constant.isSchoolMenuName=item.name
+                Constant.isSchoolMenuName = item.name
                 Constant.SELECTED_SCHOOL_MENU = item.id
                 listener.onClick(item)
             }
@@ -115,8 +114,6 @@ fun View.bounceAnimation() {
         }
         .start()
 }
-
-
 
 
 //package com.vs.schoolmessenger.Dashboard.School

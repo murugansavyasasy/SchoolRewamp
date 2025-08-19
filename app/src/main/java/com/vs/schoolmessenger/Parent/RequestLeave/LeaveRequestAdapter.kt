@@ -7,12 +7,13 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.AttendanceReport
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -37,7 +38,8 @@ class LeaveRequestAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.leave_request_history_item)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.leave_request_history_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -93,15 +95,18 @@ class LeaveRequestAdapter(
             textName.text = data.student_name
             textFirstLetter.text = data.student_name.firstOrNull()?.toString() ?: "?"
 
-            textDate.text = "${Constant.convertDateTimeFormat(data.leave_from ?: "")} - ${Constant.convertDateTimeFormat(data.leave_to ?: "")}"
-            textNoOfDays.text = "${data.no_of_days} ${if (data.no_of_days == "1") "Day" else "Days"} Application"
+            textDate.text = "${Constant.convertDateTimeFormat(data.leave_from ?: "")} - ${
+                Constant.convertDateTimeFormat(data.leave_to ?: "")
+            }"
+            textNoOfDays.text =
+                "${data.no_of_days} ${if (data.no_of_days == "1") "Day" else "Days"} Application"
             textReason.text = data.reason
 
-            if (data.leave_type==""){
-                textLeaveType.visibility=View.GONE
-            }else{
-                textLeaveType.visibility=View.VISIBLE
-                textLeaveType.text=data.leave_type
+            if (data.leave_type == "") {
+                textLeaveType.visibility = View.GONE
+            } else {
+                textLeaveType.visibility = View.VISIBLE
+                textLeaveType.text = data.leave_type
             }
 
 
@@ -110,34 +115,48 @@ class LeaveRequestAdapter(
                     btnApprove.apply {
                         visibility = View.VISIBLE
                         text = "Awaiting"
-                        lblGetOutPass.visibility=View.GONE
-                        applyTintedBackground(btnApprove, R.drawable.bg_leave_approved, R.color.light_yellow_1)
+                        lblGetOutPass.visibility = View.GONE
+                        applyTintedBackground(
+                            btnApprove,
+                            R.drawable.bg_leave_approved,
+                            R.color.light_yellow_1
+                        )
                         setTextColor(Color.parseColor("#996633"))
                         options.visibility = View.VISIBLE
                         relbuttons.visibility = View.GONE
                     }
                 }
+
                 Constant.approved -> {
                     btnApprove.apply {
                         visibility = View.VISIBLE
                         text = "Approved"
-                        lblGetOutPass.visibility=View.VISIBLE
-                        applyTintedBackground(btnApprove, R.drawable.bg_leave_approved, R.color.light_green_1)
+                        lblGetOutPass.visibility = View.VISIBLE
+                        applyTintedBackground(
+                            btnApprove,
+                            R.drawable.bg_leave_approved,
+                            R.color.light_green_1
+                        )
                         setTextColor(Color.parseColor("#2E7D32"))
 
                         options.visibility = View.GONE
-                    relbuttons.visibility = View.GONE
+                        relbuttons.visibility = View.GONE
                     }
                 }
+
                 Constant.rejected -> {
                     btnApprove.apply {
                         visibility = View.VISIBLE
                         text = "Rejected"
-                        lblGetOutPass.visibility=View.GONE
-                        applyTintedBackground(btnApprove, R.drawable.bg_leave_approved, R.color.light_red_1)
+                        lblGetOutPass.visibility = View.GONE
+                        applyTintedBackground(
+                            btnApprove,
+                            R.drawable.bg_leave_approved,
+                            R.color.light_red_1
+                        )
                         setTextColor(Color.parseColor("#D32F2F"))
                         options.visibility = View.GONE
-                    relbuttons.visibility = View.GONE
+                        relbuttons.visibility = View.GONE
                     }
                 }
             }
@@ -157,20 +176,20 @@ class LeaveRequestAdapter(
                 val myIntent = Intent(context, OutPass::class.java)
                 val saveLeaveData = LeaveData(
                     id = data.id,
-                    applied_on=data.applied_on,
-                    student_name=data.student_name,
-                    class_name=data.class_name,
-                    section_name=data.section_name,
-                    leave_from=data.leave_from,
-                    leave_to=data.leave_to,
-                    no_of_days=data.no_of_days,
-                    reason=data.reason,
-                    status=data.status,
-                    updated_on=data.updated_on,
-                    from_session=data.from_session,
-                    to_session=data.to_session,
-                    approved_by=data.approved_by,
-                    leave_type=data.leave_type
+                    applied_on = data.applied_on,
+                    student_name = data.student_name,
+                    class_name = data.class_name,
+                    section_name = data.section_name,
+                    leave_from = data.leave_from,
+                    leave_to = data.leave_to,
+                    no_of_days = data.no_of_days,
+                    reason = data.reason,
+                    status = data.status,
+                    updated_on = data.updated_on,
+                    from_session = data.from_session,
+                    to_session = data.to_session,
+                    approved_by = data.approved_by,
+                    leave_type = data.leave_type
                 )
                 Constant.isLeaveData = saveLeaveData
                 context.startActivity(myIntent)
@@ -187,7 +206,6 @@ class LeaveRequestAdapter(
 
 
     }
-
 
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

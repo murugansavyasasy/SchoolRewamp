@@ -3,14 +3,12 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 import android.content.Intent
 import android.graphics.Paint
 import android.text.InputType
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
-import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
@@ -18,7 +16,6 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.PassWordBinding
 import com.vs.schoolmessenger.databinding.PassWordNewBinding
 
 class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
@@ -49,7 +46,7 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
             Constant.hideLoading(this@PassWord)
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser
@@ -207,7 +204,8 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
             R.id.lblForgetPassword -> {
                 isForgetPassword()
             }
-            R.id.rytBack ->{
+
+            R.id.rytBack -> {
                 onBackPressed()
             }
         }

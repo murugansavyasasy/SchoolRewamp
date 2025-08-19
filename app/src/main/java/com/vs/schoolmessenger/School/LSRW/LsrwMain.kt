@@ -15,6 +15,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
     override fun getViewBinding(): LsrwSkillMainBinding {
         return LsrwSkillMainBinding.inflate(layoutInflater)
     }
+
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null

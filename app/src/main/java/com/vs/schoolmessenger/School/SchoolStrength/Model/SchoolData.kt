@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.SchoolStrength.Model
 
 import com.google.gson.annotations.SerializedName
-import com.vs.schoolmessenger.School.SchoolStrength.Model.Standard
 
 data class SchoolData(
     @SerializedName("total_student_strength")

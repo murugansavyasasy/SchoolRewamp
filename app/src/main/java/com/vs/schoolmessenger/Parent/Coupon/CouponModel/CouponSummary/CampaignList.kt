@@ -1,7 +1,5 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary
 
-import com.google.gson.annotations.SerializedName
-
 data class CampaignList(
     val current_page: Int,
     val data: List<CampaignItem>,

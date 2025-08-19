@@ -7,6 +7,7 @@ sealed class FeePendingCollectionDisplayItem {
         val feeList: List<Fee>
 
     ) : FeePendingCollectionDisplayItem()
+
     data class Fee(
         val typeName: String,
         val amount: String
