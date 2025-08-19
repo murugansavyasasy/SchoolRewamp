@@ -65,10 +65,12 @@ class NotificationAdapter(
 
         fun bind(data: NotificationDataClass, position: Int) {
 
-            lblSendBy.text = data.sendBy
+//            lblSendBy.text = data.sendBy
+            lblSendBy.text = "Posted by : ${data.sendBy}"
             lblTitle.text = data.title
             lblContent.text = data.content
-            first_letter.text = data.sendBy.first().toString()
+            first_letter.text = data.sendBy.firstOrNull()?.toString() ?: "?"
+
             when (position) {
                 1 -> {
                     lblNotification.visibility = View.VISIBLE

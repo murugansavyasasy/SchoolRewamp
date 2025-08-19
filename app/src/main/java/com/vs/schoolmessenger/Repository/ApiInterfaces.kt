@@ -512,9 +512,10 @@ interface ApiInterfaces {
     ): Call<CertificatesListResponse?>
 
     @GET(APIMethods.isNotifications)
-    fun isNotifications(
-        @Header(APIKeyNames.Authorization) token: String
-    ): Call<NotificationResponse?>
+    fun getNotifications(
+        @Header("Authorization") token: String,
+        @Query("device_type") deviceType: String
+    ): Call<NotificationResponse>
 
 
     @GET(APIMethods.get_time_table)

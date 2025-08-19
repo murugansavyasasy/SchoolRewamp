@@ -92,7 +92,9 @@ import okhttp3.RequestBody
 class App(application: Application) : AndroidViewModel(application) {
 
     private var apiSchoolRepositories: SchoolServices = SchoolServices()
-    private var apiParentRepositories: ParentServices = ParentServices()
+
+    var apiParentRepositories: ParentServices = ParentServices()
+
 
 
     var isDashBoardData: LiveData<DashboardResponse?>? = null
@@ -952,9 +954,16 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isStudentStats(isToken: String) {
         apiParentRepositories.isStudentStats(isToken)
     }
-    fun isNotificationList(isToken: String) {
-        apiParentRepositories.isNotifications(isToken)
+//    fun isNotificationList(isToken: String) {
+//        Log.d("Notifications", "ViewModel: isNotificationList() called with token = $isToken")
+//        apiParentRepositories.isNotifications(isToken)
+//    }
+
+    fun isNotificationList(token: String, deviceType: String) {
+        apiParentRepositories.isNotifications(token, deviceType)
     }
+
+
 
 
     fun getassignmentmysubmissionlist(
