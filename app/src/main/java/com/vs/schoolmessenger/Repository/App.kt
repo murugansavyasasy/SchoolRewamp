@@ -74,6 +74,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModel
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
+import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -319,6 +320,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSlotCancelByStudent: LiveData<StatusMessageModel?>? = null
     var isSlotValidation: LiveData<SlotValidationResponse?>? = null
     var isSlotDetailsHistory: LiveData<SlotDetailsResponse?>? = null
+    var islsrwStudentlist: LiveData<StudentSubmissionLsrwResponse?>? = null
 
 
     fun init() {
@@ -436,6 +438,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isStudentStats = apiParentRepositories.isStudentStatsLiveData
         getassignmentmysubmission = apiParentRepositories.getassignmentmysubmissionlistLiveData
         islsrwskillsreport = apiSchoolRepositories.islsrwskillsreportLiveData
+        islsrwStudentlist = apiSchoolRepositories.islsrwStudentlistLiveData
 
         isPtmSlotCreate = apiSchoolRepositories.isPtmSlotCreateLiveData
         isPtmSlotResponse = apiSchoolRepositories.isPtmSlotResponseLiveData
@@ -1015,6 +1018,13 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String
     ) {
         apiSchoolRepositories.islsrwskillsreport(isToken)
+
+    }
+    fun islsrwStudentlist(
+        isToken: String,
+        id: String
+    ) {
+        apiSchoolRepositories.islsrwStudentlist(isToken,id)
 
     }
 

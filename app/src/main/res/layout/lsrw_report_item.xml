@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/headerrelative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_shadow_white"
+    android:padding="20dp">
+
+
+    <LinearLayout
+        android:id="@+id/iconContainer"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="12dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/bg_icon_round_lightyellow">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/booksvgformatstyle"
+            android:contentDescription="icon" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iconContainer"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test For Notification"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            style="@style/CustomTextStylePoppinsBold" />
+
+        <TextView
+            android:id="@+id/txtSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reading"
+            android:textColor="#007BFF"
+            android:textSize="14sp"
+            style="@style/CustomTextStylePoppinsBold"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleContainer"
+        android:layout_toEndOf="@id/iconContainer"
+        android:layout_marginTop="4dp"
+        android:text="Purpose of testing student's skill"
+        android:textColor="#666666"
+        android:layout_marginEnd="20dp"
+        android:textSize="13sp"
+        android:maxLines="4"
+        android:ellipsize="end"
+        style="@style/CustomTextStylePoppinsMedium"/>
+
+
+    <LinearLayout
+        android:id="@+id/bottomRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtDescription"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/calendersvgformatstyle"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="date" />
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09 August, 2025"
+            android:textColor="#444444"
+            android:textSize="12sp"
+            style="@style/CustomTextStylePoppinsMedium"/>
+
+
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="1dp" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/groupprofilesvgformat"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="submitted" />
+
+        <TextView
+            android:id="@+id/txtSubmitted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nil/nil submitted"
+            android:textColor="#444444"
+            android:textSize="12sp"
+            style="@style/CustomTextStylePoppinsMedium"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/rytList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bottomRow"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginBottom="@dimen/two"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:id="@+id/rytList2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ten"
+            android:minHeight="@dimen/sixty"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyAssignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/five"
+                android:paddingEnd="@dimen/five" />
+
+            <TextView
+                android:id="@+id/total_numbers"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/minus_fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/ten"
+                android:layout_toEndOf="@id/rcyAssignment"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:gravity="center"
+                android:text=""
+                android:textSize="@dimen/fifteen_sp" />
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/video_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/bg_image_background_white_coupon"
+            android:scaleType="fitXY"
+            android:src="@drawable/video_play"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+        <ProgressBar
+            android:id="@+id/loadingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/progress_bar_white"
+            android:indeterminateOnly="true"
+            android:visibility="gone">
+
+        </ProgressBar>
+
+        <View
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1" />
+
+
+        <ImageView
+            android:id="@+id/arrow_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/dark_pink_background"
+            android:paddingStart="@dimen/ten"
+            android:paddingTop="@dimen/eight"
+            android:paddingEnd="@dimen/ten"
+            android:paddingBottom="@dimen/eight"
+            android:src="@drawable/arrow_right_white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgArrow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/right_arrow"
+        android:contentDescription="arrow" />
+
+</RelativeLayout>

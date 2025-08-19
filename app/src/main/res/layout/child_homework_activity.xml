@@ -12,6 +12,7 @@
         android:layout_height="@dimen/thirty_five"
         android:layout_marginTop="@dimen/twenty_three"
         android:src="@drawable/left_arrow"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,14 +21,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/imgBack"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgBack">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <TextView
                 android:id="@+id/lblSubjectName"
@@ -309,6 +312,14 @@
                 app:layout_constraintTop_toBottomOf="@id/fragmentContainer" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
+
+    <include
+        android:id="@+id/childlsrwlayoutxml"
+        layout="@layout/child_homework_lsrw"
+        android:visibility="gone"
+        >
+    </include>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelReq
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
+import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -165,6 +166,7 @@ class SchoolServices {
     var isAttachmentResponse: MutableLiveData<AttachmentReportResponse?>
     var getassignmentlist: MutableLiveData<SubmissionResponse?>
     var islsrwskillsreport: MutableLiveData<lsrwskillresponse?>
+    var islsrwStudentlist: MutableLiveData<StudentSubmissionLsrwResponse?>
     var isPtmSlotCreate: MutableLiveData<StatusMessageModel?>
     var isPtmSlotResponse: MutableLiveData<SlotResponse?>
     var isPtmSlotCancelReOpen: MutableLiveData<StatusMessageModel?>
@@ -253,6 +255,7 @@ class SchoolServices {
         isAttachmentResponse = MutableLiveData()
         getassignmentlist = MutableLiveData()
         islsrwskillsreport = MutableLiveData()
+        islsrwStudentlist = MutableLiveData()
 
         isPtmSlotCreate = MutableLiveData()
         isPtmSlotResponse = MutableLiveData()
@@ -3293,6 +3296,50 @@ class SchoolServices {
 
     val islsrwskillsreportLiveData: LiveData<lsrwskillresponse?>
         get() = islsrwskillsreport
+
+
+
+
+    fun islsrwStudentlist(
+        isToken: String,
+        id: String
+    ) {
+        RestClient.apiInterfaces.islsrwStudentlist(isToken,id)
+            ?.enqueue(object : Callback<StudentSubmissionLsrwResponse?> {
+                override fun onResponse(
+                    call: Call<StudentSubmissionLsrwResponse?>,
+                    response: Response<StudentSubmissionLsrwResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwStudentlist.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwStudentlist.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StudentSubmissionLsrwResponse?>,
+                    t: Throwable
+                ) {
+                    islsrwStudentlist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val islsrwStudentlistLiveData: LiveData<StudentSubmissionLsrwResponse?>
+        get() = islsrwStudentlist
 
 
 }

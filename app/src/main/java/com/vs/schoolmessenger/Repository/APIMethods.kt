@@ -134,6 +134,7 @@ object APIMethods {
     const val isstudentstats = "stud-attd/api/attendance/student-stats"
     const val isAssignmentMySubmission = "comm/api/assignment/my-submissions"
     const val islsrwskillsreport = "lms/api/lsrw/skills-report"
+    const val islsrwStudentlist = "lms/api/lsrw/submission-list"
 
 
     // PTM API CALLS

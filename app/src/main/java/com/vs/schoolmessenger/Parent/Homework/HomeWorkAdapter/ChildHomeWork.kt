@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,8 +17,10 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
+import com.vs.schoolmessenger.School.LSRW.LsrwStudentListFragment
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ChildHomeworkActivityBinding
@@ -36,6 +39,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         super.setupViews()
         setupToolbarBlue()
         binding.imgBack.setOnClickListener(this)
+        binding.childlsrwlayoutxml.imgBack.setOnClickListener(this)
+        binding.childlsrwlayoutxml.imgBack.setOnClickListener {
+            onBackPressed()
+        }
         binding.lblClickComplete.setOnClickListener(this)
         val data = intent.getParcelableExtra<FilePreview>("isPreViewData")
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
@@ -67,7 +74,24 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.category.text = data?.category ?: ""
             binding.subject.text = data?.assignmentsubject ?: ""
             binding.fragmentContainer.visibility = View.GONE
-        } else {
+
+        } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
+            binding.imgBack.visibility = View.GONE
+            binding.scrollView.visibility = View.GONE
+            binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
+            binding.childlsrwlayoutxml.txtTitle.text = data!!.title
+            binding.childlsrwlayoutxml.txtSubTitle.text = data!!.assignmentid
+            binding.childlsrwlayoutxml.txtDescription.text = data!!.description
+            binding.childlsrwlayoutxml.txtDate.text = data!!.created_date
+            Log.d("FragmentCheck", "Loading LsrwStudentListFragment with ID: ${data.id}")
+            subloadFragment(
+                LsrwStudentListFragment.newInstance(
+                    data.id ?: ""
+                )
+            )
+            Log.d("FragmentCheck", "LsrwStudentListFragment should now be loaded")
+
+    } else {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.GONE
             binding.fragmentContainer.visibility = View.GONE
@@ -134,6 +158,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.rcChildHW.layoutManager =
                 GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
             binding.rcChildHW.adapter = adapter
+        } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
+            binding.childlsrwlayoutxml.rcChildHW.layoutManager =
+                GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+            binding.childlsrwlayoutxml.rcChildHW.adapter = adapter
         } else {
             binding.rcChildHW.layoutManager =
                 GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
@@ -146,25 +174,44 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 isSuccessFullCompleteHomework()
             }
         }
-
         if (adapter.itemCount == 0) {
-            val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
-            params.topToBottom = binding.lblClickComplete.id
-            params.topMargin = resources.getDimensionPixelSize(R.dimen.ten) // optional
-            binding.lblPostedBy.layoutParams = params
-            binding.rcChildHW.visibility = View.GONE
-            binding.lblAttachments.visibility = View.GONE
-            binding.imgAttachmentIcon.visibility = View.GONE
+            if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+                val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+                params.topToBottom = binding.lblClickComplete.id
+                params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
+                binding.lblPostedBy.layoutParams = params
+                binding.childlsrwlayoutxml.rcChildHW.visibility = View.GONE
+                binding.childlsrwlayoutxml.lblAttachments.visibility = View.GONE
+                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility = View.GONE
+            } else {
+                val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+                params.topToBottom = binding.lblClickComplete.id
+                params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
+                binding.lblPostedBy.layoutParams = params
+                binding.rcChildHW.visibility = View.GONE
+                binding.lblAttachments.visibility = View.GONE
+                binding.imgAttachmentIcon.visibility = View.GONE
+            }
         } else {
-            val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
-            params.topToBottom = binding.rcChildHW.id
-            params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
-            binding.lblPostedBy.layoutParams = params
-            binding.rcChildHW.visibility = View.VISIBLE
-            binding.lblAttachments.visibility = View.VISIBLE
-            binding.imgAttachmentIcon.visibility = View.VISIBLE
-        }
+            if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+                val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+                params.topToBottom = binding.childlsrwlayoutxml.rcChildHW.id
+                params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
+                binding.lblPostedBy.layoutParams = params
 
+                binding.childlsrwlayoutxml.rcChildHW.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.lblAttachments.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility = View.VISIBLE
+            } else {
+                val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+                params.topToBottom = binding.rcChildHW.id
+                params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
+                binding.lblPostedBy.layoutParams = params
+                binding.rcChildHW.visibility = View.VISIBLE
+                binding.lblAttachments.visibility = View.VISIBLE
+                binding.imgAttachmentIcon.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -207,6 +254,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()
+    }
+
+    private fun subloadFragment(fragment: Fragment) {
+        val fragmentContainer = findViewById<FrameLayout>(R.id.fragmentContainer)
+        supportFragmentManager.beginTransaction()
+            .replace(fragmentContainer.id, fragment)
+            .commit()
+
     }
 
 
