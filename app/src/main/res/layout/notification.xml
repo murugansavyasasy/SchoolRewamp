@@ -10,35 +10,31 @@
         android:id="@+id/rlaLblNotification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/PrimaryColor"
         android:orientation="horizontal"
-        android:background="@color/primary_light"
         android:paddingBottom="@dimen/thirty">
-
 
         <ImageView
             android:id="@+id/imgBack"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_marginStart="@dimen/ten"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/twenty_two"
-            android:src="@drawable/arrow_back_black">
-
-        </ImageView>
+            android:src="@drawable/arrow_left_white"/>
 
         <TextView
             android:id="@+id/lblNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty"
-            android:text="@string/lblNotifications"
-            android:textColor="@color/black"
             android:fontFamily="@font/poppins_bold"
+            android:text="@string/lblNotifications"
+            android:textColor="@color/white"
             android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold">
+            android:textStyle="bold" />
 
-        </TextView>
     </LinearLayout>
+
 
     <RelativeLayout
         android:id="@+id/rytSearch"
@@ -46,8 +42,8 @@
         android:layout_height="@dimen/thirty_five"
         android:layout_below="@+id/rlaLblNotification"
         android:layout_margin="@dimen/ten"
-        android:background="@drawable/rect_grey">
-
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imgSearch"
@@ -69,14 +65,47 @@
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyNotification"
+    <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytSearch"
-        android:layout_marginTop="@dimen/ten"
-        tools:listitem="@layout/resent_notifications">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/sixteen">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <ImageView
+            android:id="@+id/imgHeader"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:contentDescription="Header Icon"
+            android:src="@drawable/home_work_icon_school" />
+
+        <TextView
+            android:id="@+id/txtHeader"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="HomeWork"
+            android:textSize="@dimen/eighteen" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyNotification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginBottom="@dimen/twenty"
+        android:background="@drawable/bg_top_rounded_container"
+        android:backgroundTint="@color/white"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none"
+        tools:listitem="@layout/resent_notifications" />
 
 </RelativeLayout>

@@ -99,7 +99,8 @@ import okhttp3.RequestBody
 class App(application: Application) : AndroidViewModel(application) {
 
     private var apiSchoolRepositories: SchoolServices = SchoolServices()
-    private var apiParentRepositories: ParentServices = ParentServices()
+
+    var apiParentRepositories: ParentServices = ParentServices()
 
 
     var isDashBoardData: LiveData<DashboardResponse?>? = null
@@ -305,7 +306,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isAssignmentlist: LiveData<ParentAssignmentResponse?>? = null
     var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
     var isStudentStats: LiveData<getStudentStats?>? = null
-    var getassignmentmysubmissionlist: LiveData<MySubmittedAssignmentsResponse?>? = null
+    var getassignmentmysubmission: LiveData<MySubmittedAssignmentsResponse?>? = null
     var islsrwskillsreport: LiveData<lsrwskillresponse?>? = null
     var isPtmSlotCreate: LiveData<StatusMessageModel?>? = null
     var isPtmSlotResponse: LiveData<SlotResponse?>? = null
@@ -433,7 +434,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isAssignmentlist = apiParentRepositories.isAssignmentlistLiveData
         isSubmitAssignment = apiParentRepositories.isSubmitAssignmentLiveData
         isStudentStats = apiParentRepositories.isStudentStatsLiveData
-        getassignmentmysubmissionlist = apiParentRepositories.getassignmentmysubmissionlistLiveData
+        getassignmentmysubmission = apiParentRepositories.getassignmentmysubmissionlistLiveData
         islsrwskillsreport = apiSchoolRepositories.islsrwskillsreportLiveData
 
         isPtmSlotCreate = apiSchoolRepositories.isPtmSlotCreateLiveData
@@ -997,12 +998,12 @@ class App(application: Application) : AndroidViewModel(application) {
         apiParentRepositories.isStudentStats(isToken)
     }
 
-    fun isNotificationList(isToken: String) {
-        apiParentRepositories.isNotifications(isToken)
+    fun isNotificationList(token: String, deviceType: String) {
+        apiParentRepositories.isNotifications(token, deviceType)
     }
 
 
-    fun getassignmentmysubmissionlist(
+    fun isGetAssignmentSubList(
         isToken: String, id: String
     ) {
         apiParentRepositories.getassignmentmysubmissionlist(isToken, id)
@@ -1092,8 +1093,6 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiParentRepositories.isSlotHistoryForStudent(isToken)
     }
-
-
 }
 
 

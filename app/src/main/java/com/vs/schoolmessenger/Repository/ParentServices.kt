@@ -267,43 +267,30 @@ class ParentServices {
         get() = isLeaveRequestApplyResponse
 
 
-    fun isNotifications(
-        isToken: String
-    ) {
-        RestClient.apiInterfaces.isNotifications(isToken)
+    fun isNotifications(isToken: String, deviceType: String) {
+        RestClient.apiInterfaces.getNotifications(isToken, deviceType)
             ?.enqueue(object : Callback<NotificationResponse?> {
                 override fun onResponse(
                     call: Call<NotificationResponse?>,
                     response: Response<NotificationResponse?>
                 ) {
-                    Log.d(
-                        "GetCertificate Response",
-                        response.code().toString() + " - " + response.toString()
-                    )
+                    Log.d("isNotifications Response", "${response.code()} - $response")
+
                     if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isNotificationResponse.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isNotificationResponse.postValue(response.body())
-                            }
+                        response.body()?.let {
+                            isNotificationResponse.postValue(it)
                         }
                     }
                 }
 
-                override fun onFailure(
-
-                    call: Call<NotificationResponse?>,
-                    t: Throwable
-                ) {
+                override fun onFailure(call: Call<NotificationResponse?>, t: Throwable) {
                     isNotificationResponse.postValue(null)
                     t.printStackTrace()
                 }
             })
     }
+
+
 
     val isNotificationResponseLiveData: LiveData<NotificationResponse?>
         get() = isNotificationResponse

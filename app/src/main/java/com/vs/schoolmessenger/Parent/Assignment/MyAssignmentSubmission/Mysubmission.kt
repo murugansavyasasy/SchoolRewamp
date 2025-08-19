@@ -49,7 +49,7 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
 
         binding.rcyAssignment.layoutManager = LinearLayoutManager(this)
 
-        appViewModel?.getassignmentmysubmissionlist?.observe(this) { response ->
+        appViewModel?.getassignmentmysubmission?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyAssignment.visibility = View.VISIBLE
             } else {
@@ -73,7 +73,7 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
         binding.rcyAssignment.adapter = mAdapter
 
         if (!assignmentId.isNullOrEmpty() && !isAccessToken.isNullOrEmpty()) {
-            appViewModel?.getassignmentmysubmissionlist(isAccessToken!!, assignmentId!!)
+            appViewModel?.isGetAssignmentSubList(isAccessToken!!, assignmentId!!)
         } else {
             Log.d("Assignment Id", "Issue in API Call")
         }
