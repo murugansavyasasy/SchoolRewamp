@@ -1568,4 +1568,34 @@ object Constant {
 //            .show()
 //    }
 
+    fun showDatePickerNormal(
+        context: Context,
+        onDateSelected: (String) -> Unit
+    ) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePicker = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val pickedCalendar = Calendar.getInstance()
+                pickedCalendar.set(selectedYear, selectedMonth, selectedDay)
+
+                // Format date as dd-MM-yyyy
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(pickedCalendar.time)
+
+                // Return selected date
+                onDateSelected(formattedDate)
+            },
+            year,
+            month,
+            day
+        )
+
+        datePicker.show()
+    }
+
 }

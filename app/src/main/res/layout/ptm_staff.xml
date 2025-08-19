@@ -2,6 +2,129 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/cltDateSelection"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_sixty"
+        android:background="@drawable/bottom_right_left_radious">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:src="@drawable/arrow_left_white">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblMenuName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text="PTM"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twenty">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblSchoolName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblMenuName"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblDatePicking"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblSchoolName"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_toEndOf="@+id/imgBack"
+            android:background="@drawable/outline_whitecolor"
+            android:drawableRight="@drawable/arrow_down_white"
+            android:drawablePadding="@dimen/five"
+            android:padding="@dimen/ten"
+            android:text="All Slots"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_below="@+id/lblSchoolName"
+            android:layout_marginTop="@dimen/eight"
+            android:layout_toEndOf="@+id/imgBack"
+            android:background="@drawable/white_circle_bg"
+            android:src="@drawable/del_icon"
+            android:visibility="gone">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblSlotCount"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblDatePicking"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text="You have a 10 meeting's todat"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:src="@drawable/ic_search_white_color" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/lblUpComingMeeting"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cltDateSelection"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/ten"
+        android:text="UpComing Meeting"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp">
+
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcySlots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblUpComingMeeting"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
