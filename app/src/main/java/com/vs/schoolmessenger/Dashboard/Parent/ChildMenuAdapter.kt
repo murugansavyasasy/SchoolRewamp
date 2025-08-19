@@ -1,33 +1,27 @@
 package com.vs.schoolmessenger.Dashboard.Parent
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import java.util.Timer
-import java.util.TimerTask
 
 
 class ChildMenuAdapter(
     private var context: Context,
     private var listener: MenuClickListener,
     private var itemList: List<MenuDetail>?,
+    private var itemCountList: ArrayList<MenuCountDetail>?,
     private var isAdItem: List<AdItem>?,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -80,7 +74,7 @@ class ChildMenuAdapter(
             is DataViewHolder -> {
                 val actualPosition = if (showAd && position > 9) position - 1 else position
                 itemList?.getOrNull(actualPosition)?.let { menuDetail ->
-                    holder.bind(menuDetail, actualPosition, listener)
+                    holder.bind(menuDetail, actualPosition, listener,itemCountList)
                 }
             }
 
@@ -105,17 +99,22 @@ class ChildMenuAdapter(
         private val itemDescription: TextView = itemView.findViewById(R.id.itemDescription)
         private val itemTitle: TextView = itemView.findViewById(R.id.itemTitle)
         private val rlaMenu: CardView = itemView.findViewById(R.id.header)
+        private val imgReadCount: View = itemView.findViewById(R.id.imgReadCount)
 
-        fun bind(data: MenuDetail, position: Int, listener: MenuClickListener) {
+        fun bind(
+            data: MenuDetail,
+            position: Int,
+            listener: MenuClickListener,
+            itemCountList: ArrayList<MenuCountDetail>?
+        ) {
             itemTitle.text = data.name
-//
-//            imgReadCount.visibility=View.GONE
-//            if(data.unreadCount>=1){
-//                imgReadCount.visibility=View.VISIBLE
-//            }
-//            else{
-//                imgReadCount.visibility=View.GONE
-//            }
+
+            if (itemCountList!![position].unread_count != 0) {
+                imgReadCount.visibility = View.VISIBLE
+            } else {
+                imgReadCount.visibility = View.GONE
+            }
+
             when (data.id) {
                 Constant.M_COMMUNICATION -> {
                     imgMenu.setImageResource(R.drawable.communication_icon_dashboard)

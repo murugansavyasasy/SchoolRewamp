@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
-import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
@@ -23,6 +22,9 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
+import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.StaffSlotResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
@@ -30,9 +32,9 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
-import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
+import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,6 +66,11 @@ class ParentServices {
     var isSubmitAssignment: MutableLiveData<AssignmentSubmitResponse?>
     var isStudentStats: MutableLiveData<getStudentStats?>
     var getassignmentmysubmissionlist: MutableLiveData<MySubmittedAssignmentsResponse?>
+    var isSlotBookingStudent: MutableLiveData<StatusMessageModel?>
+    var isStaffSlotResponse: MutableLiveData<StaffSlotResponse?>
+    var isAvailableSlotsResponse: MutableLiveData<AvailableSlotsResponse?>
+    var isSlotCancelByStudent: MutableLiveData<StatusMessageModel?>
+    var isSlotDetailsHistory: MutableLiveData<SlotDetailsResponse?>
 
     init {
         client_auth = RestClient()
@@ -92,6 +99,11 @@ class ParentServices {
         isSubmitAssignment = MutableLiveData()
         isStudentStats = MutableLiveData()
         getassignmentmysubmissionlist = MutableLiveData()
+        isSlotBookingStudent = MutableLiveData()
+        isStaffSlotResponse = MutableLiveData()
+        isAvailableSlotsResponse = MutableLiveData()
+        isSlotCancelByStudent = MutableLiveData()
+        isSlotDetailsHistory = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -313,7 +325,7 @@ class ParentServices {
                 }
 
                 override fun onFailure(
-                    
+
                     call: Call<CertificatesTypesResponse?>,
                     t: Throwable
                 ) {
@@ -351,8 +363,7 @@ class ParentServices {
                                 isCertificateRequestList.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isCertificateRequestList.postValue(null)
                     }
                 }
@@ -397,8 +408,7 @@ class ParentServices {
                                 isSendCertificateRequest.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isSendCertificateRequest.postValue(null)
                     }
                 }
@@ -443,8 +453,7 @@ class ParentServices {
                                 isTimeTable.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isTimeTable.postValue(null)
                     }
                 }
@@ -461,8 +470,6 @@ class ParentServices {
 
     val isTimeTableListLiveData: LiveData<TimeTableResponse?>
         get() = isTimeTable
-
-
 
 
     fun getdetailsforchat(
@@ -549,7 +556,6 @@ class ParentServices {
         get() = getstudentdetailsforchat
 
 
-
     fun getstaffanswers(
         isToken: String,
         staff_id: String,
@@ -558,10 +564,12 @@ class ParentServices {
         is_class_teacher: Boolean,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.getstaffanswers(isToken,staff_id,
+        RestClient.apiInterfaces.getstaffanswers(
+            isToken, staff_id,
             subject_id,
             offset,
-            is_class_teacher,)
+            is_class_teacher,
+        )
             ?.enqueue(object : Callback<AnswerResponse?> {
                 override fun onResponse(
                     call: Call<AnswerResponse?>,
@@ -599,7 +607,6 @@ class ParentServices {
         get() = getstaffanswers
 
 
-
     fun sendquestion(
         isToken: String,
         request: QuestionModelRequest
@@ -629,7 +636,6 @@ class ParentServices {
         get() = sendquestion
 
 
-
     fun getexams(
         isToken: String
     ) {
@@ -654,8 +660,7 @@ class ParentServices {
                                 getexams.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getexams.postValue(null)
                     }
                 }
@@ -698,8 +703,7 @@ class ParentServices {
                                 getexamslist.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getexamslist.postValue(null)
                     }
                 }
@@ -722,7 +726,7 @@ class ParentServices {
         isToken: String,
         exam_id: String
     ) {
-        RestClient.apiInterfaces.getviewmarks(isToken,exam_id)
+        RestClient.apiInterfaces.getviewmarks(isToken, exam_id)
             ?.enqueue(object : Callback<ExamMarksResponse?> {
                 override fun onResponse(
                     call: Call<ExamMarksResponse?>,
@@ -743,8 +747,7 @@ class ParentServices {
                                 getviewmarks.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getviewmarks.postValue(null)
                     }
                 }
@@ -761,7 +764,6 @@ class ParentServices {
 
     val getviewmarksLiveData: LiveData<ExamMarksResponse?>
         get() = getviewmarks
-
 
 
     fun isleaverequestupdate(
@@ -809,7 +811,8 @@ class ParentServices {
         RestClient.apiInterfaces.isleaverequestdelete(isToken, request)
             ?.enqueue(object : Callback<LeaveRequestDeleteResponse?> {
                 override fun onResponse(
-                    call: Call<LeaveRequestDeleteResponse?>, response: Response<LeaveRequestDeleteResponse?>
+                    call: Call<LeaveRequestDeleteResponse?>,
+                    response: Response<LeaveRequestDeleteResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -842,12 +845,11 @@ class ParentServices {
         get() = isleaverequestdelete
 
 
-
     fun getProgressMarks(
         isToken: String,
         exam_id: String
     ) {
-        RestClient.apiInterfaces.getProgressMarks(isToken,exam_id)
+        RestClient.apiInterfaces.getProgressMarks(isToken, exam_id)
             ?.enqueue(object : Callback<ProgressCardResponse?> {
                 override fun onResponse(
                     call: Call<ProgressCardResponse?>,
@@ -868,8 +870,7 @@ class ParentServices {
                                 getProgressMarks.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getProgressMarks.postValue(null)
                     }
                 }
@@ -892,7 +893,7 @@ class ParentServices {
         isToken: String,
         jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isHomeWorkComplete(isToken,jsonObject)
+        RestClient.apiInterfaces.isHomeWorkComplete(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -913,7 +914,6 @@ class ParentServices {
 
     val isUpdateCompleteHomeWorkLiveData: LiveData<StatusMessageModel?>
         get() = isUpdateCompleteHomeWork
-
 
 
     fun getLeaveCategories(
@@ -937,8 +937,7 @@ class ParentServices {
                                 isLeaveCategories.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isLeaveCategories.postValue(null)
                     }
                 }
@@ -1000,12 +999,13 @@ class ParentServices {
         get() = isAssignmentlist
 
 
-
     fun isSubmitAssignment(
         isToken: String,
-        request: AssignmentModelRequest
+        jsonObject: JsonObject,
+        activity: Activity
     ) {
-        RestClient.apiInterfaces.isSubmitAssignment(isToken, request)
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.isSubmitAssignment(isToken, jsonObject)
             ?.enqueue(object : Callback<AssignmentSubmitResponse?> {
                 override fun onResponse(
                     call: Call<AssignmentSubmitResponse?>,
@@ -1051,8 +1051,7 @@ class ParentServices {
                                 isStudentStats.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isStudentStats.postValue(null)
                     }
                 }
@@ -1071,13 +1070,11 @@ class ParentServices {
         get() = isStudentStats
 
 
-
-
     fun getassignmentmysubmissionlist(
         isToken: String,
         id: String
     ) {
-        RestClient.apiInterfaces.getassignmentmysubmissionlist(isToken,id)
+        RestClient.apiInterfaces.getassignmentmysubmissionlist(isToken, id)
             ?.enqueue(object : Callback<MySubmittedAssignmentsResponse?> {
                 override fun onResponse(
                     call: Call<MySubmittedAssignmentsResponse?>,
@@ -1115,7 +1112,218 @@ class ParentServices {
         get() = getassignmentmysubmissionlist
 
 
+    fun isSlotBookingStudent(
+        isToken: String,
+        jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isBookingForStudent(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSlotBookingStudent.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSlotBookingStudent.postValue(response.body())
+                            }
+                        }
+                    }
+                }
 
+                override fun onFailure(
+                    call: Call<StatusMessageModel?>,
+                    t: Throwable
+                ) {
+                    isSlotBookingStudent.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSlotBookingStudentLiveData: LiveData<StatusMessageModel?>
+        get() = isSlotBookingStudent
+
+
+    fun isSlotAvailableForStudent(
+        isToken: String,
+        event_date: String,
+        subject_id: String,
+        class_teacher_id: String,
+    ) {
+        RestClient.apiInterfaces.isSlotsAvailabilityForStudent(
+            isToken,
+            event_date,
+            subject_id,
+            class_teacher_id
+        )
+            ?.enqueue(object : Callback<StaffSlotResponse?> {
+                override fun onResponse(
+                    call: Call<StaffSlotResponse?>,
+                    response: Response<StaffSlotResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isStaffSlotResponse.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isStaffSlotResponse.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StaffSlotResponse?>,
+                    t: Throwable
+                ) {
+                    isStaffSlotResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isStaffSlotResponseLiveData: LiveData<StaffSlotResponse?>
+        get() = isStaffSlotResponse
+
+    fun isAvailableSlotsCountForStudent(
+        isToken: String,
+    ) {
+        RestClient.apiInterfaces.isAvailableSlotsCountForStudent(isToken)
+            ?.enqueue(object : Callback<AvailableSlotsResponse?> {
+                override fun onResponse(
+                    call: Call<AvailableSlotsResponse?>,
+                    response: Response<AvailableSlotsResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isAvailableSlotsResponse.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isAvailableSlotsResponse.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<AvailableSlotsResponse?>,
+                    t: Throwable
+                ) {
+                    isAvailableSlotsResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isAvailableSlotsResponseLiveData: LiveData<AvailableSlotsResponse?>
+        get() = isAvailableSlotsResponse
+
+
+    fun isASlotCancelByStudent(
+        isToken: String,
+        jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isCancelByStudent(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSlotCancelByStudent.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSlotCancelByStudent.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StatusMessageModel?>,
+                    t: Throwable
+                ) {
+                    isSlotCancelByStudent.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSlotCancelByStudentLiveData: LiveData<StatusMessageModel?>
+        get() = isSlotCancelByStudent
+
+
+    fun isSlotHistoryForStudent(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isSlotHistoryForStudent(isToken)
+            ?.enqueue(object : Callback<SlotDetailsResponse?> {
+                override fun onResponse(
+                    call: Call<SlotDetailsResponse?>,
+                    response: Response<SlotDetailsResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSlotDetailsHistory.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSlotDetailsHistory.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SlotDetailsResponse?>,
+                    t: Throwable
+                ) {
+                    isSlotDetailsHistory.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSlotDetailsHistoryLiveData: LiveData<SlotDetailsResponse?>
+        get() = isSlotDetailsHistory
 
 
 }

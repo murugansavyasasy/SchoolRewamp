@@ -74,14 +74,23 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         isGetSchoolStrength()
 
         appViewModel?.isGetSchoolStrengthReport?.observe(this) { response ->
-            if (response != null && response.status) {
-                isFirstLoad = true
-                binding.nomessage.visibility = View.GONE
-                binding.txtNoData.visibility = View.GONE
-                binding.rlaPieChartCount.visibility = View.VISIBLE
-                binding.rlaabsenteesreport2.visibility = View.VISIBLE
-                //isLoadSchoolStrengthData(response.data)
-                setupPieChart(response.data)
+            if (response != null) {
+                if (response.status) {
+                    isFirstLoad = true
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    binding.rlaPieChartCount.visibility = View.VISIBLE
+                    binding.rlaabsenteesreport2.visibility = View.VISIBLE
+                    //isLoadSchoolStrengthData(response.data)
+                    setupPieChart(response.data)
+                }
+                else{
+                    binding.txtNoData.text=response.message
+                    binding.nomessage.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.rlaPieChartCount.visibility = View.GONE
+                    binding.rlaabsenteesreport2.visibility = View.GONE
+                }
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE

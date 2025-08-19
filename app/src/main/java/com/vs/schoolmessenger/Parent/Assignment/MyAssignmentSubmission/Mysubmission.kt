@@ -14,7 +14,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MysubmissionAssignmentBinding
 
-class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentClickListener,
+class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentClickListener,
     View.OnClickListener {
 
     override fun getViewBinding(): MysubmissionAssignmentBinding {
@@ -50,7 +50,7 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentCli
 
         binding.rcyAssignment.layoutManager = LinearLayoutManager(this)
 
-        appViewModel?.getassignmentmysubmissionlist?.observe(this) { response ->
+        appViewModel?.getassignmentmysubmission?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyAssignment.visibility = View.VISIBLE
             } else {
@@ -74,9 +74,9 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentCli
         binding.rcyAssignment.adapter = mAdapter
 
         if (!assignmentId.isNullOrEmpty() && !isAccessToken.isNullOrEmpty()) {
-            appViewModel?.getassignmentmysubmissionlist(isAccessToken!!, assignmentId!!)
+            appViewModel?.isGetAssignmentSubList(isAccessToken!!, assignmentId!!)
         } else {
-           Log.d("Assignment Id","Issue in API Call")
+            Log.d("Assignment Id", "Issue in API Call")
         }
 
     }
@@ -88,7 +88,6 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(),AssignmentCli
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
     }
-
 
 
     override fun onClick(v: View?) {

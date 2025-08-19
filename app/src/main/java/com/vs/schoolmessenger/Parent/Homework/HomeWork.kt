@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHome
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import android.content.Context
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -222,6 +223,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         val intent = Intent(this@HomeWork, ChildHomeWork::class.java)
         intent.putExtra("isPreViewData", isHomeWorkData)
         intent.putExtra("isHomeWorkDate", isHomeWorkDate)
+        Log.d("samekkeaaaaa",isHomeWorkDate)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }

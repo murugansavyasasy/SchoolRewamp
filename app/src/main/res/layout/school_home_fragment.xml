@@ -105,12 +105,12 @@
         android:id="@+id/gridRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/fifteen"
-        android:paddingBottom="@dimen/ten"
-        android:clipToPadding="false"
-        android:layout_marginEnd="@dimen/five"
-        android:layout_marginStart="@dimen/five"
         android:layout_below="@id/dotsIndicator"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="@dimen/five"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/ten"
         tools:listitem="@layout/dashboard_app_item" />
 </RelativeLayout>
 

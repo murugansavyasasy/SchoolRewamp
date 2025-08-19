@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
@@ -54,6 +55,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -69,6 +71,9 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationR
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -81,6 +86,7 @@ class SchoolServices {
 
     var client_auth: RestClient
     var isDashBoard: MutableLiveData<DashboardResponse?>
+    var isDashBoardCount: MutableLiveData<DashboardCountResponse?>
     var isGetAds: MutableLiveData<AdsResponse?>
     var isGetGlobalVariables: MutableLiveData<GlobalVariableResponse?>
     var isGetStaffList: MutableLiveData<NameAndIdsResponse?>
@@ -164,11 +170,20 @@ class SchoolServices {
     var isEventDelete: MutableLiveData<EventDeleteResponse?>
     var isAttachmentResponse: MutableLiveData<AttachmentReportResponse?>
     var getassignmentlist: MutableLiveData<SubmissionResponse?>
+    var islsrwskillsreport: MutableLiveData<lsrwskillresponse?>
+    var isPtmSlotCreate: MutableLiveData<StatusMessageModel?>
+    var isPtmSlotResponse: MutableLiveData<SlotResponse?>
+    var isPtmSlotCancelReOpen: MutableLiveData<StatusMessageModel?>
+    var isPtmSlotCancelClose: MutableLiveData<StatusMessageModel?>
+    var isDateWiseSlot: MutableLiveData<SlotBookingResponse?>
+    var isSlotValidation: MutableLiveData<SlotValidationResponse?>
+
 
 
     init {
         client_auth = RestClient()
         isDashBoard = MutableLiveData()
+        isDashBoardCount = MutableLiveData()
         isGetAds = MutableLiveData()
         isGetGlobalVariables = MutableLiveData()
         isGetStaffList = MutableLiveData()
@@ -244,6 +259,14 @@ class SchoolServices {
         isNoticeBoardStaffReport = MutableLiveData()
         isAttachmentResponse = MutableLiveData()
         getassignmentlist = MutableLiveData()
+        islsrwskillsreport = MutableLiveData()
+
+        isPtmSlotCreate = MutableLiveData()
+        isPtmSlotResponse = MutableLiveData()
+        isPtmSlotCancelReOpen = MutableLiveData()
+        isPtmSlotCancelClose = MutableLiveData()
+        isDateWiseSlot = MutableLiveData()
+        isSlotValidation = MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -316,6 +339,42 @@ class SchoolServices {
 
     val isDashBoardLiveData: LiveData<DashboardResponse?>
         get() = isDashBoard
+
+
+
+    fun isDashBoardCount(isToken: String, isMemberType: String, activity: Activity) {
+        RestClient.apiInterfaces.isDashBoardCount(isToken, isMemberType)
+            ?.enqueue(object : Callback<DashboardCountResponse?> {
+                override fun onResponse(
+                    call: Call<DashboardCountResponse?>, response: Response<DashboardCountResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isDashBoardCount.postValue(response.body())
+                            } else {
+                                isDashBoardCount.postValue(response.body())
+                            }
+                        }
+                    } else {
+
+
+                    }
+                }
+
+                override fun onFailure(call: Call<DashboardCountResponse?>, t: Throwable) {
+                    isDashBoardCount.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isDashBoardCountLiveData: LiveData<DashboardCountResponse?>
+        get() = isDashBoardCount
 
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {
@@ -729,8 +788,7 @@ class SchoolServices {
         RestClient.apiInterfaces.isGetAssignmentReport(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<AssignmentResponse?> {
                 override fun onResponse(
-                    call: Call<AssignmentResponse?>,
-                    response: Response<AssignmentResponse?>
+                    call: Call<AssignmentResponse?>, response: Response<AssignmentResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -765,8 +823,7 @@ class SchoolServices {
         RestClient.apiInterfaces.isEventCategories(isToken)
             ?.enqueue(object : Callback<EventCategoryResponse?> {
                 override fun onResponse(
-                    call: Call<EventCategoryResponse?>,
-                    response: Response<EventCategoryResponse?>
+                    call: Call<EventCategoryResponse?>, response: Response<EventCategoryResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -801,8 +858,7 @@ class SchoolServices {
         RestClient.apiInterfaces.isAssignmentDelete(isToken, jsonObject)
             ?.enqueue(object : Callback<LPDeleteResponse?> {
                 override fun onResponse(
-                    call: Call<LPDeleteResponse?>,
-                    response: Response<LPDeleteResponse?>
+                    call: Call<LPDeleteResponse?>, response: Response<LPDeleteResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -832,14 +888,13 @@ class SchoolServices {
         get() = isAssignmentDelete
 
     fun isEditHomeWork(
-        isToken: String, jsonObject: JsonObject,activity: Activity
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
         RestClient.apiInterfaces.isHomeWorkUpdate(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -869,14 +924,13 @@ class SchoolServices {
         get() = isUpdateHomeWork
 
     fun isEditEvent(
-        isToken: String, jsonObject: JsonObject,activity: Activity
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
         RestClient.apiInterfaces.isEventUpdate(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -907,14 +961,13 @@ class SchoolServices {
 
 
     fun isEditAttachment(
-        isToken: String, jsonObject: JsonObject,activity: Activity
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
         RestClient.apiInterfaces.isAttachmentUpdate(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -945,14 +998,13 @@ class SchoolServices {
 
 
     fun isEditNoticeBoard(
-        isToken: String, jsonObject: JsonObject,activity: Activity
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
         RestClient.apiInterfaces.isNoticeBoardUpdate(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -983,14 +1035,13 @@ class SchoolServices {
 
 
     fun isHomeWorkDelete(
-        isToken: String, jsonObject: JsonObject,activity: Activity
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
         RestClient.apiInterfaces.isHomeWorkDelete(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -1020,14 +1071,13 @@ class SchoolServices {
         get() = isDeleteHomeWork
 
     fun isAttachmentDelete(
-        isToken: String, jsonObject: JsonObject,activity: Activity
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
         RestClient.apiInterfaces.isAttachmentDelete(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -1057,15 +1107,13 @@ class SchoolServices {
         get() = isDeleteAttachment
 
 
-
     fun isNoticeBoardReport(
         isToken: String, activity: Activity
     ) {
         RestClient.apiInterfaces.isNoticeBoardReport(isToken)
             ?.enqueue(object : Callback<NoticeBoardResponse?> {
                 override fun onResponse(
-                    call: Call<NoticeBoardResponse?>,
-                    response: Response<NoticeBoardResponse?>
+                    call: Call<NoticeBoardResponse?>, response: Response<NoticeBoardResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -1138,8 +1186,7 @@ class SchoolServices {
         RestClient.apiInterfaces.IsGetEventReport(isToken)
             ?.enqueue(object : Callback<EventResponse?> {
                 override fun onResponse(
-                    call: Call<EventResponse?>,
-                    response: Response<EventResponse?>
+                    call: Call<EventResponse?>, response: Response<EventResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -1169,15 +1216,13 @@ class SchoolServices {
         get() = IsGetEventReport
 
 
-
- fun IsGetEventSchoolReport(
+    fun IsGetEventSchoolReport(
         isToken: String, activity: Activity
     ) {
         RestClient.apiInterfaces.IsGetEventSchoolReport(isToken)
             ?.enqueue(object : Callback<SchoolEventResponse?> {
                 override fun onResponse(
-                    call: Call<SchoolEventResponse?>,
-                    response: Response<SchoolEventResponse?>
+                    call: Call<SchoolEventResponse?>, response: Response<SchoolEventResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -1212,8 +1257,7 @@ class SchoolServices {
         RestClient.apiInterfaces.IsGetHolidayReport(isToken)
             ?.enqueue(object : Callback<HolidayResponse?> {
                 override fun onResponse(
-                    call: Call<HolidayResponse?>,
-                    response: Response<HolidayResponse?>
+                    call: Call<HolidayResponse?>, response: Response<HolidayResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -2030,8 +2074,7 @@ class SchoolServices {
         RestClient.apiInterfaces.getStudentReport(isToken, isAcademicYearId, class_id, section_id)
             ?.enqueue(object : Callback<GetStudentReportData?> {
                 override fun onResponse(
-                    call: Call<GetStudentReportData?>,
-                    response: Response<GetStudentReportData?>
+                    call: Call<GetStudentReportData?>, response: Response<GetStudentReportData?>
                 ) {
                     Log.d(
                         "GetStudentReport Response",
@@ -2054,8 +2097,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(
-                    call: Call<GetStudentReportData?>,
-                    t: Throwable
+                    call: Call<GetStudentReportData?>, t: Throwable
                 ) {
                     isStudentReportList.postValue(null)
                     t.printStackTrace()
@@ -2069,14 +2111,12 @@ class SchoolServices {
 
 
     fun getabsenteescountbydate(
-        isToken: String,
-        activity: Activity
+        isToken: String, activity: Activity
     ) {
         RestClient.apiInterfaces.getabsenteescountbydate(isToken)
             ?.enqueue(object : Callback<AbsenteesResponse?> {
                 override fun onResponse(
-                    call: Call<AbsenteesResponse?>,
-                    response: Response<AbsenteesResponse?>
+                    call: Call<AbsenteesResponse?>, response: Response<AbsenteesResponse?>
                 ) {
                     Log.d(
                         "GetStudentReport Response",
@@ -2099,8 +2139,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(
-                    call: Call<AbsenteesResponse?>,
-                    t: Throwable
+                    call: Call<AbsenteesResponse?>, t: Throwable
                 ) {
                     getabsenteescountbydate.postValue(null)
                     t.printStackTrace()
@@ -2114,10 +2153,7 @@ class SchoolServices {
 
 
     fun getabsenteesstudentbydate(
-        isToken: String,
-        absent_on: String? = null,
-        section_id: String? = null,
-        activity: Activity
+        isToken: String, absent_on: String? = null, section_id: String? = null, activity: Activity
 
     ) {
         RestClient.apiInterfaces.getabsenteesstudentbydate(isToken, absent_on, section_id)
@@ -2147,8 +2183,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(
-                    call: Call<AbsenteeStudentsResponse?>,
-                    t: Throwable
+                    call: Call<AbsenteeStudentsResponse?>, t: Throwable
                 ) {
                     getabsenteesstudentbydate.postValue(null)
                     t.printStackTrace()
@@ -2205,43 +2240,37 @@ class SchoolServices {
         activity: Activity
     ) {
         RestClient.apiInterfaces.isGetStudentAttendanceReportForSchool(
-            isToken,
-            section_id,
-            from_date,
-            to_date,
-            class_id
-        )
-            ?.enqueue(object : Callback<StudentAttendanceReportDataResponse?> {
-                override fun onResponse(
-                    call: Call<StudentAttendanceReportDataResponse?>,
-                    response: Response<StudentAttendanceReportDataResponse?>
-                ) {
-                    Log.d(
-                        "GetStudentAttendanceReport Response",
-                        response.code().toString() + " - " + response.toString()
-                    )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetStudentAttendanceReportData", response.body().toString())
-                                isStudentAttendanceReportForSchool.postValue(response.body())
-                            } else {
-                                Log.d("GetStudentAttendanceReportData", response.body().toString())
-                                isStudentAttendanceReportForSchool.postValue(response.body())
-                            }
+            isToken, section_id, from_date, to_date, class_id
+        )?.enqueue(object : Callback<StudentAttendanceReportDataResponse?> {
+            override fun onResponse(
+                call: Call<StudentAttendanceReportDataResponse?>,
+                response: Response<StudentAttendanceReportDataResponse?>
+            ) {
+                Log.d(
+                    "GetStudentAttendanceReport Response",
+                    response.code().toString() + " - " + response.toString()
+                )
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        val status = response.body()!!.status
+                        if (status) {
+                            Log.d("GetStudentAttendanceReportData", response.body().toString())
+                            isStudentAttendanceReportForSchool.postValue(response.body())
+                        } else {
+                            Log.d("GetStudentAttendanceReportData", response.body().toString())
+                            isStudentAttendanceReportForSchool.postValue(response.body())
                         }
                     }
                 }
+            }
 
-                override fun onFailure(
-                    call: Call<StudentAttendanceReportDataResponse?>,
-                    t: Throwable
-                ) {
-                    isStudentAttendanceReportForSchool.postValue(null)
-                    t.printStackTrace()
-                }
-            })
+            override fun onFailure(
+                call: Call<StudentAttendanceReportDataResponse?>, t: Throwable
+            ) {
+                isStudentAttendanceReportForSchool.postValue(null)
+                t.printStackTrace()
+            }
+        })
     }
 
 
@@ -2547,8 +2576,7 @@ class SchoolServices {
         RestClient.apiInterfaces.islessonplandelete(isToken, requestBody)
             ?.enqueue(object : Callback<LPDeleteResponse?> {
                 override fun onResponse(
-                    call: Call<LPDeleteResponse?>,
-                    response: Response<LPDeleteResponse?>
+                    call: Call<LPDeleteResponse?>, response: Response<LPDeleteResponse?>
                 ) {
                     Log.d("isGetCountryList", "${response.code()} - $response")
                     if (response.code() == 200 && response.body() != null) {
@@ -2608,9 +2636,7 @@ class SchoolServices {
 
 
     fun getCouponsSummary(
-        mobile_no: String,
-        parentName: String,
-        apiKey: String
+        mobile_no: String, parentName: String, apiKey: String
     ) {
         val request = CouponSummaryRequest(
             mobile_no = mobile_no
@@ -2649,14 +2675,10 @@ class SchoolServices {
         get() = getCouponsSummary
 
     fun getCouponsCategorySummary(
-        category_id: String,
-        mobile_no: String,
-        parentName: String,
-        apiKey: String
+        category_id: String, mobile_no: String, parentName: String, apiKey: String
     ) {
         val request = CategorySummaryRequest(
-            category_id = category_id,
-            mobile_no = mobile_no
+            category_id = category_id, mobile_no = mobile_no
         )
         RestClient.couponApiInterfaces.getCouponsCategorySummary(parentName, apiKey, request)
             ?.enqueue(object : Callback<CampaignResponse?> {
@@ -2683,14 +2705,10 @@ class SchoolServices {
 
 
     fun getmycouponsSummary(
-        coupon_status: String,
-        mobile_no: String,
-        parentName: String,
-        apiKey: String
+        coupon_status: String, mobile_no: String, parentName: String, apiKey: String
     ) {
         val request = MyCouponSummaryRequest(
-            coupon_status = coupon_status,
-            mobile_no = mobile_no
+            coupon_status = coupon_status, mobile_no = mobile_no
         )
         RestClient.couponApiInterfaces.getmycoupons(parentName, apiKey, request)
             ?.enqueue(object : Callback<TicketSummaryResponse?> {
@@ -2717,14 +2735,10 @@ class SchoolServices {
 
 
     fun getCouponDetails(
-        source_link: String,
-        mobile_no: String,
-        parentName: String,
-        apiKey: String
+        source_link: String, mobile_no: String, parentName: String, apiKey: String
     ) {
         val request = CouponDetailsRequest(
-            source_link = source_link,
-            mobile_no = mobile_no
+            source_link = source_link, mobile_no = mobile_no
         )
         RestClient.couponApiInterfaces.getCouponDetails(parentName, apiKey, request)
             ?.enqueue(object : Callback<ActivateCouponSummaryResponse?> {
@@ -2752,14 +2766,10 @@ class SchoolServices {
 
 
     fun sendactivatecoupon(
-        source_link: String,
-        mobile_no: String,
-        parentName: String,
-        apiKey: String
+        source_link: String, mobile_no: String, parentName: String, apiKey: String
     ) {
         val request = ActivateCouponRequest(
-            source_link = source_link,
-            mobile_no = mobile_no
+            source_link = source_link, mobile_no = mobile_no
         )
         RestClient.couponApiInterfaces.sendactivatecoupon(parentName, apiKey, request)
             ?.enqueue(object : Callback<ActivateCouponResponse?> {
@@ -2785,7 +2795,6 @@ class SchoolServices {
         get() = sendactivatecoupon
 
 
-
     fun getstaffquestions(
         isToken: String,
         is_class_teacher: Boolean,
@@ -2793,57 +2802,53 @@ class SchoolServices {
         subject_id: String,
         offset: Int
     ) {
-        RestClient.apiInterfaces.getstaffquestions(isToken,is_class_teacher,
+        RestClient.apiInterfaces.getstaffquestions(
+            isToken, is_class_teacher,
             section_id,
             subject_id,
-            offset,)
-            ?.enqueue(object : Callback<QuestionResponse?> {
-                override fun onResponse(
-                    call: Call<QuestionResponse?>,
-                    response: Response<QuestionResponse?>
-                ) {
-                    Log.d(
-                        "GetChildAttendanceReportData Response",
-                        response.code().toString() + " - " + response.toString()
-                    )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getstaffquestions.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getstaffquestions.postValue(response.body())
-                            }
+            offset,
+        )?.enqueue(object : Callback<QuestionResponse?> {
+            override fun onResponse(
+                call: Call<QuestionResponse?>, response: Response<QuestionResponse?>
+            ) {
+                Log.d(
+                    "GetChildAttendanceReportData Response",
+                    response.code().toString() + " - " + response.toString()
+                )
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        val status = response.body()!!.status
+                        if (status) {
+                            Log.d("GetChildAttendanceReportData", response.body().toString())
+                            getstaffquestions.postValue(response.body())
+                        } else {
+                            Log.d("GetChildAttendanceReportData", response.body().toString())
+                            getstaffquestions.postValue(response.body())
                         }
                     }
                 }
+            }
 
-                override fun onFailure(
-                    call: Call<QuestionResponse?>,
-                    t: Throwable
-                ) {
-                    getstaffquestions.postValue(null)
-                    t.printStackTrace()
-                }
-            })
+            override fun onFailure(
+                call: Call<QuestionResponse?>, t: Throwable
+            ) {
+                getstaffquestions.postValue(null)
+                t.printStackTrace()
+            }
+        })
     }
 
     val getstaffquestionsLiveData: LiveData<QuestionResponse?>
         get() = getstaffquestions
 
 
-
     fun sendanswer(
-        isToken: String,
-        request: AnswerModelRequest
+        isToken: String, request: AnswerModelRequest
     ) {
         RestClient.apiInterfaces.sendanswer(isToken, request)
             ?.enqueue(object : Callback<AnswerModelResponse?> {
                 override fun onResponse(
-                    call: Call<AnswerModelResponse?>,
-                    response: Response<AnswerModelResponse?>
+                    call: Call<AnswerModelResponse?>, response: Response<AnswerModelResponse?>
                 ) {
                     if (response.code() == 200 && response.body() != null) {
                         sendanswer.postValue(response.body())
@@ -2864,14 +2869,14 @@ class SchoolServices {
         get() = sendanswer
 
 
-
     fun isnoticeboarddelete(
         isToken: String, request: JsonObject, activity: Activity
     ) {
         RestClient.apiInterfaces.isnoticeboarddelete(isToken, request)
             ?.enqueue(object : Callback<NoticeBoardDeleteResponse?> {
                 override fun onResponse(
-                    call: Call<NoticeBoardDeleteResponse?>, response: Response<NoticeBoardDeleteResponse?>
+                    call: Call<NoticeBoardDeleteResponse?>,
+                    response: Response<NoticeBoardDeleteResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -2891,8 +2896,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(
-                    call: Call<NoticeBoardDeleteResponse?>,
-                    t: Throwable
+                    call: Call<NoticeBoardDeleteResponse?>, t: Throwable
                 ) {
                     isnoticeboarddelete.postValue(null)
                     t.printStackTrace()
@@ -2930,8 +2934,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(
-                    call: Call<EventDeleteResponse?>,
-                    t: Throwable
+                    call: Call<EventDeleteResponse?>, t: Throwable
                 ) {
                     isEventDelete.postValue(null)
                     t.printStackTrace()
@@ -2943,8 +2946,7 @@ class SchoolServices {
         get() = isEventDelete
 
     fun getAttachmentReportList(
-        isToken: String,
-        activity: Activity
+        isToken: String, activity: Activity
     ) {
         RestClient.apiInterfaces.attachmentReportList(isToken)
             ?.enqueue(object : Callback<AttachmentReportResponse?> {
@@ -2971,8 +2973,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(
-                    call: Call<AttachmentReportResponse?>,
-                    t: Throwable
+                    call: Call<AttachmentReportResponse?>, t: Throwable
                 ) {
                     isAttachmentResponse.postValue(null)
                     t.printStackTrace()
@@ -2984,18 +2985,13 @@ class SchoolServices {
         get() = isAttachmentResponse
 
 
-
-
     fun getassignmentlist(
-        isToken: String,
-        id: String,
-        type: String
+        isToken: String, id: String, type: String
     ) {
-        RestClient.apiInterfaces.getassignmentlist(isToken,id,type)
+        RestClient.apiInterfaces.getassignmentlist(isToken, id, type)
             ?.enqueue(object : Callback<SubmissionResponse?> {
                 override fun onResponse(
-                    call: Call<SubmissionResponse?>,
-                    response: Response<SubmissionResponse?>
+                    call: Call<SubmissionResponse?>, response: Response<SubmissionResponse?>
                 ) {
                     Log.d(
                         "GetChildAttendanceReportData Response",
@@ -3016,8 +3012,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(
-                    call: Call<SubmissionResponse?>,
-                    t: Throwable
+                    call: Call<SubmissionResponse?>, t: Throwable
                 ) {
                     getassignmentlist.postValue(null)
                     t.printStackTrace()
@@ -3027,6 +3022,282 @@ class SchoolServices {
 
     val getassignmentlistLiveData: LiveData<SubmissionResponse?>
         get() = getassignmentlist
+
+    fun isPtmSlotCreating(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isCreateSlots(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isPtmSlotCreate.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isPtmSlotCreate.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StatusMessageModel?>, t: Throwable
+                ) {
+                    isPtmSlotCreate.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isPtmSlotCreateLiveData: LiveData<StatusMessageModel?>
+        get() = isPtmSlotCreate
+
+
+    fun isPtmSlotForStaff(
+        isToken: String, isEventDate: String
+    ) {
+        RestClient.apiInterfaces.isSlotDetailsForStaff(isToken, isEventDate)
+            ?.enqueue(object : Callback<SlotResponse?> {
+                override fun onResponse(
+                    call: Call<SlotResponse?>, response: Response<SlotResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isPtmSlotResponse.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isPtmSlotResponse.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SlotResponse?>, t: Throwable
+                ) {
+                    isPtmSlotResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isPtmSlotResponseLiveData: LiveData<SlotResponse?>
+        get() = isPtmSlotResponse
+
+
+    fun isSlotCancelReOpen(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isSlotCancelAndReOpen(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isPtmSlotCancelReOpen.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isPtmSlotCancelReOpen.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StatusMessageModel?>, t: Throwable
+                ) {
+                    isPtmSlotCancelReOpen.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isPtmSlotCancelReOpenLiveData: LiveData<StatusMessageModel?>
+        get() = isPtmSlotCancelReOpen
+
+
+    fun isSlotCancelAndClose(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isSlotCancelAndClose(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isPtmSlotCancelClose.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isPtmSlotCancelClose.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StatusMessageModel?>, t: Throwable
+                ) {
+                    isPtmSlotCancelClose.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isPtmSlotCancelCloseLiveData: LiveData<StatusMessageModel?>
+        get() = isPtmSlotCancelClose
+
+
+    fun isDatewiseBookedSlots(
+        isToken: String, iseventDate: String
+    ) {
+        RestClient.apiInterfaces.isDatewiseBookedSlots(isToken, iseventDate)
+            ?.enqueue(object : Callback<SlotBookingResponse?> {
+                override fun onResponse(
+                    call: Call<SlotBookingResponse?>, response: Response<SlotBookingResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isDateWiseSlot.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isDateWiseSlot.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SlotBookingResponse?>, t: Throwable
+                ) {
+                    isDateWiseSlot.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isDateWiseSlotLiveData: LiveData<SlotBookingResponse?>
+        get() = isDateWiseSlot
+
+
+    fun isSlotValidationForStaff(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isSlotValidationForStaff(isToken, jsonObject)
+            ?.enqueue(object : Callback<SlotValidationResponse?> {
+                override fun onResponse(
+                    call: Call<SlotValidationResponse?>, response: Response<SlotValidationResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSlotValidation.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSlotValidation.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SlotValidationResponse?>, t: Throwable
+                ) {
+                    isSlotValidation.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSlotValidationLiveData: LiveData<SlotValidationResponse?>
+        get() = isSlotValidation
+
+
+
+
+    fun islsrwskillsreport(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.islsrwskillsreport(isToken)
+            ?.enqueue(object : Callback<lsrwskillresponse?> {
+                override fun onResponse(
+                    call: Call<lsrwskillresponse?>,
+                    response: Response<lsrwskillresponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwskillsreport.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwskillsreport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<lsrwskillresponse?>,
+                    t: Throwable
+                ) {
+                    islsrwskillsreport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val islsrwskillsreportLiveData: LiveData<lsrwskillresponse?>
+        get() = islsrwskillsreport
 
 
 }
