@@ -49,6 +49,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
@@ -167,6 +168,8 @@ class SchoolServices {
     var getassignmentlist: MutableLiveData<SubmissionResponse?>
     var islsrwskillsreport: MutableLiveData<lsrwskillresponse?>
     var islsrwStudentlist: MutableLiveData<StudentSubmissionLsrwResponse?>
+    var islsrwSkillCreate: MutableLiveData<LsrwSkillSendResponse?>
+
     var isPtmSlotCreate: MutableLiveData<StatusMessageModel?>
     var isPtmSlotResponse: MutableLiveData<SlotResponse?>
     var isPtmSlotCancelReOpen: MutableLiveData<StatusMessageModel?>
@@ -256,6 +259,7 @@ class SchoolServices {
         getassignmentlist = MutableLiveData()
         islsrwskillsreport = MutableLiveData()
         islsrwStudentlist = MutableLiveData()
+        islsrwSkillCreate = MutableLiveData()
 
         isPtmSlotCreate = MutableLiveData()
         isPtmSlotResponse = MutableLiveData()
@@ -3340,6 +3344,37 @@ class SchoolServices {
 
     val islsrwStudentlistLiveData: LiveData<StudentSubmissionLsrwResponse?>
         get() = islsrwStudentlist
+
+
+
+
+
+    fun islsrwSkillCreate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.islsrwSkillCreate(isToken, jsonObject)
+            ?.enqueue(object : Callback<LsrwSkillSendResponse?> {
+                override fun onResponse(
+                    call: Call<LsrwSkillSendResponse?>, response: Response<LsrwSkillSendResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        islsrwSkillCreate.postValue(response.body())
+                    } else {
+                        islsrwSkillCreate.postValue(response.body())
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<LsrwSkillSendResponse?>, t: Throwable) {
+                    islsrwSkillCreate.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val islsrwSkillCreateLiveData: LiveData<LsrwSkillSendResponse?>
+        get() = islsrwSkillCreate
 
 
 }

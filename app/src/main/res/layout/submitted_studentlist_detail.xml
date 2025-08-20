@@ -208,6 +208,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/right_arrow"
+            android:visibility="gone"
             android:contentDescription="arrow" />
 
     </RelativeLayout>

@@ -248,6 +248,7 @@ object Constant {
     var notice_data = "notice_data"
     var event_data = "event_data"
     var assignment_data = "assignment_data"
+    var lsrwskill_data = "lsrwskill_data"
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var isTitle = "isTitle"

@@ -1,78 +1,65 @@
 package com.vs.schoolmessenger.Parent.LSRW
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
+import com.vs.schoolmessenger.Parent.LSRW.Model.SkillData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.LSRW.LsrwAdapter
+import com.vs.schoolmessenger.School.LSRW.Model.lsrwskilldata
+import com.vs.schoolmessenger.Utils.Constant
 
 class LSRWAdapter(
-    private var itemList: List<LSRWData>?,
-    private var listener: LSRWClickListener,
-    private var context: Context,
-    private var isLoading: Boolean
+    private var itemList: List<SkillData>,
+    private val context: Context
+) : RecyclerView.Adapter<LSRWAdapter.HeaderViewHolder>() {
 
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val TYPE_SHIMMER = 0
-    private val TYPE_DATA = 1
-    private var selectedPosition = RecyclerView.NO_POSITION
-
-
-    override fun getItemViewType(position: Int): Int {
-        return if (isLoading) TYPE_SHIMMER else TYPE_DATA
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.recyclerview_parent_lsrw, parent, false)
+        return HeaderViewHolder(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            DataViewHolder.ShimmerViewHolder(view)
-        } else {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.recyclerview_lsrw, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
-        }
+    override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
+        val item = itemList[position]
+        holder.bind(item)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
-        }
+    override fun getItemCount(): Int = itemList.size
+
+    fun updateList(newList: List<SkillData>) {
+        itemList = newList
+        notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else itemList?.size ?: 0
-    }
+    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        private val txtTitle: TextView = itemView.findViewById(R.id.txtTitle)
+        private val txtSubtitle: TextView = itemView.findViewById(R.id.txtSubtitle)
+        private val txtMainDesc: TextView = itemView.findViewById(R.id.txtMainDesc)
+        private val txtSubDesc: TextView = itemView.findViewById(R.id.txtSubDesc)
+        private val txtProfile: TextView = itemView.findViewById(R.id.txtProfile)
 
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
-        private val title: TextView = itemView.findViewById(R.id.title)
-        private val description: TextView = itemView.findViewById(R.id.description)
-
-
-        fun bind(
-            data: LSRWData,
-            position: Int,
-            listener: LSRWClickListener,
-            adapter: LSRWAdapter
-        ) {
-            title.text = data.lsrw_headervalues
-            description.text = data.lsrw_description
-        }
-
-        class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val shimmerLayout: ShimmerFrameLayout =
-                itemView.findViewById(R.id.shimmer_view_container)
-
-            init {
-                shimmerLayout.startShimmer() // Start shimmer effect
-            }
+        fun bind(item: SkillData) {
+            txtTitle.text = item.title ?: "-"
+            txtSubtitle.text = item.activity_type ?: "-"
+            txtMainDesc.text = item.subject ?: "-"
+            txtSubDesc.text = item.description ?: "-"
+            txtProfile.text = item.sent_by ?: "-"
         }
     }
 }
+

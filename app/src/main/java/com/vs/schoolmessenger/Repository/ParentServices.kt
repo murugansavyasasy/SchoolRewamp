@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
+import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.StaffSlotResponse
@@ -38,6 +39,7 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateR
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
+import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
 import retrofit2.Callback
@@ -79,6 +81,7 @@ class ParentServices {
     var isGetQuestions: MutableLiveData<GetQuizQuestions?>
     var isSubmitQuiz: MutableLiveData<SubmitQuizResponse?>
     var isGetMySubmission: MutableLiveData<GetMySubmission?>
+    var islsrwSkilllist: MutableLiveData<LsrwSkillResponse?>
 
     init {
         client_auth = RestClient()
@@ -116,6 +119,7 @@ class ParentServices {
         isGetQuestions = MutableLiveData()
         isSubmitQuiz = MutableLiveData()
         isGetMySubmission = MutableLiveData()
+        islsrwSkilllist = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1509,6 +1513,49 @@ class ParentServices {
 
     val isMySubmissionLiveData: LiveData<GetMySubmission?>
         get() = isGetMySubmission
+
+
+
+    fun islsrwSkilllist(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.islsrwSkilllist(isToken)
+            ?.enqueue(object : Callback<LsrwSkillResponse?> {
+                override fun onResponse(
+                    call: Call<LsrwSkillResponse?>,
+                    response: Response<LsrwSkillResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwSkilllist.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwSkilllist.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<LsrwSkillResponse?>,
+                    t: Throwable
+                ) {
+                    islsrwSkilllist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val islsrwSkilllistLiveData: LiveData<LsrwSkillResponse?>
+        get() = islsrwSkilllist
+
 
 
 }

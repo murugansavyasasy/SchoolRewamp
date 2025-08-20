@@ -43,6 +43,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.SectionDetails
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -50,6 +51,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.DimOverlayManager
 import com.vs.schoolmessenger.Utils.FileItem
@@ -301,6 +303,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
 
+        appViewModel!!.islsrwSkillCreate?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+
+            }
+        }
+
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
@@ -403,7 +414,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 changeTapBg(Constant.isSection)
 
                 //show send and specific student button
-            } else {
+            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tabLayout.visibility = View.GONE
+                changeTapBg(Constant.isSection)
+            }else {
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -430,6 +446,16 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 //show send button only
 
             } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tapEntireSchool.visibility = View.GONE
+                binding.tapStandards.visibility = View.GONE
+                binding.tabSectionsStudent.visibility = View.VISIBLE
+                binding.tabGroups.visibility = View.GONE
+                binding.tapStaffs.visibility = View.GONE
+                changeTapBg(Constant.isSection)
+
+            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
                 binding.tapEntireSchool.visibility = View.GONE
@@ -954,7 +980,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     fun isUploadFilesInServer(isFileType: String?) {
 
         if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK ||
-            SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT
+            SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS
         ) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
@@ -999,7 +1025,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             ProgressDialogHelper.updateProgress(10)
 
             when (SELECTED_SCHOOL_MENU) {
-                M_HOMEWORK, M_ATTACHMENTS, M_SCHOOL_CLASS_EVENTS, M_ASSIGNMENT -> {
+                M_HOMEWORK, M_ATTACHMENTS, M_SCHOOL_CLASS_EVENTS, M_ASSIGNMENT, M_SCHOOL_NEEDS -> {
                     if (Constant.selectedFiles.size != 1) {
                         isUploadFilesInServer("file")
                     } else {
@@ -1007,6 +1033,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             M_HOMEWORK -> isHomeWorkSend()
                             M_SCHOOL_CLASS_EVENTS -> eventsendapi()
                             M_ASSIGNMENT -> isAssignmentSend()
+                            M_SCHOOL_NEEDS -> isLsrwSkillSend()
                         }
                     }
                 }
@@ -1098,6 +1125,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 M_ASSIGNMENT -> {
                     isAssignmentSend()
                 }
+
+                M_SCHOOL_NEEDS -> {
+                    isLsrwSkillSend()
+                }
             }
         }
     }
@@ -1132,6 +1163,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     M_ASSIGNMENT -> {
                         isAssignmentSend()
+                    }
+
+                    M_SCHOOL_NEEDS -> {
+                        isLsrwSkillSend()
                     }
                 }
             }
@@ -1178,7 +1213,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
             isGetSubjectList(idString)
         }
         binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size
@@ -1211,7 +1246,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
             isGetSubjectList(idString)
         }
     }
@@ -1243,6 +1278,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     M_HOMEWORK -> isHomeWorkSend()
                     M_COMMUNICATION -> voiceSendApi()
                     M_ASSIGNMENT -> isAssignmentSend()
+                    M_SCHOOL_NEEDS -> isLsrwSkillSend()
                 }
             } else {
                 videoUploading()
@@ -1324,6 +1360,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                             M_ATTACHMENTS -> attachmentSendApi()
                                             M_SCHOOL_CLASS_EVENTS -> eventsendapi()
                                             M_ASSIGNMENT -> isAssignmentSend()
+                                            M_SCHOOL_NEEDS -> isLsrwSkillSend()
                                         }
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
@@ -1387,6 +1424,33 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
+
+
+    fun isLsrwSkillSend() {
+        val isLsrwnewTaskSendingData =
+            intent.getParcelableExtra<LsrwnewTaskSendingData>(Constant.lsrwskill_data)
+        isLsrwnewTaskSendingData?.let {
+            val jsonObject = ApiCallRequest.isSendLsrwSkill(
+                targetType = isTargetType!!,
+                iframe = isIframe,
+                file_size = isFileSize,
+                selectedIds = selectedIds,
+                title = it.isTitle,
+                description = it.isDescription,
+                isLsrwType = it.isLsrwType,
+                subjectId = isSubjectId
+            )
+            appViewModel!!.islsrwSkillCreate(isAccessToken!!, jsonObject, this)
+        } ?: run {
+            Constant.showValidationAlertPopup(
+                getString(
+                    R.string.alert
+                ),
+                "Task details is missing.", this
+            )
+        }
+    }
+
     fun isHomeWorkSend() {
         ProgressDialogHelper.updateProgress(100)
         ProgressDialogHelper.dismiss()
@@ -1434,4 +1498,3 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
     }
 }
-
