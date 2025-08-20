@@ -37,7 +37,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
-import com.vs.schoolmessenger.School.PTM.PTM
+import com.vs.schoolmessenger.School.PTM.Activity.PTM
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport

@@ -47,6 +47,22 @@
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"></TextView>
 
+        <TextView
+            android:id="@+id/lblCreateSlot"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblSchoolName"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/outline_whitecolor"
+            android:drawablePadding="@dimen/five"
+            android:padding="@dimen/ten"
+            android:text="Create Slot"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
 
         <TextView
             android:id="@+id/lblDatePicking"
