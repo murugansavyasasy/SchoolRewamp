@@ -716,6 +716,9 @@
     <string name="the_management_has_recived_your_request_and_it_is_currently_being_process">The Management has recived your request and it is currently being process...</string>
     <string name="ADMIS_NO_">ADMIS NO: </string>
     <string name="select_all_as_present">Select All as Present</string>
+    <string name="quiz">Quiz</string>
+    <string name="no_of_question">No of question</string>
+    <string name="check_the_box_to_continue_next_level">Check the box to continue next level</string>
 
 
 </resources>

@@ -31,6 +31,7 @@ import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
+import com.vs.schoolmessenger.Parent.QuizExam.QuizExam
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
@@ -51,6 +52,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import com.vs.schoolmessenger.School.PTM.PTM
+import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
@@ -406,6 +408,22 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
+
+            Constant.M_QUIZ_EXAM -> {
+
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    ExamQuiz::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        ExamQuiz::class.java
+                    }
+                }
+            }
+
+
+
 
             Constant.M_ATTENDANCE_MARKING -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {

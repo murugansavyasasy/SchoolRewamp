@@ -141,6 +141,10 @@ class SchoolMenuAdapter(
                     imgMenu.setImageResource(R.drawable.school_strength)
                 }
 
+                Constant.M_QUIZ_EXAM -> {
+                    imgMenu.setImageResource(R.drawable.quiz_icon)
+                }
+
                 Constant.M_NOTICEBOARD -> {
                     imgMenu.setImageResource(R.drawable.noticeboard_icon)
                 }

@@ -1,5 +1,5 @@
 
-package com.vs.schoolmessenger.Parent.Quiz.Adapter
+package com.vs.schoolmessenger.Parent.QuizExam.Adapter
 
 import android.content.Context
 import android.content.Intent
@@ -11,10 +11,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-
-import android.graphics.drawable.GradientDrawable
-import androidx.core.graphics.ColorUtils
-import androidx.core.content.ContextCompat
 
 
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamListData

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/white"
+    android:background="@color/AthensGray"
     android:layout_height="match_parent">
 
     <include
@@ -71,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/three"
                 android:layout_marginStart="@dimen/five"
+                android:background="@color/athens_gray"
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
                 >

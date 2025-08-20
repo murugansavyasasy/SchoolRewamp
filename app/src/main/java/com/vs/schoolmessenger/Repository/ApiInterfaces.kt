@@ -107,6 +107,9 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
@@ -928,5 +931,27 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.id) id: String,
     ): Call<GetMySubmission?>?
+
+
+    @POST(APIMethods.isCreateQuiz)
+    fun isCreateQuiz(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<CreateQuizResponse?>?
+
+
+    @GET(APIMethods.isGetExamQuizReport)
+    fun isGetExamQuizReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("type") type: String
+    ): Call<GetQuizExamReport?>?
+
+    @GET(APIMethods.isGetCheckLevel)
+    fun isGetCheckLevel(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("class_id") class_id: String,
+        @Query("subject_id") subject_id: String,
+    @Query("section_id") section_id: String
+    ): Call<GetCheckLevel?>?
 
 }

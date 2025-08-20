@@ -597,6 +597,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             return
         }
 
+
         val sectionDetails = SectionDetails(title, description)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.section_data, sectionDetails)

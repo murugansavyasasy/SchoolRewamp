@@ -245,6 +245,7 @@ object Constant {
     var lblAcademicYear = "lblAcademicYear"
     var isSelectedId = "isSelectedId"
     var section_data = "section_data"
+    var create_quiz_exam_data = "create_quiz_exam_data"
     var notice_data = "notice_data"
     var event_data = "event_data"
     var assignment_data = "assignment_data"

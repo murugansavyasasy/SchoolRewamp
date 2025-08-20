@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Parent.QuizExam.QuizExam
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
@@ -38,6 +39,7 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
 import com.vs.schoolmessenger.School.PTM.PTM
+import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
@@ -57,6 +59,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_MESSAGES_FROM_MANAGEMENT
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_ONLINE_MEETING
 import com.vs.schoolmessenger.Utils.Constant.M_PTM
+import com.vs.schoolmessenger.Utils.Constant.M_QUIZ_EXAM
 import com.vs.schoolmessenger.Utils.Constant.M_SCHEDULE_EXAM_TEST
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_STRENGTH
@@ -120,7 +123,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_LESSON_PLAN || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == Constant.M_PTM) {
+        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_LESSON_PLAN || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == Constant.M_PTM || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
 
@@ -334,7 +337,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 val intent = Intent(this, AbsenteesReport::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-
             } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH) {
                 val intent = Intent(this, SchoolStrength::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -371,6 +373,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
                 val intent = Intent(this, Assignment::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            } else if (SELECTED_SCHOOL_MENU == M_QUIZ_EXAM) {
+                val intent = Intent(this, ExamQuiz::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             }

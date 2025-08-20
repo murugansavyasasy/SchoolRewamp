@@ -69,6 +69,9 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -173,6 +176,9 @@ class SchoolServices {
     var isPtmSlotCancelClose: MutableLiveData<StatusMessageModel?>
     var isDateWiseSlot: MutableLiveData<SlotBookingResponse?>
     var isSlotValidation: MutableLiveData<SlotValidationResponse?>
+    var isCreateQuiz: MutableLiveData<CreateQuizResponse?>
+    var isGetQuizExamReport: MutableLiveData<GetQuizExamReport?>
+    var isGetCheckLevel: MutableLiveData<GetCheckLevel?>
 
 
     init {
@@ -263,6 +269,9 @@ class SchoolServices {
         isPtmSlotCancelClose = MutableLiveData()
         isDateWiseSlot = MutableLiveData()
         isSlotValidation = MutableLiveData()
+        isCreateQuiz = MutableLiveData()
+        isGetQuizExamReport= MutableLiveData()
+        isGetCheckLevel= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -3340,6 +3349,124 @@ class SchoolServices {
 
     val islsrwStudentlistLiveData: LiveData<StudentSubmissionLsrwResponse?>
         get() = islsrwStudentlist
+
+
+
+    fun isSubmitQuiz(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isCreateQuiz(isToken, jsonObject)
+            ?.enqueue(object : Callback<CreateQuizResponse?> {
+                override fun onResponse(
+                    call: Call<CreateQuizResponse?>, response: Response<CreateQuizResponse?>
+                ) {
+                    Log.d(
+                        "isSubmitQuiz Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("isSubmitQuizData", response.body().toString())
+                                isCreateQuiz.postValue(response.body())
+                            } else {
+                                Log.d("isSubmitQuizData", response.body().toString())
+                                isCreateQuiz.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<CreateQuizResponse?>, t: Throwable
+                ) {
+                    isCreateQuiz.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isCreateQuizLiveData: LiveData<CreateQuizResponse?>
+        get() = isCreateQuiz
+
+
+    fun isGetQuizExamReport(
+        isToken: String, type: String
+    ) {
+        RestClient.apiInterfaces.isGetExamQuizReport(isToken, type)
+            ?.enqueue(object : Callback<GetQuizExamReport?> {
+                override fun onResponse(
+                    call: Call<GetQuizExamReport?>, response: Response<GetQuizExamReport?>
+                ) {
+                    Log.d(
+                        "GetQuizExamReport Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetQuizExamReportData", response.body().toString())
+                                isGetQuizExamReport.postValue(response.body())
+                            } else {
+                                Log.d("GetQuizExamReportData", response.body().toString())
+                                isGetQuizExamReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetQuizExamReport?>, t: Throwable
+                ) {
+                    isGetQuizExamReport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetQuizExamReportLiveData: LiveData<GetQuizExamReport?>
+        get() = isGetQuizExamReport
+
+
+    fun isGetCheckLevel(
+        isToken: String,class_id:String, subject_id:String, section_id:String
+    ) {
+        RestClient.apiInterfaces.isGetCheckLevel(isToken,class_id,subject_id,section_id)
+            ?.enqueue(object : Callback<GetCheckLevel?> {
+                override fun onResponse(
+                    call: Call<GetCheckLevel?>, response: Response<GetCheckLevel?>
+                ) {
+                    Log.d(
+                        "GetCheckLevelResponse",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetCheckLevelData", response.body().toString())
+                                isGetCheckLevel.postValue(response.body())
+                            } else {
+                                Log.d("GetCheckLevelData", response.body().toString())
+                                isGetCheckLevel.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetCheckLevel?>, t: Throwable
+                ) {
+                    isGetCheckLevel.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetCheckLevelLiveData: LiveData<GetCheckLevel?>
+        get() = isGetCheckLevel
 
 
 }

@@ -97,6 +97,9 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
@@ -329,6 +332,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSubmitQuiz: LiveData<SubmitQuizResponse?>? = null
     var isGetMySubmission: LiveData<GetMySubmission?>? = null
     var islsrwStudentlist: LiveData<StudentSubmissionLsrwResponse?>? = null
+    var isCreateQuiz: LiveData<CreateQuizResponse?>? = null
+    var isGetQuizExamReport: LiveData<GetQuizExamReport?>? = null
+    var isGetCheckLevel: LiveData<GetCheckLevel?>? = null
 
 
     fun init() {
@@ -463,6 +469,9 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetQuestion = apiParentRepositories.isGetQuestionLiveData
         isSubmitQuiz = apiParentRepositories.isSubmitQuizLiveData
         isGetMySubmission = apiParentRepositories.isMySubmissionLiveData
+        isCreateQuiz = apiSchoolRepositories.isCreateQuizLiveData
+        isGetQuizExamReport = apiSchoolRepositories.isGetQuizExamReportLiveData
+        isGetCheckLevel = apiSchoolRepositories.isGetCheckLevelLiveData
 
 
     }
@@ -1148,6 +1157,29 @@ class App(application: Application) : AndroidViewModel(application) {
         id: String,
         ) {
         apiParentRepositories.isGetMySubmission(isToken,id)
+    }
+
+
+    fun isCreateQuiz(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isSubmitQuiz(
+            isToken, jsonObject,
+        )
+    }
+    fun isGetQuizExamReport(
+        isToken: String, type:String
+    ) {
+        apiSchoolRepositories.isGetQuizExamReport(
+            isToken, type,
+        )
+    }
+    fun isGetCheckLevel(
+        isToken: String, class_id:String, subject_id:String, section_id:String
+    ) {
+        apiSchoolRepositories.isGetCheckLevel(
+            isToken, class_id,subject_id,section_id
+        )
     }
 
 
