@@ -11,12 +11,44 @@
         layout="@layout/parent_side_tool_bar" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcLsrw"
+        android:id="@+id/rcyrecyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_below="@+id/toolbarLayout">
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:visibility="visible">
     </androidx.recyclerview.widget.RecyclerView>
 
+    <LinearLayout
+        android:id="@+id/lytNoDataFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/noDataImage"
+            android:layout_width="@dimen/two_hundred"
+            android:layout_height="@dimen/two_hundred"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:src="@drawable/no_data_found">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/noDataFound"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:text=""
+            android:textSize="@dimen/fifteen_sp">
+
+        </TextView>
+    </LinearLayout>
 
 </RelativeLayout>

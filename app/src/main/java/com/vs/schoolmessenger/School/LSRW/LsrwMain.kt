@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.LSRW
 
+import android.content.Intent
 import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
@@ -46,6 +47,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.newtaskbutton.setOnClickListener(this)
 
         binding.rcylsrwreport.layoutManager = LinearLayoutManager(this)
         adapter = LsrwAdapter(
@@ -96,8 +98,18 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
+            R.id.newtaskbutton -> {
+                RedirectToNewTaskPage()
+            }
         }
     }
+
+
+    private fun RedirectToNewTaskPage() {
+        val intent = Intent(this, CreateNewTask::class.java)
+        startActivity(intent)
+    }
+
 
     private fun fetchLsrwSkillReportData() {
         binding.rcylsrwreport.visibility = View.VISIBLE

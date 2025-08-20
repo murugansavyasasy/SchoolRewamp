@@ -7,13 +7,140 @@
 
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
+        layout="@layout/school_side_tool_bar" />
+
+
+    <LinearLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+
+        <LinearLayout
+            android:id="@+id/listening_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/btn_unselected"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+
+            <ImageView
+                android:id="@+id/headphone_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/headphonesvgformat" />
+
+
+            <TextView
+                android:id="@+id/btnListening"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:drawablePadding="8dp"
+                android:padding="10dp"
+                android:text="Listening"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/speaking_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/btn_unselected"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/speaking_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/micsvgformatstyle" />
+
+            <TextView
+                android:id="@+id/btnSpeaking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="8dp"
+                android:padding="10dp"
+                android:text="Speaking"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/reading_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/btn_unselected"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/reading_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/booksvg_formatstyle" />
+
+
+        <TextView
+            android:id="@+id/btnReading"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawablePadding="8dp"
+            android:padding="10dp"
+            android:text="Reading"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/writing_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_selected"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/writing_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pensvgformatstyle" />
+
+        <TextView
+            android:id="@+id/btnWriting"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawablePadding="8dp"
+            android:padding="10dp"
+            android:text="Writing"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+    </LinearLayout>
+
 
     <RelativeLayout
-        android:id="@+id/rytCreateAssignment"
+        android:id="@+id/rytcreateNewTasklsrw"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/tab_layout"
         android:layout_marginTop="@dimen/ten"
         android:visibility="visible">
 
@@ -104,11 +231,47 @@
         </TextView>
 
 
+        <TextView
+            android:id="@+id/lbldate"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTextCount"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:text="Selected Date"
+            android:textSize="@dimen/fifteen_sp">
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/edtdate"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/lbldate"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:background="@drawable/bg_stroke_rect_black"
+            android:drawableEnd="@drawable/calendar_icon"
+            android:drawablePadding="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="start|center_vertical"
+            android:hint="dd/mm/yyyy"
+            android:inputType="none"
+            android:padding="@dimen/ten"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
         <RelativeLayout
             android:id="@+id/rlaFilePicking"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/lblTextCount"
+            android:layout_below="@+id/edtdate"
             android:layout_marginTop="@dimen/five">
 
             <TextView
@@ -176,7 +339,7 @@
                 android:background="@drawable/rect_btn_orange"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="@string/submit"
+                android:text="@string/TOSTANDARDORSECTION"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -184,5 +347,6 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
 
 </RelativeLayout>

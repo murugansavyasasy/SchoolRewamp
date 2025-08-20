@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.School.PTM.DataClass
 
+import java.io.Serializable
+
 data class Slot(
     val slot_id: String,
     val from_time: String,
@@ -17,4 +19,4 @@ data class Slot(
     val break_duration: Int,
     val is_cancelled_by_staff: Int,
     val date: String
-)
+)  : Serializable

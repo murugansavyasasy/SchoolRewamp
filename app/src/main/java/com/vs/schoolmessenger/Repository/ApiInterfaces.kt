@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
+import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
@@ -87,6 +88,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelReq
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
@@ -832,6 +834,19 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.id) id: String
     ): Call<StudentSubmissionLsrwResponse?>?
+
+
+    @POST(APIMethods.islsrwSkillCreate)
+    fun islsrwSkillCreate(
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
+    ): Call<LsrwSkillSendResponse>?
+
+
+    @GET(APIMethods.islsrwSkilllist)
+    fun islsrwSkilllist(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<LsrwSkillResponse?>?
+
 
 
     // PTM

@@ -51,8 +51,9 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
-import com.vs.schoolmessenger.School.PTM.PTM
+
 import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
+import com.vs.schoolmessenger.School.PTM.Activity.PTM
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport

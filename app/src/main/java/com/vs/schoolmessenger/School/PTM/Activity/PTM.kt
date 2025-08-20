@@ -1,5 +1,6 @@
-package com.vs.schoolmessenger.School.PTM
+package com.vs.schoolmessenger.School.PTM.Activity
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -8,18 +9,21 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.PTM.Adapter.UpComingSlotAdapter
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotDate
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotDetail
+import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PtmStaffBinding
 
 class PTM : BaseActivity<PtmStaffBinding>(),
-    View.OnClickListener {
+    View.OnClickListener, StaffSlotClickListener {
 
     override fun getViewBinding(): PtmStaffBinding {
         return PtmStaffBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     var isAllSlot = true
@@ -35,6 +39,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         binding.lblDatePicking.setOnClickListener(this)
         binding.imgDelete.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
+        binding.lblCreateSlot.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -70,13 +75,13 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     }
 
     fun isLoadDataAdapter(isSlotDetail: ArrayList<SlotDetail>?) {
-        mAdapter = UpComingSlotAdapter(isSlotDetail, this, Constant.isShimmerViewDisable)
+        mAdapter = UpComingSlotAdapter(isSlotDetail, this, this, Constant.isShimmerViewDisable)
         binding.rcySlots.layoutManager = LinearLayoutManager(this)
         binding.rcySlots.adapter = mAdapter
     }
 
     fun loadData() {
-        mAdapter = UpComingSlotAdapter(null, this, Constant.isShimmerViewShow)
+        mAdapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcySlots.layoutManager = LinearLayoutManager(this)
         binding.rcySlots.adapter = mAdapter
         appViewModel!!.isSlotForStaff(
@@ -107,6 +112,22 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
+
+            R.id.lblCreateSlot -> {
+                val intent = Intent(this, CreateSlots::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }
         }
     }
+
+    override fun onClickListener(data: SlotDetail) {
+        val intent = Intent(this, StaffSlotDetails::class.java)
+        val slotList = ArrayList(data.slots)
+        intent.putExtra("isSlot", slotList)
+        intent.putExtra("isSlotDetails", data)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+    }
+
 }

@@ -23,18 +23,17 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamQuizBinding
 
 
-
-
 class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     View.OnClickListener {
 
     override fun getViewBinding(): ExamQuizBinding {
         return ExamQuizBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
-    var isType="2"
-    var isNextLevelChecked=false
+    var isType = "2"
+    var isNextLevelChecked = false
     private lateinit var adapter: ExamQuizReportAdapter
 
     private var appViewModel: App? = null
@@ -65,37 +64,27 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             binding.rbNextLvl.isChecked = isNextLevelChecked
         }
 
-
-
-
-
-
-
         appViewModel?.isGetQuizExamReport?.observe(this) { response ->
-            if(response != null){
-                if (response.status == true) {
+            if (response != null) {
+                if (response.status) {
                     binding.lytList.visibility = View.GONE
 
-                    if (isType=="2"){
+                    if (isType == "2") {
                         isLoadEQReport(response.data)
                     }
-                }
-                else{
+                } else {
                     binding.rcQuizExamReport.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
-            }
-            else {
+            } else {
                 binding.rcQuizExamReport.visibility = View.GONE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
             }
         }
 
-
-
         binding.lnrTabOneName.setOnClickListener {
-            binding.lnrTabOneName.isEnabled=false
-            binding.lnrTabTwoName.isEnabled=true
+            binding.lnrTabOneName.isEnabled = false
+            binding.lnrTabTwoName.isEnabled = true
             binding.line1.setBackgroundResource(R.color.iconBlue)
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -106,9 +95,9 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         }
 
         binding.lnrTabTwoName.setOnClickListener {
-            isType="2"
-            binding.lnrTabOneName.isEnabled=true
-            binding.lnrTabTwoName.isEnabled=false
+            isType = "2"
+            binding.lnrTabOneName.isEnabled = true
+            binding.lnrTabTwoName.isEnabled = false
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
             binding.line2.setBackgroundResource(R.color.iconBlue)
@@ -120,14 +109,13 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     }
 
     private fun isLoadEQReport(data: List<GetQuizExamReportData>) {
-        if (data.size>0){
+        if (data.isNotEmpty()) {
             binding.lytList.visibility = View.GONE
             binding.rlaQuizExamReport.visibility = View.VISIBLE
-            adapter = ExamQuizReportAdapter(data,this, false)
+            adapter = ExamQuizReportAdapter(data, this, false)
             binding.rcQuizExamReport.layoutManager = LinearLayoutManager(this)
             binding.rcQuizExamReport.adapter = adapter
-        }
-        else{
+        } else {
             binding.svOverallCreateQE.visibility = View.GONE
             binding.rlaQuizExamReport.visibility = View.VISIBLE
             binding.rcQuizExamReport.visibility = View.GONE
@@ -135,18 +123,18 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         }
     }
 
-    fun ErrorMessage(errorMessage:String){
+    fun ErrorMessage(errorMessage: String) {
         binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = errorMessage
     }
 
 
     private fun isFetchEQReport() {
-        adapter = ExamQuizReportAdapter(null,this, false)
+        adapter = ExamQuizReportAdapter(null, this, false)
         binding.rcQuizExamReport.layoutManager = LinearLayoutManager(this)
         binding.rcQuizExamReport.adapter = adapter
 
-        appViewModel?.isGetQuizExamReport(isAccessToken ?: "",isType)
+        appViewModel?.isGetQuizExamReport(isAccessToken ?: "", isType)
     }
 
     private fun isRedirectToSectionStudents() {
@@ -168,14 +156,13 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             binding.edtQuestion.requestFocus()
             return
         }
-        val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(title, description,no_of_questions,isNextLevelChecked)
-        Log.d("SaveCreateExamQuizDetails",SaveCreateExamQuizDetails.toString())
+        val SaveCreateExamQuizDetails =
+            SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked)
+        Log.d("SaveCreateExamQuizDetails", SaveCreateExamQuizDetails.toString())
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
         startActivity(intent)
     }
-
-
 
 
     override fun onClick(p0: View?) {
@@ -183,6 +170,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
+
             R.id.btnChooseRecipient -> {
                 isRedirectToSectionStudents()
             }

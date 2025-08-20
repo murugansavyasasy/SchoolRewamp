@@ -1,12 +1,12 @@
 package com.vs.schoolmessenger.Parent.LSRW
 
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Parent.LSRW.Model.SkillData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwBinding
 
@@ -14,11 +14,9 @@ import com.vs.schoolmessenger.databinding.LsrwBinding
 class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
 
     private lateinit var adapter: LSRWAdapter
-    private val lsrwList = mutableListOf<LSRWData>()
-
-    private var appViewModel: App? = null
+    private lateinit var appViewModel: App
     private var isAccessToken: String? = null
-    private var isChildDetails: ChildDetails? = null
+    private var allItems: List<SkillData> = emptyList()
 
     override fun getViewBinding(): LsrwBinding {
         return LsrwBinding.inflate(layoutInflater)
@@ -27,77 +25,50 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-
-
-        // Toolbar setup
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.lblParentToolBar.text = "LSRW"
         binding.toolbarLayout.rytSearch.visibility = View.GONE
-        isChildDetails = SharedPreference.getChildDetails(this)
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+
+        val childDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = childDetails?.access_token
+
+        binding.toolbarLayout.lblStudentName.text = childDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
-            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-
-        setupRecyclerView()
-        loadHardcodedData()
-    }
+            "${childDetails?.standard_name ?: ""} - ${childDetails?.section_name ?: ""}"
 
 
-    private fun setupRecyclerView() {
-        adapter = LSRWAdapter(lsrwList, object : LSRWClickListener {
-            override fun onItemClick(
-                data: LSRWData,
-                holder: LSRWAdapter.DataViewHolder
-            ) {
-                // Handle item click
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel.init()
+
+
+        binding.rcyrecyclerview.layoutManager = LinearLayoutManager(this)
+        adapter = LSRWAdapter(emptyList(), this)
+        binding.rcyrecyclerview.adapter = adapter
+
+        fetchLsrwSkillReportData()
+
+
+        appViewModel.islsrwSkilllist?.observe(this) { response ->
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                binding.rcyrecyclerview.visibility = View.VISIBLE
+                binding.noDataFound.visibility = View.GONE
+                allItems = response.data
+                adapter.updateList(allItems)
+            } else {
+                binding.rcyrecyclerview.visibility = View.GONE
+                binding.noDataFound.visibility = View.VISIBLE
             }
-        }, this, false)
-
-        binding.rcLsrw.layoutManager =
-            LinearLayoutManager(this)
-        binding.rcLsrw.adapter = adapter
-    }
-
-
-    private fun loadHardcodedData() {
-        lsrwList.apply {
-            add(
-                LSRWData(
-                    "Listening Comprehension - The Environment",
-                    "Listen to an audio about saving the environment and answer questions"
-                )
-            )
-            add(
-                LSRWData(
-                    "Listening Comprehension - The Environment",
-                    "Listen to an audio about saving the environment and answer questions"
-                )
-            )
-            add(
-                LSRWData(
-                    "Listening Comprehension - The Environment",
-                    "Listen to an audio about saving the environment and answer questions"
-                )
-            )
-            add(
-                LSRWData(
-                    "Listening Comprehension - The Environment",
-                    "Listen to an audio about saving the environment and answer questions"
-                )
-            )
-            add(
-                LSRWData(
-                    "Listening Comprehension - The Environment",
-                    "Listen to an audio about saving the environment and answer questions"
-                )
-            )
         }
-        adapter.notifyDataSetChanged()
     }
 
+    private fun fetchLsrwSkillReportData() {
+        binding.rcyrecyclerview.visibility = View.VISIBLE
+        binding.rcyrecyclerview.isNestedScrollingEnabled = false
+        appViewModel.islsrwSkilllist(isAccessToken ?: "")
+    }
 
-    override fun onClick(p0: View?) {
-        when (p0?.id) {
+    override fun onClick(view: View?) {
+        when (view?.id) {
             R.id.imgBack -> onBackPressed()
         }
     }
