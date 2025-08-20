@@ -269,7 +269,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             override fun afterTextChanged(p0: Editable?) {
-
             }
         })
 
@@ -347,7 +346,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     private fun changeLabel() {
         binding.lblSend.text = resources.getString(R.string.NEXT)
-
         if (Constant.isEmergencyVoiceNoticeBoard == true) {
             if (isMultipleSchool) {
                 binding.lblSend.text = resources.getString(R.string.NEXT)
@@ -355,14 +353,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (!isEmergency) {
                     binding.lblSend.text = resources.getString(R.string.NEXT)
                 } else {
-                    binding.lblSend.text = resources.getString(R.string.NEXT)
+                    binding.lblSend.text = resources.getString(R.string.Send)
                 }
             }
         } else {
             if (!isEmergency) {
                 binding.lblSend.text = resources.getString(R.string.NEXT)
             } else {
-                binding.lblSend.text = resources.getString(R.string.NEXT)
+                binding.lblSend.text = resources.getString(R.string.Send)
             }
         }
     }
