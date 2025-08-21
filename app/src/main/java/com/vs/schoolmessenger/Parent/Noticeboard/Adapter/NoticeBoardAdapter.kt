@@ -127,9 +127,6 @@ class NoticeBoardAdapter(
         //        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
-
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
-
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val remaindertag: TextView = itemView.findViewById(R.id.remaindertag)
         private val header: CardView = itemView.findViewById(R.id.header)
@@ -151,10 +148,10 @@ class NoticeBoardAdapter(
             val hasIframe = !noticeData.iframe.isNullOrEmpty()
             val hasFiles = !noticeData.file_path.isNullOrEmpty()
 
-            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyImgPDF.visibility = if (hasIframe) View.GONE else View.VISIBLE
+
+
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.INVISIBLE
-            total_numbers.visibility = View.GONE
+            total_numbers.visibility = View.INVISIBLE
 
             header.setOnClickListener {
 
@@ -235,26 +232,6 @@ class NoticeBoardAdapter(
             }
 
 
-        }
-
-        fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
-            val adapter = recyclerView.adapter ?: return
-            this.createIndicators(adapter.itemCount, 0)
-
-            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(rv, dx, dy)
-                    val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
-                    val firstVisible = layoutManager.findFirstVisibleItemPosition()
-                    this@attachToRecyclerView.animatePageSelected(firstVisible)
-                }
-            })
-
-            adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onChanged() {
-                    this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
-                }
-            })
         }
 
 

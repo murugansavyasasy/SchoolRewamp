@@ -11,6 +11,8 @@ data class AssignmentData(
     val created_date: String,
     val created_time: String,
     val submitted_count: Int,
+    val can_edit: Boolean,
+    val can_delete: Boolean,
     val total_count: Int,
     val end_date: String,
     val iframe: String,

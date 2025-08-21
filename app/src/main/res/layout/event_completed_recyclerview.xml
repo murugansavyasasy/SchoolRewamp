@@ -144,10 +144,10 @@
 
             <TextView
                 android:id="@+id/total_numbers"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
+                android:layout_width="@dimen/thirty_six"
+                android:layout_height="@dimen/thirty_six"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
                 android:background="@drawable/bg_image_background_white_coupon"
                 android:text="+9"
                 android:gravity="center"
@@ -202,7 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/twenty"
+                android:layout_marginEnd="@dimen/five"
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/dark_pink_background"
                 android:paddingStart="@dimen/ten"

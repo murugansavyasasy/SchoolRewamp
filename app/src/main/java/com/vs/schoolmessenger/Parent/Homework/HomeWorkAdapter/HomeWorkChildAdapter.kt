@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -21,10 +23,13 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDeta
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.databinding.FileviewItemBinding
+import com.vs.schoolmessenger.databinding.LsrwBinding
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.math.max
 
 class HomeWorkChildAdapter(
     private var context: Context,
@@ -38,6 +43,8 @@ class HomeWorkChildAdapter(
             FileviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DataViewHolder(binding)
     }
+
+
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         holder.bind(
@@ -150,7 +157,104 @@ class HomeWorkChildAdapter(
                         binding.progressBar.visibility = View.GONE
                     }
                 }
-            }else if  (selectedSchoolMenu == M_SCHOOL_NEEDS) {
+            } else if (selectedSchoolMenu == M_LSRW) {
+                Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
+                binding.imgView.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
+                binding.relativelayoutHeader.visibility = View.GONE
+                binding.childrelativeLayout.visibility = View.VISIBLE
+                binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
+                when (item.type.uppercase()) {
+                    Constant.IMAGE -> {
+                        binding.imgFileType.setImageResource(R.drawable.imagesvgformar)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.M4A -> {
+                        binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
+                        val audioUrl = item.url
+                        binding.lblStartDuration.text = "00:00"
+                        binding.lblEndDuration.text = "00:00"
+                        binding.lblTime.text = "00:00"
+                        getAudioDuration(audioUrl) { duration ->
+                            binding.lblEndDuration.text = duration
+                        }
+                        binding.imgVoicePlay.setOnClickListener {
+                            toggleAudioPlayer(audioUrl, binding)
+                        }
+                    }
+
+                    Constant.VIDEO -> {
+                        binding.imgFileType.setImageResource(R.drawable.videosvgformat)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.PDF -> {
+                        binding.imgFileType.setImageResource(R.drawable.pdfsvgformatter)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.DOC, Constant.DOCX -> {
+                        binding.imgFileType.setImageResource(R.drawable.docxsvgformatter)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.TXT -> {
+                        binding.imgFileType.setImageResource(R.drawable.txtsvgformat)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.PPT, Constant.PPTX -> {
+                        binding.imgFileType.setImageResource(R.drawable.pptsvgformat)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.EXCEL -> {
+                        binding.imgFileType.setImageResource(R.drawable.excelsvgformat)
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    else -> {
+                        binding.imgView.setImageResource(R.drawable.excel_icon)
+                        binding.progressBar.visibility = View.GONE
+                    }
+                }
+            } else if (selectedSchoolMenu == M_SCHOOL_NEEDS) {
                 Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
                 binding.imgView.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
@@ -357,6 +461,95 @@ class HomeWorkChildAdapter(
                 }
             }.start()
         }
+
+
+
+
+        private fun getAudioDuration(url: String, callback: (String) -> Unit) {
+            Thread {
+                try {
+                    val retriever = MediaMetadataRetriever()
+                    retriever.setDataSource(url, HashMap())
+                    val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                    val durationMs = durationStr?.toLong() ?: 0L
+                    val total = String.format(
+                        "%02d:%02d",
+                        (durationMs / 1000) / 60,
+                        (durationMs / 1000) % 60
+                    )
+                    retriever.release()
+                    Handler(Looper.getMainLooper()).post {
+                        callback(total)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }.start()
+        }
+
+
+
+        private var mediaPlayer: MediaPlayer? = null
+        private var isPlaying = false
+
+
+
+
+        private fun toggleAudioPlayer(url: String, binding: FileviewItemBinding) {
+            if (isPlaying) {
+                mediaPlayer?.pause()
+                binding.imgVoicePlay.setImageResource(R.drawable.play_icon_voice)
+                isPlaying = false
+            } else {
+                if (mediaPlayer == null) {
+                    mediaPlayer = MediaPlayer().apply {
+                        setDataSource(url)
+                        prepareAsync()
+                        setOnPreparedListener {
+                            start()
+                            binding.imgVoicePlay.setImageResource(R.drawable.pause_icon)
+                            this@DataViewHolder.isPlaying = true
+                            updateSeekbar(binding)
+                        }
+                        setOnCompletionListener {
+                            binding.imgVoicePlay.setImageResource(R.drawable.play_icon_voice)
+                            this@DataViewHolder.isPlaying = false
+                        }
+                    }
+                } else {
+                    mediaPlayer?.start()
+                    binding.imgVoicePlay.setImageResource(R.drawable.pause_icon)
+                    isPlaying = true
+                }
+            }
+        }
+
+
+
+        private fun updateSeekbar(binding: FileviewItemBinding) {
+            val handler = Handler(Looper.getMainLooper())
+            handler.post(object : Runnable {
+                override fun run() {
+                    mediaPlayer?.let {
+                        val currentPos = it.currentPosition / 1000
+                        binding.lblStartDuration.text =
+                            String.format("%02d:%02d", currentPos / 60, currentPos % 60)
+
+
+                        val normalizedPower = max(1f, (1f + 160) / 160)
+                        binding.waveformSeekBar.updateWithLevel(normalizedPower)
+
+
+                        if (isPlaying) handler.postDelayed(this, 500)
+                    }
+                }
+            })
+        }
+
+
+
+
+
 
     }
 }

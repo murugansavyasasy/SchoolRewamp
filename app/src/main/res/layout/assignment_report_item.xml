@@ -168,7 +168,7 @@
 
     <RelativeLayout
         android:id="@+id/relative_layout1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/category_linear"
         android:layout_marginStart="@dimen/ten"
@@ -214,6 +214,7 @@
             android:layout_toEndOf="@+id/subject_linear"
             android:background="@drawable/rect_shadow_light_yellow1"
             android:gravity="center"
+            android:layout_marginStart="10dp"
             android:padding="@dimen/eight"
             android:orientation="horizontal">
 
@@ -294,13 +295,13 @@
             <TextView
                 android:id="@+id/total_numbers"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
+                android:layout_width="@dimen/thirty_six"
+                android:layout_height="@dimen/thirty_six"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/minus_fifteen"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/five"
-                android:layout_marginBottom="@dimen/ten"
+                android:layout_marginBottom="@dimen/five"
                 android:layout_toEndOf="@id/rcyAssignment"
                 android:background="@drawable/bg_image_background_white_coupon"
                 android:gravity="center"

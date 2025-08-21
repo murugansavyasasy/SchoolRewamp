@@ -16,8 +16,8 @@
             android:id="@+id/linear_layout_categorychild"
             android:layout_width="@dimen/hundred"
             android:layout_height="@dimen/one_thirty"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
             android:background="@drawable/category_white_box"
             android:orientation="vertical">
 
