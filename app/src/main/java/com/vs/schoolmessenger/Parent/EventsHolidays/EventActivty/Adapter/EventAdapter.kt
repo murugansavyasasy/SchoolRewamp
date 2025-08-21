@@ -125,7 +125,6 @@ class EventAdapter(
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
 
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val header: RelativeLayout = itemView.findViewById(R.id.header)
@@ -142,7 +141,6 @@ class EventAdapter(
             status_event.text = "Today's Event"
             eventdesc.text = data.description
 
-            video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
 
             header.setOnClickListener {
@@ -174,35 +172,17 @@ class EventAdapter(
             }
 
             if (!data.iframe.isNullOrEmpty()) {
-                video_player.visibility = View.VISIBLE
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.GONE
 
-//                video_player.setOnClickListener {
-//                    val commonList = data.file_path?.map {
-//                        CommonFileData(type = it.type, path = it.url)
-//                    }?.toMutableList() ?: mutableListOf()
-//
-//                    Constant.commonFileList = commonList
-//                    Constant.selectedFileIndex = position
-//
-//                    val intent = Intent(context, FilesViewActivity::class.java)
-//                    intent.putExtra(Constant.subjectName, data.title)
-//                    context.startActivity(intent)
-//                }
             } else {
                 if (data.file_path.isNullOrEmpty()) {
-//                    rytList.visibility = View.GONE
-//                    arrow_icon.visibility = View.VISIBLE
                     rcyImgPDF.visibility = View.GONE
                     total_numbers.visibility = View.GONE
-                    video_player.visibility = View.GONE
+
                 } else {
                     rytList.visibility = View.VISIBLE
-//                    arrow_icon.visibility = View.VISIBLE
                     rcyImgPDF.visibility = View.VISIBLE
-                    video_player.visibility = View.GONE
-
                     val fileList = data.file_path
                     val totalFiles = fileList.size
 
@@ -219,27 +199,6 @@ class EventAdapter(
                         total_numbers.visibility = View.GONE
                     }
                 }
-
-            }
-
-            fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
-                val adapter = recyclerView.adapter ?: return
-                this.createIndicators(adapter.itemCount, 0)
-
-                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-                        super.onScrolled(rv, dx, dy)
-                        val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
-                        val firstVisible = layoutManager.findFirstVisibleItemPosition()
-                        this@attachToRecyclerView.animatePageSelected(firstVisible)
-                    }
-                })
-
-                adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                    override fun onChanged() {
-                        this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
-                    }
-                })
             }
         }
     }

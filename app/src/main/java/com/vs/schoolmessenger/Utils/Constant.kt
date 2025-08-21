@@ -287,6 +287,7 @@ object Constant {
     var isSelectedFiles = "isSelectedFiles"
 
     var IMAGE = "IMAGE"
+    var M4A = "M4A"
     var PDF = "PDF"
     var XLS = "PDF"
     var DOC = "DOC"

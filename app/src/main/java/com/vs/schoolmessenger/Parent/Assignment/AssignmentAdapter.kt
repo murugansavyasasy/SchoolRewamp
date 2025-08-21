@@ -136,7 +136,6 @@ class AssignmentAdapter(
         //        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
 //        private val imgDelete: ImageView = itemView.findViewById(R.id.imgDelete)
         private val options: ImageView = itemView.findViewById(R.id.options)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val progressBarAssignment: ProgressBar =
             itemView.findViewById(R.id.progressBarAssignment)
@@ -172,11 +171,8 @@ class AssignmentAdapter(
             progressBarAssignment.max = totalCount
             progressBarAssignment.progress = submittedCount
 
-            val hasIframe = !data.iframe.isNullOrEmpty()
             val hasFiles = !data.file_path.isNullOrEmpty()
 
-            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
             total_numbers.visibility = View.GONE
 
@@ -316,6 +312,14 @@ class AssignmentAdapter(
 
             lblSubmitted.setOnClickListener { listener.onSubmittedClick(data) }
             lblNotSubmitted.setOnClickListener { listener.onNotSubmittedClick(data) }
+
+            if (data.can_edit && data.can_delete) {
+                options.visibility = View.VISIBLE
+            } else {
+                options.visibility = View.GONE
+            }
+
+
             options.setOnClickListener {
                 listener.onEditAndDeleteClick(data, it, adapterPosition)
             }

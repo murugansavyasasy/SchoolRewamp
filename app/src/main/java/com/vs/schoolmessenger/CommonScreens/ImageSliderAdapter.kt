@@ -79,7 +79,7 @@ class ImageSliderAdapter(
                     DefaultImage.setImageResource(R.drawable.voice)
                 }
 
-                Constant.PDF, Constant.DOC, Constant.DOCX, Constant.TXT, Constant.PPT, Constant.PPTX, Constant.EXCEL -> {
+                Constant.PDF, Constant.DOC, Constant.DOCX, Constant.TXT, Constant.PPT, Constant.PPTX, Constant.EXCEL, Constant.VIDEO -> {
                     DefaultImage.setImageResource(getIconForType(data.type))
                 }
             }
@@ -93,6 +93,7 @@ class ImageSliderAdapter(
                 Constant.TXT -> R.drawable.txt_file_img
                 Constant.PPT, Constant.PPTX -> R.drawable.ppt_icon
                 Constant.EXCEL -> R.drawable.excel_icon
+                Constant.VIDEO -> R.drawable.video_play
                 else -> R.drawable.doc_icon
             }
         }

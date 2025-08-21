@@ -38,6 +38,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -143,6 +144,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         binding.lblDatePick.setOnClickListener(this)
         binding.lnrTabOneName.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.lblTimePick.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -305,12 +307,10 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 if (response.status) {
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
-                    binding.search.visibility = View.VISIBLE
                     val isAssignmentReport = response.data
                     isAssignmentReportData = isAssignmentReport
                     loadAssignmentReportData()
                 } else {
-                    binding.search.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
                     binding.noDataFound.text = response.message
@@ -377,6 +377,13 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                     isRedirectToSectionStudents()
                 }
             }
+            R.id.imgSearchToolBar -> {
+                if(binding.search.isVisible) {
+                    binding.search.visibility = View.GONE
+                } else {
+                    binding.search.visibility = View.VISIBLE
+                }
+            }
 
             R.id.lblTimePick -> {
                 showTimePickerDialog(this, this)
@@ -392,7 +399,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.line3.setBackgroundResource(R.color.white)
-
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rlaAssignmentReport.visibility = View.GONE
                 binding.rytCreateAssignment.visibility = View.VISIBLE
             }
@@ -407,7 +414,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.line3.setBackgroundResource(R.color.iconBlue)
                 binding.line1.setBackgroundResource(R.color.white)
-
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.rlaAssignmentReport.visibility = View.VISIBLE
                 binding.rytCreateAssignment.visibility = View.GONE
                 isAcademicYear = Constant.isAcademicYearList

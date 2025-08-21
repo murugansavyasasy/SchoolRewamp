@@ -170,7 +170,7 @@ class SchoolNoticeBoardAdapter(
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
+
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val remaindertag: TextView = itemView.findViewById(R.id.remaindertag)
         private val options: ImageView = itemView.findViewById(R.id.options)
@@ -213,7 +213,6 @@ class SchoolNoticeBoardAdapter(
 
             lblDateImage.text = outputText
             lblTimeImage.text = time
-            video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
             options.visibility =
                 if (noticeData.can_edit || noticeData.can_delete) View.VISIBLE else View.GONE
@@ -222,13 +221,11 @@ class SchoolNoticeBoardAdapter(
                 listener.onClickListener(noticeData, it, adapterPosition)
             }
 
-            val hasIframe = !noticeData.iframe.isNullOrEmpty()
+
             val hasFiles = !noticeData.file_path.isNullOrEmpty()
 
-            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyImgPDF.visibility = if (hasIframe) View.GONE else View.VISIBLE
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.INVISIBLE
-            total_numbers.visibility = View.GONE
+            total_numbers.visibility = View.INVISIBLE
 
             header.setOnClickListener {
                 val convertedList = noticeData.file_path.map {
