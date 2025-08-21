@@ -610,7 +610,7 @@ object Constant {
     }
 
     fun showErrorAlert(activity: Activity, title: String, content: String) {
-        val dialogView = LayoutInflater.from(activity).inflate(R.layout.custom_error_alert, null)
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.show_error_alert, null)
         val builder = AlertDialog.Builder(activity)
         builder.setView(dialogView)
         val alertDialog = builder.create()

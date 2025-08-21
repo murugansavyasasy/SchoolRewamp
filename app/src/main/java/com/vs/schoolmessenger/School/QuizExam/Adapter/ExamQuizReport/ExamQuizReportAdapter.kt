@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
+import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -28,11 +30,11 @@ class ExamQuizReportAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.quiz_upcominglist)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.exam_quiz_report_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.quiz_upcominglist, parent, false)
+                .inflate(R.layout.exam_quiz_report_item, parent, false)
             DataViewHolder(view)
         }
     }
@@ -57,18 +59,17 @@ class ExamQuizReportAdapter(
         private val lblPostedBy: TextView = itemView.findViewById(R.id.lblPostedBy)
         private val lblCreatedOn: TextView = itemView.findViewById(R.id.lblCreatedOn)
         private val imgItem: ImageView = itemView.findViewById(R.id.imgItem)
-        private val playnow2: ImageView = itemView.findViewById(R.id.playnow2)
-        private val rlaAttendance: RelativeLayout = itemView.findViewById(R.id.rlaAttendance)
-        private val lblAttendanceStatus: TextView = itemView.findViewById(R.id.lblAttendanceStatus)
+        private val lblLevelStatus: TextView = itemView.findViewById(R.id.lblLevelStatus)
+        private val lblAdd: TextView = itemView.findViewById(R.id.lblAdd)
+        private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
 
         fun bind(data: GetQuizExamReportData, position: Int) {
             lblTitle.text = data.title
             lblQuizDescription.text = data.standard+"-"+data.section
             subjectvalue.text = data.subject
-            lblAttendanceStatus.text = "Level " + data.level.toString()
+            lblLevelStatus.text = "Level " + data.level.toString()
             lblPostedBy.text = "Posted By: " + data.sent_by
             lblCreatedOn.text = "Sent At " + Constant.convertDateFormatType(data.sent_time)
-            playnow2.visibility=View.GONE
 
             val images = listOf(
                 R.drawable.quiz1,
@@ -89,12 +90,19 @@ class ExamQuizReportAdapter(
                 .placeholder(R.drawable.image_placeholder)
                 .into(imgItem)
 
-            // Open QuizExam on click
-            val openExam = View.OnClickListener {
-//                val intent = Intent(context, QuizExam::class.java)
-//                context.startActivity(intent)
+
+            lblAdd.setOnClickListener{
+                val intent = Intent(context, AddQuestion::class.java)
+                intent.putExtra("quiz_Id", data.id)
+                intent.putExtra("quiz_Title", data.title)
+                intent.putExtra("limitQuestion", 5)
+                context.startActivity(intent)
             }
-            rlaAttendance.setOnClickListener(openExam)
+            lblSubmitted.setOnClickListener{
+//                val intent1 = Intent(context, QuizExam::class.java)
+//                context.startActivity(intent1)
+            }
+
         }
     }
 

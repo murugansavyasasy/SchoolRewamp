@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/rect_shadow_white"
+
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_alignParentEnd="true"
+        android:id="@+id/lblremove"
+        android:layout_gravity="end"
+        android:src="@drawable/close_red_color"
+        android:layout_width="@dimen/twenty"
+        android:layout_height="@dimen/twenty">
+    </ImageView>
+
+    <LinearLayout
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_toStartOf="@+id/lblremove"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblChapter"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chapter"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="*"
+                android:textColor="@color/red"
+                android:layout_marginStart="@dimen/three"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_toEndOf="@+id/lblChapter"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </RelativeLayout>
+        <EditText
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/sixteen_sp"
+            android:layout_marginTop="@dimen/five"
+            android:id="@+id/edtChapterName"
+            android:layout_width="match_parent"
+            android:hint="Enter Chapter here"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_gray_radius"
+            android:padding="@dimen/eight"
+            tools:ignore="LabelFor" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblQuestion"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="*"
+                android:textColor="@color/red"
+                android:layout_marginStart="@dimen/three"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_toEndOf="@+id/lblQuestion"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </RelativeLayout>
+        <EditText
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/sixteen_sp"
+            android:layout_marginTop="@dimen/five"
+            android:id="@+id/edtQuestion"
+            android:hint="@string/enter_question_here"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_gray_radius"
+            android:padding="@dimen/eight" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblOptionA"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_a"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="*"
+                android:textColor="@color/red"
+                android:layout_marginStart="@dimen/three"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_toEndOf="@+id/lblOptionA"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </RelativeLayout>
+        <EditText
+            android:layout_marginTop="@dimen/five"
+            android:id="@+id/edtOptionA"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/sixteen_sp"
+            android:hint="@string/enter_option_a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_gray_radius"
+            android:padding="@dimen/eight" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblOptionB"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_b"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="*"
+                android:textColor="@color/red"
+                android:layout_marginStart="@dimen/three"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_toEndOf="@+id/lblOptionB"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </RelativeLayout>
+        <EditText
+            android:layout_marginTop="@dimen/five"
+            android:id="@+id/edtOptionB"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/sixteen_sp"
+            android:hint="@string/enter_option_b"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_gray_radius"
+            android:padding="@dimen/eight" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblOptionC"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Option C"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="*"
+                android:textColor="@color/red"
+                android:layout_marginStart="@dimen/three"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_toEndOf="@+id/lblOptionC"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </RelativeLayout>
+        <EditText
+            android:layout_marginTop="@dimen/five"
+            android:id="@+id/edtOptionC"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/sixteen_sp"
+            android:hint="@string/enter_option_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_gray_radius"
+            android:padding="@dimen/eight" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblOptionD"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Option D"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="*"
+                android:textColor="@color/red"
+                android:layout_marginStart="@dimen/three"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_toEndOf="@+id/lblOptionD"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </RelativeLayout>
+        <EditText
+            android:layout_marginTop="@dimen/five"
+            android:id="@+id/edtOptionD"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/sixteen_sp"
+            android:hint="Enter Option D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_gray_radius"
+            android:padding="@dimen/eight" />
+
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/lblCorrectAns"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/correct_ans"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/red"
+                        android:layout_marginStart="@dimen/three"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_toEndOf="@+id/lblCorrectAns"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+                </RelativeLayout>
+                <EditText
+                    android:layout_marginTop="@dimen/five"
+                    android:id="@+id/edtCorrectAns"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:hint="@string/enter_correct_answer_here"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_gray_radius"
+                    android:padding="@dimen/eight"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="none"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginStart="@dimen/five"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/lblMark"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mark"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/red"
+                        android:layout_marginStart="@dimen/three"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_toEndOf="@+id/lblMark"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+                </RelativeLayout>
+                <EditText
+                    android:layout_marginTop="@dimen/five"
+                    android:id="@+id/edtMark"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:hint="@string/drop_your_mark_here"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:background="@drawable/rect_gray_radius"
+                    android:padding="@dimen/eight" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/five"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:paddingTop="@dimen/ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:gravity="center"
+                    android:padding="@dimen/eight"
+                    android:background="@drawable/black_rect_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/white"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:text="@string/attachments"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblAttachmentCount"
+                        android:layout_width="wrap_content"
+                        android:drawableStart="@drawable/add_icon"
+                        android:text="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_marginStart="@dimen/five"
+                        android:textColor="@color/white"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+            <ImageView
+                android:layout_gravity="end"
+                android:id="@+id/lblRemoveAttachment"
+                android:src="@drawable/close_red_color"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty">
+            </ImageView>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

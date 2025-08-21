@@ -109,9 +109,13 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
@@ -968,5 +972,30 @@ interface ApiInterfaces {
         @Query("subject_id") subject_id: String,
     @Query("section_id") section_id: String
     ): Call<GetCheckLevel?>?
+
+    @GET(APIMethods.isGetQuizQuestionReport)
+    fun isGetQuizQuestionReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("id") id: String,
+    ): Call<GetQuizQuestionReport?>?
+
+    @GET(APIMethods.isGetQuizSubmissionList)
+    fun isGetQuizSubmissionList(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("id") id: String,
+    ): Call<GetQuizSubmissionList?>?
+
+    @GET(APIMethods.isGetPickFromQBank)
+    fun isGetPickFromQBank(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("subject_id") subject_id: String,
+    ): Call<GetPickFromQBank?>?
+
+    @POST(APIMethods.isAddQuestion)
+    fun isAddQuestion(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<AddQuestionResponse?>?
+
 
 }

@@ -99,9 +99,13 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
@@ -339,6 +343,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetCheckLevel: LiveData<GetCheckLevel?>? = null
     var islsrwSkillCreate: LiveData<LsrwSkillSendResponse?>? = null
     var islsrwSkilllist: LiveData<LsrwSkillResponse?>? = null
+    var isGetQuizQuestionReport: LiveData<GetQuizQuestionReport?>? = null
+    var isGetQuizSubmissionList: LiveData<GetQuizSubmissionList?>? = null
+    var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
+    var isAddQuestion: LiveData<AddQuestionResponse?>? = null
 
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
@@ -477,6 +485,10 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetCheckLevel = apiSchoolRepositories.isGetCheckLevelLiveData
         islsrwSkillCreate = apiSchoolRepositories.islsrwSkillCreateLiveData
         islsrwSkilllist = apiParentRepositories.islsrwSkilllistLiveData
+        isGetQuizQuestionReport = apiSchoolRepositories.isGetQuizQuestionReportLiveData
+        isGetQuizSubmissionList = apiSchoolRepositories.isGetQuizSubmissionListLiveData
+        isGetPickFromQBank = apiSchoolRepositories.isGetPickFromQBankLiveData
+        isAddQuestion = apiSchoolRepositories.isAddQuestionLiveData
 
 
     }
@@ -1193,6 +1205,38 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiSchoolRepositories.isGetCheckLevel(
             isToken, class_id,subject_id,section_id
+        )
+    }
+
+    fun isGetQuizQuestionReport(
+        isToken: String, id:String
+    ) {
+        apiSchoolRepositories.isGetQuizQuestionReport(
+            isToken, id
+        )
+    }
+
+    fun isGetQuizSubmissionList(
+        isToken: String, id:String
+    ) {
+        apiSchoolRepositories.isGetQuizSubmissionList(
+            isToken, id
+        )
+    }
+
+    fun isGetPickFromQBank(
+        isToken: String, subject_id:String
+    ) {
+        apiSchoolRepositories.isGetPickFromQBank(
+            isToken, subject_id
+        )
+    }
+
+    fun isQuizAddQuestion(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isQuizAddQuestion(
+            isToken, jsonObject,
         )
     }
 

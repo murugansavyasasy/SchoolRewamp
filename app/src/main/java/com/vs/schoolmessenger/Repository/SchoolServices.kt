@@ -70,9 +70,14 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -182,6 +187,10 @@ class SchoolServices {
     var isCreateQuiz: MutableLiveData<CreateQuizResponse?>
     var isGetQuizExamReport: MutableLiveData<GetQuizExamReport?>
     var isGetCheckLevel: MutableLiveData<GetCheckLevel?>
+    var isGetQuizQuestionReport: MutableLiveData<GetQuizQuestionReport?>
+    var isGetQuizSubmissionList: MutableLiveData<GetQuizSubmissionList?>
+    var isGetPickFromQBank: MutableLiveData<GetPickFromQBank?>
+    var isAddQuestion: MutableLiveData<AddQuestionResponse?>
 
 
     init {
@@ -276,6 +285,10 @@ class SchoolServices {
         isCreateQuiz = MutableLiveData()
         isGetQuizExamReport= MutableLiveData()
         isGetCheckLevel= MutableLiveData()
+        isGetQuizQuestionReport= MutableLiveData()
+        isGetQuizSubmissionList= MutableLiveData()
+        isGetPickFromQBank= MutableLiveData()
+        isAddQuestion= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -3499,5 +3512,163 @@ class SchoolServices {
     val islsrwSkillCreateLiveData: LiveData<LsrwSkillSendResponse?>
         get() = islsrwSkillCreate
 
+
+
+    fun isGetQuizQuestionReport(
+        isToken: String,class_id:String,
+    ) {
+        RestClient.apiInterfaces.isGetQuizQuestionReport(isToken,class_id)
+            ?.enqueue(object : Callback<GetQuizQuestionReport?> {
+                override fun onResponse(
+                    call: Call<GetQuizQuestionReport?>, response: Response<GetQuizQuestionReport?>
+                ) {
+                    Log.d(
+                        "GetQuizQuestionReport",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetQuizQuestionReportData", response.body().toString())
+                                isGetQuizQuestionReport.postValue(response.body())
+                            } else {
+                                Log.d("GetQuizQuestionReportData", response.body().toString())
+                                isGetQuizQuestionReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetQuizQuestionReport?>, t: Throwable
+                ) {
+                    isGetQuizQuestionReport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetQuizQuestionReportLiveData: LiveData<GetQuizQuestionReport?>
+        get() = isGetQuizQuestionReport
+
+
+    fun isGetQuizSubmissionList(
+        isToken: String,id:String,
+    ) {
+        RestClient.apiInterfaces.isGetQuizSubmissionList(isToken,id)
+            ?.enqueue(object : Callback<GetQuizSubmissionList?> {
+                override fun onResponse(
+                    call: Call<GetQuizSubmissionList?>, response: Response<GetQuizSubmissionList?>
+                ) {
+                    Log.d(
+                        "GetQuizQuestionReport",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetQuizSubmissionListData", response.body().toString())
+                                isGetQuizSubmissionList.postValue(response.body())
+                            } else {
+                                Log.d("GetQuizSubmissionListData", response.body().toString())
+                                isGetQuizSubmissionList.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetQuizSubmissionList?>, t: Throwable
+                ) {
+                    isGetQuizSubmissionList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetQuizSubmissionListLiveData: LiveData<GetQuizSubmissionList?>
+        get() = isGetQuizSubmissionList
+
+
+
+    fun isGetPickFromQBank(
+        isToken: String,subject_id: String
+    ) {
+        RestClient.apiInterfaces.isGetPickFromQBank(isToken,subject_id)
+            ?.enqueue(object : Callback<GetPickFromQBank?> {
+                override fun onResponse(
+                    call: Call<GetPickFromQBank?>, response: Response<GetPickFromQBank?>
+                ) {
+                    Log.d(
+                        "isGetPickFromQBank",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("isGetPickFromQBankData", response.body().toString())
+                                isGetPickFromQBank.postValue(response.body())
+                            } else {
+                                Log.d("isGetPickFromQBankData", response.body().toString())
+                                isGetPickFromQBank.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetPickFromQBank?>, t: Throwable
+                ) {
+                    isGetPickFromQBank.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetPickFromQBankLiveData: LiveData<GetPickFromQBank?>
+        get() = isGetPickFromQBank
+
+
+
+    fun isQuizAddQuestion(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isAddQuestion(isToken, jsonObject)
+            ?.enqueue(object : Callback<AddQuestionResponse?> {
+                override fun onResponse(
+                    call: Call<AddQuestionResponse?>, response: Response<AddQuestionResponse?>
+                ) {
+                    Log.d(
+                        "isAddQuestion Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                isAddQuestion.postValue(response.body())
+                            } else {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                isAddQuestion.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<AddQuestionResponse?>, t: Throwable
+                ) {
+                    isAddQuestion.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isAddQuestionLiveData: LiveData<AddQuestionResponse?>
+        get() = isAddQuestion
 
 }
