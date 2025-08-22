@@ -28,8 +28,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgCountryLogo"
-            android:layout_width="@dimen/fourty"
-            android:layout_height="@dimen/fourty"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/ten"
             android:src="@drawable/albania_flag"
