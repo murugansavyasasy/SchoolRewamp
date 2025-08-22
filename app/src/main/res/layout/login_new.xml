@@ -186,7 +186,7 @@
                         android:layout_marginTop="15dp"
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
-                        android:padding="@dimen/fifteen"
+                        android:padding="@dimen/ten"
                         android:text="@string/logintext"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp" />

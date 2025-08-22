@@ -65,7 +65,7 @@ class ExamQuizReportAdapter(
 
         fun bind(data: GetQuizExamReportData, position: Int) {
             lblTitle.text = data.title
-            lblQuizDescription.text = data.standard+"-"+data.section
+            lblQuizDescription.text = data.description
             subjectvalue.text = data.subject
             lblLevelStatus.text = "Level " + data.level.toString()
             lblPostedBy.text = "Posted By: " + data.sent_by
@@ -95,7 +95,8 @@ class ExamQuizReportAdapter(
                 val intent = Intent(context, AddQuestion::class.java)
                 intent.putExtra("quiz_Id", data.id)
                 intent.putExtra("quiz_Title", data.title)
-                intent.putExtra("limitQuestion", 5)
+                intent.putExtra("limitQuestion", data.no_of_questions)
+                intent.putExtra("subjectID", data.subject_id)
                 context.startActivity(intent)
             }
             lblSubmitted.setOnClickListener{

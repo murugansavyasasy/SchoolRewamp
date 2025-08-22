@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.QuizExam.QuizExamReport
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     var isQuizID=""
     var isQuestionLimit=-1
     var isQuizTitle=""
+    var isSubjectID=""
     private lateinit var savedQuizQuestionReportList: List<GetQuizQuestionReportData>
     private lateinit var editableQuizQuestionReportList: MutableList<GetQuizQuestionReportData>
 
@@ -46,6 +48,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         isQuestionLimit = intent.getIntExtra("limitQuestion", -1)
         isQuizID = intent.getStringExtra("quiz_Id").toString()
+        isSubjectID = intent.getStringExtra("subjectID").toString()
         isQuizTitle = intent.getStringExtra("quiz_Title").toString()
         binding.toolbarLayout.lblParentToolBar.text=isQuizTitle
 
@@ -62,6 +65,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                         getString(R.string.alert),
                         response.message
                     )
+                    savedQuizQuestionReportList=response.data
+                    editableQuizQuestionReportList = savedQuizQuestionReportList.map { it.copy() }.toMutableList()
+                    isLoadQuizQuestionReport()
                 }
             } else {
                 Constant.showErrorAlert(
@@ -77,14 +83,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     }
 
     private fun isLoadQuizQuestionReport() {
-        adapter = AddQuestionAdapter(editableQuizQuestionReportList.toMutableList(), this,true)
+        adapter = AddQuestionAdapter(editableQuizQuestionReportList.toMutableList(), this,false)
         binding.rcAddQuestion.layoutManager = LinearLayoutManager(this)
         binding.rcAddQuestion.isNestedScrollingEnabled = false
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         binding.rcAddQuestion.adapter = adapter
 
         // Add an empty item only if list is empty or has 0/1 item
-        if (editableQuizQuestionReportList.isEmpty()) {
+        if (editableQuizQuestionReportList.size<=0) {
             adapter.addItem()
         }
         binding.lblAddQuestion.setOnClickListener {
@@ -96,7 +102,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     }
 
     private fun isFetchQuizQuestionReport() {
-        adapter = AddQuestionAdapter(null, this, Constant.isShimmerViewShow)
+        adapter = AddQuestionAdapter(null, this,true)
         binding.rcAddQuestion.layoutManager = LinearLayoutManager(this)
         binding.rcAddQuestion.adapter = adapter
 
