@@ -9,8 +9,8 @@
     <RelativeLayout
         android:id="@+id/rytBack"
         android:layout_margin="@dimen/ten"
-        android:layout_width="@dimen/fifty"
-        android:layout_height="@dimen/fifty"
+        android:layout_width="@dimen/fourty"
+        android:layout_height="@dimen/fourty"
         android:background="@drawable/bg_circle_white"
         android:orientation="vertical">
 
@@ -81,9 +81,10 @@
                     android:background="@drawable/bg_white_stroke_box"
                     android:inputType="number"
                     android:maxLength="1"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/twenty_sp" />
 
                 <EditText
 
@@ -96,9 +97,10 @@
                     android:background="@drawable/bg_white_stroke_box"
                     android:inputType="number"
                     android:maxLength="1"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/twenty_sp" />
 
                 <EditText
                     android:id="@+id/txtOtp3"
@@ -110,9 +112,10 @@
                     android:background="@drawable/bg_white_stroke_box"
                     android:inputType="number"
                     android:maxLength="1"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/twenty_sp" />
 
                 <EditText
                     android:id="@+id/txtOtp4"
@@ -123,10 +126,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_white_stroke_box"
                     android:inputType="number"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:maxLength="1"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/twenty_sp" />
 
                 <EditText
                     android:id="@+id/txtOtp5"
@@ -135,12 +139,13 @@
                     android:layout_margin="@dimen/five"
                     android:layout_marginStart="@dimen/five"
                     android:layout_weight="1"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:background="@drawable/bg_white_stroke_box"
                     android:inputType="number"
                     android:maxLength="1"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/twenty_sp" />
 
                 <EditText
                     android:id="@+id/txtOtp6"
@@ -149,13 +154,14 @@
                     android:layout_margin="@dimen/five"
                     android:layout_marginStart="@dimen/five"
                     android:layout_weight="1"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:background="@drawable/bg_white_stroke_box"
                     android:inputType="number"
                     android:maxLength="1"
 
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/twenty_sp" />
             </LinearLayout>
 
             <RelativeLayout
@@ -219,6 +225,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/ten"
+                android:textColor="@color/PrimaryColor"
                 style="@style/CustomTextStylePoppinsBold"
                 android:gravity="center"
                 android:text="@string/contact_us"
@@ -240,7 +247,7 @@
                 android:background="@drawable/rect_btn_blue"
                 android:gravity="center"
                 android:text="@string/NEXT"
-                android:padding="@dimen/fifteen"
+                android:padding="@dimen/ten"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold" />

@@ -7,8 +7,8 @@
 
     <RelativeLayout
         android:id="@+id/rytBack"
-        android:layout_width="@dimen/fifty"
-        android:layout_height="@dimen/fifty"
+        android:layout_width="@dimen/fourty"
+        android:layout_height="@dimen/fourty"
         android:layout_margin="@dimen/ten"
         android:background="@drawable/bg_circle_white"
         android:orientation="vertical">
@@ -150,7 +150,7 @@
                         android:layout_marginBottom="@dimen/ten"
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
-                        android:padding="@dimen/fifteen"
+                        android:padding="@dimen/ten"
                         android:text="@string/lblValidate"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp" />
