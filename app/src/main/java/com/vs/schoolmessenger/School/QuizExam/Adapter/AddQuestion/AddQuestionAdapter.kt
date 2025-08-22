@@ -118,7 +118,7 @@ class AddQuestionAdapter(
                 if (isAllValid) holder.edtOptionD.requestFocus()
                 isAllValid = false
             }
-            if (item.correct_answer.isBlank()) {
+            if (item.answer.isBlank()) {
                 holder.edtCorrectAns.error = "This is required!"
                 if (isAllValid) holder.edtCorrectAns.requestFocus()
                 isAllValid = false
