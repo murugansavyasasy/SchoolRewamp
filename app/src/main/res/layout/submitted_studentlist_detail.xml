@@ -140,8 +140,8 @@
                 <TextView
                     android:id="@+id/total_numbers"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
+                    android:layout_width="@dimen/thirty_six"
+                    android:layout_height="@dimen/thirty_six"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/minus_fifteen"
                     android:layout_marginTop="@dimen/ten"

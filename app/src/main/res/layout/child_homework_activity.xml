@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/imgBack"
-        android:layout_width="@dimen/thirty_five"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_marginTop="@dimen/twenty_three"
-        android:src="@drawable/left_arrow"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -25,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgBack">
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -222,13 +217,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lblClickComplete">
+                app:layout_constraintTop_toBottomOf="@id/thumbContainer">
 
                 <ImageView
                     android:id="@+id/imgAttachmentIcon"
@@ -247,12 +242,12 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcAudioHW"
+                android:id="@+id/rcSeekBarAndTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginStart="@dimen/five"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/five"
                 android:layout_marginBottom="@dimen/ten"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:visibility="gone"
@@ -260,17 +255,20 @@
                 app:layout_constraintTop_toBottomOf="@id/attachments_container" />
 
 
+
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcChildHW"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginStart="@dimen/five"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
                 android:layout_marginBottom="@dimen/ten"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rcAudioHW" />
+                app:layout_constraintTop_toBottomOf="@id/rcSeekBarAndTitle" />
 
             <View
                 android:id="@+id/viewline"

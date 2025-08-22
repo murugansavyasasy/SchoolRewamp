@@ -55,7 +55,6 @@ class LsrwAdapter(
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
 
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
 
@@ -67,11 +66,9 @@ class LsrwAdapter(
             txtSubmitted.text = item.submitted_average
 
 
-            val hasIframe = !item.iframe.isNullOrEmpty()
             val hasFiles = !item.file_path.isNullOrEmpty()
 
-            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
+
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
             total_numbers.visibility = View.GONE
 
