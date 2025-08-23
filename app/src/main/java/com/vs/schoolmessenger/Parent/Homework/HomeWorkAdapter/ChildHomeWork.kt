@@ -9,10 +9,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
@@ -20,6 +22,7 @@ import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.School.LSRW.LsrwStudentListFragment
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -38,7 +41,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlue()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.childlsrwlayoutxml.imgBack.setOnClickListener(this)
         binding.childlsrwlayoutxml.imgBack.setOnClickListener {
             onBackPressed()
@@ -76,7 +79,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.fragmentContainer.visibility = View.GONE
 
         } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
-            binding.imgBack.visibility = View.GONE
+            binding.toolbarLayout.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.txtTitle.text = data!!.title
@@ -91,7 +94,23 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             )
             Log.d("FragmentCheck", "LsrwStudentListFragment should now be loaded")
 
-    } else {
+        } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
+
+            val audioList = data.fileList
+                .filter { it.type.equals(Constant.M4A, ignoreCase = true) }
+                .map { it.url }
+            if (audioList.isNotEmpty()) {
+                binding.rcSeekBarAndTitle.visibility = View.VISIBLE
+                val audioAdapter = AudioAdapter(audioList)
+                binding.rcSeekBarAndTitle.layoutManager =
+                    LinearLayoutManager(binding.root.context)
+                binding.rcSeekBarAndTitle.adapter = audioAdapter
+            } else {
+                binding.rcSeekBarAndTitle.visibility = View.GONE
+            }
+        }
+
+        else {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.GONE
             binding.fragmentContainer.visibility = View.GONE
@@ -162,7 +181,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.rcChildHW.layoutManager =
                 GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
             binding.childlsrwlayoutxml.rcChildHW.adapter = adapter
-        } else {
+        }else if (SELECTED_SCHOOL_MENU == M_LSRW) {
+            binding.rcChildHW.layoutManager =
+                GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+            binding.rcChildHW.adapter = adapter
+        }  else {
             binding.rcChildHW.layoutManager =
                 GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
             binding.rcChildHW.adapter = adapter

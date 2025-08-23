@@ -118,8 +118,6 @@ class AssignmentAdapter(
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblassigned: TextView = itemView.findViewById(R.id.lblassigned)
         private val lblCategory: TextView = itemView.findViewById(R.id.lblCategory)
-
-        //        private val lblSubmissionDue: TextView = itemView.findViewById(R.id.lblSubmissionDue)
         private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
         private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
@@ -129,12 +127,9 @@ class AssignmentAdapter(
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
 
-        //        private val webView: WebView = itemView.findViewById(R.id.webView)
-        private val progressBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
 
-        //        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
-//        private val imgDelete: ImageView = itemView.findViewById(R.id.imgDelete)
+
         private val options: ImageView = itemView.findViewById(R.id.options)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val progressBarAssignment: ProgressBar =

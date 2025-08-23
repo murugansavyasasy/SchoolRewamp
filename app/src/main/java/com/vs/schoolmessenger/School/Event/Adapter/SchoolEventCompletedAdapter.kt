@@ -91,9 +91,8 @@ class SchoolEventCompletedAdapter(
                     fullList
                 } else {
                     fullList.filter {
-                        it.title.lowercase().contains(query) ||
-                                it.description.lowercase().contains(query) ||
-                                it.venue.lowercase().contains(query)
+                        it.title.lowercase().contains(query) || it.description.lowercase()
+                            .contains(query) || it.venue.lowercase().contains(query)
                     }
                 }
                 val filterResults = FilterResults()
@@ -170,28 +169,27 @@ class SchoolEventCompletedAdapter(
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
-                if (data.file_path.isEmpty()) {
-                    rcyImgPDF.visibility = View.GONE
-                    total_numbers.visibility = View.GONE
+            if (data.file_path.isEmpty()) {
+                rcyImgPDF.visibility = View.GONE
+                total_numbers.visibility = View.GONE
+            } else {
+                rytList.visibility = View.VISIBLE
+                arrow_icon.visibility = View.VISIBLE
+                rcyImgPDF.visibility = View.VISIBLE
+                val fileList = data.file_path
+                val totalFiles = fileList.size
+                val adapter = EventFilePathAdapter(fileList, context, Constant.isShimmerViewDisable)
+                rcyImgPDF.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rcyImgPDF.adapter = adapter
+                if (totalFiles > 3) {
+                    total_numbers.text = "+${totalFiles - 3}"
+                    total_numbers.visibility = View.VISIBLE
                 } else {
-                    rytList.visibility = View.VISIBLE
-                    arrow_icon.visibility = View.VISIBLE
-                    rcyImgPDF.visibility = View.VISIBLE
-                    val fileList = data.file_path
-                    val totalFiles = fileList.size
-                    val adapter =
-                        EventFilePathAdapter(fileList, context, Constant.isShimmerViewDisable)
-                    rcyImgPDF.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    rcyImgPDF.adapter = adapter
-                    if (totalFiles > 3) {
-                        total_numbers.text = "+${totalFiles - 3}"
-                        total_numbers.visibility = View.VISIBLE
-                    } else {
-                        total_numbers.visibility = View.GONE
-                    }
+                    total_numbers.visibility = View.GONE
                 }
             }
+        }
 
     }
 }

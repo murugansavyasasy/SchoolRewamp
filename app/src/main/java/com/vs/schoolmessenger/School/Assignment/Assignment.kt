@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -167,24 +166,25 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             noDataText = binding.noDataFound
         )
 
-        binding.rcyAssignmentReport.adapter = adapter
+        binding.rcyAssignmentReport.adapter = isAssignmentAdapter
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                adapter.filter.filter(s)
+                isAssignmentAdapter?.filter?.filter(s)
                 binding.rcyAssignmentReport.post {
-                    if (adapter.itemCount == 0) {
+                    if (isAssignmentAdapter?.itemCount == 0) {
                         binding.rcyAssignmentReport.visibility = View.GONE
-                        binding.noDataFound.visibility = View.VISIBLE
+                        binding.lytNoDataFound.visibility = View.VISIBLE
                     } else {
                         binding.rcyAssignmentReport.visibility = View.VISIBLE
-                        binding.noDataFound.visibility = View.GONE
+                        binding.lytNoDataFound.visibility = View.GONE
                     }
                 }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+            }
         })
 
 
@@ -203,10 +203,11 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 adapter.updateList(response.data)
                 binding.rcyAssignmentReport.visibility = View.VISIBLE
-                binding.noDataFound.visibility = View.GONE
+                binding.lytNoDataFound.visibility = View.GONE
             } else {
                 binding.rcyAssignmentReport.visibility = View.GONE
-                binding.noDataFound.visibility = View.VISIBLE
+                binding.lytNoDataFound.visibility = View.VISIBLE
+                binding.noDataFound.text = "No data found"
             }
         }
 
@@ -313,7 +314,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 } else {
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
-                    binding.noDataFound.text = response.message
+                    binding.noDataFound.text = "No data found"
                 }
             }
         }
@@ -377,8 +378,9 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                     isRedirectToSectionStudents()
                 }
             }
+
             R.id.imgSearchToolBar -> {
-                if(binding.search.isVisible) {
+                if (binding.search.isVisible) {
                     binding.search.visibility = View.GONE
                 } else {
                     binding.search.visibility = View.VISIBLE
