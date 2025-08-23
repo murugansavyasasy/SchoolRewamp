@@ -4,16 +4,32 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="@drawable/rect_shadow_white"
-
     android:layout_height="wrap_content">
-    <ImageView
-        android:layout_alignParentEnd="true"
-        android:id="@+id/lblremove"
-        android:layout_gravity="end"
-        android:src="@drawable/close_red_color"
-        android:layout_width="@dimen/twenty"
-        android:layout_height="@dimen/twenty">
-    </ImageView>
+    <RelativeLayout
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginBottom="@dimen/five"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:layout_alignParentStart="true"
+            android:id="@+id/cbQuestion"
+            style="@style/CustomCheckBox"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/two"
+            android:button="@drawable/ch_square"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_alignParentEnd="true"
+            android:id="@+id/lblremove"
+            android:layout_centerVertical="true"
+            android:src="@drawable/close_red_color"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty">
+        </ImageView>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_marginStart="@dimen/ten"
@@ -315,12 +331,16 @@
                     android:layout_height="wrap_content"
                     android:digits="0123456789"
                     android:inputType="number"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="none"
                     android:background="@drawable/rect_gray_radius"
                     android:padding="@dimen/eight" />
             </LinearLayout>
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/lnrAttachment"
             android:layout_marginTop="@dimen/five"
             android:gravity="end"
             android:layout_width="match_parent"

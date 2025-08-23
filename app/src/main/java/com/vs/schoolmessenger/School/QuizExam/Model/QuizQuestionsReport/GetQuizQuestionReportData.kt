@@ -4,6 +4,7 @@ data class GetQuizQuestionReportData (
     val id: String,
     val quiz_id: String,
     var question: String,
+    var chapter: String,
     var answer: String,
     var a_option: String,
     var b_option: String,
