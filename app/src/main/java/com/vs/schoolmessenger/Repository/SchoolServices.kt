@@ -3486,7 +3486,6 @@ class SchoolServices {
 
 
     fun islsrwSkillCreate(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.islsrwSkillCreate(isToken, jsonObject)
             ?.enqueue(object : Callback<LsrwSkillSendResponse?> {
                 override fun onResponse(

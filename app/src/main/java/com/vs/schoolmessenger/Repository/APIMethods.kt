@@ -136,6 +136,7 @@ object APIMethods {
     const val islsrwskillsreport = "lms/api/lsrw/skills-report"
     const val islsrwStudentlist = "lms/api/lsrw/submission-list"
     const val islsrwSkillCreate = "lms/api/lsrw/create-skill"
+    const val islsrwSkillSubmit = "lms/api/lsrw/submit-skill"
     const val islsrwSkilllist = "lms/api/lsrw/skill-list"
 
 

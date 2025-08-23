@@ -40,6 +40,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
+import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
@@ -342,6 +343,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetQuizExamReport: LiveData<GetQuizExamReport?>? = null
     var isGetCheckLevel: LiveData<GetCheckLevel?>? = null
     var islsrwSkillCreate: LiveData<LsrwSkillSendResponse?>? = null
+    var islsrwSkillSubmit: LiveData<LSRWSkillSubmitResponse?>? = null
     var islsrwSkilllist: LiveData<LsrwSkillResponse?>? = null
     var isGetQuizQuestionReport: LiveData<GetQuizQuestionReport?>? = null
     var isGetQuizSubmissionList: LiveData<GetQuizSubmissionList?>? = null
@@ -484,6 +486,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetQuizExamReport = apiSchoolRepositories.isGetQuizExamReportLiveData
         isGetCheckLevel = apiSchoolRepositories.isGetCheckLevelLiveData
         islsrwSkillCreate = apiSchoolRepositories.islsrwSkillCreateLiveData
+        islsrwSkillSubmit = apiParentRepositories.islsrwSkillSubmitLiveData
         islsrwSkilllist = apiParentRepositories.islsrwSkilllistLiveData
         isGetQuizQuestionReport = apiSchoolRepositories.isGetQuizQuestionReportLiveData
         isGetQuizSubmissionList = apiSchoolRepositories.isGetQuizSubmissionListLiveData
@@ -1069,6 +1072,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun islsrwSkillCreate(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.islsrwSkillCreate(isToken, josnObject, activity)
+    }
+
+
+    fun islsrwSkillSubmit(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiParentRepositories.islsrwSkillSubmit(isToken, josnObject, activity)
     }
 
     fun islsrwSkilllist(isToken: String) {

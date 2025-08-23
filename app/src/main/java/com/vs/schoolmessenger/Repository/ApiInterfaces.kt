@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
+import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
@@ -845,12 +846,16 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<LsrwSkillSendResponse>?
 
+    @POST(APIMethods.islsrwSkillSubmit)
+    fun islsrwSkillSubmit(
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
+    ): Call<LSRWSkillSubmitResponse>?
+
 
     @GET(APIMethods.islsrwSkilllist)
     fun islsrwSkilllist(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<LsrwSkillResponse?>?
-
 
 
     // PTM
@@ -970,7 +975,7 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query("class_id") class_id: String,
         @Query("subject_id") subject_id: String,
-    @Query("section_id") section_id: String
+        @Query("section_id") section_id: String
     ): Call<GetCheckLevel?>?
 
     @GET(APIMethods.isGetQuizQuestionReport)

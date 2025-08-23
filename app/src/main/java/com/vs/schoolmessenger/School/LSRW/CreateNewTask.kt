@@ -574,7 +574,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             title,
             description,
             selectedSkill,
-
             )
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.lsrwskill_data, isLsrwnewTaskSendingData)
