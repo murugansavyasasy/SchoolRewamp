@@ -48,12 +48,21 @@ class AddQuestionAdapter(
         return if (isLoading) 20 else itemList!!.size
     }
 
+    fun addItems(newItems: List<GetQuizQuestionReportData>) {
+        val startPosition = itemList!!.size
+        itemList!!.addAll(newItems)
+        notifyItemRangeInserted(startPosition, newItems.size)
+    }
+
+
+
     fun addItem() {
         itemList!!.add(
             GetQuizQuestionReportData(
                 id = "",
                 quiz_id = "",
                 question = "",
+                chapter = "",
                 answer = "",
                 a_option = "",
                 b_option = "",
@@ -156,7 +165,7 @@ class AddQuestionAdapter(
 
         fun bind(data: GetQuizQuestionReportData, position: Int) {
 
-            edtChapterName.setText(data.question)
+            edtChapterName.setText(data.chapter)
             edtQuestion.setText(data.question)
             edtOptionA.setText(data.a_option)
             edtOptionB.setText(data.b_option)

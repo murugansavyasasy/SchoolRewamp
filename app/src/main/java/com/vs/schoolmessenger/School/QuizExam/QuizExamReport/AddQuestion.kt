@@ -1,7 +1,14 @@
 package com.vs.schoolmessenger.School.QuizExam.QuizExamReport
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.CheckBox
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +17,8 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.AddQuestionAdapter
+import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
+import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBankData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -27,11 +36,13 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     var isQuizTitle=""
     var isSubjectID=""
     private lateinit var savedQuizQuestionReportList: List<GetQuizQuestionReportData>
+    private lateinit var pickQBankList: List<GetPickFromQBankData>
     private lateinit var editableQuizQuestionReportList: MutableList<GetQuizQuestionReportData>
 
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: AddQuestionAdapter
+    private lateinit var adapter2: PickQuestionAdapter
 
 
 
@@ -39,17 +50,23 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlue()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.setOnClickListener{
+            val FinalList=adapter.getUpdatedList()
+            Log.d("FinalList",FinalList.toString())
+        }
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         isQuestionLimit = intent.getIntExtra("limitQuestion", -1)
         isQuizID = intent.getStringExtra("quiz_Id").toString()
         isSubjectID = intent.getStringExtra("subjectID").toString()
         isQuizTitle = intent.getStringExtra("quiz_Title").toString()
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.lblImportQuestion.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text=isQuizTitle
 
         appViewModel?.isGetQuizQuestionReport?.observe(this) { response ->
@@ -78,8 +95,31 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             }
         }
 
+        appViewModel?.isGetPickFromQBank?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this)
+                    pickQBankList=response.data
+                    showResumeListDialog(this, pickQBankList)
+                }
+                else {
+                    Constant.hideLoading(this)
+                    Constant.showErrorAlert(
+                        this,
+                        getString(R.string.alert),
+                        response.message
+                    )
+                }
+            } else {
+                Constant.hideLoading(this)
+                Constant.showErrorAlert(
+                    this,
+                    getString(R.string.fail),
+                    getString(R.string.Something_went_wrong_Please_try_again)
+                )
+            }
+        }
         isFetchQuizQuestionReport()
-
     }
 
     private fun isLoadQuizQuestionReport() {
@@ -109,12 +149,98 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         appViewModel?.isGetQuizQuestionReport(isAccessToken ?: "", isQuizID)
     }
 
+    private fun isFetchFromQuestionBank(){
+        appViewModel?.isGetPickFromQBank(isAccessToken ?: "", isSubjectID)
+    }
+
+    fun showResumeListDialog(
+        activity: Activity,
+        pickFomQbank: List<GetPickFromQBankData>
+    ) {
+        if (activity.isFinishing || activity.isDestroyed) return
+
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.pick_question_from_qbank, null)
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // Check again before showing
+        if (!activity.isFinishing && !activity.isDestroyed) {
+            alertDialog.show()
+        }
+
+        val lblClose = dialogView.findViewById<TextView>(R.id.lblClose)
+        val lblImportQuestion = dialogView.findViewById<TextView>(R.id.lblImportQuestion)
+        val recyclerView = dialogView.findViewById<RecyclerView>(R.id.rcPickFromQBank)
+        val cbSelect = dialogView.findViewById<CheckBox>(R.id.cbSelect)
+
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false){ isChecked ->
+            if (!isChecked && cbSelect.isChecked) {
+                cbSelect.isChecked = false
+            }
+            if (adapter2.getSelectedQuestions().size == pickFomQbank.size) {
+                cbSelect.isChecked = true
+            }
+        }
+        recyclerView.adapter = adapter2
+
+        lblImportQuestion.setOnClickListener {
+            val selectedQuestions = adapter2.getSelectedQuestions()
+
+            // Convert to AddQuestionAdapter model
+            val quizQuestions = selectedQuestions.map { it.toQuizQuestionReportData() }
+
+            adapter.addItems(quizQuestions)
+        }
+
+        lblClose.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        cbSelect.setOnCheckedChangeListener { _, isChecked ->
+            adapter2.selectAll(isChecked)
+        }
+
+    }
+
+    fun GetPickFromQBankData.toQuizQuestionReportData(): GetQuizQuestionReportData {
+        return GetQuizQuestionReportData(
+            id = this.id,
+            quiz_id = "",
+            question = this.question,
+            chapter = this.chapter,
+            answer = this.answer,
+            a_option = this.a_option,
+            b_option = this.b_option,
+            c_option = this.c_option,
+            d_option = this.d_option,
+            mark = this.mark,
+            option_a_counts = 0,
+            option_b_counts = 0,
+            option_c_counts = 0,
+            option_d_counts = 0,
+            correct_answer_counts = 0,
+            incorrect_answer_counts = 0,
+            correct_answer = this.answer
+        )
+    }
+
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
                 onBackPressed()
             }
+            R.id.lblImportQuestion->{
+                Constant.showLoading(this)
+                isFetchFromQuestionBank()
+            }
+
 
         }
     }
