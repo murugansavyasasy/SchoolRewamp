@@ -108,9 +108,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             } else {
                 binding.rcSeekBarAndTitle.visibility = View.GONE
             }
-        }
-
-        else {
+        } else {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.GONE
             binding.fragmentContainer.visibility = View.GONE
@@ -181,11 +179,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.rcChildHW.layoutManager =
                 GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
             binding.childlsrwlayoutxml.rcChildHW.adapter = adapter
-        }else if (SELECTED_SCHOOL_MENU == M_LSRW) {
+        } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
             binding.rcChildHW.layoutManager =
                 GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
             binding.rcChildHW.adapter = adapter
-        }  else {
+        } else {
             binding.rcChildHW.layoutManager =
                 GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
             binding.rcChildHW.adapter = adapter
