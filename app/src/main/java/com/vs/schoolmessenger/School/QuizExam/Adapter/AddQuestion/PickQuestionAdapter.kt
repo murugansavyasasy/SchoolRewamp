@@ -56,13 +56,27 @@ class PickQuestionAdapter(
     fun getUpdatedList(): List<GetPickFromQBankData> = itemList!!
 
     // 🔹 Select/Deselect All
+//    fun selectAll(isSelectAll: Boolean) {
+//        selectedIds.clear()
+//        if (isSelectAll) {
+//            selectedIds.addAll(itemList!!.map { it.id }) // assumes id is Int
+//        }
+//        notifyDataSetChanged()
+//    }
+
     fun selectAll(isSelectAll: Boolean) {
         selectedIds.clear()
-        if (isSelectAll) {
-            selectedIds.addAll(itemList!!.map { it.id }) // assumes id is Int
+
+        itemList?.forEach { item ->
+            item.checked = isSelectAll
+            if (isSelectAll) {
+                selectedIds.add(item.id)
+            }
         }
+
         notifyDataSetChanged()
     }
+
 
     fun getSelectedQuestions(): List<GetPickFromQBankData> {
         return itemList!!.filter { selectedIds.contains(it.id) }
@@ -119,17 +133,17 @@ class PickQuestionAdapter(
             edtMark.isClickable = false
 
             // 🔹 Selection binding
+
             cbQuestion.setOnCheckedChangeListener(null)
-            cbQuestion.isChecked = selectedIds.contains(data.id)
+            cbQuestion.isChecked = data.checked  // default is false
 
             cbQuestion.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    selectedIds.add(data.id)
-                } else {
-                    selectedIds.remove(data.id)
-                }
+                data.checked = isChecked
+                if (isChecked) selectedIds.add(data.id)
+                else selectedIds.remove(data.id)
                 onItemCheckedChange?.invoke(isChecked)
             }
+
         }
     }
 

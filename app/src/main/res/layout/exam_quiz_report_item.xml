@@ -145,7 +145,7 @@
                     android:paddingBottom="@dimen/five"
                     android:layout_width="wrap_content"
                     android:background="@drawable/light_green_radius"
-                    android:text="@string/add_1"
+                    android:text="@string/add_question"
                     android:textColor="@color/white"
                     android:layout_marginEnd="@dimen/ten"
                     style="@style/CustomTextStylePoppinsBold"
@@ -160,7 +160,7 @@
                     android:paddingBottom="@dimen/five"
                     android:layout_width="wrap_content"
                     android:background="@drawable/bg_light_orange"
-                    android:text="@string/submit_list"
+                    android:text="@string/submit_report"
                     android:textColor="@color/white"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_height="wrap_content">

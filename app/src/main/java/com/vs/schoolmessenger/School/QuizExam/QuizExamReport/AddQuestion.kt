@@ -35,6 +35,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     var isQuestionLimit=-1
     var isQuizTitle=""
     var isSubjectID=""
+    var isFirstClick=true
     private lateinit var savedQuizQuestionReportList: List<GetQuizQuestionReportData>
     private lateinit var pickQBankList: List<GetPickFromQBankData>
     private lateinit var editableQuizQuestionReportList: MutableList<GetQuizQuestionReportData>
@@ -99,7 +100,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this)
-                    pickQBankList=response.data
+                    pickQBankList = response.data.map { it.copy(checked = false) }
                     showResumeListDialog(this, pickQBankList)
                 }
                 else {
@@ -124,7 +125,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
     private fun isLoadQuizQuestionReport() {
         adapter = AddQuestionAdapter(editableQuizQuestionReportList.toMutableList(), this,false)
-        binding.rcAddQuestion.layoutManager = LinearLayoutManager(this)
+        binding.rcAddQuestion.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.rcAddQuestion.isNestedScrollingEnabled = false
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         binding.rcAddQuestion.adapter = adapter
@@ -143,8 +144,12 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
     private fun isFetchQuizQuestionReport() {
         adapter = AddQuestionAdapter(null, this,true)
-        binding.rcAddQuestion.layoutManager = LinearLayoutManager(this)
+//        binding.rcAddQuestion.layoutManager = LinearLayoutManager(this)
+        binding.rcAddQuestion.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.rcAddQuestion.isNestedScrollingEnabled = false
+        binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         binding.rcAddQuestion.adapter = adapter
+
 
         appViewModel?.isGetQuizQuestionReport(isAccessToken ?: "", isQuizID)
     }
@@ -238,7 +243,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             }
             R.id.lblImportQuestion->{
                 Constant.showLoading(this)
-                isFetchFromQuestionBank()
+                if(isFirstClick){
+                    isFetchFromQuestionBank()
+                    isFirstClick=false
+                }
+                else{
+                    showResumeListDialog(this, pickQBankList)
+                }
+
             }
 
 

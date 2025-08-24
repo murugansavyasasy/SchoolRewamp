@@ -329,7 +329,6 @@
                     android:hint="@string/drop_your_mark_here"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:digits="0123456789"
                     android:inputType="number"
                     android:singleLine="true"
                     android:scrollHorizontally="true"
@@ -377,6 +376,7 @@
                 </LinearLayout>
             </LinearLayout>
             <ImageView
+                android:visibility="gone"
                 android:layout_gravity="end"
                 android:id="@+id/lblRemoveAttachment"
                 android:src="@drawable/close_red_color"
