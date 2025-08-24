@@ -37,7 +37,7 @@
         android:background="@drawable/bg_file_item"
         android:visibility="gone">
 
-        <ImageView
+        <TextView
             android:id="@+id/imgFileType"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -45,8 +45,11 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/bg_icon_round"
-            android:scaleType="centerInside"
-            android:src="@drawable/imagesvgformar" />
+            android:gravity="center"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text="IMG"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/txtFileName"
@@ -60,7 +63,7 @@
             android:singleLine="true"
             android:text="BD84A0BAB151.jpg"
             android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/txtFileSize"
@@ -70,7 +73,7 @@
             android:layout_alignStart="@id/txtFileName"
             android:text="2.1 MB, IMAGE"
             android:textColor="#888888"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
     </RelativeLayout>
 
 

@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.Assignment
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,8 @@ import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClick
 import com.vs.schoolmessenger.School.Assignment.Model.StudentSubmission
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Locale
+import androidx.core.graphics.toColorInt
+import com.vs.schoolmessenger.Utils.Constant
 
 class AssignmentStudentListAdapter(
     private var itemList: List<StudentSubmission>?,
@@ -149,6 +152,7 @@ class AssignmentStudentListAdapter(
         private val submittedDate: TextView = itemView.findViewById(R.id.submittedDate)
         private val cancelimage: ImageView = itemView.findViewById(R.id.cancelimage)
         private val statusButton: LinearLayout = itemView.findViewById(R.id.statusButton)
+        private val avatarText: TextView = itemView.findViewById(R.id.avatarText)
 
 
         fun bind(data: StudentSubmission, position: Int, adapter: AssignmentStudentListAdapter) {
@@ -156,9 +160,18 @@ class AssignmentStudentListAdapter(
             sectionlabel.text = data.standard + " - " + data.section
             val submissiondetails = data.submissions_details.firstOrNull()
             submittedLabel.text = data.submit_status
-            submittedDate.text = submissiondetails?.submitted_on
+            submittedDate.text = submissiondetails?.submitted_on?.let {
+                Constant.convertDateFormat(it)
+            } ?: "--"
 
             lblStudentName.text = data.student_name
+
+            val name = data.student_name
+            avatarText.text = if (!name.isNullOrEmpty()) {
+                name.first().toString().uppercase()
+            } else {
+                "-"
+            }
 
             sectionLabel.text = data.standard
 //            standardLabel.text = data.section
@@ -185,12 +198,13 @@ class AssignmentStudentListAdapter(
                 statuslabel.setTextColor(
                     ContextCompat.getColor(context, R.color.clr_green)
                 )
+                statusButton.setBackgroundResource(R.drawable.completed_button_bg)
             } else {
                 statuslabel.text = "Pending"
                 cancelimage.setBackgroundResource(R.drawable.close_red_color)
-                statuslabel.setTextColor(
-                    ContextCompat.getColor(context, android.R.color.holo_red_dark)
-                )
+                statuslabel.setTextColor("#9e6e40".toColorInt())
+
+                statusButton.setBackgroundResource(R.drawable.pending_button_bg)
             }
 
 

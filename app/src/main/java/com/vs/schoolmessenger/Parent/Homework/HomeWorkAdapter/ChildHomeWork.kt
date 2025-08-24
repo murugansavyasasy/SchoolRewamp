@@ -108,13 +108,19 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
+
+
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblParentToolBar.text = childDetails!!.name
+        binding.toolbarLayout.lblSchoolName.text = childDetails!!.school_name
+
         binding.lbltitle.text = data!!.title
         binding.lblDescription.text = data!!.description
 
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
-            binding.createdDate.text = data?.created_date ?: ""
+            binding.createdDate.text = Constant.convertDateFormat(data?.created_date ?: "")
             binding.category.text = data?.category ?: ""
             binding.subject.text = data?.assignmentsubject ?: ""
             binding.fragmentContainer.visibility = View.VISIBLE
