@@ -148,6 +148,22 @@ class AddQuestionAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateItems(newItems: List<GetQuizQuestionReportData>) {
+
+        val newIds = newItems.map { it.id }.toHashSet()//Collect all new ID from from QuestionBank
+        itemList = itemList!!.filter { it.id in newIds }.toMutableList()//Remove items that are not in the new selection
+
+        // Find missing items from the new selection and add them
+        val existingIds = itemList!!.map { it.id }.toHashSet()
+        val itemsToAdd = newItems.filter { it.id !in existingIds }
+        itemList!!.addAll(itemsToAdd)
+
+        notifyDataSetChanged()
+    }
+
+
+
+
 
     fun getUpdatedList(): List<GetQuizQuestionReportData> = itemList!!
 

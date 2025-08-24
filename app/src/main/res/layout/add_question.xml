@@ -41,26 +41,32 @@
                 android:layout_height="wrap_content">
             </TextView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="@dimen/ten"
+            <LinearLayout
                 android:layout_below="@+id/lblImportQuestion"
-                android:id="@+id/rcAddQuestion"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcAddQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    >
+                </androidx.recyclerview.widget.RecyclerView>
 
-            <TextView
-                android:id="@+id/lblAddQuestion"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_below="@+id/rcAddQuestion"
-                android:drawableStart="@drawable/add_icon"
-                android:textColor="@color/iconBlue"
-                android:layout_width="match_parent"
-                android:drawablePadding="@dimen/three"
-                android:text="@string/add_question"
-                android:layout_height="wrap_content"
-                android:drawableTint="@color/iconBlue"
-                ></TextView>
+                <TextView
+                    android:id="@+id/lblAddQuestion"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_below="@+id/rcAddQuestion"
+                    android:drawableStart="@drawable/add_icon"
+                    android:textColor="@color/iconBlue"
+                    android:layout_width="match_parent"
+                    android:drawablePadding="@dimen/three"
+                    android:text="@string/add_question"
+                    android:layout_height="wrap_content"
+                    android:drawableTint="@color/iconBlue"
+                    ></TextView>
+            </LinearLayout>
 
         </RelativeLayout>
 

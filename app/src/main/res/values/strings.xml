@@ -719,8 +719,7 @@
     <string name="quiz">Quiz</string>
     <string name="no_of_question">No of question</string>
     <string name="check_the_box_to_continue_next_level">Check the box to continue next level</string>
-    <string name="add_1">Add</string>
-    <string name="submit_list">Submit List</string>
+    <string name="submit_report">Submit Report</string>
     <string name="question">Question</string>
     <string name="enter_question_here">Enter Question here</string>
     <string name="option_a">Option A</string>
