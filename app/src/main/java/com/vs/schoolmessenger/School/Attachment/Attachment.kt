@@ -112,7 +112,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)

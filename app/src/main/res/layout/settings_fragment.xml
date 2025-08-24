@@ -14,7 +14,7 @@
             android:id="@+id/rlaLblSettings"
             android:layout_width="match_parent"
             android:layout_height="@dimen/one_fifty"
-            android:background="@drawable/gradient_theme_school"
+            android:background="@color/PrimaryColor"
             android:paddingBottom="@dimen/thirty">
 
             <ImageView
@@ -34,7 +34,7 @@
                 android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/fifty"
                 android:text="@string/permission_settings"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold">
 
@@ -82,7 +82,7 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/notification_icon">
+                        android:src="@drawable/notification_icon_gray">
                     </ImageView>
 
                     <TextView
@@ -468,7 +468,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Enable Fingerprint Login"
-                            style="@style/CustomTextStylePoppinsBold"/>
+                            style="@style/CustomTextStylePoppinsRegular"/>
 
                         <Switch
                             android:layout_weight="0.8"

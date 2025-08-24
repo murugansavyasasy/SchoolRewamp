@@ -11,7 +11,7 @@
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/PrimaryColor"
         android:paddingVertical="@dimen/fifteen">
 
         <ImageView
@@ -19,7 +19,7 @@
             android:layout_width="@dimen/thirty_five"
             android:layout_centerVertical="true"
             android:layout_height="@dimen/thirty_five"
-            android:src="@drawable/left_arrow">
+            android:src="@drawable/arrow_left_white">
 
         </ImageView>
 
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SATISH KUMAR"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:text="I-B"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -63,7 +63,7 @@
         <ImageView
             android:id="@id/imgSearch"
             android:layout_width="@dimen/thirty"
-            android:src="@drawable/search_icon"
+            android:src="@drawable/search_icon_white"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/twenty"
             android:layout_alignParentEnd="true"

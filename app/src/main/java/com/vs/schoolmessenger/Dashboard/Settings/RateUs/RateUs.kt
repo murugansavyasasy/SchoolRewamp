@@ -48,7 +48,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
         } else {
-            setupToolbarBlue()
+            setupToolbarBlueWhite()
         }
 
         binding.lblAppUi.setOnClickListener(this)

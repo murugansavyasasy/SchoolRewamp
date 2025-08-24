@@ -22,7 +22,7 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
             isToolBarPrimaryTheme()
             binding.rlaLblContactSupport.setBackgroundResource(R.drawable.gradient_theme_parent)
         } else {
-            setupToolbarBlue()
+            setupToolbarBlueWhite()
             binding.rlaLblContactSupport.setBackgroundResource(R.drawable.gradient_theme_school)
         }
     }

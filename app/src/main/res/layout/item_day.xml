@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rytCard"
-    android:layout_width="@dimen/seventy"
-    android:layout_height="@dimen/seventy"
+    android:layout_width="@dimen/sixty"
+    android:layout_height="@dimen/sixty"
     android:layout_margin="@dimen/five"
     android:background="@drawable/day_unselected"
     android:fitsSystemWindows="true"
