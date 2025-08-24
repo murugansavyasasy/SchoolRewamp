@@ -47,9 +47,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.School.Event.CreateEvent
-import com.vs.schoolmessenger.School.LSRW.CreateNewTask
 import com.vs.schoolmessenger.School.LSRW.LsrwStudentListFragment
-import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
@@ -95,7 +93,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.childlsrwlayoutxml.imgBack.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
@@ -126,7 +124,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.fragmentContainer.visibility = View.VISIBLE
             loadFragment(
                 StudentListFragment.newInstance(
-                    data!!.assignmentid ?: "", "TOTAL", data!!.submittedCount ?: 0, data!!.totalCount ?: 0
+                    data!!.assignmentid ?: "", "TOTAL", data!!.submittedCount ?: 0, data!!.totalCount ?: 0,data!!.created_date ?: ""
                 )
             )
         } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == true) {

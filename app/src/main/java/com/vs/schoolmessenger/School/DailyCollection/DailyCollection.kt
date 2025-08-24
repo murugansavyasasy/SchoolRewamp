@@ -42,7 +42,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.className.setOnClickListener(this)
         binding.modeName.setOnClickListener(this)

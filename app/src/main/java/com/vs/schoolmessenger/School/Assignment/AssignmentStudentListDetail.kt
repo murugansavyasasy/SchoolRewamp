@@ -23,7 +23,7 @@ class AssignmentStudentListDetail : BaseActivity<AssignmentStudentDetailreportBi
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
 

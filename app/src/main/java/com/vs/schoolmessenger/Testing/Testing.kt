@@ -25,7 +25,7 @@ class Testing : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickListe
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
 
         binding.recyclerViewCalendar.layoutManager =
             LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)

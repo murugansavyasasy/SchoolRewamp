@@ -29,7 +29,8 @@ class AssignmentStudentListAdapter(
     private var context: Context,
     private var isLoading: Boolean,
     private val noDataImage: ImageView? = null,
-    private val noDataText: TextView? = null
+    private val noDataText: TextView? = null,
+    private val createdDate: String? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
@@ -50,7 +51,7 @@ class AssignmentStudentListAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.assignment_student_list, parent, false)
-            DataViewHolder(view, context, listener)
+            DataViewHolder(view, context, listener,createdDate)
         }
     }
 
@@ -134,14 +135,12 @@ class AssignmentStudentListAdapter(
     class DataViewHolder(
         itemView: View,
         private val context: Context,
-        private val listener: AssignmentStudentListClickListener
+        private val listener: AssignmentStudentListClickListener,
+        private  val createdDate: String?
     ) : RecyclerView.ViewHolder(itemView) {
-
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
 
         private val sectionLabel: TextView = itemView.findViewById(R.id.sectionlabel)
-
-        //        private val standardLabel: TextView = itemView.findViewById(R.id.standardlabel)
         private val statusLabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val layout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
 //        private val arrowIcon: ImageView = itemView.findViewById(R.id.arrow_icon)
@@ -159,10 +158,15 @@ class AssignmentStudentListAdapter(
 
             sectionlabel.text = data.standard + " - " + data.section
             val submissiondetails = data.submissions_details.firstOrNull()
-            submittedLabel.text = data.submit_status
-            submittedDate.text = submissiondetails?.submitted_on?.let {
-                Constant.convertDateFormat(it)
-            } ?: "--"
+
+            if (data.submit_status == "NOTSUBMITTED") {
+                submittedLabel.text = "Due Date" + " : "
+                submittedDate.text =  createdDate
+                Log.d("created_date",createdDate.toString())
+            } else {
+                submittedLabel.text = data.submit_status + " : "
+                submittedDate.text = Constant.convertSubmittedDateAssignment(submissiondetails?.submitted_on)
+            }
 
             lblStudentName.text = data.student_name
 
@@ -201,7 +205,7 @@ class AssignmentStudentListAdapter(
                 statusButton.setBackgroundResource(R.drawable.completed_button_bg)
             } else {
                 statuslabel.text = "Pending"
-                cancelimage.setBackgroundResource(R.drawable.close_red_color)
+                cancelimage.setBackgroundResource(R.drawable.downloadsvgformat)
                 statuslabel.setTextColor("#9e6e40".toColorInt())
 
                 statusButton.setBackgroundResource(R.drawable.pending_button_bg)

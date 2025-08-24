@@ -1201,6 +1201,38 @@ object Constant {
     }
 
 
+    fun CustomisedconvertDateAndTimeFormat(input: String?): String {
+        if (input.isNullOrEmpty()) return ""
+
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            date?.let { outputFormat.format(it) } ?: ""
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+    fun convertSubmittedDateAssignment(input: String?): String {
+        if (input.isNullOrEmpty()) return "--"
+
+        return try {
+
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+
+
+            val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+
+            val date = inputFormat.parse(input)
+            date?.let { outputFormat.format(it) } ?: "--"
+        } catch (e: Exception) {
+            "--"
+        }
+    }
+
+
+
     fun convertDateTimeFormat(input: String): String {
         return try {
             val inputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())

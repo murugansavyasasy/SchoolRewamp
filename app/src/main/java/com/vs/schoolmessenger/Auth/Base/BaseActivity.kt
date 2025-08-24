@@ -111,6 +111,14 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
 
+    protected open fun setupToolbarBlueWhite() {
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
+        window.navigationBarColor = this.resources.getColor(R.color.white)
+        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
+    }
+
     protected open fun setupToolbarBlue() {
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -118,6 +126,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.navigationBarColor = this.resources.getColor(R.color.PrimaryColor)
         window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
+
 
 //    protected open fun setupToolbarBlue() {
 //        val window = this.window

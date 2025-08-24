@@ -44,7 +44,6 @@ import com.vs.schoolmessenger.Repository.App
 
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
-import com.vs.schoolmessenger.School.LSRW.Model.lsrwskilldata
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -60,7 +59,6 @@ import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CreateNewtaskLsrwBinding
-import com.vs.schoolmessenger.databinding.LsrwSkillMainBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
@@ -109,7 +107,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()

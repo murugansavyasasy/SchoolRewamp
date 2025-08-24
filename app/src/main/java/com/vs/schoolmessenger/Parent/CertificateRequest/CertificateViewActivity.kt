@@ -45,7 +45,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.imgBack.setOnClickListener(this)
         binding.imgMoreOptions.setOnClickListener(this)
 

@@ -18,7 +18,7 @@
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
             android:layout_centerVertical="true"
-            android:src="@drawable/left_arrow">
+            android:src="@drawable/arrow_left_white">
 
         </ImageView>
 
@@ -51,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SARAN"
+                android:textColor="@color/white"
                 >
 
             </TextView>
@@ -62,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:text="ENGLISH"
+                android:textColor="@color/white"
                >
 
             </TextView>

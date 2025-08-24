@@ -6,12 +6,12 @@
 
     <ImageView
         android:id="@+id/imgReadUnRead"
-        android:layout_width="@dimen/fifteen"
+        android:layout_width="@dimen/ten"
         android:src="@drawable/circle_bg_red"
         android:visibility="gone"
         android:layout_marginTop="@dimen/five"
         android:layout_marginStart="@dimen/five"
-        android:layout_height="@dimen/fifteen">
+        android:layout_height="@dimen/ten">
 
     </ImageView>
 
@@ -57,21 +57,20 @@
         android:layout_below="@+id/imgDate"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:text=""
-        >
+        android:text="">
 
     </TextView>
 
     <TextView
         android:id="@+id/lblDescription"
-        style="@style/CustomTextStylePoppinsBold"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblTitle"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/five"
         android:text=""
-        android:textColor="@color/light_gray"
+        android:textColor="@color/black"
         android:maxLines="10"
         android:ellipsize="end" />
 
@@ -106,7 +105,7 @@
         android:textSize="@dimen/thirteen_sp"
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
-        android:textColor="@color/grey"
+        android:textColor="@color/mild_grey_dark"
         android:gravity="end"
         android:text="Posted By : "
         android:layout_below="@+id/rcyFile"

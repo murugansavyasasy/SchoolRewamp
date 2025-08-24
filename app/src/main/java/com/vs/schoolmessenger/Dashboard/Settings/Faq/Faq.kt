@@ -27,7 +27,7 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
             isToolBarPrimaryTheme()
             binding.header.setBackgroundResource(R.drawable.gradient_theme_parent)
         } else {
-            setupToolbarBlue()
+            setupToolbarBlueWhite()
             binding.header.setBackgroundResource(R.drawable.gradient_theme_school)
         }
     }

@@ -61,7 +61,7 @@
             android:layout_marginTop="@dimen/six"
             android:layout_toEndOf="@id/avatarText"
             android:text="Submitted:"
-            android:textColor="@android:color/black"
+            android:textColor="@color/grey"
             android:textSize="13sp" />
 
         <TextView
@@ -96,7 +96,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/twele"
                 android:paddingEnd="@dimen/twele"
-                android:src="@drawable/close_red_color" />
+                android:src="@drawable/downloadsvgformat" />
 
 
             <TextView

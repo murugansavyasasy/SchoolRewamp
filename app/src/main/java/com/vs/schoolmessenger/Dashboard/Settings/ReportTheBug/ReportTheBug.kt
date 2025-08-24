@@ -71,7 +71,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
             isToolBarPrimaryTheme()
             binding.rlaLblReportBug.setBackgroundResource(R.drawable.gradient_theme_parent)
         } else {
-            setupToolbarBlue()
+            setupToolbarBlueWhite()
             binding.rlaLblReportBug.setBackgroundResource(R.drawable.gradient_theme_school)
         }
 

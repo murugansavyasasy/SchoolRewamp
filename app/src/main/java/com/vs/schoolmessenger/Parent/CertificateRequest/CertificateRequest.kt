@@ -38,7 +38,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
 
         binding.ivradio.setOnClickListener(this)
         binding.ivradio1.setOnClickListener(this)

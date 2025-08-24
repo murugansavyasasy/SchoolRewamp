@@ -80,7 +80,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
 
         binding.btnEnableLocation.setOnClickListener(this)
         binding.btnPresent.setOnClickListener(this)

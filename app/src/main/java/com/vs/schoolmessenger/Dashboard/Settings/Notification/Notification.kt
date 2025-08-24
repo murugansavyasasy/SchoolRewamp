@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Dashboard.Settings.Notification
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +27,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
 
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.imgBack.setOnClickListener(this)
 
         val childDetails = SharedPreference.getChildDetails(this)

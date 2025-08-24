@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -140,7 +139,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
