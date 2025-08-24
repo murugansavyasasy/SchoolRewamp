@@ -48,16 +48,31 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
             if (response != null && response.status) {
                 isNotificationItems.clear()
 
-                response.data.forEach { item ->
+                response.data.forEach { menu ->
                     isNotificationItems.add(
                         NotificationDataClass(
-                            type = item.type ?: "",
-                            title = item.name ?: "",
-                            content = item.message ?: "",
-                            sendBy = item.member_id ?: ""
+                            type = "",
+                            title = menu.menu_name ?: "",
+                            content = "",
+                            sendBy = "",
+                            category = menu.menu_name ?: "",
+                            isHeader = true
                         )
                     )
-            }
+
+                    menu.details?.forEach { item ->
+                        isNotificationItems.add(
+                            NotificationDataClass(
+                                type = item.type ?: "",
+                                title = item.name ?: "",
+                                content = item.message ?: "",
+                                sendBy = item.member_id ?: "",
+                                category = menu.menu_name ?: "",
+                                isHeader = false
+                            )
+                        )
+                    }
+                }
 
                 isNotificationAdapter = NotificationAdapter(isNotificationItems, this, false)
                 binding.rcyNotification.adapter = isNotificationAdapter
@@ -69,6 +84,9 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
                 )
             }
         }
+
+
+
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -114,11 +132,10 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
             isNotificationItems
         } else {
             isNotificationItems.filter {
-                it.title.contains(text, ignoreCase = true)
+                it.title?.contains(text, ignoreCase = true) == true
             }
         }
         isNotificationAdapter = NotificationAdapter(filteredList.toMutableList(), this, false)
         binding.rcyNotification.adapter = isNotificationAdapter
     }
-
 }

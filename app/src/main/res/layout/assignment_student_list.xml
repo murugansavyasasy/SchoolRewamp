@@ -73,7 +73,7 @@
             android:layout_marginStart="@dimen/four"
             android:layout_toEndOf="@id/submittedLabel"
             android:text="Mon, 11"
-            android:textColor="@android:color/black"
+            android:textColor="@color/grey"
             android:textSize="13sp" />
 
         <LinearLayout

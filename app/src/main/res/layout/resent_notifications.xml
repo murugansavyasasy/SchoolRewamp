@@ -31,7 +31,7 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:background="@drawable/notification_contact_bg"
                     android:gravity="center"
-                    android:text="A"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/sixteen_sp"
                     android:textStyle="bold"
@@ -108,15 +108,6 @@
 
         </RelativeLayout>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgRoundCard"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:elevation="@dimen/ten"
-            android:visibility="gone" />
-
     </RelativeLayout>
 
     <TextView
@@ -132,135 +123,3 @@
 
 </RelativeLayout>
 
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:fitsSystemWindows="true"-->
-<!--    android:layout_height="wrap_content">-->
-
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content">-->
-
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/fab"-->
-<!--            android:layout_marginEnd="@dimen/fifteen"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/rect_shadow_white"-->
-<!--            android:paddingTop="@dimen/ten"-->
-<!--            android:paddingBottom="@dimen/ten">-->
-<!--            -->
-<!--            <LinearLayout-->
-<!--                android:id="@+id/linear_layout"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_marginEnd="@dimen/ten"-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:gravity="center_vertical">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/first_letter"-->
-<!--                    android:layout_width="@dimen/twenty_seven"-->
-<!--                    android:layout_height="@dimen/twenty_seven"-->
-<!--                    android:gravity="center"-->
-<!--                    android:background="@drawable/notification_contact_bg"-->
-<!--                    android:text="A"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:textSize="@dimen/sixteen_sp"-->
-<!--                    android:layout_marginStart="@dimen/fifteen"-->
-<!--                    android:textStyle="bold" />-->
-
-
-<!--                <TextView-->
-<!--                    android:id="@+id/lblSendBy"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="@dimen/five"-->
-<!--                    android:text="Send By Sathish"-->
-<!--                    android:textSize="@dimen/thirteen_sp"-->
-<!--                    android:textColor="@color/sky_blue0"-->
-<!--                    android:textStyle="bold">-->
-
-<!--                </TextView>-->
-
-<!--            </LinearLayout>-->
-
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblTitle"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/linear_layout"-->
-<!--                android:layout_marginStart="@dimen/fourty_eight"-->
-<!--                android:layout_marginTop="@dimen/three"-->
-<!--                android:text="Function"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:textColor="@color/black">-->
-
-<!--            </TextView>-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblContent"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/lblTitle"-->
-<!--                android:layout_marginStart="@dimen/fourty_eight"-->
-<!--                android:layout_marginTop="@dimen/three"-->
-<!--                android:layout_marginBottom="@dimen/ten"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:text="All of you come to school tomorrow"-->
-<!--                android:textColor="@color/black">-->
-
-<!--            </TextView>-->
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblView"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/lblContent"-->
-<!--                android:layout_marginStart="@dimen/twenty"-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:text="@string/view_"-->
-<!--                android:visibility="gone"-->
-<!--                android:textColor="@color/navi_blue1">-->
-
-<!--            </TextView>-->
-
-<!--        </RelativeLayout>-->
-
-
-<!--        <de.hdodenhof.circleimageview.CircleImageView-->
-<!--            android:id="@+id/imgRoundCard"-->
-<!--            android:layout_width="@dimen/thirty"-->
-<!--            android:layout_height="@dimen/thirty"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:elevation="@dimen/ten"-->
-<!--        >-->
-
-<!--        </de.hdodenhof.circleimageview.CircleImageView>-->
-
-
-
-<!--    </RelativeLayout>-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/lblNotification"-->
-<!--        android:layout_width="@dimen/fifteen"-->
-<!--        android:layout_height="@dimen/fifteen"-->
-<!--        android:layout_marginTop="@dimen/five"-->
-<!--        android:visibility="visible"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:elevation="@dimen/ten"-->
-<!--        android:layout_marginEnd="@dimen/twenty_three"-->
-<!--        android:background="@drawable/circle_dark_blue"-->
-<!--        >-->
-<!--    </TextView>-->
-
-
-<!--</RelativeLayout>-->

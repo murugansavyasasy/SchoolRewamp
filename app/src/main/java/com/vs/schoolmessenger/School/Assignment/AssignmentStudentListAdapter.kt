@@ -161,8 +161,9 @@ class AssignmentStudentListAdapter(
 
             if (data.submit_status == "NOTSUBMITTED") {
                 submittedLabel.text = "Due Date" + " : "
-                submittedDate.text =  createdDate
-                Log.d("created_date",createdDate.toString())
+                submittedDate.text = Constant.formatCreatedDate(createdDate)
+                Log.d("created_date", Constant.formatCreatedDate(createdDate))
+
             } else {
                 submittedLabel.text = data.submit_status + " : "
                 submittedDate.text = Constant.convertSubmittedDateAssignment(submissiondetails?.submitted_on)
