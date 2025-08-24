@@ -1,5 +1,9 @@
 package com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport
 
+enum class QuestionSource {
+    USER, API, QBANK
+}
+
 data class GetQuizQuestionReportData (
     val id: String,
     val quiz_id: String,
@@ -18,4 +22,5 @@ data class GetQuizQuestionReportData (
     val correct_answer_counts: Int,
     val incorrect_answer_counts: Int,
     val correct_answer: String,
+    var sourceType: QuestionSource = QuestionSource.API
 )

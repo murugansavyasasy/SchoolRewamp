@@ -733,6 +733,7 @@
     <string name="import_from_question_bank">Import from question bank</string>
     <string name="add_question">Add Question</string>
     <string name="enter_correct_answer_here">Enter correct answer here</string>
+    <string name="question_limit_reached">Sorry!Already question limit reached</string>
 
 
 </resources>
