@@ -1201,6 +1201,59 @@ object Constant {
     }
 
 
+    fun CustomisedconvertDateAndTimeFormat(input: String?): String {
+        if (input.isNullOrEmpty()) return ""
+
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            date?.let { outputFormat.format(it) } ?: ""
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+    fun formatCreatedDate(input: String?): String {
+        if (input.isNullOrEmpty()) return "--"
+
+        return try {
+            val inputFormatFull = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+
+            val date = try {
+                inputFormatFull.parse(input)
+            } catch (e: Exception) {
+                val inputFormatDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                inputFormatDate.parse(input)
+            }
+
+            date?.let { outputFormat.format(it) } ?: "--"
+        } catch (e: Exception) {
+            "--"
+        }
+    }
+
+
+    fun convertSubmittedDateAssignment(input: String?): String {
+        if (input.isNullOrEmpty()) return "--"
+
+        return try {
+
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+
+
+            val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+
+            val date = inputFormat.parse(input)
+            date?.let { outputFormat.format(it) } ?: "--"
+        } catch (e: Exception) {
+            "--"
+        }
+    }
+
+
+
     fun convertDateTimeFormat(input: String): String {
         return try {
             val inputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())

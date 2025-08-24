@@ -8,6 +8,7 @@ data class ParentAssignmentData(
     val title: String,
     val description: String,
     val category: String,
+    val created_date: String,
     val subject: String,
     val date: String,
     val time: String,

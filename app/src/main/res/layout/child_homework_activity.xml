@@ -105,7 +105,7 @@
                         android:padding="@dimen/five"
                         android:text="05-07-2025"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp" />
+                        android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -130,7 +130,7 @@
                         android:padding="@dimen/five"
                         android:text="TAMIL"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp" />
+                        android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -155,7 +155,7 @@
                         android:padding="@dimen/five"
                         android:text="General"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp" />
+                        android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -165,10 +165,10 @@
                 android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/twenty"
                 android:text="Mahatma Gandhi, born Mohandas Karamchand Gandhi on October 2, 1869, was a prominent leader of the Indian independence movement..."
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/linearlayout_container" />
@@ -265,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
                 android:layout_marginBottom="@dimen/ten"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

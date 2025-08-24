@@ -20,10 +20,12 @@
             android:layout_height="@dimen/fourty_eight"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="@dimen/twele"
-            android:background="@drawable/default_profile"
+            android:background="@drawable/avatar_circle"
             android:gravity="center"
+            android:text="L"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/twenty_sp" />
+            android:textStyle="bold"
+            android:textSize="@dimen/twenty_sp"/>
 
 
         <TextView
@@ -59,7 +61,7 @@
             android:layout_marginTop="@dimen/six"
             android:layout_toEndOf="@id/avatarText"
             android:text="Submitted:"
-            android:textColor="@android:color/black"
+            android:textColor="@color/grey"
             android:textSize="13sp" />
 
         <TextView
@@ -71,7 +73,7 @@
             android:layout_marginStart="@dimen/four"
             android:layout_toEndOf="@id/submittedLabel"
             android:text="Mon, 11"
-            android:textColor="@android:color/black"
+            android:textColor="@color/grey"
             android:textSize="13sp" />
 
         <LinearLayout
@@ -94,7 +96,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/twele"
                 android:paddingEnd="@dimen/twele"
-                android:src="@drawable/close_red_color" />
+                android:src="@drawable/downloadsvgformat" />
 
 
             <TextView

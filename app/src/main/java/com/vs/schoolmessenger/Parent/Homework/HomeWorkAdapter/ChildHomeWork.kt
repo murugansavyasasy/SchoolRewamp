@@ -106,25 +106,31 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
+
+
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblParentToolBar.text = childDetails!!.name
+        binding.toolbarLayout.lblSchoolName.text = childDetails!!.school_name
+
         binding.lbltitle.text = data!!.title
         binding.lblDescription.text = data!!.description
 
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
-            binding.createdDate.text = data?.created_date ?: ""
+            binding.createdDate.text = Constant.convertDateFormat(data?.created_date ?: "")
             binding.category.text = data?.category ?: ""
             binding.subject.text = data?.assignmentsubject ?: ""
             binding.fragmentContainer.visibility = View.VISIBLE
             loadFragment(
                 StudentListFragment.newInstance(
-                    data!!.assignmentid ?: "", "TOTAL", data!!.submittedCount ?: 0, data!!.totalCount ?: 0
+                    data!!.assignmentid ?: "", "TOTAL", data!!.submittedCount ?: 0, data!!.totalCount ?: 0,data!!.created_date ?: ""
                 )
             )
         } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == true) {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
-            binding.createdDate.text = data?.created_date ?: ""
+            binding.createdDate.text = Constant.convertDateFormat(data?.created_date ?: "")
             binding.category.text = data?.category ?: ""
             binding.subject.text = data?.assignmentsubject ?: ""
             binding.fragmentContainer.visibility = View.GONE
@@ -136,7 +142,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.txtTitle.text = data!!.title
             binding.childlsrwlayoutxml.txtSubTitle.text = data!!.assignmentid
             binding.childlsrwlayoutxml.txtDescription.text = data!!.description
-            binding.childlsrwlayoutxml.txtDate.text = data!!.created_date
+            binding.childlsrwlayoutxml.txtDate.text = Constant.convertDateFormat(data?.created_date ?: "")
             Log.d("FragmentCheck", "Loading LsrwStudentListFragment with ID: ${data!!.id}")
             subloadFragment(
                 LsrwStudentListFragment.newInstance(

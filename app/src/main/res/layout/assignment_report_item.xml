@@ -15,7 +15,7 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:text="Hello Title"
-        android:textSize="@dimen/twenty_sp" />
+        android:textSize="@dimen/eighteen_sp" />
 
 
     <ImageView
@@ -50,7 +50,7 @@
         android:layout_marginTop="@dimen/ten"
         android:text="Experiment with solar power building and connection between them is the real power"
         android:textColor="@color/clr_grey_dark"
-        android:textSize="@dimen/thirteen_sp" />
+        android:textSize="@dimen/twele_sp" />
 
 
     <LinearLayout
@@ -126,6 +126,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Assigned - 03/07/2025"
+            android:textSize="@dimen/twele_sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/dark_blue_1"
             android:layout_marginStart="10dp"
             />
@@ -158,6 +161,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GENERAL"
+            android:textSize="@dimen/twele_sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/clr_grey_dark"
             android:layout_marginStart="10dp"
             />
@@ -197,7 +203,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TAMIL"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:layout_marginStart="10dp"
+                android:textSize="@dimen/twele_sp"
                 android:textColor="@color/dark_blue_1"
                 >
             </TextView>
@@ -229,6 +238,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:text="Deadline 04-07-2025"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/twele_sp"
                 android:textColor="@color/dark_orange"
                 >
             </TextView>
@@ -247,7 +259,7 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_below="@+id/relative_layout1"
         android:layout_marginStart="@dimen/ten"
-        android:textSize="@dimen/fifteen_sp"/>
+        android:textSize="@dimen/thirteen_sp"/>
 
 
     <ProgressBar
@@ -262,7 +274,7 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
-        android:layout_marginBottom="@dimen/eight"/>
+        android:layout_marginBottom="@dimen/five"/>
 
 
 
@@ -279,7 +291,7 @@
             android:id="@+id/rytList2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginBottom="@dimen/five"
             android:minHeight="@dimen/sixty"
             android:orientation="horizontal"
             android:visibility="gone">

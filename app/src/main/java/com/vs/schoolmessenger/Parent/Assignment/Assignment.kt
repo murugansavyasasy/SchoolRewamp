@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.Parent.Assignment
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +31,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         super.setupViews()
         isToolBarPrimaryTheme()
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Assignment)
-        binding.toolbarLayout.rytSearch.visibility = View.GONE
+        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
 
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
@@ -61,6 +63,18 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         }
 
         fetchAssignmentReportData()
+
+
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                isAssignmentAdapter?.filter(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
     }
 
     private fun fetchAssignmentReportData() {
@@ -81,7 +95,9 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     }
 
 
+
     override fun onSubmittedClick(data: AssignmentData) {
+
     }
 
     override fun onEditAndDeleteClick(

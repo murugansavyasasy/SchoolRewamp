@@ -150,8 +150,8 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
@@ -219,7 +219,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 )
             )
         }
-        binding.btnChooseRecipient.text = getString(R.string.NEXT)
+        binding.btnChooseRecipient.text = getString(R.string.ChooseRecipients)
         binding.rcyImages.visibility = View.VISIBLE
 
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
@@ -304,6 +304,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         }
 
         appViewModel!!.isGetAssignmentReport?.observe(this) { response ->
+            Constant.hideLoading(this@Assignment)
             if (response != null) {
                 if (response.status) {
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
@@ -396,7 +397,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
 
             R.id.lnrTabOneName -> {
-                binding.btnChooseRecipient.text = getString(R.string.NEXT)
+                binding.btnChooseRecipient.text = getString(R.string.ChooseRecipients)
                 binding.line1.setBackgroundResource(R.color.iconBlue)
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -431,9 +432,10 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
     private fun fetchAssignmentReportData() {
+        Constant.showLoading(this@Assignment)
         binding.rcyAssignmentReport.visibility = View.VISIBLE
         isAssignmentAdapter =
-            AssignmentAdapter(mutableListOf(), this, this, Constant.isShimmerViewShow)
+            AssignmentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
         binding.rcyAssignmentReport.isNestedScrollingEnabled = false
         binding.rcyAssignmentReport.adapter = isAssignmentAdapter
