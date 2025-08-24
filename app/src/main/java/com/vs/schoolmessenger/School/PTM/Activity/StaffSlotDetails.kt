@@ -28,7 +28,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         isSlot = intent.getSerializableExtra("isSlot") as? ArrayList<Slot>
         val isSlotsDetails = intent.getSerializableExtra("isSlotDetails") as SlotDetail
 

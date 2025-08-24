@@ -29,7 +29,7 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
         val childDetails = SharedPreference.getChildDetails(this)

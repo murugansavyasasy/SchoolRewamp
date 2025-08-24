@@ -68,7 +68,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.btnAddLocation.setOnClickListener(this)
         binding.btnViewLocations.setOnClickListener(this)
         binding.webViewMap.setOnClickListener(this)

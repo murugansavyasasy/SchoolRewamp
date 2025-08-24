@@ -11,7 +11,8 @@
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="@dimen/two_fourty"
-        android:background="@drawable/gradient_theme_school" />
+        android:orientation="vertical"
+        android:background="@color/PrimaryColor" />
 
     <LinearLayout
         android:id="@+id/topbar"
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/twenty"
+        android:orientation="vertical"
         android:gravity="center_vertical"
         android:padding="@dimen/fifteen">
 
@@ -46,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lblProfile"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold"
                 android:layout_centerInParent="true" />
@@ -64,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit"
-                android:textColor="@color/navi_blue2"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp"
                 android:textStyle="bold"
                 android:layout_centerVertical="true"
@@ -75,7 +77,7 @@
                 android:layout_width="@dimen/sixteen"
                 android:layout_height="@dimen/sixteen"
                 android:layout_centerVertical="true"
-                android:src="@drawable/pencilicon"
+                android:src="@drawable/edit_icon_3"
               />
 
         </RelativeLayout>
@@ -139,8 +141,8 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imgStudentProfile"
-                    android:layout_width="@dimen/eighty"
-                    android:layout_height="@dimen/eighty"
+                    android:layout_width="@dimen/seventy"
+                    android:layout_height="@dimen/seventy"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/ten"
                     android:scaleType="centerCrop"
@@ -182,6 +184,7 @@
                         android:layout_height="wrap_content"
                         android:text="Register number : 1473538628"
                         android:layout_marginTop="@dimen/eight"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp" />
 
 

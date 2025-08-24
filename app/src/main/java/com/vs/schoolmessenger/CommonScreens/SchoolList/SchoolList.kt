@@ -24,7 +24,6 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
-import com.vs.schoolmessenger.Parent.QuizExam.QuizExam
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
@@ -102,7 +101,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlueWhite()
         binding.imgBack.setOnClickListener(this)
         binding.lblSendToMultipleSchool.setOnClickListener(this)
         binding.lblSelectReceipients.setOnClickListener(this)

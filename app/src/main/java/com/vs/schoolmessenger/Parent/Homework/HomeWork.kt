@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.Homework
 
-import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
@@ -46,7 +45,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
 
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }

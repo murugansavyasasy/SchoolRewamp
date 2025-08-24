@@ -35,7 +35,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()

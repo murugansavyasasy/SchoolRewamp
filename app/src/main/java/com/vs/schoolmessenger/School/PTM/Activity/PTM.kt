@@ -35,7 +35,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.lblDatePicking.setOnClickListener(this)
         binding.imgDelete.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)

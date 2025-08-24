@@ -21,7 +21,7 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
         } else {
-            setupToolbarBlue()
+            setupToolbarBlueWhite()
         }
 
         Constant.loadWebView(
