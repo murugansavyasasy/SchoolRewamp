@@ -45,7 +45,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         super.setupViews()
         isToolBarPrimaryTheme()
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
         val staffDetails = SharedPreference.getStaffDetails(this)

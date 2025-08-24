@@ -36,7 +36,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.toolbarLayout.rytSearch.visibility = View.GONE
 
         appViewModel = ViewModelProvider(this)[App::class.java]

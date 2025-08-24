@@ -74,21 +74,6 @@
         android:orientation="horizontal"
         android:padding="@dimen/sixteen">
 
-        <ImageView
-            android:id="@+id/imgHeader"
-            android:layout_width="@dimen/fifty"
-            android:layout_height="@dimen/fifty"
-            android:contentDescription="Header Icon"
-            android:src="@drawable/home_work_icon_school" />
-
-        <TextView
-            android:id="@+id/txtHeader"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="HomeWork"
-            android:textSize="@dimen/eighteen" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

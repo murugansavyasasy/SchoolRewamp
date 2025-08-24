@@ -9,7 +9,7 @@
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/AthensGray"
+        android:background="@color/PrimaryColor"
         android:paddingVertical="@dimen/fifteen">
 
         <ImageView
@@ -17,7 +17,7 @@
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
             android:layout_centerVertical="true"
-            android:src="@drawable/left_arrow" />
+            android:src="@drawable/arrow_left_white" />
 
         <TextView
             android:id="@+id/lblParentToolBar"
@@ -44,6 +44,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text=""
                  />
 
@@ -52,6 +53,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text=""
                  />
         </LinearLayout>
@@ -74,7 +76,7 @@
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_search" />
+            android:src="@drawable/search_icon_white" />
 
     </RelativeLayout>
 

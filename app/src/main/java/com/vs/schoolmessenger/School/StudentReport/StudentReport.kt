@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.StudentReport
 
-import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -65,7 +64,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         filterCaterotyType = listOf(
             resources.getString(R.string.get_all_student),
             resources.getString(R.string.standard_and_section)

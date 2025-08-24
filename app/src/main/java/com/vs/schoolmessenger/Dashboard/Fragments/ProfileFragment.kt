@@ -33,7 +33,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         if (Constant.isParentChoose) {
             binding.rytEdit.visibility = View.VISIBLE
-            binding.rytHeader.setBackgroundResource(R.drawable.gradient_theme_parent)
+            binding.rytHeader.setBackgroundResource(R.drawable.gradient_theme_school)
             setupStudentDetails()
 
         } else {

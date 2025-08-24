@@ -38,7 +38,7 @@ class Attendance : BaseActivity<AttendanceBinding>() {
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         Constant
 
         binding.imgBack.setOnClickListener {

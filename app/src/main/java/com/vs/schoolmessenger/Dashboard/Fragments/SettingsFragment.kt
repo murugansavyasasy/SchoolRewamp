@@ -88,7 +88,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         }
 
         if (Constant.isParentChoose) {
-            binding.rlaLblSettings.setBackgroundResource(R.drawable.gradient_theme_parent)
+            binding.rlaLblSettings.setBackgroundResource(R.drawable.gradient_theme_school)
         } else {
             binding.rlaLblSettings.setBackgroundResource(R.drawable.gradient_theme_school)
         }
