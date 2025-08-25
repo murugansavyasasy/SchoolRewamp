@@ -2,8 +2,11 @@ package com.vs.schoolmessenger.School.Attachment
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -15,7 +18,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentFilePath
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -53,6 +60,7 @@ class AttachmentReportAdapter(
             DataViewHolder(view, context, childClickListener)
         }
     }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (!isLoading && holder is DataViewHolder) {
@@ -172,7 +180,6 @@ class AttachmentReportAdapter(
             })
 
 
-
             lblSeeMore.setOnClickListener {
                 isExpanded = !isExpanded
                 if (isExpanded) {
@@ -202,7 +209,6 @@ class AttachmentReportAdapter(
                 listener.onItemClick(item, it, adapterPosition)
             }
 
-
             val markAsRead = {
                 if (data.is_unread) {
                     data.is_unread = false
@@ -218,8 +224,26 @@ class AttachmentReportAdapter(
             rcyFile.layoutManager = GridLayoutManager(context, 3)
             rcyFile.isNestedScrollingEnabled = false
             rcyFile.adapter = attachmentAdapter
-        }
 
+
+            rcyFile.addOnItemTouchListener(
+                object : RecyclerView.SimpleOnItemTouchListener() {
+                    override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                        val child = rv.findChildViewUnder(e.x, e.y)
+                        if (child != null && e.action == MotionEvent.ACTION_UP) {
+                            rv.getChildAdapterPosition(child)
+                            Log.d("RecyclerTouch", "Clicked position: $position")
+                            if (data.is_unread) {
+                                data.is_unread = false
+                                imgReadUnRead.visibility = View.GONE
+                                listener.onReadStatusClick(item, adapterPosition)
+                            }
+                        }
+                        return false
+                    }
+                }
+            )
+        }
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

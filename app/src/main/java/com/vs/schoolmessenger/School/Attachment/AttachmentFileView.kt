@@ -61,8 +61,6 @@ class AttachmentFileView(
             isSubjectName: String
         ) {
             val data = fullList[position]
-
-            // Load image or placeholder based on type
             when (data.type.uppercase()) {
                 Constant.IMAGE -> {
                     Glide.with(context)
@@ -80,7 +78,6 @@ class AttachmentFileView(
                 else -> imgAttachment.setBackgroundResource(R.drawable.image_pdf_icon)
             }
 
-            // Click event to open FilesViewActivity
             itemView.setOnClickListener {
                 val commonList = fullList.map {
                     CommonFileData(
@@ -107,4 +104,5 @@ class AttachmentFileView(
             shimmerLayout.startShimmer()
         }
     }
+
 }

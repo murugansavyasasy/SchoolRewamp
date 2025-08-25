@@ -44,7 +44,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="jnwkqenkjwqk"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -53,7 +53,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ijqwelwqnl"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
         </LinearLayout>

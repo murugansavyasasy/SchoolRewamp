@@ -129,8 +129,8 @@ class ChildMenuAdapter(
                     imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 }
 
-                Constant.M_ATTENDANCE_MARKING -> {
-                    imgMenu.setImageResource(R.drawable.attendance_marking)
+                Constant.M_ATTENDANCE_REPORT -> {
+                    imgMenu.setImageResource(R.drawable.attendance_report_icon)
                 }
 
                 Constant.M_ABSENTEES_REPORT -> {
@@ -211,7 +211,43 @@ class ChildMenuAdapter(
                 }
 
                 Constant.M_SCHOOL_NEEDS -> {
-                    imgMenu.setImageResource(R.drawable.school_needs)
+                    imgMenu.setImageResource(R.drawable.absentees_report_icon)
+                }
+
+                Constant.M_CERTIFICATE_REQUEST -> {
+                    imgMenu.setImageResource(R.drawable.certificate_request)
+                }
+
+                Constant.M_CLASS_TIME_TABLE -> {
+                    imgMenu.setImageResource(R.drawable.timetable_icon)
+                }
+
+                Constant.M_PARENT_CLASS_EVENTS -> {
+                    imgMenu.setImageResource(R.drawable.graduationevent)
+                }
+
+                Constant.M_EXAM -> {
+                    imgMenu.setImageResource(R.drawable.schedule_exam_icon)
+                }
+
+                Constant.M_FEE_DETAILS -> {
+                    imgMenu.setImageResource(R.drawable.fee_details)
+                }
+
+                Constant.M_INTERACTION_WITH_STAFF -> {
+                    imgMenu.setImageResource(R.drawable.interact_with_student)
+                }
+
+                Constant.M_LSRW -> {
+                    imgMenu.setImageResource(R.drawable.lsrw_icon)
+                }
+
+                Constant.M_ONLINE_TEXT_BOOK -> {
+                    imgMenu.setImageResource(R.drawable.book)
+                }
+
+                Constant.M_QUIZ_EXAM -> {
+                    imgMenu.setImageResource(R.drawable.quiz_icon)
                 }
             }
 

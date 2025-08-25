@@ -19,7 +19,6 @@ import com.vs.schoolmessenger.School.LSRW.Model.WeeklyReportItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwReportstaticsBinding
-import com.vs.schoolmessenger.databinding.LsrwSkillMainBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields

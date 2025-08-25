@@ -49,17 +49,16 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
         binding.btnReceipt.setOnClickListener(this)
-        binding.toolbarLayout.rytSearch.visibility = View.GONE
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
 
-        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.lblStudentSection.text =
+        binding.lblStudentName.text = isChildDetails!!.name
+        binding.lblParentToolBar.text = Constant.isParentMenuName
+        binding.lblStudentSection.text =
             isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java]

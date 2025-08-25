@@ -42,7 +42,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
         binding.rlaTextMessage.setOnClickListener(this)
         binding.rlaVoiceMessage.setOnClickListener(this)
         binding.seeMoreLabel.setOnClickListener(this)
@@ -56,13 +56,13 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         isAccessToken = isChildDetails?.access_token
         showShimmer()
 
-        binding.toolbarLayout.imgBack.setOnClickListener {
+        binding.imgBack.setOnClickListener {
             onBackPressed()
         }
 
-        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.lblStudentSection.text =
+        binding.lblStudentName.text = isChildDetails!!.name
+        binding.lblParentToolBar.text = Constant.isParentMenuName
+        binding.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {

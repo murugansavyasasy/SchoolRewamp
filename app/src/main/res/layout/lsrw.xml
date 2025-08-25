@@ -10,8 +10,6 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar" />
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyrecyclerview"
         android:layout_width="match_parent"
