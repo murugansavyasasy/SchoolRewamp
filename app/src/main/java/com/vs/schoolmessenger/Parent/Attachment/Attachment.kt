@@ -40,11 +40,12 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
-        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+
+        binding.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
-        binding.toolbarLayout.lblStudentName.text = childDetails?.name
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.lblStudentSection.text =
+        binding.lblStudentName.text = childDetails?.name
+        binding.lblParentToolBar.text = Constant.isParentMenuName
+        binding.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
         binding.linearlayout1.visibility = View.VISIBLE
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }

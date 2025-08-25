@@ -48,29 +48,9 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
             if (response != null && response.status) {
                 isNotificationItems.clear()
 
-                response.data.forEach { menu ->
-                    isNotificationItems.add(
-                        NotificationDataClass(
-                            type = "",
-                            title = menu.menu_name ?: "",
-                            content = "",
-                            sendBy = "",
-                            category = menu.menu_name ?: "",
-                            isHeader = true
-                        )
-                    )
+                response.data.forEach { menu -> isNotificationItems.add(NotificationDataClass(type = "", title = menu.menu_name ?: "", content = "", sendBy = "", category = menu.menu_name ?: "", isHeader = true))
 
-                    menu.details?.forEach { item ->
-                        isNotificationItems.add(
-                            NotificationDataClass(
-                                type = item.type ?: "",
-                                title = item.name ?: "",
-                                content = item.message ?: "",
-                                sendBy = item.member_id ?: "",
-                                category = menu.menu_name ?: "",
-                                isHeader = false
-                            )
-                        )
+                    menu.details?.forEach { item -> isNotificationItems.add(NotificationDataClass(type = item.type ?: "", title = menu.menu_name ?: "", content = item.message ?: "", sendBy = item.name ?: "", category = menu.menu_name ?: "", isHeader = false))
                     }
                 }
 
@@ -115,8 +95,6 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
         Constant.showLoading(this)
         appViewModel!!.isNotificationList(isAccessToken ?: "", "Android")
     }
-
-
 
 
     override fun onClick(p0: View?) {

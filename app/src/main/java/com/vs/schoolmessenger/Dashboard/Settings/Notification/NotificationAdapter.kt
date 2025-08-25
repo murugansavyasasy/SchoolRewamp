@@ -54,15 +54,20 @@ class NotificationAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (isLoading) return
-        if (itemList.isNullOrEmpty() || position >= itemList!!.size) return
-
-        val item = itemList!![position]
+        val list = itemList ?: return
+        val item = list[position]
 
         when (holder) {
-            is DataViewHolder -> holder.bind(item, position)
+            is DataViewHolder -> {
+                val lastIndex = list.lastIndex
+                val nextIsHeader = position < lastIndex && list[position + 1].isHeader
+                val showDivider = position < lastIndex && !nextIsHeader
+                holder.bind(item, showDivider)
+            }
             is HeaderViewHolder -> holder.bind(item)
         }
     }
+
 
 
     override fun getItemCount(): Int {
@@ -71,20 +76,24 @@ class NotificationAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        val lblSendBy: TextView = itemView.findViewById(R.id.lblSendBy)
-        val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
-        val lblContent: TextView = itemView.findViewById(R.id.lblContent)
-        val first_letter: TextView = itemView.findViewById(R.id.first_letter)
-        val lblNotification: TextView = itemView.findViewById(R.id.lblNotification)
 
-        fun bind(data: NotificationDataClass, position: Int) {
-            lblSendBy.text = "Posted by : ${data.sendBy}"
+        private val lblSendBy: TextView = itemView.findViewById(R.id.lblSendBy)
+        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
+        private val lblContent: TextView = itemView.findViewById(R.id.lblContent)
+        private val first_letter: TextView = itemView.findViewById(R.id.first_letter)
+        private val lblNotification: TextView = itemView.findViewById(R.id.lblNotification)
+        private val line: View = itemView.findViewById(R.id.line)
+
+        fun bind(data: NotificationDataClass, showDivider: Boolean) {
+            lblSendBy.text = data.sendBy
             lblTitle.text = data.title
             lblContent.text = data.content.replace("•", "")
             first_letter.visibility = View.GONE
             first_letter.text = data.sendBy.firstOrNull()?.toString() ?: "?"
+            line.visibility = if (showDivider) View.VISIBLE else View.GONE
         }
     }
+
 
 
     class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -98,9 +107,11 @@ class NotificationAdapter(
                 "Homework" -> imgHeader.setBackgroundResource(R.drawable.home_work_icon_school)
                 "Assignment" -> imgHeader.setBackgroundResource(R.drawable.assignment_icon_school)
                 "Events" -> imgHeader.setBackgroundResource(R.drawable.graduationevent)
+                "Communication" -> imgHeader.setBackgroundResource(R.drawable.communication_icon_dashboard)
             }
         }
     }
+
 
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

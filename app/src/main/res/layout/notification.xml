@@ -20,7 +20,7 @@
             android:layout_height="@dimen/thirty"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/twenty_two"
-            android:src="@drawable/arrow_left_white"/>
+            android:src="@drawable/arrow_left_white" />
 
         <TextView
             android:id="@+id/lblNotification"
@@ -82,11 +82,9 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/header"
         android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/twenty"
-        android:background="@drawable/bg_top_rounded_container"
-        android:backgroundTint="@color/white"
+        android:background="@drawable/bg_notification_rounded_container"
         android:clipToPadding="false"
         android:divider="@null"
         android:dividerHeight="0dp"
