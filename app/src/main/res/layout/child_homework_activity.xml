@@ -86,13 +86,17 @@
                     android:id="@+id/createddate_linear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:padding="2dp"
+                    android:background="@drawable/rect_shadow_light_green1"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
                         android:layout_gravity="center"
                         android:src="@drawable/calendar" />
 
@@ -101,10 +105,11 @@
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/dark_blue_1"
+                        android:gravity="center"
                         android:layout_weight="1"
                         android:padding="@dimen/five"
                         android:text="05-07-2025"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
 
@@ -113,11 +118,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/rect_shadow_light_green1"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
                         android:layout_gravity="center"
                         android:src="@drawable/bookimage" />
 
@@ -128,8 +137,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/five"
+                        android:textColor="@color/dark_blue_1"
+                        android:gravity="center"
                         android:text="TAMIL"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
 
@@ -138,12 +148,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/rect_light_grey"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:paddingStart="10dp"
                         android:src="@drawable/copyimagesvg" />
 
                     <TextView
@@ -153,6 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/five"
+                        android:gravity="center"
                         android:text="General"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp" />
@@ -165,7 +180,7 @@
                 android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/twenty"
                 android:text="Mahatma Gandhi, born Mohandas Karamchand Gandhi on October 2, 1869, was a prominent leader of the Indian independence movement..."
                 android:textSize="@dimen/thirteen_sp"

@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.AddQuestionAda
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBankData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AddQuestionBinding
@@ -63,6 +64,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         }
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         isQuestionLimit = intent.getIntExtra("limitQuestion", -1)
+        Log.d("isQuestionLimit",isQuestionLimit.toString())
+
         isQuizID = intent.getStringExtra("quiz_Id").toString()
         isSubjectID = intent.getStringExtra("subjectID").toString()
         isQuizTitle = intent.getStringExtra("quiz_Title").toString()
@@ -73,8 +76,12 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         appViewModel?.isGetQuizQuestionReport?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
-                    savedQuizQuestionReportList=response.data
-                    editableQuizQuestionReportList = savedQuizQuestionReportList.map { it.copy() }.toMutableList()
+                    savedQuizQuestionReportList = response.data
+
+                    // Mark all as API type
+                    editableQuizQuestionReportList = savedQuizQuestionReportList.map { it.copy(sourceType = QuestionSource.API)
+                    }.toMutableList()
+
                     isLoadQuizQuestionReport()
                 }
                 else {
@@ -83,8 +90,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                         getString(R.string.alert),
                         response.message
                     )
-                    savedQuizQuestionReportList=response.data
-                    editableQuizQuestionReportList = savedQuizQuestionReportList.map { it.copy() }.toMutableList()
+
+                    savedQuizQuestionReportList = response.data
+                    editableQuizQuestionReportList = savedQuizQuestionReportList.map {it.copy(sourceType = QuestionSource.API)
+                    }.toMutableList()
                     isLoadQuizQuestionReport()
                 }
             } else {
@@ -130,13 +139,28 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         binding.rcAddQuestion.adapter = adapter
 
+        adapter.onQBankItemRemoved = { removedId ->
+            adapter2.uncheckItemById(removedId)
+        }
+
         // Add an empty item only if list is empty or has 0/1 item
         if (editableQuizQuestionReportList.size<=0) {
             adapter.addItem()
         }
         binding.lblAddQuestion.setOnClickListener {
             if (adapter.showValidationErrors(binding.rcAddQuestion)) {
-                adapter.addItem()
+
+                if (isQuestionLimit<adapter.getUpdatedList().size){
+                    adapter.addItem()
+                    isQuestionLimit+=1
+                }
+                else{
+                    Constant.showErrorAlert(
+                        this,
+                        getString(R.string.alert),
+                        getString(R.string.question_limit_reached)
+                    )
+                }
             }
         }
 
@@ -149,7 +173,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         binding.rcAddQuestion.isNestedScrollingEnabled = false
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         binding.rcAddQuestion.adapter = adapter
-
 
         appViewModel?.isGetQuizQuestionReport(isAccessToken ?: "", isQuizID)
     }
@@ -183,24 +206,69 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         val cbSelect = dialogView.findViewById<CheckBox>(R.id.cbSelect)
 
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false){ isChecked ->
-            if (!isChecked && cbSelect.isChecked) {
-                cbSelect.isChecked = false
-            }
-            if (adapter2.getSelectedQuestions().size == pickFomQbank.size) {
-                cbSelect.isChecked = true
+//        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false){ isChecked ->
+////            if (!isChecked && cbSelect.isChecked) {
+////                cbSelect.isChecked = false
+////            }
+////            if (adapter2.getSelectedQuestions().size == pickFomQbank.size) {
+////                cbSelect.isChecked = true
+////            }
+//        }
+
+//        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false) {
+//            // Called whenever an item’s checkbox changes
+//            val total = pickFomQbank.size
+//            val selected = adapter2.getSelectedQuestions().size
+//
+//            cbSelect.setOnCheckedChangeListener(null) // avoid recursion
+//            cbSelect.isChecked = (selected == total && total > 0)
+//            cbSelect.setOnCheckedChangeListener { _, isChecked ->
+//                adapter2.selectAll(isChecked)
+//            }
+//        }
+
+        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false) {
+            val total = pickFomQbank.size
+            val selected = adapter2.getSelectedQuestions().size
+
+            cbSelect.setOnCheckedChangeListener(null)
+            cbSelect.isChecked = (selected == total && total > 0)
+            cbSelect.setOnCheckedChangeListener { _, isChecked ->
+                adapter2.selectAll(isChecked)
             }
         }
+
+
         recyclerView.adapter = adapter2
 
+//        lblImportQuestion.setOnClickListener {
+//            val selectedQuestions = adapter2.getSelectedQuestions()
+//            // Convert to AddQuestionAdapter model
+//            val quizQuestions = selectedQuestions.map { it.toQuizQuestionReportData() }
+//            adapter.updateItems(quizQuestions)
+//            alertDialog.dismiss()
+//        }
+
         lblImportQuestion.setOnClickListener {
-            val selectedQuestions = adapter2.getSelectedQuestions()
 
-            // Convert to AddQuestionAdapter model
-            val quizQuestions = selectedQuestions.map { it.toQuizQuestionReportData() }
+            if (isQuestionLimit<adapter.getUpdatedList().size) {
+                val selectedQuestions = adapter2.getSelectedQuestions()
+                val quizQuestions = selectedQuestions.map {
+                    it.toQuizQuestionReportData().copy(sourceType = QuestionSource.QBANK)
+                }
+                adapter.updateItems(quizQuestions)
+                alertDialog.dismiss()
+            }
+            else{
+                Constant.showErrorAlert(
+                    this,
+                    getString(R.string.alert),
+                    getString(R.string.question_limit_reached)
+                )
 
-            adapter.addItems(quizQuestions)
+            }
         }
+
 
         lblClose.setOnClickListener {
             alertDialog.dismiss()
@@ -242,8 +310,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 onBackPressed()
             }
             R.id.lblImportQuestion->{
-                Constant.showLoading(this)
                 if(isFirstClick){
+                    Constant.showLoading(this)
                     isFetchFromQuestionBank()
                     isFirstClick=false
                 }

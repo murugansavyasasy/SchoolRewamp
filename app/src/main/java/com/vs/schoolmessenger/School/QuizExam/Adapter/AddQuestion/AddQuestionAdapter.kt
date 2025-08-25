@@ -11,11 +11,14 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 class AddQuestionAdapter(
     private var itemList: MutableList<GetQuizQuestionReportData>?,
     private var context: Context,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
+    var onQBankItemRemoved: ((String) -> Unit)? = null
+
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -48,12 +51,13 @@ class AddQuestionAdapter(
         return if (isLoading) 20 else itemList!!.size
     }
 
+
+
     fun addItems(newItems: List<GetQuizQuestionReportData>) {
         val startPosition = itemList!!.size
         itemList!!.addAll(newItems)
         notifyItemRangeInserted(startPosition, newItems.size)
     }
-
 
 
     fun addItem() {
@@ -76,13 +80,29 @@ class AddQuestionAdapter(
                 correct_answer_counts = 0,
                 incorrect_answer_counts = 0,
                 correct_answer = "",
+                sourceType = QuestionSource.USER
             )
         )
         notifyItemInserted(itemList!!.size - 1)
     }
 
+//    fun removeItem(position: Int) {
+//        if (position >= 0 && position < itemList!!.size) {
+//            itemList!!.removeAt(position)
+//            notifyItemRemoved(position)
+//            notifyItemRangeChanged(position, itemList!!.size)
+//        }
+//    }
+
     fun removeItem(position: Int) {
         if (position >= 0 && position < itemList!!.size) {
+            val removed = itemList!![position]
+
+            // If it's a QBANK question → notify PickQuestionAdapter
+            if (removed.sourceType == QuestionSource.QBANK && removed.id.isNotEmpty()) {
+                onQBankItemRemoved?.invoke(removed.id)
+            }
+
             itemList!!.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemList!!.size)
@@ -148,22 +168,47 @@ class AddQuestionAdapter(
         notifyDataSetChanged()
     }
 
-    fun updateItems(newItems: List<GetQuizQuestionReportData>) {
+//    fun updateItems(newItems: List<GetQuizQuestionReportData>) {
+//        val newIds = newItems.mapNotNull { it.id }.toHashSet()
+//
+//        // Keep:
+//        // 1. All locally created items (id == null)
+//        // 2. All API items that are still in the new list
+//        itemList = itemList!!.filter { it.id == "" || (it.id != "" && it.id in newIds) }
+//            .toMutableList()
+//
+//        // Now add missing new API items
+//        val existingIds = itemList!!.mapNotNull { it.id }.toHashSet()
+//        val itemsToAdd = newItems.filter { it.id != "" && it.id !in existingIds }
+//
+//        itemList!!.addAll(itemsToAdd)
+//
+//        notifyDataSetChanged()
+//    }
 
-        val newIds = newItems.map { it.id }.toHashSet()//Collect all new ID from from QuestionBank
-        itemList = itemList!!.filter { it.id in newIds }.toMutableList()//Remove items that are not in the new selection
+fun updateItems(newQBankItems: List<GetQuizQuestionReportData>) {
+    // Keep:
+    // 1. User-created (id == "" && sourceType == USER)
+    // 2. API questions that are still in API response
+    // 3. Replace/update QBank questions
 
-        // Find missing items from the new selection and add them
-        val existingIds = itemList!!.map { it.id }.toHashSet()
-        val itemsToAdd = newItems.filter { it.id !in existingIds }
-        itemList!!.addAll(itemsToAdd)
+    val userItems = itemList!!.filter { it.sourceType == QuestionSource.USER }
+    val apiItems = itemList!!.filter { it.sourceType == QuestionSource.API && it.id.isNotEmpty() }
+    val qbankItems = newQBankItems.map { it.copy(sourceType = QuestionSource.QBANK) }
 
-        notifyDataSetChanged()
+    // Filter API items → keep only still present
+    val newApiIds = apiItems.mapNotNull { it.id }.toHashSet()
+    val filteredApi = apiItems.filter { it.id in newApiIds }
+
+    // Merge: User + Filtered API + Latest QBank
+    itemList = mutableListOf<GetQuizQuestionReportData>().apply {
+        addAll(userItems)
+        addAll(filteredApi)
+        addAll(qbankItems)
     }
 
-
-
-
+    notifyDataSetChanged()
+}
 
     fun getUpdatedList(): List<GetQuizQuestionReportData> = itemList!!
 
@@ -192,7 +237,7 @@ class AddQuestionAdapter(
 
             edtChapterName.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    itemList!![adapterPosition].question = text.toString()
+                    itemList!![adapterPosition].chapter = text.toString()
                 }
             }
             edtQuestion.doAfterTextChanged { text ->

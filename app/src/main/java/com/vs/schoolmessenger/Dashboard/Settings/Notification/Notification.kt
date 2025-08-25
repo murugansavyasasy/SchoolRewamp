@@ -66,8 +66,6 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
         }
 
 
-
-
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
@@ -85,7 +83,6 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
         super.onResume()
     }
 
-
     override fun onPause() {
         super.onPause()
         Constant.stopDelay()
@@ -95,7 +92,6 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
         Constant.showLoading(this)
         appViewModel!!.isNotificationList(isAccessToken ?: "", "Android")
     }
-
 
     override fun onClick(p0: View?) {
         when (p0?.id) {

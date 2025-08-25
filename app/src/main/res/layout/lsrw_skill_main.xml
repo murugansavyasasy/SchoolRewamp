@@ -69,8 +69,8 @@
         android:layout_below="@+id/rcyFilter"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="Recent Tasks"
-        android:textColor="@color/mild_grey_dark"
+        android:text="Active Tasks"
+        android:textColor="@color/black"
         android:textSize="15sp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -78,6 +78,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header_label"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:visibility="visible">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <TextView
+        android:id="@+id/completed_label"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rcylsrwreport"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Completed Tasks"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcylsrwcompletedreport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/completed_label"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"

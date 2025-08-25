@@ -304,7 +304,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         }
 
         appViewModel!!.isGetAssignmentReport?.observe(this) { response ->
-            binding.progressLoader.visibility = View.GONE
+            Constant.hideLoading(this@Assignment)
             if (response != null) {
                 if (response.status) {
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
@@ -432,7 +432,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
     private fun fetchAssignmentReportData() {
-        binding.progressLoader.visibility = View.VISIBLE
+        Constant.showLoading(this@Assignment)
         binding.rcyAssignmentReport.visibility = View.VISIBLE
         isAssignmentAdapter =
             AssignmentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
