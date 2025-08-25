@@ -34,8 +34,9 @@
                 android:id="@+id/txtCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3"
+                android:text="0"
                 android:gravity="end"
+                android:visibility="visible"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 style="@style/CustomTextStylePoppinsBold" />
@@ -46,18 +47,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Active Tasks"
+            android:text="Today Submitted"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-           style="@style/CustomTextStylePoppinsBold" />
+            style="@style/CustomTextStylePoppinsBold" />
 
         <TextView
             android:id="@+id/txtSubTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1 overddue"
+            android:text="0 Students"
             android:textColor="#808080"
             android:maxLines="1"
             android:ellipsize="end"

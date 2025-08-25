@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.LSRW
+package com.vs.schoolmessenger.School.LSRW.Adapter
 
 import android.content.Context
 import android.content.Intent
@@ -7,11 +7,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
@@ -19,18 +16,20 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LSRW.Model.lsrwskilldata
-import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrw
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
+import com.vs.schoolmessenger.School.LSRW.Model.Overview
 import com.vs.schoolmessenger.Utils.Constant
 
-class SubmittedStudentlistAdapter (
-    private var itemList: List<StudentSubmissionLsrw>,
-    private val context: Context
-) : RecyclerView.Adapter<SubmittedStudentlistAdapter.HeaderViewHolder>() {
+class LsrwCompletedAdapter (
+    private var itemList: List<LsrwTask>,
+    private val context: Context,
+    private val noDataImage: ImageView? = null,
+    private val noDataText: TextView? = null
+) : RecyclerView.Adapter<LsrwCompletedAdapter.HeaderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.submitted_studentlist_detail, parent, false)
+            .inflate(R.layout.lsrw_report_item, parent, false)
         return HeaderViewHolder(view)
     }
 
@@ -42,54 +41,36 @@ class SubmittedStudentlistAdapter (
     override fun getItemCount(): Int = itemList.size
 
 
-    fun updateList(newList: List<StudentSubmissionLsrw>) {
+    fun updateList(newList: List<LsrwTask>) {
         itemList = newList
         notifyDataSetChanged()
     }
 
     inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
-        private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
-        private val submittedDate: TextView = itemView.findViewById(R.id.submittedDate)
-        private val statuslabel: TextView = itemView.findViewById(R.id.statuslabel)
-
+        private val txtTitle: TextView = itemView.findViewById(R.id.txtTitle)
+        private val txtSubTitle: TextView = itemView.findViewById(R.id.txtSubTitle)
+        private val txtDescription: TextView = itemView.findViewById(R.id.txtDescription)
+        private val txtDate: TextView = itemView.findViewById(R.id.txtDate)
+        private val txtSubmitted: TextView = itemView.findViewById(R.id.txtSubmitted)
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
-
+        private val txtsubdesc: TextView = itemView.findViewById(R.id.txtsubdesc)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
-        private val cancelimage: ImageView = itemView.findViewById(R.id.cancelimage)
-        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
-        private val statusButton: LinearLayout = itemView.findViewById(R.id.statusButton)
+        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
 
-        fun bind(item: StudentSubmissionLsrw) {
-            lblStudentName.text = item.student_name
-            sectionlabel.text = item.standard +" - "+ item.section
-            submittedDate.text = item.submitted_date
-
-
-            if (item.submit_status == "SUBMITTED") {
-                statuslabel.text = "Submitted"
-                cancelimage.setBackgroundResource(R.drawable.correcticonsvg)
-                statuslabel.setTextColor(
-                    ContextCompat.getColor(context, R.color.clr_green)
-                )
-                statusButton.setBackgroundResource(R.drawable.completed_button_bg)
-            } else {
-                statuslabel.text = "Pending"
-                cancelimage.setBackgroundResource(R.drawable.downloadsvgformat)
-                statuslabel.setTextColor("#9e6e40".toColorInt())
-
-                statusButton.setBackgroundResource(R.drawable.pending_button_bg)
-            }
-
-
-
+        fun bind(item: LsrwTask) {
+            txtTitle.text = item.subject
+            txtSubTitle.text = item.activity_type
+            txtDescription.text = item.title
+            txtsubdesc.text = item.description
+            txtDate.text = item.created_on
+            txtSubmitted.text = item.submitted_average + "submitted"
 
 
             val hasFiles = !item.file_path.isNullOrEmpty()
 
 
-            rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
+            rytList2.visibility = if (hasFiles) View.GONE else View.GONE
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
@@ -101,8 +82,8 @@ class SubmittedStudentlistAdapter (
                 }
                 val isHomeWorkData = FilePreview(
                     id = item.id,
-                    title = "",
-                    description = "",
+                    title = item.title,
+                    description = item.description,
                     subjectName = "",
                     sentBy = "",
                     thumbnail = item.thumbnail,
@@ -112,8 +93,8 @@ class SubmittedStudentlistAdapter (
                     fileList = convertedList,
                     submittedCount = 0,
                     totalCount = 0,
-                    assignmentid = "",
-                    created_date = "",
+                    assignmentid = item.activity_type,
+                    created_date = item.created_on,
                     category = "",
                     assignmentsubject = ""
                 )
@@ -133,8 +114,8 @@ class SubmittedStudentlistAdapter (
                 }
                 val isHomeWorkData = FilePreview(
                     id = item.id,
-                    title = "",
-                    description = "",
+                    title = item.title,
+                    description = item.description,
                     subjectName = "",
                     sentBy = "",
                     thumbnail = item.thumbnail,
@@ -144,8 +125,8 @@ class SubmittedStudentlistAdapter (
                     fileList = convertedList,
                     submittedCount = 0,
                     totalCount = 0,
-                    assignmentid = "",
-                    created_date = "",
+                    assignmentid = item.activity_type,
+                    created_date = item.created_on,
                     category = "",
                     assignmentsubject = "",
                     isParentAssignment = false
@@ -171,8 +152,8 @@ class SubmittedStudentlistAdapter (
                             }
                             val isHomeWorkData = FilePreview(
                                 id = item.id,
-                                title = "",
-                                description = "",
+                                title = item.title,
+                                description = item.description,
                                 subjectName = "",
                                 sentBy = "",
                                 thumbnail = item.thumbnail,
@@ -182,8 +163,8 @@ class SubmittedStudentlistAdapter (
                                 fileList = convertedList,
                                 submittedCount = 0,
                                 totalCount = 0,
-                                assignmentid = "",
-                                created_date = "",
+                                assignmentid = item.activity_type,
+                                created_date = item.created_on,
                                 category = "",
                                 assignmentsubject = "",
                                 isParentAssignment = false

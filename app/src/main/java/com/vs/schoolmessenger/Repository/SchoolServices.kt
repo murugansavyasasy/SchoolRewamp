@@ -49,6 +49,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
@@ -177,6 +178,7 @@ class SchoolServices {
     var islsrwskillsreport: MutableLiveData<lsrwskillresponse?>
     var islsrwStudentlist: MutableLiveData<StudentSubmissionLsrwResponse?>
     var islsrwSkillCreate: MutableLiveData<LsrwSkillSendResponse?>
+    var islsrwstats: MutableLiveData<AvgSkillResponse?>
 
     var isPtmSlotCreate: MutableLiveData<StatusMessageModel?>
     var isPtmSlotResponse: MutableLiveData<SlotResponse?>
@@ -275,6 +277,7 @@ class SchoolServices {
         islsrwskillsreport = MutableLiveData()
         islsrwStudentlist = MutableLiveData()
         islsrwSkillCreate = MutableLiveData()
+        islsrwstats = MutableLiveData()
 
         isPtmSlotCreate = MutableLiveData()
         isPtmSlotResponse = MutableLiveData()
@@ -3366,6 +3369,53 @@ class SchoolServices {
 
     val islsrwStudentlistLiveData: LiveData<StudentSubmissionLsrwResponse?>
         get() = islsrwStudentlist
+
+
+
+    fun islsrwstats(
+        isToken: String,
+        month_id: Int,
+
+    ) {
+        RestClient.apiInterfaces.islsrwstats(isToken,month_id)
+            ?.enqueue(object : Callback<AvgSkillResponse?> {
+                override fun onResponse(
+                    call: Call<AvgSkillResponse?>,
+                    response: Response<AvgSkillResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwstats.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                islsrwstats.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<AvgSkillResponse?>,
+                    t: Throwable
+                ) {
+                    islsrwstats.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val islsrwstatsLiveData: LiveData<AvgSkillResponse?>
+        get() = islsrwstats
+
+
+
 
     fun isSubmitQuiz(
         isToken: String, jsonObject: JsonObject

@@ -89,6 +89,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelReq
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
@@ -856,6 +857,13 @@ interface ApiInterfaces {
     fun islsrwSkilllist(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<LsrwSkillResponse?>?
+
+
+    @GET(APIMethods.islsrwstats)
+    fun islsrwstats(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.month_id) month_id: Int
+    ): Call<AvgSkillResponse?>?
 
 
     // PTM

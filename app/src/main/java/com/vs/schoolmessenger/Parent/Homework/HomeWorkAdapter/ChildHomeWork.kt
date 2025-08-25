@@ -95,9 +95,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         super.setupViews()
         setupToolbarBlueWhite()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.childlsrwlayoutxml.imgBack.setOnClickListener(this)
+        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
-        binding.childlsrwlayoutxml.imgBack.setOnClickListener {
+        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
         binding.lblClickComplete.setOnClickListener(this)
@@ -143,6 +143,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.txtTitle.text = data!!.title
             binding.childlsrwlayoutxml.txtSubTitle.text = data!!.assignmentid
             binding.childlsrwlayoutxml.txtDescription.text = data!!.description
+            binding.childlsrwlayoutxml.lsrwgragmentcontainer.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.txtDate.text = Constant.convertDateFormat(data?.created_date ?: "")
             Log.d("FragmentCheck", "Loading LsrwStudentListFragment with ID: ${data!!.id}")
             subloadFragment(
@@ -151,6 +152,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 )
             )
             Log.d("FragmentCheck", "LsrwStudentListFragment should now be loaded")
+
+            val audioList = data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
+                .map { it.url }
+            if (audioList.isNotEmpty()) {
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
+                val audioAdapter = AudioAdapter(audioList)
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager = LinearLayoutManager(binding.root.context)
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
+            } else {
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
+            }
 
         } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
 
@@ -434,10 +446,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
     private fun subloadFragment(fragment: Fragment) {
-        val fragmentContainer = findViewById<FrameLayout>(R.id.fragmentContainer)
-        supportFragmentManager.beginTransaction().replace(fragmentContainer.id, fragment).commit()
-
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.lsrwgragmentcontainer, fragment)
+            .commit()
     }
+
 
 
     private fun checkCameraPermissionAndOpenCamera() {

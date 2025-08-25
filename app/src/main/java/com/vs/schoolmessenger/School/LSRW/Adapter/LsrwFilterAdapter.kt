@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.LSRW
+package com.vs.schoolmessenger.School.LSRW.Adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
