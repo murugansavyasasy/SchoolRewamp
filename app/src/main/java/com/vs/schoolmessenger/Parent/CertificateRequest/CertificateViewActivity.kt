@@ -72,14 +72,21 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
             PorterDuff.Mode.SRC_IN
         )
 
-        binding.lblRequestedOnDate.text = Constant.isCertificateData?.requested_on ?: ""
+        binding.lblSubject.text=Constant.isCertificateData?.type.toString()
+
+
+        val requestedOn=Constant.formatDate(Constant.isCertificateData?.requested_on.toString())
+        binding.lblRequestedOnDate.text =  requestedOn ?: ""
+
+
         if (Constant.isCertificateData!!.url != "" && Constant.isCertificateData!!.issued_on != "") {
             binding.rytCertificate.visibility = View.VISIBLE
             binding.wvCertificatePdf.visibility = View.VISIBLE
             binding.lblCertificateDate.visibility = View.VISIBLE
             binding.imgMoreOptions.visibility = View.VISIBLE
             binding.rytWaitingProcess.visibility = View.GONE
-            binding.lblCertificateDate.text = Constant.isCertificateData?.issued_on ?: ""
+            val issuedOn=Constant.formatDate(Constant.isCertificateData?.issued_on.toString())
+            binding.lblCertificateDate.text = issuedOn?: ""
 
             binding.loadingBar.visibility = View.VISIBLE
             binding.wvCertificatePdf.apply {

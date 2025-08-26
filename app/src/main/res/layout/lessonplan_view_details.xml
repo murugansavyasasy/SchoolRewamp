@@ -94,7 +94,8 @@
     </HorizontalScrollView>
 
     <RelativeLayout
-        android:id="@+id/rytSearch"
+        android:id="@+id/rytSearch1"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
         android:layout_margin="@dimen/ten"
@@ -112,7 +113,7 @@
             android:src="@drawable/ic_search" />
 
         <EditText
-            android:id="@+id/txtSearchMenu"
+            android:id="@+id/txtSearchMenu1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toEndOf="@+id/imgSearch"
@@ -128,7 +129,7 @@
         android:id="@+id/rcyLessonViewPlan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearch"
+        android:layout_below="@+id/rytSearch1"
         android:layout_marginTop="@dimen/ten"
         />
 

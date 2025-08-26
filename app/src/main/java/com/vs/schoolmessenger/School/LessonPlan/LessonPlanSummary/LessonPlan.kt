@@ -46,23 +46,31 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
 
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rytSearch1.visibility == View.VISIBLE) {
+                binding.rytSearch1.visibility = View.GONE
+            } else {
+                binding.txtSearchMenu1.text.clear()
+                binding.rytSearch1.visibility = View.VISIBLE
+            }
+        }
+
         appViewModel?.getlpStaffReport?.observe(this) { response ->
             if (response != null && response.status) {
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
-                binding.rytSearch1.visibility = View.VISIBLE
                 binding.rcyLessonPlan.visibility = View.VISIBLE
                 islpStaffData(response.data, currentRequestType)
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.rytSearch1.visibility = View.GONE
                 binding.rcyLessonPlan.visibility = View.GONE
             }
         }
@@ -70,7 +78,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         loadlpAllClassdata("allclass")
 
 
-        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtSearchMenu1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::lessonplanAdapter.isInitialized) {
@@ -130,6 +138,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btnCreate -> {
+                binding.txtSearchMenu1.text.clear()
                 binding.btnCreate.setTextColor(Color.BLACK)
                 binding.btnCreate.background =
                     ContextCompat.getDrawable(this, R.drawable.white_radious)
@@ -139,7 +148,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             }
 
             R.id.btnHistory -> {
-
+                binding.txtSearchMenu1.text.clear()
                 binding.btnHistory.setTextColor(Color.BLACK)
                 binding.btnHistory.background =
                     ContextCompat.getDrawable(this, R.drawable.white_radious)
