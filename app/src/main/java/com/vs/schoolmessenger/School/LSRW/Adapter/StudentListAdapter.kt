@@ -3,18 +3,18 @@ package com.vs.schoolmessenger.School.LSRW.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.School.LSRW.Model.TopPerformanceItem
-import com.vs.schoolmessenger.databinding.ItemTopPerformanceBinding
+import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgStudentSubmission
+import com.vs.schoolmessenger.databinding.ItemStudentlistReccleBinding
 
-class TopPerformanceAdapter(
-    private val items: List<TopPerformanceItem>
-) : RecyclerView.Adapter<TopPerformanceAdapter.ViewHolder>() {
+class StudentListAdapter(
+    private val items: List<AvgStudentSubmission>
+) : RecyclerView.Adapter<StudentListAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: ItemTopPerformanceBinding) :
+    inner class ViewHolder(val binding: ItemStudentlistReccleBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemTopPerformanceBinding.inflate(
+        val binding = ItemStudentlistReccleBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return ViewHolder(binding)
@@ -23,16 +23,17 @@ class TopPerformanceAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.binding.apply {
-            txtTitle.text = item.studentName
-            txtclassname.text = item.className
-            txtValue.text = "${item.percentage}%"
-
-            val name = item.studentName
+            txtTitle.text = item.student_name
+            txtclassname.text = "Class ${item.std_sec}"
+            txtValue.text  = item.remark
+            val name = item.student_name
             avatarText.text = if (!name.isNullOrEmpty()) {
                 name.first().toString().uppercase()
             } else {
                 "-"
             }
+
+
 
         }
     }

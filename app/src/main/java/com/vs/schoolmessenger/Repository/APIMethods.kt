@@ -139,6 +139,7 @@ object APIMethods {
     const val islsrwSkillSubmit = "lms/api/lsrw/submit-skill"
     const val islsrwSkilllist = "lms/api/lsrw/skill-list"
     const val islsrwstats = "lms/api/lsrw/stats"
+    const val islsrwremarkupdate = "lms/api/lsrw/remark"
 
 
     // PTM API CALLS

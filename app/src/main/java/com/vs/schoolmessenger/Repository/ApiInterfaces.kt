@@ -91,6 +91,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.Interaction
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
@@ -864,6 +865,13 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.month_id) month_id: Int
     ): Call<AvgSkillResponse?>?
+
+
+
+    @PUT(APIMethods.islsrwremarkupdate)
+    fun islsrwremarkupdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<LsrwremarkUpdateModel?>
 
 
     // PTM

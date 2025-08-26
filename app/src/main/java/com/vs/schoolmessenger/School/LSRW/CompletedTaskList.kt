@@ -4,28 +4,31 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwAdapter
+import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwCompletedAdapter
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
 import com.vs.schoolmessenger.databinding.ActivityTasklistBinding
+import com.vs.schoolmessenger.databinding.CompletedTasklistBinding
 
-class ActiveTaskList : AppCompatActivity() {
+class CompletedTaskList : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTasklistBinding
-    private lateinit var adapter: LsrwAdapter
+    private lateinit var binding: CompletedTasklistBinding
+    private lateinit var adapter: LsrwCompletedAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTasklistBinding.inflate(layoutInflater)
+        binding = CompletedTasklistBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val taskList = intent.getParcelableArrayListExtra<LsrwTask>("TASK_LIST") ?: arrayListOf()
+        val taskList =
+            intent.getParcelableArrayListExtra<LsrwTask>("COMPLETED_TASK_LIST") ?: arrayListOf()
 
-        binding.rcyactivetaskrcy.layoutManager = LinearLayoutManager(this)
-        adapter = LsrwAdapter(
+        binding.rcycompletedtaskrcy.layoutManager = LinearLayoutManager(this)
+        adapter = LsrwCompletedAdapter(
             itemList = taskList,
             context = this,
             noDataImage = binding.noDataImage,
             noDataText = binding.noDataFound
         )
-        binding.rcyactivetaskrcy.adapter = adapter
+        binding.rcycompletedtaskrcy.adapter = adapter
     }
 }

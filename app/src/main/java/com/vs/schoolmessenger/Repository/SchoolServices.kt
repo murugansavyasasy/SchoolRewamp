@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModel
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
@@ -179,6 +180,7 @@ class SchoolServices {
     var islsrwStudentlist: MutableLiveData<StudentSubmissionLsrwResponse?>
     var islsrwSkillCreate: MutableLiveData<LsrwSkillSendResponse?>
     var islsrwstats: MutableLiveData<AvgSkillResponse?>
+    var islsrwremarkupdate: MutableLiveData<LsrwremarkUpdateModel?>
 
     var isPtmSlotCreate: MutableLiveData<StatusMessageModel?>
     var isPtmSlotResponse: MutableLiveData<SlotResponse?>
@@ -278,6 +280,7 @@ class SchoolServices {
         islsrwStudentlist = MutableLiveData()
         islsrwSkillCreate = MutableLiveData()
         islsrwstats = MutableLiveData()
+        islsrwremarkupdate = MutableLiveData()
 
         isPtmSlotCreate = MutableLiveData()
         isPtmSlotResponse = MutableLiveData()
@@ -3413,6 +3416,44 @@ class SchoolServices {
 
     val islsrwstatsLiveData: LiveData<AvgSkillResponse?>
         get() = islsrwstats
+
+
+
+    fun islsrwremarkupdate(
+        isToken: String, jsonObject: JsonObject, activity: Activity
+    ) {
+
+        RestClient.apiInterfaces.islsrwremarkupdate(isToken, jsonObject)
+            ?.enqueue(object : Callback<LsrwremarkUpdateModel?> {
+                override fun onResponse(
+                    call: Call<LsrwremarkUpdateModel?>, response: Response<LsrwremarkUpdateModel?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                islsrwremarkupdate.postValue(response.body())
+                            } else {
+                                islsrwremarkupdate.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        islsrwremarkupdate.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LsrwremarkUpdateModel?>, t: Throwable) {
+                    islsrwremarkupdate.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val islsrwremarkupdateLiveData: LiveData<LsrwremarkUpdateModel?>
+        get() = islsrwremarkupdate
 
 
 

@@ -1,0 +1,65 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    app:cardCornerRadius="12dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="12dp">
+
+
+        <TextView
+            android:id="@+id/avatarText"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="J"
+            android:textSize="16sp"
+           style="@style/CustomTextStylePoppinsBold"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bg_circle_avatar" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jeeva"
+                android:textSize="14sp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/txtclassname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class I - B -"
+                android:textSize="12sp"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textColor="@android:color/darker_gray" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.0%"
+            android:textSize="14sp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textColor="@android:color/holo_green_dark" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

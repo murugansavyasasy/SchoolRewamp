@@ -6,5 +6,7 @@ import kotlinx.parcelize.Parcelize
 data class LsrwnewTaskSendingData (
     val isTitle: String,
     val isDescription: String,
-    val isLsrwType: String
+    val isLsrwType: String,
+    val submission_date: String,
+
 ) : Parcelable

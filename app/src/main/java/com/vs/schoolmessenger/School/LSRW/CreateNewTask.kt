@@ -558,6 +558,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     private fun isRedirectToSectionStudents() {
         val title = binding.edtTitle.text.toString().trim()
         val description = binding.edtDescription.text.toString().trim()
+        val edtdate = binding.edtdate.text.toString().trim()
         if (title.isEmpty()) {
             binding.edtTitle.error = getString(R.string.This_field_required)
             binding.edtTitle.requestFocus()
@@ -572,6 +573,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             title,
             description,
             selectedSkill,
+            edtdate,
             )
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.lsrwskill_data, isLsrwnewTaskSendingData)

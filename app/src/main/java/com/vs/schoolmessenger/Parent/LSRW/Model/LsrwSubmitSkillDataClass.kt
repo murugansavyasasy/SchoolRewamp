@@ -5,5 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class LsrwSubmitSkillDataClass (
-    val isDescription: String
+    val id: String,
+    val isDescription: String,
+    val thumbnail: String
 ) : Parcelable

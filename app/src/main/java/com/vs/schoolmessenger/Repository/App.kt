@@ -81,6 +81,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.Interaction
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
@@ -325,6 +326,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var getassignmentmysubmission: LiveData<MySubmittedAssignmentsResponse?>? = null
     var islsrwskillsreport: LiveData<lsrwskillresponse?>? = null
     var islsrwstats: LiveData<AvgSkillResponse?>? = null
+
+    var islsrwremarkupdate: LiveData<LsrwremarkUpdateModel?>? = null
+
     var isPtmSlotCreate: LiveData<StatusMessageModel?>? = null
     var isPtmSlotResponse: LiveData<SlotResponse?>? = null
     var isPtmSlotCancelReOpen: LiveData<StatusMessageModel?>? = null
@@ -468,6 +472,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getassignmentmysubmission = apiParentRepositories.getassignmentmysubmissionlistLiveData
         islsrwskillsreport = apiSchoolRepositories.islsrwskillsreportLiveData
         islsrwStudentlist = apiSchoolRepositories.islsrwStudentlistLiveData
+        islsrwremarkupdate = apiSchoolRepositories.islsrwremarkupdateLiveData
 
         isPtmSlotCreate = apiSchoolRepositories.isPtmSlotCreateLiveData
         isPtmSlotResponse = apiSchoolRepositories.isPtmSlotResponseLiveData
@@ -1091,6 +1096,10 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.islsrwstats(isToken,month_id)
     }
 
+
+    fun islsrwremarkupdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.islsrwremarkupdate(isToken, jsonObject, activity)
+    }
 
     // PTM
 
