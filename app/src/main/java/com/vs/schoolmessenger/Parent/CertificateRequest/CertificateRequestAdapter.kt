@@ -82,8 +82,17 @@ class CertificateRequestAdapter(
             lblCertificateTitle.text = data.type
             lblCertificateReason.text = buildSpannedString {
                 bold { color(Color.BLACK) { append("Reason : ") } }
-                append(data.reason)
+
+                val reasonText = data.reason ?: ""
+                val shortReason = if (reasonText.length > 10) {
+                    reasonText.take(10) + "..."
+                } else {
+                    reasonText
+                }
+                append(shortReason)
             }
+
+
 
             lblDate.text = Constant.convertDateTimeFormat(data.requested_on)
 

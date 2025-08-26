@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,15 +65,26 @@ class LessonPlanAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: LessonPlanViewSummaryItem) {
             val recyclerView = itemView.findViewById<RecyclerView>(R.id.detailsRecyclerView)
-            val bottomstatusrelative_layout =
-                itemView.findViewById<RelativeLayout>(R.id.bottomstatusrelative_layout)
+            val lblSubjectId = itemView.findViewById<TextView>(R.id.lblSubjectId)
+            val lblTeaching = itemView.findViewById<TextView>(R.id.lblTeaching)
+            val lblLevel = itemView.findViewById<TextView>(R.id.lblLevel)
             val status_text1label = itemView.findViewById<ImageView>(R.id.status_text1label)
-            val status_textlabel = itemView.findViewById<TextView>(R.id.status_textlabel)
+
+
+            val activityDetail = item.details.find { it.name.equals("Activity", ignoreCase = true) }
+            val topicDetail = item.details.find { it.name.equals("Topic", ignoreCase = true) }
+
+            lblSubjectId.text = topicDetail?.value ?: ""
+            lblTeaching.text = activityDetail?.value ?: ""
+            lblLevel.text = item.lesson_plan_status.toString()?: ""
+
             val btnedit = itemView.findViewById<LinearLayout>(R.id.btnEditContainer)
             val btndelete = itemView.findViewById<LinearLayout>(R.id.btnDeleteContainer)
 
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = LessonPlanDetailAdapter(item.details)
+
+
 
             if (requestType == "allclass") {
                 btndelete.visibility = View.GONE
@@ -82,28 +94,22 @@ class LessonPlanAdapter(
 
             when (item.lesson_plan_status) {
                 3 -> {
-                    bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_green_radoius_20dp)
                     status_text1label.setImageResource(R.drawable.correcticonsvg)
-                    status_textlabel.setTextColor(ContextCompat.getColor(context, R.color.green))
-                    status_textlabel.text = "Completed"
+
                 }
 
                 2 -> {
-                    bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_blue_radoius_20dp)
                     status_text1label.setImageResource(R.drawable.refreshicon)
-                    status_textlabel.setTextColor(ContextCompat.getColor(context, R.color.iconBlue))
-                    status_textlabel.text = "In Progress"
+
                 }
 
                 1 -> {
-                    bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_orange_radoius_20dp)
                     status_text1label.setImageResource(R.drawable.sandclockicon)
-                    status_textlabel.setTextColor(
-                        ContextCompat.getColor(
-                            context, R.color.dark_orange
-                        )
+                    status_text1label.setColorFilter(
+                        ContextCompat.getColor(context, R.color.dark_orange),   // your color
+                        PorterDuff.Mode.SRC_IN
                     )
-                    status_textlabel.text = "Yet to Start"
+
                 }
             }
             btnedit.setOnClickListener { listener.onEditItem(item) }

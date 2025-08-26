@@ -32,6 +32,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/lnrEntireCard"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"

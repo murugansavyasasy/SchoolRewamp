@@ -740,6 +740,7 @@
     <string name="exam">Exam</string>
     <string name="fee_details">Fee Details</string>
     <string name="certificate_request">Certificate Request</string>
+    <string name="level">Level</string>
 
 
 </resources>

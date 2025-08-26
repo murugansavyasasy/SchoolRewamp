@@ -1,35 +1,41 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.FlowLayout android:id="@+id/flowLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/ten"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    xmlns:android="http://schemas.android.com/apk/res/android" />
 
-    <TextView
-        android:id="@+id/namelabel"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="@dimen/one_fifty"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:textColor="@color/dark_blue_1"
-        android:textSize="@dimen/fourteen_sp" />
 
-    <TextView
-        android:id="@+id/dotlabel"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/thirty_five"
-        android:layout_marginEnd="@dimen/four"
-        android:text=":"
-        android:textSize="@dimen/fourteen_sp" />
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginTop="@dimen/ten"-->
+<!--    android:gravity="center_vertical"-->
+<!--    android:orientation="horizontal">-->
 
-    <TextView
-        android:id="@+id/lblName"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/eight"
-        android:text="Value"
-        android:textSize="@dimen/fourteen_sp" />
-</LinearLayout>
+<!--    <TextView-->
+<!--        android:id="@+id/namelabel"-->
+<!--        style="@style/CustomTextStylePoppinsBold"-->
+<!--        android:layout_width="@dimen/one_fifty"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Name"-->
+<!--        android:textColor="@color/dark_blue_1"-->
+<!--        android:textSize="@dimen/fourteen_sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/dotlabel"-->
+<!--        style="@style/CustomTextStylePoppinsBold"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/thirty_five"-->
+<!--        android:layout_marginEnd="@dimen/four"-->
+<!--        android:text=":"-->
+<!--        android:textSize="@dimen/fourteen_sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/lblName"-->
+<!--        style="@style/CustomTextStylePoppinsMedium"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/eight"-->
+<!--        android:text="Value"-->
+<!--        android:textSize="@dimen/fourteen_sp" />-->
+<!--</LinearLayout>-->

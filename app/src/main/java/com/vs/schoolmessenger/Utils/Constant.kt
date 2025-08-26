@@ -672,6 +672,37 @@ object Constant {
     }
 
 
+    //"dd-MM-yyyy" to "dd MMMM, yyyy"
+    fun formatDate(dateStr: String): String {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+
+        val inputDate = inputFormat.parse(dateStr) ?: return dateStr
+
+        val calendar = Calendar.getInstance()
+
+        // Today
+        val today = Calendar.getInstance()
+
+        // Yesterday
+        val yesterday = Calendar.getInstance()
+        yesterday.add(Calendar.DAY_OF_YEAR, -1)
+
+        return when {
+            isSameDay(calendar = today, date = inputDate) -> "Today"
+            isSameDay(calendar = yesterday, date = inputDate) -> "Yesterday"
+            else -> outputFormat.format(inputDate)
+        }
+    }
+
+    private fun isSameDay(calendar: Calendar, date: Date): Boolean {
+        val cal = Calendar.getInstance()
+        cal.time = date
+        return calendar.get(Calendar.YEAR) == cal.get(Calendar.YEAR) &&
+                calendar.get(Calendar.DAY_OF_YEAR) == cal.get(Calendar.DAY_OF_YEAR)
+    }
+
+
     fun showTopAlertPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)

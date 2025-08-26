@@ -47,6 +47,18 @@ class PickQuestionAdapter(
         }
     }
 
+    fun getAllNotImported(): List<GetPickFromQBankData> {
+        return itemList?.filter { !it.checked } ?: emptyList()
+    }
+
+//
+//    fun clearSelections() {
+//        itemList?.forEach { it.checked = false }
+//        notifyDataSetChanged()
+//    }
+
+
+
     override fun getItemCount(): Int {
         return if (isLoading) 20 else itemList!!.size
     }
@@ -59,16 +71,30 @@ class PickQuestionAdapter(
 //        notifyDataSetChanged()
 //    }
 
+//    fun selectAll(isChecked: Boolean) {
+//        if (isChecked) {
+//            // Mark all as selected
+//            itemList?.forEach { it.checked = true }
+//        } else {
+//            // Just clear all
+//            itemList?.forEach { it.checked = false }
+//        }
+//        notifyDataSetChanged()
+//    }
+
+
+    // Select/Deselect All (temporary only)
     fun selectAll(isChecked: Boolean) {
         if (isChecked) {
-            // Mark all as selected
-            itemList?.forEach { it.checked = true }
+            // Mark all as temporarily selected
+            itemList?.forEach { tempSelection[it.id] = true }
         } else {
-            // Just clear all
-            itemList?.forEach { it.checked = false }
+            // Clear all temporary selections
+            itemList?.forEach { tempSelection[it.id] = false }
         }
         notifyDataSetChanged()
     }
+
 
 
     // Return selected items
@@ -99,6 +125,19 @@ class PickQuestionAdapter(
     fun getSelected(): List<GetPickFromQBankData> {
         return itemList!!.filter { tempSelection[it.id] ?: it.checked }
     }
+
+    fun clearSelections() {
+        // Clear only temporary selections
+        tempSelection.clear()
+
+        // Refresh only items that were temporarily selected
+        itemList?.forEachIndexed { index, item ->
+            if (!item.checked) {   // refresh only non-imported
+                notifyItemChanged(index)
+            }
+        }
+    }
+
 
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
