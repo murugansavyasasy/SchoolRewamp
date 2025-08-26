@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cltDateSelection"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/two_hundred"
+        android:layout_height="@dimen/two_hundred_thirty"
         android:background="@drawable/bottom_right_left_radious"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -85,10 +85,11 @@
         android:layout_marginTop="@dimen/ten"
         android:text="@string/HomeWork"
         android:textColor="@color/black"
-        android:textSize="@dimen/fifteen_sp"
+        android:textSize="@dimen/twenty"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cltDateSelection">
     </TextView>
+
 
     <LinearLayout
         android:id="@+id/lytSearch"

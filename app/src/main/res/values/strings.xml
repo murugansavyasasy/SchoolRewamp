@@ -734,6 +734,12 @@
     <string name="add_question">Add Question</string>
     <string name="enter_correct_answer_here">Enter correct answer here</string>
     <string name="question_limit_reached">Sorry!Already question limit reached</string>
+    <string name="communication">Communication</string>
+    <string name="assignment">Assignment</string>
+    <string name="attachment">Attachment</string>
+    <string name="exam">Exam</string>
+    <string name="fee_details">Fee Details</string>
+    <string name="certificate_request">Certificate Request</string>
     <string name="level">Level</string>
 
 

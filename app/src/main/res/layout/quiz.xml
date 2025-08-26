@@ -11,11 +11,34 @@
         layout="@layout/parent_side_tool_bar" />
 
 
+
+    <LinearLayout
+        android:id="@+id/headerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/twenty"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/lblHeaderTitle"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Quiz"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_marginTop="@dimen/ten"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/headerview"
         android:id="@+id/toolbarLayout2"
         android:weightSum="1"
         android:orientation="horizontal"

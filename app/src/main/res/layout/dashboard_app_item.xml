@@ -24,7 +24,7 @@
             android:layout_width="@dimen/ten"
             android:visibility="gone"
             android:layout_gravity="end"
-            android:background="@drawable/circle_dark_blue"
+            android:background="@drawable/bg_red_circle"
             android:layout_height="@dimen/ten">
 
         </View>

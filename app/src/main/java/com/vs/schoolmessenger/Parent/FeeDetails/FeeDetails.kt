@@ -115,22 +115,26 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             R.id.btnPayment -> {
                 binding.payWebview.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
-                binding.btnPayment.setBackgroundResource(R.drawable.white_radious)
-                binding.btnPayment.setTextColor(Color.BLACK)
-                binding.btnReceipt.setBackgroundResource(R.drawable.bg_light_green)
-                loadPaymentPage(binding.payWebview)
+                binding.linePayment.setBackgroundResource(R.color.PrimaryColor)
+                binding.lineReceipt.setBackgroundResource(R.color.athens_gray)
+                binding.btnPayment.setTextColor(Color.parseColor("#0D47A1"))
+                binding.btnReceipt.setTextColor(Color.BLACK)
 
+                loadPaymentPage(binding.payWebview)
             }
 
             R.id.btnReceipt -> {
                 binding.payWebview.visibility = View.GONE
                 binding.rvReceipts.visibility = View.VISIBLE
-                binding.btnPayment.setBackgroundResource(R.drawable.bg_light_green)
-                binding.btnReceipt.setTextColor(Color.BLACK)
-                binding.btnReceipt.setBackgroundResource(R.drawable.white_radious)
-                loadFeeReceipts()
+                binding.linePayment.setBackgroundResource(R.color.athens_gray)
+                binding.lineReceipt.setBackgroundResource(R.color.PrimaryColor)
+                binding.btnPayment.setTextColor(Color.BLACK)
+                binding.btnReceipt.setTextColor(Color.parseColor("#0D47A1"))
 
+                loadFeeReceipts()
             }
+
+
         }
     }
 

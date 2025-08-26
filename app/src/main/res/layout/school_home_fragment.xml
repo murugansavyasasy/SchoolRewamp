@@ -3,10 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/headerLayout"
@@ -15,38 +12,37 @@
         android:background="@color/PrimaryColor">
 
         <ImageView
-            android:layout_width="@dimen/thirty_five"
             android:id="@+id/imgBurgerMenu"
-            android:src="@drawable/burger_menu"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty_five"
-            android:layout_height="@dimen/thirty_five">
-        </ImageView>
+            android:src="@drawable/burger_menu"></ImageView>
 
 
         <TextView
             android:id="@+id/username"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgBurgerMenu"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty_five"
             android:layout_marginEnd="@dimen/ten"
             android:layout_toStartOf="@+id/imgNotification"
-            android:layout_marginTop="@dimen/twenty_five"
+            android:layout_toEndOf="@+id/imgBurgerMenu"
             android:text="Madhuri Sharma"
-            android:layout_marginStart="@dimen/ten"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/eighteen_sp"
-            style="@style/CustomTextStylePoppinsBold" />
+            android:textSize="@dimen/eighteen_sp" />
 
         <TextView
             android:id="@+id/lblSchoolName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgBurgerMenu"
             android:layout_below="@+id/username"
             android:layout_marginStart="@dimen/ten"
-            android:layout_toStartOf="@+id/imgNotification"
             android:layout_marginTop="@dimen/ten"
+            android:layout_toStartOf="@+id/imgNotification"
+            android:layout_toEndOf="@+id/imgBurgerMenu"
             android:text="Madhuri Sharma"
             android:textColor="@android:color/white"
             android:textSize="@dimen/fifteen_sp" />
@@ -71,17 +67,16 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/thirty_two"
             android:layout_marginEnd="@dimen/sixteen"
-            android:background="@drawable/bg_circle_1"
+            android:background="@drawable/bg_profile"
             android:scaleType="centerCrop"
-            android:src="@drawable/user_sample" />
+            android:src="@drawable/person_circle" />
 
         <com.vs.schoolmessenger.Utils.DashBoardWaveDesign
             android:id="@+id/waveView"
-            android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
             android:layout_height="@dimen/hundred_fifty"
             android:layout_alignParentBottom="true"
-            />
+            android:layout_marginTop="@dimen/ten" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

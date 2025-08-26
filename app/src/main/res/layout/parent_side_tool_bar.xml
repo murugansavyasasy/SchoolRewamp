@@ -28,6 +28,7 @@
             android:layout_toStartOf="@+id/rlaStudentName"
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp">
 
@@ -37,8 +38,7 @@
             android:id="@+id/rlaStudentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/ten"
+            android:layout_toEndOf="@id/imgBack"
             android:orientation="vertical">
 
             <TextView
@@ -46,7 +46,6 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
                 android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
@@ -59,7 +58,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
-                android:layout_gravity="end"
                 android:text=""
                 android:textColor="@color/white">
 
