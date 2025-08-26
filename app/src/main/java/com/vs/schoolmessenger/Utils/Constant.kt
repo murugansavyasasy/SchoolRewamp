@@ -179,6 +179,7 @@ object Constant {
     var selectedFileIndex: Int = -1
     var isCommunicationType = 1
     var isVoiceType = 1
+    var isQuestionLimit = -1
 
     var isTitleLength = 50
     var isDescriptionLength = 500

@@ -33,7 +33,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         return AddQuestionBinding.inflate(layoutInflater)
     }
     var isQuizID=""
-    var isQuestionLimit=-1
     var isQuizTitle=""
     var isSubjectID=""
     var isFirstClick=true
@@ -63,8 +62,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             Log.d("FinalList",FinalList.toString())
         }
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
-        isQuestionLimit = intent.getIntExtra("limitQuestion", -1)
-        Log.d("isQuestionLimit",isQuestionLimit.toString())
+        Constant.isQuestionLimit = intent.getIntExtra("limitQuestion", -1)
+        Log.d("isQuestionLimit",Constant.isQuestionLimit.toString())
 
         isQuizID = intent.getStringExtra("quiz_Id").toString()
         isSubjectID = intent.getStringExtra("subjectID").toString()
@@ -81,7 +80,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     // Mark all as API type
                     editableQuizQuestionReportList = savedQuizQuestionReportList.map { it.copy(sourceType = QuestionSource.API)
                     }.toMutableList()
-
+                    Constant.isQuestionLimit-=savedQuizQuestionReportList.size
                     isLoadQuizQuestionReport()
                 }
                 else {
@@ -133,6 +132,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     }
 
     private fun isLoadQuizQuestionReport() {
+        Log.d("QuestionLimitInAdapter",Constant.isQuestionLimit.toString())
+
         adapter = AddQuestionAdapter(editableQuizQuestionReportList.toMutableList(), this,false)
         binding.rcAddQuestion.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.rcAddQuestion.isNestedScrollingEnabled = false
@@ -143,23 +144,23 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             adapter2.uncheckItemById(removedId)
         }
 
-        // Add an empty item only if list is empty or has 0/1 item
+        // Add an empty item only if list is empty
         if (editableQuizQuestionReportList.size<=0) {
             adapter.addItem()
         }
         binding.lblAddQuestion.setOnClickListener {
             if (adapter.showValidationErrors(binding.rcAddQuestion)) {
-
-                if (isQuestionLimit<adapter.getUpdatedList().size){
-                    adapter.addItem()
-                    isQuestionLimit+=1
-                }
+                Log.d("QuestionLimit",Constant.isQuestionLimit.toString())
+                Log.d("FinalListSize",adapter.getUpdatedList().size.toString())
+                if(Constant.isQuestionLimit>0){
+                        adapter.addItem()
+                        Constant.isQuestionLimit-=1
+                    }
                 else{
                     Constant.showErrorAlert(
-                        this,
-                        getString(R.string.alert),
-                        getString(R.string.question_limit_reached)
-                    )
+                            this,
+                            getString(R.string.alert),
+                            getString(R.string.question_limit_reached))
                 }
             }
         }
@@ -168,7 +169,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
     private fun isFetchQuizQuestionReport() {
         adapter = AddQuestionAdapter(null, this,true)
-//        binding.rcAddQuestion.layoutManager = LinearLayoutManager(this)
         binding.rcAddQuestion.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.rcAddQuestion.isNestedScrollingEnabled = false
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
@@ -206,30 +206,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         val cbSelect = dialogView.findViewById<CheckBox>(R.id.cbSelect)
 
         recyclerView.layoutManager = LinearLayoutManager(activity)
-//        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false){ isChecked ->
-////            if (!isChecked && cbSelect.isChecked) {
-////                cbSelect.isChecked = false
-////            }
-////            if (adapter2.getSelectedQuestions().size == pickFomQbank.size) {
-////                cbSelect.isChecked = true
-////            }
-//        }
-
-//        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false) {
-//            // Called whenever an item’s checkbox changes
-//            val total = pickFomQbank.size
-//            val selected = adapter2.getSelectedQuestions().size
-//
-//            cbSelect.setOnCheckedChangeListener(null) // avoid recursion
-//            cbSelect.isChecked = (selected == total && total > 0)
-//            cbSelect.setOnCheckedChangeListener { _, isChecked ->
-//                adapter2.selectAll(isChecked)
-//            }
-//        }
-
         adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false) {
             val total = pickFomQbank.size
-            val selected = adapter2.getSelectedQuestions().size
+            val selected = adapter2.getSelected().size
 
             cbSelect.setOnCheckedChangeListener(null)
             cbSelect.isChecked = (selected == total && total > 0)
@@ -238,35 +217,74 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             }
         }
 
+//        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false) {
+//            val total = pickFomQbank.size
+//            val selected = adapter2.getSelected().size
+//
+//            cbSelect.setOnCheckedChangeListener(null)
+//            cbSelect.isChecked = (selected == total && total > 0)
+//
+//            cbSelect.setOnCheckedChangeListener { _, isChecked ->
+//                if (isChecked) {
+//                    val remainingLimit = Constant.isQuestionLimit
+//                    if (total <= remainingLimit) {
+//                        adapter2.selectAll(true)
+//                    } else {
+//                        cbSelect.isChecked = false
+//                    }
+//                } else {
+//                    adapter2.selectAll(false)
+//                }
+//            }
+//
+//        }
+
+
 
         recyclerView.adapter = adapter2
 
-//        lblImportQuestion.setOnClickListener {
-//            val selectedQuestions = adapter2.getSelectedQuestions()
-//            // Convert to AddQuestionAdapter model
-//            val quizQuestions = selectedQuestions.map { it.toQuizQuestionReportData() }
-//            adapter.updateItems(quizQuestions)
-//            alertDialog.dismiss()
-//        }
 
         lblImportQuestion.setOnClickListener {
 
-            if (isQuestionLimit<adapter.getUpdatedList().size) {
-                val selectedQuestions = adapter2.getSelectedQuestions()
-                val quizQuestions = selectedQuestions.map {
-                    it.toQuizQuestionReportData().copy(sourceType = QuestionSource.QBANK)
+            val selectedQuestions = adapter2.getSelected()
+            if (Constant.isQuestionLimit > 0) {
+                Log.d("isQuestionLimitQuestionBankAfter", Constant.isQuestionLimit.toString())
+                Log.d("selectedQuestionsAfter", selectedQuestions.size.toString())
+
+                if (selectedQuestions.size <= Constant.isQuestionLimit) {
+                    // within the limit -> allow adding
+                    Constant.isQuestionLimit -= selectedQuestions.size
+
+                    val quizQuestions = selectedQuestions.map {
+                        it.toQuizQuestionReportData().copy(sourceType = QuestionSource.QBANK)
+                    }
+
+                    adapter.updateItems(quizQuestions)
+
+                    adapter2.markAsImported(selectedQuestions)
+
+
+                    alertDialog.dismiss()
+
                 }
-                adapter.updateItems(quizQuestions)
-                alertDialog.dismiss()
-            }
-            else{
+                else {
+                    //  more than the allowed limit -> show error
+                    Constant.showErrorAlert(
+                        this,
+                        getString(R.string.alert),
+                        getString(R.string.question_limit_reached)
+                    )
+                }
+
+            } else {
+                // already no limit left
                 Constant.showErrorAlert(
                     this,
                     getString(R.string.alert),
                     getString(R.string.question_limit_reached)
                 )
-
             }
+
         }
 
 
