@@ -79,6 +79,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelReq
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
@@ -323,6 +324,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isStudentStats: LiveData<getStudentStats?>? = null
     var getassignmentmysubmission: LiveData<MySubmittedAssignmentsResponse?>? = null
     var islsrwskillsreport: LiveData<lsrwskillresponse?>? = null
+    var islsrwstats: LiveData<AvgSkillResponse?>? = null
     var isPtmSlotCreate: LiveData<StatusMessageModel?>? = null
     var isPtmSlotResponse: LiveData<SlotResponse?>? = null
     var isPtmSlotCancelReOpen: LiveData<StatusMessageModel?>? = null
@@ -488,6 +490,7 @@ class App(application: Application) : AndroidViewModel(application) {
         islsrwSkillCreate = apiSchoolRepositories.islsrwSkillCreateLiveData
         islsrwSkillSubmit = apiParentRepositories.islsrwSkillSubmitLiveData
         islsrwSkilllist = apiParentRepositories.islsrwSkilllistLiveData
+        islsrwstats = apiSchoolRepositories.islsrwstatsLiveData
         isGetQuizQuestionReport = apiSchoolRepositories.isGetQuizQuestionReportLiveData
         isGetQuizSubmissionList = apiSchoolRepositories.isGetQuizSubmissionListLiveData
         isGetPickFromQBank = apiSchoolRepositories.isGetPickFromQBankLiveData
@@ -1081,6 +1084,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun islsrwSkilllist(isToken: String) {
         apiParentRepositories.islsrwSkilllist(isToken)
+    }
+
+
+    fun islsrwstats(isToken: String,month_id:Int) {
+        apiSchoolRepositories.islsrwstats(isToken,month_id)
     }
 
 

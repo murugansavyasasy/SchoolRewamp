@@ -1,8 +1,7 @@
 package com.vs.schoolmessenger.School.LSRW.Model
 
-data class DashboardItem(
-    val icon: Int,
-    val count: String,
+data class Overview (
     val title: String,
+    val value: String,
     val subtitle: String
 )
