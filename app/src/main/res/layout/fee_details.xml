@@ -67,10 +67,33 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/lnrParent"
+            android:id="@+id/headerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rytHeader"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/lblHeaderTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/fee_details"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnrParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/headerview"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="@dimen/ten"
             android:layout_marginStart="@dimen/fifteen"
