@@ -36,26 +36,41 @@
         android:textSize="15sp" />
 
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvWeekly"
-        android:layout_width="match_parent"
+<HorizontalScrollView
+    android:layout_width="match_parent"
+    android:layout_below="@+id/monthly_label"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/monthly_label"
-        android:layout_marginEnd="5dp"
-        android:visibility="visible" />
+        android:id="@+id/linear_recylerview"
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTopPerformance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/rvWeekly"
-        android:layout_marginEnd="5dp"
-        android:visibility="visible" />
+        android:orientation="horizontal">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvWeekly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+
+            android:layout_marginEnd="5dp"
+            android:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTopPerformance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:visibility="visible" />
+    </LinearLayout>
+</HorizontalScrollView>
+
+
+
+
+
 
     <LinearLayout
         android:id="@+id/lytNoDataFound"
