@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 class AddQuestionAdapter(
     private var itemList: MutableList<GetQuizQuestionReportData>?,
@@ -86,13 +87,6 @@ class AddQuestionAdapter(
         notifyItemInserted(itemList!!.size - 1)
     }
 
-//    fun removeItem(position: Int) {
-//        if (position >= 0 && position < itemList!!.size) {
-//            itemList!!.removeAt(position)
-//            notifyItemRemoved(position)
-//            notifyItemRangeChanged(position, itemList!!.size)
-//        }
-//    }
 
     fun removeItem(position: Int) {
         if (position >= 0 && position < itemList!!.size) {
@@ -101,11 +95,13 @@ class AddQuestionAdapter(
             // If it's a QBANK question → notify PickQuestionAdapter
             if (removed.sourceType == QuestionSource.QBANK && removed.id.isNotEmpty()) {
                 onQBankItemRemoved?.invoke(removed.id)
+                Constant.isQuestionLimit += 1
             }
 
             itemList!!.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemList!!.size)
+            Constant.isQuestionLimit += 1
         }
     }
 
@@ -168,26 +164,8 @@ class AddQuestionAdapter(
         notifyDataSetChanged()
     }
 
-//    fun updateItems(newItems: List<GetQuizQuestionReportData>) {
-//        val newIds = newItems.mapNotNull { it.id }.toHashSet()
-//
-//        // Keep:
-//        // 1. All locally created items (id == null)
-//        // 2. All API items that are still in the new list
-//        itemList = itemList!!.filter { it.id == "" || (it.id != "" && it.id in newIds) }
-//            .toMutableList()
-//
-//        // Now add missing new API items
-//        val existingIds = itemList!!.mapNotNull { it.id }.toHashSet()
-//        val itemsToAdd = newItems.filter { it.id != "" && it.id !in existingIds }
-//
-//        itemList!!.addAll(itemsToAdd)
-//
-//        notifyDataSetChanged()
-//    }
 
 fun updateItems(newQBankItems: List<GetQuizQuestionReportData>) {
-    // Keep:
     // 1. User-created (id == "" && sourceType == USER)
     // 2. API questions that are still in API response
     // 3. Replace/update QBank questions
@@ -200,7 +178,6 @@ fun updateItems(newQBankItems: List<GetQuizQuestionReportData>) {
     val newApiIds = apiItems.mapNotNull { it.id }.toHashSet()
     val filteredApi = apiItems.filter { it.id in newApiIds }
 
-    // Merge: User + Filtered API + Latest QBank
     itemList = mutableListOf<GetQuizQuestionReportData>().apply {
         addAll(userItems)
         addAll(filteredApi)
