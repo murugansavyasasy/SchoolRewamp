@@ -734,6 +734,7 @@
     <string name="add_question">Add Question</string>
     <string name="enter_correct_answer_here">Enter correct answer here</string>
     <string name="question_limit_reached">Sorry!Already question limit reached</string>
+    <string name="level">Level</string>
 
 
 </resources>
