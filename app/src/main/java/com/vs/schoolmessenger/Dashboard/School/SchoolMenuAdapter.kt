@@ -76,7 +76,6 @@ class SchoolMenuAdapter(
                     holder.bind(menuDetail, actualPosition, listener, itemCountList)
                 }
             }
-
             is ShimmerViewHolder -> holder.startShimmer()
 
             //is AdViewHolder -> holder.bind(isAdItem ?: emptyList(), context)

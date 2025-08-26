@@ -32,7 +32,9 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
+        }
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Assignment)
         binding.toolbarLayout.rytSearch.visibility = View.GONE
 
@@ -52,10 +54,12 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
         appViewModel?.getassignmentmysubmission?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyAssignment.visibility = View.VISIBLE
+                mAdapter.updateList(response.data)
             } else {
                 showEmptyState(response?.message ?: getString(R.string.no_data_found))
             }
         }
+
         fetchAssignmentReportData()
     }
 
@@ -65,7 +69,7 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
             mutableListOf(),
             this,
             this,
-            Constant.isShimmerViewShow,
+            Constant.isShimmerViewDisable,
             titleName,
             subjectName
         )

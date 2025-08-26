@@ -65,9 +65,10 @@ class MySubmissionAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            itemList.getOrNull(position)?.let {
+            filteredList.getOrNull(position)?.let {
                 holder.bind(it, position, this, listener, title, subject)
             }
+
         } else if (holder is SchoolNoticeBoardAdapter.ShimmerViewHolder) {
             holder.startShimmer()
         }
@@ -85,10 +86,18 @@ class MySubmissionAdapter(
         }
     }
 
+    fun updateList(newList: List<SubmittedAssignment>) {
+        itemList.clear()
+        itemList.addAll(newList)
+        notifyDataSetChanged()
+    }
+
+
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 else itemList.size
+        return if (isLoading) 20 else filteredList.size
     }
+
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
@@ -99,7 +108,6 @@ class MySubmissionAdapter(
 
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val submitteddetails: TextView = itemView.findViewById(R.id.submitteddetails)
         private val datevalue: TextView = itemView.findViewById(R.id.datevalue)
@@ -145,11 +153,9 @@ class MySubmissionAdapter(
                 datevalue.text = data.submitted_on
             }
 
-            val hasIframe = !data.iframe.isNullOrEmpty()
+
             val hasFiles = !data.file_path.isNullOrEmpty()
 
-            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
             total_numbers.visibility = View.GONE
 
@@ -164,7 +170,7 @@ class MySubmissionAdapter(
                     id = data.id,
                     title = title.toString(),
                     description = data.description,
-                    subjectName = "",
+                    subjectName = subject,
                     sentBy = "",
                     thumbnail = data.thumbnail,
                     isUnread = true,
@@ -193,7 +199,7 @@ class MySubmissionAdapter(
                     id = data.id,
                     title = title.toString(),
                     description = data.description,
-                    subjectName = "",
+                    subjectName = subject,
                     sentBy = "",
                     thumbnail = data.thumbnail,
                     isUnread = true,
@@ -203,8 +209,7 @@ class MySubmissionAdapter(
                     submittedCount = 0,
                     assignmentid = data.id,
                     category = "",
-                    assignmentsubject = "",
-                    isParentAssignment = true
+                    assignmentsubject = ""
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -227,9 +232,9 @@ class MySubmissionAdapter(
                             }
                             val isHomeWorkData = FilePreview(
                                 id = "",
-                                title = "",
+                                title = title.toString(),
                                 description = data.description,
-                                subjectName = "",
+                                subjectName = subject,
                                 sentBy = "",
                                 thumbnail = data.thumbnail,
                                 isUnread = true,
@@ -239,8 +244,7 @@ class MySubmissionAdapter(
                                 submittedCount = 0,
                                 assignmentid = data.id,
                                 category = "",
-                                assignmentsubject = "",
-                                isParentAssignment = true
+                                assignmentsubject = ""
                             )
 
                             val intent = Intent(context, ChildHomeWork::class.java)

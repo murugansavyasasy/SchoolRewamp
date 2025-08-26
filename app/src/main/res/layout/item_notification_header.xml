@@ -1,25 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/mild4"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="12dp"
-    android:gravity="center_vertical">
+    android:padding="@dimen/fifteen">
 
     <ImageView
         android:id="@+id/imgHeader"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/home_work_icon_school" />
+        android:layout_width="@dimen/fourty"
+        android:layout_height="@dimen/fourty" />
 
     <TextView
         android:id="@+id/txtHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_marginStart="12dp"
         android:text="Homework"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/black" />
+        android:textSize="@dimen/eighteen" />
 
 </LinearLayout>
 

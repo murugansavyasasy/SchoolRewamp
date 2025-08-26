@@ -40,11 +40,13 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
-        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+
+        binding.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
-        binding.toolbarLayout.lblStudentName.text = childDetails?.name
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.lblStudentSection.text =
+        binding.imgSearchHeader.setOnClickListener(this)
+        binding.lblStudentName.text = childDetails?.name
+        binding.lblParentToolBar.text = Constant.isParentMenuName
+        binding.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
         binding.linearlayout1.visibility = View.VISIBLE
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
@@ -54,28 +56,20 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mAttachmentReportAdapter?.filter?.filter(s)
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        binding.txtSearchMenu.setOnEditorActionListener { v, actionId, _ ->
+        binding.txtSearchMenu.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                // Trigger search
                 val query = binding.txtSearchMenu.text.toString()
                 mAttachmentReportAdapter?.filter?.filter(query)
 
-                // Hide keyboard
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
-
                 binding.txtSearchMenu.clearFocus()
                 true
-            } else {
-                false
-            }
+            } else false
         }
-
-
 
 
         appViewModel?.isAttachmentResponse?.observe(this) { response ->
@@ -130,9 +124,22 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun onClick(v: View?) {
         when (v?.id) {
-
+            R.id.imgSearchHeader -> {
+                if (binding.rytSearch.visibility == View.VISIBLE) {
+                    binding.rytSearch.visibility = View.GONE
+                    binding.txtSearchMenu.setText("")
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
+                } else {
+                    binding.rytSearch.visibility = View.VISIBLE
+                    binding.txtSearchMenu.requestFocus()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.txtSearchMenu, InputMethodManager.SHOW_IMPLICIT)
+                }
+            }
         }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -143,7 +150,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         view: View,
         isPosition: Int
     ) {
-
     }
 
     override fun onReadStatusClick(isData: List<AttachmentReportData>, isPosition: Int) {

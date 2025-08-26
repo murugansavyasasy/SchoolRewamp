@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.Assignment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -30,19 +31,20 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Assignment)
-        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
 
-        binding.toolbarLayout.imgBack.setOnClickListener {
+        binding.imgBack.setOnClickListener {
             onBackPressed()
         }
 
-        val childDetails = SharedPreference.getChildDetails(this)
-        isAccessToken = childDetails?.access_token
+        binding.imgSearch.setOnClickListener(this)
+        val isChildDetails = SharedPreference.getChildDetails(this)
 
-        binding.toolbarLayout.lblStudentName.text = childDetails!!.name
-        binding.toolbarLayout.lblStudentSection.text =
-            childDetails.standard_name + " - " + childDetails.section_name
+        isAccessToken = isChildDetails?.access_token
+
+        binding.lblStudentName.text = isChildDetails?.name
+
+        binding.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -54,18 +56,18 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                 isAssignmentReportData = response.data
                 loadAssignmentReportData()
                 binding.rcyAssignment.visibility = View.VISIBLE
-                binding.lytNoDataFound.visibility = View.GONE
+                binding.lytList.visibility = View.GONE
             } else {
                 binding.rcyAssignment.visibility = View.GONE
-                binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.noDataFound.text = response?.message
+                binding.lytList.visibility = View.VISIBLE
+                binding.txtNoData.text = response?.message
             }
         }
 
         fetchAssignmentReportData()
 
 
-        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -80,7 +82,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     private fun fetchAssignmentReportData() {
         binding.rcyAssignment.visibility = View.VISIBLE
         isAssignmentAdapter =
-            AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewShow)
+            AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcyAssignment.adapter = isAssignmentAdapter
 
         appViewModel?.isAssignmentlist(isAccessToken!!)
@@ -114,6 +116,20 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     override fun onClick(v: View?) {
         when (v?.id) {
 
+            R.id.imgSearch -> {
+                if (binding.rytsearch.visibility == View.VISIBLE) {
+                    binding.rytsearch.visibility = View.GONE
+                    binding.txtVideoMenu.setText("")
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
+                } else {
+                    binding.rytsearch.visibility = View.VISIBLE
+                    binding.txtVideoMenu.setText("")
+                    binding.txtVideoMenu.requestFocus()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                }
+            }
         }
     }
 }
