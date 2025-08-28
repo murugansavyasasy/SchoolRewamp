@@ -12,7 +12,6 @@
         android:background="@drawable/outline_gray"
         android:padding="@dimen/ten">
 
-
         <RelativeLayout
             android:id="@+id/rltStatus"
             android:layout_width="wrap_content"
