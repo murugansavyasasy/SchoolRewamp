@@ -12,11 +12,14 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class FeeReceiptAdapter(
-    private var itemList: List<InvoiceDetails>?,
+    private var originalList: List<InvoiceDetails>?,
     private var listener: InvoiceClickListener,
     private var context: Context,
-    private var isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var isLoading: Boolean,
+    private var filterResultListener: FeeDetails.OnFilterResultListener? = null
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), android.widget.Filterable {
+
+    private var filteredList: List<InvoiceDetails>? = originalList
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
@@ -28,28 +31,53 @@ class FeeReceiptAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.fee_receipt_list_items)
-            com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder(
-                shimmerView
-            )
+            ShimmerViewHolder(shimmerView)
         } else {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.fee_receipt_list_items, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.fee_receipt_list_items, parent, false)
+            DataViewHolder(view, context)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], listener, position, this)
-
+            filteredList?.get(position)?.let {
+                holder.bind(it, listener, position, this)
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else itemList?.size ?: 0
+        return if (isLoading) 20 else filteredList?.size ?: 0
+    }
+
+
+    override fun getFilter(): android.widget.Filter {
+        return object : android.widget.Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+
+                val results = if (query.isEmpty()) {
+                    originalList ?: listOf()
+                } else {
+                    originalList?.filter {
+                        it.lblInvoiceNo.lowercase().contains(query) ||
+                                it.lblInvoiceDate.lowercase().contains(query) ||
+                                it.lblInvoiceAmount.lowercase().contains(query) ||
+                                it.lblInvoiceTime.lowercase().contains(query)
+                    } ?: listOf()
+                }
+
+                return FilterResults().apply { values = results }
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<InvoiceDetails> ?: listOf()
+                notifyDataSetChanged()
+                filterResultListener?.onFilterResult(filteredList.isNullOrEmpty())
+            }
+        }
     }
 
     class DataViewHolder(itemView: View, private val context: Context) :
@@ -59,7 +87,6 @@ class FeeReceiptAdapter(
         private val lblInvoiceAmount: TextView = itemView.findViewById(R.id.lblInvoiceAmount)
         private val lblInvoiceTime: TextView = itemView.findViewById(R.id.lblInvoiceTime)
         private val rytView: RelativeLayout = itemView.findViewById(R.id.rytView)
-
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(
@@ -72,11 +99,10 @@ class FeeReceiptAdapter(
             lblInvoiceDate.text = data.lblInvoiceDate
             lblInvoiceAmount.text = data.lblInvoiceAmount
             lblInvoiceTime.text = data.lblInvoiceTime
+
             rytView.setOnClickListener {
                 listener.onItemClick(data, this@DataViewHolder)
-
             }
-
         }
     }
 

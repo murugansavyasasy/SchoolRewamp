@@ -8,9 +8,12 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Message
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
@@ -65,8 +68,29 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         appViewModel!!.init()
         alertDialogView = AlertDialog.Builder(this@FeeDetails).create()
 
+        binding.imgSearchHeader.setOnClickListener {
+            if (binding.rytSearch.visibility == View.VISIBLE) {
+                binding.rytSearch.visibility = View.GONE
+                binding.txtSearchMenu.setText("")
+            } else {
+                binding.rytSearch.visibility = View.VISIBLE
+                binding.txtSearchMenu.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.txtSearchMenu, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
         loadPaymentPage(binding.payWebview)
         binding.payWebview.loadUrl("https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063/app")
+
+        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                mAdapter.filter.filter(s)
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
 
         invoiceList = listOf(
             InvoiceDetails(
@@ -115,6 +139,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             R.id.btnPayment -> {
                 binding.payWebview.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
+                binding.imgSearchHeader.visibility = View.GONE
+                binding.rytSearch.visibility = View.GONE
                 binding.linePayment.setBackgroundResource(R.color.PrimaryColor)
                 binding.lineReceipt.setBackgroundResource(R.color.athens_gray)
                 binding.btnPayment.setTextColor(Color.parseColor("#0D47A1"))
@@ -126,6 +152,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             R.id.btnReceipt -> {
                 binding.payWebview.visibility = View.GONE
                 binding.rvReceipts.visibility = View.VISIBLE
+                binding.imgSearchHeader.visibility = View.VISIBLE
+
                 binding.linePayment.setBackgroundResource(R.color.athens_gray)
                 binding.lineReceipt.setBackgroundResource(R.color.PrimaryColor)
                 binding.btnPayment.setTextColor(Color.BLACK)
@@ -133,7 +161,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
                 loadFeeReceipts()
             }
-
 
         }
     }
@@ -299,17 +326,34 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
 
     private fun loadFeeReceipts() {
-
         binding.rvReceipts.layoutManager = LinearLayoutManager(this)
         mAdapter = FeeReceiptAdapter(
             invoiceList,
             this,
             this,
-            Constant.isShimmerViewDisable
+            Constant.isShimmerViewDisable,
+            object : OnFilterResultListener {
+                override fun onFilterResult(isEmpty: Boolean) {
+                    if (isEmpty) {
+                        binding.nomessage.visibility = View.VISIBLE
+                        binding.txtNoData.visibility = View.VISIBLE
+                        binding.rvReceipts.visibility = View.GONE
+                    } else {
+                        binding.nomessage.visibility = View.GONE
+                        binding.txtNoData.visibility = View.GONE
+                        binding.rvReceipts.visibility = View.VISIBLE
+                    }
+                }
+            }
         )
         binding.rvReceipts.adapter = mAdapter
-
     }
+
+    interface OnFilterResultListener {
+        fun onFilterResult(isEmpty: Boolean)
+    }
+
+
 
     override fun onItemClick(data: InvoiceDetails, holder: FeeReceiptAdapter.DataViewHolder) {
         Log.d("InvoiceID", data.id.toString())
