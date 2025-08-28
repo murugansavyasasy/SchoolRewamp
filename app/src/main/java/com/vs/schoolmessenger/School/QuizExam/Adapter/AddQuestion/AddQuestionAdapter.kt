@@ -22,12 +22,15 @@ class AddQuestionAdapter(
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+
+
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
@@ -39,6 +42,8 @@ class AddQuestionAdapter(
             DataViewHolder(view)
         }
     }
+
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
@@ -52,6 +57,18 @@ class AddQuestionAdapter(
         return if (isLoading) 20 else itemList!!.size
     }
 
+    fun removeItemsByIds(ids: List<String>) {
+        if (ids.isEmpty()) return
+        val iterator = itemList!!.iterator()
+        while (iterator.hasNext()) {
+            val q = iterator.next()
+            if (ids.contains(q.id)) {
+                iterator.remove()
+            }
+        }
+        notifyDataSetChanged()
+    }
+
 
 
     fun addItems(newItems: List<GetQuizQuestionReportData>) {
@@ -59,6 +76,8 @@ class AddQuestionAdapter(
         itemList!!.addAll(newItems)
         notifyItemRangeInserted(startPosition, newItems.size)
     }
+
+
 
 
     fun addItem() {
@@ -86,6 +105,7 @@ class AddQuestionAdapter(
         )
         notifyItemInserted(itemList!!.size - 1)
     }
+
 
 
     fun removeItem(position: Int) {
@@ -186,6 +206,10 @@ fun updateItems(newQBankItems: List<GetQuizQuestionReportData>) {
 
     notifyDataSetChanged()
 }
+
+
+
+
 
     fun getUpdatedList(): List<GetQuizQuestionReportData> = itemList!!
 
