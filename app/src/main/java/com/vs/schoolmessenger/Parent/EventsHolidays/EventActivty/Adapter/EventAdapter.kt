@@ -221,26 +221,6 @@ class EventAdapter(
                 }
 
             }
-
-            fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
-                val adapter = recyclerView.adapter ?: return
-                this.createIndicators(adapter.itemCount, 0)
-
-                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-                        super.onScrolled(rv, dx, dy)
-                        val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
-                        val firstVisible = layoutManager.findFirstVisibleItemPosition()
-                        this@attachToRecyclerView.animatePageSelected(firstVisible)
-                    }
-                })
-
-                adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                    override fun onChanged() {
-                        this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
-                    }
-                })
-            }
         }
     }
 }
