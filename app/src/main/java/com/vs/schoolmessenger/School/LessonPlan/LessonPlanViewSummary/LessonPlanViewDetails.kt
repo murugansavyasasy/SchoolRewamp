@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -55,7 +56,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
@@ -63,6 +64,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         isAccessToken = isStaffDetails!!.access_token
 
         binding.toolbarLayout.lblParentToolBar.text = "Lesson Plan"
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -83,6 +85,15 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         setupRecycler()
         highlightSelectedTab(binding.allbutton)
         fetchLessonPlanData(sectionSubjectId)
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rytSearch1.visibility == View.VISIBLE) {
+                binding.rytSearch1.visibility = View.GONE
+            } else {
+                binding.txtSearchMenu1.text.clear()
+                binding.rytSearch1.visibility = View.VISIBLE
+            }
+        }
 
         appViewModel?.getlpViewReport?.observe(this) { response ->
             if (response != null && response.status) {
@@ -108,11 +119,12 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             }
         }
 
-        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtSearchMenu1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::lessonplanViewAdapter.isInitialized) {
                     lessonplanViewAdapter.filter.filter(s)
+                    Log.d("Search",s.toString())
                 }
             }
 
@@ -193,24 +205,29 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
             R.id.allbutton -> {
+                binding.txtSearchMenu1.text.clear()
                 currentStatus = 0
                 highlightSelectedTab(binding.allbutton)
                 filterAndShowData(currentStatus)
             }
 
             R.id.ytsbutton -> {
+                binding.txtSearchMenu1.text.clear()
                 currentStatus = 1
                 highlightSelectedTab(binding.ytsbutton)
                 filterAndShowData(currentStatus)
+
             }
 
             R.id.inprogressbutton -> {
+                binding.txtSearchMenu1.text.clear()
                 currentStatus = 2
                 highlightSelectedTab(binding.inprogressbutton)
                 filterAndShowData(currentStatus)
             }
 
             R.id.completedbutton -> {
+                binding.txtSearchMenu1.text.clear()
                 currentStatus = 3
                 highlightSelectedTab(binding.completedbutton)
                 filterAndShowData(currentStatus)

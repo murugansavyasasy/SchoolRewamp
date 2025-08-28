@@ -19,7 +19,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.lblSchoolName.text = isStaffDetails!!.school_name

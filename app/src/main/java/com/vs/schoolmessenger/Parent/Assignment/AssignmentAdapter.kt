@@ -118,8 +118,6 @@ class AssignmentAdapter(
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblassigned: TextView = itemView.findViewById(R.id.lblassigned)
         private val lblCategory: TextView = itemView.findViewById(R.id.lblCategory)
-
-        //        private val lblSubmissionDue: TextView = itemView.findViewById(R.id.lblSubmissionDue)
         private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
         private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
@@ -129,14 +127,10 @@ class AssignmentAdapter(
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
 
-        //        private val webView: WebView = itemView.findViewById(R.id.webView)
-        private val progressBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
 
-        //        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
-//        private val imgDelete: ImageView = itemView.findViewById(R.id.imgDelete)
+
         private val options: ImageView = itemView.findViewById(R.id.options)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val progressBarAssignment: ProgressBar =
             itemView.findViewById(R.id.progressBarAssignment)
@@ -172,11 +166,8 @@ class AssignmentAdapter(
             progressBarAssignment.max = totalCount
             progressBarAssignment.progress = submittedCount
 
-            val hasIframe = !data.iframe.isNullOrEmpty()
             val hasFiles = !data.file_path.isNullOrEmpty()
 
-            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
             total_numbers.visibility = View.GONE
 
@@ -316,6 +307,14 @@ class AssignmentAdapter(
 
             lblSubmitted.setOnClickListener { listener.onSubmittedClick(data) }
             lblNotSubmitted.setOnClickListener { listener.onNotSubmittedClick(data) }
+
+            if (data.can_edit && data.can_delete) {
+                options.visibility = View.VISIBLE
+            } else {
+                options.visibility = View.GONE
+            }
+
+
             options.setOnClickListener {
                 listener.onEditAndDeleteClick(data, it, adapterPosition)
             }

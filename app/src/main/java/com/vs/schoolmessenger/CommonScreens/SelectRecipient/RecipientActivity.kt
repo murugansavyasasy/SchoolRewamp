@@ -37,6 +37,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
 import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
+import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSubmitSkillDataClass
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
@@ -50,6 +51,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
@@ -309,6 +311,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Log.d("Response", response.status.toString())
                 Constant.showTopAlertPopup(response.message, this)
 
+            }
+        }
+
+
+        appViewModel!!.islsrwSkillSubmit?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
@@ -1129,6 +1140,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 M_SCHOOL_NEEDS -> {
                     isLsrwSkillSend()
                 }
+
+
             }
         }
     }
@@ -1168,6 +1181,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     M_SCHOOL_NEEDS -> {
                         isLsrwSkillSend()
                     }
+
+
                 }
             }
         }
@@ -1279,6 +1294,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     M_COMMUNICATION -> voiceSendApi()
                     M_ASSIGNMENT -> isAssignmentSend()
                     M_SCHOOL_NEEDS -> isLsrwSkillSend()
+
                 }
             } else {
                 videoUploading()
@@ -1438,6 +1454,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 title = it.isTitle,
                 description = it.isDescription,
                 isLsrwType = it.isLsrwType,
+                submission_date = it.submission_date,
                 subjectId = isSubjectId
             )
             appViewModel!!.islsrwSkillCreate(isAccessToken!!, jsonObject, this)
@@ -1450,6 +1467,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             )
         }
     }
+
+
 
     fun isHomeWorkSend() {
         ProgressDialogHelper.updateProgress(100)

@@ -124,6 +124,10 @@
             android:name=".Parent.QuizExam.QuizExam"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".School.QuizExam.QuizExamReport.AddQuestion"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
             android:name=".Parent.Assignment.MyAssignmentSubmission.Mysubmission"
@@ -336,7 +340,21 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
+            android:name=".School.LSRW.LsrwReportAndStatics"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".School.LSRW.CompletedTaskList"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
             android:name=".School.NoticeBoard.CreateNoticeBoard"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".School.LSRW.ActiveTaskList"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
@@ -353,6 +371,11 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.CertificateRequest.CertificateRequest"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".School.LSRW.SubmittedStudentListRemarkSubmit"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity

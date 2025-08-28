@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -92,14 +91,13 @@
 
             <TextView
                 android:id="@+id/lblCategory"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                style="@style/CustomTextStylePoppinsBold"
                 android:text="@string/Catogory"
-                android:textSize="@dimen/fifteen_sp"
-                >
+                android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
@@ -124,62 +122,59 @@
 
             <TextView
                 android:id="@+id/lblTitle"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytSendingType"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/Title"
-               style="@style/CustomTextStylePoppinsBold"
-                android:textSize="@dimen/fifteen_sp"
-                >
+                android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
             <EditText
                 android:id="@+id/edtTitle"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblTitle"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
-               style="@style/CustomTextStylePoppinsMedium"
-                >
+                android:layout_marginEnd="@dimen/fifteen">
 
             </EditText>
 
             <TextView
                 android:id="@+id/lblTitleTextCount"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edtTitle"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/fifteen"
-                style="@style/CustomTextStylePoppinsMedium"
                 android:text="0 / 50"
-                android:textColor="@color/light_gray"
-                >
+                android:textColor="@color/light_gray">
 
             </TextView>
 
             <TextView
                 android:id="@+id/lblDescription"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblTitleTextCount"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/Description"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textSize="@dimen/fifteen_sp"
-                >
+                android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
             <EditText
                 android:id="@+id/edtDescription"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/hundred"
                 android:layout_below="@+id/lblDescription"
@@ -193,30 +188,28 @@
                 android:gravity="start"
                 android:hint="@string/Description"
                 android:padding="@dimen/ten"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:textSize="@dimen/thirteen_sp"
-                >
+                android:textSize="@dimen/thirteen_sp">
 
             </EditText>
 
 
             <TextView
                 android:id="@+id/lblTextCount"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edtDescription"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
-                style="@style/CustomTextStylePoppinsMedium"
                 android:text="0 / 500"
-                android:textColor="@color/light_gray"
-                >
+                android:textColor="@color/light_gray">
 
             </TextView>
 
             <TextView
                 android:id="@+id/lblSubDate"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblTextCount"
@@ -224,9 +217,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:text="@string/SubmissionDate"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textSize="@dimen/fifteen_sp"
-               >
+                android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
@@ -243,6 +234,7 @@
 
             <TextView
                 android:id="@+id/lblDatePick"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSubDate"
@@ -251,14 +243,13 @@
                 android:layout_toEndOf="@+id/imgCalender"
                 android:drawableEnd="@drawable/ic_down_arrow"
                 android:drawablePadding="@dimen/ten"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:text=""
-                >
+                android:text="">
 
             </TextView>
 
             <TextView
                 android:id="@+id/lblTimePick"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSubDate"
@@ -267,9 +258,8 @@
                 android:layout_marginEnd="@dimen/fifteen"
                 android:drawableEnd="@drawable/ic_down_arrow"
                 android:drawablePadding="@dimen/ten"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:text="12:12 PM"
-                ></TextView>
+                android:text="12:12 PM">
+            </TextView>
 
 
             <RelativeLayout
@@ -287,8 +277,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/add_attachment"
-                    android:textColor="@color/black"
-                    >
+                    android:textColor="@color/black">
 
                 </TextView>
 
@@ -360,9 +349,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbarLayout1"
             android:layout_marginStart="10dp"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="10dp">
+            android:layout_marginEnd="10dp"
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/AcademicYear"
@@ -407,11 +396,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/AcademicYear"
                 android:layout_margin="@dimen/ten"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/gray_bg_radius"
                 android:gravity="center"
-                android:padding="@dimen/five">
+                android:padding="@dimen/five"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="@dimen/twenty_five"
@@ -439,9 +428,8 @@
                 android:id="@+id/rcyAssignmentReport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/search">
+                android:layout_below="@+id/search"
+                android:layout_marginTop="5dp">
             </androidx.recyclerview.widget.RecyclerView>
 
 
@@ -469,7 +457,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/twenty"
-                    android:text=""
+                    android:text="No data found"
                     android:textSize="@dimen/fifteen_sp">
 
                 </TextView>

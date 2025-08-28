@@ -113,12 +113,13 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"
         android:padding="@dimen/eight"
+        android:gravity="center_vertical"
         android:background="@drawable/rect_shadow_light_green1"
         android:orientation="horizontal">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/subjectimagesvgformat"
+            android:src="@drawable/calenderstylesvg"
             android:layout_gravity="center"/>
 
         <TextView
@@ -126,9 +127,12 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TAMIL"
+            android:text="Assigned : 24 Aug 2025"
             android:textColor="@color/dark_blue_1"
+            android:textSize="12sp"
             android:layout_marginStart="10dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
     </LinearLayout>
@@ -143,6 +147,7 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"
         android:padding="@dimen/eight"
+        android:gravity="center_vertical"
         android:layout_toEndOf="@+id/linearassigned_layout"
         android:background="@drawable/rect_light_grey"
         android:id="@+id/category_linear">
@@ -159,7 +164,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GENERAL"
-            android:textColor="@color/clr_grey_dark"
+            android:textSize="12sp"
+            android:textColor="@color/black"
             android:layout_marginStart="10dp"
             />
 
@@ -173,33 +179,69 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/category_linear"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/five"
-        android:layout_marginBottom="@dimen/ten">
+        android:layout_marginTop="@dimen/five">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lbldeadline_linear"
-            android:background="@drawable/rect_shadow_light_yellow1"
-            android:gravity="center"
+            android:background="@drawable/rect_shadow_light_green1"
+            android:gravity="center_vertical"
             android:padding="@dimen/eight"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/calendersvgformat"/>
+                android:src="@drawable/bookformatsvg"/>
+            <TextView
+                android:id="@+id/lblsubject"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:text="TAMIL"
+                android:textSize="12sp"
+                android:textColor="@color/dark_blue_1"
+                >
+            </TextView>
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:padding="@dimen/eight"
+            android:gravity="center_vertical"
+            android:layout_toEndOf="@+id/lbldeadline_linear"
+            android:background="@drawable/bg_icon_round_lightyellow"
+            android:id="@+id/deadline_linear">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calendersvgformat"
+                android:layout_gravity="center"/>
+
             <TextView
                 android:id="@+id/lbldeadline"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
-                android:text="Deadline 04-07-2025"
-                android:textColor="@color/dark_orange"
-                >
-            </TextView>
+                android:text="Deadline 24 Aug 2025"
+                android:textSize="12sp"
+                android:textColor="@color/jaffa"
+                android:layout_marginStart="10dp"
+                />
+
         </LinearLayout>
+
+
     </RelativeLayout>
 
 
@@ -211,14 +253,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/relative_layout1"
         android:layout_marginStart="@dimen/five"
-        android:layout_marginBottom="@dimen/two"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/rytList2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
             android:minHeight="@dimen/sixty"
             android:orientation="horizontal"
             android:visibility="gone">
@@ -234,8 +274,8 @@
             <TextView
                 android:id="@+id/total_numbers"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
+                android:layout_width="@dimen/thirty_six"
+                android:layout_height="@dimen/thirty_six"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/minus_fifteen"
                 android:layout_marginTop="@dimen/ten"
@@ -330,7 +370,7 @@
             android:background="@drawable/bg_green_radoius_10dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
-            android:padding="@dimen/eight"
+            android:padding="@dimen/ten"
             android:text="Submit"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"

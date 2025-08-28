@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="@dimen/twenty"
+    android:background="@android:color/transparent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:orientation="vertical"
+        android:background="@drawable/white_bg_radius"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_margin="@dimen/ten"
+            android:layout_above="@+id/LnrCancelOk"
+            android:orientation="vertical"
+            android:id="@+id/lnrHeader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_width="match_parent"
+                    android:layout_toStartOf="@+id/cbSelect"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:text="Pick From Question Bank"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <CheckBox
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/cbSelect"
+                    style="@style/CustomCheckBox"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="@dimen/three"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ch_square"
+                    android:text="@string/Selectallaspresent"
+                    android:layout_marginTop="@dimen/five"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/rcPickFromQBank"
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:id="@+id/LnrCancelOk"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblImportQuestion"
+                android:layout_margin="@dimen/ten"
+                android:gravity="center"
+                android:background="@drawable/bg_light_orange"
+                android:layout_weight="0.5"
+                android:padding="@dimen/five"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:text="Import Question"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <TextView
+                android:gravity="center"
+                android:layout_margin="@dimen/ten"
+                android:layout_weight="0.5"
+                android:layout_width="match_parent"
+                android:text="Cancel"
+                android:id="@+id/lblClose"
+                android:padding="@dimen/five"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_red_radoius_15dp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

@@ -136,7 +136,10 @@ object APIMethods {
     const val islsrwskillsreport = "lms/api/lsrw/skills-report"
     const val islsrwStudentlist = "lms/api/lsrw/submission-list"
     const val islsrwSkillCreate = "lms/api/lsrw/create-skill"
+    const val islsrwSkillSubmit = "lms/api/lsrw/submit-skill"
     const val islsrwSkilllist = "lms/api/lsrw/skill-list"
+    const val islsrwstats = "lms/api/lsrw/stats"
+    const val islsrwremarkupdate = "lms/api/lsrw/remark"
 
 
     // PTM API CALLS
@@ -165,6 +168,10 @@ object APIMethods {
     const val isCreateQuiz= "lms/api/quiz/create-quiz"
     const val isGetExamQuizReport= "lms/api/quiz/report"
     const val isGetCheckLevel= "lms/api/quiz/check-level"
+    const val isGetQuizQuestionReport= "lms/api/quiz/questions-report"
+    const val isGetQuizSubmissionList= "lms/api/quiz/submission-list"
+    const val isGetPickFromQBank= "lms/api/quiz/pick-from-qbank"
+    const val isAddQuestion= "lms/api/quiz/add-question"
 
 
 

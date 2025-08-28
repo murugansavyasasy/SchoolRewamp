@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fillViewport="true">
+    android:fitsSystemWindows="true">
 
-    <ImageView
-        android:id="@+id/imgBack"
-        android:layout_width="@dimen/thirty_five"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_marginTop="@dimen/twenty_three"
-        android:src="@drawable/left_arrow"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -22,10 +17,11 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgBack">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnSubmit">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -90,13 +86,17 @@
                     android:id="@+id/createddate_linear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:padding="2dp"
+                    android:background="@drawable/rect_shadow_light_green1"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
                         android:layout_gravity="center"
                         android:src="@drawable/calendar" />
 
@@ -105,11 +105,12 @@
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/dark_blue_1"
+                        android:gravity="center"
                         android:layout_weight="1"
                         android:padding="@dimen/five"
                         android:text="05-07-2025"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp" />
+                        android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -117,11 +118,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/rect_shadow_light_green1"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
                         android:layout_gravity="center"
                         android:src="@drawable/bookimage" />
 
@@ -132,9 +137,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/five"
+                        android:textColor="@color/dark_blue_1"
+                        android:gravity="center"
                         android:text="TAMIL"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp" />
+                        android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -142,12 +148,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/rect_light_grey"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:paddingStart="10dp"
                         android:src="@drawable/copyimagesvg" />
 
                     <TextView
@@ -157,9 +167,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/five"
+                        android:gravity="center"
                         android:text="General"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp" />
+                        android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -169,10 +180,10 @@
                 android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/twenty"
                 android:text="Mahatma Gandhi, born Mohandas Karamchand Gandhi on October 2, 1869, was a prominent leader of the Indian independence movement..."
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/linearlayout_container" />
@@ -222,13 +233,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lblClickComplete">
+                app:layout_constraintTop_toBottomOf="@id/thumbContainer">
 
                 <ImageView
                     android:id="@+id/imgAttachmentIcon"
@@ -247,16 +258,33 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcSeekBarAndTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/ten"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/attachments_container" />
+
+
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcChildHW"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginStart="@dimen/five"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/five"
                 android:layout_marginBottom="@dimen/ten"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/attachments_container" />
+                app:layout_constraintTop_toBottomOf="@id/rcSeekBarAndTitle" />
 
             <View
                 android:id="@+id/viewline"
@@ -268,24 +296,81 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rcChildHW" />
 
+
+
+            <RelativeLayout
+                android:id="@+id/rytRecyclewview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rcChildHW">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="vertical">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/description_label"
+                android:text="Add description"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rytRecyclewview"/>
+
+
+            <EditText
+                android:id="@+id/edit_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="description"
+                android:background="@drawable/bg_edittext_rounded"
+                android:padding="12dp"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@id/description_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+
             <TextView
                 android:id="@+id/lblviewSubmissions"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/twenty"
                 android:layout_marginEnd="@dimen/thirty"
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/rect_shadow_light_primary"
-                android:gravity="center"
+                android:gravity="end"
                 android:padding="@dimen/eight"
                 android:text="View Submissions"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/viewline" />
 
             <FrameLayout
@@ -314,6 +399,20 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/rect_shadow_light_primary"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <include
         android:id="@+id/childlsrwlayoutxml"

@@ -719,6 +719,28 @@
     <string name="quiz">Quiz</string>
     <string name="no_of_question">No of question</string>
     <string name="check_the_box_to_continue_next_level">Check the box to continue next level</string>
+    <string name="submit_report">Submit Report</string>
+    <string name="question">Question</string>
+    <string name="enter_question_here">Enter Question here</string>
+    <string name="option_a">Option A</string>
+    <string name="enter_option_a">Enter Option A</string>
+    <string name="option_b">Option B</string>
+    <string name="enter_option_b">Enter Option B</string>
+    <string name="enter_option_c">Enter Option C</string>
+    <string name="drop_your_mark_here">Drop your mark here</string>
+    <string name="correct_ans">Correct Ans</string>
+    <string name="attachments">Attachments</string>
+    <string name="import_from_question_bank">Import from question bank</string>
+    <string name="add_question">Add Question</string>
+    <string name="enter_correct_answer_here">Enter correct answer here</string>
+    <string name="question_limit_reached">Sorry!Already question limit reached</string>
+    <string name="communication">Communication</string>
+    <string name="assignment">Assignment</string>
+    <string name="attachment">Attachment</string>
+    <string name="exam">Exam</string>
+    <string name="fee_details">Fee Details</string>
+    <string name="certificate_request">Certificate Request</string>
+    <string name="level">Level</string>
 
 
 </resources>

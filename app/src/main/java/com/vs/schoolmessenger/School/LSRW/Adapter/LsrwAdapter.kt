@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.LSRW
+package com.vs.schoolmessenger.School.LSRW.Adapter
 
 import android.content.Context
 import android.content.Intent
@@ -16,12 +16,11 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LSRW.Model.lsrwskilldata
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
 import com.vs.schoolmessenger.Utils.Constant
 
-
 class LsrwAdapter(
-    private var itemList: List<lsrwskilldata>,
+    private var itemList: List<LsrwTask>,
     private val context: Context,
     private val noDataImage: ImageView? = null,
     private val noDataText: TextView? = null
@@ -41,7 +40,7 @@ class LsrwAdapter(
     override fun getItemCount(): Int = itemList.size
 
 
-    fun updateList(newList: List<lsrwskilldata>) {
+    fun updateList(newList: List<LsrwTask>) {
         itemList = newList
         notifyDataSetChanged()
     }
@@ -50,29 +49,28 @@ class LsrwAdapter(
         private val txtTitle: TextView = itemView.findViewById(R.id.txtTitle)
         private val txtSubTitle: TextView = itemView.findViewById(R.id.txtSubTitle)
         private val txtDescription: TextView = itemView.findViewById(R.id.txtDescription)
+        private val txtsubdesc: TextView = itemView.findViewById(R.id.txtsubdesc)
         private val txtDate: TextView = itemView.findViewById(R.id.txtDate)
         private val txtSubmitted: TextView = itemView.findViewById(R.id.txtSubmitted)
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
 
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
 
-        fun bind(item: lsrwskilldata) {
-            txtTitle.text = item.title
+        fun bind(item: LsrwTask) {
+            txtTitle.text = item.subject
             txtSubTitle.text = item.activity_type
-            txtDescription.text = item.description
+            txtDescription.text = item.title
+            txtsubdesc.text = item.description
             txtDate.text = item.created_on
-            txtSubmitted.text = item.submitted_average
+            txtSubmitted.text = item.submitted_average + "submitted"
 
 
-            val hasIframe = !item.iframe.isNullOrEmpty()
             val hasFiles = !item.file_path.isNullOrEmpty()
 
-            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
-            rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
+
+            rytList2.visibility = if (hasFiles) View.GONE else View.GONE
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {

@@ -1,33 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:fillViewport="true">
-    <ImageView
-        android:id="@+id/imgBack"
-        android:layout_width="@dimen/thirty_five"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_marginTop="@dimen/twenty_three"
-        android:src="@drawable/left_arrow"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
+
+    <!-- Scrollable container below toolbar -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarLayout"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
     <TextView
         android:id="@+id/header_label"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_below="@+id/imgBack"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
         android:text="Task Details :"
         android:textColor="@color/mild_grey_dark"
-        android:textSize="15sp"
-       />
-
-
-
+        android:textSize="15sp" />
 
 
     <RelativeLayout
@@ -41,20 +48,20 @@
 
         <LinearLayout
             android:id="@+id/iconContainer"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/fourty_eight"
+            android:layout_height="@dimen/fourty_eight"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/twele"
+            android:background="@drawable/bg_icon_round_lightyellow"
             android:gravity="center"
-            android:orientation="vertical"
-            android:background="@drawable/bg_icon_round_lightyellow">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/imgIcon"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/booksvgformatstyle"
-                android:contentDescription="icon" />
+                android:layout_width="@dimen/twenty_eight"
+                android:layout_height="@dimen/twenty_eight"
+                android:contentDescription="icon"
+                android:src="@drawable/booksvgformatstyle" />
         </LinearLayout>
 
 
@@ -67,53 +74,54 @@
 
             <TextView
                 android:id="@+id/txtTitle"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Test For Notification"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"
-                style="@style/CustomTextStylePoppinsBold" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txtSubTitle"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reading"
                 android:textColor="#007BFF"
-                android:textSize="14sp"
-                style="@style/CustomTextStylePoppinsBold"/>
+                android:textSize="14sp" />
         </LinearLayout>
 
 
         <TextView
             android:id="@+id/txtDescription"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/titleContainer"
+            android:layout_marginTop="@dimen/four"
+            android:layout_marginEnd="@dimen/twenty"
             android:layout_toEndOf="@id/iconContainer"
-            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="4"
             android:text="Purpose of testing student's skill"
             android:textColor="#666666"
-            android:layout_marginEnd="20dp"
-            android:textSize="13sp"
-            android:maxLines="4"
-            android:ellipsize="end"
-            style="@style/CustomTextStylePoppinsMedium"/>
+            android:textSize="13sp" />
+
 
         <LinearLayout
             android:id="@+id/attachments_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDescription"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_below="@+id/txtDescription">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imgAttachmentIcon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
                 android:src="@drawable/ic_attach_file" />
 
             <TextView
@@ -121,21 +129,31 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/eight"
                 android:text="Attachments"
                 android:textSize="18sp" />
         </LinearLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcSeekBarAndTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/attachments_container"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_marginBottom="@dimen/ten"
+            android:visibility="gone" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcChildHW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/fifteen"
+            android:layout_below="@+id/rcSeekBarAndTitle"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:layout_marginBottom="@dimen/ten"
-           android:layout_below="@+id/attachments_container" />
+            android:layout_marginBottom="@dimen/ten" />
 
 
         <LinearLayout
@@ -143,71 +161,68 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rcChildHW"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/eight"
+            android:layout_marginBottom="@dimen/five"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/calendersvgformatstyle"
-                android:layout_marginEnd="4dp"
-                android:contentDescription="date" />
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/sixteen"
+                android:layout_marginEnd="@dimen/four"
+                android:contentDescription="date"
+                android:src="@drawable/calendersvgformatstyle" />
 
             <TextView
                 android:id="@+id/txtDate"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="09 August, 2025"
                 android:textColor="#444444"
-                android:textSize="12sp"
-                style="@style/CustomTextStylePoppinsMedium"/>
+                android:textSize="@dimen/twele_sp" />
 
 
             <Space
-                android:layout_width="16dp"
-                android:layout_height="1dp" />
-
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/one" />
 
 
             <TextView
                 android:id="@+id/txtexportrecord"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Export Record"
-                android:textColor="@color/white"
-                android:padding="10dp"
                 android:background="@drawable/bg_purple_circle"
-                android:textSize="12sp"
-                style="@style/CustomTextStylePoppinsMedium"/>
+                android:padding="@dimen/ten"
+                android:text="Export Record"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twele_sp" />
+
             <Space
-                android:layout_width="16dp"
-                android:layout_height="1dp" />
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/one" />
 
             <TextView
                 android:id="@+id/txtremainder"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remainder"
-                android:textColor="@color/white"
-                android:padding="10dp"
                 android:background="@drawable/bg_green_radoius_10dp"
-                android:textSize="12sp"
-                style="@style/CustomTextStylePoppinsMedium"/>
+                android:padding="@dimen/ten"
+                android:text="Remainder"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twele_sp" />
 
 
         </LinearLayout>
 
 
-
-
-
     </RelativeLayout>
-
-
 
 
     <TextView
@@ -215,22 +230,22 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_below="@+id/headerrelative_layout"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
         android:text="Submitted Students :"
         android:textColor="@color/mild_grey_dark"
-        android:textSize="15sp"
-        />
-
+        android:textSize="15sp" />
 
 
     <FrameLayout
         android:id="@+id/lsrwgragmentcontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:layout_below="@+id/footer_label" />
+        android:visibility="visible" />
 
+
+    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,13 +63,28 @@ class AssignmentParentAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            itemList?.get(position)?.let {
+            filteredList[position].let {
                 holder.bind(it, position, this, listener)
             }
         } else if (holder is SchoolNoticeBoardAdapter.ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
+
+    fun filter(query: String) {
+        filteredList = if (query.isEmpty()) {
+            fullList
+        } else {
+            fullList.filter {
+                it.title?.contains(query, ignoreCase = true) == true ||
+                        it.subject?.contains(query, ignoreCase = true) == true ||
+                        it.category?.contains(query, ignoreCase = true) == true
+            }
+        }
+        itemList = filteredList.toMutableList()
+        notifyDataSetChanged()
+    }
+
 
     fun removeItemAt(position: Int) {
         if (position in filteredList.indices) {
@@ -83,7 +99,7 @@ class AssignmentParentAdapter(
 
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 else itemList.size
+        return if (isLoading) 20 else filteredList.size
     }
 
     class DataViewHolder(itemView: View, private val context: Context) :
@@ -98,12 +114,13 @@ class AssignmentParentAdapter(
 
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
 
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val lblassigned: TextView = itemView.findViewById(R.id.lblassigned)
         private val lbldeadline: TextView = itemView.findViewById(R.id.lbldeadline)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
         private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
+        private val lblsubject: TextView = itemView.findViewById(R.id.lblsubject)
+        private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
 
         private val headerrelative_layout: RelativeLayout =
             itemView.findViewById(R.id.headerrelative_layout)
@@ -115,19 +132,24 @@ class AssignmentParentAdapter(
             adapter: AssignmentParentAdapter,
             listener: AssignmentClickListener
         ) {
-
             lblDescription.text = data.description
             lblTitle.text = data.title
             lblCategory.text = data.category
-            lblassigned.text = data.subject
-            lbldeadline.text = data.end_date
+            lblsubject.text = data.subject
+            lblassigned.text = "Assigned : " + Constant.formatCreatedDate(data.created_date)
+            lbldeadline.text = "Deadline" + Constant.formatCreatedDate(data.end_date)
+
+            if(data.submitted_count == 0) {
+                lblSubmitted.visibility = View.GONE
+            } else {
+                lblSubmitted.visibility = View.VISIBLE
+            }
 
 
-            val hasIframe = !data.iframe.isNullOrEmpty()
+
             val hasFiles = !data.file_path.isNullOrEmpty()
 
-            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
+
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
             total_numbers.visibility = View.GONE
 
@@ -145,6 +167,7 @@ class AssignmentParentAdapter(
                     subjectName = "",
                     sentBy = "",
                     thumbnail = data.thumbnail,
+                    created_date = data.created_date,
                     isUnread = true,
                     isCompleted = true,
                     isMenuType = Constant.M_ASSIGNMENT,
@@ -161,7 +184,7 @@ class AssignmentParentAdapter(
                 context.startActivity(intent)
             }
 
-            headerrelative_layout.setOnClickListener {
+            rytList.setOnClickListener {
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -176,6 +199,7 @@ class AssignmentParentAdapter(
                     sentBy = "",
                     thumbnail = data.thumbnail,
                     isUnread = true,
+                    created_date = data.created_date,
                     isCompleted = true,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
@@ -212,6 +236,7 @@ class AssignmentParentAdapter(
                             thumbnail = data.thumbnail,
                             isUnread = true,
                             isCompleted = true,
+                            created_date = data.created_date,
                             isMenuType = Constant.M_ASSIGNMENT,
                             fileList = convertedList,
                             submittedCount = data.submitted_count,

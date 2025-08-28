@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
@@ -18,13 +21,17 @@ import com.bumptech.glide.request.target.Target
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
+import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.databinding.FileviewItemBinding
+import com.vs.schoolmessenger.databinding.LsrwBinding
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.math.max
 
 class HomeWorkChildAdapter(
     private var context: Context,
@@ -53,6 +60,8 @@ class HomeWorkChildAdapter(
     override fun getItemCount(): Int = filePathDetails.size
 
 
+
+
     class DataViewHolder(private val binding: FileviewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -64,10 +73,13 @@ class HomeWorkChildAdapter(
             isSubjectName: String,
             selectedSchoolMenu: Int
         ) {
+
             binding.relativelayoutHeader.visibility = View.VISIBLE
             binding.progressBar.visibility = View.VISIBLE
             binding.imgView.visibility = View.VISIBLE
             binding.imgView.setBackgroundColor(Color.TRANSPARENT)
+
+
             if (selectedSchoolMenu == M_ASSIGNMENT) {
                 Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
                 binding.imgView.visibility = View.GONE
@@ -76,7 +88,7 @@ class HomeWorkChildAdapter(
                 binding.childrelativeLayout.visibility = View.VISIBLE
                 when (item.type.uppercase()) {
                     Constant.IMAGE -> {
-                        binding.imgFileType.setImageResource(R.drawable.imagesvgformar)
+                        binding.imgFileType.setText("IMG")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -86,7 +98,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.VIDEO -> {
-                        binding.imgFileType.setImageResource(R.drawable.videosvgformat)
+                        binding.imgFileType.setText("VID")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -96,7 +108,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PDF -> {
-                        binding.imgFileType.setImageResource(R.drawable.pdfsvgformatter)
+                        binding.imgFileType.setText("PDF")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -106,7 +118,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.DOC, Constant.DOCX -> {
-                        binding.imgFileType.setImageResource(R.drawable.docxsvgformatter)
+                        binding.imgFileType.setText("DOCX")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -116,7 +128,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.TXT -> {
-                        binding.imgFileType.setImageResource(R.drawable.txtsvgformat)
+                        binding.imgFileType.setText("TXT")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -126,7 +138,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PPT, Constant.PPTX -> {
-                        binding.imgFileType.setImageResource(R.drawable.pptsvgformat)
+                        binding.imgFileType.setText("PPT")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -136,7 +148,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.EXCEL -> {
-                        binding.imgFileType.setImageResource(R.drawable.excelsvgformat)
+                        binding.imgFileType.setText("EXC")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -146,11 +158,11 @@ class HomeWorkChildAdapter(
                     }
 
                     else -> {
-                        binding.imgView.setImageResource(R.drawable.excel_icon)
+                        binding.imgFileType.setText("EXC")
                         binding.progressBar.visibility = View.GONE
                     }
                 }
-            }else if  (selectedSchoolMenu == M_SCHOOL_NEEDS) {
+            } else if (selectedSchoolMenu == M_LSRW) {
                 Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
                 binding.imgView.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
@@ -158,7 +170,7 @@ class HomeWorkChildAdapter(
                 binding.childrelativeLayout.visibility = View.VISIBLE
                 when (item.type.uppercase()) {
                     Constant.IMAGE -> {
-                        binding.imgFileType.setImageResource(R.drawable.imagesvgformar)
+                        binding.imgFileType.setText("IMG")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -166,9 +178,8 @@ class HomeWorkChildAdapter(
                         }
                         binding.progressBar.visibility = View.GONE
                     }
-
                     Constant.VIDEO -> {
-                        binding.imgFileType.setImageResource(R.drawable.videosvgformat)
+                        binding.imgFileType.setText("VID")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -178,7 +189,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PDF -> {
-                        binding.imgFileType.setImageResource(R.drawable.pdfsvgformatter)
+                        binding.imgFileType.setText("PDF")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -188,7 +199,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.DOC, Constant.DOCX -> {
-                        binding.imgFileType.setImageResource(R.drawable.docxsvgformatter)
+                        binding.imgFileType.setText("DOCX")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -198,7 +209,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.TXT -> {
-                        binding.imgFileType.setImageResource(R.drawable.txtsvgformat)
+                        binding.imgFileType.setText("TXT")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -208,7 +219,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PPT, Constant.PPTX -> {
-                        binding.imgFileType.setImageResource(R.drawable.pptsvgformat)
+                        binding.imgFileType.setText("PPTX")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -218,7 +229,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.EXCEL -> {
-                        binding.imgFileType.setImageResource(R.drawable.excelsvgformat)
+                        binding.imgFileType.setText("EXC")
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -228,7 +239,89 @@ class HomeWorkChildAdapter(
                     }
 
                     else -> {
-                        binding.imgView.setImageResource(R.drawable.excel_icon)
+                        binding.imgFileType.setText("EXC")
+                        binding.progressBar.visibility = View.GONE
+                    }
+                }
+            } else if (selectedSchoolMenu == M_SCHOOL_NEEDS) {
+                Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
+                binding.imgView.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
+                binding.relativelayoutHeader.visibility = View.GONE
+                binding.childrelativeLayout.visibility = View.VISIBLE
+                when (item.type.uppercase()) {
+                    Constant.IMAGE -> {
+                        binding.imgFileType.setText("IMG")
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.VIDEO -> {
+                        binding.imgFileType.setText("VID")
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.PDF -> {
+                        binding.imgFileType.setText("PDF")
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.DOC, Constant.DOCX -> {
+                        binding.imgFileType.setText("DOCX")
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.TXT -> {
+                        binding.imgFileType.setText("TXT")
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.PPT, Constant.PPTX -> {
+                        binding.imgFileType.setText("PPTX")
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.EXCEL -> {
+                        binding.imgFileType.setText("EXC")
+                        val fileName = item.url.substringAfterLast("/")
+                        binding.txtFileName.text = fileName
+                        getFileSize(item.url) { size ->
+                            binding.txtFileSize.text = size
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    else -> {
+                        binding.imgFileType.setText("EXC")
                         binding.progressBar.visibility = View.GONE
                     }
                 }
@@ -305,9 +398,7 @@ class HomeWorkChildAdapter(
 
             }
 
-
-
-            binding.root.setOnClickListener {
+            binding.relativelayoutHeader.setOnClickListener {
                 val commonList = fullList.map {
                     CommonFileData(
                         type = it.type,
@@ -323,8 +414,24 @@ class HomeWorkChildAdapter(
                 context.startActivity(intent)
             }
 
+            binding.childrelativeLayout.setOnClickListener {
+                val commonList = fullList.map {
+                    CommonFileData(
+                        type = it.type,
+                        path = it.url
+                    )
+                }.toMutableList()
+
+                Constant.commonFileList = commonList
+                Constant.selectedFileIndex = position
+
+                val intent = Intent(context, FilesViewActivity::class.java)
+                intent.putExtra(Constant.subjectName, isSubjectName)
+                context.startActivity(intent)
+            }
 
         }
+
 
         private fun getFileSize(url: String, callback: (String) -> Unit) {
             Thread {
@@ -357,6 +464,8 @@ class HomeWorkChildAdapter(
                 }
             }.start()
         }
+
+
 
     }
 }

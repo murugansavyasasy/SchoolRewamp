@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/thirty"
             android:text="@string/lblHelp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
 

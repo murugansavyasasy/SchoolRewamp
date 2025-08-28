@@ -10,6 +10,8 @@
     card_view:cardCornerRadius="@dimen/twele"
     card_view:cardElevation="@dimen/four">
 
+
+
     <RelativeLayout
         android:id="@+id/rlarelativelayout"
         android:layout_width="match_parent"
@@ -22,9 +24,10 @@
             android:layout_height="@dimen/fourty_eight"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="@dimen/twele"
-            android:background="@drawable/default_profile"
-            android:gravity="center"
             android:textColor="@android:color/white"
+            android:background="@drawable/bg_circle_avatar"
+            android:gravity="center"
+            android:text="J"
             android:textSize="@dimen/twenty_sp" />
 
 
@@ -140,8 +143,8 @@
                 <TextView
                     android:id="@+id/total_numbers"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
+                    android:layout_width="@dimen/thirty_six"
+                    android:layout_height="@dimen/thirty_six"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/minus_fifteen"
                     android:layout_marginTop="@dimen/ten"

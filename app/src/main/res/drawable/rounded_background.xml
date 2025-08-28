@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- Solid fill color -->
-    <solid android:color="#6467D2" />
+    <solid android:color="@color/white" />
 
     <!-- Square size -->
     <size

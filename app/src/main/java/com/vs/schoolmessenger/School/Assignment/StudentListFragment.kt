@@ -36,6 +36,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
     private var assignmentId: String? = null
     private var submittedCount: Int = 0
     private var totalCount: Int = 0
+    private var created_date: String? = null
     private var type: String? = null
 
     private var allStudentsList: List<StudentSubmission> = emptyList()
@@ -48,6 +49,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             type = it.getString("type")
             submittedCount = it.getInt("submitted_count", 0)
             totalCount = it.getInt("Total_Count", 0)
+            created_date = it.getString("created_date")
         }
     }
 
@@ -147,7 +149,8 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             requireContext(),
             Constant.isShimmerViewDisable,
             binding.nomessage,
-            binding.txtNoData
+            binding.txtNoData,
+            created_date
         )
         binding.rcystudentlist.adapter = assignmentstudentlistadapter
     }
@@ -168,7 +171,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     private fun isGetAssignmentStudentList() {
         assignmentstudentlistadapter =
-            AssignmentStudentListAdapter(null, this, requireContext(), Constant.isShimmerViewShow)
+            AssignmentStudentListAdapter(null, this, requireContext(), Constant.isShimmerViewShow,null,null,created_date)
 
         binding.rcystudentlist.layoutManager = LinearLayoutManager(requireContext())
         binding.rcystudentlist.isNestedScrollingEnabled = false
@@ -197,13 +200,15 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             assignmentId: String,
             type: String,
             submittedCount: Int,
-            totalCount: Int
+            totalCount: Int,
+            created_date: String
         ) = StudentListFragment().apply {
             arguments = Bundle().apply {
                 putString("assignment_id", assignmentId)
                 putString("type", type)
                 putInt("submitted_count", submittedCount)
                 putInt("Total_Count", totalCount)
+                putString("created_date", created_date)
             }
         }
     }

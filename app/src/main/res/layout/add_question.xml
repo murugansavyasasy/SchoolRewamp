@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/athens_gray"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblImportQuestion"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:text="@string/import_from_question_bank"
+                android:textColor="@color/iconBlue"
+                android:drawablePadding="@dimen/three"
+                android:drawableStart="@drawable/import_icon"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <LinearLayout
+                android:layout_below="@+id/lblImportQuestion"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcAddQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    >
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/lblAddQuestion"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_below="@+id/rcAddQuestion"
+                    android:drawableStart="@drawable/add_icon"
+                    android:textColor="@color/iconBlue"
+                    android:layout_width="match_parent"
+                    android:drawablePadding="@dimen/three"
+                    android:text="@string/add_question"
+                    android:layout_height="wrap_content"
+                    android:drawableTint="@color/iconBlue"
+                    ></TextView>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</LinearLayout>

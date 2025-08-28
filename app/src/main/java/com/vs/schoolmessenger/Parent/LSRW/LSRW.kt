@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.Parent.LSRW
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +28,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         super.setupViews()
         isToolBarPrimaryTheme()
         binding.toolbarLayout.lblParentToolBar.text = "LSRW"
-        binding.toolbarLayout.rytSearch.visibility = View.GONE
+        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
         val childDetails = SharedPreference.getChildDetails(this)
@@ -36,10 +38,8 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblStudentSection.text =
             "${childDetails?.standard_name ?: ""} - ${childDetails?.section_name ?: ""}"
 
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
-
 
         binding.rcyrecyclerview.layoutManager = LinearLayoutManager(this)
         adapter = LSRWAdapter(emptyList(), this)
@@ -47,18 +47,28 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
 
         fetchLsrwSkillReportData()
 
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                filterList(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
 
         appViewModel.islsrwSkilllist?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyrecyclerview.visibility = View.VISIBLE
-                binding.noDataFound.visibility = View.GONE
+                binding.lytNoDataFound.visibility = View.GONE
                 allItems = response.data
                 adapter.updateList(allItems)
             } else {
                 binding.rcyrecyclerview.visibility = View.GONE
-                binding.noDataFound.visibility = View.VISIBLE
+                binding.lytNoDataFound.visibility = View.VISIBLE
             }
         }
+
     }
 
     private fun fetchLsrwSkillReportData() {
@@ -67,9 +77,37 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         appViewModel.islsrwSkilllist(isAccessToken ?: "")
     }
 
+    private fun filterList(query: String) {
+        if (query.isEmpty()) {
+            adapter.updateList(allItems)
+            binding.lytNoDataFound.visibility = if (allItems.isEmpty()) View.VISIBLE else View.GONE
+            return
+        }
+
+        val filteredList = allItems.filter { item ->
+            item.subject?.contains(query, ignoreCase = true) == true ||
+                    item.activity_type?.contains(query, ignoreCase = true) == true ||
+                    item.title?.contains(query, ignoreCase = true) == true ||
+                    item.description?.contains(query, ignoreCase = true) == true ||
+                    item.sent_by?.contains(query, ignoreCase = true) == true
+        }
+
+        if (filteredList.isNotEmpty()) {
+            adapter.updateList(filteredList)
+            binding.rcyrecyclerview.visibility = View.VISIBLE
+            binding.lytNoDataFound.visibility = View.GONE
+        } else {
+            adapter.updateList(emptyList())
+            binding.rcyrecyclerview.visibility = View.GONE
+            binding.lytNoDataFound.visibility = View.VISIBLE
+        }
+    }
+
+
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
         }
     }
 }
+

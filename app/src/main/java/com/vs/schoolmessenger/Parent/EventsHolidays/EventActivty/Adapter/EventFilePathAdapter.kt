@@ -77,60 +77,41 @@ class EventFilePathAdapter(
             adapter: EventFilePathAdapter,
         ) {
 
-            Log.d("GetFileDetails", data.toString())
-            if (data?.url.isNullOrEmpty()) {
-                Log.e("FilePathAdapter", "Invalid URL at position $position")
-                return
-            }
+            DefaultImage.visibility = View.VISIBLE
+
             when (data?.type?.uppercase()) {
                 Constant.IMAGE -> {
-                    Glide.with(context)
-                        .load(data.url)
+                    Glide.with(context).load(data.url)
                         .placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
-                    DefaultImage.visibility = View.VISIBLE
                 }
 
-                Constant.PDF -> {
-                    DefaultImage.setImageResource(R.drawable.hw_pdf_img)
-                    openDocumentInWebView(data.url)
+                Constant.AUDIO -> {
+                    Glide.with(context).load(R.drawable.voice).into(DefaultImage)
+                    DefaultImage.setImageResource(R.drawable.voice)
                 }
 
-                Constant.DOC, Constant.DOCX -> {
-                    DefaultImage.setImageResource(R.drawable.microsoft_word_img)
-                    openDocumentInWebView(data.url)
+                Constant.PDF, Constant.DOC, Constant.DOCX, Constant.TXT, Constant.PPT, Constant.PPTX, Constant.EXCEL, Constant.VIDEO -> {
+                    DefaultImage.setImageResource(getIconForType(data.type))
                 }
 
-                Constant.TXT -> {
-                    DefaultImage.setImageResource(R.drawable.txt_file_img)
-                    openDocumentInWebView(data.url)
-                }
 
-                Constant.PPT, Constant.PPTX -> {
-                    DefaultImage.setImageResource(R.drawable.ppt_icon)
-                    openDocumentInWebView(data.url)
-                }
-
-                Constant.EXCEL -> {
-                    DefaultImage.setImageResource(R.drawable.excel_icon)
-                    openDocumentInWebView(data.url)
-                }
             }
+
         }
 
-
-        private fun openDocumentInWebView(urlPath: String) {
-            DefaultImage.visibility = View.GONE
-        }
-
-
-        class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val shimmerLayout: ShimmerFrameLayout =
-                itemView.findViewById(R.id.shimmer_view_container)
-
-            init {
-                shimmerLayout.startShimmer() // Start shimmer effect
+        private fun getIconForType(type: String): Int {
+            return when (type.uppercase()) {
+                Constant.PDF -> R.drawable.hw_pdf_img
+                Constant.DOC, Constant.DOCX -> R.drawable.microsoft_word_img
+                Constant.TXT -> R.drawable.txt_file_img
+                Constant.PPT, Constant.PPTX -> R.drawable.ppt_icon
+                Constant.EXCEL -> R.drawable.excel_icon
+                Constant.VIDEO -> R.drawable.video_play
+                else -> R.drawable.doc_icon
             }
         }
     }
+
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

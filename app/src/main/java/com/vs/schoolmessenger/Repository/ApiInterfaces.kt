@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
+import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
@@ -88,7 +89,9 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelReq
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
@@ -109,9 +112,13 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
@@ -841,12 +848,30 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<LsrwSkillSendResponse>?
 
+    @POST(APIMethods.islsrwSkillSubmit)
+    fun islsrwSkillSubmit(
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
+    ): Call<LSRWSkillSubmitResponse>?
+
 
     @GET(APIMethods.islsrwSkilllist)
     fun islsrwSkilllist(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<LsrwSkillResponse?>?
 
+
+    @GET(APIMethods.islsrwstats)
+    fun islsrwstats(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.month_id) month_id: Int
+    ): Call<AvgSkillResponse?>?
+
+
+
+    @PUT(APIMethods.islsrwremarkupdate)
+    fun islsrwremarkupdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<LsrwremarkUpdateModel?>
 
 
     // PTM
@@ -966,7 +991,32 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query("class_id") class_id: String,
         @Query("subject_id") subject_id: String,
-    @Query("section_id") section_id: String
+        @Query("section_id") section_id: String
     ): Call<GetCheckLevel?>?
+
+    @GET(APIMethods.isGetQuizQuestionReport)
+    fun isGetQuizQuestionReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("id") id: String,
+    ): Call<GetQuizQuestionReport?>?
+
+    @GET(APIMethods.isGetQuizSubmissionList)
+    fun isGetQuizSubmissionList(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("id") id: String,
+    ): Call<GetQuizSubmissionList?>?
+
+    @GET(APIMethods.isGetPickFromQBank)
+    fun isGetPickFromQBank(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("subject_id") subject_id: String,
+    ): Call<GetPickFromQBank?>?
+
+    @POST(APIMethods.isAddQuestion)
+    fun isAddQuestion(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<AddQuestionResponse?>?
+
 
 }

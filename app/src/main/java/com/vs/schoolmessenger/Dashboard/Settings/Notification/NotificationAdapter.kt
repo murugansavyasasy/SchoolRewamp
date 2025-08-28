@@ -19,111 +19,106 @@ class NotificationAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+    private val TYPE_HEADER = 2
 
     override fun getItemViewType(position: Int): Int {
-        return if (isLoading) TYPE_SHIMMER else TYPE_DATA
+        return if (isLoading) {
+            TYPE_SHIMMER
+        } else if (itemList!![position].isHeader) {
+            TYPE_HEADER
+        } else {
+            TYPE_DATA
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.resent_notifications)
-            com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder(
-                shimmerView
-            )
-        } else {
+        return when (viewType) {
+            TYPE_SHIMMER -> {
+                val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.resent_notifications)
+                ShimmerViewHolder(shimmerView)
+            }
 
-            val view =
-                LayoutInflater.from(parent.context)
+            TYPE_HEADER -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_notification_header, parent, false)
+                HeaderViewHolder(view)
+            }
+
+            else -> {
+                val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.resent_notifications, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
-
-        }
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position)
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else itemList?.size ?: 0
-    }
-
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
-        val imgRoundCard: CircleImageView = itemView.findViewById(R.id.imgRoundCard)
-        val lblSendBy: TextView = itemView.findViewById(R.id.lblSendBy)
-        val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
-        val lblContent: TextView = itemView.findViewById(R.id.lblContent)
-        val first_letter: TextView = itemView.findViewById(R.id.first_letter)
-        val lblNotification: TextView = itemView.findViewById(R.id.lblNotification)
-
-        fun bind(data: NotificationDataClass, position: Int) {
-
-            lblSendBy.text = "Posted by : ${data.sendBy}"
-            lblTitle.text = data.title
-            lblContent.text = data.content
-            first_letter.text = data.sendBy.firstOrNull()?.toString() ?: "?"
-
-            when (position) {
-                1 -> {
-                    lblNotification.visibility = View.VISIBLE
-                    imgRoundCard.setImageResource(R.drawable.voice)
-                }
-
-                2 -> {
-                    lblNotification.visibility = View.VISIBLE
-                    imgRoundCard.setImageResource(R.drawable.phone_icon)
-                }
-
-                3 -> {
-                    lblNotification.visibility = View.GONE
-                    imgRoundCard.setImageResource(R.drawable.mail_icon)
-                }
-
-                4 -> {
-                    lblNotification.visibility = View.VISIBLE
-                    imgRoundCard.setImageResource(R.drawable.text_notification)
-
-                }
-
-                5 -> {
-                    lblNotification.visibility = View.GONE
-                    imgRoundCard.setImageResource(R.drawable.voice)
-                }
-
-                6 -> {
-                    lblNotification.visibility = View.GONE
-                    imgRoundCard.setImageResource(R.drawable.phone_icon)
-                }
-
-                7 -> {
-                    lblNotification.visibility = View.VISIBLE
-                    imgRoundCard.setImageResource(R.drawable.mail_icon)
-                }
-
-                8 -> {
-                    lblNotification.visibility = View.GONE
-                    imgRoundCard.setImageResource(R.drawable.text_notification)
-                }
-
-                9 -> {
-                    lblNotification.visibility = View.VISIBLE
-                    imgRoundCard.setImageResource(R.drawable.voice)
-                }
+                DataViewHolder(view, context)
             }
         }
     }
 
-    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (isLoading) return
+        val list = itemList ?: return
+        val item = list[position]
 
+        when (holder) {
+            is DataViewHolder -> {
+                val lastIndex = list.lastIndex
+                val nextIsHeader = position < lastIndex && list[position + 1].isHeader
+                val showDivider = position < lastIndex && !nextIsHeader
+                holder.bind(item, showDivider)
+            }
+            is HeaderViewHolder -> holder.bind(item)
+        }
+    }
+
+
+
+    override fun getItemCount(): Int {
+        return if (isLoading) 20 else itemList?.size ?: 0
+    }
+
+    class DataViewHolder(itemView: View, private val context: Context) :
+        RecyclerView.ViewHolder(itemView) {
+
+        private val lblSendBy: TextView = itemView.findViewById(R.id.lblSendBy)
+        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
+        private val lblContent: TextView = itemView.findViewById(R.id.lblContent)
+        private val first_letter: TextView = itemView.findViewById(R.id.first_letter)
+        private val lblNotification: TextView = itemView.findViewById(R.id.lblNotification)
+        private val line: View = itemView.findViewById(R.id.line)
+
+        fun bind(data: NotificationDataClass, showDivider: Boolean) {
+            lblSendBy.text = data.sendBy
+            lblTitle.text = data.title
+            lblContent.text = data.content.replace("•", "")
+            first_letter.visibility = View.GONE
+            first_letter.text = data.sendBy.firstOrNull()?.toString() ?: "?"
+            line.visibility = if (showDivider) View.VISIBLE else View.GONE
+        }
+    }
+
+
+
+    class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val txtHeader: TextView = itemView.findViewById(R.id.txtHeader)
+        private val imgHeader: View = itemView.findViewById(R.id.imgHeader)
+
+        fun bind(data: NotificationDataClass) {
+            txtHeader.text = data.category
+
+            when (data.category) {
+                "Homework" -> imgHeader.setBackgroundResource(R.drawable.home_work_icon_school)
+                "Assignment" -> imgHeader.setBackgroundResource(R.drawable.assignment_icon_school)
+                "Events" -> imgHeader.setBackgroundResource(R.drawable.graduationevent)
+                "Communication" -> imgHeader.setBackgroundResource(R.drawable.communication_icon_dashboard)
+            }
+        }
+    }
+
+
+
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+            if (itemView is ShimmerFrameLayout) {
+                itemView.startShimmer()
+            }
         }
     }
 }

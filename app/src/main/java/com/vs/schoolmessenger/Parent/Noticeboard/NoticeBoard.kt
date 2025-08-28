@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -42,14 +43,10 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         binding.lblStudentName.text = isChildDetails?.name
         binding.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-//        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
-//        binding.toolbarLayout.lblStudentSection.text =
-//            isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
-//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-//        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.imgBack.setOnClickListener(this)
 
         binding.rytSearch.setOnClickListener(this)
+        binding.imgSearch.setOnClickListener(this)
 
         binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -112,6 +109,13 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                     binding.txtVideoMenu.requestFocus()
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                }
+            }
+            R.id.imgSearch -> {
+                if (binding.rytsearch.isVisible) {
+                    binding.rytsearch.visibility = View.GONE
+                } else {
+                    binding.rytsearch.visibility = View.VISIBLE
                 }
             }
         }

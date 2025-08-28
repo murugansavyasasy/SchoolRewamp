@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
+import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
@@ -39,6 +40,7 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateR
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
@@ -82,6 +84,7 @@ class ParentServices {
     var isSubmitQuiz: MutableLiveData<SubmitQuizResponse?>
     var isGetMySubmission: MutableLiveData<GetMySubmission?>
     var islsrwSkilllist: MutableLiveData<LsrwSkillResponse?>
+    var islsrwSkillSubmit: MutableLiveData<LSRWSkillSubmitResponse?>
 
     init {
         client_auth = RestClient()
@@ -120,6 +123,7 @@ class ParentServices {
         isSubmitQuiz = MutableLiveData()
         isGetMySubmission = MutableLiveData()
         islsrwSkilllist = MutableLiveData()
+        islsrwSkillSubmit = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1555,6 +1559,36 @@ class ParentServices {
 
     val islsrwSkilllistLiveData: LiveData<LsrwSkillResponse?>
         get() = islsrwSkilllist
+
+
+
+
+    fun islsrwSkillSubmit(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.islsrwSkillSubmit(isToken, jsonObject)
+            ?.enqueue(object : Callback<LSRWSkillSubmitResponse?> {
+                override fun onResponse(
+                    call: Call<LSRWSkillSubmitResponse?>, response: Response<LSRWSkillSubmitResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        islsrwSkillSubmit.postValue(response.body())
+                    } else {
+                        islsrwSkillSubmit.postValue(response.body())
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<LSRWSkillSubmitResponse?>, t: Throwable) {
+                    islsrwSkillSubmit.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val islsrwSkillSubmitLiveData: LiveData<LSRWSkillSubmitResponse?>
+        get() = islsrwSkillSubmit
+
 
 
 

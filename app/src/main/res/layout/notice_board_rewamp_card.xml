@@ -4,7 +4,6 @@
     android:id="@+id/header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/horizonatal_linearlayout"
     android:layout_margin="@dimen/eight"
     android:clipChildren="false"
     android:clipToPadding="false"
@@ -103,8 +102,8 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/four"
             android:ellipsize="end"
-            android:lines="5"
-            android:maxLines="5"
+            android:lines="3"
+            android:maxLines="3"
             android:paddingTop="@dimen/four"
             android:text="Our Annual Sports Meet is scheduled for Thursday, 8th August 2025 at the school ground. All students are encouraged to participate.\n➤ Participants must register with the Sports Coordinator by 1st August.\n➤ House t-shirts must be worn."
             android:textColor="@color/black"
@@ -113,19 +112,15 @@
 
         <LinearLayout
             android:id="@+id/rytList"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
-            android:layout_marginBottom="@dimen/two"
             android:orientation="horizontal">
 
             <RelativeLayout
                 android:id="@+id/rytList2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/ten"
-                android:minHeight="@dimen/sixty"
-                android:background="@drawable/bg_radiantwhite1"
                 android:orientation="horizontal"
                 android:visibility="invisible">
 
@@ -137,23 +132,22 @@
                     android:paddingStart="@dimen/five"
                     android:paddingEnd="@dimen/five" />
 
+
+
                 <TextView
-                    android:layout_toEndOf="@id/rcyImgPDF"
-                    android:layout_centerVertical="true"
                     android:id="@+id/total_numbers"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/minus_fifteen"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/five"
-                    android:layout_marginBottom="@dimen/ten"
+                    android:layout_width="@dimen/thirty_six"
+                    android:layout_height="@dimen/thirty_six"
+                    android:layout_toEndOf="@id/rcyImgPDF"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginBottom="@dimen/five"
                     android:background="@drawable/bg_image_background_white_coupon"
+                    android:text="+9"
                     android:gravity="center"
-                    android:text=""
-                    android:padding="@dimen/ten"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_marginStart="@dimen/minus_fifteen"
+                    android:layout_marginEnd="@dimen/five"
                     />
 
             </RelativeLayout>
@@ -245,7 +239,7 @@
                 android:layout_weight="1"
                 android:text="99:99 AM"
                 android:textColor="@color/grey"
-                android:textSize="@dimen/thirteen"
+                android:textSize="12sp"
                  />
 
             <View
@@ -262,7 +256,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/reminder"
                 android:textColor="@color/grey"
-                android:textSize="@dimen/twele"
+                android:textSize="12sp"
                 android:textStyle="normal" />
 
         </LinearLayout>

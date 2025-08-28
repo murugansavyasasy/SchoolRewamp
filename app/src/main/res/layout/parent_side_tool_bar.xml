@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
@@ -19,18 +18,19 @@
             android:layout_centerVertical="true"
             android:src="@drawable/arrow_left_white">
         </ImageView>
-        
+
         <TextView
             android:id="@+id/lblParentToolBar"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/rlaStudentName"
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
+            android:visibility="gone"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
-            style="@style/CustomTextStylePoppinsBold">
+            android:textSize="@dimen/fifteen_sp">
 
         </TextView>
 
@@ -38,17 +38,15 @@
             android:id="@+id/rlaStudentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/ten">
+            android:layout_toEndOf="@id/imgBack"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/lblStudentName"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:layout_gravity="end"
-                style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -56,14 +54,12 @@
 
             <TextView
                 android:id="@+id/lblStudentSection"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:text=""
-                android:layout_gravity="end"
-                android:textColor="@color/white"
-                style="@style/CustomTextStylePoppinsMedium"
-              >
+                android:textColor="@color/white">
 
             </TextView>
         </LinearLayout>
@@ -144,7 +140,7 @@
             android:layout_toEndOf="@id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
 

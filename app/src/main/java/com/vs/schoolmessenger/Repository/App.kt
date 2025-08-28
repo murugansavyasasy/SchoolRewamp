@@ -40,6 +40,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
+import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
@@ -78,7 +79,9 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelReq
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
+import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
@@ -99,9 +102,13 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
@@ -318,6 +325,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isStudentStats: LiveData<getStudentStats?>? = null
     var getassignmentmysubmission: LiveData<MySubmittedAssignmentsResponse?>? = null
     var islsrwskillsreport: LiveData<lsrwskillresponse?>? = null
+    var islsrwstats: LiveData<AvgSkillResponse?>? = null
+
+    var islsrwremarkupdate: LiveData<LsrwremarkUpdateModel?>? = null
+
     var isPtmSlotCreate: LiveData<StatusMessageModel?>? = null
     var isPtmSlotResponse: LiveData<SlotResponse?>? = null
     var isPtmSlotCancelReOpen: LiveData<StatusMessageModel?>? = null
@@ -338,7 +349,12 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetQuizExamReport: LiveData<GetQuizExamReport?>? = null
     var isGetCheckLevel: LiveData<GetCheckLevel?>? = null
     var islsrwSkillCreate: LiveData<LsrwSkillSendResponse?>? = null
+    var islsrwSkillSubmit: LiveData<LSRWSkillSubmitResponse?>? = null
     var islsrwSkilllist: LiveData<LsrwSkillResponse?>? = null
+    var isGetQuizQuestionReport: LiveData<GetQuizQuestionReport?>? = null
+    var isGetQuizSubmissionList: LiveData<GetQuizSubmissionList?>? = null
+    var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
+    var isAddQuestion: LiveData<AddQuestionResponse?>? = null
 
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
@@ -456,6 +472,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getassignmentmysubmission = apiParentRepositories.getassignmentmysubmissionlistLiveData
         islsrwskillsreport = apiSchoolRepositories.islsrwskillsreportLiveData
         islsrwStudentlist = apiSchoolRepositories.islsrwStudentlistLiveData
+        islsrwremarkupdate = apiSchoolRepositories.islsrwremarkupdateLiveData
 
         isPtmSlotCreate = apiSchoolRepositories.isPtmSlotCreateLiveData
         isPtmSlotResponse = apiSchoolRepositories.isPtmSlotResponseLiveData
@@ -476,7 +493,13 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetQuizExamReport = apiSchoolRepositories.isGetQuizExamReportLiveData
         isGetCheckLevel = apiSchoolRepositories.isGetCheckLevelLiveData
         islsrwSkillCreate = apiSchoolRepositories.islsrwSkillCreateLiveData
+        islsrwSkillSubmit = apiParentRepositories.islsrwSkillSubmitLiveData
         islsrwSkilllist = apiParentRepositories.islsrwSkilllistLiveData
+        islsrwstats = apiSchoolRepositories.islsrwstatsLiveData
+        isGetQuizQuestionReport = apiSchoolRepositories.isGetQuizQuestionReportLiveData
+        isGetQuizSubmissionList = apiSchoolRepositories.isGetQuizSubmissionListLiveData
+        isGetPickFromQBank = apiSchoolRepositories.isGetPickFromQBankLiveData
+        isAddQuestion = apiSchoolRepositories.isAddQuestionLiveData
 
 
     }
@@ -1059,10 +1082,24 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.islsrwSkillCreate(isToken, josnObject, activity)
     }
 
+
+    fun islsrwSkillSubmit(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiParentRepositories.islsrwSkillSubmit(isToken, josnObject, activity)
+    }
+
     fun islsrwSkilllist(isToken: String) {
         apiParentRepositories.islsrwSkilllist(isToken)
     }
 
+
+    fun islsrwstats(isToken: String,month_id:Int) {
+        apiSchoolRepositories.islsrwstats(isToken,month_id)
+    }
+
+
+    fun islsrwremarkupdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.islsrwremarkupdate(isToken, jsonObject, activity)
+    }
 
     // PTM
 
@@ -1193,6 +1230,38 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiSchoolRepositories.isGetCheckLevel(
             isToken, class_id,subject_id,section_id
+        )
+    }
+
+    fun isGetQuizQuestionReport(
+        isToken: String, id:String
+    ) {
+        apiSchoolRepositories.isGetQuizQuestionReport(
+            isToken, id
+        )
+    }
+
+    fun isGetQuizSubmissionList(
+        isToken: String, id:String
+    ) {
+        apiSchoolRepositories.isGetQuizSubmissionList(
+            isToken, id
+        )
+    }
+
+    fun isGetPickFromQBank(
+        isToken: String, subject_id:String
+    ) {
+        apiSchoolRepositories.isGetPickFromQBank(
+            isToken, subject_id
+        )
+    }
+
+    fun isQuizAddQuestion(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isQuizAddQuestion(
+            isToken, jsonObject,
         )
     }
 

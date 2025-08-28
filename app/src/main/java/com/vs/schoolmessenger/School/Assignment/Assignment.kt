@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -38,6 +37,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -137,20 +137,21 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)
         binding.lnrTabOneName.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.lblTimePick.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
@@ -165,24 +166,25 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             noDataText = binding.noDataFound
         )
 
-        binding.rcyAssignmentReport.adapter = adapter
+        binding.rcyAssignmentReport.adapter = isAssignmentAdapter
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                adapter.filter.filter(s)
+                isAssignmentAdapter?.filter?.filter(s)
                 binding.rcyAssignmentReport.post {
-                    if (adapter.itemCount == 0) {
+                    if (isAssignmentAdapter?.itemCount == 0) {
                         binding.rcyAssignmentReport.visibility = View.GONE
-                        binding.noDataFound.visibility = View.VISIBLE
+                        binding.lytNoDataFound.visibility = View.VISIBLE
                     } else {
                         binding.rcyAssignmentReport.visibility = View.VISIBLE
-                        binding.noDataFound.visibility = View.GONE
+                        binding.lytNoDataFound.visibility = View.GONE
                     }
                 }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+            }
         })
 
 
@@ -201,10 +203,11 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 adapter.updateList(response.data)
                 binding.rcyAssignmentReport.visibility = View.VISIBLE
-                binding.noDataFound.visibility = View.GONE
+                binding.lytNoDataFound.visibility = View.GONE
             } else {
                 binding.rcyAssignmentReport.visibility = View.GONE
-                binding.noDataFound.visibility = View.VISIBLE
+                binding.lytNoDataFound.visibility = View.VISIBLE
+                binding.noDataFound.text = "No data found"
             }
         }
 
@@ -216,7 +219,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 )
             )
         }
-        binding.btnChooseRecipient.text = getString(R.string.NEXT)
+        binding.btnChooseRecipient.text = getString(R.string.ChooseRecipients)
         binding.rcyImages.visibility = View.VISIBLE
 
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
@@ -301,19 +304,18 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         }
 
         appViewModel!!.isGetAssignmentReport?.observe(this) { response ->
+            Constant.hideLoading(this@Assignment)
             if (response != null) {
                 if (response.status) {
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
-                    binding.search.visibility = View.VISIBLE
                     val isAssignmentReport = response.data
                     isAssignmentReportData = isAssignmentReport
                     loadAssignmentReportData()
                 } else {
-                    binding.search.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
-                    binding.noDataFound.text = response.message
+                    binding.noDataFound.text = "No data found"
                 }
             }
         }
@@ -378,6 +380,14 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 }
             }
 
+            R.id.imgSearchToolBar -> {
+                if (binding.search.isVisible) {
+                    binding.search.visibility = View.GONE
+                } else {
+                    binding.search.visibility = View.VISIBLE
+                }
+            }
+
             R.id.lblTimePick -> {
                 showTimePickerDialog(this, this)
             }
@@ -387,12 +397,12 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
 
             R.id.lnrTabOneName -> {
-                binding.btnChooseRecipient.text = getString(R.string.NEXT)
+                binding.btnChooseRecipient.text = getString(R.string.ChooseRecipients)
                 binding.line1.setBackgroundResource(R.color.iconBlue)
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.line3.setBackgroundResource(R.color.white)
-
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rlaAssignmentReport.visibility = View.GONE
                 binding.rytCreateAssignment.visibility = View.VISIBLE
             }
@@ -407,7 +417,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.line3.setBackgroundResource(R.color.iconBlue)
                 binding.line1.setBackgroundResource(R.color.white)
-
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.rlaAssignmentReport.visibility = View.VISIBLE
                 binding.rytCreateAssignment.visibility = View.GONE
                 isAcademicYear = Constant.isAcademicYearList
@@ -422,9 +432,10 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
     private fun fetchAssignmentReportData() {
+        Constant.showLoading(this@Assignment)
         binding.rcyAssignmentReport.visibility = View.VISIBLE
         isAssignmentAdapter =
-            AssignmentAdapter(mutableListOf(), this, this, Constant.isShimmerViewShow)
+            AssignmentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
         binding.rcyAssignmentReport.isNestedScrollingEnabled = false
         binding.rcyAssignmentReport.adapter = isAssignmentAdapter

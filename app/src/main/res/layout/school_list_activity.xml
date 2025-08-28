@@ -12,7 +12,7 @@
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/blue_gradient_color"
+        android:background="@drawable/gradient_theme_school"
         android:paddingVertical="@dimen/twenty"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,8 +21,7 @@
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/fifteen"
-            android:src="@drawable/left_arrow" />
+            android:src="@drawable/arrow_left_white" />
 
         <TextView
             android:id="@+id/lblTitle"

@@ -91,9 +91,8 @@ class SchoolEventCompletedAdapter(
                     fullList
                 } else {
                     fullList.filter {
-                        it.title.lowercase().contains(query) ||
-                                it.description.lowercase().contains(query) ||
-                                it.venue.lowercase().contains(query)
+                        it.title.lowercase().contains(query) || it.description.lowercase()
+                            .contains(query) || it.venue.lowercase().contains(query)
                     }
                 }
                 val filterResults = FilterResults()
@@ -125,7 +124,6 @@ class SchoolEventCompletedAdapter(
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
 
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)
@@ -143,9 +141,8 @@ class SchoolEventCompletedAdapter(
             event_location.text = data.venue
             eventdesc.text = data.description
 
-            video_player.visibility = View.GONE
-            loadingBar.visibility = View.GONE
 
+            loadingBar.visibility = View.GONE
 
             header.setOnClickListener {
                 val convertedList = data.file_path.map {
@@ -172,42 +169,27 @@ class SchoolEventCompletedAdapter(
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
-
-            if (data.iframe.isNotEmpty()) {
-                video_player.visibility = View.VISIBLE
-                rytList.visibility = View.VISIBLE
+            if (data.file_path.isEmpty()) {
                 rcyImgPDF.visibility = View.GONE
-
+                total_numbers.visibility = View.GONE
             } else {
-                if (data.file_path.isEmpty()) {
-//                    rytList.visibility = View.GONE
-                    arrow_icon.visibility = View.VISIBLE
-                    rcyImgPDF.visibility = View.GONE
-                    total_numbers.visibility = View.GONE
-                    video_player.visibility = View.GONE
+                rytList.visibility = View.VISIBLE
+                arrow_icon.visibility = View.VISIBLE
+                rcyImgPDF.visibility = View.VISIBLE
+                val fileList = data.file_path
+                val totalFiles = fileList.size
+                val adapter = EventFilePathAdapter(fileList, context, Constant.isShimmerViewDisable)
+                rcyImgPDF.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rcyImgPDF.adapter = adapter
+                if (totalFiles > 3) {
+                    total_numbers.text = "+${totalFiles - 3}"
+                    total_numbers.visibility = View.VISIBLE
                 } else {
-                    rytList.visibility = View.VISIBLE
-                    arrow_icon.visibility = View.VISIBLE
-                    rcyImgPDF.visibility = View.VISIBLE
-                    video_player.visibility = View.GONE
-
-                    val fileList = data.file_path
-                    val totalFiles = fileList.size
-
-                    val adapter =
-                        EventFilePathAdapter(fileList, context, Constant.isShimmerViewDisable)
-                    rcyImgPDF.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    rcyImgPDF.adapter = adapter
-
-                    if (totalFiles > 3) {
-                        total_numbers.text = "+${totalFiles - 3}"
-                        total_numbers.visibility = View.VISIBLE
-                    } else {
-                        total_numbers.visibility = View.GONE
-                    }
+                    total_numbers.visibility = View.GONE
                 }
             }
         }
+
     }
 }

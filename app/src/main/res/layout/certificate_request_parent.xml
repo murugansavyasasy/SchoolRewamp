@@ -3,22 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/light_gray4"
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cltDateSelection"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred"
+            android:layout_height="@dimen/hundred"
             android:background="@drawable/bottom_right_left_radious"
             app:layout_constraintTop_toTopOf="parent">
-
-
+            
             <ImageView
                 android:id="@+id/imgBack"
                 android:layout_width="@dimen/thirty_five"
@@ -27,7 +25,8 @@
                 android:layout_marginTop="@dimen/twenty_five"
                 android:src="@drawable/arrow_left_white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                app:layout_constraintTop_toTopOf="parent">
+            </ImageView>
 
             <TextView
                 android:id="@+id/lblName"
@@ -38,7 +37,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:text="Sathish"
                 android:textColor="@color/white"
-                android:textSize="@dimen/twenty_five"
+                android:textSize="@dimen/twenty"
                 app:layout_constraintStart_toEndOf="@+id/imgBack"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -77,7 +76,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            app:layout_constraintTop_toBottomOf="@+id/cltDateSelection"
+            app:layout_constraintTop_toBottomOf="@+id/header_text4"
             android:background="@drawable/rect_grey"
             android:visibility="gone">
 
@@ -112,10 +111,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
-            android:text="@string/request_for_certificate"
+            android:text="@string/certificate_request"
             android:textSize="@dimen/eighteen_sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rlaSortSearch" />
+            app:layout_constraintTop_toBottomOf="@+id/cltDateSelection" />
 
         <RelativeLayout
             android:id="@+id/rytRequestTap"
@@ -138,22 +137,30 @@
                 android:text="@string/select_certificate"
                 />
 
-            <Spinner
-                android:id="@+id/spinner_text"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/fourty"
+            <RelativeLayout
                 android:layout_below="@+id/header_text"
-                android:layout_marginStart="@dimen/ten"
+                android:id="@+id/lnrSpinnner"
+                android:background="@drawable/bg_white_light_radious"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten">
-            </Spinner>
+                android:layout_marginStart="@dimen/ten"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:layout_centerVertical="true"
+                    android:id="@+id/spinner_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty"
+                    >
+                </Spinner>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/header_text1"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/spinner_text"
+                android:layout_below="@+id/lnrSpinnner"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/select_urgency_level"
@@ -291,7 +298,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/header_text4" />
+            app:layout_constraintTop_toBottomOf="@+id/rlaSortSearch" />
 
 
         <LinearLayout

@@ -179,6 +179,7 @@ object Constant {
     var selectedFileIndex: Int = -1
     var isCommunicationType = 1
     var isVoiceType = 1
+    var isQuestionLimit = -1
 
     var isTitleLength = 50
     var isDescriptionLength = 500
@@ -250,6 +251,7 @@ object Constant {
     var event_data = "event_data"
     var assignment_data = "assignment_data"
     var lsrwskill_data = "lsrwskill_data"
+    var lsrwsubmitskill_data = "lsrwsubmitskill_data"
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var isTitle = "isTitle"
@@ -287,6 +289,7 @@ object Constant {
     var isSelectedFiles = "isSelectedFiles"
 
     var IMAGE = "IMAGE"
+    var M4A = "M4A"
     var PDF = "PDF"
     var XLS = "PDF"
     var DOC = "DOC"
@@ -610,7 +613,7 @@ object Constant {
     }
 
     fun showErrorAlert(activity: Activity, title: String, content: String) {
-        val dialogView = LayoutInflater.from(activity).inflate(R.layout.custom_error_alert, null)
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.show_error_alert, null)
         val builder = AlertDialog.Builder(activity)
         builder.setView(dialogView)
         val alertDialog = builder.create()
@@ -666,6 +669,37 @@ object Constant {
             val intent = Intent(activity, RecipientActivity::class.java)
             activity.startActivity(intent)
         }
+    }
+
+
+    //"dd-MM-yyyy" to "dd MMMM, yyyy"
+    fun formatDate(dateStr: String): String {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+
+        val inputDate = inputFormat.parse(dateStr) ?: return dateStr
+
+        val calendar = Calendar.getInstance()
+
+        // Today
+        val today = Calendar.getInstance()
+
+        // Yesterday
+        val yesterday = Calendar.getInstance()
+        yesterday.add(Calendar.DAY_OF_YEAR, -1)
+
+        return when {
+            isSameDay(calendar = today, date = inputDate) -> "Today"
+            isSameDay(calendar = yesterday, date = inputDate) -> "Yesterday"
+            else -> outputFormat.format(inputDate)
+        }
+    }
+
+    private fun isSameDay(calendar: Calendar, date: Date): Boolean {
+        val cal = Calendar.getInstance()
+        cal.time = date
+        return calendar.get(Calendar.YEAR) == cal.get(Calendar.YEAR) &&
+                calendar.get(Calendar.DAY_OF_YEAR) == cal.get(Calendar.DAY_OF_YEAR)
     }
 
 
@@ -1197,6 +1231,59 @@ object Constant {
             input
         }
     }
+
+
+    fun CustomisedconvertDateAndTimeFormat(input: String?): String {
+        if (input.isNullOrEmpty()) return ""
+
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            date?.let { outputFormat.format(it) } ?: ""
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+    fun formatCreatedDate(input: String?): String {
+        if (input.isNullOrEmpty()) return "--"
+
+        return try {
+            val inputFormatFull = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+
+            val date = try {
+                inputFormatFull.parse(input)
+            } catch (e: Exception) {
+                val inputFormatDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                inputFormatDate.parse(input)
+            }
+
+            date?.let { outputFormat.format(it) } ?: "--"
+        } catch (e: Exception) {
+            "--"
+        }
+    }
+
+
+    fun convertSubmittedDateAssignment(input: String?): String {
+        if (input.isNullOrEmpty()) return "--"
+
+        return try {
+
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+
+
+            val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+
+            val date = inputFormat.parse(input)
+            date?.let { outputFormat.format(it) } ?: "--"
+        } catch (e: Exception) {
+            "--"
+        }
+    }
+
 
 
     fun convertDateTimeFormat(input: String): String {

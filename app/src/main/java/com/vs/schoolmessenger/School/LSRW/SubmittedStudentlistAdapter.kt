@@ -2,14 +2,17 @@ package com.vs.schoolmessenger.School.LSRW
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
@@ -54,15 +57,31 @@ class SubmittedStudentlistAdapter (
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
 
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
-        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
+        private val avatarText: TextView = itemView.findViewById(R.id.avatarText)
+        private val submittedLabel: TextView = itemView.findViewById(R.id.submittedLabel)
         private val cancelimage: ImageView = itemView.findViewById(R.id.cancelimage)
-        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
+        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
+        private val statusButton: LinearLayout = itemView.findViewById(R.id.statusButton)
 
         fun bind(item: StudentSubmissionLsrw) {
             lblStudentName.text = item.student_name
             sectionlabel.text = item.standard +" - "+ item.section
-            submittedDate.text = item.submitted_on
+
+            if (item.submitted_date == "--") {
+                submittedDate.text = item.submit_status
+                submittedLabel.text = ""
+            } else {
+                submittedDate.text = item.submitted_date
+                submittedLabel.visibility = View.VISIBLE
+            }
+
+            val name = item.student_name
+            avatarText.text = if (!name.isNullOrEmpty()) {
+                name.first().toString().uppercase()
+            } else {
+                "-"
+            }
 
 
             if (item.submit_status == "SUBMITTED") {
@@ -71,90 +90,108 @@ class SubmittedStudentlistAdapter (
                 statuslabel.setTextColor(
                     ContextCompat.getColor(context, R.color.clr_green)
                 )
+                statusButton.setBackgroundResource(R.drawable.completed_button_bg)
             } else {
                 statuslabel.text = "Pending"
-                cancelimage.setBackgroundResource(R.drawable.close_red_color)
-                statuslabel.setTextColor(
-                    ContextCompat.getColor(context, android.R.color.holo_red_dark)
-                )
+                cancelimage.setBackgroundResource(R.drawable.downloadsvgformat)
+                statuslabel.setTextColor("#9e6e40".toColorInt())
+
+                statusButton.setBackgroundResource(R.drawable.pending_button_bg)
             }
 
 
 
-            val hasIframe = !item.iframe.isNullOrEmpty()
+
+
             val hasFiles = !item.file_path.isNullOrEmpty()
 
-            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
-            rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
-            rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
+
+            rytList2.visibility = if (hasFiles) View.GONE else View.GONE
             total_numbers.visibility = View.GONE
 
-            rytList2.setOnClickListener {
-                val convertedList = item.file_path.map {
-                    GetFilePathDetails(
-                        type = it.type,
-                        url = it.url,
-                    )
-                }
-                val isHomeWorkData = FilePreview(
-                    id = item.id,
-                    title = "",
-                    description = "",
-                    subjectName = "",
-                    sentBy = "",
-                    thumbnail = item.thumbnail,
-                    isUnread = true,
-                    isCompleted = true,
-                    isMenuType = Constant.M_SCHOOL_NEEDS,
-                    fileList = convertedList,
-                    submittedCount = 0,
-                    totalCount = 0,
-                    assignmentid = "",
-                    created_date = "",
-                    category = "",
-                    assignmentsubject = ""
-                )
 
-                val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                context.startActivity(intent)
+
+                rytList2.setOnClickListener {
+                    if(item.submit_status=="NOTSUBMITTED") {
+                        Log.d("Not Submitted the list"," Not submitted any records")
+                        return@setOnClickListener
+                    } else {
+                    val convertedList = item.file_path.map {
+                        GetFilePathDetails(
+                            type = it.type,
+                            url = it.url,
+                        )
+                    }
+                    val isHomeWorkData = FilePreview(
+                        id = item.id,
+                        title = item.student_id,
+                        description = "",
+                        subjectName = "",
+                        sentBy = "",
+                        thumbnail = item.thumbnail,
+                        isUnread = true,
+                        isCompleted = true,
+                        isMenuType = Constant.M_SCHOOL_NEEDS,
+                        fileList = convertedList,
+                        submittedCount = 0,
+                        totalCount = 0,
+                        assignmentid = "",
+                        created_date = "",
+                        category = "",
+                        assignmentsubject = ""
+                    )
+
+                    val intent = Intent(context, SubmittedStudentListRemarkSubmit::class.java)
+                    intent.putExtra("isPreViewData", isHomeWorkData)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    context.startActivity(intent)
+                }
             }
 
-            headerrelative_layout.setOnClickListener {
-                val convertedList = item.file_path.map {
-                    GetFilePathDetails(
-                        type = it.type,
-                        url = it.url,
-                    )
-                }
-                val isHomeWorkData = FilePreview(
-                    id = item.id,
-                    title = "",
-                    description = "",
-                    subjectName = "",
-                    sentBy = "",
-                    thumbnail = item.thumbnail,
-                    isUnread = true,
-                    isCompleted = true,
-                    isMenuType = Constant.M_SCHOOL_NEEDS,
-                    fileList = convertedList,
-                    submittedCount = 0,
-                    totalCount = 0,
-                    assignmentid = "",
-                    created_date = "",
-                    category = "",
-                    assignmentsubject = "",
-                    isParentAssignment = false
-                )
 
-                val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                context.startActivity(intent)
+            headerrelative_layout.setOnClickListener {
+                if(item.submit_status=="NOTSUBMITTED") {
+                    Log.d("Not Submitted the list"," Not submitted any records")
+                    return@setOnClickListener
+                } else {
+                    val convertedList = item.file_path.map {
+                        GetFilePathDetails(
+                            type = it.type,
+                            url = it.url,
+                        )
+                    }
+                    val isHomeWorkData = FilePreview(
+                        id = item.id,
+                        title = item.student_id,
+                        description = "",
+                        subjectName = "",
+                        sentBy = "",
+                        thumbnail = item.thumbnail,
+                        isUnread = true,
+                        isCompleted = true,
+                        isMenuType = Constant.M_SCHOOL_NEEDS,
+                        fileList = convertedList,
+                        submittedCount = 0,
+                        totalCount = 0,
+                        assignmentid = "",
+                        created_date = "",
+                        category = "",
+                        assignmentsubject = "",
+                        isParentAssignment = false
+                    )
+
+                    val intent = Intent(context, SubmittedStudentListRemarkSubmit::class.java)
+                    intent.putExtra("isPreViewData", isHomeWorkData)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    context.startActivity(intent)
+                }
             }
 
             rcyAssignment.addOnItemTouchListener(
+                if(item.submit_status=="NOTSUBMITTED") {
+                    Log.d("Not Submitted the list"," Not submitted any records")
+                    return
+                } else {
                 object : RecyclerView.SimpleOnItemTouchListener() {
                     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                         val child = rv.findChildViewUnder(e.x, e.y)
@@ -168,7 +205,7 @@ class SubmittedStudentlistAdapter (
                             }
                             val isHomeWorkData = FilePreview(
                                 id = item.id,
-                                title = "",
+                                title = item.student_id,
                                 description = "",
                                 subjectName = "",
                                 sentBy = "",
@@ -186,13 +223,15 @@ class SubmittedStudentlistAdapter (
                                 isParentAssignment = false
                             )
 
-                            val intent = Intent(context, ChildHomeWork::class.java)
+                            val intent =
+                                Intent(context, SubmittedStudentListRemarkSubmit::class.java)
                             intent.putExtra("isPreViewData", isHomeWorkData)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             context.startActivity(intent)
                         }
                         return false
                     }
+                }
                 }
             )
 

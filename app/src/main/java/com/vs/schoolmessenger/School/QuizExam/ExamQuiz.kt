@@ -10,11 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
-import com.vs.schoolmessenger.Parent.QuizExam.Adapter.CompletedQuizAdapter
-import com.vs.schoolmessenger.Parent.QuizExam.Adapter.QuizUpcomingAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport.ExamQuizReportAdapter
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
@@ -39,7 +36,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -67,16 +64,19 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         appViewModel?.isGetQuizExamReport?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
+                    binding.rcQuizExamReport.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
-
                     if (isType == "2") {
                         isLoadEQReport(response.data)
                     }
-                } else {
+                }
+                else {
+                    binding.rlaQuizExamReport.visibility = View.VISIBLE
                     binding.rcQuizExamReport.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             } else {
+                binding.rlaQuizExamReport.visibility = View.VISIBLE
                 binding.rcQuizExamReport.visibility = View.GONE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
             }
@@ -89,9 +89,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.line2.setBackgroundResource(R.color.athens_gray)
-            binding.rlaQuizExamReport.visibility = View.GONE
-            binding.svOverallCreateQE.visibility = View.VISIBLE
-
+            showTabOne()
         }
 
         binding.lnrTabTwoName.setOnClickListener {
@@ -102,26 +100,26 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
             binding.line2.setBackgroundResource(R.color.iconBlue)
             binding.line1.setBackgroundResource(R.color.athens_gray)
-            binding.svOverallCreateQE.visibility = View.GONE
-            binding.rlaQuizExamReport.visibility = View.VISIBLE
+            showTabTwo()
             isFetchEQReport()
+
         }
     }
 
     private fun isLoadEQReport(data: List<GetQuizExamReportData>) {
         if (data.isNotEmpty()) {
-            binding.lytList.visibility = View.GONE
-            binding.rlaQuizExamReport.visibility = View.VISIBLE
-            adapter = ExamQuizReportAdapter(data, this, false)
+            adapter = ExamQuizReportAdapter(data, this, Constant.isShimmerViewDisable)
             binding.rcQuizExamReport.layoutManager = LinearLayoutManager(this)
             binding.rcQuizExamReport.adapter = adapter
+            binding.rcQuizExamReport.visibility = View.VISIBLE
+            binding.lytList.visibility = View.GONE
         } else {
-            binding.svOverallCreateQE.visibility = View.GONE
-            binding.rlaQuizExamReport.visibility = View.VISIBLE
             binding.rcQuizExamReport.visibility = View.GONE
-            ErrorMessage(getString(R.string.no_data_found))
+            binding.lytList.visibility = View.VISIBLE
+            binding.txtNoData.text = getString(R.string.no_data_found)
         }
     }
+
 
     fun ErrorMessage(errorMessage: String) {
         binding.lytList.visibility = View.VISIBLE
@@ -130,7 +128,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
 
     private fun isFetchEQReport() {
-        adapter = ExamQuizReportAdapter(null, this, false)
+        adapter = ExamQuizReportAdapter(null, this, Constant.isShimmerViewShow)
         binding.rcQuizExamReport.layoutManager = LinearLayoutManager(this)
         binding.rcQuizExamReport.adapter = adapter
 
@@ -162,6 +160,18 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
         startActivity(intent)
+    }
+
+    private fun showTabOne() {
+        binding.lytList.visibility = View.GONE
+        binding.rlaQuizExamReport.visibility = View.GONE
+        binding.svOverallCreateQE.visibility = View.VISIBLE
+    }
+
+    private fun showTabTwo() {
+        binding.lytList.visibility = View.GONE
+        binding.svOverallCreateQE.visibility = View.GONE
+        binding.rlaQuizExamReport.visibility = View.VISIBLE
     }
 
 

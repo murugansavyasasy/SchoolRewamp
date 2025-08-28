@@ -12,8 +12,117 @@
         android:layout_marginTop="@dimen/five"
         android:background="@drawable/rect_shadow_white">
 
+        <RelativeLayout
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+
+            android:id="@+id/rytHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgBook"
+                android:background="@drawable/pink_radius_bg"
+                android:layout_width="@dimen/fifty"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/book_icon_2"
+                android:padding="@dimen/eight"
+                android:layout_height="@dimen/fifty">
+            </ImageView>
+            <LinearLayout
+                android:layout_toStartOf="@+id/status_text1label"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_toEndOf="@+id/imgBook"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/lblSubjectId"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_width="match_parent"
+                    android:text="Tamil"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_width="match_parent"
+                    android:text="Chapter"
+                    android:id="@+id/lblTeaching"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:weightSum="1"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:id="@+id/lblLevel"
+                            android:layout_width="@dimen/thirty"
+                            android:text="1"
+                            android:layout_alignParentStart="true"
+                            android:gravity="center"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:textColor="@color/PrimaryColor"
+                            android:background="@drawable/bg_circle_gray"
+                            android:layout_height="@dimen/thirty">
+                        </TextView>
+                        <TextView
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/lblLevel"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:text="@string/level"
+                            android:layout_height="wrap_content">
+                        </TextView>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_weight="0.5"
+                        android:drawableStart="@drawable/red_circle_icon"
+                        android:text="Admin"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:drawablePadding="@dimen/five"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <ImageView
+                android:layout_alignParentEnd="true"
+                android:layout_width="@dimen/twenty"
+                android:src="@drawable/completed_green"
+                android:id="@+id/status_text1label"
+                android:layout_height="@dimen/twenty">
+
+            </ImageView>
+        </RelativeLayout>
+        <View
+            android:layout_below="@+id/rytHeader"
+            android:id="@+id/divder1"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_width="match_parent"
+            android:background="@color/gray4"
+            android:layout_height="@dimen/one">
+
+        </View>
+
+
+
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/divder1"
+            android:layout_marginTop="@dimen/ten"
             android:id="@+id/detailsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,61 +131,11 @@
             android:paddingStart="@dimen/thirteen"
             android:paddingEnd="@dimen/thirteen" />
 
-
-        <LinearLayout
-            android:id="@+id/bottomstatuslinear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/detailsRecyclerView"
-            android:layout_margin="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="visible">
-
-            <RelativeLayout
-                android:id="@+id/bottomstatusrelative_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:background="@drawable/bg_green_radoius_20dp"
-                android:gravity="center"
-                android:padding="@dimen/two">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/status_text1label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/twenty_five"
-                        android:layout_marginTop="@dimen/five"
-                        android:src="@drawable/correcticonsvg" />
-
-                    <TextView
-                        android:id="@+id/status_textlabel"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/five"
-                        android:layout_marginBottom="@dimen/three"
-                        android:text="@string/completed"
-                        android:textColor="@color/green"
-                        android:textSize="@dimen/fifteen_sp" />
-                </LinearLayout>
-            </RelativeLayout>
-        </LinearLayout>
-
-
         <RelativeLayout
             android:id="@+id/editdeletelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/bottomstatuslinear_layout"
+            android:layout_below="@+id/detailsRecyclerView"
             android:layout_marginBottom="@dimen/eight"
             android:padding="@dimen/two">
 
@@ -94,7 +153,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/eight"
-                    android:background="@drawable/rect_grey"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/twele_sp"
@@ -104,10 +162,10 @@
 
                     <ImageView
                         android:id="@+id/imgEditIcon"
-                        android:layout_width="@dimen/sixteen"
-                        android:layout_height="@dimen/sixteen"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
                         android:contentDescription="Edit Icon"
-                        android:src="@drawable/edit_icon" />
+                        android:src="@drawable/edit_icon_2" />
 
                     <TextView
                         android:id="@+id/btnedit"
@@ -116,7 +174,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/eight"
                         android:text="@string/edit"
-                         />
+                        android:textSize="@dimen/fourteen_sp"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
