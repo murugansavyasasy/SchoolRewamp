@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/imgCalender"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
+            android:layout_width="@dimen/twenty_eight"
+            android:layout_height="@dimen/twenty_five"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/five"
             android:src="@drawable/calendar_circle_fill">
@@ -68,8 +68,8 @@
 
         <ImageView
             android:id="@+id/imgNext"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
             android:layout_below="@+id/lblCertificateTitle"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"

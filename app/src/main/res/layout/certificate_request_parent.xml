@@ -13,8 +13,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cltDateSelection"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/hundred"
-            android:background="@drawable/bottom_right_left_radious"
+            android:layout_height="@dimen/eighty"
+            android:background="@color/PrimaryColor"
             app:layout_constraintTop_toTopOf="parent">
             
             <ImageView
@@ -111,8 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
-            android:text="@string/certificate_request"
-            android:textSize="@dimen/eighteen_sp"
+            android:text="@string/request_for_certificate"
+            android:textSize="@dimen/twenty"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cltDateSelection" />
 
@@ -133,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
                 android:text="@string/select_certificate"
                 />
 
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lnrSpinnner"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
                 android:text="@string/select_urgency_level"
                  />
 
@@ -194,7 +194,7 @@
 
                     <TextView
                         android:id="@+id/rb_not_urgent"
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -223,7 +223,7 @@
 
                     <TextView
                         android:id="@+id/rb_urgent"
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -268,7 +268,7 @@
                 android:layout_height="@dimen/fourty"
                 android:layout_below="@+id/txtReason"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/twenty"
                 android:layout_marginBottom="@dimen/twele"
                 android:background="@drawable/bg_orange"
                 android:gravity="center"

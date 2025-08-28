@@ -35,7 +35,7 @@
                 android:text="SARANRAJ SHANMUGAM"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fourteen_sp"
-                android:textStyle="bold" />
+                style="@style/CustomTextStylePoppinsMedium"/>
 
             <TextView
                 android:id="@+id/tvClass"
@@ -45,7 +45,7 @@
                 android:text="I - B"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fourteen_sp"
-                android:textStyle="bold" />
+                style="@style/CustomTextStylePoppinsMedium"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -57,16 +57,15 @@
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/twenty">
 
-        <!-- Left: Timetable Title -->
         <TextView
             android:id="@+id/tvTimetableTitle"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/timetable"
+            style="@style/CustomTextStylePoppinsBold"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/twenty_four"
-            android:textStyle="bold" />
+            android:textSize="@dimen/twenty_four" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -82,7 +81,7 @@
                 android:text="@string/today"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fifteen"
-                android:textStyle="bold" />
+                style="@style/CustomTextStylePoppinsMedium" />
 
             <TextView
                 android:id="@+id/tvToday"
@@ -90,7 +89,8 @@
                 android:layout_height="wrap_content"
                 android:text="mon 28 jul 25"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/fourteen_sp" />
+                android:textSize="@dimen/fourteen_sp"
+                style="@style/CustomTextStylePoppinsMedium"/>
         </LinearLayout>
     </LinearLayout>
 

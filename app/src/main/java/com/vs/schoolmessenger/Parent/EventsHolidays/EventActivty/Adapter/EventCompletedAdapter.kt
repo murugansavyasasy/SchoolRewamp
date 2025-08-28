@@ -146,7 +146,6 @@ class EventCompletedAdapter(
 
             loadingBar.visibility = View.GONE
 
-
             header.setOnClickListener {
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
@@ -194,6 +193,5 @@ class EventCompletedAdapter(
 
             }
         }
-
     }
 }
