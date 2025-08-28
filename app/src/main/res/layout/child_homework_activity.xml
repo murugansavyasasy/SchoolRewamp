@@ -357,21 +357,20 @@
             <TextView
                 android:id="@+id/lblviewSubmissions"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/twenty"
                 android:layout_marginEnd="@dimen/thirty"
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/rect_shadow_light_primary"
-                android:gravity="center"
+                android:gravity="end"
                 android:padding="@dimen/eight"
                 android:text="View Submissions"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/viewline" />
 
             <FrameLayout

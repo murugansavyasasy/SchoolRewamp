@@ -82,12 +82,23 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         dashboardviewadapter = LsRwDashboardAdapter(
             itemList = emptyList(),
-            context = this
-        ) { overviewItem ->
-            val intent = Intent(this, ActiveTaskList::class.java)
-            intent.putParcelableArrayListExtra("TASK_LIST", ArrayList(allTaskItems))
-            startActivity(intent)
-        }
+            context = this,
+            onDashboardClick = { overviewItem ->
+                val intent = Intent(this, ActiveTaskList::class.java)
+                intent.putParcelableArrayListExtra("TASK_LIST", ArrayList(allTaskItems))
+                startActivity(intent)
+            },
+            onCompletedClick = { overviewItem ->
+                val intent = Intent(this, CompletedTaskList::class.java)
+                intent.putParcelableArrayListExtra(
+                    "COMPLETED_TASK_LIST",
+                    ArrayList(allCompletedItems)
+                )
+                startActivity(intent)
+            }
+        )
+
+
 
         binding.rcylsrwheader.adapter = dashboardviewadapter
 

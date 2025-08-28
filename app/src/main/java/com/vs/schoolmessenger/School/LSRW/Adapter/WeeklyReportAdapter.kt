@@ -1,8 +1,11 @@
 package com.vs.schoolmessenger.School.LSRW.Adapter
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LSRW.Model.WeeklyReportItem
 import com.vs.schoolmessenger.databinding.ItemWeeklyReportBinding
 
@@ -23,10 +26,16 @@ class WeeklyReportAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.binding.apply {
-            txtWeekTitle.text = item.weekName
-            txtWeekDesc.text = "${item.percentage}%"
+            txtweek.text = item.weekName
+            txtpercentage.text = "${item.percentage}%"
+            progressBar.max = 100
+            progressBar.progress = item.percentage
+
+            progressBar.progressTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(root.context, R.color.PrimaryColor))
         }
     }
+
 
     override fun getItemCount(): Int = items.size
 }

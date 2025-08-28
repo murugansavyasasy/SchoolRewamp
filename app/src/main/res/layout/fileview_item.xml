@@ -27,7 +27,7 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-    <!-- File Item -->
+
     <RelativeLayout
         android:id="@+id/childrelative_layout"
         android:layout_width="match_parent"

@@ -6,6 +6,7 @@ object APIKeyNames {
     const val data = "data"
     const val title = "title"
     const val description = "description"
+    const val submission_date = "submission_date"
     const val id = "id"
     const val latitude = "latitude"
     const val longitude = "longitude"

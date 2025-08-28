@@ -43,6 +43,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSubmitSkillDataClass
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
@@ -75,7 +76,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     var isHomeworkId = ""
     var isHomeWorkDate: String? = ""
     private var appViewModel: App? = null
-
+    var isIframe = ""
+    var isFileSize = ""
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
 
@@ -89,6 +91,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
+
     private var data: FilePreview? = null
 
     override fun setupViews() {
@@ -119,13 +122,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
             binding.createdDate.text = (data?.created_date ?: "")
-            Log.d("createddatevalue",data?.created_date ?: "")
+            Log.d("createddatevalue", data?.created_date ?: "")
             binding.category.text = data?.category ?: ""
             binding.subject.text = data?.assignmentsubject ?: ""
             binding.fragmentContainer.visibility = View.VISIBLE
             loadFragment(
                 StudentListFragment.newInstance(
-                    data!!.assignmentid ?: "", "TOTAL", data!!.submittedCount ?: 0, data!!.totalCount ?: 0,data!!.created_date ?: ""
+                    data!!.assignmentid ?: "",
+                    "TOTAL",
+                    data!!.submittedCount ?: 0,
+                    data!!.totalCount ?: 0,
+                    data!!.created_date ?: ""
                 )
             )
         } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == true) {
@@ -144,7 +151,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.txtSubTitle.text = data!!.assignmentid
             binding.childlsrwlayoutxml.txtDescription.text = data!!.description
             binding.childlsrwlayoutxml.lsrwgragmentcontainer.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.txtDate.text = Constant.convertDateFormat(data?.created_date ?: "")
+            binding.childlsrwlayoutxml.txtDate.text =
+                Constant.convertDateFormat(data?.created_date ?: "")
             Log.d("FragmentCheck", "Loading LsrwStudentListFragment with ID: ${data!!.id}")
             subloadFragment(
                 LsrwStudentListFragment.newInstance(
@@ -153,20 +161,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             )
             Log.d("FragmentCheck", "LsrwStudentListFragment should now be loaded")
 
-            val audioList = data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
-                .map { it.url }
+            val audioList =
+                data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
+                    .map { it.url }
             if (audioList.isNotEmpty()) {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
                 val audioAdapter = AudioAdapter(audioList)
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager = LinearLayoutManager(binding.root.context)
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
+                    LinearLayoutManager(binding.root.context)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
             } else {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
             }
 
         } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
-
-
             if (data!!.assignmentid == "Listening") {
                 binding.descriptionLabel.visibility = View.GONE
                 binding.editDescription.visibility = View.GONE
@@ -183,6 +191,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.descriptionLabel.visibility = View.VISIBLE
                 binding.editDescription.visibility = View.VISIBLE
                 binding.rytRecyclewview.visibility = View.VISIBLE
+                binding.lblviewSubmissions.visibility = View.VISIBLE
                 binding.rcyImages.visibility = View.VISIBLE
                 binding.btnSubmit.visibility = View.VISIBLE
             }
@@ -252,8 +261,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         }
                     }
                 }
-            val audioList = data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
-                .map { it.url }
+            val audioList =
+                data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
+                    .map { it.url }
             if (audioList.isNotEmpty()) {
                 binding.rcSeekBarAndTitle.visibility = View.VISIBLE
                 val audioAdapter = AudioAdapter(audioList)
@@ -272,14 +282,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lblviewSubmissions.setOnClickListener(this)
 
         binding.lblviewSubmissions.setOnClickListener {
-            val intent = Intent(this, AssignmentStudentList::class.java)
-            intent.putExtra("assignment_id", data!!.assignmentid)
-            intent.putExtra("submitted_count", data!!.submittedCount)
-            Log.d("submitted_count", data!!.submittedCount.toString())
-            intent.putExtra("Total_Count", data!!.totalCount)
-            Log.d("Total_Count", data!!.totalCount.toString())
-            intent.putExtra("type", "TOTAL")
-            startActivity(intent)
+
         }
 
         if (data!!.isMenuType == Constant.M_HOMEWORK) {
@@ -346,6 +349,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 isSuccessFullCompleteHomework()
             }
         }
+
+        appViewModel!!.islsrwSkillSubmit?.observe(this) { response ->
+            Constant.hideLoading(this@ChildHomeWork)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+
+            }
+        }
+
+
         if (adapter.itemCount == 0) {
             if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
                 val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
@@ -427,18 +441,21 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun LsrwSubmitSkill() {
+        Constant.showLoading(this@ChildHomeWork)
         val description = binding.editDescription.text.toString().trim()
         if (description.isEmpty()) {
             binding.editDescription.error = getString(R.string.This_field_required)
             binding.editDescription.requestFocus()
             return
         }
-        val isLsrwSubmitSkill = LsrwSubmitSkillDataClass(
-            description
+        val jsonObject = ApiCallRequest.islsrwSkillSubmit(
+            iframe = isIframe,
+            file_size = isFileSize,
+            id = data!!.id,
+            description = description,
+            thumbnail = "",
         )
-        val intent = Intent(this, RecipientActivity::class.java)
-        intent.putExtra(Constant.lsrwsubmitskill_data, isLsrwSubmitSkill)
-        startActivity(intent)
+        appViewModel!!.islsrwSkillSubmit(isAccessToken!!, jsonObject, this)
     }
 
     private fun loadFragment(fragment: Fragment) {
@@ -450,7 +467,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             .replace(R.id.lsrwgragmentcontainer, fragment)
             .commit()
     }
-
 
 
     private fun checkCameraPermissionAndOpenCamera() {

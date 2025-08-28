@@ -327,6 +327,7 @@ object ApiCallRequest {
         title: String,
         description: String,
         isLsrwType: String,
+        submission_date: String,
         subjectId: Int
     ): JsonObject {
 
@@ -352,10 +353,43 @@ object ApiCallRequest {
         jsonObject.addProperty(APIKeyNames.iframe, iframe)
         jsonObject.addProperty(APIKeyNames.file_size, file_size)
         jsonObject.addProperty(APIKeyNames.description, description)
+        jsonObject.addProperty(APIKeyNames.submission_date, submission_date)
         jsonObject.addProperty(
             APIKeyNames.subject_id,
             subjectId.toString()
         )
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+        return jsonObject
+    }
+
+
+
+    fun islsrwSkillSubmit(
+        file_size: String,
+        iframe: String,
+        id: String,
+        thumbnail: String,
+        description: String,
+    ): JsonObject {
+
+        val jsonObject = JsonObject()
+
+        val filePathArray = JsonArray()
+
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.type,
+                Constant.isAwsUploadedFiles[i].isFileType.toString()
+            )
+            filePathArray.add(isSelectedObject)
+        }
+        jsonObject.addProperty(APIKeyNames.iframe, iframe)
+        jsonObject.addProperty(APIKeyNames.thumbnail, thumbnail)
+        jsonObject.addProperty(APIKeyNames.id, id)
+        jsonObject.addProperty(APIKeyNames.file_size, file_size)
+        jsonObject.addProperty(APIKeyNames.description, description)
         jsonObject.add(APIKeyNames.file_path, filePathArray)
         return jsonObject
     }

@@ -1,7 +1,10 @@
 package com.vs.schoolmessenger.School.LSRW
 
+import android.R
 import android.os.Build
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +12,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwHeaderAdapter
+import com.vs.schoolmessenger.School.LSRW.Adapter.StudentListAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.TopPerformanceAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.WeeklyReportAdapter
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillData
@@ -19,9 +23,11 @@ import com.vs.schoolmessenger.School.LSRW.Model.WeeklyReportItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwReportstaticsBinding
+import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
+import java.util.Calendar
 import java.util.Locale
 
 class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnClickListener {
@@ -43,19 +49,18 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
 
-
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
 
-        fetchLsrwstatsReportData()
+        setupMonthSpinner()
+
 
         appViewModel?.islsrwstats?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
-
 
                 val headerItems = mutableListOf<LsrwHeaderItem>()
                 headerItems.add(LsrwHeaderItem("Today Submitted", "", "${data.today_submitted?.size ?: 0} Students"))
@@ -70,7 +75,6 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 }
                 binding.rclsrwheader.adapter = headerAdapter
 
-
                 val allDetails = mutableListOf<AvgStudentSubmission>()
                 allDetails.addAll(data.reading?.details ?: emptyList())
                 allDetails.addAll(data.speaking?.details ?: emptyList())
@@ -80,24 +84,54 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 binding.rvWeekly.layoutManager = LinearLayoutManager(this)
                 binding.rvWeekly.adapter = WeeklyReportAdapter(weeklyReport)
 
-
                 val topPerformers = calculateTopPerformers(allDetails)
                 binding.rvTopPerformance.layoutManager = LinearLayoutManager(this)
                 binding.rvTopPerformance.adapter = TopPerformanceAdapter(topPerformers)
 
+
                 binding.rclsrwheader.visibility = View.VISIBLE
+                binding.rvWeekly.visibility = View.VISIBLE
+                binding.rvTopPerformance.visibility = View.VISIBLE
                 binding.noDataFound.visibility = View.GONE
             } else {
+
                 binding.rclsrwheader.visibility = View.GONE
+                binding.rvWeekly.visibility = View.GONE
+                binding.rvTopPerformance.visibility = View.GONE
                 binding.noDataFound.visibility = View.VISIBLE
             }
         }
 
-
-
     }
 
+    private fun setupMonthSpinner() {
+        val months = DateFormatSymbols().months
+        val monthList = months.take(12)
 
+        val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, monthList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerDropdown.adapter = adapter
+
+
+        val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
+        binding.spinnerDropdown.setSelection(currentMonthIndex)
+
+        binding.spinnerDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedMonthNumber = position + 1
+                fetchLsrwstatsReportData(selectedMonthNumber)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun filterByHeader(selected: LsrwHeaderItem, data: AvgSkillData) {
@@ -106,31 +140,30 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
             "Speaking" -> data.speaking?.details ?: emptyList()
             "Reading" -> data.reading?.details ?: emptyList()
             "Writing" -> data.writing?.details ?: emptyList()
+            "Today Submitted" -> data.today_submitted ?: emptyList()
             else -> emptyList()
         }
 
-        val weeklyReport = calculateWeeklyReport(details)
-        binding.rvWeekly.adapter = WeeklyReportAdapter(weeklyReport)
-
-        val topPerformers = calculateTopPerformers(details)
-        binding.rvTopPerformance.adapter = TopPerformanceAdapter(topPerformers)
+        binding.rcstudents.layoutManager = LinearLayoutManager(this)
+        binding.rcstudents.adapter = StudentListAdapter(details)
+        binding.rcstudents.visibility = View.VISIBLE
     }
-
-
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun calculateWeeklyReport(details: List<AvgStudentSubmission>): List<WeeklyReportItem> {
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault())
+        val currentMonth = LocalDate.now().monthValue
+        val currentYear = LocalDate.now().year
+
         val weeks = mutableMapOf<Int, MutableList<Int>>()
 
         details.forEach { detail ->
             val date = LocalDate.parse(detail.submission_date, formatter)
-            val weekOfMonth = date.get(WeekFields.of(Locale.getDefault()).weekOfMonth())
-
-            val remarkValue = detail.remark.replace("%", "").toIntOrNull() ?: 0
-            weeks.getOrPut(weekOfMonth) { mutableListOf() }.add(remarkValue)
+            if (date.monthValue == currentMonth && date.year == currentYear) {
+                val weekOfMonth = date.get(WeekFields.of(Locale.getDefault()).weekOfMonth())
+                val remarkValue = detail.remark.replace("%", "").toIntOrNull() ?: 0
+                weeks.getOrPut(weekOfMonth) { mutableListOf() }.add(remarkValue)
+            }
         }
 
         val weeklyReport = mutableListOf<WeeklyReportItem>()
@@ -141,7 +174,6 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         }
         return weeklyReport
     }
-
 
     private fun calculateTopPerformers(details: List<AvgStudentSubmission>): List<TopPerformanceItem> {
         return details.map {
@@ -154,15 +186,14 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     }
 
 
-
-
-    private fun fetchLsrwstatsReportData() {
+    private fun fetchLsrwstatsReportData(month: Int) {
         binding.rclsrwheader.visibility = View.VISIBLE
-        appViewModel?.islsrwstats(isAccessToken ?: "", 8)
-
+        appViewModel?.islsrwstats(isAccessToken ?: "", month)
     }
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+        if (v?.id == binding.toolbarLayout.imgBack.id) {
+            onBackPressed()
+        }
     }
 }

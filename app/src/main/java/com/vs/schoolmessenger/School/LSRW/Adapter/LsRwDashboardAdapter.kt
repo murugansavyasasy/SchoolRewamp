@@ -17,7 +17,8 @@ import com.vs.schoolmessenger.School.LSRW.Model.Overview
 class LsRwDashboardAdapter(
     private var itemList: List<Overview>,
     private val context: Context,
-    private val onDashboardClick: (Overview) -> Unit
+    private val onDashboardClick: (Overview) -> Unit,
+    private val onCompletedClick: (Overview) -> Unit
 ) : RecyclerView.Adapter<LsRwDashboardAdapter.HeaderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
@@ -58,8 +59,8 @@ class LsRwDashboardAdapter(
                 } else if (item.title == "Avg. Performance") {
                     val intent = Intent(context, LsrwReportAndStatics::class.java)
                     context.startActivity(intent)
-                } else {
-
+                } else if (item.title == "Completed Tasks" ) {
+                    onCompletedClick(item)
                 }
             }
         }

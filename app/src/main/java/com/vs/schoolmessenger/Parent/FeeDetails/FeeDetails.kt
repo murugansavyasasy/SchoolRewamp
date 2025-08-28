@@ -42,7 +42,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
     lateinit var mAdapter: FeeReceiptAdapter
     private lateinit var invoiceList: List<InvoiceDetails>
-
     private var appViewModel: App? = null
 
     private val popupWebViewStack = Stack<WebView>()
