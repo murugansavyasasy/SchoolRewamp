@@ -116,8 +116,11 @@ class AddQuestionAdapter(
             if (removed.sourceType == QuestionSource.QBANK && removed.id.isNotEmpty()) {
                 onQBankItemRemoved?.invoke(removed.id)
                 Constant.isQuestionLimit += 1
+                itemList!!.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, itemList!!.size)
+                return
             }
-
             itemList!!.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemList!!.size)

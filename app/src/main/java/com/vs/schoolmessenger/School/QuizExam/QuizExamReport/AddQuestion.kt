@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -155,14 +156,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 Log.d("QuestionLimit", Constant.isQuestionLimit.toString())
                 Log.d("FinalListSize", adapter.getUpdatedList().size.toString())
                 if (Constant.isQuestionLimit > 0) {
-                    if (adapter.getUpdatedList().size <= Constant.isQuestionLimit) {
-                        adapter.addItem()
-                        Constant.isQuestionLimit -= 1
-                    }
-                    else {
-                        Constant.showErrorAlert(this, getString(R.string.alert), getString(R.string.question_limit_reached))
-                    }
-                } else {
+                    adapter.addItem()
+                    Constant.isQuestionLimit -= 1
+                }
+                else {
                     Constant.showErrorAlert(
                         this,
                         getString(R.string.alert),
@@ -213,40 +210,87 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         val cbSelect = dialogView.findViewById<CheckBox>(R.id.cbSelect)
 
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false) {
+//        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false) {
+//
+//
+////old working
+//            cbSelect.setOnCheckedChangeListener { _, isChecked ->
+//                if (isChecked) {
+//                    val allQuestions = adapter2.getAllNotImported()
+//                    val totalToSelect = allQuestions.size
+//
+//                    if (totalToSelect <= Constant.isQuestionLimit) {
+//                        //  Within limit → mark as imported
+//                        Constant.isQuestionLimit -= totalToSelect
+//                        adapter2.markAsImported(allQuestions)
+//                        cbSelect.isChecked = true
+//                    } else {
+//                        // Over the limit → show message and reset checkbox
+//                        Constant.showErrorAlert(
+//                            this,
+//                            getString(R.string.alert),
+//                            getString(R.string.question_limit_reached)
+//                        )
+//                        cbSelect.isChecked = false
+//                    }
+//                } else {
+//                    //  Uncheck → clear only selections (not imported ones)
+//                    adapter2.clearSelections()
+//                }
+//            }
+//
+//
+//
+//        }
 
+        adapter2 = PickQuestionAdapter(pickFomQbank.toMutableList(), activity, false)
+        recyclerView.adapter = adapter2
 
-//old working
-            cbSelect.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    val allQuestions = adapter2.getAllNotImported()
-                    val totalToSelect = allQuestions.size
-
-                    if (totalToSelect <= Constant.isQuestionLimit) {
-                        //  Within limit → mark as imported
-                        Constant.isQuestionLimit -= totalToSelect
-                        adapter2.markAsImported(allQuestions)
-                        cbSelect.isChecked = true
-                    } else {
-                        // Over the limit → show message and reset checkbox
-                        Constant.showErrorAlert(
-                            this,
-                            getString(R.string.alert),
-                            getString(R.string.question_limit_reached)
-                        )
-                        cbSelect.isChecked = false
-                    }
-                } else {
-                    //  Uncheck → clear only selections (not imported ones)
-                    adapter2.clearSelections()
-                }
+        // Listener first
+        val selectAllListener = CompoundButton.OnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                adapter2.getAllNotImported().forEach { adapter2.tempSelect(it.id) }
+            } else {
+                adapter2.getAllNotImported().forEach { adapter2.tempUnselect(it.id) }
             }
-
-
-
         }
 
-        recyclerView.adapter = adapter2
+// Initialize Select All without triggering listener
+        cbSelect.setOnCheckedChangeListener(null)
+        cbSelect.isChecked = adapter2.getUpdatedList().all { it.checked || adapter2.tempSelection[it.id] == true }
+
+// Sync Select All when individual selections change
+        adapter2.onSelectionChanged = { allSelected ->
+            cbSelect.setOnCheckedChangeListener(null)
+            cbSelect.isChecked = allSelected
+            cbSelect.setOnCheckedChangeListener(selectAllListener)
+        }
+
+// Attach listener
+        cbSelect.setOnCheckedChangeListener(selectAllListener)
+
+
+//
+//        cbSelect.setOnCheckedChangeListener(null)
+//
+//// Initialize checkbox based on current selections
+//        cbSelect.isChecked = adapter2.getUpdatedList().all { it.checked || adapter2.tempSelection[it.id] == true }
+//
+//// Listen for individual selection changes
+//        adapter2.onSelectionChanged = { allSelected ->
+//            cbSelect.isChecked = allSelected
+//        }
+//
+//        cbSelect.setOnCheckedChangeListener { _, isChecked ->
+//            if (isChecked) {
+//                // Temporarily select all not-imported items
+//                adapter2.getAllNotImported().forEach { adapter2.tempSelect(it.id) }
+//            } else {
+//                adapter2.clearSelections()
+//            }
+//        }
+
+
 
 //old working
 //        lblImportQuestion.setOnClickListener {
@@ -293,68 +337,160 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 //        }
 
         //new working select all issue
+//        lblImportQuestion.setOnClickListener {
+//            val selectedQuestions = adapter2.getSelected()                       // PickQuestionAdapter -> GetPickFromQBankData
+//            val selectedIds = selectedQuestions.map { it.id }.toSet()
+//
+//            val currentAdded = adapter.getUpdatedList()                         // AddQuestionAdapter -> GetQuizQuestionReportData
+//            val alreadyAddedIds = currentAdded.map { it.id }.toSet()
+//
+//            // QBANK items currently present in AddQuestionAdapter
+//            val qbankAddedIds = currentAdded
+//                .filter { it.sourceType == QuestionSource.QBANK && it.id.isNotEmpty() }
+//                .map { it.id }
+//
+//            // Items user just selected in dialog that are genuinely new to AddQuestionAdapter
+//            val newSelectedQuestions = selectedQuestions.filter { it.id !in alreadyAddedIds }
+//
+//            // QBANK ids that were previously in AddQuestionAdapter but user deselected in the dialog now
+//            val deselectedIds = qbankAddedIds.filter { it !in selectedIds }
+//
+//            // Effective available slots: current limit + slots freed by deselection
+//            val effectiveAvailableSlots = Constant.isQuestionLimit + deselectedIds.size
+//
+//            Log.d("ImportDebug", "selected=${selectedIds.size}, newSelected=${newSelectedQuestions.size}, alreadyAdded=${alreadyAddedIds.size}, deselected=${deselectedIds.size}, effectiveSlots=$effectiveAvailableSlots")
+//
+//            if (effectiveAvailableSlots <= 0) {
+//                Constant.showErrorAlert(
+//                    this,
+//                    getString(R.string.alert),
+//                    getString(R.string.question_limit_reached)
+//                )
+//                return@setOnClickListener
+//            }
+//
+//            if (newSelectedQuestions.size <= effectiveAvailableSlots) {
+//                // convert to AddQuestion model
+//                val quizQuestions = newSelectedQuestions.map {
+//                    it.toQuizQuestionReportData().copy(sourceType = QuestionSource.QBANK)
+//                }
+//
+//                // 1) Remove only the deselected QBANK items (permanently)
+//                if (deselectedIds.isNotEmpty()) {
+//                    adapter.removeItemsByIds(deselectedIds)
+//                }
+//
+//                // 2) Add newly selected QBANK items
+//                if (quizQuestions.isNotEmpty()) {
+//                    adapter.addItems(quizQuestions)
+//                }
+//
+//                // 3) Update remaining limit: available - used
+//                val newRemaining = (effectiveAvailableSlots - newSelectedQuestions.size).coerceAtLeast(0)
+//                Constant.isQuestionLimit = newRemaining
+//
+//                // 4) Sync PickQuestionAdapter:
+//                //    - mark newly imported as imported (sets checked = true in pick adapter)
+//                adapter2.markAsImported(newSelectedQuestions)
+//
+//                //    - ensure the deselected items in pick adapter are unchecked (defensive)
+//                deselectedIds.forEach { id -> adapter2.uncheckItemById(id) }
+//
+//                alertDialog.dismiss()
+//            } else {
+//                // not enough slots; do nothing (no removals), just show error
+//                Constant.showErrorAlert(
+//                    this,
+//                    getString(R.string.alert),
+//                    getString(R.string.question_limit_reached)
+//                )
+//            }
+//        }
+
+//        lblImportQuestion.setOnClickListener {
+//            val selectedQuestions = adapter2.getSelected()
+//            val selectedIds = selectedQuestions.map { it.id }.toSet()
+//
+//            val currentAdded = adapter.getUpdatedList()
+//            val alreadyAddedIds = currentAdded.map { it.id }.toSet()
+//
+//            val qbankAddedIds = currentAdded
+//                .filter { it.sourceType == QuestionSource.QBANK && it.id.isNotEmpty() }
+//                .map { it.id }
+//
+//            val newSelectedQuestions = selectedQuestions.filter { it.id !in alreadyAddedIds }
+//            val deselectedIds = qbankAddedIds.filter { it !in selectedIds }
+//
+//            val effectiveAvailableSlots = Constant.isQuestionLimit + deselectedIds.size
+//
+//            if (effectiveAvailableSlots <= 0) {
+//                Constant.showErrorAlert(this, getString(R.string.alert), getString(R.string.question_limit_reached))
+//                return@setOnClickListener
+//            }
+//
+//            if (newSelectedQuestions.size <= effectiveAvailableSlots) {
+//                val quizQuestions = newSelectedQuestions.map {
+//                    it.toQuizQuestionReportData().copy(sourceType = QuestionSource.QBANK)
+//                }
+//
+//                // Permanently remove deselected items
+//                if (deselectedIds.isNotEmpty()) adapter.removeItemsByIds(deselectedIds)
+//
+//                // Add newly selected
+//                if (quizQuestions.isNotEmpty()) adapter.addItems(quizQuestions)
+//
+//                // Update remaining limit
+//                Constant.isQuestionLimit = (effectiveAvailableSlots - newSelectedQuestions.size).coerceAtLeast(0)
+//
+//                // Sync PickQuestionAdapter
+//                adapter2.markAsImported(newSelectedQuestions)
+//                deselectedIds.forEach { id -> adapter2.uncheckItemById(id) }
+//
+//                alertDialog.dismiss()
+//            } else {
+//                Constant.showErrorAlert(this, getString(R.string.alert), getString(R.string.question_limit_reached))
+//            }
+//        }
         lblImportQuestion.setOnClickListener {
-            val selectedQuestions = adapter2.getSelected()                       // PickQuestionAdapter -> GetPickFromQBankData
+            val selectedQuestions = adapter2.getSelected()
             val selectedIds = selectedQuestions.map { it.id }.toSet()
 
-            val currentAdded = adapter.getUpdatedList()                         // AddQuestionAdapter -> GetQuizQuestionReportData
+            val currentAdded = adapter.getUpdatedList()
             val alreadyAddedIds = currentAdded.map { it.id }.toSet()
 
-            // QBANK items currently present in AddQuestionAdapter
             val qbankAddedIds = currentAdded
                 .filter { it.sourceType == QuestionSource.QBANK && it.id.isNotEmpty() }
                 .map { it.id }
 
-            // Items user just selected in dialog that are genuinely new to AddQuestionAdapter
-            val newSelectedQuestions = selectedQuestions.filter { it.id !in alreadyAddedIds }
-
-            // QBANK ids that were previously in AddQuestionAdapter but user deselected in the dialog now
+            // 1️⃣ Remove deselected items first (always)
             val deselectedIds = qbankAddedIds.filter { it !in selectedIds }
+            Log.d("DeselectedIds",deselectedIds.toString())
+            Log.d("DeselectedIdsSize",deselectedIds.size.toString())
 
-            // Effective available slots: current limit + slots freed by deselection
-            val effectiveAvailableSlots = Constant.isQuestionLimit + deselectedIds.size
+            if (deselectedIds.isNotEmpty()) {
+                adapter.removeItemsByIds(deselectedIds)
+                deselectedIds.forEach { id -> adapter2.uncheckItemById(id) }
+                Constant.isQuestionLimit += deselectedIds.size
+            }
 
-            Log.d("ImportDebug", "selected=${selectedIds.size}, newSelected=${newSelectedQuestions.size}, alreadyAdded=${alreadyAddedIds.size}, deselected=${deselectedIds.size}, effectiveSlots=$effectiveAvailableSlots")
-
-            if (effectiveAvailableSlots <= 0) {
-                Constant.showErrorAlert(
-                    this,
-                    getString(R.string.alert),
-                    getString(R.string.question_limit_reached)
-                )
+            // 2️⃣ Newly selected questions
+            val newSelectedQuestions = selectedQuestions.filter { it.id !in alreadyAddedIds }
+            if (newSelectedQuestions.isEmpty()) {
+                alertDialog.dismiss()
                 return@setOnClickListener
             }
 
-            if (newSelectedQuestions.size <= effectiveAvailableSlots) {
-                // convert to AddQuestion model
+            // 3️⃣ Limit check
+            if (newSelectedQuestions.size <= Constant.isQuestionLimit) {
                 val quizQuestions = newSelectedQuestions.map {
                     it.toQuizQuestionReportData().copy(sourceType = QuestionSource.QBANK)
                 }
 
-                // 1) Remove only the deselected QBANK items (permanently)
-                if (deselectedIds.isNotEmpty()) {
-                    adapter.removeItemsByIds(deselectedIds)
-                }
-
-                // 2) Add newly selected QBANK items
-                if (quizQuestions.isNotEmpty()) {
-                    adapter.addItems(quizQuestions)
-                }
-
-                // 3) Update remaining limit: available - used
-                val newRemaining = (effectiveAvailableSlots - newSelectedQuestions.size).coerceAtLeast(0)
-                Constant.isQuestionLimit = newRemaining
-
-                // 4) Sync PickQuestionAdapter:
-                //    - mark newly imported as imported (sets checked = true in pick adapter)
+                adapter.addItems(quizQuestions)
+                Constant.isQuestionLimit -= newSelectedQuestions.size
                 adapter2.markAsImported(newSelectedQuestions)
-
-                //    - ensure the deselected items in pick adapter are unchecked (defensive)
-                deselectedIds.forEach { id -> adapter2.uncheckItemById(id) }
-
                 alertDialog.dismiss()
             } else {
-                // not enough slots; do nothing (no removals), just show error
                 Constant.showErrorAlert(
                     this,
                     getString(R.string.alert),
@@ -362,8 +498,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 )
             }
         }
-
-
 
 
 

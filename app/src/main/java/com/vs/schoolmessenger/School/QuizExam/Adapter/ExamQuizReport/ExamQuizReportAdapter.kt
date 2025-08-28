@@ -95,7 +95,7 @@ class ExamQuizReportAdapter(
                 val intent = Intent(context, AddQuestion::class.java)
                 intent.putExtra("quiz_Id", data.id)
                 intent.putExtra("quiz_Title", data.title)
-                intent.putExtra("limitQuestion", data.no_of_questions)
+                intent.putExtra("limitQuestion", 5)
                 intent.putExtra("subjectID", data.subject_id)
                 context.startActivity(intent)
             }
