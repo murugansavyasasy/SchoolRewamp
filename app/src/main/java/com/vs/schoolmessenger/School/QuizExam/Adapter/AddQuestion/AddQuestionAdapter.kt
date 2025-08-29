@@ -80,14 +80,14 @@ class AddQuestionAdapter(
             GetQuizQuestionReportData(
                 id = "",
                 quiz_id = "",
-                question = "11",
-                chapter = "11",
-                answer = "11",
-                a_option = "11",
-                b_option = "11",
-                c_option = "11",
-                d_option = "11",
-                mark = 1,
+                question = "",
+                chapter = "",
+                answer = "",
+                a_option = "",
+                b_option = "",
+                c_option = "",
+                d_option = "",
+                mark = 0,
                 option_a_counts = 0,
                 option_b_counts = 0,
                 option_c_counts = 0,
@@ -102,6 +102,7 @@ class AddQuestionAdapter(
                 file_path = emptyList()
             )
         )
+        Constant.isQuestionLimit -= 1
         notifyItemInserted(itemList!!.size - 1)
     }
 

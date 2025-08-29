@@ -112,10 +112,6 @@ class PickQuestionAdapter(
     }
 
 
-//    fun notifySelectionChanged() {
-//        val allSelected = itemList!!.all { it.checked || tempSelection[it.id] == true }
-//        onSelectionChanged?.invoke(allSelected)
-//    }
 
     fun getSelected(): List<GetPickFromQBankData> {
         return itemList!!.filter { tempSelection[it.id] ?: it.checked }

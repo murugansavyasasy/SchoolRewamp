@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.AddQuestionAdapter
@@ -109,6 +110,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     savedQuizQuestionReportList = response.data
                     editableQuizQuestionReportList = savedQuizQuestionReportList.map {it.copy(sourceType = QuestionSource.API)
                     }.toMutableList()
+                    Constant.isQuestionLimit-=savedQuizQuestionReportList.size
                     isLoadQuizQuestionReport()
                 }
             } else {
@@ -116,6 +118,28 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     this,
                     getString(R.string.fail),
                     getString(R.string.Something_went_wrong_Please_try_again)
+                )
+            }
+        }
+
+            appViewModel!!.isAddQuestion?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@AddQuestion)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success), response.message, this
+                    )
+                } else {
+                    Constant.hideLoading(this@AddQuestion)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+            else {
+                Constant.hideLoading(this@AddQuestion)
+                Constant.showDataValidation(
+                    resources.getString(R.string.fail),getString(R.string.Something_went_wrong_Please_try_again), this
                 )
             }
         }
@@ -172,7 +196,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 Log.d("FinalListSize", adapter.getUpdatedList().size.toString())
                 if (Constant.isQuestionLimit > 0) {
                     adapter.addItem()
-                    Constant.isQuestionLimit -= 1
+//                    Constant.isQuestionLimit -= 1
                 }
                 else {
                     Constant.showErrorAlert(
@@ -384,7 +408,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         )
     }
 
-    fun isAddQuestionSubmit(){
+    fun isAddQuestionSubmit() {
         val allQuestions = adapter.getUpdatedList()
 
         val apiUserQuestions = allQuestions
@@ -400,10 +424,27 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     d_option = it.d_option,
                     answer = it.answer,
                     mark = it.mark,
-                    iframe = it.iframe,
-                    file_size = it.file_size,
-                    thumbnail = it.thumbnail,
-                    file_path = it.file_path
+                    iframe = it.iframe?:"",
+                    file_size ="4"?:"",
+                    thumbnail = it.thumbnail?:"",
+                    file_path = listOf(
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782816.jpg",
+                            type = "IMAGE"
+                        ),
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782401.jpg",
+                            type = "IMAGE"
+                        ),
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_150kB.pdf",
+                            type = "PDF"
+                        ),
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_100kB.docx",
+                            type = "WORD"
+                        )
+                    )
                 )
             }
 
@@ -419,7 +460,28 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     c_option = it.c_option,
                     d_option = it.d_option,
                     answer = it.answer,
-                    mark = it.mark
+                    mark = it.mark ,
+                    iframe = it.iframe?:"",
+                    file_size = "4",
+                    thumbnail = it.thumbnail?:"",
+                    file_path = listOf(
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782816.jpg",
+                            type = "IMAGE"
+                        ),
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_150kB.pdf",
+                            type = "PDF"
+                        ),
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782401.jpg",
+                            type = "IMAGE"
+                        ),
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_100kB.docx",
+                            type = "WORD"
+                        )
+                    )
                 )
             }
 
@@ -427,17 +489,22 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
         val body = QuizRequestBody(
             quiz_id = isQuizID,
-            questions = apiUserQuestions,        // only API + USER
-            max_mark = totalMaxMark,             // all three types included
+            questions = apiUserQuestions,
+            max_mark = totalMaxMark,
             ok_flag = isOkFlag,
             update_question_bank = updateQBankList
         )
 
-        val json = Gson().toJson(body)
-        Log.d("FinalJSON", json)
+        // ✅ Convert to JsonObject instead of String
+        val jsonObject = Gson().toJsonTree(body).asJsonObject
+        Log.d("FinalJSON", jsonObject.toString())
+
         Constant.hideLoading(this)
 
+        // pass token + JsonObject
+        appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
     }
+
 
     fun isCallAddQuestion() {
 
