@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQ
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+
 class AddQuestionAdapter(
     private var itemList: MutableList<GetQuizQuestionReportData>?,
     private var context: Context,
@@ -21,7 +22,6 @@ class AddQuestionAdapter(
     var onQBankItemRemoved: ((String) -> Unit)? = null
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
 
 
     private val TYPE_SHIMMER = 0
@@ -42,8 +42,6 @@ class AddQuestionAdapter(
             DataViewHolder(view)
         }
     }
-
-
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
@@ -70,7 +68,6 @@ class AddQuestionAdapter(
     }
 
 
-
     fun addItems(newItems: List<GetQuizQuestionReportData>) {
         val startPosition = itemList!!.size
         itemList!!.addAll(newItems)
@@ -78,21 +75,19 @@ class AddQuestionAdapter(
     }
 
 
-
-
     fun addItem() {
         itemList!!.add(
             GetQuizQuestionReportData(
                 id = "",
                 quiz_id = "",
-                question = "",
-                chapter = "",
-                answer = "",
-                a_option = "",
-                b_option = "",
-                c_option = "",
-                d_option = "",
-                mark = 0,
+                question = "11",
+                chapter = "11",
+                answer = "11",
+                a_option = "11",
+                b_option = "11",
+                c_option = "11",
+                d_option = "11",
+                mark = 1,
                 option_a_counts = 0,
                 option_b_counts = 0,
                 option_c_counts = 0,
@@ -100,12 +95,15 @@ class AddQuestionAdapter(
                 correct_answer_counts = 0,
                 incorrect_answer_counts = 0,
                 correct_answer = "",
-                sourceType = QuestionSource.USER
+                iframe="",
+                file_size="",
+                thumbnail="",
+                sourceType = QuestionSource.USER,
+                file_path = emptyList()
             )
         )
         notifyItemInserted(itemList!!.size - 1)
     }
-
 
 
     fun removeItem(position: Int) {
@@ -116,11 +114,8 @@ class AddQuestionAdapter(
             if (removed.sourceType == QuestionSource.QBANK && removed.id.isNotEmpty()) {
                 onQBankItemRemoved?.invoke(removed.id)
                 Constant.isQuestionLimit += 1
-                itemList!!.removeAt(position)
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, itemList!!.size)
-                return
             }
+
             itemList!!.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemList!!.size)
@@ -171,11 +166,16 @@ class AddQuestionAdapter(
                 if (isAllValid) holder.edtCorrectAns.requestFocus()
                 isAllValid = false
             }
-            if (item.mark==0 ||item.mark==null) {
+            if (item.mark == null) {
                 holder.edtMark.error = "This is required!"
                 if (isAllValid) holder.edtMark.requestFocus()
                 isAllValid = false
+            } else if (item.mark <= 0) {
+                holder.edtMark.error = "Mark should be greater than zero!"
+                if (isAllValid) holder.edtMark.requestFocus()
+                isAllValid = false
             }
+
         }
 
         return isAllValid
@@ -186,32 +186,6 @@ class AddQuestionAdapter(
         itemList!!.addAll(newList)
         notifyDataSetChanged()
     }
-
-
-fun updateItems(newQBankItems: List<GetQuizQuestionReportData>) {
-    // 1. User-created (id == "" && sourceType == USER)
-    // 2. API questions that are still in API response
-    // 3. Replace/update QBank questions
-
-    val userItems = itemList!!.filter { it.sourceType == QuestionSource.USER }
-    val apiItems = itemList!!.filter { it.sourceType == QuestionSource.API && it.id.isNotEmpty() }
-    val qbankItems = newQBankItems.map { it.copy(sourceType = QuestionSource.QBANK) }
-
-    // Filter API items → keep only still present
-    val newApiIds = apiItems.mapNotNull { it.id }.toHashSet()
-    val filteredApi = apiItems.filter { it.id in newApiIds }
-
-    itemList = mutableListOf<GetQuizQuestionReportData>().apply {
-        addAll(userItems)
-        addAll(filteredApi)
-        addAll(qbankItems)
-    }
-
-    notifyDataSetChanged()
-}
-
-
-
 
 
     fun getUpdatedList(): List<GetQuizQuestionReportData> = itemList!!
@@ -294,3 +268,5 @@ fun updateItems(newQBankItems: List<GetQuizQuestionReportData>) {
         }
     }
 }
+
+
