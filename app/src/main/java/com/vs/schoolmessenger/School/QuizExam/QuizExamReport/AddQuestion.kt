@@ -495,14 +495,12 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             update_question_bank = updateQBankList
         )
 
-        // ✅ Convert to JsonObject instead of String
         val jsonObject = Gson().toJsonTree(body).asJsonObject
         Log.d("FinalJSON", jsonObject.toString())
 
         Constant.hideLoading(this)
 
-        // pass token + JsonObject
-//        appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+        appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
     }
 
 
