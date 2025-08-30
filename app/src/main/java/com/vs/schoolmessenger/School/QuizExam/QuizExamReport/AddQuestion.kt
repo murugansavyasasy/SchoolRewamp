@@ -502,7 +502,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         Constant.hideLoading(this)
 
         // pass token + JsonObject
-        appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+//        appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
     }
 
 
