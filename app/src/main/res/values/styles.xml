@@ -88,11 +88,6 @@
         <item name="cornerSizeBottomRight">10dp</item>
     </style>
 
-
-
-
-
-
     <style name="CustomTextStylePoppinsMedium1" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/inter_medium</item>
         <item name="android:textSize">@dimen/thirteen_sp</item>

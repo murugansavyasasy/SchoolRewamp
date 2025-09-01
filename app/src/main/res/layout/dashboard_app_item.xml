@@ -4,14 +4,13 @@
     android:id="@+id/header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/eight"
     android:layout_marginStart="@dimen/five"
     android:layout_marginTop="@dimen/ten"
     android:layout_marginEnd="@dimen/five"
-    android:layout_margin="@dimen/eight"
-    android:backgroundTint="@color/white"
-    android:elevation="@dimen/fifteen"
-    app:cardElevation="@dimen/fifteen"
-    app:cardCornerRadius="@dimen/five">
+    app:cardCornerRadius="@dimen/six"
+    app:cardElevation="1dp"
+    app:cardUseCompatPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,10 +21,10 @@
         <View
             android:id="@+id/imgReadCount"
             android:layout_width="@dimen/ten"
-            android:visibility="gone"
+            android:layout_height="@dimen/ten"
             android:layout_gravity="end"
             android:background="@drawable/bg_red_circle"
-            android:layout_height="@dimen/ten">
+            android:visibility="gone">
 
         </View>
 
@@ -46,26 +45,26 @@
 
             <TextView
                 android:id="@+id/itemTitle"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="2"
                 android:ellipsize="end"
+                android:maxLines="2"
                 android:text="Your Feed"
-                android:textColor="@color/dark_blue_1"
-                android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsBold"/>
+                android:textColor="@color/dark_blue_color"
+                android:textSize="@dimen/thirteen_sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/itemDescription"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textColor="@color/mild_grey6"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            style="@style/CustomTextStylePoppinsMedium"
+            android:textColor="@color/mild_grey7"
             android:textSize="@dimen/thirteen_sp" />
 
     </LinearLayout>

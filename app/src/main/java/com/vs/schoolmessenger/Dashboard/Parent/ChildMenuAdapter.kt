@@ -249,6 +249,7 @@ class ChildMenuAdapter(
                 Constant.M_QUIZ_EXAM -> {
                     imgMenu.setImageResource(R.drawable.quiz_icon)
                 }
+
             }
 
             rlaMenu.setOnClickListener {

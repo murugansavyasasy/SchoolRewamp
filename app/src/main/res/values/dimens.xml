@@ -70,6 +70,7 @@
     <dimen name="eighty_five">85dp</dimen>
     <dimen name="ninety">90dp</dimen>
     <dimen name="hundred">100dp</dimen>
+    <dimen name="hundred_ten">110dp</dimen>
     <dimen name="one_ten">110dp</dimen>
     <dimen name="one_twenty">120dp</dimen>
     <dimen name="one_twenty_five">125dp</dimen>

@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/bpWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <RelativeLayout
         android:id="@+id/headerLayout"
@@ -85,8 +85,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/autoScrollRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/hundred"
+        android:layout_height="@dimen/hundred_ten"
         android:layout_below="@id/headerLayout"
+        android:background="@color/bpWhite"
         android:layout_marginTop="@dimen/five"
         android:orientation="horizontal"
         tools:listitem="@layout/resent_using_app_item" />

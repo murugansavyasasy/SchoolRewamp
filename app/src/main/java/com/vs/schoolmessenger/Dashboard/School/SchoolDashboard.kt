@@ -141,8 +141,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         }
 
 
-
-
         accessChildView(
             binding,
             R.id.nav_home,
