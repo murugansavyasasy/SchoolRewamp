@@ -96,6 +96,7 @@ class QuizUpcomingAdapter(
             // Open QuizExam on click
             val openExam = View.OnClickListener {
                 val intent = Intent(context, QuizExam::class.java)
+                intent.putExtra("isRSQuizId", data.quiz_id)
                 context.startActivity(intent)
             }
             rlaAttendance.setOnClickListener(openExam)

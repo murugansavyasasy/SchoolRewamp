@@ -741,6 +741,21 @@
     <string name="fee_details">Fee Details</string>
     <string name="certificate_request">Certificate Request</string>
     <string name="level">Level</string>
+    <string name="this_question_has_already_been_submitted_by">This question has already been submitted by</string>
+    <string name="do_you_want_to_update_it">.Do you want to update it?</string>
+    <string name="students">students</string>
+    <string name="student_">student</string>
+    <string name="questions">questions</string>
+    <string name="question_">question</string>
+    <string name="are_you_sure_want_to_send_the_quiz">Are you sure want to send the quiz?</string>
+    <string name="almost_there_You_ve_entered">Almost there! You’ve entered</string>
+    <string name="just">Just</string>
+    <string name="more_to_complete_the_quiz_but_don_t_worry_you_can_add_them_later"> more to complete the quiz but don’t worry, you can add them later.</string>
+    <string name="no_of_question_greater_than_zero">No of questions should be greater than zero</string>
+
+
+
+
 
 
 </resources>

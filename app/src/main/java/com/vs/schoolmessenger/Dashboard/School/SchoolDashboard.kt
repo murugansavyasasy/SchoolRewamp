@@ -150,7 +150,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             R.id.icon_home,
             R.id.icon_help,
             R.id.icon_settings,
-            R.id.icon_profile,a
+            R.id.icon_profile,
             R.id.fragment_container,
             R.id.customBottomNav
         )
