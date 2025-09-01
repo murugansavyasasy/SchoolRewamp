@@ -174,6 +174,10 @@ object APIMethods {
     const val isAddQuestion= "lms/api/quiz/add-question"
 
 
+    const val isGetMessageFromStaff= "comm/api/msg-from-management/get-messages-staff"
+    const val isGetMessageFromStaffAchieve= "comm/api/msg-from-management/get-messages-staff-archive"
+
+
 
 
 

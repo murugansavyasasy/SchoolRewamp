@@ -66,6 +66,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaff
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
@@ -195,6 +196,8 @@ class SchoolServices {
     var isGetQuizSubmissionList: MutableLiveData<GetQuizSubmissionList?>
     var isGetPickFromQBank: MutableLiveData<GetPickFromQBank?>
     var isAddQuestion: MutableLiveData<AddQuestionResponse?>
+    var isGetMessageFromStaff: MutableLiveData<GetMessagesStaff?>
+    var isGetMessageFromStaffAchieve: MutableLiveData<GetMessagesStaff?>
 
 
     init {
@@ -295,6 +298,8 @@ class SchoolServices {
         isGetQuizSubmissionList= MutableLiveData()
         isGetPickFromQBank= MutableLiveData()
         isAddQuestion= MutableLiveData()
+        isGetMessageFromStaff= MutableLiveData()
+        isGetMessageFromStaffAchieve= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -3760,5 +3765,84 @@ class SchoolServices {
 
     val isAddQuestionLiveData: LiveData<AddQuestionResponse?>
         get() = isAddQuestion
+
+
+    fun isGetMessageFromStaff(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isGetMessageFromStaff(isToken)
+            ?.enqueue(object : Callback<GetMessagesStaff?> {
+                override fun onResponse(
+                    call: Call<GetMessagesStaff?>, response: Response<GetMessagesStaff?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isGetMessageFromStaff.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isGetMessageFromStaff.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetMessagesStaff?>, t: Throwable
+                ) {
+                    isGetMessageFromStaff.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetMessageStaffLiveData: LiveData<GetMessagesStaff?>
+        get() = isGetMessageFromStaff
+
+
+
+    fun isGetMessageStaffAchieve(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isGetMessageFromStaffAchieve(isToken)
+            ?.enqueue(object : Callback<GetMessagesStaff?> {
+                override fun onResponse(
+                    call: Call<GetMessagesStaff?>, response: Response<GetMessagesStaff?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isGetMessageFromStaffAchieve.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isGetMessageFromStaffAchieve.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetMessagesStaff?>, t: Throwable
+                ) {
+                    isGetMessageFromStaffAchieve.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetMessageStaffAchieveLiveData: LiveData<GetMessagesStaff?>
+        get() = isGetMessageFromStaffAchieve
 
 }

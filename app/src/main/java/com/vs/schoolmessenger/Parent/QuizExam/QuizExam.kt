@@ -62,7 +62,7 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         appViewModel?.isGetQuestion?.observe(this) { response ->
 
             if(response != null){
-                if (response.status == true) {
+                if (response.status) {
                     Constant.hideLoading(this)
                     isAllQuestionData=response.data
                     isQuestionList=isAllQuestionData.get(0).question_details
@@ -74,6 +74,7 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
                 }
                 else{
+                    Constant.hideLoading(this)
                     binding.lnrQuiz.visibility=View.GONE
                     binding.quizStatus.visibility=View.GONE
                     binding.lytList.visibility=View.VISIBLE
@@ -81,6 +82,7 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                 }
             }
             else{
+                Constant.hideLoading(this)
                 binding.lnrQuiz.visibility=View.GONE
                 binding.quizStatus.visibility=View.GONE
                 binding.lytList.visibility=View.VISIBLE
@@ -175,7 +177,7 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
         resetOptionColors()
 
-        // ✅ Restore previously selected answer from Map
+        //  Restore previously selected answer from Map
         val selectedIndex = selectedAnswersMap[currentQuestion.id]
         if (selectedIndex != null) {
             optionsArray[selectedIndex].apply {
@@ -189,8 +191,16 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
         updateProgressBar()
         binding.prevButton.isEnabled = currentQuestionIndex > 0
-        binding.nextButton.text =
+        binding.nextButton1.text =
             if (currentQuestionIndex == questionList.size - 1) "Submit" else "Next"
+
+        if(currentQuestionIndex==0){
+            binding.prevButton.visibility=View.GONE
+        }
+        else{
+            binding.prevButton.visibility=View.VISIBLE
+
+        }
     }
 
 
@@ -212,7 +222,7 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
     private fun buildAnswerJson(): JsonObject {
         val json = JsonObject()
-        json.addProperty("id", "1285") // quiz id or paper id
+        json.addProperty("id", isQuizID) // quiz id or paper id
 
         val answersObj = JsonObject()
         selectedAnswersMap.forEach { (questionId, selectedIndex) ->
@@ -237,7 +247,7 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         val answeredCount = selectedAnswersMap.size
         val progress = (answeredCount.toFloat() / questionList.size * 100).toInt()
         binding.progressBar.progress = progress
-        binding.questionCounter.text = "$answeredCount/${questionList.size}"
+        binding.questionCounter.text = "Question $answeredCount/${questionList.size}"
     }
 
 

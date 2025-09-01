@@ -106,6 +106,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaff
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
@@ -1018,5 +1019,14 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject,
     ): Call<AddQuestionResponse?>?
 
+    @GET(APIMethods.isGetMessageFromStaff)
+    fun isGetMessageFromStaff(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<GetMessagesStaff?>?
+
+    @GET(APIMethods.isGetMessageFromStaffAchieve)
+    fun isGetMessageFromStaffAchieve(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<GetMessagesStaff?>?
 
 }
