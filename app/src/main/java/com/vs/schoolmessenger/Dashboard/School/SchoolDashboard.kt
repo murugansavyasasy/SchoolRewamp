@@ -141,8 +141,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         }
 
 
-
-
         accessChildView(
             binding,
             R.id.nav_home,
@@ -152,7 +150,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             R.id.icon_home,
             R.id.icon_help,
             R.id.icon_settings,
-            R.id.icon_profile,
+            R.id.icon_profile,a
             R.id.fragment_container,
             R.id.customBottomNav
         )

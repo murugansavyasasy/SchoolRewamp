@@ -4,7 +4,7 @@
     android:layout_height="@dimen/ninety"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="@dimen/fifteen"
-    app:cardElevation="@dimen/fifteen"
+    app:cardCornerRadius="@dimen/six"
     android:layout_margin="@dimen/eight">
 
     <RelativeLayout
