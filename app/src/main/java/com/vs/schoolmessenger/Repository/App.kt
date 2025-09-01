@@ -96,6 +96,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaff
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
@@ -355,6 +356,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetQuizSubmissionList: LiveData<GetQuizSubmissionList?>? = null
     var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
     var isAddQuestion: LiveData<AddQuestionResponse?>? = null
+    var isGetMessageStaff: LiveData<GetMessagesStaff?>? = null
+    var isGetMessageStaffAchieve: LiveData<GetMessagesStaff?>? = null
 
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
@@ -500,6 +503,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetQuizSubmissionList = apiSchoolRepositories.isGetQuizSubmissionListLiveData
         isGetPickFromQBank = apiSchoolRepositories.isGetPickFromQBankLiveData
         isAddQuestion = apiSchoolRepositories.isAddQuestionLiveData
+        isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
+        isGetMessageStaffAchieve = apiSchoolRepositories.isGetMessageStaffAchieveLiveData
 
 
     }
@@ -1262,6 +1267,22 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiSchoolRepositories.isQuizAddQuestion(
             isToken, jsonObject,
+        )
+    }
+
+    fun isGetMessageStaff(
+        isToken: String
+    ) {
+        apiSchoolRepositories.isGetMessageFromStaff(
+            isToken
+        )
+    }
+
+    fun isGetMessageStaffAchieve(
+        isToken: String
+    ) {
+        apiSchoolRepositories.isGetMessageStaffAchieve(
+            isToken
         )
     }
 
