@@ -10,45 +10,25 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
+
     <ScrollView
         android:layout_below="@+id/toolbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <RelativeLayout
             android:id="@+id/rlaMessageFFromStaff"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="@dimen/five"
+            android:paddingBottom="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/five">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcMessageStaff"
+                android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                >
-            </androidx.recyclerview.widget.RecyclerView>
-            <TextView
-                android:layout_below="@+id/rcMessageStaff"
-                android:id="@+id/lblSeeMore"
-                android:text="@string/see_more"
-                android:layout_marginTop="@dimen/ten"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textColor="@color/iconBlue"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TextView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_below="@+id/lblSeeMore"
-                android:id="@+id/rcMessageStaffAchieve"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/five"
                 >
             </androidx.recyclerview.widget.RecyclerView>

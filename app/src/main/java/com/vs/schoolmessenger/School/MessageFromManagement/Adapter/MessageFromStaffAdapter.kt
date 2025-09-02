@@ -1,27 +1,26 @@
 package com.vs.schoolmessenger.School.MessageFromManagement.Adapter
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaff
+import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
-import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
+import com.vs.schoolmessenger.School.MessageFromManagement.MsgStaffListener
 import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class MessageFromStaffAdapter(
     private var itemList: List<GetMessagesStaffData>?,
+    private val listener: MsgStaffListener,
     private var context: Context,
     private var isLoading: Boolean
 
@@ -78,41 +77,69 @@ class MessageFromStaffAdapter(
             lblRole.text = "Teacher"
             lblTimeDate.text = Constant.isFormatDate(data.date.toString())+" "+data.time
 
+            lblDescription.apply {
+                isSingleLine = true
+                ellipsize = TextUtils.TruncateAt.END
+                maxLines = 1
+            }
+
+            if (data.is_unread){
+                lblView.apply {
+                    setCompoundDrawablesWithIntrinsicBounds(R.drawable.eye_closed, 0, 0, 0)
+                    compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.PrimaryColor)
+                }
+            }
+            else{
+                lblView.apply {
+                    setCompoundDrawablesWithIntrinsicBounds(R.drawable.eye_icon, 0, 0, 0)
+                    compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.PrimaryColor)
+                }
+            }
+
             when (data.type) {
                 Constant.TEXT -> {
                     lblType.apply {
                         text = context.getString(R.string.text)
                         setCompoundDrawablesWithIntrinsicBounds(R.drawable.text_msg_icon, 0, 0, 0)
                         compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.PrimaryColor)
+                        lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.light_bg_blue)
+                        setTextColor(ContextCompat.getColor(context, R.color.PrimaryColor))
                     }
+                    lblDescription.text=data.content
                 }
 
                 Constant.VOICE -> {
                     lblType.apply {
                         text = context.getString(R.string.voice)
                         setCompoundDrawablesWithIntrinsicBounds(R.drawable.voice_icon_2, 0, 0, 0)
-                        compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.green)
+                        compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.dark_bg_orange_2)
+                        lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.pale_light_yellow)
+                        setTextColor(ContextCompat.getColor(context, R.color.dark_bg_voilet))
+
                     }
+                    lblDescription.text=data.description
                 }
 
                 Constant.ATTACHMENT_ -> {
                     lblType.apply {
                         text = context.getString(R.string.attachment)
                         setCompoundDrawablesWithIntrinsicBounds(R.drawable.attachment_icon_2, 0, 0, 0)
-                        compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.red)
+                        compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.dark_bg_orange_4)
+                        lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.pale_light_orange)
+                        setTextColor(ContextCompat.getColor(context, R.color.pale_light_brown))
                     }
+                    lblDescription.text=data.description
                 }
             }
 
 
 
             rlaHeader.setOnClickListener{
-                    val intent = Intent(context, AddQuestion::class.java)
-                    intent.putExtra("quiz_Id", data.id)
-                    intent.putExtra("quiz_Title", data.title)
-                    context.startActivity(intent)
+                listener.onStaffClick(data)
             }
-
+            lblView.setOnClickListener{
+                listener.onStaffClick(data)
+            }
         }
     }
 

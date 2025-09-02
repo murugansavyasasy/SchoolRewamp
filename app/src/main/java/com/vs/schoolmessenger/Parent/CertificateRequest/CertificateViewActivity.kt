@@ -12,8 +12,6 @@ import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -32,6 +30,9 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import android.webkit.WebView
+import android.webkit.WebViewClient
+
 
 
 class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),

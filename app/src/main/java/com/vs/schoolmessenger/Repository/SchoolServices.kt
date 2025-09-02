@@ -197,7 +197,6 @@ class SchoolServices {
     var isGetPickFromQBank: MutableLiveData<GetPickFromQBank?>
     var isAddQuestion: MutableLiveData<AddQuestionResponse?>
     var isGetMessageFromStaff: MutableLiveData<GetMessagesStaff?>
-    var isGetMessageFromStaffAchieve: MutableLiveData<GetMessagesStaff?>
 
 
     init {
@@ -299,7 +298,6 @@ class SchoolServices {
         isGetPickFromQBank= MutableLiveData()
         isAddQuestion= MutableLiveData()
         isGetMessageFromStaff= MutableLiveData()
-        isGetMessageFromStaffAchieve= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -3807,42 +3805,5 @@ class SchoolServices {
 
 
 
-    fun isGetMessageStaffAchieve(
-        isToken: String
-    ) {
-        RestClient.apiInterfaces.isGetMessageFromStaffAchieve(isToken)
-            ?.enqueue(object : Callback<GetMessagesStaff?> {
-                override fun onResponse(
-                    call: Call<GetMessagesStaff?>, response: Response<GetMessagesStaff?>
-                ) {
-                    Log.d(
-                        "GetMessagesStaff Response",
-                        response.code().toString() + " - " + response.toString()
-                    )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isGetMessageFromStaffAchieve.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isGetMessageFromStaffAchieve.postValue(response.body())
-                            }
-                        }
-                    }
-                }
-
-                override fun onFailure(
-                    call: Call<GetMessagesStaff?>, t: Throwable
-                ) {
-                    isGetMessageFromStaffAchieve.postValue(null)
-                    t.printStackTrace()
-                }
-            })
-    }
-
-    val isGetMessageStaffAchieveLiveData: LiveData<GetMessagesStaff?>
-        get() = isGetMessageFromStaffAchieve
 
 }

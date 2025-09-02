@@ -357,7 +357,6 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
     var isAddQuestion: LiveData<AddQuestionResponse?>? = null
     var isGetMessageStaff: LiveData<GetMessagesStaff?>? = null
-    var isGetMessageStaffAchieve: LiveData<GetMessagesStaff?>? = null
 
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
@@ -504,7 +503,6 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetPickFromQBank = apiSchoolRepositories.isGetPickFromQBankLiveData
         isAddQuestion = apiSchoolRepositories.isAddQuestionLiveData
         isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
-        isGetMessageStaffAchieve = apiSchoolRepositories.isGetMessageStaffAchieveLiveData
 
 
     }
@@ -1278,13 +1276,6 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
 
-    fun isGetMessageStaffAchieve(
-        isToken: String
-    ) {
-        apiSchoolRepositories.isGetMessageStaffAchieve(
-            isToken
-        )
-    }
 
 }
 
