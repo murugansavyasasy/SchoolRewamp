@@ -71,7 +71,7 @@ class MessageFromStaffAdapter(
 
         fun bind(data: GetMessagesStaffData, position: Int) {
             lblTitle.text = data.title
-            var name="Dr M Santhosh Kumar"
+            var name=data.sent_by!!
             lblLogo.text = Constant.getNameInitials(name)
             lblName.text = name
             lblRole.text = "Teacher"
@@ -98,6 +98,7 @@ class MessageFromStaffAdapter(
 
             when (data.type) {
                 Constant.TEXT -> {
+                    lblDescription.visibility=View.VISIBLE
                     lblType.apply {
                         text = context.getString(R.string.text)
                         setCompoundDrawablesWithIntrinsicBounds(R.drawable.text_msg_icon, 0, 0, 0)
@@ -109,18 +110,33 @@ class MessageFromStaffAdapter(
                 }
 
                 Constant.VOICE -> {
-                    lblType.apply {
-                        text = context.getString(R.string.voice)
-                        setCompoundDrawablesWithIntrinsicBounds(R.drawable.voice_icon_2, 0, 0, 0)
-                        compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.dark_bg_orange_2)
-                        lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.pale_light_yellow)
-                        setTextColor(ContextCompat.getColor(context, R.color.dark_bg_voilet))
 
+                    if (data.is_emergency){
+                        lblType.apply {
+                            text = context.getString(R.string.voice)
+                            setCompoundDrawablesWithIntrinsicBounds(R.drawable.voice_icon_2, 0, 0, 0)
+                            compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.white)
+                            lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red)
+                            setTextColor(ContextCompat.getColor(context, R.color.white))
+
+                        }
                     }
-                    lblDescription.text=data.description
+                    else{
+                        lblType.apply {
+                            text = context.getString(R.string.voice)
+                            setCompoundDrawablesWithIntrinsicBounds(R.drawable.voice_icon_2, 0, 0, 0)
+                            compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.dark_bg_orange_2)
+                            lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.pale_light_yellow)
+                            setTextColor(ContextCompat.getColor(context, R.color.dark_bg_voilet))
+                        }
+                    }
+
+                    lblDescription.visibility=View.GONE
                 }
 
                 Constant.ATTACHMENT_ -> {
+                    lblDescription.visibility=View.VISIBLE
+
                     lblType.apply {
                         text = context.getString(R.string.attachment)
                         setCompoundDrawablesWithIntrinsicBounds(R.drawable.attachment_icon_2, 0, 0, 0)

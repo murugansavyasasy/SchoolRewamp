@@ -16,8 +16,10 @@ data class GetMessagesStaffData (
     val thumbnail: String?,
     val date: String?,
     val time: String?,
+    val sent_by: String?,
     val sender_info: String?,
     val is_unread: Boolean,
+    val is_emergency: Boolean,
     val duration: Int?,
     val is_archive: Boolean
 )

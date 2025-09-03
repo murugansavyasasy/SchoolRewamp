@@ -752,10 +752,7 @@
     <string name="just">Just</string>
     <string name="more_to_complete_the_quiz_but_don_t_worry_you_can_add_them_later"> more to complete the quiz but don’t worry, you can add them later.</string>
     <string name="no_of_question_greater_than_zero">No of questions should be greater than zero</string>
-
-
-
-
+    <string name="emergency_voice">Emergency voice</string>
 
 
 </resources>

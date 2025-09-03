@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_below="@+id/imgBack"
                 android:id="@+id/rcAttachement"
-                android:layout_margin="@dimen/eight"
+                android:layout_margin="@dimen/ten"
                 android:layout_height="@dimen/two_hundred">
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -42,6 +42,8 @@
             android:visibility="gone" />
 
         <RelativeLayout
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
             android:layout_below="@+id/indicator"
             android:layout_width="match_parent"
             android:id="@+id/rlaAudioDetails"
@@ -54,110 +56,109 @@
                 android:layout_height="@dimen/one_fifty">
             </ImageView>
             <LinearLayout
+                android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/voiceImg"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:layout_alignParentEnd="true"
                 android:layout_height="wrap_content">
                 <TextView
-                    style="@style/CustomTextStylePoppinsBold"
+                    android:id="@+id/tvAudioTittle"
+                    android:text="This is Sample Audio Ignore this"
+                    android:maxLines="1"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="@dimen/fifteen_sp"
                     android:layout_width="match_parent"
-                    android:text="Audio"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    android:id="@+id/lblEmergency"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:text="@string/voice"
                     android:textSize="@dimen/sixteen_sp"
                     android:layout_height="wrap_content">
 
                 </TextView>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/recentSeekbarlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:background="@drawable/bg_emergency_voice_white"
-                    android:backgroundTint="@color/grey_screen_clr"
-                   >
-
-                    <RelativeLayout
-                        android:layout_marginTop="@dimen/ten"
-
-                        android:id="@+id/rlaAudioImgBar"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_height="wrap_content">
+                    <SeekBar
+                        android:id="@+id/recentseekbar"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:id="@+id/imgRecentEmgplaypause"
-                            android:layout_width="@dimen/twenty_five"
-                            android:layout_height="@dimen/twenty_five"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginStart="@dimen/eight"
-                            android:src="@drawable/play_icon_voice"
-                            android:tint="@color/PrimaryColor"
-                            />
+                        android:layout_height="wrap_content"
+                        android:indeterminate="false"
+                        android:progressTint="@color/PrimaryColor"
+                        android:thumbTint="@color/PrimaryColor" />
 
-                        <SeekBar
-                            android:id="@+id/recentseekbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_toEndOf="@+id/imgRecentEmgplaypause"
-                            android:indeterminate="false"
-                            android:progressTint="@color/PrimaryColor"
-                            android:thumbTint="@color/PrimaryColor" />
-
-                    </RelativeLayout>
                     <LinearLayout
                         android:layout_below="@+id/rlaAudioImgBar"
                         android:id="@+id/lnrRecentSeconds"
-                        android:layout_marginTop="@dimen/three"
-                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/five"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/ten">
+                       >
 
                         <TextView
                             android:id="@+id/lblEmgRecentduration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="00:00"
-                            android:textColor="@color/black"
-                            android:textSize="10dp"
-                            android:textStyle="normal" />
+                            style="@style/CustomTextStylePoppinsMedium"
+                             />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" / "
-                            android:textColor="@color/black"
-                            android:textSize="10dp" />
+                            style="@style/CustomTextStylePoppinsMedium"
+                            />
 
                         <TextView
                             android:id="@+id/lblRecentTotalDuration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="00:00"
-                            android:textColor="@color/black"
-                            android:textSize="10dp" />
+                            style="@style/CustomTextStylePoppinsMedium"
+                            />
                     </LinearLayout>
-                </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/imgRecentEmgplaypause"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
+                        android:layout_gravity="end"
+                        android:layout_marginStart="@dimen/eight"
+                        android:src="@drawable/play_icon_2"
+                        />
+
+                </LinearLayout>
 
 
             </LinearLayout>
-
+            <View
+                android:layout_below="@+id/voiceImg"
+                android:layout_width="match_parent"
+                android:background="@color/athens_gray"
+                android:layout_height="@dimen/two">
+            </View>
         </RelativeLayout>
 
-        <LinearLayout
 
+        <LinearLayout
             android:layout_margin="@dimen/ten"
             android:layout_below="@+id/rlaAudioDetails"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
@@ -166,8 +167,8 @@
                     android:id="@+id/imgLblTitle"
                     android:src="@drawable/pin_icon_2"
                     android:tint="@color/PrimaryColor"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty">
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty">
                 </ImageView>
                 <TextView
                     android:layout_centerVertical="true"
@@ -183,7 +184,7 @@
                 </TextView>
             </RelativeLayout>
             <TextView
-                android:layout_marginStart="@dimen/fourty"
+                android:layout_marginStart="@dimen/thirty"
                 android:layout_marginEnd="@dimen/five"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:id="@+id/tvTitle"
@@ -195,7 +196,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/rytCertificate"
+                android:id="@+id/rytDescription"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -204,8 +205,8 @@
                     android:id="@+id/imgDescription"
                     android:tint="@color/PrimaryColor"
                     android:src="@drawable/edit_icon_2"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty">
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty">
                 </ImageView>
                 <TextView
                     android:text="@string/Description"
@@ -221,7 +222,7 @@
                 </TextView>
             </RelativeLayout>
             <TextView
-                android:layout_marginStart="@dimen/fourty"
+                android:layout_marginStart="@dimen/thirty"
                 android:layout_marginEnd="@dimen/five"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:id="@+id/tvDescription"
@@ -240,8 +241,8 @@
                     android:layout_centerVertical="true"
                     android:id="@+id/imgSendBy"
                     android:src="@drawable/person_circle"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty">
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty">
                 </ImageView>
                 <TextView
                     android:text="Sent by Saranraj"
@@ -266,8 +267,8 @@
                     android:layout_centerVertical="true"
                     android:id="@+id/imgTime"
                     android:src="@drawable/time_icon"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty">
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty">
                 </ImageView>
                 <TextView
                     android:text="Sent at"
@@ -275,7 +276,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginEnd="@dimen/five"
                     android:layout_toEndOf="@+id/imgTime"
-                    style="@style/CustomTextStylePoppinsBold"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:id="@+id/lblSentTime"
                     android:textSize="@dimen/fifteen_sp"
                     android:layout_width="match_parent"

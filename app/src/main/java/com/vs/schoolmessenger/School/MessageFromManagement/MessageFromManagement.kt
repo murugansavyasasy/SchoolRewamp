@@ -4,14 +4,17 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
@@ -20,10 +23,12 @@ import androidx.core.os.HandlerCompat.postDelayed
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentFilePathAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.AttachmentMediaAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.MessageFromStaffAdapter
@@ -43,12 +48,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var appViewModel: App? = null
     private lateinit var adapter2: AttachmentFilePathAdapter
     private lateinit var adapter: MessageFromStaffAdapter
-    var mediaPlayer: MediaPlayer? = MediaPlayer()
     var mediaFileLengthInMilliseconds = 0
-    private lateinit var runnable: Runnable
-    private var handler: Handler = Handler()
+    private var handler: Handler? = null
+    private var mediaPlayer: MediaPlayer? = null
 
-
+    private var updateRunnable: Runnable? = null
 
 
     override fun getViewBinding(): MessageFromManagementBinding {
@@ -115,8 +119,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     }
 
 
-
-
     fun ErrorMessage(errorMessage: String) {
         binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = errorMessage
@@ -147,75 +149,66 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         val tvDescription = dialogView.findViewById<TextView>(R.id.tvDescription)
         val imgBack = dialogView.findViewById<ImageView>(R.id.imgBack)
         val rlaAudioDetails = dialogView.findViewById<RelativeLayout>(R.id.rlaAudioDetails)
+        val rytDescription = dialogView.findViewById<RelativeLayout>(R.id.rytDescription)
+        val lblEmergency = dialogView.findViewById<TextView>(R.id.lblEmergency)
 
         // FIX: use dialogView.findViewById instead of findViewById
         val lblRecentTotalDuration: TextView = dialogView.findViewById(R.id.lblRecentTotalDuration)
+        val tvAudioTittle: TextView = dialogView.findViewById(R.id.tvAudioTittle)
         val lblEmgRecentduration: TextView = dialogView.findViewById(R.id.lblEmgRecentduration)
         val imgRecentEmgplaypause: ImageView = dialogView.findViewById(R.id.imgRecentEmgplaypause)
         val recentseekbar: SeekBar = dialogView.findViewById(R.id.recentseekbar)
-        val recentSeekbarlayout: RelativeLayout = dialogView.findViewById(R.id.recentSeekbarlayout)
+        val recentSeekbarlayout: LinearLayout = dialogView.findViewById(R.id.recentSeekbarlayout)
 
         tvTitle.text = data.title
-        lblSendBy.text = "Sent by Santhosh Kumar"
+        lblSendBy.text = "Posted by ${data.sent_by}"
         lblSentTime.text = "Sent at ${Constant.isFormatDate(data.date.toString())} ${data.time}"
 
-        if (!data.content.isNullOrEmpty()) {
-            lblRecentTotalDuration.visibility = View.VISIBLE
-            lblRecentTotalDuration.text = data.duration.toString()
-            recentSeekbarlayout.visibility = View.VISIBLE
 
-            // MediaPlayer play/pause handling
-            imgRecentEmgplaypause.setOnClickListener {
-                if (mediaPlayer?.isPlaying == true) {
-                    mediaPlayer?.pause()
-                    imgRecentEmgplaypause.setImageResource(R.drawable.play_icon_voice)
-                } else {
-                    try {
-                        if (mediaPlayer == null) mediaPlayer = MediaPlayer()
-                        mediaPlayer?.reset()
-                        mediaPlayer?.setDataSource(data.content)
-                        mediaPlayer?.prepare()
-                        mediaPlayer?.start()
-
-                        imgRecentEmgplaypause.setImageResource(R.drawable.pause_icon)
-
-                        // Start SeekBar updates
-                        updateSeekBar(mediaPlayer!!, recentseekbar, lblEmgRecentduration, lblRecentTotalDuration)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-
-            recentseekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                    if (fromUser) {
-                        mediaPlayer?.seekTo(progress)
-                    }
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar) {}
-            })
-        } else {
-            recentSeekbarlayout.visibility = View.GONE
-        }
-
-        // Attachment handling
         when (data.type) {
             Constant.TEXT -> {
+                rytDescription.visibility=View.VISIBLE
+                tvDescription.visibility=View.VISIBLE
                 rlaAudioDetails.visibility=View.GONE
                 recyclerView.visibility = View.GONE
                 indicator.visibility = View.GONE
                 tvDescription.text = data.content
             }
-            Constant.VOICE ->{ tvDescription.text = data.description
+
+            Constant.VOICE ->{
+                rytDescription.visibility=View.GONE
+                tvDescription.visibility=View.GONE
+                tvAudioTittle.apply {
+                    text=data.title
+                    isSingleLine = true
+                    ellipsize = TextUtils.TruncateAt.END
+                    maxLines = 1
+                }
+                if (data.is_emergency){
+                    lblEmergency.text=getString(R.string.emergency_voice)
+                }
+                else{
+                    lblEmergency.text=getString(R.string.voice)
+                }
+                tvDescription.text = data.description
                 rlaAudioDetails.visibility=View.VISIBLE
                 recyclerView.visibility = View.GONE
                 indicator.visibility = View.GONE
 
+                setupAudioPlayer(
+                    data,
+                    imgRecentEmgplaypause,
+                    recentseekbar,
+                    lblEmgRecentduration,
+                    lblRecentTotalDuration,
+                    recentSeekbarlayout
+                )
+
             }
             Constant.ATTACHMENT_ -> {
+                rytDescription.visibility=View.VISIBLE
+                tvDescription.visibility=View.VISIBLE
+
                 rlaAudioDetails.visibility=View.GONE
                 recyclerView.visibility = View.VISIBLE
                 indicator.visibility = View.VISIBLE
@@ -236,138 +229,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             indicator.attachToRecyclerView(recyclerView)
         }
 
-        imgBack.setOnClickListener { alertDialog.dismiss() }
+        imgBack.setOnClickListener {
+            releaseMediaPlayer()
+            alertDialog.dismiss()
+        }
     }
 
-
-//    fun showResumeListDialog(
-//        activity: Activity,
-//        data: GetMessagesStaffData
-//    ) {
-//        if (activity.isFinishing || activity.isDestroyed) return
-//
-//        val dialogView = LayoutInflater.from(activity).inflate(R.layout.msg_from_staff_preview, null)
-//        val builder = AlertDialog.Builder(activity)
-//        builder.setView(dialogView)
-//        val alertDialog = builder.create()
-//        alertDialog.setCancelable(false)
-//        alertDialog.setCanceledOnTouchOutside(false)
-//        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//
-//        if (!activity.isFinishing && !activity.isDestroyed) {
-//            alertDialog.show()
-//        }
-//
-//        val recyclerView = dialogView.findViewById<RecyclerView>(R.id.rcAttachement)
-//        val indicator = dialogView.findViewById<CircleIndicator2>(R.id.indicator)
-//        val lblSentTime = dialogView.findViewById<TextView>(R.id.lblSentTime)
-//        val lblSendBy = dialogView.findViewById<TextView>(R.id.lblSendBy)
-//        val tvTitle = dialogView.findViewById<TextView>(R.id.tvTitle)
-//        val tvDescription = dialogView.findViewById<TextView>(R.id.tvDescription)
-//        val imgBack = dialogView.findViewById<ImageView>(R.id.imgBack)
-//
-//        var lblRecentTotalDuration: TextView = findViewById(R.id.lblRecentTotalDuration)
-//        var lblEmgRecentduration: TextView = findViewById(R.id.lblEmgRecentduration)
-//        var imgRecentEmgplaypause: ImageView = findViewById(R.id.imgRecentEmgplaypause)
-//        var recentseekbar: SeekBar = findViewById(R.id.recentseekbar)
-//        var recentSeekbarlayout: RelativeLayout = findViewById(R.id.recentSeekbarlayout)
-//
-//
-//
-//
-//
-//        tvTitle.text=data.title
-//        lblSendBy.text="Sent by Santhosh Kumar"
-//        lblSentTime.text = "Sent at"+" "+Constant.isFormatDate(data.date.toString())+" "+data.time
-//
-//        if (data.content!!.isNotEmpty()) {
-//
-//            lblRecentTotalDuration.visibility = View.VISIBLE
-//            lblRecentTotalDuration.text = data.duration.toString()
-//            recentSeekbarlayout.visibility = View.VISIBLE
-//            imgRecentEmgplaypause.setOnClickListener {
-//                if (mediaPlayer!!.isPlaying) {
-//                    mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition)
-//                    mediaPlayer!!.pause()
-//                    imgRecentEmgplaypause.setImageResource(R.drawable.play_icon_voice)
-//                } else {
-//                    mediaFileLengthInMilliseconds = mediaPlayer!!.duration
-//                    imgRecentEmgplaypause.setImageResource(R.drawable.pause_icon)
-//                    mediaPlayer!!.reset()
-//                    mediaPlayer!!.setDataSource(data.content)
-//                    mediaPlayer!!.prepare()
-//                    mediaPlayer!!.start()
-//                    primarySeekBarProgressUpdater(mediaFileLengthInMilliseconds)
-//                }
-//                initializeSeekBar()
-//            }
-//
-//            recentseekbar.setOnSeekBarChangeListener(object :
-//                SeekBar.OnSeekBarChangeListener {
-//                override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-//                    if (b) {
-//                        mediaPlayer!!.seekTo(i * 1000)
-//                    }
-//                    mediaPlayer!!.setOnCompletionListener {
-//                        imgRecentEmgplaypause.setImageResource(R.drawable.play_icon_voice)
-//                        mediaPlayer!!.seekTo(0)
-//                    }
-//                }
-//
-//                override fun onStartTrackingTouch(seekBar: SeekBar) {
-//                }
-//
-//                override fun onStopTrackingTouch(seekBar: SeekBar) {
-//                }
-//            })
-//        } else {
-//            recentSeekbarlayout!!.visibility = View.GONE
-//        }
-//
-//
-//        when (data.type) {
-//            Constant.TEXT -> {
-//                recyclerView.visibility=View.GONE
-//                indicator.visibility = View.GONE
-//                tvDescription.text=data.content
-//            }
-//
-//            Constant.VOICE -> {
-//                tvDescription.text=data.description
-//            }
-//
-//            Constant.ATTACHMENT_ -> {
-//                recyclerView.visibility=View.VISIBLE
-//                indicator.visibility = View.VISIBLE
-//                tvDescription.text=data.description
-//
-//            }
-//        }
-//
-//        if (data.file_size.isNullOrEmpty()) {
-//            indicator.visibility = View.GONE
-//            recyclerView.visibility=View.GONE
-//        }
-//        else{
-//            indicator.visibility = View.VISIBLE
-//            recyclerView.visibility=View.VISIBLE
-//
-//            recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//            recyclerView.adapter = AttachmentMediaAdapter(
-//                data.file_path,
-//                activity,
-//                Constant.isShimmerViewDisable
-//            )
-//            indicator.attachToRecyclerView(recyclerView)
-//        }
-//
-//
-//        imgBack.setOnClickListener {
-//            alertDialog.dismiss()
-//        }
-//
-//
-//    }
 
     private fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
         val adapter = recyclerView.adapter ?: return
@@ -389,9 +256,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     }
 
 
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
+            R.id.imgBack -> {
+                onBackPressed()
+            }
 
         }
     }
@@ -399,41 +268,99 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     override fun onStaffClick(data: GetMessagesStaffData) {
         Log.d("SelectedData",data.toString())
         showResumeListDialog(this,data)
+
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, data.type)
+            addProperty(APIKeyNames.detail_id, data.id)
+        }
+        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
     }
 
-    fun milliSecondsToTimer(milliseconds: Long): String {
-        var finalTimerString = ""
-        var secondsString = ""
-        var minutesString = ""
 
-        // Convert total duration into time
-        val hours = (milliseconds / (1000 * 60 * 60)).toInt()
-        val minutes = (milliseconds % (1000 * 60 * 60)).toInt() / (1000 * 60)
-        val seconds = ((milliseconds % (1000 * 60 * 60)) % (1000 * 60) / 1000).toInt()
-        // Add hours if there
-        if (hours > 0) {
-            finalTimerString = "$hours:"
+
+    private fun setupAudioPlayer(
+        data: GetMessagesStaffData,
+        imgPlayPause: ImageView,
+        seekBar: SeekBar,
+        lblCurrent: TextView,
+        lblTotal: TextView,
+        seekBarLayout: LinearLayout
+    ) {
+        if (data.content.isNullOrEmpty()) {
+            seekBarLayout.visibility = View.GONE
+            return
         }
 
-        // Prepending 0 to Minutes if it is one digit
-        minutesString = if (minutes < 10) {
-            "0$minutes"
-        } else {
-            "" + minutes
+        seekBarLayout.visibility = View.VISIBLE
+        lblCurrent.text = "00:00"
+        lblTotal.text = milliSecondsToTimer(data.duration!! * 1000L)
+
+        imgPlayPause.setOnClickListener {
+            if (mediaPlayer?.isPlaying == true) {
+                // 🔹 Pause
+                mediaPlayer?.pause()
+                imgPlayPause.setImageResource(R.drawable.play_icon_2)
+            } else {
+                if (mediaPlayer == null) {
+                    mediaPlayer = MediaPlayer().apply {
+                        setAudioStreamType(AudioManager.STREAM_MUSIC)
+
+                        setOnPreparedListener { mp ->
+                            seekBar.max = mp.duration
+                            lblTotal.text = milliSecondsToTimer(mp.duration.toLong())
+
+                            mp.start()
+                            imgPlayPause.setImageResource(R.drawable.pause_icon_2)
+
+                            seekBar.progress = 0
+                            lblCurrent.text = "00:00"
+
+                            updateSeekBar(mp, seekBar, lblCurrent, lblTotal)
+                        }
+
+                        setOnCompletionListener {
+                            imgPlayPause.setImageResource(R.drawable.play_icon_2)
+                            seekBar.progress = 0
+                            lblCurrent.text = "00:00"
+                            handler?.removeCallbacks(updateRunnable!!)
+                        }
+
+                        setOnErrorListener { _, what, extra ->
+                            Log.e("MediaPlayer", "Error what=$what extra=$extra")
+                            releaseMediaPlayer()
+                            true
+                        }
+                    }
+
+                    try {
+                        mediaPlayer?.reset()
+                        mediaPlayer?.setDataSource(data.content)
+                        mediaPlayer?.prepareAsync() // 🔹 async, safe for all versions
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                } else {
+                    // Already prepared → resume
+                    mediaPlayer?.start()
+                    imgPlayPause.setImageResource(R.drawable.pause_icon_2)
+                    updateSeekBar(mediaPlayer!!, seekBar, lblCurrent, lblTotal)
+                }
+            }
         }
 
-        // Prepending 0 to seconds if it is one digit
-        secondsString = if (seconds < 10) {
-            "0$seconds"
-        } else {
-            "" + seconds
-        }
-        finalTimerString = "$finalTimerString$minutesString:$secondsString"
-
-        // return timer string
-        return finalTimerString
+        // 🔹 Manual seek
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    mediaPlayer?.seekTo(progress)
+                    lblCurrent.text = milliSecondsToTimer(progress.toLong())
+                }
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
     }
-
 
     private fun updateSeekBar(
         mediaPlayer: MediaPlayer,
@@ -441,58 +368,176 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         lblCurrent: TextView,
         lblTotal: TextView
     ) {
-        seekBar.max = mediaPlayer.duration
-        lblTotal.text = milliSecondsToTimer(mediaPlayer.duration.toLong())
+        handler?.removeCallbacks(updateRunnable ?: return)
 
-        val handler = Handler(Looper.getMainLooper())
-        handler.post(object : Runnable {
+        handler = Handler(Looper.getMainLooper())
+        updateRunnable = object : Runnable {
             override fun run() {
                 if (mediaPlayer.isPlaying) {
                     seekBar.progress = mediaPlayer.currentPosition
                     lblCurrent.text = milliSecondsToTimer(mediaPlayer.currentPosition.toLong())
-                    handler.postDelayed(this, 1000)
+                    lblTotal.text = milliSecondsToTimer(mediaPlayer.duration.toLong())
+                    handler?.postDelayed(this, 500)
                 }
             }
-        })
+        }
+        handler?.post(updateRunnable!!)
     }
 
+    fun milliSecondsToTimer(milliseconds: Long): String {
+        val hours = (milliseconds / (1000 * 60 * 60)).toInt()
+        val minutes = ((milliseconds % (1000 * 60 * 60)) / (1000 * 60)).toInt()
+        val seconds = ((milliseconds % (1000 * 60)) / 1000).toInt()
+
+        val minutesString = if (minutes < 10) "0$minutes" else "$minutes"
+        val secondsString = if (seconds < 10) "0$seconds" else "$seconds"
+
+        return if (hours > 0) "$hours:$minutesString:$secondsString"
+        else "$minutesString:$secondsString"
+    }
+
+    private fun releaseMediaPlayer() {
+        handler?.removeCallbacks(updateRunnable ?: return)
+        updateRunnable = null
+        handler = null
+
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releaseMediaPlayer()
+    }
+
+
 //
-//    private fun primarySeekBarProgressUpdater(fileLength: Int,) {
-//        val iProgress = (mediaPlayer!!.currentPosition.toFloat() / fileLength * 100).toInt()
-//        recentseekbar.setProgress(iProgress) // This math construction give a percentage of "was playing"/"song length"
-//        if (mediaPlayer!!.isPlaying) {
-//            val notification = Runnable {
-//                lblEmgRecentduration.text = milliSecondsToTimer(
-//                    mediaPlayer!!.currentPosition.toLong()
-//                )
-//                primarySeekBarProgressUpdater(fileLength)
+//
+//    private fun setupAudioPlayer(
+//        data: GetMessagesStaffData,
+//        imgPlayPause: ImageView,
+//        seekBar: SeekBar,
+//        lblCurrent: TextView,
+//        lblTotal: TextView,
+//        seekBarLayout: LinearLayout
+//    ) {
+//        if (data.content.isNullOrEmpty()) {
+//            seekBarLayout.visibility = View.GONE
+//            return
+//        }
+//
+//        seekBarLayout.visibility = View.VISIBLE
+//
+//        // ✅ Convert seconds from API into mm:ss
+//        lblTotal.text = milliSecondsToTimer(data.duration!! * 1000L)
+//        lblCurrent.text = "00:00"
+//
+//
+//        imgPlayPause.setOnClickListener {
+//            if (mediaPlayer?.isPlaying == true) {
+//                mediaPlayer?.pause()
+//                imgPlayPause.setImageResource(R.drawable.play_icon_2)
+//            } else {
+//                try {
+//                    if (mediaPlayer == null) mediaPlayer = MediaPlayer()
+//
+//                    if (mediaPlayer?.currentPosition == 0) {
+//                        mediaPlayer?.reset()
+//                        mediaPlayer?.setDataSource(data.content)
+//                        mediaPlayer?.prepare()
+//                    }
+//
+//                    mediaPlayer?.start()
+//                    imgPlayPause.setImageResource(R.drawable.pause_icon_2)
+//
+//                    // ✅ update immediately at play start
+//                    lblCurrent.text = milliSecondsToTimer(mediaPlayer!!.currentPosition.toLong())
+//                    seekBar.max = mediaPlayer!!.duration
+//                    seekBar.progress = mediaPlayer!!.currentPosition
+//
+//                    // keep updating every second
+//                    updateSeekBar(mediaPlayer!!, seekBar, lblCurrent)
+//
+//                    // reset UI when complete
+//                    mediaPlayer?.setOnCompletionListener {
+//                        imgPlayPause.setImageResource(R.drawable.play_icon_2)
+//                        seekBar.progress = 0
+//                        lblCurrent.text = "00:00"
+//                    }
+//
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                }
 //            }
-//            postDelayed(notification, 1000)
 //        }
+//
+//
+//
+//
+//        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+//                if (fromUser) {
+//                    mediaPlayer?.seekTo(progress)
+//                    lblCurrent.text = milliSecondsToTimer(progress.toLong())
+//                }
+//            }
+//
+//            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+//            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+//        })
 //    }
 //
 //
-//    private fun initializeSeekBar() {
-//        recentseekbar.max = mediaPlayer!!.seconds
 //
-//        runnable = Runnable {
-//            recentseekbar.progress = mediaPlayer!!.currentSeconds
-//            postDelayed(runnable, 1000)
-//        }
-//        postDelayed(runnable, 1000)
+//
+//
+//    fun milliSecondsToTimer(milliseconds: Long): String {
+//        val hours = (milliseconds / (1000 * 60 * 60)).toInt()
+//        val minutes = ((milliseconds % (1000 * 60 * 60)) / (1000 * 60)).toInt()
+//        val seconds = ((milliseconds % (1000 * 60)) / 1000).toInt()
+//
+//        val minutesString = if (minutes < 10) "0$minutes" else "$minutes"
+//        val secondsString = if (seconds < 10) "0$seconds" else "$seconds"
+//
+//        return if (hours > 0) "$hours:$minutesString:$secondsString"
+//        else "$minutesString:$secondsString"
 //    }
-
-
-
-    val MediaPlayer.seconds: Int
-        get() {
-            return this.duration / 1000
-        }
-
-    // Creating an extension property to get media player current position in seconds
-    val MediaPlayer.currentSeconds: Int
-        get() {
-            return this.currentPosition / 1000
-        }
+//
+//
+//
+//    private fun updateSeekBar(
+//        mediaPlayer: MediaPlayer,
+//        seekBar: SeekBar,
+//        lblCurrent: TextView
+//    ) {
+//        handler = Handler(Looper.getMainLooper())
+//        updateRunnable = object : Runnable {
+//            override fun run() {
+//                if (mediaPlayer.isPlaying) {
+//                    seekBar.progress = mediaPlayer.currentPosition
+//                    lblCurrent.text = milliSecondsToTimer(mediaPlayer.currentPosition.toLong())
+//                    handler?.postDelayed(this, 500)
+//                }
+//            }
+//        }
+//        handler?.post(updateRunnable!!)
+//    }
+//
+//
+//
+//
+//    private fun releaseMediaPlayer() {
+//        handler?.removeCallbacks(updateRunnable ?: return)
+//        updateRunnable = null
+//        handler = null
+//
+//        mediaPlayer?.release()
+//        mediaPlayer = null
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        releaseMediaPlayer()
+//    }
 
 }
