@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_edit_delete"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_btn_grey"
+    android:orientation="vertical"
+    android:padding="@dimen/five">
+
+    <LinearLayout
+        android:id="@+id/layout_reopen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/ten">
+
+        <ImageView
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:src="@drawable/arrow_trianglehead" />
+
+        <TextView
+            android:id="@+id/option_edit"
+            android:layout_width="wrap_content"
+            style="@style/CustomTextStylePoppinsBold1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:text="@string/ReOpen"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/ten">
+
+        <ImageView
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:src="@drawable/close_red_color"
+            />
+
+        <TextView
+            android:id="@+id/option_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            style="@style/CustomTextStylePoppinsBold1"
+            android:text="@string/Cancel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp" />
+    </LinearLayout>
+</LinearLayout>

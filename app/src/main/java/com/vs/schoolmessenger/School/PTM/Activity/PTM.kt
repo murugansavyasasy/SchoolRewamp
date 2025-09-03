@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
@@ -12,7 +13,6 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.PTM.Adapter.UpComingSlotAdapter
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotCategory
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotDetail
-import com.vs.schoolmessenger.School.PTM.DataClass.SlotGroup
 import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -62,45 +62,66 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     }
 
     fun isLoadData(isSlotCategory: List<SlotCategory>?) {
-        isSlotDetail.clear()
         if (isSlotCategory.isNullOrEmpty()) return
 
-        for (category in isSlotCategory) {
-            val allGroups = mutableListOf<SlotGroup>()
-            allGroups.addAll(category.today)
-            allGroups.addAll(category.upcoming)
-            allGroups.addAll(category.completed)
+        // Clear old data
+        val todayList = ArrayList<SlotDetail>()
+        val upcomingList = ArrayList<SlotDetail>()
+        val completedList = ArrayList<SlotDetail>()
 
-            for (group in allGroups) {
-                if (isAllSlot) {
-                    isSlotDetail.addAll(group.details)
-                } else {
-                    for (detail in group.details) {
-                        if (detail.date == isSelectedDate) {
-                            isSlotDetail.add(detail)
-                        }
-                    }
+        for (category in isSlotCategory) {
+            if (isAllSlot) {
+                todayList.addAll(category.today.flatMap { it.details })
+                upcomingList.addAll(category.upcoming.flatMap { it.details })
+                completedList.addAll(category.completed.flatMap { it.details })
+            } else {
+                for (group in category.today) {
+                    todayList.addAll(group.details.filter { it.date == isSelectedDate })
+                }
+                for (group in category.upcoming) {
+                    upcomingList.addAll(group.details.filter { it.date == isSelectedDate })
+                }
+                for (group in category.completed) {
+                    completedList.addAll(group.details.filter { it.date == isSelectedDate })
                 }
             }
         }
 
-        Log.d("PTM", "Loaded slot details: ${isSlotDetail.size}")
-        isLoadDataAdapter(isSlotDetail)
+        Log.d(
+            "PTM",
+            "Today: ${todayList.size}, Upcoming: ${upcomingList.size}, Complete: ${completedList.size}"
+        )
+
+        // Load into adapters
+        isLoadDataAdapter(todayList, binding.rcyToday)
+        isLoadDataAdapter(upcomingList, binding.rcyUpcoming)
+        isLoadDataAdapter(completedList, binding.rcyComplete)
     }
 
-    fun isLoadDataAdapter(isSlotDetail: ArrayList<SlotDetail>?) {
-        mAdapter = UpComingSlotAdapter(isSlotDetail, this, this, Constant.isShimmerViewDisable)
-        binding.rcySlots.layoutManager = LinearLayoutManager(this)
-        binding.rcySlots.adapter = mAdapter
+    fun isLoadDataAdapter(list: ArrayList<SlotDetail>, recyclerView: RecyclerView) {
+        val adapter = UpComingSlotAdapter(list, this, this, Constant.isShimmerViewDisable)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
     }
 
     fun loadData() {
-        mAdapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.rcySlots.layoutManager = LinearLayoutManager(this)
-        binding.rcySlots.adapter = mAdapter
-        isAccessToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGFmZl9pZCI6IjEwMDc3NjQ4Iiwic2Nob29sX2lkIjoiNzA0NCIsImlhdCI6MTc1NjcwNTIxM30.EkV33rNEvCE51bw7wpM1JZK41rq9ySydWFmGrxPmTiU"
+        // Shimmer loading state
+        val shimmerAdapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
+
+        binding.rcyToday.layoutManager = LinearLayoutManager(this)
+        binding.rcyToday.adapter = shimmerAdapter
+
+        binding.rcyUpcoming.layoutManager = LinearLayoutManager(this)
+        binding.rcyUpcoming.adapter = shimmerAdapter
+
+        binding.rcyComplete.layoutManager = LinearLayoutManager(this)
+        binding.rcyComplete.adapter = shimmerAdapter
+
+        isAccessToken =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGFmZl9pZCI6IjEwMDc3NjQ4Iiwic2Nob29sX2lkIjoiNzA0NCIsImlhdCI6MTc1NjcwNTIxM30.EkV33rNEvCE51bw7wpM1JZK41rq9ySydWFmGrxPmTiU"
         appViewModel!!.isSlotForStaff(isAccessToken!!, "ALL")
     }
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {

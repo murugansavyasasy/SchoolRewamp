@@ -5,15 +5,19 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.PTM.DataClass.Slot
+import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotCancelReOpenClickListener
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class StaffSlotStatusAdapter(
     private var itemList: List<Slot>? = null,
     private var context: Context,
+    private var listener: StaffSlotCancelReOpenClickListener,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -42,7 +46,7 @@ class StaffSlotStatusAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position)
+            holder.bind(itemList!![position], position,listener)
 
         }
     }
@@ -58,17 +62,37 @@ class StaffSlotStatusAdapter(
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
         private val lblDuration: TextView = itemView.findViewById(R.id.lblDuration)
         private val lblBookedName: TextView = itemView.findViewById(R.id.lblBookedName)
+        private val lblWaitingBooking: TextView = itemView.findViewById(R.id.lblWaitingBooking)
+        private val rltStatus: RelativeLayout = itemView.findViewById(R.id.rltStatus)
+        private val rltBookedBy: RelativeLayout = itemView.findViewById(R.id.rltBookedBy)
+        private val imgStatus: ImageView = itemView.findViewById(R.id.imgStatus)
+        private val imgDot: ImageView = itemView.findViewById(R.id.imgDot)
         private val lblStandardAndSection: TextView =
             itemView.findViewById(R.id.lblStandardAndSection)
 
         @SuppressLint("UseCompatLoadingForDrawables")
-        fun bind(data: Slot, position: Int) {
+        fun bind(data: Slot, position: Int, listener: StaffSlotCancelReOpenClickListener) {
             lblBookedName.text = data.booked_by
             lblStatus.text = data.status
             lblDuration.text = "Meeting Duration" + " - " + data.meeting_duration.toString()
             lblTime.text = data.from_time + " - " + data.to_time
             lblStandardAndSection.text = data.my_class + " - " + data.my_section
 
+            if (data.status.equals("Available")){
+                rltStatus.setBackgroundDrawable(context.getDrawable(R.drawable.bg_light_radious_blue))
+                lblWaitingBooking.visibility= View.VISIBLE
+                rltBookedBy.visibility= View.GONE
+                imgStatus.setImageDrawable(context.getDrawable(R.drawable.exclamationmark_circle))
+            }else{
+                rltStatus.setBackgroundDrawable(context.getDrawable(R.drawable.bg_light_green))
+                lblWaitingBooking.visibility= View.GONE
+                rltBookedBy.visibility= View.VISIBLE
+                imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
+            }
+
+            imgDot.setOnClickListener {
+                listener.onStaffSlotCancelReOpenClickListener(data,it, adapterPosition)
+            }
         }
     }
 

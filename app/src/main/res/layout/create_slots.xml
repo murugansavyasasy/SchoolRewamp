@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mild_grey2">
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/cltDateSelection"
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/cltDateSelection"
-        android:background="@color/mild_grey2">
+        android:background="@color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -75,8 +75,7 @@
                 android:id="@+id/rytMeetingTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/ten"
-                >
+                android:layout_margin="@dimen/ten">
 
                 <TextView
                     android:id="@+id/lblPurposeOfMeeting"
@@ -133,11 +132,13 @@
                     android:weightSum="3">
 
                     <TextView
+                        android:id="@+id/lblPerson"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="1"
-                        android:background="@drawable/rect_btn_blue"
+                        android:background="@drawable/gray_bg_radius"
                         android:gravity="center"
                         android:padding="@dimen/ten"
                         android:text="In Person"
@@ -147,11 +148,13 @@
                     </TextView>
 
                     <TextView
+                        android:id="@+id/lblOnline"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="1"
-                        android:background="@drawable/rect_btn_blue"
+                        android:background="@drawable/gray_bg_radius"
                         android:gravity="center"
                         android:padding="@dimen/ten"
                         android:text="Online"
@@ -161,11 +164,13 @@
                     </TextView>
 
                     <TextView
+                        android:id="@+id/lblPhoneCall"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="1"
-                        android:background="@drawable/rect_btn_blue"
+                        android:background="@drawable/gray_bg_radius"
                         android:gravity="center"
                         android:padding="@dimen/ten"
                         android:text="Phone call"
@@ -213,8 +218,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytMeetingTitle"
-                android:layout_margin="@dimen/ten"
-                >
+                android:layout_margin="@dimen/ten">
+
+                <RelativeLayout
+                    android:id="@+id/lnrAcademicYearView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:gravity="center_vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/tvAcademicYearLabel"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblchoose_academic_year"
+                        android:layout_marginEnd="@dimen/five"
+                        android:textColor="@color/light_gray"
+                        />
+
+                    <RelativeLayout
+                        android:layout_toEndOf="@+id/tvAcademicYearLabel"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/rytAcademicYearDropDown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/five"
+                        android:background="@drawable/bg_white_light_radious"
+                        android:gravity="center">
+
+                        <Spinner
+                            android:id="@+id/isSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_spinner_background" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
 
 
                 <TextView
@@ -223,6 +271,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
+                    android:layout_below="@+id/lnrAcademicYearView"
                     android:layout_marginTop="@dimen/ten"
                     android:text="Select the academic year"
                     android:textColor="@color/black"
@@ -247,8 +296,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytSectionSelection"
-                android:layout_margin="@dimen/ten"
-                >
+                android:layout_margin="@dimen/ten">
 
 
                 <TextView
@@ -300,13 +348,15 @@
 
                     <ImageView
                         android:id="@+id/imgDownArrow"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_marginBottom="@dimen/ten"
-                        android:src="@drawable/down_arrow_3"></ImageView>
+                        android:src="@drawable/down_arrow_3">
+
+                    </ImageView>
 
                 </RelativeLayout>
 
@@ -338,7 +388,9 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginTop="@dimen/ten"
                             android:layout_marginBottom="@dimen/ten"
-                            android:src="@drawable/ic_date_time"></ImageView>
+                            android:src="@drawable/calendar_black">
+
+                        </ImageView>
 
                         <TextView
                             android:id="@+id/lblFromTime"
@@ -355,13 +407,15 @@
 
                         <ImageView
                             android:id="@+id/imgFromTimeDownArrow"
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
+                            android:layout_width="@dimen/fifteen"
+                            android:layout_height="@dimen/fifteen"
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/ten"
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_marginBottom="@dimen/ten"
-                            android:src="@drawable/down_arrow_3"></ImageView>
+                            android:src="@drawable/down_arrow_3">
+
+                        </ImageView>
 
                     </RelativeLayout>
 
@@ -384,7 +438,9 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginTop="@dimen/ten"
                             android:layout_marginBottom="@dimen/ten"
-                            android:src="@drawable/ic_date_time"></ImageView>
+                            android:src="@drawable/calendar_black">
+
+                        </ImageView>
 
                         <TextView
                             android:id="@+id/lblToTime"
@@ -401,13 +457,15 @@
 
                         <ImageView
                             android:id="@+id/imgDownArrowToTime"
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
+                            android:layout_width="@dimen/fifteen"
+                            android:layout_height="@dimen/fifteen"
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/ten"
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_marginBottom="@dimen/ten"
-                            android:src="@drawable/down_arrow_3"></ImageView>
+                            android:src="@drawable/down_arrow_3">
+
+                        </ImageView>
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -418,8 +476,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytDateAndTime"
-                android:layout_margin="@dimen/ten"
-                >
+                android:layout_margin="@dimen/ten">
 
 
                 <TextView
@@ -471,8 +528,8 @@
 
                     <ImageView
                         android:id="@+id/imgDownArrowBreak"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
@@ -536,7 +593,7 @@
                         android:layout_height="@dimen/twenty"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/fifteen"
-                        android:src="@drawable/ic_date_time">
+                        android:src="@drawable/ic_plus">
 
                     </ImageView>
 
@@ -555,12 +612,12 @@
 
                     <ImageView
                         android:id="@+id/imgUp"
-                        android:layout_width="@dimen/twenty"
+                        android:layout_width="@dimen/fifteen"
                         android:layout_height="@dimen/twenty"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/fifteen"
                         android:layout_toEndOf="@+id/lblPlus"
-                        android:src="@drawable/ic_date_time">
+                        android:src="@drawable/negative">
 
                     </ImageView>
                 </RelativeLayout>
