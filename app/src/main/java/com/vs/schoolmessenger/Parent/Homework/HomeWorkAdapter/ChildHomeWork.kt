@@ -97,7 +97,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
         binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
         binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener {
@@ -109,11 +109,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
-
-
-        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblParentToolBar.text = childDetails!!.name
-        binding.toolbarLayout.lblSchoolName.text = childDetails!!.school_name
 
         binding.lbltitle.text = data!!.title
         binding.lblDescription.text = data!!.description
@@ -144,7 +139,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.fragmentContainer.visibility = View.GONE
 
         } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
-            binding.toolbarLayout.imgBack.visibility = View.GONE
+            binding.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.txtTitle.text = data!!.title

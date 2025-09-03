@@ -110,6 +110,7 @@
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/five"
         android:clipToPadding="false"
+        android:background="@color/mild_grey"
         android:paddingBottom="@dimen/ten"
         tools:listitem="@layout/dashboard_app_item" />
 </RelativeLayout>
