@@ -142,16 +142,16 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         val dayFormatter = SimpleDateFormat("EEE", Locale.getDefault())
         val dateFormatter = SimpleDateFormat("dd", Locale.getDefault())
         val fullFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val monthFormatter = SimpleDateFormat("MMM", Locale.getDefault()) // NEW
+        val monthFormatter = SimpleDateFormat("MMM", Locale.getDefault())
 
-        for (i in 0..20) {
+        for (i in 0..10) {
             val date = calendar.time
             list.add(
                 CalendarDate(
                     day = dayFormatter.format(date),
                     date = dateFormatter.format(date),
                     fullDate = fullFormatter.format(date),
-                    month = monthFormatter.format(date) // ADD MONTH
+                    month = monthFormatter.format(date)
                 )
             )
             calendar.add(Calendar.DATE, 1)
@@ -159,6 +159,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
         return list
     }
+
 
 
     override fun onClick(v: View?) {
