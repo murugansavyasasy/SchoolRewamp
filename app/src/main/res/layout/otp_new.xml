@@ -15,8 +15,8 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/fifteen"
+            android:layout_height="@dimen/fifteen"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_arrow_back_black" />
 
@@ -186,7 +186,7 @@
                     style="@style/CustomTextStylePoppinsRegular"
                     android:layout_toEndOf="@+id/lblDidNot"
                     android:text="@string/_00_00"
-                    android:textColor="@color/system_pink"
+                    android:textColor="@color/red"
                     android:textSize="@dimen/fifteen_sp"
                     android:visibility="visible">
 
@@ -199,7 +199,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_toEndOf="@+id/lblDidNot"
                     android:text="@string/resend"
-                    android:textColor="@color/white"
+                    android:textColor="@color/PrimaryColor"
                     android:textSize="@dimen/fifteen_sp"
                     android:visibility="gone" />
 
