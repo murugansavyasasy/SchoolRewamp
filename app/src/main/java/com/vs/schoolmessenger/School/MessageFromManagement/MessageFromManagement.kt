@@ -1,26 +1,58 @@
 package com.vs.schoolmessenger.School.MessageFromManagement
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.os.Handler
+import android.os.Looper
+import android.text.TextUtils
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.SeekBar
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.os.HandlerCompat.postDelayed
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentFilePathAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.AttachmentMediaAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.MessageFromStaffAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
-import com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport.ExamQuizReportAdapter
+import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MessageFromManagementBinding
+import me.relex.circleindicator.CircleIndicator2
+
 
 class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
-    View.OnClickListener {
+    View.OnClickListener,MsgStaffListener {
 
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private var appViewModel: App? = null
+    private lateinit var adapter2: AttachmentFilePathAdapter
     private lateinit var adapter: MessageFromStaffAdapter
+    var mediaFileLengthInMilliseconds = 0
+    private var handler: Handler? = null
+    private var mediaPlayer: MediaPlayer? = null
+
+    private var updateRunnable: Runnable? = null
 
 
     override fun getViewBinding(): MessageFromManagementBinding {
@@ -58,38 +90,15 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             }
         }
 
-        appViewModel?.isGetMessageStaffAchieve?.observe(this) { response ->
-            if (response != null) {
-                if (response.status) {
-                    binding.rcMessageStaffAchieve.visibility = View.VISIBLE
-                    binding.lytList.visibility = View.GONE
-                    isLoadMsgStaffAchieve(response.data)
-                }
-                else {
-                    binding.rlaMessageFFromStaff.visibility = View.VISIBLE
-                    binding.rcMessageStaffAchieve.visibility = View.GONE
-                    ErrorMessage(response.message)
-                }
-            } else {
-                binding.rlaMessageFFromStaff.visibility = View.VISIBLE
-                binding.rcMessageStaffAchieve.visibility = View.GONE
-                ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
-            }
-        }
-        binding.lblSeeMore.setOnClickListener{
-            binding.lblSeeMore.text="See less"
-            isGetMessageFromStaffAchieve()
-        }
-
-
     }
 
     private fun isLoadMsgStaff(data: List<GetMessagesStaffData>) {
 
         if (data.isNotEmpty()) {
-            adapter = MessageFromStaffAdapter(data, this, Constant.isShimmerViewDisable)
-            binding.rcMessageStaff.layoutManager = LinearLayoutManager(this)
+            adapter = MessageFromStaffAdapter(data,this, this, Constant.isShimmerViewDisable)
+            binding.rcMessageStaff.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
             binding.rcMessageStaff.adapter = adapter
+            binding.rcMessageStaff.isNestedScrollingEnabled = false
             binding.rcMessageStaff.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
         } else {
@@ -99,33 +108,14 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         }
     }
 
-    private fun isLoadMsgStaffAchieve(data: List<GetMessagesStaffData>) {
 
-        if (data.isNotEmpty()) {
-            adapter = MessageFromStaffAdapter(data, this, Constant.isShimmerViewDisable)
-            binding.rcMessageStaff.layoutManager = LinearLayoutManager(this)
-            binding.rcMessageStaff.adapter = adapter
-            binding.rcMessageStaff.visibility = View.VISIBLE
-            binding.lytList.visibility = View.GONE
-        } else {
-            binding.rcMessageStaff.visibility = View.GONE
-            binding.lytList.visibility = View.VISIBLE
-            binding.txtNoData.text = getString(R.string.no_data_found)
-        }
-    }
 
     fun isGetMessageFromStaff(){
-        adapter = MessageFromStaffAdapter(null, this, Constant.isShimmerViewShow)
-        binding.rcMessageStaff.layoutManager = LinearLayoutManager(this)
+        adapter = MessageFromStaffAdapter(null,this, this, Constant.isShimmerViewShow)
+        binding.rcMessageStaff.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         binding.rcMessageStaff.adapter = adapter
+        binding.rcMessageStaff.isNestedScrollingEnabled = false
         appViewModel?.isGetMessageStaff(isAccessToken ?: "")
-    }
-
-    fun isGetMessageFromStaffAchieve(){
-        adapter = MessageFromStaffAdapter(null, this, Constant.isShimmerViewShow)
-        binding.rcMessageStaffAchieve.layoutManager = LinearLayoutManager(this)
-        binding.rcMessageStaffAchieve.adapter = adapter
-        appViewModel?.isGetMessageStaffAchieve(isAccessToken ?: "")
     }
 
 
@@ -134,9 +124,420 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         binding.txtNoData.text = errorMessage
     }
 
+    fun showResumeListDialog(
+        activity: Activity,
+        data: GetMessagesStaffData
+    ) {
+        if (activity.isFinishing || activity.isDestroyed) return
+
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.msg_from_staff_preview, null)
+        val builder = AlertDialog.Builder(activity).setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        if (!activity.isFinishing && !activity.isDestroyed) {
+            alertDialog.show()
+        }
+
+        val recyclerView = dialogView.findViewById<RecyclerView>(R.id.rcAttachement)
+        val indicator = dialogView.findViewById<CircleIndicator2>(R.id.indicator)
+        val lblSentTime = dialogView.findViewById<TextView>(R.id.lblSentTime)
+        val lblSendBy = dialogView.findViewById<TextView>(R.id.lblSendBy)
+        val tvTitle = dialogView.findViewById<TextView>(R.id.tvTitle)
+        val tvDescription = dialogView.findViewById<TextView>(R.id.tvDescription)
+        val imgBack = dialogView.findViewById<ImageView>(R.id.imgBack)
+        val rlaAudioDetails = dialogView.findViewById<RelativeLayout>(R.id.rlaAudioDetails)
+        val rytDescription = dialogView.findViewById<RelativeLayout>(R.id.rytDescription)
+        val lblEmergency = dialogView.findViewById<TextView>(R.id.lblEmergency)
+
+        // FIX: use dialogView.findViewById instead of findViewById
+        val lblRecentTotalDuration: TextView = dialogView.findViewById(R.id.lblRecentTotalDuration)
+        val tvAudioTittle: TextView = dialogView.findViewById(R.id.tvAudioTittle)
+        val lblEmgRecentduration: TextView = dialogView.findViewById(R.id.lblEmgRecentduration)
+        val imgRecentEmgplaypause: ImageView = dialogView.findViewById(R.id.imgRecentEmgplaypause)
+        val recentseekbar: SeekBar = dialogView.findViewById(R.id.recentseekbar)
+        val recentSeekbarlayout: LinearLayout = dialogView.findViewById(R.id.recentSeekbarlayout)
+
+        tvTitle.text = data.title
+        lblSendBy.text = "Posted by ${data.sent_by}"
+        lblSentTime.text = "Sent at ${Constant.isFormatDate(data.date.toString())} ${data.time}"
+
+
+        when (data.type) {
+            Constant.TEXT -> {
+                rytDescription.visibility=View.VISIBLE
+                tvDescription.visibility=View.VISIBLE
+                rlaAudioDetails.visibility=View.GONE
+                recyclerView.visibility = View.GONE
+                indicator.visibility = View.GONE
+                tvDescription.text = data.content
+            }
+
+            Constant.VOICE ->{
+                rytDescription.visibility=View.GONE
+                tvDescription.visibility=View.GONE
+                tvAudioTittle.apply {
+                    text=data.title
+                    isSingleLine = true
+                    ellipsize = TextUtils.TruncateAt.END
+                    maxLines = 1
+                }
+                if (data.is_emergency){
+                    lblEmergency.text=getString(R.string.emergency_voice)
+                }
+                else{
+                    lblEmergency.text=getString(R.string.voice)
+                }
+                tvDescription.text = data.description
+                rlaAudioDetails.visibility=View.VISIBLE
+                recyclerView.visibility = View.GONE
+                indicator.visibility = View.GONE
+
+                setupAudioPlayer(
+                    data,
+                    imgRecentEmgplaypause,
+                    recentseekbar,
+                    lblEmgRecentduration,
+                    lblRecentTotalDuration,
+                    recentSeekbarlayout
+                )
+
+            }
+            Constant.ATTACHMENT_ -> {
+                rytDescription.visibility=View.VISIBLE
+                tvDescription.visibility=View.VISIBLE
+
+                rlaAudioDetails.visibility=View.GONE
+                recyclerView.visibility = View.VISIBLE
+                indicator.visibility = View.VISIBLE
+                tvDescription.text = data.description
+            }
+        }
+
+        if (data.file_size.isNullOrEmpty()) {
+            indicator.visibility = View.GONE
+            recyclerView.visibility = View.GONE
+        } else {
+            recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.adapter = AttachmentMediaAdapter(
+                data.file_path,
+                activity,
+                Constant.isShimmerViewDisable
+            )
+            indicator.attachToRecyclerView(recyclerView)
+        }
+
+        imgBack.setOnClickListener {
+            releaseMediaPlayer()
+            alertDialog.dismiss()
+        }
+    }
+
+
+    private fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
+        val adapter = recyclerView.adapter ?: return
+        this.createIndicators(adapter.itemCount, 0)
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
+                val firstVisible = layoutManager.findFirstVisibleItemPosition()
+                this@attachToRecyclerView.animatePageSelected(firstVisible)
+            }
+        })
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
+            }
+        })
+    }
+
+
     override fun onClick(p0: View?) {
         when (p0?.id) {
+            R.id.imgBack -> {
+                onBackPressed()
+            }
 
         }
     }
+
+    override fun onStaffClick(data: GetMessagesStaffData) {
+        Log.d("SelectedData",data.toString())
+        showResumeListDialog(this,data)
+
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, data.type)
+            addProperty(APIKeyNames.detail_id, data.id)
+        }
+        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+    }
+
+
+
+    private fun setupAudioPlayer(
+        data: GetMessagesStaffData,
+        imgPlayPause: ImageView,
+        seekBar: SeekBar,
+        lblCurrent: TextView,
+        lblTotal: TextView,
+        seekBarLayout: LinearLayout
+    ) {
+        if (data.content.isNullOrEmpty()) {
+            seekBarLayout.visibility = View.GONE
+            return
+        }
+
+        seekBarLayout.visibility = View.VISIBLE
+        lblCurrent.text = "00:00"
+        lblTotal.text = milliSecondsToTimer(data.duration!! * 1000L)
+
+        imgPlayPause.setOnClickListener {
+            if (mediaPlayer?.isPlaying == true) {
+                // 🔹 Pause
+                mediaPlayer?.pause()
+                imgPlayPause.setImageResource(R.drawable.play_icon_2)
+            } else {
+                if (mediaPlayer == null) {
+                    mediaPlayer = MediaPlayer().apply {
+                        setAudioStreamType(AudioManager.STREAM_MUSIC)
+
+                        setOnPreparedListener { mp ->
+                            seekBar.max = mp.duration
+                            lblTotal.text = milliSecondsToTimer(mp.duration.toLong())
+
+                            mp.start()
+                            imgPlayPause.setImageResource(R.drawable.pause_icon_2)
+
+                            seekBar.progress = 0
+                            lblCurrent.text = "00:00"
+
+                            updateSeekBar(mp, seekBar, lblCurrent, lblTotal)
+                        }
+
+                        setOnCompletionListener {
+                            imgPlayPause.setImageResource(R.drawable.play_icon_2)
+                            seekBar.progress = 0
+                            lblCurrent.text = "00:00"
+                            handler?.removeCallbacks(updateRunnable!!)
+                        }
+
+                        setOnErrorListener { _, what, extra ->
+                            Log.e("MediaPlayer", "Error what=$what extra=$extra")
+                            releaseMediaPlayer()
+                            true
+                        }
+                    }
+
+                    try {
+                        mediaPlayer?.reset()
+                        mediaPlayer?.setDataSource(data.content)
+                        mediaPlayer?.prepareAsync() // 🔹 async, safe for all versions
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                } else {
+                    // Already prepared → resume
+                    mediaPlayer?.start()
+                    imgPlayPause.setImageResource(R.drawable.pause_icon_2)
+                    updateSeekBar(mediaPlayer!!, seekBar, lblCurrent, lblTotal)
+                }
+            }
+        }
+
+        // 🔹 Manual seek
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    mediaPlayer?.seekTo(progress)
+                    lblCurrent.text = milliSecondsToTimer(progress.toLong())
+                }
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+    }
+
+    private fun updateSeekBar(
+        mediaPlayer: MediaPlayer,
+        seekBar: SeekBar,
+        lblCurrent: TextView,
+        lblTotal: TextView
+    ) {
+        handler?.removeCallbacks(updateRunnable ?: return)
+
+        handler = Handler(Looper.getMainLooper())
+        updateRunnable = object : Runnable {
+            override fun run() {
+                if (mediaPlayer.isPlaying) {
+                    seekBar.progress = mediaPlayer.currentPosition
+                    lblCurrent.text = milliSecondsToTimer(mediaPlayer.currentPosition.toLong())
+                    lblTotal.text = milliSecondsToTimer(mediaPlayer.duration.toLong())
+                    handler?.postDelayed(this, 500)
+                }
+            }
+        }
+        handler?.post(updateRunnable!!)
+    }
+
+    fun milliSecondsToTimer(milliseconds: Long): String {
+        val hours = (milliseconds / (1000 * 60 * 60)).toInt()
+        val minutes = ((milliseconds % (1000 * 60 * 60)) / (1000 * 60)).toInt()
+        val seconds = ((milliseconds % (1000 * 60)) / 1000).toInt()
+
+        val minutesString = if (minutes < 10) "0$minutes" else "$minutes"
+        val secondsString = if (seconds < 10) "0$seconds" else "$seconds"
+
+        return if (hours > 0) "$hours:$minutesString:$secondsString"
+        else "$minutesString:$secondsString"
+    }
+
+    private fun releaseMediaPlayer() {
+        handler?.removeCallbacks(updateRunnable ?: return)
+        updateRunnable = null
+        handler = null
+
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releaseMediaPlayer()
+    }
+
+
+//
+//
+//    private fun setupAudioPlayer(
+//        data: GetMessagesStaffData,
+//        imgPlayPause: ImageView,
+//        seekBar: SeekBar,
+//        lblCurrent: TextView,
+//        lblTotal: TextView,
+//        seekBarLayout: LinearLayout
+//    ) {
+//        if (data.content.isNullOrEmpty()) {
+//            seekBarLayout.visibility = View.GONE
+//            return
+//        }
+//
+//        seekBarLayout.visibility = View.VISIBLE
+//
+//        // ✅ Convert seconds from API into mm:ss
+//        lblTotal.text = milliSecondsToTimer(data.duration!! * 1000L)
+//        lblCurrent.text = "00:00"
+//
+//
+//        imgPlayPause.setOnClickListener {
+//            if (mediaPlayer?.isPlaying == true) {
+//                mediaPlayer?.pause()
+//                imgPlayPause.setImageResource(R.drawable.play_icon_2)
+//            } else {
+//                try {
+//                    if (mediaPlayer == null) mediaPlayer = MediaPlayer()
+//
+//                    if (mediaPlayer?.currentPosition == 0) {
+//                        mediaPlayer?.reset()
+//                        mediaPlayer?.setDataSource(data.content)
+//                        mediaPlayer?.prepare()
+//                    }
+//
+//                    mediaPlayer?.start()
+//                    imgPlayPause.setImageResource(R.drawable.pause_icon_2)
+//
+//                    // ✅ update immediately at play start
+//                    lblCurrent.text = milliSecondsToTimer(mediaPlayer!!.currentPosition.toLong())
+//                    seekBar.max = mediaPlayer!!.duration
+//                    seekBar.progress = mediaPlayer!!.currentPosition
+//
+//                    // keep updating every second
+//                    updateSeekBar(mediaPlayer!!, seekBar, lblCurrent)
+//
+//                    // reset UI when complete
+//                    mediaPlayer?.setOnCompletionListener {
+//                        imgPlayPause.setImageResource(R.drawable.play_icon_2)
+//                        seekBar.progress = 0
+//                        lblCurrent.text = "00:00"
+//                    }
+//
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                }
+//            }
+//        }
+//
+//
+//
+//
+//        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+//                if (fromUser) {
+//                    mediaPlayer?.seekTo(progress)
+//                    lblCurrent.text = milliSecondsToTimer(progress.toLong())
+//                }
+//            }
+//
+//            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+//            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+//        })
+//    }
+//
+//
+//
+//
+//
+//    fun milliSecondsToTimer(milliseconds: Long): String {
+//        val hours = (milliseconds / (1000 * 60 * 60)).toInt()
+//        val minutes = ((milliseconds % (1000 * 60 * 60)) / (1000 * 60)).toInt()
+//        val seconds = ((milliseconds % (1000 * 60)) / 1000).toInt()
+//
+//        val minutesString = if (minutes < 10) "0$minutes" else "$minutes"
+//        val secondsString = if (seconds < 10) "0$seconds" else "$seconds"
+//
+//        return if (hours > 0) "$hours:$minutesString:$secondsString"
+//        else "$minutesString:$secondsString"
+//    }
+//
+//
+//
+//    private fun updateSeekBar(
+//        mediaPlayer: MediaPlayer,
+//        seekBar: SeekBar,
+//        lblCurrent: TextView
+//    ) {
+//        handler = Handler(Looper.getMainLooper())
+//        updateRunnable = object : Runnable {
+//            override fun run() {
+//                if (mediaPlayer.isPlaying) {
+//                    seekBar.progress = mediaPlayer.currentPosition
+//                    lblCurrent.text = milliSecondsToTimer(mediaPlayer.currentPosition.toLong())
+//                    handler?.postDelayed(this, 500)
+//                }
+//            }
+//        }
+//        handler?.post(updateRunnable!!)
+//    }
+//
+//
+//
+//
+//    private fun releaseMediaPlayer() {
+//        handler?.removeCallbacks(updateRunnable ?: return)
+//        updateRunnable = null
+//        handler = null
+//
+//        mediaPlayer?.release()
+//        mediaPlayer = null
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        releaseMediaPlayer()
+//    }
+
 }

@@ -1024,9 +1024,4 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetMessagesStaff?>?
 
-    @GET(APIMethods.isGetMessageFromStaffAchieve)
-    fun isGetMessageFromStaffAchieve(
-        @Header(APIKeyNames.Authorization) token: String,
-    ): Call<GetMessagesStaff?>?
-
 }

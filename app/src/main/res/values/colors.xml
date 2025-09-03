@@ -72,10 +72,12 @@
     <color name="bpWhite">#ffffff</color>
     <color name="teacher_clr_grey_dark">#4B4B4D</color>
     <color name="white">#fff</color>
+    <color name="grey_screen_clr">#F4F4F3</color>
     <color name="light_gray_2">#888888</color>
     <color name="gray_white">#f2f2f7</color>
     <color name="mild_grey6">#656565</color>
     <color name="mild_grey7">#586171</color>
+    <color name="mild_grey">#f9fafc</color>
     <color name="light_purple1">#6467d2</color>
     <color name="very_light_purple1">#1A6467d2</color>
     <color name="light_yellow_color">#F0C743</color>
@@ -192,6 +194,12 @@
     <color name="dark_bg_green">#8EFBCC</color>
     <color name="dark_bg_purple">#D4ABFD</color>
     <color name="dark_bg_orange">#F89F75</color>
+    <color name="dark_bg_orange_4">#f54a00</color>
+    <color name="pale_light_orange">#ffedd4</color>
+    <color name="dark_bg_voilet">#a22d00</color>
+    <color name="dark_bg_orange_2">#e17100</color>
+    <color name="pale_light_yellow">#fef3c6</color>
+    <color name="pale_light_brown">#c37652</color>
 
 
     <color name="light_bg_blue">#CFE8F6</color>

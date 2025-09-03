@@ -175,7 +175,6 @@ object APIMethods {
 
 
     const val isGetMessageFromStaff= "comm/api/msg-from-management/get-messages-staff"
-    const val isGetMessageFromStaffAchieve= "comm/api/msg-from-management/get-messages-staff-archive"
 
 
 

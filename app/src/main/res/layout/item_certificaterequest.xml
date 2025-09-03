@@ -30,6 +30,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:layout_toEndOf="@+id/imgCalender"
+            android:textSize="@dimen/sixteen"
             android:text="01 Apr, 2025"
             >
 
@@ -37,7 +38,7 @@
 
         <TextView
             android:id="@+id/lblCertificateTitle"
-            style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsMedium1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgCalender"
