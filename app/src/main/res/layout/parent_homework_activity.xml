@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cltDateSelection"
@@ -23,6 +23,7 @@
             android:src="@drawable/arrow_left_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
         </ImageView>
 
         <TextView
@@ -67,12 +68,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCalendar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/one_twenty"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:padding="@dimen/eight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lblSection" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -95,34 +99,36 @@
         android:id="@+id/lytSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:background="@drawable/rect_shadow_white"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/twenty"
+        android:layout_weight="1"
+        android:background="@drawable/rect_grey"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/fifteen"
+        android:padding="@dimen/seven"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/lblHomeWork">
 
         <ImageView
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:src="@drawable/search_icon">
-
-        </ImageView>
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search" />
 
         <EditText
             android:id="@+id/edtSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:inputType="text"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/imgSearch"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
             android:imeOptions="actionSearch"
-            android:background="@null"
-            android:hint="@string/search_dot">
-
-        </EditText>
+            android:inputType="text"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -142,10 +148,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cytNoDataFound"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifty"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/lytSearch"
 
         >
