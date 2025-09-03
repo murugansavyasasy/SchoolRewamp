@@ -7,4 +7,4 @@ data class ClassSection(
     val section_id: String,
     val class_name: String,
     val section_name: String
-)  : Serializable
+) : Serializable

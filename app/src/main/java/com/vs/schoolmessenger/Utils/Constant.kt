@@ -374,6 +374,7 @@ object Constant {
     var upload = "upload"
     var view = "view"
     var attachment = "Attachment"
+    var ATTACHMENT_ = "ATTACHMENT"
     var unlisted = "unlisted"
     var download = "download"
     var privacy = "privacy"
@@ -694,6 +695,46 @@ object Constant {
             else -> outputFormat.format(inputDate)
         }
     }
+
+    //"dd-MM-yyyy" to "dd MMM yyyy"
+
+    fun isFormatDate(dateStr: String): String {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+
+        val inputDate = inputFormat.parse(dateStr) ?: return dateStr
+
+        val calendar = Calendar.getInstance()
+
+        // Today
+        val today = Calendar.getInstance()
+
+        // Yesterday
+        val yesterday = Calendar.getInstance()
+        yesterday.add(Calendar.DAY_OF_YEAR, -1)
+
+        return when {
+            isSameDay(calendar = today, date = inputDate) -> "Today"
+            isSameDay(calendar = yesterday, date = inputDate) -> "Yesterday"
+            else -> outputFormat.format(inputDate)
+        }
+    }
+
+    fun getNameInitials(fullName: String): String {
+        // List of common prefixes to ignore
+        val prefixes = listOf("dr", "mr", "ms", "mrs", "miss")
+
+        return fullName
+            .trim()
+            .split("\\s+".toRegex()) // split by space(s)
+            .filter { part ->
+                part.isNotEmpty() && !prefixes.contains(part.lowercase())
+            }
+            .map { it[0].uppercaseChar() } // take first letter of each word
+            .joinToString("")
+    }
+
+
 
     private fun isSameDay(calendar: Calendar, date: Date): Boolean {
         val cal = Calendar.getInstance()

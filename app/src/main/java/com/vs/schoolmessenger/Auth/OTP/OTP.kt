@@ -9,11 +9,13 @@ import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -60,6 +62,8 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
         isOtpTitleLoad()
         binding.lblContactUs.paintFlags =
             binding.lblContactUs.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+        setupOtp()
 
         authViewModel!!.isOtpResponse?.observe(this) { response ->
             Constant.hideLoading(this@OTP)
@@ -153,15 +157,71 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
             }
         }
 
-        setOtpInputListener(binding.txtOtp1, binding.txtOtp2, null)
-        setOtpInputListener(binding.txtOtp2, binding.txtOtp3, binding.txtOtp1)
-        setOtpInputListener(binding.txtOtp3, binding.txtOtp4, binding.txtOtp2)
-        setOtpInputListener(binding.txtOtp4, binding.txtOtp5, binding.txtOtp3)
-        setOtpInputListener(binding.txtOtp5, binding.txtOtp6, binding.txtOtp4)
-        setOtpInputListener(binding.txtOtp6, null, binding.txtOtp5)
+//        setOtpInputListener(binding.txtOtp1, binding.txtOtp2, null)
+//        setOtpInputListener(binding.txtOtp2, binding.txtOtp3, binding.txtOtp1)
+//        setOtpInputListener(binding.txtOtp3, binding.txtOtp4, binding.txtOtp2)
+//        setOtpInputListener(binding.txtOtp4, binding.txtOtp5, binding.txtOtp3)
+//        setOtpInputListener(binding.txtOtp5, binding.txtOtp6, binding.txtOtp4)
+//        setOtpInputListener(binding.txtOtp6, null, binding.txtOtp5)
 
         startOtpTimer()
     }
+
+    private fun setupOtp() {
+        val boxes = listOf(binding.txtOtp1, binding.txtOtp2, binding.txtOtp3, binding.txtOtp4, binding.txtOtp5, binding.txtOtp6)
+
+        // Move forward automatically
+        boxes.forEachIndexed { index, editText ->
+            editText.doAfterTextChanged {
+                if (it?.length == 1) {
+                    if (index < boxes.lastIndex) {
+                        boxes[index + 1].requestFocus()
+                    } else {
+                        editText.clearFocus()
+                    }
+                }
+            }
+
+            // Backspace handling
+            editText.setOnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
+                    if (editText.text.isEmpty() && index > 0) {
+                        boxes[index - 1].apply {
+                            requestFocus()
+                            setSelection(text.length)
+                        }
+                        return@setOnKeyListener true
+                    }
+                }
+                false
+            }
+
+            // Paste full OTP
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val pasted = s?.toString() ?: return
+                    if (pasted.length > 1) {
+                        fillFromString(pasted.take(6), boxes)
+                    }
+                }
+                override fun afterTextChanged(s: Editable?) {}
+            })
+        }
+
+        binding.txtOtp1.requestFocus()
+    }
+
+    private fun fillFromString(code: String, boxes: List<EditText>) {
+        boxes.forEachIndexed { i, e ->
+            e.setText(code.getOrNull(i)?.toString() ?: "")
+        }
+        val firstEmpty = boxes.indexOfFirst { it.text.isNullOrEmpty() }
+        if (firstEmpty == -1) boxes.last().clearFocus() else boxes[firstEmpty].requestFocus()
+    }
+
+    private fun getOtp(): String = listOf(binding.txtOtp1, binding.txtOtp2, binding.txtOtp3, binding.txtOtp4, binding.txtOtp5, binding.txtOtp6).joinToString("") { it.text.toString() }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
@@ -301,9 +361,11 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
             }
 
             R.id.btnNext -> {
-                if (binding.txtOtp1.text.toString() != "" && binding.txtOtp2.text.toString() != "" && binding.txtOtp3.text.toString() != "" && binding.txtOtp4.text.toString() != "" && binding.txtOtp5.text.toString() != "" && binding.txtOtp6.text.toString() != "") {
-                    val isOpt =
-                        binding.txtOtp1.text.toString() + binding.txtOtp2.text.toString() + binding.txtOtp3.text.toString() + binding.txtOtp4.text.toString() + binding.txtOtp5.text.toString() + binding.txtOtp6.text.toString()
+                val isOpt = getOtp()
+                if (isOpt.length == 6) {
+//                if (binding.txtOtp1.text.toString() != "" && binding.txtOtp2.text.toString() != "" && binding.txtOtp3.text.toString() != "" && binding.txtOtp4.text.toString() != "" && binding.txtOtp5.text.toString() != "" && binding.txtOtp6.text.toString() != "") {
+//                    val isOpt =
+//                        binding.txtOtp1.text.toString() + binding.txtOtp2.text.toString() + binding.txtOtp3.text.toString() + binding.txtOtp4.text.toString() + binding.txtOtp5.text.toString() + binding.txtOtp6.text.toString()
                     binding.isLoading.visibility = View.GONE
                     isOtpValidate(isOpt)
                 } else {
