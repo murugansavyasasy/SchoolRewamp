@@ -8,10 +8,13 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -26,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentFilePathAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -36,6 +40,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaf
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_New
 import com.vs.schoolmessenger.databinding.MessageFromManagementBinding
 import me.relex.circleindicator.CircleIndicator2
 
@@ -48,12 +53,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var appViewModel: App? = null
     private lateinit var adapter2: AttachmentFilePathAdapter
     private lateinit var adapter: MessageFromStaffAdapter
-    var mediaFileLengthInMilliseconds = 0
     private var handler: Handler? = null
     private var mediaPlayer: MediaPlayer? = null
 
-    private var updateRunnable: Runnable? = null
+    private var isMsgStaff: List<GetMessagesStaffData>? = emptyList()
 
+    private var updateRunnable: Runnable? = null
 
     override fun getViewBinding(): MessageFromManagementBinding {
         return MessageFromManagementBinding.inflate(layoutInflater)
@@ -67,6 +72,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         isGetMessageFromStaff()
@@ -77,6 +83,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.rcMessageStaff.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
                     isLoadMsgStaff(response.data)
+                    isMsgStaff=response.data
+
                 }
                 else {
                     binding.rlaMessageFFromStaff.visibility = View.VISIBLE
@@ -90,7 +98,82 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             }
         }
 
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rytSearch1.visibility == View.VISIBLE) {
+                binding.rytSearch1.visibility = View.GONE
+            } else {
+                binding.rytSearch1.visibility = View.VISIBLE
+                binding.toolbarLayout.txtSearch.text.clear()
+
+            }
+        }
+
+
+        binding.txtSearch1.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+                Log.d("Search",s.toString())
+
+
+            }
+        })
+
     }
+
+    private fun filter(text: String) {
+        val searchWords = text.trim().lowercase().split("\\s+".toRegex())
+
+        val filteredList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
+            isMsgStaff.orEmpty()
+        } else {
+            isMsgStaff.orEmpty().filter { msgStaff ->
+                val fieldsToSearch = mutableListOf(
+                    msgStaff.title?.lowercase().orEmpty(),
+                    msgStaff.description?.lowercase().orEmpty(),
+                    msgStaff.time?.lowercase().orEmpty(),
+                    msgStaff.sent_by?.lowercase().orEmpty()
+                )
+
+                // 🔹 Skip content if VOICE
+                if (msgStaff.type?.uppercase() != "VOICE") {
+                    fieldsToSearch.add(msgStaff.content?.lowercase().orEmpty())
+                }
+
+                searchWords.all { word ->
+                    fieldsToSearch.any { field -> field.contains(word) }
+                }
+            }
+        }
+
+        // 🔹 Update UI
+        if (filteredList.isNotEmpty()) {
+            ShowData()
+            adapter.updateData(filteredList)
+        } else {
+            binding.rlaMessageFFromStaff.visibility = View.VISIBLE
+            binding.rcMessageStaff.visibility = View.GONE
+            ErrorMessage(getString(R.string.no_data_found))
+        }
+    }
+
+
+
+
+    fun ShowData() {
+        binding.rlaMessageFFromStaff.visibility = View.VISIBLE
+        binding.rcMessageStaff.visibility = View.VISIBLE
+        binding.lytList.visibility = View.GONE
+    }
+
+
 
     private fun isLoadMsgStaff(data: List<GetMessagesStaffData>) {
 
@@ -275,7 +358,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         }
         appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
     }
-
 
 
     private fun setupAudioPlayer(

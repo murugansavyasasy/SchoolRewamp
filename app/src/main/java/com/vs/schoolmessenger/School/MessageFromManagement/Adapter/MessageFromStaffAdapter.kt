@@ -10,6 +10,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
@@ -56,6 +57,11 @@ class MessageFromStaffAdapter(
         return if (isLoading) 20 else itemList?.size ?: 0
     }
 
+    fun updateData(newList: List<GetMessagesStaffData>) {
+        itemList = newList
+        notifyDataSetChanged()
+    }
+
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
@@ -66,7 +72,7 @@ class MessageFromStaffAdapter(
         private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
         private val lblView: TextView = itemView.findViewById(R.id.lblView)
         private val lblType: TextView = itemView.findViewById(R.id.lblType)
-        private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
+        private val imgReadStatus: View = itemView.findViewById(R.id.imgReadStatus)
 
 
         fun bind(data: GetMessagesStaffData, position: Int) {
@@ -84,16 +90,10 @@ class MessageFromStaffAdapter(
             }
 
             if (data.is_unread){
-                lblView.apply {
-                    setCompoundDrawablesWithIntrinsicBounds(R.drawable.eye_closed, 0, 0, 0)
-                    compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.PrimaryColor)
-                }
+                imgReadStatus.visibility=View.VISIBLE
             }
             else{
-                lblView.apply {
-                    setCompoundDrawablesWithIntrinsicBounds(R.drawable.eye_icon, 0, 0, 0)
-                    compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.PrimaryColor)
-                }
+                imgReadStatus.visibility=View.GONE
             }
 
             when (data.type) {
@@ -148,12 +148,8 @@ class MessageFromStaffAdapter(
                 }
             }
 
-
-
-            rlaHeader.setOnClickListener{
-                listener.onStaffClick(data)
-            }
             lblView.setOnClickListener{
+                imgReadStatus.visibility=View.GONE
                 listener.onStaffClick(data)
             }
         }
