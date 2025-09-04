@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Month header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/btnPrevMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Previous"
+            android:textSize="18sp"
+            android:padding="8dp"/>
+
+        <TextView
+            android:id="@+id/tvMonthYear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:text="September 2025"/>
+
+        <TextView
+            android:id="@+id/btnNextMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:textSize="18sp"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+    <!-- Weekdays row -->
+    <GridView
+        android:id="@+id/gridWeekdays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="7"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp"/>
+
+    <!-- Days grid -->
+    <GridView
+        android:id="@+id/gridCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="7"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp"/>
+</LinearLayout>

@@ -27,7 +27,7 @@ class SectionAndStandardAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.staff_slot_status_item)
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.class_load_item)
             ShimmerViewHolder(
                 shimmerView
             )
