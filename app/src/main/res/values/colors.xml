@@ -64,7 +64,6 @@
     <color name="light_sky_blue2">#b4d8ee</color>
     <color name="light_custom_green">#d0e4d8</color>
 
-
     <color name="light_gray">#616159</color>
     <color name="light_sky_blue_color">#bde6fc</color>
     <color name="gray_color">#f2f1f6</color>
@@ -91,6 +90,7 @@
     <color name="mild_grey5">#ebecee</color>
     <color name="violet1">#5856D6</color>
     <color name="very_light_grey">#E5E5EA</color>
+    <color name="light_red">#ffd8d6</color>
 
 
     <color name="grey">#ACACBA</color>
@@ -174,6 +174,7 @@
     <color name="navi_blue6">#3f87f2</color>
     <color name="gray">#e6e5eb</color>
     <color name="stoke_gray">#DDDDDD</color>
+    <color name="clr_violet">#6467d2</color>
 
     <color name="system_blue">#9DD6FD</color>
     <color name="light_violet">#E3F1FB</color>
