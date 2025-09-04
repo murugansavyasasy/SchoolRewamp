@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.School.PTM.Adapter.SelectedDatesAdapter
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.CreateSlotsBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -46,6 +47,12 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     private val selectedDates = ArrayList<String>()
     var startCalendar: Calendar? = null
     var endCalendar: Calendar? = null
+    var isSlotsCount = 1
+
+    private val itemsCategory = listOf(
+        "Select Slot Duration", "10", "15", "20", "30", "Custom"
+    )
+    var isSlotDuration = ""
 
 
     override fun setupViews() {
@@ -58,8 +65,16 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         binding.lblPhoneCall.setOnClickListener(this)
         binding.rytPickFromTime.setOnClickListener(this)
         binding.rytToTime.setOnClickListener(this)
+        binding.rytPickDurationBreak.setOnClickListener(this)
         binding.rytPickDate.setOnClickListener(this)
+        binding.imgCountUp.setOnClickListener(this)
+        binding.imgCountDown.setOnClickListener(this)
         binding.lblPerson.setOnClickListener(this)
+        binding.lblFiveMin.setOnClickListener(this)
+        binding.lblTenMin.setOnClickListener(this)
+        binding.lblTwentyMin.setOnClickListener(this)
+        binding.lblThirtyMin.setOnClickListener(this)
+
         isAccessToken = isStaffDetails!!.access_token
         binding.lblSchoolName.text = isStaffDetails!!.school_name
 
@@ -80,6 +95,16 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 }
             }
         }
+
+        binding.switchBreak.setOnClickListener {
+            if (binding.switchBreak.isChecked()) {
+                binding.rytNeedBreak.visibility = View.VISIBLE
+            } else {
+                binding.rytNeedBreak.visibility = View.GONE
+            }
+        }
+
+        isLoadSlotDuration()
     }
 
     private fun loadSectionStandard(data: List<Standard>) {
@@ -100,7 +125,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             SectionAndStandardAdapter(standardSectionList, this, Constant.isShimmerViewDisable)
         binding.rcySectionAndStandardList.layoutManager = GridLayoutManager(this, 5)
         binding.rcySectionAndStandardList.adapter = adapter
-
     }
 
 
@@ -150,6 +174,36 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
             R.id.rytPickDate -> {
                 showCalendarDialog()
+            }
+
+            R.id.lblFiveMin -> {
+                isChangeTheBackRoundBreakDuration(binding.lblFiveMin)
+            }
+
+            R.id.lblTenMin -> {
+                isChangeTheBackRoundBreakDuration(binding.lblTenMin)
+            }
+
+            R.id.lblTwentyMin -> {
+                isChangeTheBackRoundBreakDuration(binding.lblTwentyMin)
+            }
+
+            R.id.lblThirtyMin -> {
+                isChangeTheBackRoundBreakDuration(binding.lblThirtyMin)
+            }
+
+            R.id.imgCountUp -> {
+                isSlotsCount++
+                binding.lblSlotsCount.text = isSlotsCount.toString()
+            }
+
+            R.id.imgCountDown -> {
+                isSlotsCount--
+                binding.lblSlotsCount.text = isSlotsCount.toString()
+            }
+
+            R.id.rytPickDurationBreak -> {
+                isLoadSlotDuration()
             }
 
             R.id.rytPickFromTime -> {
@@ -213,6 +267,29 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
     }
 
+    fun isLoadSlotDuration() {
+        val adapter = SpinnerLoadingAdapter(this, itemsCategory)
+        binding.spinnerSlotDuration.adapter = adapter
+
+        binding.spinnerSlotDuration.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+                    isSlotDuration = itemsCategory[position]
+                    if (isSlotDuration == "Custom") {
+                        binding.rytSlotCustomEdit.visibility = View.VISIBLE
+                    } else {
+                        binding.rytSlotCustomEdit.visibility = View.GONE
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+    }
+
     private fun showCalendarDialog() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_calendar)
@@ -246,13 +323,18 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         dialog.show()
     }
 
+    private fun isChangeTheBackRoundBreakDuration(isSelectedTextView: TextView) {
+        binding.lblFiveMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
+        binding.lblTenMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
+        binding.lblTwentyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
+        binding.lblThirtyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
+        isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.bg_light_blue))
+    }
 
     private fun isChangeTheBackRound(isSelectedTextView: TextView) {
         binding.lblPerson.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblOnline.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblPhoneCall.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
-
         isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.bg_light_blue))
-
     }
 }

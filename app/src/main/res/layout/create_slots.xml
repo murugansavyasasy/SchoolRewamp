@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
 
     <RelativeLayout
@@ -502,50 +501,90 @@
 
                 </TextView>
 
-                <RelativeLayout
-                    android:id="@+id/rytPickDurationBreak"
+                <LinearLayout
+                    android:id="@+id/lytDuration"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSelectBreakTime"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:background="@drawable/outline_gray">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-
-                    <ImageView
-                        android:id="@+id/imgDuration"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty"
+                    <RelativeLayout
+                        android:id="@+id/rytPickDurationBreak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblSelectBreakTime"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_marginBottom="@dimen/ten"
-                        android:src="@drawable/calender_icon"></ImageView>
-
-                    <TextView
-                        android:id="@+id/lblSelectBreakAndDuration"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/twenty"
-                        android:layout_toEndOf="@+id/imgDuration"
-                        android:text="Duration"
-                        android:textColor="@color/black">
-
-                    </TextView>
-
-                    <ImageView
-                        android:id="@+id/imgDownArrowBreak"
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
-                        android:layout_marginBottom="@dimen/ten"
-                        android:src="@drawable/down_arrow_3"></ImageView>
+                        android:layout_weight="1"
+                        android:background="@drawable/outline_gray">
 
-                </RelativeLayout>
+
+                        <ImageView
+                            android:id="@+id/imgDuration"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/ten"
+                            android:src="@drawable/calender_icon"></ImageView>
+
+                        <RelativeLayout
+                            android:id="@+id/rytSendingType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/fifteen"
+                            android:layout_toEndOf="@+id/imgDuration"
+                            android:background="@drawable/bg_white_light_radious"
+                            android:gravity="center">
+
+                            <Spinner
+                                android:id="@+id/spinnerSlotDuration"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/custom_spinner_background" />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rytSlotCustomEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/edtSlotCustomDuration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/lblSlotDuration"
+                            android:gravity="center"
+                            android:hint="Enter">
+
+                        </EditText>
+
+                        <TextView
+                            android:id="@+id/lblSlotDuration"
+                            style="@style/CustomTextStylePoppinsBold1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:text="Minutes"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
 
 
                 <TextView
@@ -553,7 +592,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rytPickDurationBreak"
+                    android:layout_below="@+id/lytDuration"
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/fifteen"
                     android:layout_marginBottom="@dimen/ten"
@@ -565,169 +604,180 @@
                     android:id="@+id/switchBreak"
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
-                    android:layout_below="@+id/rytPickDurationBreak"
+                    android:layout_below="@+id/lytDuration"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/eight"
                     android:layout_marginBottom="@dimen/ten"
                     android:layout_toEndOf="@+id/lblNeedBreak" />
 
-
-                <TextView
-                    android:id="@+id/lblBreakAfter"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblNeedBreak"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:text="Break After"
-                    android:textColor="@color/black"></TextView>
-
-
                 <RelativeLayout
-                    android:id="@+id/rytBreakPick"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/rytNeedBreak"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblNeedBreak"
-                    android:layout_marginStart="@dimen/twenty_five"
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_toEndOf="@+id/lblBreakAfter"
-                    android:background="@drawable/rounded_bg">
+                    android:visibility="gone">
 
-                    <ImageView
-                        android:id="@+id/imdCountUp"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/fifteen"
-                        android:src="@drawable/ic_plus">
-
-                    </ImageView>
 
                     <TextView
-                        android:id="@+id/lblPlus"
+                        android:id="@+id/lblBreakAfter"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/twenty"
-                        android:layout_toEndOf="@+id/imdCountUp"
-                        android:text=" 1 "
+                        android:layout_marginBottom="@dimen/ten"
+                        android:text="Break After"
                         android:textColor="@color/black"></TextView>
 
-                    <ImageView
-                        android:id="@+id/imgCountDown"
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/twenty"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/fifteen"
-                        android:layout_toEndOf="@+id/lblPlus"
-                        android:src="@drawable/negative">
 
-                    </ImageView>
+                    <RelativeLayout
+                        android:id="@+id/rytBreakPick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/twenty_five"
+                        android:layout_marginTop="@dimen/five"
+                        android:layout_toEndOf="@+id/lblBreakAfter"
+                        android:background="@drawable/rounded_bg">
+
+                        <ImageView
+                            android:id="@+id/imgCountUp"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/fifteen"
+                            android:src="@drawable/ic_plus">
+
+                        </ImageView>
+
+                        <TextView
+                            android:id="@+id/lblSlotsCount"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/fifteen"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/twenty"
+                            android:layout_toEndOf="@+id/imgCountUp"
+                            android:text=" 1 "
+                            android:textColor="@color/black"></TextView>
+
+                        <ImageView
+                            android:id="@+id/imgCountDown"
+                            android:layout_width="@dimen/fifteen"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/fifteen"
+                            android:layout_toEndOf="@+id/lblSlotsCount"
+                            android:src="@drawable/negative">
+
+                        </ImageView>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/lblSlots"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginBottom="@dimen/ten"
+                        android:layout_toEndOf="@+id/rytBreakPick"
+                        android:text="Slots"
+                        android:textColor="@color/black"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/lblBreakDuration"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblBreakAfter"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginBottom="@dimen/ten"
+                        android:text="Break Duration"
+                        android:textColor="@color/black"></TextView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblBreakDuration"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginBottom="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <TextView
+                            android:id="@+id/lblFiveMin"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/five"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_bg"
+                            android:gravity="center"
+                            android:padding="@dimen/five"
+                            android:text="5 mins"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/lblTenMin"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/five"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_bg"
+                            android:gravity="center"
+                            android:padding="@dimen/five"
+                            android:text="10 mins"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/lblTwentyMin"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/five"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_bg"
+                            android:gravity="center"
+                            android:padding="@dimen/five"
+                            android:text="20 mins"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/lblThirtyMin"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/five"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_bg"
+                            android:gravity="center"
+                            android:padding="@dimen/five"
+                            android:text="30 mins"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+
                 </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/lblSlots"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblNeedBreak"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:layout_toEndOf="@+id/rytBreakPick"
-                    android:text="Slots"
-                    android:textColor="@color/black"></TextView>
-
-
-                <TextView
-                    android:id="@+id/lblBreakDuration"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblBreakAfter"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:text="Break Duration"
-                    android:textColor="@color/black"></TextView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblBreakDuration"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-                    <TextView
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/five"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_bg"
-                        android:gravity="center"
-                        android:padding="@dimen/five"
-                        android:text="5 mins"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <TextView
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/five"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_bg"
-                        android:gravity="center"
-                        android:padding="@dimen/five"
-                        android:text="10 mins"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <TextView
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/five"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_bg"
-                        android:gravity="center"
-                        android:padding="@dimen/five"
-                        android:text="20 mins"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <TextView
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/five"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_bg"
-                        android:gravity="center"
-                        android:padding="@dimen/five"
-                        android:text="30 mins"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                </LinearLayout>
             </RelativeLayout>
 
             <TextView
