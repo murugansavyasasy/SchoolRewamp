@@ -28,6 +28,7 @@
             android:weightSum="1">
 
             <LinearLayout
+                android:layout_marginEnd="@dimen/five"
                 android:id="@+id/lnrTabOneName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:layout_marginStart="@dimen/five"
                 android:orientation="vertical">
 
                 <TextView

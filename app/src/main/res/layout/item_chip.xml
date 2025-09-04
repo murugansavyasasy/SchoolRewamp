@@ -9,14 +9,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/bg_chip"
-        android:padding="@dimen/ten"
+        android:padding="@dimen/five"
         android:layout_margin="@dimen/four"
-        android:gravity="center_vertical">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/imgIcon"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
+            android:layout_width="@dimen/twele"
+            android:layout_height="@dimen/twele"
             android:layout_marginEnd="@dimen/four"
             android:src="@drawable/search_icon" />
 
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sample"
-            android:textSize="@dimen/fourteen_sp" />
+            android:textSize="@dimen/twele_sp" />
     </LinearLayout>
 
 
