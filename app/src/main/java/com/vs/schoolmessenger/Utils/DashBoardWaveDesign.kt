@@ -2,11 +2,12 @@ package com.vs.schoolmessenger.Utils
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.vs.schoolmessenger.R
 import kotlin.math.sin
 
 class DashBoardWaveDesign @JvmOverloads constructor(
@@ -15,20 +16,21 @@ class DashBoardWaveDesign @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+    private val waveColor = ContextCompat.getColor(context, R.color.bpWhite)
+
     private val wavePaint1 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
-        alpha = 60
-        style = Paint.Style.FILL
-    }
-    private val wavePaint2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
+        color = waveColor
         alpha = 80
         style = Paint.Style.FILL
     }
-
+    private val wavePaint2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = waveColor
+        alpha = 80
+        style = Paint.Style.FILL
+    }
     private val wavePaint3 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
-        alpha = 200
+        color = waveColor
+        alpha = 250
         style = Paint.Style.FILL
     }
 
@@ -36,31 +38,31 @@ class DashBoardWaveDesign @JvmOverloads constructor(
         super.onDraw(canvas)
 
         val totalHeight = height.toFloat()
-        val waveLength = width.toFloat() * 1.99f
-        val waveHeight = 20f
+        val waveLength = width.toFloat() * 2.35f
+        val waveHeight = 30f
 
         drawWave(
             canvas,
             wavePaint1,
             waveLength,
             waveHeight,
-            offsetY = totalHeight - 90,
-            phaseShift = 150f
+            offsetY = totalHeight - 95,
+            phaseShift = 85f
         )
         drawWave(
             canvas,
             wavePaint2,
             waveLength,
             waveHeight,
-            offsetY = totalHeight - 65,
-            phaseShift = 450f
+            offsetY = totalHeight - 95,
+            phaseShift = 500f
         )
         drawWave(
             canvas,
             wavePaint3,
             waveLength,
             waveHeight,
-            offsetY = totalHeight - 45,
+            offsetY = totalHeight - 75,
             phaseShift = 700f
         )
     }
@@ -79,7 +81,7 @@ class DashBoardWaveDesign @JvmOverloads constructor(
 
         path.moveTo(0f, viewHeight)
         for (x in 0..viewWidth.toInt()) {
-            val y = (waveHeight * sin((x + phaseShift) * Math.PI * 10 / waveLength)).toFloat()
+            val y = (waveHeight * sin((x + phaseShift) * Math.PI * 9.85 / waveLength)).toFloat()
             path.lineTo(x.toFloat(), offsetY + y)
         }
         path.lineTo(viewWidth, viewHeight)
