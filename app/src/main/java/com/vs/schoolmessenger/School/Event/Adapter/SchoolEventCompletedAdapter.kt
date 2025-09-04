@@ -25,6 +25,7 @@ import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import lecho.lib.hellocharts.model.Line
 
 class SchoolEventCompletedAdapter(
     private var itemList: List<SchoolEventItem>?,
@@ -128,6 +129,7 @@ class SchoolEventCompletedAdapter(
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)
         private val header: RelativeLayout = itemView.findViewById(R.id.header)
+        private val rytList2: LinearLayout = itemView.findViewById(R.id.rytList2)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -169,6 +171,7 @@ class SchoolEventCompletedAdapter(
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
+
             if (data.file_path.isEmpty()) {
                 rcyImgPDF.visibility = View.GONE
                 total_numbers.visibility = View.GONE

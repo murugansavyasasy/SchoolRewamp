@@ -589,15 +589,16 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     )
         ) {
 
-            binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_green)
+//            binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_green)
             binding.btnAbsent.setBackgroundResource(R.drawable.rect_shadow_red)
-            binding.btnSelectPresent.isEnabled = true
+            binding.btnAbsent.background.setTint(ContextCompat.getColor(this, R.color.PrimaryColor))
+//            binding.btnSelectPresent.isEnabled = true
             binding.btnAbsent.isEnabled = true
         } else {
-            binding.btnSelectPresent.isEnabled = false
+//            binding.btnSelectPresent.isEnabled = false
             binding.btnAbsent.isEnabled = false
             binding.btnAbsent.setBackgroundResource(R.drawable.rect_shadow_gray)
-            binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_gray)
+//            binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_gray)
 
         }
     }

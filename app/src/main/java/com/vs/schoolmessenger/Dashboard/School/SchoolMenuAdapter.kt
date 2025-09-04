@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.School
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -222,6 +223,8 @@ class SchoolMenuAdapter(
                 Constant.isSchoolMenuName = data.name
                 Constant.SELECTED_SCHOOL_MENU = data.id
                 listener.onClick(data)
+                Constant.isSchoolMenuCount=itemCountList!![position].unread_count
+                Log.d("Menu Count","${Constant.isSchoolMenuCount},${data.name}")
             }
         }
     }

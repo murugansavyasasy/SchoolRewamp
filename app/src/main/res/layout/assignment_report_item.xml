@@ -161,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GENERAL"
-            android:textSize="@dimen/twele_sp"
+            android:textSize="@dimen/ten"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/clr_grey_dark"
@@ -276,13 +276,24 @@
         android:layout_marginEnd="@dimen/ten"
         android:layout_marginBottom="@dimen/five"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblSubmittedCount"
+        android:text="0/0"
+        android:textColor="@color/black"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_below="@+id/progressBarAssignment"
+        android:layout_marginStart="@dimen/ten"
+        android:textSize="@dimen/thirteen_sp"/>
+
 
 
     <LinearLayout
         android:id="@+id/rytList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBarAssignment"
+        android:layout_below="@+id/lblSubmittedCount"
         android:layout_marginStart="@dimen/five"
         android:layout_marginBottom="@dimen/two"
         android:orientation="horizontal">

@@ -189,6 +189,7 @@ object Constant {
     var isParentMenuName = ""
 
     var isSchoolMenuName = ""
+    var isSchoolMenuCount =-1
 
 
 //    var isForward = false
@@ -721,18 +722,29 @@ object Constant {
     }
 
     fun getNameInitials(fullName: String): String {
-        // List of common prefixes to ignore
         val prefixes = listOf("dr", "mr", "ms", "mrs", "miss")
 
-        return fullName
+        val parts = fullName
             .trim()
-            .split("\\s+".toRegex()) // split by space(s)
+            .split("[\\s.]+".toRegex()) // split by space or dot
             .filter { part ->
                 part.isNotEmpty() && !prefixes.contains(part.lowercase())
             }
-            .map { it[0].uppercaseChar() } // take first letter of each word
-            .joinToString("")
+
+        return when {
+            parts.isEmpty() -> ""
+            parts.size == 1 -> {
+                // Only one word → just first letter
+                parts[0].first().uppercaseChar().toString()
+            }
+            else -> {
+                val first = parts.first().first().uppercaseChar()
+                val last = parts.last().last().uppercaseChar()
+                "$first$last"
+            }
+        }
     }
+
 
 
 

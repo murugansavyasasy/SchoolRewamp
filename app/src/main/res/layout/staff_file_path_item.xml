@@ -4,8 +4,6 @@
     android:id="@+id/fileItem"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/ten"
-    android:layout_marginBottom="@dimen/ten"
     android:fitsSystemWindows="true">
 
 
