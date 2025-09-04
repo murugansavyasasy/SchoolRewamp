@@ -115,11 +115,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         dateFormat.format(currentDate)
-//        binding.lblDate.text = formattedDate
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-//        binding.changeroll.paintFlags = binding.changeroll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
         Constant.checkBiometricSupport(requireActivity())
 
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
@@ -165,8 +162,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             (activity as? SchoolDashboard)?.openDrawer()
         }
 
-
-
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
                 val status = response.status
@@ -180,7 +175,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     appViewModel!!.isDashBoardCountData(
                         access_token, Constant.staff_, requireActivity()
                     )
-
                     isSchoolMenuDetails = isSchoolDashBoardData!![0].menus
                     FrequentSchoollyUsedMenuItems = isSchoolDashBoardData!![0].frequently_used
                     allMenuItems = isSchoolMenuDetails!!
@@ -221,8 +215,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 isLoadData()
             }
         }
-
-
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (userDetails!!.is_parent && userDetails!!.is_staff) {
@@ -235,11 +227,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
         return binding.root
     }
-
-
     private fun setupRecyclerView() {
         if (!FrequentSchoollyUsedMenuItems.isNullOrEmpty()) {
             binding.autoScrollRecyclerView.visibility = View.VISIBLE
@@ -262,19 +251,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.autoScrollRecyclerView.visibility = View.GONE
         }
     }
-
-
-//    private fun updateDotsIndicator(position: Int) {
-//        if (position < dots.size && position != currentDotPosition) {
-//            if (currentDotPosition < dots.size) {
-//                dots[currentDotPosition].setImageDrawable(createDotDrawable(false))
-//            }
-//
-//            dots[position].setImageDrawable(createDotDrawable(true))
-//            currentDotPosition = position
-//        }
-//    }
-
 
     private fun createSampleData(): List<ScrollItem> {
         return listOf(
@@ -341,16 +317,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             SchoolMenuAdapter(requireActivity(), this, null, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 
-        // Adjust span count for special layout
-//        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//            override fun getSpanSize(position: Int): Int {
-//                return when (isMenuAdapter.getItemViewType(position)) {
-//                    2 -> 3 // TYPE_AD: Span across all 3 columns
-//                    else -> 1 // Default: 1 span per item
-//                }
-//            }
-//        }
-
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
 
@@ -376,11 +342,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         else{
             isLoadData()
             setupRecyclerView()
-
         }
         Log.d("Loading", "Dashboard Data is Refreshed")
-
-        Log.d("Status", "onResume")
     }
 
     override fun onPause() {
@@ -600,7 +563,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
-
             Constant.M_ATTACHMENTS -> {
                 Attachment::class.java
             }
@@ -608,14 +570,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_LEAVE_REQUEST -> {
                 LeaveRequests::class.java
             }
-
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
 //            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
             Constant.M_SCHOOL_NEEDS -> LsrwMain::class.java
             else -> null
         }
-
         activityClass?.let {
             startActivity(Intent(requireActivity(), it))
         }

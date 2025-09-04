@@ -90,28 +90,17 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding = ParentHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
-//        binding.imgSearchClick.setOnClickListener(this)
-//        binding.lblChangeRoll.setOnClickListener(this)
-//        binding.imgSearchCancel.setOnClickListener(this)
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
         access_token = childDetails!!.access_token
 
-
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         dateFormat.format(currentDate)
-//        binding.lblDate.text = formattedDate
-//        binding.lblStudentName.text = childDetails!!.name
         binding.username.text = childDetails!!.name
         binding.lblSchoolName.text = childDetails!!.school_name
-//        binding.lblSchoolAddress.text = childDetails!!.student_address
-//        binding.lblChangeRoll.paintFlags =
-//            binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
         Constant.checkBiometricSupport(requireActivity())
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
@@ -129,73 +118,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgBurgerMenu.setOnClickListener {
             (activity as? ParentDashboard)?.openDrawer()
         }
-
-
-//        if (userDetails!!.is_parent && userDetails!!.is_staff) {
-//            binding.lblChangeRoll.visibility = View.VISIBLE
-//        } else {
-//            if (userDetails!!.child_details.size > 1) {
-//                binding.lblChangeRoll.visibility = View.VISIBLE
-//            } else {
-//                binding.lblChangeRoll.visibility = View.GONE
-//            }
-//        }
-
-//        Glide.with(requireActivity())
-//            .load(childDetails!!.school_logo_url)
-//            .listener(object : RequestListener<Drawable> {
-//
-//                override fun onLoadFailed(
-//                    e: GlideException?,
-//                    model: Any?,
-//                    target: com.bumptech.glide.request.target.Target<Drawable?>,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    Handler(Looper.getMainLooper()).post {
-//                        Glide.with(requireActivity())
-//                            .load(R.drawable.school_sample)
-//                            .into(binding.imgSchoolLogo)
-//                    }
-//                    return false
-//                }
-//
-//                override fun onResourceReady(
-//                    resource: Drawable,
-//                    model: Any,
-//                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
-//                    dataSource: com.bumptech.glide.load.DataSource,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    Log.d("Glide", "Image load success")
-//                    return false
-//                }
-//            })
-//            .into(binding.imgSchoolLogo)
-//
-//        binding.lblViewDetails.paintFlags =
-//            binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
-
-//        binding.lblViewDetails.setOnClickListener {
-//            this.startActivity(
-//                Intent(
-//                    requireActivity(), AttendanceReport::class.java
-//                )
-//            )
-//        }
-//
-//        binding.lblGif.playAnimation()
-//        binding.lblGif.setAnimation(R.raw.mathematics)
-
-//        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {}
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                filter(s.toString())
-//            }
-//        })
 
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
@@ -362,28 +284,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val intent = Intent(requireActivity(), Notification::class.java)
                 startActivity(intent)
             }
-
-//            R.id.lblChangeRoll -> {
-//                requireActivity().onBackPressedDispatcher.onBackPressed()
-//            }
-
-
-//            R.id.imgSearchClick -> {
-//                if (isSearchVisible) {
-//                    binding.txtSearchMenu.setText("")
-//                    isSearchVisible = false
-//                    binding.rytSearchBar.visibility = View.GONE
-//                } else {
-//                    isSearchVisible = true
-//                    binding.rytSearchBar.visibility = View.VISIBLE
-//                }
-//            }
-//
-//            R.id.imgSearchCancel -> {
-//                binding.txtSearchMenu.setText("")
-//                isSearchVisible = false
-//                binding.rytSearchBar.visibility = View.GONE
-//            }
         }
     }
 
@@ -436,17 +336,14 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 CertificateRequest::class.java
             )
-
             Constant.M_COUPON_PACKET -> Intent(
                 requireActivity(),
                 CouponDashboardActivity::class.java
             )
-
             Constant.M_EXAM -> Intent(
                 requireActivity(),
                 ExamMark::class.java
             )
-
 
             else -> null
         }

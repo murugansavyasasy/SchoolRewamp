@@ -32,6 +32,7 @@ import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -74,26 +75,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         // Optionally overridden in child activities to perform actions on views
     }
 
-//    private fun applyCustomFontToViews() {
-//        val customFont: Typeface? = ResourcesCompat.getFont(this, R.font.poppins_regular)
-//        customFont?.let { font ->
-//            // Apply the font to all TextViews in the root view
-//            val rootView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
-//            setFontRecursively(rootView, font)
-//        }
-//    }
-//
-//    private fun setFontRecursively(viewGroup: ViewGroup, font: Typeface) {
-//        for (i in 0 until viewGroup.childCount) {
-//            val child = viewGroup.getChildAt(i)
-//            when (child) {
-//                is TextView -> child.typeface = font
-//                is ViewGroup -> setFontRecursively(child, font)
-//            }
-//        }
-//    }
-
-
     fun isToolBarBlackTheme() {
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -127,14 +108,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
 
-
-//    protected open fun setupToolbarBlue() {
-//        val window = this.window
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//        window.statusBarColor = Color.TRANSPARENT
-//        window.navigationBarColor = Color.TRANSPARENT
-//        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
-//    }
 
     protected open fun setUpGradientParent() {
         val window = this.window
@@ -202,6 +175,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         icon_help: Int,
         icon_settings: Int,
         icon_profile: Int,
+        lbl_home: Int,
+        lbl_help: Int,
+        lbl_settings: Int,
+        lbl_profile: Int,
         frm: Int,
         isBottomMenu: Int
     ) {
@@ -213,12 +190,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         binding.root.findViewById<FrameLayout>(frm)
         val isBottomMenu = binding.root.findViewById<LinearLayout>(isBottomMenu)
 
+        isBottomMenu.setBackgroundResource(R.drawable.white_bg_card)
+
         if (Constant.isParentChoose) {
-            isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_school)
             loadFragment(this, ParentHomeFragment())
         } else {
             loadFragment(this, SchoolHomeFragment())
-            isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_school)
         }
         updateNavBar(icon_home)
 
@@ -243,34 +220,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             updateNavBar(icon_profile)
         }
 
-        // Perform actions on the view
+
     }
-
-//    fun showDropdownMenuSort(
-//        context: Context,
-//        spinner: Spinner,
-//        items: List<String>,
-//        onItemSelected: (String) -> Unit
-//    ) {
-//        val adapter = ArrayAdapter(
-//            context,
-//            R.layout.dropdown_spinner, // or android.R.layout.simple_spinner_item
-//            items
-//        )
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        spinner.adapter = adapter
-//
-//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>, view: View?, position: Int, id: Long
-//            ) {
-//                onItemSelected(items[position])
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {}
-//        }
-//    }
-
     fun showDropdownMenuSort(
         anchor: View,
         activity: Activity,
@@ -520,30 +471,55 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
     fun updateNavBar(selectedItemId: Int) {
-//        // Reset all icons
+        // Reset all icons
         findViewById<ImageView>(R.id.icon_home).setColorFilter(
             ContextCompat.getColor(
                 this,
-                R.color.black1
+                R.color.grey
             ), PorterDuff.Mode.SRC_IN
         )
-        findViewById<ImageView>(R.id.icon_help).setColorFilter(
+        findViewById<TextView>(R.id.lblHome).setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.black1
+                R.color.grey
+            )
+        )
+
+            findViewById<ImageView>(R.id.icon_help).setColorFilter(
+            ContextCompat.getColor(
+                this,
+                R.color.grey
             ), PorterDuff.Mode.SRC_IN
+        )
+        findViewById<TextView>(R.id.lblHelp).setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.grey
+            )
         )
         findViewById<ImageView>(R.id.icon_profile).setColorFilter(
             ContextCompat.getColor(
                 this,
-                R.color.black1
+                R.color.grey
             ), PorterDuff.Mode.SRC_IN
+        )
+        findViewById<TextView>(R.id.lblProfile).setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.grey
+            )
         )
         findViewById<ImageView>(R.id.icon_settings).setColorFilter(
             ContextCompat.getColor(
                 this,
-                R.color.black1
+                R.color.grey
             ), PorterDuff.Mode.SRC_IN
+        )
+        findViewById<TextView>(R.id.lblSettings).setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.grey
+            )
         )
 
         findViewById<ImageView>(R.id.icon_settings).background = null
@@ -555,97 +531,65 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         when (selectedItemId) {
             R.id.icon_home -> {
-
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_home))
-
                 findViewById<ImageView>(R.id.icon_home).setColorFilter(
                     ContextCompat.getColor(
                         this,
-                        R.color.white
+                        R.color.PrimaryColor
                     ), PorterDuff.Mode.SRC_IN
                 )
+                findViewById<TextView>(R.id.lblHome).setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.PrimaryColor
+                    )
+                )
 
-//                animateBackgroundColor(
-//                    binding.root.findViewById(R.id.icon_home),
-//                    R.color.sky_blue0,
-//                    R.color.sky_blue2
-//                )
-                //    setupToolbar()
-                if (Constant.isParentChoose) {
-                    setupToolbarBlue()
-                    window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
-
-                } else {
-                    setupToolbarBlue()
-                }
             }
 
             R.id.icon_help -> {
-
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_help))
                 findViewById<ImageView>(R.id.icon_help).setColorFilter(
-                    ContextCompat.getColor(this, R.color.white),
+                    ContextCompat.getColor(this, R.color.PrimaryColor),
                     PorterDuff.Mode.SRC_IN
                 )
-//                animateBackgroundColor(
-//                    binding.root.findViewById(R.id.icon_help),
-//                    R.color.sky_blue0,
-//                    R.color.sky_blue2
-//                )
-                //      setupToolbar()
-                if (Constant.isParentChoose) {
-                    setupToolbarBlue()
-                    window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
 
-                } else {
-                    setupToolbarBlue()
-                }
+                findViewById<TextView>(R.id.lblHelp).setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.PrimaryColor
+                    )
+                )
             }
 
             R.id.icon_profile -> {
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_profile))
-
                 findViewById<ImageView>(R.id.icon_profile).setColorFilter(
-                    ContextCompat.getColor(this, R.color.white),
+                    ContextCompat.getColor(this, R.color.PrimaryColor),
                     PorterDuff.Mode.SRC_IN
                 )
-//                animateBackgroundColor(
-//                    binding.root.findViewById(R.id.icon_profile),
-//                    R.color.sky_blue0,
-//                    R.color.sky_blue2
-//                )
 
-                //   setupToolbar()
-                if (Constant.isParentChoose) {
-                    setupToolbarBlue()
-                    window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
-
-                } else {
-                    setupToolbarBlue()
-                }
+                findViewById<TextView>(R.id.lblProfile).setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.PrimaryColor
+                    )
+                )
             }
 
             R.id.icon_settings -> {
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_settings))
-
                 findViewById<ImageView>(R.id.icon_settings).setColorFilter(
-                    ContextCompat.getColor(this, R.color.white),
+                    ContextCompat.getColor(this, R.color.PrimaryColor),
                     PorterDuff.Mode.SRC_IN
                 )
-//                animateBackgroundColor(
-//                    binding.root.findViewById(R.id.icon_settings),
-//                    R.color.sky_blue0,
-//                    R.color.sky_blue2
-//                )
 
-                //    setupToolbar()
-                if (Constant.isParentChoose) {
-                    setupToolbarBlue()
-                    window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
-
-                } else {
-                    setupToolbarBlue()
-                }
+                findViewById<TextView>(R.id.lblSettings).setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.PrimaryColor
+                    )
+                )
             }
         }
     }
@@ -889,23 +833,4 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-//    fun validateTimeWithAmPmLegacy(fromTime: String, toTime: String): String {
-//        val timeFormat = SimpleDateFormat(Constant.hh_mm_a) // 12-hour format with AM/PM
-//        val fromDate = timeFormat.parse(fromTime)
-//        val toDate = timeFormat.parse(toTime)
-//
-//        return when {
-//            fromDate == toDate -> {
-//                resources.getString(R.string.The_time_equal_Please_validtime)
-//            }
-//
-//            toDate!!.before(fromDate) -> {
-//                resources.getString(R.string.The_time_before_Please_validtime)
-//            }
-//
-//            else -> {
-//                resources.getString(R.string.The_time_is_valid)
-//            }
-//        }
-//    }
 }
