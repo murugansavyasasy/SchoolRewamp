@@ -147,7 +147,34 @@ class EventCompletedAdapter(
 
             loadingBar.visibility = View.GONE
 
-            header.setOnClickListener {
+//            header.setOnClickListener {
+//                val convertedList = data.file_path.map {
+//                    GetFilePathDetails(
+//                        type = it.type,
+//                        url = it.url,
+//                    )
+//                }
+//
+//                val isHomeWorkData = FilePreview(
+//                    id = "",
+//                    title = data.title,
+//                    description = data.description,
+//                    subjectName = "",
+//                    sentBy = "",
+//                    thumbnail = "",
+//                    isUnread = true,
+//                    isCompleted = true,
+//                    isMenuType = Constant.M_PARENT_CLASS_EVENTS,
+//                    fileList = convertedList,
+//                )
+//
+//                val intent = Intent(context, ChildHomeWork::class.java)
+//                intent.putExtra("isPreViewData", isHomeWorkData)
+//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                context.startActivity(intent)
+//            }
+
+            val openPreview: () -> Unit = {
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -173,6 +200,10 @@ class EventCompletedAdapter(
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
+            header.setOnClickListener { openPreview() }
+
+            rytList.setOnClickListener { openPreview() }
+            rcyImgPDF.setOnClickListener { openPreview() }
 
 
             if (data.file_path.isNullOrEmpty()) {
