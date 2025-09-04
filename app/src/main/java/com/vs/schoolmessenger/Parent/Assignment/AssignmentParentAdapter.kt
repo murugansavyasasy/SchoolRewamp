@@ -185,6 +185,7 @@ class AssignmentParentAdapter(
             }
 
             rytList.setOnClickListener {
+
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
