@@ -490,7 +490,7 @@
                                 <TextView
                                     android:layout_marginTop="@dimen/five"
                                     android:layout_width="wrap_content"
-                                    android:text="@string/attendance_report"
+                                    android:text="@string/leave_history"
                                     android:gravity="center"
                                     style="@style/CustomTextStylePoppinsMedium"
                                     android:textSize="@dimen/twele_sp"
