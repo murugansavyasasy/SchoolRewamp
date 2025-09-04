@@ -136,10 +136,8 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             mAdapter = FeePendingReportAdapter(flatList, this)
             binding.totalsummary1.layoutManager = LinearLayoutManager(this)
             binding.totalsummary1.adapter = mAdapter
-            val totalCollectionSum = data.sumOf {
-                it.total_pending.replace("₹", "").toDoubleOrNull() ?: 0.0
-            }
-            binding.totalCollection.text = "₹ %.2f".format(totalCollectionSum)
+            val totalCollectionSum = data[0].total_pending
+            binding.totalCollection.text = totalCollectionSum.toString()
 
         }
     }

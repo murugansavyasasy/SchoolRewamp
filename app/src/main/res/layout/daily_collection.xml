@@ -233,7 +233,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/five"
             android:gravity="center"
-            android:text="88,000.00"
+            android:text="0.0"
             android:textColor="@color/black"
             android:textSize="@dimen/thirty_five_sp" />
     </RelativeLayout>

@@ -131,6 +131,7 @@ class EventCompletedAdapter(
 
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val header: RelativeLayout = itemView.findViewById(R.id.header)
+        private val rytList2: LinearLayout = itemView.findViewById(R.id.rytList2)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -172,6 +173,8 @@ class EventCompletedAdapter(
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
+
+
             if (data.file_path.isNullOrEmpty()) {
                 rcyImgPDF.visibility = View.GONE
                 total_numbers.visibility = View.GONE

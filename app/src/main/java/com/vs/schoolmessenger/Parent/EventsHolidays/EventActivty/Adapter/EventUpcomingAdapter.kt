@@ -129,6 +129,7 @@ class EventUpcomingAdapter(
 
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val header: RelativeLayout = itemView.findViewById(R.id.header)
+        private val rytList2: LinearLayout = itemView.findViewById(R.id.rytList2)
 
 
         @SuppressLint("ClickableViewAccessibility")
@@ -171,6 +172,8 @@ class EventUpcomingAdapter(
                 context.startActivity(intent)
 
             }
+
+
 
             if (data.file_path.isNullOrEmpty()) {
                 rcyImgPDF.visibility = View.GONE

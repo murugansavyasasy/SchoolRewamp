@@ -144,6 +144,7 @@ class SchoolEventUpcomingAdapter(
         private val options: ImageView = itemView.findViewById(R.id.options)
 
         private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
+        private val rytList2: LinearLayout = itemView.findViewById(R.id.rytList2)
 
 
         @SuppressLint("ClickableViewAccessibility")
@@ -244,6 +245,8 @@ class SchoolEventUpcomingAdapter(
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
+
+
                 if (data.file_path.isNullOrEmpty()) {
                     rcyImgPDF.visibility = View.GONE
                     total_numbers.visibility = View.GONE
