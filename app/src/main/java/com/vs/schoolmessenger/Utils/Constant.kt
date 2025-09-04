@@ -1419,8 +1419,10 @@ object Constant {
         val month = SimpleDateFormat(MMMM, Locale.getDefault()).format(date) // "April"
         val day = calendar.get(Calendar.DAY_OF_MONTH) // 29
         val dayOfWeek = SimpleDateFormat(EEEE, Locale.getDefault()).format(date) // "Tuesday"
+        val shortDay = dayOfWeek.take(3) // First 3 characters
 
-        return Triple(month, day, dayOfWeek)
+
+        return Triple(month, day, shortDay)
     }
 
     fun getDeviceName(): String {

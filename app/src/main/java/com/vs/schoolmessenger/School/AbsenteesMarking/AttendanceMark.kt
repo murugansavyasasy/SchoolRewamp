@@ -80,8 +80,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.rlaSection.setOnClickListener(this)
         binding.rlaAttendanceType.setOnClickListener(this)
         binding.btnAbsent.setOnClickListener(this)
-        binding.btnCreate.setOnClickListener(this)
-        binding.btnHistory.setOnClickListener(this)
         binding.imgSearch.setOnClickListener(this)
         binding.btnSelectPresent.setOnClickListener(this)
 //        binding.rlaSectionReport.setOnClickListener(this)
@@ -102,6 +100,48 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+
+
+        binding.lnrTabOneName.setOnClickListener {
+            binding.lnrTabOneName.isEnabled = false
+            binding.lnrTabTwoName.isEnabled = true
+            binding.line1.setBackgroundResource(R.color.iconBlue)
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.line2.setBackgroundResource(R.color.athens_gray)
+            callApi = false
+            binding.txtSearchBox.text.clear()
+            binding.radioButtonFullDay.isChecked = false
+            binding.radioButtonHalfDay.isChecked = false
+            binding.lnrClasses2.visibility = View.GONE
+            binding.sessionHeader.visibility = View.GONE
+            binding.rlaMarkAttendance.visibility = View.VISIBLE
+            binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
+            binding.rytSearchbox.visibility = View.GONE
+            binding.rcyAttendanceReport.visibility = View.GONE
+            binding.lytNoDataFound.visibility = View.GONE
+
+        }
+
+        binding.lnrTabTwoName.setOnClickListener {
+            binding.lnrTabOneName.isEnabled = true
+            binding.lnrTabTwoName.isEnabled = false
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.line2.setBackgroundResource(R.color.iconBlue)
+            binding.line1.setBackgroundResource(R.color.athens_gray)
+            callApi = true
+            binding.radioButtonFullDay.isChecked = false
+            binding.radioButtonHalfDay.isChecked = false
+            binding.radioButtonFirstHalf.isChecked = false
+            binding.radioButtonSecondHalf.isChecked = false
+            binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
+            binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
+            binding.rlaMarkAttendance.visibility = View.GONE
+            binding.rytSearchbox.visibility = View.VISIBLE
+            binding.rcyAttendanceReport.visibility = View.VISIBLE
+            loadData()
+        }
 
 
         binding.txtSearchBox.addTextChangedListener(object : TextWatcher {
@@ -421,44 +461,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 }
             }
 
-
-            R.id.btnCreate -> {
-                callApi = false
-                binding.btnHistory.isEnabled = true
-                binding.btnCreate.isEnabled = false
-                binding.txtSearchBox.text.clear()
-                binding.radioButtonFullDay.isChecked = false
-                binding.radioButtonHalfDay.isChecked = false
-                binding.lnrClasses2.visibility = View.GONE
-                binding.sessionHeader.visibility = View.GONE
-                isBackRoundChange(binding.btnCreate)
-                binding.rlaMarkAttendance.visibility = View.VISIBLE
-                binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
-                binding.rytSearchbox.visibility = View.GONE
-                binding.rcyAttendanceReport.visibility = View.GONE
-                binding.lytNoDataFound.visibility = View.GONE
-
-
-            }
-
-            R.id.btnHistory -> {
-                callApi = true
-                binding.btnHistory.isEnabled = false
-                binding.btnCreate.isEnabled = true
-                binding.radioButtonFullDay.isChecked = false
-                binding.radioButtonHalfDay.isChecked = false
-                binding.radioButtonFirstHalf.isChecked = false
-                binding.radioButtonSecondHalf.isChecked = false
-                isBackRoundChange(binding.btnHistory)
-                binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
-                binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
-                binding.rlaMarkAttendance.visibility = View.GONE
-                binding.rytSearchbox.visibility = View.VISIBLE
-                binding.rcyAttendanceReport.visibility = View.VISIBLE
-                loadData()
-
-            }
-
             R.id.btnAbsent -> {
 
                 val intent = Intent(this, AbsenteesStudentMark::class.java)
@@ -658,21 +660,21 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     }
 
 
-    private fun isBackRoundChange(isClickingId: TextView) {
-
-        if (isClickingId == binding.btnCreate) {
-            binding.btnHistory.background = null
-            binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-        }
-
-        if (isClickingId == binding.btnHistory) {
-            binding.btnCreate.background = null
-            binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-
-        }
-
-        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
-        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
-
-    }
+//    private fun isBackRoundChange(isClickingId: TextView) {
+//
+//        if (isClickingId == binding.btnCreate) {
+//            binding.btnHistory.background = null
+//            binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
+//        }
+//
+//        if (isClickingId == binding.btnHistory) {
+//            binding.btnCreate.background = null
+//            binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
+//
+//        }
+//
+//        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
+//        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
+//
+//    }
 }

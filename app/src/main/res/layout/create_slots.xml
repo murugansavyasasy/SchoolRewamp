@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
 
     <RelativeLayout
@@ -360,11 +361,19 @@
 
                 </RelativeLayout>
 
+             <androidx.recyclerview.widget.RecyclerView
+                 android:id="@+id/rcySelectedDate"
+                 android:layout_width="match_parent"
+                 android:layout_below="@id/rytPickDate"
+                 android:layout_height="wrap_content">
+             </androidx.recyclerview.widget.RecyclerView>
+
+
                 <LinearLayout
                     android:id="@+id/lytPickTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rytPickDate"
+                    android:layout_below="@+id/rcySelectedDate"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -588,7 +597,7 @@
                     android:background="@drawable/rounded_bg">
 
                     <ImageView
-                        android:id="@+id/imgDown"
+                        android:id="@+id/imdCountUp"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_centerVertical="true"
@@ -606,12 +615,12 @@
                         android:layout_marginStart="@dimen/fifteen"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/twenty"
-                        android:layout_toEndOf="@+id/imgDown"
-                        android:text=" 2 "
+                        android:layout_toEndOf="@+id/imdCountUp"
+                        android:text=" 1 "
                         android:textColor="@color/black"></TextView>
 
                     <ImageView
-                        android:id="@+id/imgUp"
+                        android:id="@+id/imgCountDown"
                         android:layout_width="@dimen/fifteen"
                         android:layout_height="@dimen/twenty"
                         android:layout_centerVertical="true"

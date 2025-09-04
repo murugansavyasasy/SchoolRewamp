@@ -81,12 +81,32 @@
                     android:textSize="@dimen/sixteen_sp"
                     android:textStyle="bold" />
 
+
+
                 <LinearLayout
                     android:orientation="vertical"
                     android:background="@drawable/white_bg_card"
                     android:layout_width="match_parent"
                     android:padding="@dimen/ten"
                     android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:id="@+id/rcAttachement"
+                        android:layout_marginTop="@dimen/five"
+                        android:layout_height="@dimen/two_hundred">
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <me.relex.circleindicator.CircleIndicator2
+                        android:id="@+id/indicator"
+                        style="@style/IndicatorStyle"
+                        android:layout_marginTop="@dimen/five"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_gravity="center"
+                        android:elevation="@dimen/four"
+                        android:visibility="gone" />
+
                     <!-- Question Text -->
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"

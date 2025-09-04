@@ -16,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -69,10 +70,10 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
-        binding.allbutton.setOnClickListener(this)
-        binding.ytsbutton.setOnClickListener(this)
-        binding.inprogressbutton.setOnClickListener(this)
-        binding.completedbutton.setOnClickListener(this)
+        binding.allbutton1.setOnClickListener(this)
+        binding.ytsbutton1.setOnClickListener(this)
+        binding.inprogressbutton1.setOnClickListener(this)
+        binding.completedbutton1.setOnClickListener(this)
 
         sectionSubjectId = intent.getStringExtra("section_subject_id")
         request_type = intent.getStringExtra("request_type")
@@ -83,7 +84,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         }
 
         setupRecycler()
-        highlightSelectedTab(binding.allbutton)
+        highlightSelectedTab(binding.allbutton1)
         fetchLessonPlanData(sectionSubjectId)
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -204,48 +205,92 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
-            R.id.allbutton -> {
+            R.id.allbutton1 -> {
                 binding.txtSearchMenu1.text.clear()
                 currentStatus = 0
-                highlightSelectedTab(binding.allbutton)
+                highlightSelectedTab(binding.allbutton1)
                 filterAndShowData(currentStatus)
             }
 
-            R.id.ytsbutton -> {
+            R.id.ytsbutton1 -> {
                 binding.txtSearchMenu1.text.clear()
                 currentStatus = 1
-                highlightSelectedTab(binding.ytsbutton)
+                highlightSelectedTab(binding.ytsbutton1)
                 filterAndShowData(currentStatus)
 
             }
 
-            R.id.inprogressbutton -> {
+            R.id.inprogressbutton1 -> {
                 binding.txtSearchMenu1.text.clear()
                 currentStatus = 2
-                highlightSelectedTab(binding.inprogressbutton)
+                highlightSelectedTab(binding.inprogressbutton1)
                 filterAndShowData(currentStatus)
             }
 
-            R.id.completedbutton -> {
+            R.id.completedbutton1 -> {
                 binding.txtSearchMenu1.text.clear()
                 currentStatus = 3
-                highlightSelectedTab(binding.completedbutton)
+                highlightSelectedTab(binding.completedbutton1)
                 filterAndShowData(currentStatus)
             }
         }
     }
 
+//    private fun highlightSelectedTab(selectedView: View) {
+//        val buttons = listOf(
+//            binding.allbutton, binding.ytsbutton, binding.inprogressbutton, binding.completedbutton
+//        )
+//        buttons.forEach {
+//            it.isEnabled = true
+//            it.setBackgroundResource(R.drawable.light_gray_radius)
+//        }
+//        selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
+//        selectedView.isEnabled = false
+//    }
+
     private fun highlightSelectedTab(selectedView: View) {
-        val buttons = listOf(
-            binding.allbutton, binding.ytsbutton, binding.inprogressbutton, binding.completedbutton
+        // Each tab = container, imageView, textView
+        val tabs = listOf(
+            Triple(binding.allbutton1, binding.imgAll, binding.allbutton),
+            Triple(binding.ytsbutton1, binding.imgYet, binding.ytsbutton),
+            Triple(binding.inprogressbutton1, binding.imgProgress, binding.inprogressbutton),
+            Triple(binding.completedbutton1, binding.imgComplete, binding.completedbutton)
         )
-        buttons.forEach {
-            it.isEnabled = true
-            it.setBackgroundResource(R.drawable.light_gray_radius)
+
+        tabs.forEach { (container, imageView, textView) ->
+            if (container == selectedView) {
+                // Selected background
+                val drawable = ContextCompat.getDrawable(this, R.drawable.theme_colour_radius)?.mutate()
+                drawable?.setTint(ContextCompat.getColor(this, R.color.PrimaryColor))
+                container.background = drawable
+
+                // Selected text
+                textView.setTextColor(ContextCompat.getColor(this, R.color.white))
+                container.isEnabled = false
+
+                // Selected image
+                imageView?.setColorFilter(ContextCompat.getColor(this, R.color.white))
+            } else {
+                // Unselected background
+                val drawable = ContextCompat.getDrawable(this, R.drawable.light_gray_radius)?.mutate()
+                container.background = drawable
+                container.isEnabled = true
+
+                // Unselected text
+                textView.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+                // Reset image tint
+                when (imageView?.id) {
+                    R.id.imgAll      -> imageView.setColorFilter(ContextCompat.getColor(this, R.color.black))
+                    R.id.imgYet      -> imageView.setColorFilter(ContextCompat.getColor(this, R.color.dark_orange))
+                    R.id.imgProgress -> imageView.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor))
+                    R.id.imgComplete -> imageView.setColorFilter(ContextCompat.getColor(this, R.color.green))
+                }
+            }
         }
-        selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
-        selectedView.isEnabled = false
     }
+
+
 
     override fun onEditItem(data: LessonPlanViewSummaryItem) {
         val intent = Intent(this@LessonPlanViewDetails, LessonPlanEditActivity::class.java)
