@@ -99,6 +99,7 @@
                         android:layout_width="@dimen/fourty"
                         android:layout_height="@dimen/fourty">
                     </ImageView>
+
                     <TextView
                         android:gravity="center"
                         android:layout_below="@+id/imgTimimg"

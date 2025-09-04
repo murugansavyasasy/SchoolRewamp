@@ -16,7 +16,6 @@ class DashBoardWaveDesign @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    // Use your custom bpWhite color
     private val waveColor = ContextCompat.getColor(context, R.color.bpWhite)
 
     private val wavePaint1 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
