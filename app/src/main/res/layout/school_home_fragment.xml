@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/ten" />
+           />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -87,7 +87,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/hundred"
         android:layout_below="@id/headerLayout"
-        android:layout_marginTop="@dimen/five"
         android:background="@color/bpWhite"
         android:orientation="horizontal"
         tools:listitem="@layout/resent_using_app_item" />
