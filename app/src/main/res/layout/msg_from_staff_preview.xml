@@ -12,13 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:layout_marginBottom="@dimen/five"
             android:layout_alignParentEnd="true"
-            android:layout_width="@dimen/thirty"
-            android:src="@drawable/close_icon_red"
+            android:layout_width="@dimen/twenty_five"
+            android:src="@drawable/close_icon_3"
             android:id="@+id/imgBack"
             android:layout_marginTop="@dimen/three"
             android:layout_marginStart="@dimen/three"
-            android:layout_height="@dimen/thirty">
+            android:layout_height="@dimen/twenty_five">
 
         </ImageView>
         
@@ -26,7 +27,9 @@
                 android:layout_width="match_parent"
                 android:layout_below="@+id/imgBack"
                 android:id="@+id/rcAttachement"
-                android:layout_margin="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
                 android:layout_height="@dimen/two_hundred">
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -44,6 +47,7 @@
         <RelativeLayout
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
             android:layout_below="@+id/indicator"
             android:layout_width="match_parent"
             android:id="@+id/rlaAudioDetails"
@@ -151,24 +155,62 @@
 
 
         <LinearLayout
-            android:layout_margin="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
             android:layout_below="@+id/rlaAudioDetails"
-            android:layout_marginTop="@dimen/five"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
             <RelativeLayout
+                android:id="@+id/rlaTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
-
                     android:layout_centerVertical="true"
+                    android:id="@+id/imgTime"
+                    android:src="@drawable/time_icon"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty">
+                </ImageView>
+                <TextView
+                    android:text="@string/post_on"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_toEndOf="@+id/imgTime"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:id="@+id/lblSentTime"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+            </RelativeLayout>
+            <TextView
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginEnd="@dimen/five"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:id="@+id/tvPostOn"
+                android:text="acubicsaubca"
+                android:textColor="@color/gnt_gray"
+                android:textSize="@dimen/fifteen_sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
                     android:id="@+id/imgLblTitle"
                     android:src="@drawable/pin_icon_2"
                     android:tint="@color/PrimaryColor"
                     android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty">
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerVertical="true"
+                    >
                 </ImageView>
                 <TextView
                     android:layout_centerVertical="true"
@@ -258,31 +300,7 @@
                 </TextView>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rlaTime"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/imgTime"
-                    android:src="@drawable/time_icon"
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty">
-                </ImageView>
-                <TextView
-                    android:text="Sent at"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginEnd="@dimen/five"
-                    android:layout_toEndOf="@+id/imgTime"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:id="@+id/lblSentTime"
-                    android:textSize="@dimen/fifteen_sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </TextView>
-            </RelativeLayout>
+
         </LinearLayout>
         
     </RelativeLayout>

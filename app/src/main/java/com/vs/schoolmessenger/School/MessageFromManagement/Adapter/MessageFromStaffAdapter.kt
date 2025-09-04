@@ -70,9 +70,8 @@ class MessageFromStaffAdapter(
         private val lblRole: TextView = itemView.findViewById(R.id.lblRole)
         private val lblTimeDate: TextView = itemView.findViewById(R.id.lblTimeDate)
         private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
-        private val lblView: TextView = itemView.findViewById(R.id.lblView)
-        private val lblType: TextView = itemView.findViewById(R.id.lblType)
         private val imgReadStatus: View = itemView.findViewById(R.id.imgReadStatus)
+        private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
 
 
         fun bind(data: GetMessagesStaffData, position: Int) {
@@ -80,7 +79,7 @@ class MessageFromStaffAdapter(
             var name=data.sent_by!!
             lblLogo.text = Constant.getNameInitials(name)
             lblName.text = name
-            lblRole.text = "Teacher"
+            lblRole.text = data.role
             lblTimeDate.text = Constant.isFormatDate(data.date.toString())+" "+data.time
 
             lblDescription.apply {
@@ -99,56 +98,20 @@ class MessageFromStaffAdapter(
             when (data.type) {
                 Constant.TEXT -> {
                     lblDescription.visibility=View.VISIBLE
-                    lblType.apply {
-                        text = context.getString(R.string.text)
-                        setCompoundDrawablesWithIntrinsicBounds(R.drawable.text_msg_icon, 0, 0, 0)
-                        compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.PrimaryColor)
-                        lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.light_bg_blue)
-                        setTextColor(ContextCompat.getColor(context, R.color.PrimaryColor))
-                    }
                     lblDescription.text=data.content
                 }
 
                 Constant.VOICE -> {
-
-                    if (data.is_emergency){
-                        lblType.apply {
-                            text = context.getString(R.string.voice)
-                            setCompoundDrawablesWithIntrinsicBounds(R.drawable.voice_icon_2, 0, 0, 0)
-                            compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.white)
-                            lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red)
-                            setTextColor(ContextCompat.getColor(context, R.color.white))
-
-                        }
-                    }
-                    else{
-                        lblType.apply {
-                            text = context.getString(R.string.voice)
-                            setCompoundDrawablesWithIntrinsicBounds(R.drawable.voice_icon_2, 0, 0, 0)
-                            compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.dark_bg_orange_2)
-                            lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.pale_light_yellow)
-                            setTextColor(ContextCompat.getColor(context, R.color.dark_bg_voilet))
-                        }
-                    }
-
                     lblDescription.visibility=View.GONE
                 }
 
                 Constant.ATTACHMENT_ -> {
                     lblDescription.visibility=View.VISIBLE
-
-                    lblType.apply {
-                        text = context.getString(R.string.attachment)
-                        setCompoundDrawablesWithIntrinsicBounds(R.drawable.attachment_icon_2, 0, 0, 0)
-                        compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.dark_bg_orange_4)
-                        lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.pale_light_orange)
-                        setTextColor(ContextCompat.getColor(context, R.color.pale_light_brown))
-                    }
                     lblDescription.text=data.description
                 }
             }
 
-            lblView.setOnClickListener{
+            rlaHeader.setOnClickListener{
                 imgReadStatus.visibility=View.GONE
                 listener.onStaffClick(data)
             }

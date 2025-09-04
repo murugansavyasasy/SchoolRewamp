@@ -565,10 +565,11 @@
                     android:enabled="false"
                     style="@style/CustomTextStylePoppinsBold"
                     android:gravity="center"
+
                     android:padding="@dimen/ten"
                     android:text="@string/select_all_as_present"
                     android:textColor="@color/white"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                 </TextView>
 
@@ -582,7 +583,7 @@
                     android:gravity="center"
                     android:text="@string/OR"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                 </TextView>
 
@@ -599,7 +600,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:gravity="center"
                     android:padding="@dimen/ten"
-                    android:text="@string/MarkAbsentees"
+                    android:text="@string/mark_attendance"
                     android:textColor="@color/white"
                     android:visibility="visible">
 

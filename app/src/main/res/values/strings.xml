@@ -754,5 +754,7 @@
     <string name="no_of_question_greater_than_zero">No of questions should be greater than zero</string>
     <string name="ReOpen">ReOpen</string>
     <string name="emergency_voice">Emergency voice</string>
+    <string name="post_on">Post on</string>
+    <string name="posted_by">Posted by</string>
 
 </resources>

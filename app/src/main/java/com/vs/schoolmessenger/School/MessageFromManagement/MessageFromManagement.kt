@@ -9,6 +9,8 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
@@ -39,6 +41,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.MessageFromSt
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.RoundedBackgroundSpan
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_New
 import com.vs.schoolmessenger.databinding.MessageFromManagementBinding
@@ -59,6 +62,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var isMsgStaff: List<GetMessagesStaffData>? = emptyList()
 
     private var updateRunnable: Runnable? = null
+    var isMenuCount=-1
 
     override fun getViewBinding(): MessageFromManagementBinding {
         return MessageFromManagementBinding.inflate(layoutInflater)
@@ -74,7 +78,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        isMenuCount=Constant.isSchoolMenuCount
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
+        setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
+
+
         isGetMessageFromStaff()
 
         appViewModel?.isGetMessageStaff?.observe(this) { response ->
@@ -102,9 +111,10 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
+                binding.txtSearch1.text.clear()
             } else {
                 binding.rytSearch1.visibility = View.VISIBLE
-                binding.toolbarLayout.txtSearch.text.clear()
+                binding.txtSearch1.text.clear()
 
             }
         }
@@ -139,6 +149,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     msgStaff.title?.lowercase().orEmpty(),
                     msgStaff.description?.lowercase().orEmpty(),
                     msgStaff.time?.lowercase().orEmpty(),
+                    msgStaff.role?.lowercase().orEmpty(),
                     msgStaff.sent_by?.lowercase().orEmpty()
                 )
 
@@ -165,13 +176,34 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     }
 
 
-
-
     fun ShowData() {
         binding.rlaMessageFFromStaff.visibility = View.VISIBLE
         binding.rcMessageStaff.visibility = View.VISIBLE
         binding.lytList.visibility = View.GONE
     }
+
+    fun setMessageWithCount(textView: TextView, message: String, count: Int) {
+        val fullText = "$message $count"
+        val spannable = SpannableString(fullText)
+
+        val start = fullText.indexOf(count.toString())
+        val end = start + count.toString().length
+
+        spannable.setSpan(
+            RoundedBackgroundSpan(
+                backgroundColor = ContextCompat.getColor(textView.context, R.color.red),
+                textColor = ContextCompat.getColor(textView.context, R.color.white),
+                cornerRadius = 20f,
+                padding = 15f
+            ),
+            start,
+            end,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        textView.text = spannable
+    }
+
 
 
 
@@ -234,6 +266,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         val rlaAudioDetails = dialogView.findViewById<RelativeLayout>(R.id.rlaAudioDetails)
         val rytDescription = dialogView.findViewById<RelativeLayout>(R.id.rytDescription)
         val lblEmergency = dialogView.findViewById<TextView>(R.id.lblEmergency)
+        val tvPostOn = dialogView.findViewById<TextView>(R.id.tvPostOn)
 
         // FIX: use dialogView.findViewById instead of findViewById
         val lblRecentTotalDuration: TextView = dialogView.findViewById(R.id.lblRecentTotalDuration)
@@ -244,8 +277,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         val recentSeekbarlayout: LinearLayout = dialogView.findViewById(R.id.recentSeekbarlayout)
 
         tvTitle.text = data.title
-        lblSendBy.text = "Posted by ${data.sent_by}"
-        lblSentTime.text = "Sent at ${Constant.isFormatDate(data.date.toString())} ${data.time}"
+        lblSendBy.text = "${getString(R.string.posted_by)} ${data.sent_by}"
+        tvPostOn.text = "${Constant.isFormatDate(data.date.toString())} ${data.time}"
 
 
         when (data.type) {
@@ -352,11 +385,18 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         Log.d("SelectedData",data.toString())
         showResumeListDialog(this,data)
 
+        if (data.is_unread){
+            isMenuCount-=1
+            setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
+
+        }
+
         val jsonObject = JsonObject().apply {
             addProperty(APIKeyNames.type, data.type)
             addProperty(APIKeyNames.detail_id, data.id)
         }
         appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+
     }
 
 
@@ -444,6 +484,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         })
     }
 
+
     private fun updateSeekBar(
         mediaPlayer: MediaPlayer,
         seekBar: SeekBar,
@@ -492,134 +533,5 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         releaseMediaPlayer()
     }
 
-
-//
-//
-//    private fun setupAudioPlayer(
-//        data: GetMessagesStaffData,
-//        imgPlayPause: ImageView,
-//        seekBar: SeekBar,
-//        lblCurrent: TextView,
-//        lblTotal: TextView,
-//        seekBarLayout: LinearLayout
-//    ) {
-//        if (data.content.isNullOrEmpty()) {
-//            seekBarLayout.visibility = View.GONE
-//            return
-//        }
-//
-//        seekBarLayout.visibility = View.VISIBLE
-//
-//        // ✅ Convert seconds from API into mm:ss
-//        lblTotal.text = milliSecondsToTimer(data.duration!! * 1000L)
-//        lblCurrent.text = "00:00"
-//
-//
-//        imgPlayPause.setOnClickListener {
-//            if (mediaPlayer?.isPlaying == true) {
-//                mediaPlayer?.pause()
-//                imgPlayPause.setImageResource(R.drawable.play_icon_2)
-//            } else {
-//                try {
-//                    if (mediaPlayer == null) mediaPlayer = MediaPlayer()
-//
-//                    if (mediaPlayer?.currentPosition == 0) {
-//                        mediaPlayer?.reset()
-//                        mediaPlayer?.setDataSource(data.content)
-//                        mediaPlayer?.prepare()
-//                    }
-//
-//                    mediaPlayer?.start()
-//                    imgPlayPause.setImageResource(R.drawable.pause_icon_2)
-//
-//                    // ✅ update immediately at play start
-//                    lblCurrent.text = milliSecondsToTimer(mediaPlayer!!.currentPosition.toLong())
-//                    seekBar.max = mediaPlayer!!.duration
-//                    seekBar.progress = mediaPlayer!!.currentPosition
-//
-//                    // keep updating every second
-//                    updateSeekBar(mediaPlayer!!, seekBar, lblCurrent)
-//
-//                    // reset UI when complete
-//                    mediaPlayer?.setOnCompletionListener {
-//                        imgPlayPause.setImageResource(R.drawable.play_icon_2)
-//                        seekBar.progress = 0
-//                        lblCurrent.text = "00:00"
-//                    }
-//
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//            }
-//        }
-//
-//
-//
-//
-//        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//                if (fromUser) {
-//                    mediaPlayer?.seekTo(progress)
-//                    lblCurrent.text = milliSecondsToTimer(progress.toLong())
-//                }
-//            }
-//
-//            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-//            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-//        })
-//    }
-//
-//
-//
-//
-//
-//    fun milliSecondsToTimer(milliseconds: Long): String {
-//        val hours = (milliseconds / (1000 * 60 * 60)).toInt()
-//        val minutes = ((milliseconds % (1000 * 60 * 60)) / (1000 * 60)).toInt()
-//        val seconds = ((milliseconds % (1000 * 60)) / 1000).toInt()
-//
-//        val minutesString = if (minutes < 10) "0$minutes" else "$minutes"
-//        val secondsString = if (seconds < 10) "0$seconds" else "$seconds"
-//
-//        return if (hours > 0) "$hours:$minutesString:$secondsString"
-//        else "$minutesString:$secondsString"
-//    }
-//
-//
-//
-//    private fun updateSeekBar(
-//        mediaPlayer: MediaPlayer,
-//        seekBar: SeekBar,
-//        lblCurrent: TextView
-//    ) {
-//        handler = Handler(Looper.getMainLooper())
-//        updateRunnable = object : Runnable {
-//            override fun run() {
-//                if (mediaPlayer.isPlaying) {
-//                    seekBar.progress = mediaPlayer.currentPosition
-//                    lblCurrent.text = milliSecondsToTimer(mediaPlayer.currentPosition.toLong())
-//                    handler?.postDelayed(this, 500)
-//                }
-//            }
-//        }
-//        handler?.post(updateRunnable!!)
-//    }
-//
-//
-//
-//
-//    private fun releaseMediaPlayer() {
-//        handler?.removeCallbacks(updateRunnable ?: return)
-//        updateRunnable = null
-//        handler = null
-//
-//        mediaPlayer?.release()
-//        mediaPlayer = null
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        releaseMediaPlayer()
-//    }
 
 }
