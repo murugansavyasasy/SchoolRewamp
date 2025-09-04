@@ -29,55 +29,112 @@
             android:layout_marginStart="@dimen/ten"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/allbutton"
-                style="@style/CustomTextStylePoppinsMedium"
+            <RelativeLayout
+                android:id="@+id/allbutton1"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:paddingStart="@dimen/thirty_sp"
-                android:paddingEnd="@dimen/thirty_sp"
-                android:text="@string/all"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp">
-            </TextView>
-
-            <TextView
-                android:id="@+id/ytsbutton"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/five"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="@string/yet_to_start"
+                android:paddingStart="@dimen/thirty"
+                android:paddingEnd="@dimen/thirty"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/imgAll"
+                    android:tint="@color/black"
+                    android:src="@drawable/all_icon_2"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imgAll"
+                    android:id="@+id/allbutton"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:text="@string/all"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp">
+                </TextView>
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/ytsbutton1"
+                android:layout_width="wrap_content"
+                android:padding="@dimen/ten"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/five"
                 android:paddingStart="@dimen/eighteen_sp"
                 android:paddingEnd="@dimen/eighteen_sp"
-                android:textSize="@dimen/twele_sp" />
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imgYet"
+                    android:tint="@color/dark_orange"
+                    android:src="@drawable/waiting_for_approval"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty">
 
-            <TextView
-                android:id="@+id/inprogressbutton"
-                style="@style/CustomTextStylePoppinsMedium"
+                </ImageView>
+
+                <TextView
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/ytsbutton"
+                    android:layout_toEndOf="@+id/imgYet"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/yet_to_start"
+                    android:textSize="@dimen/twele_sp" />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/inprogressbutton1"
+
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="@dimen/five"
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
                 android:paddingEnd="@dimen/eighteen_sp"
-                android:text="@string/in_progress"
-                android:textSize="@dimen/twele_sp" />
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imgProgress"
+                    android:src="@drawable/progress_icon_2"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty">
+                </ImageView>
+
+                <TextView
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imgProgress"
+                    android:id="@+id/inprogressbutton"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/in_progress"
+                    android:textSize="@dimen/twele_sp" />
+            </RelativeLayout>
 
 
-            <TextView
-                android:id="@+id/completedbutton"
-                style="@style/CustomTextStylePoppinsMedium"
+
+            <RelativeLayout
+                android:id="@+id/completedbutton1"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/ten"
@@ -85,9 +142,29 @@
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
                 android:paddingEnd="@dimen/eighteen_sp"
-                android:text="@string/completed"
-                android:textSize="@dimen/twele_sp">
-            </TextView>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgComplete"
+                    android:src="@drawable/completed_icon_3"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty">
+                </ImageView>
+
+                <TextView
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imgComplete"
+                    android:id="@+id/completedbutton"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/completed"
+                    android:textSize="@dimen/twele_sp">
+                </TextView>
+
+            </RelativeLayout>
 
 
         </LinearLayout>

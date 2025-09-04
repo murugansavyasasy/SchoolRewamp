@@ -58,22 +58,23 @@ class StaffAttendanceReportAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val lblPresentStatus: TextView = itemView.findViewById(R.id.lblPresentStatus)
-        private val lblAbsentStatus: TextView = itemView.findViewById(R.id.lblAbsentStatus)
 
-        private val lblAbsentLabel: TextView = itemView.findViewById(R.id.lblAbsentLabel)
-        private val lblPresentLabel: TextView = itemView.findViewById(R.id.lblPresentLabel)
-        private val lblStaffName: TextView = itemView.findViewById(R.id.lblStaffName)
-        private val lblCheckInTime: TextView = itemView.findViewById(R.id.lblCheckInTime)
-        private val lblCheckoutTime: TextView = itemView.findViewById(R.id.lblCheckoutTime)
-        private val lblWorkingHours: TextView = itemView.findViewById(R.id.lblWorkingHours)
-        private val lblMonth: TextView = itemView.findViewById(R.id.lblMonth)
+
+        private val lblName: TextView = itemView.findViewById(R.id.lblName)
+        private val lblRole: TextView = itemView.findViewById(R.id.lblRole)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val lblDay: TextView = itemView.findViewById(R.id.lblDay)
-        private val rytParentCard: RelativeLayout = itemView.findViewById(R.id.rytParentCard)
-        private val lblStaffDesignation: TextView = itemView.findViewById(R.id.lblStaffDesignation)
-        private val lnrDate: LinearLayout = itemView.findViewById(R.id.lnrDate)
-        private val imgPunchHistory: ImageView = itemView.findViewById(R.id.imgPunchHistory)
+        private val lblCheckInTime: TextView = itemView.findViewById(R.id.lblCheckInTime)
+        private val lblCheckOutTime: TextView = itemView.findViewById(R.id.lblCheckOutTime)
+        private val lblHours: TextView = itemView.findViewById(R.id.lblHours)
+        private val lnrParentCard: LinearLayout = itemView.findViewById(R.id.lnrParentCard)
+        private val lnrAbsent: LinearLayout = itemView.findViewById(R.id.lnrAbsent)
+        private val lnrPresent: LinearLayout = itemView.findViewById(R.id.lnrPresent)
+        private val lblAbsentKey: TextView = itemView.findViewById(R.id.lblAbsentKey)
+        private val lblAbsentValue: TextView = itemView.findViewById(R.id.lblAbsentValue)
+        private val lblPresentKey: TextView = itemView.findViewById(R.id.lblPresentKey)
+        private val lblPresentValue: TextView = itemView.findViewById(R.id.lblPresentValue)
+
 
         fun bind(
             data: StaffAttendanceReportData,
@@ -83,52 +84,52 @@ class StaffAttendanceReportAdapter(
         ) {
 
             val attendanceMap = data.attendance_type
-            lblPresentLabel.visibility = View.GONE
-            lblAbsentLabel.visibility = View.GONE
-            lblPresentStatus.visibility = View.GONE
-            lblAbsentStatus.visibility = View.GONE
-            Log.d("attendanceMap", data.attendance_type.size.toString())
-
-
             attendanceMap.forEach { (key, value) ->
                 if (value == Constant.Absent) {
-                    lblAbsentLabel.visibility = View.VISIBLE
-                    lblAbsentStatus.visibility = View.VISIBLE
-                    lblAbsentLabel.text = key
-                    lblAbsentStatus.text = value
-                    if (data.attendance_type.size != 2) {
-                        imgPunchHistory.visibility = View.GONE
-                    } else {
-                        imgPunchHistory.visibility = View.VISIBLE
-                    }
+                    lnrAbsent.visibility = View.VISIBLE
+                    lnrPresent.visibility = View.GONE
+                    lblAbsentKey.text = key
+                    lblAbsentValue.text = value
+
+//                    if (data.attendance_type.size != 2) {
+//                        imgPunchHistory.visibility = View.GONE
+//                    } else {
+//                        imgPunchHistory.visibility = View.VISIBLE
+//                    }
                 }
                 if (value == Constant.Present) {
-                    lblPresentLabel.visibility = View.VISIBLE
-                    lblPresentStatus.visibility = View.VISIBLE
-                    lblPresentLabel.text = key
-                    lblPresentStatus.text = value
-                    imgPunchHistory.visibility = View.VISIBLE
+                    lnrAbsent.visibility = View.GONE
+                    lnrPresent.visibility = View.VISIBLE
+                    lblPresentKey.text = key
+                    lblPresentValue.text = value
+
+//                    imgPunchHistory.visibility = View.VISIBLE
                 }
             }
 
 
-            lblStaffName.text = data.name
-            lblCheckInTime.text = context.getString(R.string.Firstin) + data.in_time
-            if (data.out_time != "") {
-                lblCheckoutTime.visibility = View.VISIBLE
-                lblCheckoutTime.text = context.getString(R.string.Lastin) + data.out_time
+            lblName.text = data.name
+
+            if (data.in_time != "") {
+                lblCheckInTime.text = data.in_time
+
             } else {
-                lblCheckoutTime.visibility = View.GONE
+                lblCheckInTime.text = "-"
+
             }
-            lblWorkingHours.text = context.getString(R.string.Workinghours) + data.working_hours
-            lblStaffDesignation.text = data.role
+            if (data.out_time != "") {
+                lblCheckOutTime.text = data.out_time
+            } else {
+                lblCheckOutTime.text = "-"
+            }
+            lblHours.text = data.working_hours
+            lblRole.text = data.role
 
             val result = Constant.getDateDetails(data.date)
-            lblMonth.text = result.first
             lblDate.text = result.second.toString()
             lblDay.text = result.third
 
-            rytParentCard.setOnClickListener {
+            lnrParentCard.setOnClickListener {
                 attendanceMap.forEach { (_, value) ->
                     if (value == Constant.Present) {
                         listener.onItemClick(data)

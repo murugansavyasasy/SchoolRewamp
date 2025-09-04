@@ -3,215 +3,491 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/ten"
+    android:layout_marginVertical="@dimen/five"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:id="@+id/rytParentCard"
+
+    <LinearLayout
+        android:id="@+id/lnrParentCard"
+        android:background="@drawable/rect_white"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rect_shadow_white"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
+
+    <RelativeLayout
+        android:layout_margin="@dimen/ten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/lnrDate"
-            android:layout_width="@dimen/eighty_five"
-            android:layout_height="wrap_content"
-            android:weightSum="3"
-            android:background="@drawable/start_rounded_background"
-            android:gravity="center"
-            android:orientation="vertical">
-
+            android:background="@drawable/circle_bg_violet"
+            android:orientation="vertical"
+            android:padding="@dimen/five"
+            android:layout_width="@dimen/sixty"
+            android:layout_height="@dimen/sixty">
 
             <TextView
-                android:id="@+id/lblMonth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/clr_month_blue"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:padding="@dimen/ten"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold" />
-
-            <TextView
+                android:layout_gravity="center"
                 android:id="@+id/lblDate"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/light_sky_blue5"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_weight="1"
-                android:padding="@dimen/five"
-                android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold" />
+                android:text="03"/>
 
             <TextView
+                android:layout_gravity="center"
                 android:id="@+id/lblDay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/light_sky_blue5"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:padding="@dimen/five"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:text="Wed"/>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/lblPresentLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginEnd="@dimen/one"
-            android:layout_toStartOf="@+id/lblPresentStatus"
-            android:background="@drawable/rounded_start_bottom_green"
-            android:padding="@dimen/seven"
-            style="@style/CustomTextStylePoppinsRegular"
-            android:text="@string/fd"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twele_sp" />
-
-        <TextView
-            android:id="@+id/lblPresentStatus"
-            style="@style/CustomTextStylePoppinsRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/rounded_top_end_green"
-            android:gravity="center"
-            android:padding="@dimen/seven"
-            android:text="Present"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twele_sp" />
-
-        <TextView
-            android:id="@+id/lblAbsentLabel"
-            style="@style/CustomTextStylePoppinsRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblPresentStatus"
-            android:layout_marginTop="@dimen/three"
-            android:layout_marginEnd="@dimen/one"
-            android:layout_toStartOf="@+id/lblAbsentStatus"
-            android:background="@drawable/rounded_start_bottom_red"
-            android:gravity="center"
-            android:padding="@dimen/seven"
-            android:text="@string/fd"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twele_sp" />
-
-        <TextView
-            android:id="@+id/lblAbsentStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblPresentStatus"
-            android:layout_alignParentEnd="true"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/three"
-            android:background="@drawable/rounded_top_end_red"
-            style="@style/CustomTextStylePoppinsRegular"
-            android:padding="@dimen/seven"
-            android:text="@string/present"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twele_sp" />
-
-
-        <RelativeLayout
-            android:id="@+id/rytDetails"
+        <LinearLayout
+            android:layout_toStartOf="@+id/lnrAttendanceStatus"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/five"
+            android:layout_toEndOf="@+id/lnrDate"
+            android:id="@+id/lnrNames"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/five"
-            android:layout_toStartOf="@+id/lblPresentLabel"
-            android:layout_toEndOf="@+id/lnrDate">
-
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/lblStaffName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                style="@style/CustomTextStylePoppinsRegular"
-                android:textColor="@color/bpBlue"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/lblStaffDesignation"
+                android:id="@+id/lblName"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblStaffName"
-                android:text=""
-               />
-
-            <RelativeLayout
-                android:id="@+id/rytCheckInTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblStaffDesignation">
-
-                <TextView
-                    android:id="@+id/lblCheckInTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/five"
-                    android:text=""
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="normal"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/lblCheckoutTime"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblCheckInTime"
-                    android:layout_marginTop="@dimen/five"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="normal"
-                    android:visibility="visible" />
-
-            </RelativeLayout>
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:text="ARAVINTH A"/>
 
             <TextView
-                android:id="@+id/lblWorkingHours"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginTop="@dimen/three"
+                android:id="@+id/lblRole"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_below="@+id/rytCheckInTime"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginBottom="@dimen/twenty"
-                android:text=""
+                android:textColor="@color/mild_grey_dark"
                 android:textSize="@dimen/thirteen_sp"
-                 />
+                android:text="Teaching Staff"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imgPunchHistory"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/lblAbsentStatus"
+
+        <LinearLayout
+            android:id="@+id/lnrAttendanceStatus"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/rightarrrow" />
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/lnrAbsent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/five"
+            android:background="@drawable/rect_bg_light_red_absent"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/lblAbsentKey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/thirteen_sp"
+                android:textColor="@color/red"
+                android:text="FD"/>
+
+            <View
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginHorizontal="@dimen/five"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/red"/>
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/lblAbsentValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/thirteen_sp"
+                android:textColor="@color/red"
+                android:text="Absent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrPresent"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/five"
+            android:background="@drawable/rect_bg_light_green_present"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/lblPresentKey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/thirteen_sp"
+                android:textColor="@color/green"
+                android:text="FD"/>
+            
+            <View
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginHorizontal="@dimen/five"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/green"/>
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/lblPresentValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/thirteen_sp"
+                android:textColor="@color/green"
+                android:text="Present"/>
+
+        </LinearLayout>
+
+        </LinearLayout>
 
 
     </RelativeLayout>
+
+        <View
+            android:layout_marginHorizontal="@dimen/fifteen"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/grey"/>
+
+        <RelativeLayout
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:id="@+id/lnrCheckIn"
+                android:orientation="vertical"
+                android:padding="@dimen/ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/mild_grey_dark"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="CHECK-IN"/>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_marginTop="@dimen/five"
+                    android:id="@+id/lblCheckInTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/clr_violet"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="Not yet in"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/ten"
+                android:id="@+id/lnrCheckOut"
+                android:orientation="vertical"
+                android:padding="@dimen/ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/mild_grey_dark"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="CHECK-OUT"/>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_marginTop="@dimen/five"
+                    android:id="@+id/lblCheckOutTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/clr_violet"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="Not yet in"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/ten"
+                android:id="@+id/lbnHours"
+                android:orientation="vertical"
+                android:padding="@dimen/ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/mild_grey_dark"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="HOURS"/>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_marginTop="@dimen/five"
+                    android:id="@+id/lblHours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="0 min"/>
+
+            </LinearLayout>
+
+
+
+
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/rytParentCard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/rect_shadow_white"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/lnrDate"-->
+<!--            android:layout_width="@dimen/eighty_five"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:weightSum="3"-->
+<!--            android:background="@drawable/start_rounded_background"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="vertical">-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblMonth"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/clr_month_blue"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_weight="1"-->
+<!--                android:padding="@dimen/ten"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="@dimen/fifteen_sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblDate"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/light_sky_blue5"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:layout_weight="1"-->
+<!--                android:padding="@dimen/five"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/twenty_sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblDay"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@color/light_sky_blue5"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_weight="1"-->
+<!--                android:padding="@dimen/five"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/twele_sp" />-->
+
+<!--        </LinearLayout>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/lblPresentLabel"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_marginEnd="@dimen/one"-->
+<!--            android:layout_toStartOf="@+id/lblPresentStatus"-->
+<!--            android:background="@drawable/rounded_start_bottom_green"-->
+<!--            android:padding="@dimen/seven"-->
+<!--            style="@style/CustomTextStylePoppinsRegular"-->
+<!--            android:text="@string/fd"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/twele_sp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/lblPresentStatus"-->
+<!--            style="@style/CustomTextStylePoppinsRegular"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:background="@drawable/rounded_top_end_green"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="@dimen/seven"-->
+<!--            android:text="Present"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/twele_sp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/lblAbsentLabel"-->
+<!--            style="@style/CustomTextStylePoppinsRegular"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/lblPresentStatus"-->
+<!--            android:layout_marginTop="@dimen/three"-->
+<!--            android:layout_marginEnd="@dimen/one"-->
+<!--            android:layout_toStartOf="@+id/lblAbsentStatus"-->
+<!--            android:background="@drawable/rounded_start_bottom_red"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="@dimen/seven"-->
+<!--            android:text="@string/fd"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/twele_sp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/lblAbsentStatus"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/lblPresentStatus"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_marginTop="@dimen/three"-->
+<!--            android:background="@drawable/rounded_top_end_red"-->
+<!--            style="@style/CustomTextStylePoppinsRegular"-->
+<!--            android:padding="@dimen/seven"-->
+<!--            android:text="@string/present"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/twele_sp" />-->
+
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rytDetails"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="@dimen/ten"-->
+<!--            android:layout_marginTop="@dimen/ten"-->
+<!--            android:layout_marginEnd="@dimen/five"-->
+<!--            android:layout_toStartOf="@+id/lblPresentLabel"-->
+<!--            android:layout_toEndOf="@+id/lnrDate">-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblStaffName"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=""-->
+<!--                style="@style/CustomTextStylePoppinsRegular"-->
+<!--                android:textColor="@color/bpBlue"-->
+<!--                android:textSize="@dimen/thirteen_sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:visibility="visible" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblStaffDesignation"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/lblStaffName"-->
+<!--                android:text=""-->
+<!--               />-->
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/rytCheckInTime"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/lblStaffDesignation">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/lblCheckInTime"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="@dimen/five"-->
+<!--                    android:text=""-->
+<!--                    style="@style/CustomTextStylePoppinsRegular"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="@dimen/thirteen_sp"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:visibility="visible" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/lblCheckoutTime"-->
+<!--                    style="@style/CustomTextStylePoppinsRegular"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/lblCheckInTime"-->
+<!--                    android:layout_marginTop="@dimen/five"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="@dimen/thirteen_sp"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:visibility="visible" />-->
+
+<!--            </RelativeLayout>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblWorkingHours"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/CustomTextStylePoppinsRegular"-->
+<!--                android:layout_below="@+id/rytCheckInTime"-->
+<!--                android:layout_marginTop="@dimen/five"-->
+<!--                android:layout_marginBottom="@dimen/twenty"-->
+<!--                android:text=""-->
+<!--                android:textSize="@dimen/thirteen_sp"-->
+<!--                 />-->
+
+<!--        </RelativeLayout>-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imgPunchHistory"-->
+<!--            android:layout_width="@dimen/thirty"-->
+<!--            android:layout_height="@dimen/thirty"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_below="@+id/lblAbsentStatus"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginEnd="@dimen/ten"-->
+<!--            android:src="@drawable/rightarrrow" />-->
+
+
+<!--    </RelativeLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

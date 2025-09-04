@@ -15,6 +15,7 @@
 
         <ImageView
             android:id="@+id/imgIcon"
+            android:paddingStart="@dimen/three"
             android:layout_width="@dimen/twele"
             android:layout_height="@dimen/twele"
             android:layout_marginEnd="@dimen/four"
@@ -26,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sample"
+            android:paddingEnd="@dimen/three"
             android:textSize="@dimen/twele_sp" />
     </LinearLayout>
 
