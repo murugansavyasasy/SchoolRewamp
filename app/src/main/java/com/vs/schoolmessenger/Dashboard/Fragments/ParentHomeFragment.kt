@@ -45,6 +45,12 @@ import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.FrequentParentlyUsedMenuItems
+import com.vs.schoolmessenger.Utils.Constant.isParentAdItem
+import com.vs.schoolmessenger.Utils.Constant.isParentContactDetails
+import com.vs.schoolmessenger.Utils.Constant.isParentDashBoardData
+import com.vs.schoolmessenger.Utils.Constant.isParentMenuCountDetails
+import com.vs.schoolmessenger.Utils.Constant.isParentMenuDetails
 import com.vs.schoolmessenger.Utils.ScrollItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
@@ -59,16 +65,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private lateinit var aditems: List<AdItem>
     private var isSearchVisible = false
     var childDetails: ChildDetails? = null
-    var FrequentlyUsedMenuItems: List<MenuDetail>? = null
     var userDetails: UserDetails? = null
     private var appViewModel: App? = null
     var isDashBoardCountData: List<DashboardCountData>? = null
-    var isMenuCountDetails: ArrayList<MenuCountDetail>? = null
-    var isDashBoardData: List<DashboardData>? = null
     private lateinit var items: List<ScrollItem>
     var isContactDetails: ContactDetails? = null
-    var isMenuDetails: List<MenuDetail>? = null
-    var isAdItem: List<AdItem>? = null
     var access_token = ""
 
     var isAdsDisplayOptions: AdsDisplayOptions? = null
@@ -113,7 +114,15 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        isDashBoardData()
+
+        if (isParentDashBoardData == null || isParentDashBoardData!!.isEmpty()) {
+            isDashBoardData()
+        }
+        else{
+            isLoadData()
+            setupRecyclerView()
+
+        }
 
         binding.imgBurgerMenu.setOnClickListener(this)
 
@@ -194,17 +203,18 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 response.message
                 if (status) {
                     val isDashboardResponse = response.data
-                    isDashBoardData = isDashboardResponse
-                    isContactDetails = isDashBoardData!![0].contactDetails
-                    isMenuDetails = isDashBoardData!![0].menus
-                    FrequentlyUsedMenuItems = isDashBoardData!![0].frequently_used
-                    allMenuItems = isMenuDetails!!
+                    isParentDashBoardData = isDashboardResponse
+
+                    isParentContactDetails = isParentDashBoardData!![0].contactDetails
+                    isParentMenuDetails = isParentDashBoardData!![0].menus
+                    FrequentParentlyUsedMenuItems = isParentDashBoardData!![0].frequently_used
+                    allMenuItems = isParentMenuDetails!!
 
                     appViewModel!!.isDashBoardCountData(
                         access_token, Constant.parent, requireActivity()
                     )
 
-                    Log.d("isMenuDetails", isMenuDetails!!.size.toString())
+                    Log.d("isMenuDetails", isParentMenuDetails!!.size.toString())
                     setupRecyclerView()
 
                 }
@@ -218,7 +228,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 if (status) {
                     val isDashboardResponse = response.data
                     isDashBoardCountData = isDashboardResponse
-                    isMenuCountDetails = isDashBoardCountData!![0].menu_details
+                    isParentMenuCountDetails = isDashBoardCountData!![0].menu_details
                     isGetAds()
                 }
             }
@@ -229,15 +239,15 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val status = response.status
                 response.message
                 if (status) {
-                    isAdItem = response.data
+                    isParentAdItem = response.data
                     val filteredAds = response.data.filter { it.id != null }
-                    isAdsDisplayOptions = isAdItem!![0].ads_display_options
+                    isAdsDisplayOptions = isParentAdItem!![0].ads_display_options
                     val adList: List<AdItem> = filteredAds.map { ad ->
                         AdItem(
                             ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
                         )
                     }
-                    isAdItem = adList
+                    isParentAdItem = adList
                 }
                 isLoadData()
             }
@@ -247,14 +257,14 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun setupRecyclerView() {
 
-        if (!FrequentlyUsedMenuItems.isNullOrEmpty()) {
+        if (!FrequentParentlyUsedMenuItems.isNullOrEmpty()) {
             binding.autoScrollRecyclerView.visibility = View.VISIBLE
 
             layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
-            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!, this)
+            adapter = AutoScrollAdapterWithDots(FrequentParentlyUsedMenuItems!!, this)
             binding.autoScrollRecyclerView.adapter = adapter
 
             if (binding.autoScrollRecyclerView.onFlingListener == null) {
@@ -287,9 +297,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         isMenuAdapter = ChildMenuAdapter(
             requireActivity(),
             this,
-            isMenuDetails,
-            isMenuCountDetails,
-            isAdItem,
+            isParentMenuDetails,
+            isParentMenuCountDetails,
+            isParentAdItem,
             Constant.isShimmerViewDisable
         )
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

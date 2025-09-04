@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/request_for_certificate"
-            android:textSize="@dimen/twenty_five"
+            android:textSize="@dimen/twenty"
             app:layout_constraintStart_toStartOf="@+id/rytRequestTap"
             app:layout_constraintTop_toBottomOf="@+id/cltDateSelection" />
 
@@ -282,7 +282,7 @@
             android:layout_marginTop="@dimen/twenty"
             android:text="Certificate History"
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty_five"
+            android:textSize="@dimen/twenty"
             app:layout_constraintStart_toStartOf="@+id/rytRequestTap"
             app:layout_constraintTop_toBottomOf="@+id/rytRequestTap" />
 
