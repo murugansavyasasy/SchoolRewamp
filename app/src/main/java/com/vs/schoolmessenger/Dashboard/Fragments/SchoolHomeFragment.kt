@@ -59,6 +59,12 @@ import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.FrequentSchoollyUsedMenuItems
+import com.vs.schoolmessenger.Utils.Constant.isSchoolAdItem
+import com.vs.schoolmessenger.Utils.Constant.isSchoolContactDetails
+import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
+import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuCountDetails
+import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuDetails
 import com.vs.schoolmessenger.Utils.ScrollItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
@@ -77,13 +83,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
     var staffDetails: StaffDetails? = null
-    var isDashBoardData: List<DashboardData>? = null
     var isDashBoardCountData: List<DashboardCountData>? = null
-    var FrequentlyUsedMenuItems: List<MenuDetail>? = null
-    var isContactDetails: ContactDetails? = null
-    var isMenuDetails: List<MenuDetail>? = null
-    var isMenuCountDetails: ArrayList<MenuCountDetail>? = null
-    var isAdItem: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
     var access_token = ""
     private lateinit var allMenuItems: List<MenuDetail>
@@ -173,16 +173,17 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 response.message
                 if (status) {
                     val isDashboardResponse = response.data
-                    isDashBoardData = isDashboardResponse
-                    isContactDetails = isDashBoardData!![0].contactDetails
+                    isSchoolDashBoardData = isDashboardResponse
+
+                    isSchoolContactDetails = isSchoolDashBoardData!![0].contactDetails
 
                     appViewModel!!.isDashBoardCountData(
                         access_token, Constant.staff_, requireActivity()
                     )
 
-                    isMenuDetails = isDashBoardData!![0].menus
-                    FrequentlyUsedMenuItems = isDashBoardData!![0].frequently_used
-                    allMenuItems = isMenuDetails!!
+                    isSchoolMenuDetails = isSchoolDashBoardData!![0].menus
+                    FrequentSchoollyUsedMenuItems = isSchoolDashBoardData!![0].frequently_used
+                    allMenuItems = isSchoolMenuDetails!!
                     setupRecyclerView()
 
                 }
@@ -196,7 +197,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 if (status) {
                     val isDashboardResponse = response.data
                     isDashBoardCountData = isDashboardResponse
-                    isMenuCountDetails = isDashBoardCountData!![0].menu_details
+                    isSchoolMenuCountDetails = isDashBoardCountData!![0].menu_details
                     isGetAds()
                 }
             }
@@ -207,15 +208,15 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val status = response.status
                 response.message
                 if (status) {
-                    isAdItem = response.data
+                    isSchoolAdItem = response.data
                     val filteredAds = response.data.filter { it.id != null }
-                    isAdsDisplayOptions = isAdItem!![0].ads_display_options
+                    isAdsDisplayOptions = isSchoolAdItem!![0].ads_display_options
                     val adList: List<AdItem> = filteredAds.map { ad ->
                         AdItem(
                             ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
                         )
                     }
-                    isAdItem = adList
+                    isSchoolAdItem = adList
                 }
                 isLoadData()
             }
@@ -240,14 +241,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
     private fun setupRecyclerView() {
-        if (!FrequentlyUsedMenuItems.isNullOrEmpty()) {
+        if (!FrequentSchoollyUsedMenuItems.isNullOrEmpty()) {
             binding.autoScrollRecyclerView.visibility = View.VISIBLE
 
             layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
-            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!, this)
+            adapter = AutoScrollAdapterWithDots(FrequentSchoollyUsedMenuItems!!, this)
             binding.autoScrollRecyclerView.adapter = adapter
 
             if (binding.autoScrollRecyclerView.onFlingListener == null) {
@@ -288,13 +289,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
 
-        Log.d("isMenuCountDetails", isMenuCountDetails!!.size.toString())
+        Log.d("isMenuCountDetails", isSchoolMenuCountDetails!!.size.toString())
         isMenuAdapter = SchoolMenuAdapter(
             requireActivity(),
             this,
-            isMenuDetails,
-            isMenuCountDetails,
-            isAdItem,
+            isSchoolMenuDetails,
+            isSchoolMenuCountDetails,
+            isSchoolAdItem,
             Constant.isShimmerViewDisable
         )
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
@@ -369,7 +370,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onResume() {
         super.onResume()
         Log.d("Loading", "Dashboard Data is Loading")
-        isDashBoardData()
+        if(isSchoolDashBoardData == null) {
+            isDashBoardData()
+        }
+        else{
+            isLoadData()
+            setupRecyclerView()
+
+        }
         Log.d("Loading", "Dashboard Data is Refreshed")
 
         Log.d("Status", "onResume")

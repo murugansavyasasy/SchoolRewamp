@@ -45,7 +45,12 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
+import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
@@ -202,6 +207,22 @@ object Constant {
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null
     var isAbsenteesReportDataSending: ClassWise? = null
+
+    var isParentDashBoardData: List<DashboardData>? = null
+    var isSchoolDashBoardData: List<DashboardData>? = null
+
+    var isParentContactDetails: ContactDetails? = null
+    var isParentMenuDetails: List<MenuDetail>? = null
+    var isParentMenuCountDetails: ArrayList<MenuCountDetail>? = null
+    var FrequentParentlyUsedMenuItems: List<MenuDetail>? = null
+    var isParentAdItem: List<AdItem>? = null
+
+    var isSchoolContactDetails: ContactDetails? = null
+    var isSchoolMenuDetails: List<MenuDetail>? = null
+    var isSchoolMenuCountDetails: ArrayList<MenuCountDetail>? = null
+    var FrequentSchoollyUsedMenuItems: List<MenuDetail>? = null
+    var isSchoolAdItem: List<AdItem>? = null
+
 
     var secondHalf = "SH"
     var firstHalf = "FH"
