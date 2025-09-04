@@ -31,7 +31,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     private lateinit var navigationView: NavigationView
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
@@ -77,6 +77,10 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
             R.id.icon_help,
             R.id.icon_settings,
             R.id.icon_profile,
+            R.id.lblHome,
+            R.id.lblHelp,
+            R.id.lblSettings,
+            R.id.lblProfile,
             R.id.fragment_container,
             R.id.customBottomNav
         )

@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.CertificateRequest
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -9,6 +10,7 @@ import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Environment
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.webkit.WebChromeClient
@@ -32,7 +34,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 import android.webkit.WebView
 import android.webkit.WebViewClient
-
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 
 
 class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
@@ -43,6 +46,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -84,7 +88,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
             binding.rytCertificate.visibility = View.VISIBLE
             binding.wvCertificatePdf.visibility = View.VISIBLE
             binding.lblCertificateDate.visibility = View.VISIBLE
-            binding.imgMoreOptions.visibility = View.VISIBLE
+//            binding.imgMoreOptions.visibility = View.VISIBLE
             binding.rytWaitingProcess.visibility = View.GONE
             val issuedOn=Constant.formatDate(Constant.isCertificateData?.issued_on.toString())
             binding.lblCertificateDate.text = issuedOn?: ""
@@ -111,16 +115,24 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
                     }
                 }
 
+                setOnTouchListener { v, event ->
+                    if (event.action == MotionEvent.ACTION_UP) {
+                        isDirectPreviewActivity()
+                    }
+                    true // consume touch, so default WebView options won’t appear
+                }
+
                 webChromeClient = WebChromeClient()
 
                 loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=${Constant.isCertificateData!!.url}")
 
             }
 
+
         } else {
             binding.wvCertificatePdf.visibility = View.GONE
             binding.rytCertificate.visibility = View.GONE
-            binding.imgMoreOptions.visibility = View.GONE
+//            binding.imgMoreOptions.visibility = View.GONE
             binding.loadingBar.visibility = View.GONE
             binding.rytWaitingProcess.visibility = View.VISIBLE
             binding.lblCertificateDate.visibility = View.GONE
@@ -139,6 +151,16 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
 
         }
 
+    }
+    fun isDirectPreviewActivity(){
+        Constant.commonFileList.isEmpty()
+        Constant.commonFileList.clear()
+        Constant.commonFileList.add(CommonFileData(type = "PDF", path =Constant.isCertificateData!!.url ))
+        Log.d("File",Constant.commonFileList.toString())
+        Log.d("FileSize",Constant.commonFileList.size.toString())
+        Constant.selectedFileIndex = 0
+        val intent = Intent(this, FilesViewActivity::class.java)
+        this.startActivity(intent)
     }
 
     private fun showFileOptions(url: String) {

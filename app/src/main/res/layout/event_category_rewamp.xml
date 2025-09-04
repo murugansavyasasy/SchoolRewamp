@@ -15,7 +15,7 @@
         <LinearLayout
             android:id="@+id/linear_layout_categorychild"
             android:layout_width="@dimen/hundred"
-            android:layout_height="@dimen/one_thirty"
+            android:layout_height="@dimen/one_fourty"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/category_white_box"
@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/category_image"
-                android:layout_width="@dimen/fifty"
-                android:layout_height="@dimen/fifty"
+                android:layout_width="44dp"
+                android:layout_height="53dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/ten"
                 android:src="@drawable/allimage" />

@@ -4,7 +4,8 @@
     android:id="@+id/main"
     android:background="@color/bpWhite"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/headerLayout"
@@ -28,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/twenty_five"
+            android:layout_marginTop="@dimen/thirty"
             android:layout_marginEnd="@dimen/ten"
             android:layout_toStartOf="@+id/imgNotification"
             android:layout_toEndOf="@+id/imgBurgerMenu"
@@ -77,18 +78,16 @@
         <com.vs.schoolmessenger.Utils.DashBoardWaveDesign
             android:id="@+id/waveView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/hundred_fifty"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/ten" />
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/autoScrollRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/hundred_ten"
+        android:layout_height="@dimen/hundred"
         android:layout_below="@id/headerLayout"
         android:background="@color/bpWhite"
-        android:layout_marginTop="@dimen/five"
         android:orientation="horizontal"
         tools:listitem="@layout/resent_using_app_item" />
 
@@ -107,10 +106,10 @@
         android:layout_height="match_parent"
         android:layout_below="@id/dotsIndicator"
         android:layout_marginStart="@dimen/five"
-        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/five"
         android:clipToPadding="false"
-        android:background="@color/mild_grey"
+        android:background="@color/bpWhite"
         android:paddingBottom="@dimen/ten"
         tools:listitem="@layout/dashboard_app_item" />
 </RelativeLayout>

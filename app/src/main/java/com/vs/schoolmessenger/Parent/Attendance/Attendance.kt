@@ -184,7 +184,5 @@ class Attendance : BaseActivity<AttendanceBinding>() {
             e.printStackTrace()
         }
     }
-
-
 }
 

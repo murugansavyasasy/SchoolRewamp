@@ -45,7 +45,12 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
+import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
@@ -189,6 +194,7 @@ object Constant {
     var isParentMenuName = ""
 
     var isSchoolMenuName = ""
+    var isSchoolMenuCount =-1
 
 
 //    var isForward = false
@@ -201,6 +207,22 @@ object Constant {
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null
     var isAbsenteesReportDataSending: ClassWise? = null
+
+    var isParentDashBoardData: List<DashboardData>? = null
+    var isSchoolDashBoardData: List<DashboardData>? = null
+
+    var isParentContactDetails: ContactDetails? = null
+    var isParentMenuDetails: List<MenuDetail>? = null
+    var isParentMenuCountDetails: ArrayList<MenuCountDetail>? = null
+    var FrequentParentlyUsedMenuItems: List<MenuDetail>? = null
+    var isParentAdItem: List<AdItem>? = null
+
+    var isSchoolContactDetails: ContactDetails? = null
+    var isSchoolMenuDetails: List<MenuDetail>? = null
+    var isSchoolMenuCountDetails: ArrayList<MenuCountDetail>? = null
+    var FrequentSchoollyUsedMenuItems: List<MenuDetail>? = null
+    var isSchoolAdItem: List<AdItem>? = null
+
 
     var secondHalf = "SH"
     var firstHalf = "FH"
@@ -721,18 +743,29 @@ object Constant {
     }
 
     fun getNameInitials(fullName: String): String {
-        // List of common prefixes to ignore
         val prefixes = listOf("dr", "mr", "ms", "mrs", "miss")
 
-        return fullName
+        val parts = fullName
             .trim()
-            .split("\\s+".toRegex()) // split by space(s)
+            .split("[\\s.]+".toRegex()) // split by space or dot
             .filter { part ->
                 part.isNotEmpty() && !prefixes.contains(part.lowercase())
             }
-            .map { it[0].uppercaseChar() } // take first letter of each word
-            .joinToString("")
+
+        return when {
+            parts.isEmpty() -> ""
+            parts.size == 1 -> {
+                // Only one word → just first letter
+                parts[0].first().uppercaseChar().toString()
+            }
+            else -> {
+                val first = parts.first().first().uppercaseChar()
+                val last = parts.last().last().uppercaseChar()
+                "$first$last"
+            }
+        }
     }
+
 
 
 

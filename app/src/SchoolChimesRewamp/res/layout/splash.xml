@@ -161,15 +161,41 @@
 
     </RelativeLayout>
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/fourty"
+    <RelativeLayout
         android:layout_centerHorizontal="true"
-        android:text="1.0"
-        android:textColor="@color/black" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/four"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/lnrPowered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:src="@drawable/savyasasy"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:text="Powered by savyasasy"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_below="@+id/lnrPowered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/five"
+            android:text="1.0"
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

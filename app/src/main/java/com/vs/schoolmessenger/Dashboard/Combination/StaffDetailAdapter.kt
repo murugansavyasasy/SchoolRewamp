@@ -16,6 +16,8 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SchoolClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isParentDashBoardData
+import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
 import com.vs.schoolmessenger.databinding.SchoolDetailsListItemBinding
 
 class StaffDetailAdapter(
@@ -116,6 +118,7 @@ class StaffDetailAdapter(
 
         holder.binding.rlaStaffDetails.setOnClickListener {
             if (isStaffRole == Constant.isStaffRole) {
+                isSchoolDashBoardData = null
                 listener.onItemClick(item)
             }
         }

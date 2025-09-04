@@ -8,6 +8,7 @@ data class GetMessagesStaffData (
     val id: String,
     val header_id: String,
     val title: String?,
+    val role: String?,
     val description: String?,
     val content: String?,
     val file_path: List<AttachmentFile>?,

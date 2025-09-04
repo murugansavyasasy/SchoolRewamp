@@ -10,6 +10,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
@@ -56,6 +57,11 @@ class MessageFromStaffAdapter(
         return if (isLoading) 20 else itemList?.size ?: 0
     }
 
+    fun updateData(newList: List<GetMessagesStaffData>) {
+        itemList = newList
+        notifyDataSetChanged()
+    }
+
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
@@ -64,8 +70,7 @@ class MessageFromStaffAdapter(
         private val lblRole: TextView = itemView.findViewById(R.id.lblRole)
         private val lblTimeDate: TextView = itemView.findViewById(R.id.lblTimeDate)
         private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
-        private val lblView: TextView = itemView.findViewById(R.id.lblView)
-        private val lblType: TextView = itemView.findViewById(R.id.lblType)
+        private val imgReadStatus: View = itemView.findViewById(R.id.imgReadStatus)
         private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
 
 
@@ -74,7 +79,7 @@ class MessageFromStaffAdapter(
             var name=data.sent_by!!
             lblLogo.text = Constant.getNameInitials(name)
             lblName.text = name
-            lblRole.text = "Teacher"
+            lblRole.text = data.role
             lblTimeDate.text = Constant.isFormatDate(data.date.toString())+" "+data.time
 
             lblDescription.apply {
@@ -84,76 +89,30 @@ class MessageFromStaffAdapter(
             }
 
             if (data.is_unread){
-                lblView.apply {
-                    setCompoundDrawablesWithIntrinsicBounds(R.drawable.eye_closed, 0, 0, 0)
-                    compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.PrimaryColor)
-                }
+                imgReadStatus.visibility=View.VISIBLE
             }
             else{
-                lblView.apply {
-                    setCompoundDrawablesWithIntrinsicBounds(R.drawable.eye_icon, 0, 0, 0)
-                    compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.PrimaryColor)
-                }
+                imgReadStatus.visibility=View.GONE
             }
 
             when (data.type) {
                 Constant.TEXT -> {
                     lblDescription.visibility=View.VISIBLE
-                    lblType.apply {
-                        text = context.getString(R.string.text)
-                        setCompoundDrawablesWithIntrinsicBounds(R.drawable.text_msg_icon, 0, 0, 0)
-                        compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.PrimaryColor)
-                        lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.light_bg_blue)
-                        setTextColor(ContextCompat.getColor(context, R.color.PrimaryColor))
-                    }
                     lblDescription.text=data.content
                 }
 
                 Constant.VOICE -> {
-
-                    if (data.is_emergency){
-                        lblType.apply {
-                            text = context.getString(R.string.voice)
-                            setCompoundDrawablesWithIntrinsicBounds(R.drawable.voice_icon_2, 0, 0, 0)
-                            compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.white)
-                            lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red)
-                            setTextColor(ContextCompat.getColor(context, R.color.white))
-
-                        }
-                    }
-                    else{
-                        lblType.apply {
-                            text = context.getString(R.string.voice)
-                            setCompoundDrawablesWithIntrinsicBounds(R.drawable.voice_icon_2, 0, 0, 0)
-                            compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.dark_bg_orange_2)
-                            lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.pale_light_yellow)
-                            setTextColor(ContextCompat.getColor(context, R.color.dark_bg_voilet))
-                        }
-                    }
-
                     lblDescription.visibility=View.GONE
                 }
 
                 Constant.ATTACHMENT_ -> {
                     lblDescription.visibility=View.VISIBLE
-
-                    lblType.apply {
-                        text = context.getString(R.string.attachment)
-                        setCompoundDrawablesWithIntrinsicBounds(R.drawable.attachment_icon_2, 0, 0, 0)
-                        compoundDrawableTintList = ContextCompat.getColorStateList(context, R.color.dark_bg_orange_4)
-                        lblType.backgroundTintList = ContextCompat.getColorStateList(context, R.color.pale_light_orange)
-                        setTextColor(ContextCompat.getColor(context, R.color.pale_light_brown))
-                    }
                     lblDescription.text=data.description
                 }
             }
 
-
-
             rlaHeader.setOnClickListener{
-                listener.onStaffClick(data)
-            }
-            lblView.setOnClickListener{
+                imgReadStatus.visibility=View.GONE
                 listener.onStaffClick(data)
             }
         }

@@ -30,22 +30,9 @@
             android:text="@string/certificate"
             android:layout_marginStart="@dimen/five"
             android:textColor="@color/white"
-            android:layout_toStartOf="@+id/imgMoreOptions"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="visible" />
 
-        <ImageView
-            android:id="@+id/imgMoreOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="@dimen/ten"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="@dimen/five"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_more_vert"
-            android:visibility="gone" />
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -56,6 +43,7 @@
         android:layout_below="@+id/rytHeader">
 
         <LinearLayout
+            android:id="@+id/rlaRedirect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -64,14 +52,25 @@
             android:paddingEnd="@dimen/ten"
             android:background="@drawable/white_bg_radius">
 
+            <ImageView
+                android:id="@+id/imgMoreOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:layout_gravity="end"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/five"
+                android:src="@drawable/ic_more_vert"
+                android:visibility="gone" />
+
             <RelativeLayout
+                android:id="@+id/rlaFileItem"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <WebView
                     android:id="@+id/wvCertificatePdf"
                     android:visibility="gone"
-
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/two_hundred" />
 
@@ -100,6 +99,7 @@
                         android:layout_width="@dimen/fourty"
                         android:layout_height="@dimen/fourty">
                     </ImageView>
+
                     <TextView
                         android:gravity="center"
                         android:layout_below="@+id/imgTimimg"
@@ -230,7 +230,8 @@
                 <RelativeLayout
                     android:layout_marginTop="@dimen/ten"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
                     <ImageView
                         android:layout_centerVertical="true"
                         android:id="@+id/imgReason"
@@ -257,6 +258,7 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:id="@+id/lblReasonValue"
                     android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </TextView>

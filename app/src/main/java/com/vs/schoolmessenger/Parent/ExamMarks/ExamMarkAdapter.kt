@@ -105,7 +105,7 @@ class ExamMarkAdapter(
             position: Int,
             adapter: ExamMarkAdapter
         ) {
-            rootHeader.background.alpha = (0.2f * 255).toInt()
+            rootHeader.background.alpha = (0.1f * 255).toInt()
             textExamTitle.text = exam.name
             btnViewMarks.setOnClickListener {
                 val context = itemView.context

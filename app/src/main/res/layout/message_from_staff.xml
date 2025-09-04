@@ -5,7 +5,9 @@
     android:id="@+id/rlaHeader"
     android:clipToPadding="false"
     android:clipChildren="false"
-    android:padding="@dimen/fifteen"
+    android:paddingBottom="@dimen/fifteen"
+    android:paddingStart="@dimen/ten"
+    android:paddingEnd="@dimen/ten"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
@@ -36,6 +38,9 @@
                     android:backgroundTint="@color/PrimaryColor" />
 
                 <RelativeLayout
+                    android:layout_marginEnd="@dimen/ten"
+                    android:id="@+id/rlaNRDetails"
+                    android:layout_toStartOf="@+id/imgReadStatus"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/lblLogo"
@@ -48,9 +53,9 @@
                         android:id="@+id/lblName"
                         android:layout_alignParentStart="true"
                         android:layout_width="wrap_content"
+                        android:layout_toStartOf="@+id/lblRole"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/lblRole"
                         android:text="Dr. Senthana Abert"
                         style="@style/CustomTextStylePoppinsMedium" />
 
@@ -66,8 +71,16 @@
                         android:textSize="@dimen/twele_sp"
                         style="@style/CustomTextStylePoppinsBold"
                         android:background="@drawable/gray_bg_radius" />
-
                 </RelativeLayout>
+                <View
+                    android:visibility="gone"
+                    android:id="@+id/imgReadStatus"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/circle_bg_red"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/fifteen">
+
+                </View>
             </RelativeLayout>
             <!-- Logo -->
 
@@ -101,33 +114,10 @@
                     android:text="Please attend the meeting scheduled at 5 PM."
                     style="@style/CustomTextStylePoppinsMedium" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/lblType"
-                        android:layout_alignParentStart="true"
-                        android:layout_width="wrap_content"
-                        android:text="Notice"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:paddingBottom="@dimen/five"
-                        android:paddingStart="@dimen/ten"
-                        android:paddingEnd="@dimen/ten"
-                        android:paddingTop="@dimen/five"
-                        android:textSize="@dimen/twele_sp"
-                        android:drawableTint="@color/PrimaryColor"
-                        android:gravity="center"
-                        android:drawablePadding="@dimen/two"
-                        android:backgroundTint="@color/light_bg_blue"
-                        android:background="@drawable/gray_bg_radius"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_height="wrap_content">
-
-                    </TextView>
-                    <TextView
-                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
                         android:text="View"
+                        android:layout_gravity="end"
                         android:id="@+id/lblView"
                         android:textColor="@color/iconBlue"
                         android:padding="@dimen/five"
@@ -141,7 +131,6 @@
                         android:layout_height="wrap_content">
 
                     </TextView>
-                </RelativeLayout>
                 <TextView
                     android:id="@+id/lblTimeDate"
                     style="@style/CustomTextStylePoppinsMedium"
@@ -150,7 +139,7 @@
                     android:layout_gravity="end"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:textColor="@color/light_gray_4"
+                    android:textColor="@color/gnt_gray"
                     android:layout_marginTop="@dimen/five"
                     android:text="Today 04:45 PM"
                     android:textSize="@dimen/twele_sp"

@@ -94,8 +94,6 @@ class EventFilePathAdapter(
                 Constant.PDF, Constant.DOC, Constant.DOCX, Constant.TXT, Constant.PPT, Constant.PPTX, Constant.EXCEL, Constant.VIDEO -> {
                     DefaultImage.setImageResource(getIconForType(data.type))
                 }
-
-
             }
 
         }

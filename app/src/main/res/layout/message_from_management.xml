@@ -11,11 +11,43 @@
         layout="@layout/school_side_tool_bar" />
 
 
+    <RelativeLayout
+        android:id="@+id/rytSearch1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@id/toolbarLayout"
+        android:layout_margin="@dimen/ten"
+        android:layout_marginStart="@dimen/five"
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgSearch1"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/txtSearch1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch1"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
+
     <ScrollView
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/rytSearch1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
+
             android:id="@+id/rlaMessageFFromStaff"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,18 +68,19 @@
 
             <LinearLayout
                 android:id="@+id/lytList"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rcMessageStaff"
                 android:layout_centerInParent="true"
                 android:orientation="vertical"
+                android:paddingBottom="@dimen/ten"
                 android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/noDataImage"
                     android:layout_width="@dimen/two_hundred"
                     android:layout_height="@dimen/two_hundred"
-                    android:layout_marginTop="@dimen/twenty_five"
+                    android:layout_gravity="center_horizontal"
                     android:src="@drawable/no_data_found">
                 </ImageView>
 
@@ -57,8 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:text=""
+                    android:text="No Data"
                     android:textSize="@dimen/fifteen_sp">
 
                 </TextView>

@@ -613,7 +613,7 @@
     <string name="type">Type</string>
     <string name="cause">Cause</string>
     <string name="add_attachment">Add Attachment</string>
-    <string name="assignment_progress">Assignment Progress</string>
+    <string name="assignment_progress">Submission Progress</string>
     <string name="pending">Pending</string>
     <string name="activate_coupon">ACTIVATE COUPON</string>
     <string name="go_to_website">GO TO WEBSITE</string>
@@ -633,7 +633,7 @@
     <string name="notice_display_date_range">Notice Display Date Range</string>
     <string name="quit_earning">Quit Earning?</string>
     <string name="ok">Ok</string>
-    <string name="total_collection_today">TOTAL COLLECTION TODAY</string>
+    <string name="total_collection_today">TOTAL COLLECTION</string>
     <string name="payment_history">Payment history</string>
     <string name="cancel_2">CANCEL</string>
     <string name="OK_2">OK</string>
@@ -754,5 +754,7 @@
     <string name="no_of_question_greater_than_zero">No of questions should be greater than zero</string>
     <string name="ReOpen">ReOpen</string>
     <string name="emergency_voice">Emergency voice</string>
+    <string name="post_on">Post on</string>
+    <string name="posted_by">Posted by</string>
 
 </resources>

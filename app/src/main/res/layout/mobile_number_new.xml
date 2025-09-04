@@ -147,6 +147,31 @@
                     android:textSize="@dimen/fifteen_sp"
                     />
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/fifteen"
+                android:id="@+id/lnrPowered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/imgSavyasasy"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:src="@drawable/savyasasy"/>
+
+                <TextView
+                    android:layout_toEndOf="@+id/imgSavyasasy"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
+                    android:text="Powered by savyasasy"/>
+            </RelativeLayout>
+
         </RelativeLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

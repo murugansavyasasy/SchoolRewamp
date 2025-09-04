@@ -181,6 +181,8 @@ class NoticeBoardAdapter(
                 context.startActivity(intent)
             }
 
+
+
             if (hasFiles) {
                 val fileList = noticeData.file_path!!
                 val totalFiles = fileList.size
