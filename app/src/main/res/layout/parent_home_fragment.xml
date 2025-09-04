@@ -4,12 +4,13 @@
     android:id="@+id/main"
     android:background="@color/bpWhite"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/one_sixty"
+        android:layout_height="@dimen/one_eighty"
         android:background="@color/PrimaryColor">
 
         <ImageView
@@ -28,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/thirty_five"
+            android:layout_marginTop="@dimen/thirty"
             android:layout_marginEnd="@dimen/ten"
             android:layout_toStartOf="@+id/imgNotification"
             android:layout_toEndOf="@+id/imgBurgerMenu"
@@ -110,7 +111,7 @@
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/five"
         android:clipToPadding="false"
-        android:background="@color/mild_grey"
+        android:background="@color/bpWhite"
         android:paddingBottom="@dimen/ten"
         tools:listitem="@layout/dashboard_app_item" />
 </RelativeLayout>

@@ -81,11 +81,17 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         binding.recyclerViewCalendar.adapter = calendarAdapter
 
         binding.recyclerViewCalendar.post {
-            val centerOffset = binding.recyclerViewCalendar.width / 2 - 35
-            (binding.recyclerViewCalendar.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
-                10, centerOffset
-            )
+            val todayDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                .format(Calendar.getInstance().time)
+
+            val todayPos = dateList.indexOfFirst { it.fullDate == todayDate }
+            if (todayPos != -1) {
+                val centerOffset = binding.recyclerViewCalendar.width / 2 - 35
+                (binding.recyclerViewCalendar.layoutManager as LinearLayoutManager)
+                    .scrollToPositionWithOffset(todayPos, centerOffset)
+            }
         }
+
 
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -137,14 +143,16 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         val list = mutableListOf<CalendarDate>()
         val calendar = Calendar.getInstance()
 
-        calendar.add(Calendar.DATE, -10)
+        val today = calendar.time
+
+        calendar.add(Calendar.MONTH, -6)
 
         val dayFormatter = SimpleDateFormat("EEE", Locale.getDefault())
         val dateFormatter = SimpleDateFormat("dd", Locale.getDefault())
         val fullFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val monthFormatter = SimpleDateFormat("MMM", Locale.getDefault())
 
-        for (i in 0..10) {
+        while (!calendar.time.after(today)) {
             val date = calendar.time
             list.add(
                 CalendarDate(
@@ -156,7 +164,6 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             )
             calendar.add(Calendar.DATE, 1)
         }
-
         return list
     }
 

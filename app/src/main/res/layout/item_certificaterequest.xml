@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/rytCertificate"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/one_fourty"
+        android:layout_height="@dimen/one_thirty"
         android:background="@color/light_green_4"
         android:padding="@dimen/ten">
 
@@ -61,6 +61,7 @@
             android:layout_marginBottom="@dimen/ten"
             android:layout_toStartOf="@+id/imgNext"
             android:maxLines="1"
+            android:visibility="gone"
             android:text="Study Certificate"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
@@ -73,7 +74,6 @@
             android:layout_height="@dimen/thirty"
             android:layout_below="@+id/lblCertificateTitle"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
             android:src="@drawable/arrow_right_circle">
 
