@@ -128,6 +128,7 @@ class AssignmentAdapter(
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
 
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
+        private val lblSubmittedCount: TextView = itemView.findViewById(R.id.lblSubmittedCount)
 
 
         private val options: ImageView = itemView.findViewById(R.id.options)
@@ -158,6 +159,8 @@ class AssignmentAdapter(
 
             lblSubmitted.text = "Submitted" + " - " + data.submitted_count
             lblNotSubmitted.text = "Not Submitted" + " - " + data.total_count
+
+            lblSubmittedCount.text = data.submitted_count.toString()+"/"+data.total_count.toString()
 
 
             val submittedCount = data.submitted_count ?: 0

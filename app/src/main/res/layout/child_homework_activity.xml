@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/imgBack"
-            android:layout_width="@dimen/fourty"
-            android:layout_height="@dimen/fourty"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
             android:src="@drawable/arrow_left_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -70,8 +70,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/lbltitle"

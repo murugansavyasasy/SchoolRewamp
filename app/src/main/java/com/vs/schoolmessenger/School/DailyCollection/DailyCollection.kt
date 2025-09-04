@@ -158,14 +158,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             binding.totalsummary1.layoutManager = LinearLayoutManager(this)
             binding.totalsummary1.adapter = mAdapter
 
-            val totalCollectionSum = data.sumOf {
-                it.total_collection
-                    .replace("₹", "")
-                    .replace(",", "")
-                    .trim()
-                    .toDoubleOrNull() ?: 0.0
-            }
-            binding.totalCollection.text = "₹ %.2f".format(totalCollectionSum)
+            val totalCollectionSum = data[0].total_collection
+            binding.totalCollection.text = totalCollectionSum.toString()
 
         }
     }

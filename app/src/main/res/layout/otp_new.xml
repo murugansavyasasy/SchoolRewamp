@@ -253,6 +253,31 @@
                 android:textStyle="bold" />
 
 
+            <RelativeLayout
+                android:gravity="bottom"
+                android:layout_marginTop="@dimen/fourty"
+                android:id="@+id/lnrPowered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/imgSavyasasy"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:src="@drawable/savyasasy"/>
+
+                <TextView
+                    android:layout_toEndOf="@+id/imgSavyasasy"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
+                    android:text="Powered by savyasasy"/>
+            </RelativeLayout>
+
+
             <com.vs.schoolmessenger.Utils.SpinningProgressBar
                 android:id="@+id/isLoading"
                 android:layout_width="@dimen/thirty"
