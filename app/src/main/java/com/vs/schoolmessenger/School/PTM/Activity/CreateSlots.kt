@@ -1,9 +1,13 @@
 package com.vs.schoolmessenger.School.PTM.Activity
 
+import android.app.Dialog
+import android.app.TimePickerDialog
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -13,11 +17,16 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.PTM.Adapter.CustomCalendar
 import com.vs.schoolmessenger.School.PTM.Adapter.SectionAndStandardAdapter
+import com.vs.schoolmessenger.School.PTM.Adapter.SelectedDatesAdapter
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CreateSlotsBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     View.OnClickListener {
@@ -27,12 +36,16 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     }
 
     private var isAccessToken: String? = null
+    private lateinit var selectedDatesAdapter: SelectedDatesAdapter
     private var isStaffDetails: StaffDetails? = null
     private var appViewModel: App? = null
     var isValidAcademicYear = false
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
     var isAcademicYear: List<AcademicYear>? = null
+    private val selectedDates = ArrayList<String>()
+    var startCalendar: Calendar? = null
+    var endCalendar: Calendar? = null
 
 
     override fun setupViews() {
@@ -43,6 +56,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.lblOnline.setOnClickListener(this)
         binding.lblPhoneCall.setOnClickListener(this)
+        binding.rytPickFromTime.setOnClickListener(this)
+        binding.rytToTime.setOnClickListener(this)
+        binding.rytPickDate.setOnClickListener(this)
         binding.lblPerson.setOnClickListener(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.lblSchoolName.text = isStaffDetails!!.school_name
@@ -54,11 +70,13 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isGetStandardSection()
 
-
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
+                    binding.rcySectionAndStandardList.visibility = View.VISIBLE
                     loadSectionStandard(response.data)
+                } else {
+                    binding.rcySectionAndStandardList.visibility = View.GONE
                 }
             }
         }
@@ -130,8 +148,104 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             R.id.lblPhoneCall -> {
                 isChangeTheBackRound(binding.lblPhoneCall)
             }
+            R.id.rytPickDate -> {
+                showCalendarDialog()
+            }
+
+            R.id.rytPickFromTime -> {
+                val calendar = Calendar.getInstance()
+                TimePickerDialog(
+                    this,
+                    { _, hour, minute ->
+                        startCalendar = Calendar.getInstance().apply {
+                            set(Calendar.HOUR_OF_DAY, hour)
+                            set(Calendar.MINUTE, minute)
+                        }
+                        binding.lblFromTime.text =
+                            SimpleDateFormat(
+                                "hh:mm a",
+                                Locale.getDefault()
+                            ).format(startCalendar!!.time)
+                    },
+                    calendar.get(Calendar.HOUR_OF_DAY),
+                    calendar.get(Calendar.MINUTE),
+                    false
+                ).show()
+            }
+
+            R.id.rytToTime -> {
+                if (startCalendar == null) {
+                    Toast.makeText(this, "Please select Start Time first", Toast.LENGTH_SHORT)
+                        .show()
+                    return
+                }
+
+                val calendar = Calendar.getInstance()
+                TimePickerDialog(
+                    this,
+                    { _, hour, minute ->
+                        endCalendar = Calendar.getInstance().apply {
+                            set(Calendar.HOUR_OF_DAY, hour)
+                            set(Calendar.MINUTE, minute)
+                        }
+
+                        // Validation
+                        if (endCalendar!!.before(startCalendar)) {
+                            Toast.makeText(
+                                this,
+                                "End Time cannot be before Start Time",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            endCalendar = null
+                        } else {
+                            binding.lblToTime.text =
+                                SimpleDateFormat(
+                                    "hh:mm a",
+                                    Locale.getDefault()
+                                ).format(endCalendar!!.time)
+                        }
+                    },
+                    calendar.get(Calendar.HOUR_OF_DAY),
+                    calendar.get(Calendar.MINUTE),
+                    false
+                ).show()
+            }
         }
     }
+
+    private fun showCalendarDialog() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_calendar)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        val calendarView = dialog.findViewById<CustomCalendar>(R.id.customCalendar)
+        val btnSave = dialog.findViewById<TextView>(R.id.btnSaveCalendar)
+
+        // restore previously saved selection
+        calendarView.setSelectedDates(selectedDates)
+
+        btnSave.setOnClickListener {
+            selectedDates.clear()
+            selectedDates.addAll(calendarView.getSelectedDates())
+
+            // now update your RecyclerView/GridView adapter
+            selectedDatesAdapter = SelectedDatesAdapter(selectedDates) { date ->
+                selectedDates.remove(date)
+                selectedDatesAdapter.notifyDataSetChanged()
+                calendarView.setSelectedDates(selectedDates) // keep sync with calendar
+            }
+            binding.rcySelectedDate.layoutManager = GridLayoutManager(this, 3)
+            binding.rcySelectedDate.adapter = selectedDatesAdapter
+
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
 
     private fun isChangeTheBackRound(isSelectedTextView: TextView) {
         binding.lblPerson.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))

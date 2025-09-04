@@ -10,6 +10,7 @@
         android:textSize="@dimen/fifteen_sp"
         style="@style/CustomTextStylePoppinsBold1"
         android:textColor="@color/black"
+        android:padding="@dimen/ten"
         android:layout_marginStart="@dimen/fifteen"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
