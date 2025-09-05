@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="@dimen/twenty_sp"
+                android:textSize="@dimen/fifteen_sp"
                 android:text="03"/>
 
             <TextView
