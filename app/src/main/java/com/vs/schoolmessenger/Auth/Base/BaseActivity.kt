@@ -34,6 +34,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -75,54 +76,22 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         // Optionally overridden in child activities to perform actions on views
     }
 
-    fun isToolBarBlackTheme() {
-        val window = this.window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = this.resources.getColor(R.color.black)
-        window.navigationBarColor = this.resources.getColor(R.color.white)
-    }
-
     // Example: Setup common toolbar
     protected open fun setupToolbar() {
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = Color.TRANSPARENT
-        window.navigationBarColor = Color.TRANSPARENT
-        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
-    }
-
-    protected open fun setupToolbarBlueWhite() {
-        val window = this.window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
-        window.navigationBarColor = this.resources.getColor(R.color.white)
-        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
-    }
-
-    protected open fun setupToolbarBlue() {
-        val window = this.window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
-        window.navigationBarColor = this.resources.getColor(R.color.PrimaryColor)
-        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
-    }
-
-
-    protected open fun setUpGradientParent() {
-        val window = this.window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = Color.TRANSPARENT
-        window.navigationBarColor = Color.TRANSPARENT
-        window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
-    }
-
-    protected open fun setUpGradientSchool() {
-        val window = this.window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
+        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
+    }
+
+        protected open fun setupToolbarBlueWhite() {
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
+        window.navigationBarColor = this.resources.getColor(R.color.white)
         window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
 
@@ -220,191 +189,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             updateNavBar(icon_profile)
         }
 
-
     }
-    fun showDropdownMenuSort(
-        anchor: View,
-        activity: Activity,
-        items: List<String>,
-        onItemSelected: (String) -> Unit
-    ) {
-        if (activity.isFinishing || activity.isDestroyed) {
-            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
-            return
-        }
-
-        val inflater = LayoutInflater.from(anchor.context)
-        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
-
-        // Create a PopupWindow
-        val popupWindow = PopupWindow(
-            dropdownView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            true
-        )
-        dimBehind(popupWindow)
-        // Set up the ListView in the dropdown
-        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
-        val adapter =
-            ArrayAdapter(anchor.context, R.layout.dropdown_spinner, items)
-        listView.adapter = adapter
-
-        // Handle item clicks
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedItem = items[position]
-            onItemSelected(selectedItem)
-            clearDim()
-            popupWindow.dismiss() // Close the dropdown
-        }
-
-        popupWindow.setOnDismissListener {
-            clearDim()
-        }
-
-        try {
-            popupWindow.showAsDropDown(anchor)
-        } catch (e: Exception) {
-            Log.e("DropdownMenu", "Failed to show dropdown menu", e)
-        }
-    }
-
-    fun isDropDownLoadData(
-        anchor: View,
-        activity: Activity,
-        items: List<NameAndIds>?, // Pass full list, not just names
-        onItemSelected: (Pair<String, Int>) -> Unit // Return name + ID
-    ) {
-        if (activity.isFinishing || activity.isDestroyed) {
-            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
-            return
-        }
-
-        val inflater = LayoutInflater.from(anchor.context)
-        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
-
-        val popupWindow = PopupWindow(
-            dropdownView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            true
-        )
-        dimBehind(popupWindow)
-
-        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
-
-        // Extract names for UI display
-        val subjectNames = items!!.map { it.name }
-        val adapter = ArrayAdapter(anchor.context, R.layout.dropdown_spinner, subjectNames)
-        listView.adapter = adapter
-
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedSubject = items[position] // Get full SubjectListData object
-            onItemSelected(Pair(selectedSubject.name, selectedSubject.id)) // Pass both name & ID
-            clearDim()
-            popupWindow.dismiss()
-        }
-
-        popupWindow.setOnDismissListener {
-            clearDim()
-        }
-
-        try {
-            popupWindow.showAsDropDown(anchor)
-        } catch (e: Exception) {
-            Log.e("DropdownMenu", "Failed to show dropdown menu", e)
-        }
-    }
-
-    fun isDropDownLoadDataSection(
-        anchor: View,
-        activity: Activity,
-        items: List<Section>?, // Pass full list, not just names
-        onItemSelected: (Pair<String, Int>) -> Unit // Return name + ID
-    ) {
-        if (activity.isFinishing || activity.isDestroyed) {
-            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
-            return
-        }
-
-        val inflater = LayoutInflater.from(anchor.context)
-        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
-
-        val popupWindow = PopupWindow(
-            dropdownView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            true
-        )
-        dimBehind(popupWindow)
-
-        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
-
-        // Extract names for UI display
-        val subjectNames = items!!.map { it.name }
-        val adapter = ArrayAdapter(anchor.context, R.layout.dropdown_spinner, subjectNames)
-        listView.adapter = adapter
-
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedSubject = items[position] // Get full SubjectListData object
-            onItemSelected(Pair(selectedSubject.name, selectedSubject.id)) // Pass both name & ID
-            clearDim()
-            popupWindow.dismiss()
-        }
-
-        popupWindow.setOnDismissListener {
-            clearDim()
-        }
-
-        try {
-            popupWindow.showAsDropDown(anchor)
-        } catch (e: Exception) {
-            Log.e("DropdownMenu", "Failed to show dropdown menu", e)
-        }
-    }
-
-
-    fun showStandardDropdown(
-        anchor: View,
-        activity: Activity,
-        standards: List<Standard>?,
-        onStandardSelected: (Standard, Int) -> Unit // Add position
-    ) {
-        if (activity.isFinishing || activity.isDestroyed) {
-            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
-            return
-        }
-
-        val inflater = LayoutInflater.from(anchor.context)
-        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
-        val popupWindow = PopupWindow(
-            dropdownView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            true
-        )
-        dimBehind(popupWindow)
-
-        val standardNames = standards!!.map { it.name }
-        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
-        val adapter =
-            ArrayAdapter(anchor.context, android.R.layout.simple_list_item_1, standardNames)
-        listView.adapter = adapter
-
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedStandard = standards[position]
-            onStandardSelected(selectedStandard, position) // Pass position
-            popupWindow.dismiss()
-        }
-
-        popupWindow.setOnDismissListener {
-            clearDim()
-        }
-
-        popupWindow.showAsDropDown(anchor)
-    }
-
-
     fun showAcademicDropdown(
         anchor: View,
         activity: Activity,
@@ -624,30 +409,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-    private fun animateBackgroundColor(imageView: ImageView, colorStart: Int, colorEnd: Int) {
-        // Get the current background drawable (or create a new one if not set)
-        val background = (imageView.background as? GradientDrawable) ?: GradientDrawable().apply {
-            cornerRadius = 50f // Set the radius to 20dp
-        }
-
-        // Get the current color from the drawable (fallback to colorStart if not available)
-        val currentColor =
-            (background.color?.defaultColor ?: ContextCompat.getColor(this, colorStart))
-
-        // Create a ValueAnimator for smooth color transition
-        val colorAnimation =
-            ValueAnimator.ofArgb(currentColor, ContextCompat.getColor(this, colorEnd))
-        colorAnimation.duration = 400 // Set duration for the transition (500ms)
-
-        // Update the background color with the animated value
-        colorAnimation.addUpdateListener { animator ->
-            background.setColor(animator.animatedValue as Int)
-            imageView.background = background // Apply the updated drawable with radius
-        }
-
-        colorAnimation.start() // Start the animation
-    }
-
     companion object {
         @JvmStatic
         fun loadFragment(activity: FragmentActivity, fragment: Fragment) {
@@ -749,88 +510,5 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         datePickerDialog.show()
     }
-
-
-    fun changeDateFormat(inputDate: String): String {
-        // Define the current format of the input date
-        val inputFormat = SimpleDateFormat(Constant.dd_MM_yyyy, Locale.getDefault())
-
-        // Define the desired output format
-        val outputFormat = SimpleDateFormat(Constant.EEE_dd_MMM_yyyy, Locale.getDefault())
-
-        // Parse the input date and reformat it
-        val date = inputFormat.parse(inputDate)
-        return outputFormat.format(date!!)
-    }
-
-
-    fun showSpinnerTimePicker(
-        context: Context,
-        onTimeSelected: (hour: Int, minute: Int, isAm: Boolean) -> Unit
-    ) {
-        val dialog = Dialog(context)
-        dialog.setContentView(R.layout.custom_time_picker)
-
-        // Ensure the dialog can handle large content
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
-        val hourRecyclerView = dialog.findViewById<RecyclerView>(R.id.hourSpinner)
-        val minuteRecyclerView = dialog.findViewById<RecyclerView>(R.id.minuteSpinner)
-        val ampmRecyclerView = dialog.findViewById<RecyclerView>(R.id.ampmSpinner)
-        val tvTitle = dialog.findViewById<TextView>(R.id.tvTitle)
-
-        val hours = (1..12).map { it.toString() }
-        val minutes = (0..59).map { it.toString().padStart(2, '0') }
-        val ampm = listOf(Constant.AM, Constant.PM)
-
-        // Get the current time
-        val calendar = Calendar.getInstance()
-        var selectedHour = calendar.get(Calendar.HOUR) // 12-hour format
-        var selectedMinute = calendar.get(Calendar.MINUTE)
-        var isAm = calendar.get(Calendar.AM_PM) == Calendar.AM
-        tvTitle.paintFlags = tvTitle.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
-        // Adjust the selected hour for 1-12 format
-        if (selectedHour == 0) {
-            selectedHour = 12 // Convert 0 hour to 12 for 12-hour format
-        }
-
-        // Set up adapters with selected positions
-        hourRecyclerView.layoutManager = LinearLayoutManager(context)
-        hourRecyclerView.adapter = TimePickerAdapter(hours, { hourIndex ->
-            selectedHour = hourIndex + 1 // Pass index directly (0-based to 1-12)
-        }, selectedHour - 1) // Pass current hour index (1-12) adjusted for 0-based index
-
-        minuteRecyclerView.layoutManager = LinearLayoutManager(context)
-        minuteRecyclerView.adapter = TimePickerAdapter(minutes, { minuteIndex ->
-            selectedMinute = minuteIndex // Pass selected minute directly
-        }, selectedMinute) // Pass current minute index
-
-        ampmRecyclerView.layoutManager = LinearLayoutManager(context)
-        ampmRecyclerView.adapter = TimePickerAdapter(ampm, { isAmIndex ->
-            isAm = isAmIndex == 0 // 0 for AM, 1 for PM
-        }, if (isAm) 0 else 1) // Set AM/PM position based on current time
-        ampmRecyclerView.visibility = View.VISIBLE // Optional for 12-hour format
-
-        // Scroll to the current time in the RecyclerViews
-        hourRecyclerView.scrollToPosition(selectedHour - 1) // 0-index for RecyclerView
-        minuteRecyclerView.scrollToPosition(selectedMinute) // 0-index for RecyclerView
-
-        // Handle buttons
-        dialog.findViewById<RelativeLayout>(R.id.btnCancel).setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.findViewById<RelativeLayout>(R.id.btnConfirm).setOnClickListener {
-            onTimeSelected(selectedHour, selectedMinute, isAm)
-            dialog.dismiss()
-        }
-
-        dialog.show()
-    }
-
 
 }
