@@ -90,12 +90,6 @@ class StaffAttendanceReportAdapter(
                     lnrPresent.visibility = View.GONE
                     lblAbsentKey.text = key
                     lblAbsentValue.text = value
-
-//                    if (data.attendance_type.size != 2) {
-//                        imgPunchHistory.visibility = View.GONE
-//                    } else {
-//                        imgPunchHistory.visibility = View.VISIBLE
-//                    }
                 }
                 if (value == Constant.Present) {
                     lnrAbsent.visibility = View.GONE
@@ -103,13 +97,11 @@ class StaffAttendanceReportAdapter(
                     lblPresentKey.text = key
                     lblPresentValue.text = value
 
-//                    imgPunchHistory.visibility = View.VISIBLE
                 }
             }
 
 
             lblName.text = data.name
-
             if (data.in_time != "") {
                 lblCheckInTime.text = data.in_time
 
