@@ -22,14 +22,14 @@ class NotificationAdapter(
     private val TYPE_HEADER = 2
 
     override fun getItemViewType(position: Int): Int {
-        return if (isLoading) {
-            TYPE_SHIMMER
-        } else if (itemList!![position].isHeader) {
-            TYPE_HEADER
-        } else {
-            TYPE_DATA
+        return when {
+            isLoading -> TYPE_SHIMMER
+            itemList.isNullOrEmpty() -> TYPE_DATA
+            itemList!![position].isHeader == true -> TYPE_HEADER
+            else -> TYPE_DATA
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

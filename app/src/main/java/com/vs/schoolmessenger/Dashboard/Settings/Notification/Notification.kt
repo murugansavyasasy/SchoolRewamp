@@ -48,14 +48,38 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
             if (response != null && response.status) {
                 isNotificationItems.clear()
 
-                response.data.forEach { menu -> isNotificationItems.add(NotificationDataClass(type = "", title = menu.menu_name ?: "", content = "", sendBy = "", category = menu.menu_name ?: "", isHeader = true))
+                response.data.forEach { menu ->
+                    if (!menu.menu_name.isNullOrEmpty()) {
+                        isNotificationItems.add(
+                            NotificationDataClass(
+                                type = "",
+                                title = menu.menu_name,
+                                content = "",
+                                sendBy = "",
+                                category = menu.menu_name,
+                                isHeader = true
+                            )
+                        )
 
-                    menu.details?.forEach { item -> isNotificationItems.add(NotificationDataClass(type = item.type ?: "", title = menu.menu_name ?: "", content = item.message ?: "", sendBy = item.name ?: "", category = menu.menu_name ?: "", isHeader = false))
+                        menu.details?.forEach { item ->
+                            isNotificationItems.add(
+                                NotificationDataClass(
+                                    type = item.type ?: "",
+                                    title = item.type ?: "",
+                                    content = item.message ?: "",
+                                    sendBy = item.name ?: "",
+                                    category = menu.menu_name,
+                                    isHeader = false
+                                )
+                            )
+                        }
                     }
                 }
 
+                // Refresh adapter
                 isNotificationAdapter = NotificationAdapter(isNotificationItems, this, false)
                 binding.rcyNotification.adapter = isNotificationAdapter
+
             } else {
                 Constant.showDataValidation(
                     response?.status.toString(),
@@ -64,6 +88,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
                 )
             }
         }
+
 
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {

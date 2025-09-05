@@ -4,7 +4,7 @@
     android:background="@color/mild4"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="@dimen/fifteen">
+    android:padding="@dimen/five">
 
     <ImageView
         android:id="@+id/imgHeader"
