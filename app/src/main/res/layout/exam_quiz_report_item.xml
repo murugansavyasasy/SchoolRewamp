@@ -26,7 +26,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/one_eighty"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
                 app:shapeAppearanceOverlay="@style/RoundedAllCornersEvenly" />

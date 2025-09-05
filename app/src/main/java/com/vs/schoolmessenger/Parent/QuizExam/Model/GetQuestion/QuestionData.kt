@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.QuizExam
+package com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion
 
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 

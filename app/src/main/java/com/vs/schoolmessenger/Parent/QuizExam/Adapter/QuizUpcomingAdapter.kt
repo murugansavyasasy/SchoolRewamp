@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 
 
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamListData
-import com.vs.schoolmessenger.Parent.QuizExam.QuizExam
+import com.vs.schoolmessenger.Parent.QuizExam.AttendQuiz
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -95,7 +95,7 @@ class QuizUpcomingAdapter(
 
             // Open QuizExam on click
             val openExam = View.OnClickListener {
-                val intent = Intent(context, QuizExam::class.java)
+                val intent = Intent(context, AttendQuiz::class.java)
                 intent.putExtra("isRSQuizId", data.quiz_id)
                 context.startActivity(intent)
             }

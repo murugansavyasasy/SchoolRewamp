@@ -216,7 +216,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         binding.rcAddQuestion.isNestedScrollingEnabled = false
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         binding.rcAddQuestion.adapter = adapter
-
         appViewModel?.isGetQuizQuestionReport(isAccessToken ?: "", isQuizID)
     }
 
