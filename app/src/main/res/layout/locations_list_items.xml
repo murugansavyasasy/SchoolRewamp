@@ -3,84 +3,274 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true">
+    android:layout_margin="@dimen/five"
+    android:background="@drawable/rect_white"
+    android:fitsSystemWindows="true"
+    android:padding="@dimen/five">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rect_shadow_white"
-        android:padding="@dimen/ten"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rytImgLocation"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circle_bg_light_blue"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/location_icon" />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_toStartOf="@+id/rytImgEdit"
+                android:layout_toEndOf="@+id/rytImgLocation"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lblPlace"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chennai"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:background="@drawable/rect_bg_light_blue"
+                    android:paddingVertical="@dimen/five"
+                    android:paddingStart="@dimen/ten"
+                    android:paddingRight="@dimen/twenty"
+                    android:text="Work Place"
+                    android:textColor="@color/PrimaryColor"
+                    android:textSize="@dimen/fifteen_sp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rytImgEdit"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/rytImgDelete"
+                android:background="@drawable/circle_bg_light_blue"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/ten"
+                    android:layout_height="@dimen/ten"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/edit_icon_blue" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rytImgDelete"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:background="@drawable/circle_bg_light_red"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/ten"
+                    android:layout_height="@dimen/ten"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/delete_icon_blue" />
+            </RelativeLayout>
+
+        </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rytDetails"
+            android:id="@+id/rytAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toStartOf="@+id/rytActions">
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgAddress"
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/fifteen"
+                android:layout_centerVertical="true"
+                android:src="@drawable/edit_icon_blue" />
 
             <TextView
-
-                android:id="@+id/lblPlaceName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="T.nagar"
+                android:id="@+id/lblAddress"
                 style="@style/CustomTextStylePoppinsRegular"
-                android:textColor="@color/bpBlue"
-                android:textSize="@dimen/fifteen_sp" />
-
-            <TextView
-                android:id="@+id/lblLatLong"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblPlaceName"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_marginTop="@dimen/five"
-                android:text=""
-                android:textSize="@dimen/fifteen_sp" />
-
-
-            <TextView
-                android:id="@+id/lblDistance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblLatLong"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginBottom="@dimen/ten"
-                android:text="10 Meters"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp" />
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_toEndOf="@+id/imgAddress"
+                android:text="Chennai"
+                android:textColor="@color/mild_grey_dark"
+                android:textSize="@dimen/thirteen_sp" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rytActions"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imgEdit"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty_five"
-                android:layout_marginEnd="@dimen/twenty"
-                android:src="@drawable/edit_icon_blue"
-                android:visibility="visible" />
 
-            <ImageView
-                android:id="@+id/imgDelete"
-                android:layout_width="@dimen/twenty_five"
-                android:layout_height="@dimen/twenty_five"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_toEndOf="@+id/imgEdit"
-                android:src="@drawable/delete_icon_blue" />
+            <RelativeLayout
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/lblDot"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/ten"
+                    android:layout_height="@dimen/ten"
+                    android:background="@drawable/circle_bg_green" />
+
+                <TextView
+                    android:id="@+id/lblDistance"
+                    android:layout_centerVertical="true"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/lblDot"
+                    android:text="10 Meter"
+                    android:textColor="@color/mild_grey_dark"
+                    android:textSize="@dimen/thirteen_sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/imgTime"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:src="@drawable/time_icon" />
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/imgTime"
+                    android:text="2 hours ago"
+                    android:textColor="@color/mild_grey_dark"
+                    android:textSize="@dimen/thirteen_sp" />
+
+            </RelativeLayout>
+
 
         </RelativeLayout>
 
-    </RelativeLayout>
+
+    </LinearLayout>
+
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/rect_shadow_white"-->
+    <!--        android:padding="@dimen/ten"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
+    <!--        -->
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/rytDetails"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginStart="@dimen/ten"-->
+    <!--            android:layout_toStartOf="@+id/rytActions">-->
+
+    <!--            <TextView-->
+
+    <!--                android:id="@+id/lblPlaceName"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/five"-->
+    <!--                android:text="T.nagar"-->
+    <!--                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                android:textColor="@color/bpBlue"-->
+    <!--                android:textSize="@dimen/fifteen_sp" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblLatLong"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/lblPlaceName"-->
+    <!--                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                android:layout_marginTop="@dimen/five"-->
+    <!--                android:text=""-->
+    <!--                android:textSize="@dimen/fifteen_sp" />-->
+
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblDistance"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/lblLatLong"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_marginTop="@dimen/five"-->
+    <!--                android:layout_marginBottom="@dimen/ten"-->
+    <!--                android:text="10 Meters"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="@dimen/fifteen_sp" />-->
+
+    <!--        </RelativeLayout>-->
+
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/rytActions"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentEnd="true"-->
+    <!--            android:layout_centerVertical="true">-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/imgEdit"-->
+    <!--                android:layout_width="@dimen/twenty"-->
+    <!--                android:layout_height="@dimen/twenty_five"-->
+    <!--                android:layout_marginEnd="@dimen/twenty"-->
+    <!--                android:src="@drawable/edit_icon_blue"-->
+    <!--                android:visibility="visible" />-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/imgDelete"-->
+    <!--                android:layout_width="@dimen/twenty_five"-->
+    <!--                android:layout_height="@dimen/twenty_five"-->
+    <!--                android:layout_marginEnd="@dimen/ten"-->
+    <!--                android:layout_toEndOf="@+id/imgEdit"-->
+    <!--                android:src="@drawable/delete_icon_blue" />-->
+
+    <!--        </RelativeLayout>-->
+
+    <!--    </RelativeLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

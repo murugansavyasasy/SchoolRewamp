@@ -175,6 +175,7 @@
     <color name="gray">#e6e5eb</color>
     <color name="stoke_gray">#DDDDDD</color>
     <color name="clr_violet">#6467d2</color>
+    <color name="clr_light_blue">#dff3fb</color>
 
     <color name="system_blue">#9DD6FD</color>
     <color name="light_violet">#E3F1FB</color>
