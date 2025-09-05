@@ -5,7 +5,7 @@
     android:id="@+id/constParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rect_white_light_radious"
+    android:background="@color/gray_white"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
