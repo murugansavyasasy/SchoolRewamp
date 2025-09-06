@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
@@ -146,65 +147,7 @@ class EventCompletedAdapter(
             eventdesc.text = data.description
 
             loadingBar.visibility = View.GONE
-
-//            header.setOnClickListener {
-//                val convertedList = data.file_path.map {
-//                    GetFilePathDetails(
-//                        type = it.type,
-//                        url = it.url,
-//                    )
-//                }
-//
-//                val isHomeWorkData = FilePreview(
-//                    id = "",
-//                    title = data.title,
-//                    description = data.description,
-//                    subjectName = "",
-//                    sentBy = "",
-//                    thumbnail = "",
-//                    isUnread = true,
-//                    isCompleted = true,
-//                    isMenuType = Constant.M_PARENT_CLASS_EVENTS,
-//                    fileList = convertedList,
-//                )
-//
-//                val intent = Intent(context, ChildHomeWork::class.java)
-//                intent.putExtra("isPreViewData", isHomeWorkData)
-//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                context.startActivity(intent)
-//            }
-
-            val openPreview: () -> Unit = {
-                val convertedList = data.file_path.map {
-                    GetFilePathDetails(
-                        type = it.type,
-                        url = it.url,
-                    )
-                }
-
-                val isHomeWorkData = FilePreview(
-                    id = "",
-                    title = data.title,
-                    description = data.description,
-                    subjectName = "",
-                    sentBy = "",
-                    thumbnail = "",
-                    isUnread = true,
-                    isCompleted = true,
-                    isMenuType = Constant.M_PARENT_CLASS_EVENTS,
-                    fileList = convertedList,
-                )
-
-                val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                context.startActivity(intent)
-            }
-            header.setOnClickListener { openPreview() }
-
-            rytList.setOnClickListener { openPreview() }
-            rcyImgPDF.setOnClickListener { openPreview() }
-
+            setupPreviewListeners(data)
 
             if (data.file_path.isNullOrEmpty()) {
                 rcyImgPDF.visibility = View.GONE
@@ -212,20 +155,61 @@ class EventCompletedAdapter(
             } else {
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.VISIBLE
+
                 val fileList = data.file_path
                 val totalFiles = fileList.size
+
                 val adapter = EventFilePathAdapter(fileList, context, Constant.isShimmerViewDisable)
                 rcyImgPDF.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 rcyImgPDF.adapter = adapter
+
                 if (totalFiles > 3) {
                     total_numbers.text = "+${totalFiles - 3}"
                     total_numbers.visibility = View.VISIBLE
                 } else {
                     total_numbers.visibility = View.GONE
                 }
-
             }
+        }
+
+        private fun openPreview(data: EventItem) {
+            val convertedList = data.file_path.map {
+                GetFilePathDetails(type = it.type, url = it.url)
+            }
+
+            val isHomeWorkData = FilePreview(
+                id = "",
+                title = data.title,
+                description = data.description,
+                subjectName = "",
+                sentBy = "",
+                thumbnail = "",
+                isUnread = true,
+                isCompleted = true,
+                isMenuType = Constant.M_PARENT_CLASS_EVENTS,
+                fileList = convertedList,
+            )
+
+            val intent = Intent(context, ChildHomeWork::class.java)
+            intent.putExtra("isPreViewData", isHomeWorkData)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            context.startActivity(intent)
+        }
+
+        private fun setupPreviewListeners(data: EventItem) {
+            header.setOnClickListener {
+                openPreview(data)
+            }
+            rcyImgPDF.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    val child = rv.findChildViewUnder(e.x, e.y)
+                    if (child != null && e.action == MotionEvent.ACTION_UP) {
+                        openPreview(data)
+                    }
+                    return false
+                }
+            })
         }
     }
 }

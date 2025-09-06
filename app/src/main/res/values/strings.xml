@@ -756,5 +756,13 @@
     <string name="emergency_voice">Emergency voice</string>
     <string name="post_on">Post on</string>
     <string name="posted_by">Posted by</string>
+    <string name="correct_answer">Correct answer :</string>
+    <string name="correct_answer1">Correct answer</string>
+    <string name="wrong_answer">Wrong answer :</string>
+    <string name="wrong_answer1">Wrong answer</string>
+    <string name="not_answered">Not answered :</string>
+    <string name="not_answered1">Not answered</string>
+    <string name="quiz_submission">Quiz Submission</string>
+    <string name="your_answer">Your Answer</string>
 
 </resources>

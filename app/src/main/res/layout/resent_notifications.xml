@@ -84,7 +84,7 @@
                     <View
                         android:id="@+id/line"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/two"
+                        android:layout_height="@dimen/one"
                         android:layout_above="@+id/lblSendBy"
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@color/gray"

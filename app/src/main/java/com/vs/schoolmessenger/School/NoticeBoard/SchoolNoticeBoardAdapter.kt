@@ -11,6 +11,7 @@ import android.os.Build
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
@@ -221,33 +222,9 @@ class SchoolNoticeBoardAdapter(
                 listener.onClickListener(noticeData, it, adapterPosition)
             }
 
-
             val hasFiles = !noticeData.file_path.isNullOrEmpty()
-
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.INVISIBLE
             total_numbers.visibility = View.INVISIBLE
-
-            header.setOnClickListener {
-                val convertedList = noticeData.file_path.map {
-                    GetFilePathDetails(type = it.type, url = it.url)
-                }
-                val preview = FilePreview(
-                    id = "",
-                    title = noticeData.title,
-                    description = noticeData.description,
-                    subjectName = "",
-                    sentBy = "",
-                    thumbnail = "",
-                    isUnread = true,
-                    isCompleted = true,
-                    isMenuType = Constant.M_NOTICEBOARD,
-                    fileList = convertedList
-                )
-                val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", preview)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                context.startActivity(intent)
-            }
 
             if (hasFiles) {
                 val fileList = noticeData.file_path!!
@@ -263,10 +240,53 @@ class SchoolNoticeBoardAdapter(
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 rcyImgPDF.adapter =
                     FilePathAdapter(visibleList, fileList, context, Constant.isShimmerViewDisable)
+
+                setupPreviewListeners(noticeData)
+            } else {
+                rcyImgPDF.adapter = null
             }
 
             remaindertag.setOnClickListener { showReminderPicker(context) }
         }
+
+        private fun openPreview(noticeData: NoticeStaffData) {
+            val convertedList = noticeData.file_path?.map {
+                GetFilePathDetails(type = it.type, url = it.url)
+            } ?: emptyList()
+
+            val preview = FilePreview(
+                id = "",
+                title = noticeData.title,
+                description = noticeData.description,
+                subjectName = "",
+                sentBy = "",
+                thumbnail = "",
+                isUnread = true,
+                isCompleted = true,
+                isMenuType = Constant.M_NOTICEBOARD,
+                fileList = convertedList
+            )
+            val intent = Intent(context, ChildHomeWork::class.java)
+            intent.putExtra("isPreViewData", preview)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            context.startActivity(intent)
+        }
+
+        private fun setupPreviewListeners(noticeData: NoticeStaffData) {
+            header.setOnClickListener {
+                openPreview(noticeData)
+            }
+            rcyImgPDF.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    val child = rv.findChildViewUnder(e.x, e.y)
+                    if (child != null && e.action == MotionEvent.ACTION_UP) {
+                        openPreview(noticeData)
+                    }
+                    return false
+                }
+            })
+        }
+
 
         private fun showReminderPicker(context: Context) {
             val calendar = Calendar.getInstance()

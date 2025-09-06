@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -65,11 +66,13 @@ class LocationHistoryAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val lblPlaceName: TextView = itemView.findViewById(R.id.lblPlaceName)
-        private val lblLatLong: TextView = itemView.findViewById(R.id.lblLatLong)
+        private val lblPlaceName: TextView = itemView.findViewById(R.id.lblPlace)
+        private val lblAddress: TextView = itemView.findViewById(R.id.lblAddress)
         private val lblDistance: TextView = itemView.findViewById(R.id.lblDistance)
-        private val imgEdit: ImageView = itemView.findViewById(R.id.imgEdit)
-        private val imgDelete: ImageView = itemView.findViewById(R.id.imgDelete)
+        private val rytImgEdit: RelativeLayout = itemView.findViewById(R.id.rytImgEdit)
+        private val rytImgDelete: RelativeLayout = itemView.findViewById(R.id.rytImgDelete)
+
+
 
         fun bind(
             data: LocationHistoryData,
@@ -78,13 +81,13 @@ class LocationHistoryAdapter(
             adapter: LocationHistoryAdapter
         ) {
             lblPlaceName.text = data.location
-            lblLatLong.text = data.latitude + " - " + data.longitude
+            lblAddress.text = data.latitude + " - " + data.longitude
             lblDistance.text = data.distance + context.getString(R.string.Meters)
 
-            imgDelete.setOnClickListener {
+            rytImgDelete.setOnClickListener {
                 listener.onItemClick(data, Constant.isDelete)
             }
-            imgEdit.setOnClickListener {
+            rytImgEdit.setOnClickListener {
                 listener.onItemClick(data, Constant.isEdit)
             }
         }

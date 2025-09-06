@@ -256,9 +256,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="100"
-                                        android:maxLength="3"
+                                        android:maxLength="4"
                                         style="@style/CustomTextStylePoppinsBold"
-                                        android:textSize="@dimen/twenty_sp"
+                                        android:textSize="@dimen/eighteen_sp"
                                         android:textColor="@color/PrimaryColor"
                                         />
                                     <TextView
@@ -267,7 +267,7 @@
                                         android:text="%"
                                         android:layout_marginTop="@dimen/three"
                                         style="@style/CustomTextStylePoppinsBold"
-                                        android:textSize="@dimen/sixteen_sp"
+                                        android:textSize="@dimen/fourteen_sp"
                                         android:textColor="@color/PrimaryColor"
                                         />
                                 </LinearLayout>
@@ -277,6 +277,7 @@
                                 android:text="@string/attendance"
                                 style="@style/CustomTextStylePoppinsMedium"
                                 android:gravity="center"
+                                android:textSize="@dimen/twele_sp"
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_height="wrap_content">
 
@@ -321,7 +322,7 @@
                                     android:maxLength="3"
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:textColor="@color/PrimaryColor"
-                                    android:textSize="@dimen/twenty_sp"
+                                    android:textSize="@dimen/eighteen_sp"
                                     />
                             </FrameLayout>
                             <TextView
@@ -368,10 +369,11 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center"
                                     android:text="50"
+                                    style="@style/CustomTextStylePoppinsBold"
                                     android:maxLength="3"
                                     android:textColor="@color/PrimaryColor"
-                                    android:textSize="@dimen/twenty_sp"
-                                    android:textStyle="bold" />
+                                    android:textSize="@dimen/eighteen_sp"
+                                     />
                             </FrameLayout>
                             <TextView
                                 android:layout_width="match_parent"
