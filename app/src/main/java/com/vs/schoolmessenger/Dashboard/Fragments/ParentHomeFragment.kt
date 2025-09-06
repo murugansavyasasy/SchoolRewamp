@@ -39,6 +39,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWork
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
 import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
+import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.Parent.Timetable.TimeTable
@@ -203,17 +204,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
 
-    private fun createSampleData(): List<ScrollItem> {
-        return listOf(
-            ScrollItem(R.drawable.home_work_icon_school, "Daily Homework"),
-            ScrollItem(R.drawable.fee_pending_reports, "Fee Payment"),
-            ScrollItem(R.drawable.attachment_icon, "Attendance"),
-            ScrollItem(R.drawable.event_icon_school, "School Events"),
-            ScrollItem(R.drawable.fee_details, "Grades"),
-            ScrollItem(R.drawable.message_f_management, "Messages")
-        )
-    }
-
     private fun isLoadData() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         isMenuAdapter = ChildMenuAdapter(
@@ -221,17 +211,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             this,
             isParentMenuDetails,
             isParentMenuCountDetails,
-            isParentAdItem,
             Constant.isShimmerViewDisable
         )
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return when (isMenuAdapter.getItemViewType(position)) {
-                    2 -> 3
-                    else -> 1
-                }
-            }
-        }
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
     }
@@ -239,18 +220,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private fun isDashBoardData() {
 
         val adapter =
-            ChildMenuAdapter(requireActivity(), this, null, null, null, Constant.isShimmerViewShow)
+            ChildMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-
-        // Adjust span count for special layout
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return when (adapter.getItemViewType(position)) {
-                    2 -> 3 // TYPE_AD: Span across all 3 columns
-                    else -> 1 // Default: 1 span per item
-                }
-            }
-        }
 
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = adapter
@@ -343,6 +314,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_EXAM -> Intent(
                 requireActivity(),
                 ExamMark::class.java
+            )
+
+            Constant.M_PTM -> Intent(
+                requireActivity(),
+                PTM::class.java
             )
 
             else -> null

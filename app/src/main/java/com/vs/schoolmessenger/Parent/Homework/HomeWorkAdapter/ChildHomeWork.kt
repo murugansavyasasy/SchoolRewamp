@@ -285,7 +285,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (data!!.isMenuType == Constant.M_HOMEWORK) {
             isHomeworkId = data!!.id
             isHomeWorkDate = intent.getStringExtra("isHomeWorkDate")
-            Log.d("isHomeWorkDate2", isHomeWorkDate.toString())
+//            Log.d("isHomeWorkDate2", isHomeWorkDate.toString())
 
             if (data!!.subjectName != "") {
                 binding.lblSubjectName.visibility = View.VISIBLE

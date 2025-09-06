@@ -189,13 +189,14 @@
                     android:layout_below="@+id/meetingMode"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="PurPose of meeting"
+                    android:visibility="gone"
+                    android:text="Meeting link"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp">
 
                 </TextView>
 
-                <EditText
+                <com.vs.schoolmessenger.Utils.UrlPasteOnlyEditText
                     android:id="@+id/edtMobileOrLink"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -203,13 +204,14 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
+                    android:visibility="gone"
                     android:layout_marginBottom="@dimen/ten"
                     android:background="@drawable/outline_gray"
                     android:hint="Paste the meeting link"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp">
 
-                </EditText>
+                </com.vs.schoolmessenger.Utils.UrlPasteOnlyEditText>
 
             </RelativeLayout>
 
@@ -231,25 +233,24 @@
                     android:visibility="visible">
 
                     <TextView
-                        android:layout_alignParentStart="true"
                         android:id="@+id/tvAcademicYearLabel"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/lblchoose_academic_year"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/five"
-                        android:textColor="@color/light_gray"
-                        />
+                        android:text="@string/lblchoose_academic_year"
+                        android:textColor="@color/light_gray" />
 
                     <RelativeLayout
-                        android:layout_toEndOf="@+id/tvAcademicYearLabel"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
                         android:id="@+id/rytAcademicYearDropDown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/five"
+                        android:layout_toEndOf="@+id/tvAcademicYearLabel"
                         android:background="@drawable/bg_white_light_radious"
                         android:gravity="center">
 
@@ -263,15 +264,13 @@
                 </RelativeLayout>
 
 
-
-
                 <TextView
                     android:id="@+id/lblSelectAcademicYear"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
                     android:layout_below="@+id/lnrAcademicYearView"
+                    android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:text="Select the academic year"
                     android:textColor="@color/black"
@@ -360,12 +359,11 @@
 
                 </RelativeLayout>
 
-             <androidx.recyclerview.widget.RecyclerView
-                 android:id="@+id/rcySelectedDate"
-                 android:layout_width="match_parent"
-                 android:layout_below="@id/rytPickDate"
-                 android:layout_height="wrap_content">
-             </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcySelectedDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rytPickDate"></androidx.recyclerview.widget.RecyclerView>
 
 
                 <LinearLayout
@@ -504,8 +502,8 @@
                 <LinearLayout
                     android:id="@+id/lytDuration"
                     android:layout_width="match_parent"
-                    android:layout_below="@+id/lblSelectBreakTime"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblSelectBreakTime"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -564,7 +562,8 @@
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/lblSlotDuration"
                             android:gravity="center"
-                            android:hint="Enter">
+                            android:hint="Enter"
+                            android:inputType="number">
 
                         </EditText>
 

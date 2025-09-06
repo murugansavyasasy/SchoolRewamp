@@ -10,15 +10,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class SelectedClassSection(
+    val class_id: String,
+    val section_id: String
+) : Parcelable
+
 
 class SectionAndStandardAdapter(
     private var itemList: MutableList<StandardSection>,
     private var context: Context,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
+    private val onSelectionChanged: (List<SelectedClassSection>) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+
+    // Maintain selected items
+    private val selectedItems = mutableSetOf<SelectedClassSection>()
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -28,41 +41,55 @@ class SectionAndStandardAdapter(
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
                 ShimmerUtil.wrapWithShimmer(parent, R.layout.class_load_item)
-            ShimmerViewHolder(
-                shimmerView
-            )
+            ShimmerViewHolder(shimmerView)
         } else {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.class_load_item, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.class_load_item, parent, false)
+            DataViewHolder(view, context)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position)
-
+            holder.bind(itemList[position], position)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else itemList?.size ?: 0
+        return if (isLoading) 20 else itemList.size
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
+    inner class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val lblClasses: TextView = itemView.findViewById(R.id.lblClasses)
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StandardSection, position: Int) {
-            lblClasses.setBackgroundDrawable(context.getDrawable(R.drawable.gray_bg_radius))
-            lblClasses.text = data.standardName + " - " + data.sectionName
+            val itemKey = SelectedClassSection(
+                section_id = data.sectionId,
+                class_id = data.standardId
+            )
+
+            // Apply background based on selection state
+            if (selectedItems.contains(itemKey)) {
+                lblClasses.background = context.getDrawable(R.drawable.bg_light_blue)
+            } else {
+                lblClasses.background = context.getDrawable(R.drawable.gray_bg_radius)
+            }
+
+            lblClasses.text = "${data.standardName} - ${data.sectionName}"
 
             lblClasses.setOnClickListener {
-                lblClasses.setBackgroundDrawable(context.getDrawable(R.drawable.bg_light_blue))
+                if (selectedItems.contains(itemKey)) {
+                    // Unselect
+                    selectedItems.remove(itemKey)
+                    lblClasses.background = context.getDrawable(R.drawable.gray_bg_radius)
+                } else {
+                    // Select
+                    selectedItems.add(itemKey)
+                    lblClasses.background = context.getDrawable(R.drawable.bg_light_blue)
+                }
+                onSelectionChanged(selectedItems.toList())
             }
         }
     }
