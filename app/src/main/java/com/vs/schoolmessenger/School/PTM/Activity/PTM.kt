@@ -13,10 +13,13 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.PTM.Adapter.UpComingSlotAdapter
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotCategory
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotDetail
+import com.vs.schoolmessenger.School.PTM.DataClass.TimeSlot
 import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PtmStaffBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class PTM : BaseActivity<PtmStaffBinding>(),
     View.OnClickListener, StaffSlotClickListener {
@@ -163,4 +166,5 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }
+
 }

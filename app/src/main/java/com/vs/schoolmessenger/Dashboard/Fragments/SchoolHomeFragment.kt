@@ -271,7 +271,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             this,
             isSchoolMenuDetails,
             isSchoolMenuCountDetails,
-            isSchoolAdItem,
             Constant.isShimmerViewDisable
         )
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
@@ -314,7 +313,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private fun isDashBoardData() {
 
         isMenuAdapter =
-            SchoolMenuAdapter(requireActivity(), this, null, null, null, Constant.isShimmerViewShow)
+            SchoolMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 
         binding.gridRecyclerView.layoutManager = gridLayoutManager
