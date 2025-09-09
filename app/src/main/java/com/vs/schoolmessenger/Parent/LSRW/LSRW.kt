@@ -85,11 +85,19 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         }
 
         val filteredList = allItems.filter { item ->
-            item.subject?.contains(query, ignoreCase = true) == true ||
-                    item.activity_type?.contains(query, ignoreCase = true) == true ||
-                    item.title?.contains(query, ignoreCase = true) == true ||
-                    item.description?.contains(query, ignoreCase = true) == true ||
-                    item.sent_by?.contains(query, ignoreCase = true) == true
+            item.subject?.contains(
+                query,
+                ignoreCase = true
+            ) == true || item.activity_type?.contains(
+                query,
+                ignoreCase = true
+            ) == true || item.title?.contains(
+                query,
+                ignoreCase = true
+            ) == true || item.description?.contains(
+                query,
+                ignoreCase = true
+            ) == true || item.sent_by?.contains(query, ignoreCase = true) == true
         }
 
         if (filteredList.isNotEmpty()) {
@@ -110,4 +118,3 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         }
     }
 }
-

@@ -2,19 +2,16 @@ package com.vs.schoolmessenger.School.PTM.Activity
 
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -24,13 +21,17 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.PTM.Adapter.CheckAvailableSlotsDate
 import com.vs.schoolmessenger.School.PTM.Adapter.CustomCalendar
 import com.vs.schoolmessenger.School.PTM.Adapter.SectionAndStandardAdapter
 import com.vs.schoolmessenger.School.PTM.Adapter.SelectedClassSection
 import com.vs.schoolmessenger.School.PTM.Adapter.SelectedDatesAdapter
+import com.vs.schoolmessenger.School.PTM.DataClass.AvailableSlotGroup
 import com.vs.schoolmessenger.School.PTM.DataClass.MeetingCreationData
+import com.vs.schoolmessenger.School.PTM.DataClass.SlotAvailability
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.School.PTM.DataClass.TimeSlot
+import com.vs.schoolmessenger.School.PTM.DataClass.ValidatedSlot
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
@@ -48,6 +49,8 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
     private var isAccessToken: String? = null
     private lateinit var selectedDatesAdapter: SelectedDatesAdapter
+    private var selectedSlots: List<Pair<String, SlotAvailability>> = emptyList()
+
     private var isStaffDetails: StaffDetails? = null
     private var appViewModel: App? = null
     var isValidAcademicYear = false
@@ -62,6 +65,11 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     private val itemsCategory = listOf(
         "Select Slot Duration", "10", "15", "20", "30", "Custom"
     )
+    private lateinit var isSlotCreateValues: MutableList<Pair<String, List<SlotAvailability>>>
+
+
+
+
     var isSlotDuration = ""
     var isMeetingMode = ""
     var isBreakDuration = ""
@@ -108,6 +116,22 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     loadSectionStandard(response.data)
                 } else {
                     binding.rcySectionAndStandardList.visibility = View.GONE
+                }
+            }
+        }
+
+        appViewModel!!.isPtmSlotCreate?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.showTopAlertPopup(response.message, this)
+                }
+            }
+        }
+
+        appViewModel!!.isSlotValidation?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    isShowAvailableSlot(response.data)
                 }
             }
         }
@@ -291,59 +315,156 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
 
             R.id.lblCheckAvailability -> {
-                val meetingData = validateMeetingInputs()
-                if (meetingData != null) {
                     isCheckAvailableSlots()
-                    isShowAvailableSlot(meetingData)
-//                    val intent = Intent(this, SlotCheckAndSubmit::class.java)
-//                    intent.putExtra("MEETING_DATA", meetingData)
-//                    startActivity(intent)
-
-
-                    // Example: split slots if needed
-//        val slots = splitIntoSlots(
-//            binding.lblFromTime.text.toString(),
-//            binding.lblToTime.text.toString(),
-//            isSlotDuration.toInt()
-//        )
-//        for (slot in slots) {
-//            println("From: ${slot.fromTime}, To: ${slot.toTime}")
-//        }
-                }
             }
         }
     }
 
     fun isCheckAvailableSlots() {
-        val jsonArray= JsonArray()
-        var jsonObject= JsonObject()
+        val meetingData = validateMeetingInputs()
+        if (meetingData != null) {
+            val jsonArray = JsonArray()
+            for (i in meetingData.selectedDates.indices) {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty("date", meetingData.selectedDates[i])
+                jsonObject.addProperty("event_name", meetingData.purpose)
+                jsonObject.addProperty("from_time", meetingData.fromTime)
+                jsonObject.addProperty("to_time", meetingData.toTime)
+                jsonObject.addProperty("duration", meetingData.slotDuration)
+                jsonObject.addProperty("event_link", meetingData.meetingLink)
+                jsonObject.addProperty("break_time", meetingData.breakDuration)
+                jsonObject.addProperty("meeting_mode", meetingData.meetingMode)
 
-        jsonObject.addProperty("date","")
-        jsonObject.addProperty("event_name","")
-        jsonObject.addProperty("from_time","")
-        jsonObject.addProperty("to_time","")
 
-        appViewModel!!.isSlotValidationForStaff(
-            isAccessToken!!, jsonObject
+                val isStdSecJsonArray = JsonArray()
+                for (i in meetingData.selectedSections.indices) {
+                    val isStdSecJsonObject = JsonObject()
+                    isStdSecJsonObject.addProperty(
+                        "section_id",
+                        meetingData.selectedSections.get(i).section_id
+                    )
+                    isStdSecJsonObject.addProperty(
+                        "class_id",
+                        meetingData.selectedSections.get(i).class_id
+                    )
+                    isStdSecJsonArray.add(isStdSecJsonObject)
+                }
+
+                val slotsTiming = splitIntoSlots(
+                    binding.lblFromTime.text.toString(),
+                    binding.lblToTime.text.toString(),
+                    isSlotDuration.toInt()
+                )
+
+
+                val isSlotsDateJsonArray = JsonArray()
+
+                for (i in slotsTiming.indices) {
+                    val isSlotsDateJsonObject = JsonObject()
+                    isSlotsDateJsonObject.addProperty("from_time", slotsTiming.get(i).fromTime)
+                    isSlotsDateJsonObject.addProperty("to_time", slotsTiming.get(i).toTime)
+                    isSlotsDateJsonArray.add(isSlotsDateJsonObject)
+                }
+
+                jsonObject.add("slots", isSlotsDateJsonArray)
+                jsonObject.add("std_sec_details", isStdSecJsonArray)
+                jsonArray.add(jsonObject)
+            }
+
+            Log.d("jsonArray", jsonArray.toString())
+            appViewModel!!.isSlotValidationForStaff(
+                isAccessToken!!, jsonArray
+            )
+        }
+    }
+
+    fun isCreateSlots() {
+        val jsonArray = JsonArray()
+        val meetingData = validateMeetingInputs() ?: return
+
+        for (i in isSlotCreateValues.indices) {
+
+            val date = isSlotCreateValues[i].first
+            val slotsForDate = isSlotCreateValues[i].second
+
+            val jsonObject = JsonObject().apply {
+                addProperty("date", date)
+                addProperty("event_name", meetingData.purpose)
+                addProperty("from_time", meetingData.fromTime)
+                addProperty("to_time", meetingData.toTime)
+                addProperty("duration", meetingData.slotDuration)
+                addProperty("event_link", meetingData.meetingLink)
+                addProperty("break_time", meetingData.breakDuration)
+                addProperty("meeting_mode", meetingData.meetingMode)
+            }
+
+            val isStdSecJsonArray = JsonArray()
+            for (section in meetingData.selectedSections) {
+                val isStdSecJsonObject = JsonObject()
+                isStdSecJsonObject.addProperty("section_id", section.section_id)
+                isStdSecJsonObject.addProperty("class_id", section.class_id)
+                isStdSecJsonArray.add(isStdSecJsonObject)
+            }
+            jsonObject.add("std_sec_details", isStdSecJsonArray)
+            val isSlotsDateJsonArray = JsonArray()
+            for (slot in slotsForDate) {
+                val isSlotsDateJsonObject = JsonObject()
+                isSlotsDateJsonObject.addProperty("from_time", slot.slot_from)
+                isSlotsDateJsonObject.addProperty("to_time", slot.slot_to)
+                isSlotsDateJsonArray.add(isSlotsDateJsonObject)
+            }
+            jsonObject.add("slots", isSlotsDateJsonArray)
+
+            jsonArray.add(jsonObject)
+        }
+
+        Log.d("isCreateSlots", jsonArray.toString())
+
+        appViewModel!!.isSlotCreating(
+            isAccessToken!!, jsonArray
         )
     }
 
-    private fun isShowAvailableSlot(isMeetingData: MeetingCreationData) {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.checkslot_create)
+    private fun isShowAvailableSlot(data: List<ValidatedSlot>) {
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val view = layoutInflater.inflate(R.layout.checkslot_create, null)
+        bottomSheetDialog.setContentView(view)
 
-        val isrcySlotDate = dialog.findViewById<RecyclerView>(R.id.rcySlotDate)
+        val isRcySlotDate = view.findViewById<RecyclerView>(R.id.rcySlotDate)
+        val lblCreateSlot = view.findViewById<TextView>(R.id.lblCreateSlot)
 
-
-        dialog.window?.apply {
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            setGravity(Gravity.BOTTOM)
-            setWindowAnimations(R.style.PopupAnimation)
+        val groupedData = data.map { slot ->
+            AvailableSlotGroup(slot.date, slot.slots.toMutableList())
         }
-        dialog.show()
+
+        val adapter = CheckAvailableSlotsDate(this, groupedData) { updatedList ->
+            selectedSlots = updatedList
+            Log.d("MainActivity", "Updated slots = ${updatedList.size}")
+        }
+
+        isRcySlotDate.layoutManager = GridLayoutManager(this, 1)
+        isRcySlotDate.adapter = adapter
+
+        lblCreateSlot?.setOnClickListener {
+
+            val availableSlots = selectedSlots.filter { (_, slot) ->
+                slot.slot_availablity.equals("Available", true)
+            }
+
+            isSlotCreateValues = availableSlots
+                .groupBy { it.first }
+                .map { (date, slots) ->
+                    date to slots.map { it.second }
+                }
+                .toMutableList()
+
+            isCreateSlots()
+
+        }
+
+        bottomSheetDialog.show()
     }
+
 
     private fun validateMeetingInputs(): MeetingCreationData? {
         if (binding.edtPurPose.text.toString().isEmpty()) {
@@ -416,7 +537,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
     fun splitIntoSlots(start: String, end: String, durationMinutes: Int): List<TimeSlot> {
         val slots = ArrayList<TimeSlot>()
-        val sdf = SimpleDateFormat("HH:mm a", Locale.getDefault())
+        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
         val startDate = sdf.parse(start)
         val endDate = sdf.parse(end)
         if (startDate != null && endDate != null) {
