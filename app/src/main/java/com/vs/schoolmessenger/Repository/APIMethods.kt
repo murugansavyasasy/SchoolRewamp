@@ -159,26 +159,23 @@ object APIMethods {
     const val isSlotHistoryForStudent = "ptm/api/ptm-schedule/slot-history-for-student"
 
 
+    const val isGetQuizExamList = "lms/api/quiz/quiz-exam-list"
+    const val isGetQuestion = "lms/api/quiz/get-questions"
+    const val isSubmitQuiz = "lms/api/quiz/submit"
+    const val isGetMySubmission = "lms/api/quiz/my-submissions"
 
-    const val isGetQuizExamList= "lms/api/quiz/quiz-exam-list"
-    const val isGetQuestion= "lms/api/quiz/get-questions"
-    const val isSubmitQuiz= "lms/api/quiz/submit"
-    const val isGetMySubmission= "lms/api/quiz/my-submissions"
-
-    const val isCreateQuiz= "lms/api/quiz/create-quiz"
-    const val isGetExamQuizReport= "lms/api/quiz/report"
-    const val isGetCheckLevel= "lms/api/quiz/check-level"
-    const val isGetQuizQuestionReport= "lms/api/quiz/questions-report"
-    const val isGetQuizSubmissionList= "lms/api/quiz/submission-list"
-    const val isGetPickFromQBank= "lms/api/quiz/pick-from-qbank"
-    const val isAddQuestion= "lms/api/quiz/add-question"
-
-
-    const val isGetMessageFromStaff= "comm/api/msg-from-management/get-messages-staff"
+    const val isCreateQuiz = "lms/api/quiz/create-quiz"
+    const val isGetExamQuizReport = "lms/api/quiz/report"
+    const val isGetCheckLevel = "lms/api/quiz/check-level"
+    const val isGetQuizQuestionReport = "lms/api/quiz/questions-report"
+    const val isGetQuizSubmissionList = "lms/api/quiz/submission-list"
+    const val isGetPickFromQBank = "lms/api/quiz/pick-from-qbank"
+    const val isAddQuestion = "lms/api/quiz/add-question"
 
 
-
-
+    const val isGetMessageFromStaff = "comm/api/msg-from-management/get-messages-staff"
+    const val isGetPauketPoints = "dashboard/api/pauket/get-points"
+    const val isSpentPoints = "dashboard/api/pauket/spent-points"
 
 
 }

@@ -38,13 +38,12 @@ class SchoolEventAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.event_ongoing_recyclerview)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.event_ongoing_recyclerview)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.event_ongoing_recyclerview, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view)
         }
     }
 

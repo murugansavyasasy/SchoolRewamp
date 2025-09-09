@@ -150,6 +150,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="CustomAudioSeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressDrawable">@drawable/custom_seekbar_progress</item>
+        <item name="android:thumb">@drawable/custom_seekbar_thumb</item>
+    </style>
 
 
 </resources>

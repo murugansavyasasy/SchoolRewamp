@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendance
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.PauketPointsResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
@@ -85,6 +86,7 @@ class ParentServices {
     var isGetMySubmission: MutableLiveData<GetMySubmission?>
     var islsrwSkilllist: MutableLiveData<LsrwSkillResponse?>
     var islsrwSkillSubmit: MutableLiveData<LSRWSkillSubmitResponse?>
+    var isGetPauketPoints: MutableLiveData<PauketPointsResponse?>
 
     init {
         client_auth = RestClient()
@@ -124,6 +126,7 @@ class ParentServices {
         isGetMySubmission = MutableLiveData()
         islsrwSkilllist = MutableLiveData()
         islsrwSkillSubmit = MutableLiveData()
+        isGetPauketPoints = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1588,6 +1591,53 @@ class ParentServices {
 
     val islsrwSkillSubmitLiveData: LiveData<LSRWSkillSubmitResponse?>
         get() = islsrwSkillSubmit
+
+
+
+
+
+
+    fun isGetPauketPoints(
+        isToken: String,
+        mobile_number: Long,
+        user_type: Int,
+    ) {
+        RestClient.apiInterfaces.isGetPauketPoints(isToken,mobile_number,user_type)
+            ?.enqueue(object : Callback<PauketPointsResponse?> {
+                override fun onResponse(
+                    call: Call<PauketPointsResponse?>,
+                    response: Response<PauketPointsResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isGetPauketPoints.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isGetPauketPoints.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<PauketPointsResponse?>,
+                    t: Throwable
+                ) {
+                    isGetPauketPoints.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetPauketPointsLiveData: LiveData<PauketPointsResponse?>
+        get() = isGetPauketPoints
 
 
 

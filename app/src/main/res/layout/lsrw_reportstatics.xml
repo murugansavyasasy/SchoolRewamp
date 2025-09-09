@@ -19,7 +19,8 @@
         android:layout_margin="16dp"
         android:background="@drawable/spinner_background"
         android:padding="12dp"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:visibility="gone" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -78,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:elevation="4dp"
-                        app:cardCornerRadius="12dp"
+                        app:cardCornerRadius="3dp"
                         app:cardUseCompatPadding="true">
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -96,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:elevation="4dp"
-                        app:cardCornerRadius="12dp"
+                        app:cardCornerRadius="3dp"
                         app:cardUseCompatPadding="true">
 
                         <androidx.recyclerview.widget.RecyclerView

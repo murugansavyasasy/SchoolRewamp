@@ -26,6 +26,7 @@ import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.PauketPointsResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCoupon.ActivateCouponResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSummary.ActivateCouponSummaryResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
@@ -352,6 +353,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var islsrwSkillCreate: LiveData<LsrwSkillSendResponse?>? = null
     var islsrwSkillSubmit: LiveData<LSRWSkillSubmitResponse?>? = null
     var islsrwSkilllist: LiveData<LsrwSkillResponse?>? = null
+    var isGetPauketPoints: LiveData<PauketPointsResponse?>? = null
     var isGetQuizQuestionReport: LiveData<GetQuizQuestionReport?>? = null
     var isGetQuizSubmissionList: LiveData<GetQuizSubmissionList?>? = null
     var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
@@ -503,6 +505,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetPickFromQBank = apiSchoolRepositories.isGetPickFromQBankLiveData
         isAddQuestion = apiSchoolRepositories.isAddQuestionLiveData
         isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
+        isGetPauketPoints = apiParentRepositories.isGetPauketPointsLiveData
 
 
     }
@@ -1274,6 +1277,12 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.isGetMessageFromStaff(
             isToken
         )
+    }
+
+
+
+    fun isGetPauketPoints(isToken: String,mobile_number:Long,user_type:Int) {
+        apiParentRepositories.isGetPauketPoints(isToken,mobile_number,user_type)
     }
 
 

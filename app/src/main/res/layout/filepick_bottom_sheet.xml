@@ -110,7 +110,8 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
                     android:padding="@dimen/ten"
-                    android:src="@drawable/ic_document"></ImageView>
+                    android:src="@drawable/ic_document">
+                </ImageView>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -151,7 +152,8 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
                     android:padding="@dimen/ten"
-                    android:src="@drawable/video_icon"></ImageView>
+                    android:src="@drawable/video_icon">
+                </ImageView>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -166,6 +168,12 @@
 
                 </TextView>
             </RelativeLayout>
+
+
+
+
+
+
 
             <RelativeLayout
                 android:id="@+id/rlaVoice"

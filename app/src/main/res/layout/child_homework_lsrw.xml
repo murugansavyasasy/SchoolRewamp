@@ -76,7 +76,7 @@
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Test For Notification"
+                        android:text="ENGLISH"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
 
@@ -85,7 +85,7 @@
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Reading"
+                        android:text="Speaking"
                         android:textColor="#007BFF"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -93,16 +93,30 @@
 
                 <TextView
                     android:id="@+id/txtDescription"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iconContainer"
+                    android:layout_marginTop="@dimen/four"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:ellipsize="end"
+                    android:maxLines="4"
+                    android:text="The Only Way I"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/txtDescription1"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/titleContainer"
+                    android:layout_below="@id/txtDescription"
                     android:layout_marginTop="@dimen/four"
                     android:layout_marginEnd="@dimen/twenty"
-                    android:layout_toEndOf="@id/iconContainer"
                     android:ellipsize="end"
                     android:maxLines="4"
-                    android:text="Purpose of testing student's skill"
+                    android:text="The First Time the two"
                     android:textColor="#666666"
                     android:textSize="13sp" />
 
@@ -111,7 +125,7 @@
                     android:id="@+id/attachments_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txtDescription"
+                    android:layout_below="@+id/txtDescription1"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
                     android:gravity="center_vertical"
@@ -232,7 +246,7 @@
                 android:layout_below="@+id/headerrelative_layout"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Submitted Students :"
+                android:text="Submitted Students"
                 android:textColor="@color/mild_grey_dark"
                 android:textSize="15sp" />
 

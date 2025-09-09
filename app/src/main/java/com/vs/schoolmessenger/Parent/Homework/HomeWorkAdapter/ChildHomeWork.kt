@@ -144,9 +144,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.txtTitle.text = data!!.title
+            binding.childlsrwlayoutxml.txtTitle.text = data!!.subjectName
             binding.childlsrwlayoutxml.txtSubTitle.text = data!!.assignmentid
-            binding.childlsrwlayoutxml.txtDescription.text = data!!.description
+            binding.childlsrwlayoutxml.txtDescription.text = data!!.title
+            binding.childlsrwlayoutxml.txtDescription1.text = data!!.description
             binding.childlsrwlayoutxml.lsrwgragmentcontainer.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.txtDate.text =
                 Constant.convertToReadableDate(data?.created_date ?: "")

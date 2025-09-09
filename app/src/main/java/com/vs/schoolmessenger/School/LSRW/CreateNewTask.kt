@@ -349,6 +349,8 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
+        rlaVoice.visibility = View.VISIBLE
+
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
             Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())

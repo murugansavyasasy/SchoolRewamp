@@ -49,9 +49,25 @@
                 android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp"
-                android:visibility="gone"></TextView>
+                android:visibility="gone">
+            </TextView>
 
         </LinearLayout>
+
+        <Spinner
+            android:id="@+id/lblDropDownMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:spinnerMode="dropdown"
+            android:padding="4dp"
+            android:visibility="gone"
+            android:popupBackground="@color/white"
+            android:textColor="@color/white"
+            android:entries="@array/months" />
+
 
         <RelativeLayout
             android:id="@+id/rlaStudentName"

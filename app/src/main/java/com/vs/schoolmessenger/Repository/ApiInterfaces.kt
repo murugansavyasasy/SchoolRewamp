@@ -31,6 +31,8 @@ import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.PauketPointsResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.SpentPointsModel
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCoupon.ActivateCouponResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSummary.ActivateCouponSummaryResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.MyCouponSummaryRequest
@@ -1023,5 +1025,27 @@ interface ApiInterfaces {
     fun isGetMessageFromStaff(
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetMessagesStaff?>?
+
+
+
+//    Pauket Api
+
+    @GET(APIMethods.isGetPauketPoints)
+    fun isGetPauketPoints(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.mobile_number) mobile_number: Long,
+        @Query(APIKeyNames.user_type) user_type: Int
+    ): Call<PauketPointsResponse?>?
+
+
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isSpentPoints)
+    fun isSpentPoints(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body requestBody: JsonObject
+    ): Call<SpentPointsModel?>
+
+
 
 }

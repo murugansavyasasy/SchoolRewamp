@@ -19,6 +19,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickLis
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FragmentHomeBinding
 
 
@@ -30,6 +31,8 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
     private lateinit var appViewModel: App
     private lateinit var menuadapter: CouponMenuAdapter
     private lateinit var summaryadapter: CouponSummaryAdapter
+    private var isAccessToken: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,19 +41,18 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         binding.relativeLayout.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+        val isChildDetails = SharedPreference.getChildDetails(requireContext())
+        isAccessToken = isChildDetails?.access_token
 
         AppCredentials.init(requireContext())
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
-
         binding.recyclerview1.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-
         fetchCouponMenu()
         fetchCouponSummary()
-
+        fetchPauketPoints()
         appViewModel.getcouponmenu?.observe(viewLifecycleOwner) { response ->
             val categoryList = response?.data?.categories
             if (categoryList.isNullOrEmpty()) {
@@ -78,6 +80,16 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             } else {
                 isLoadCouponSummaryData(campaignsList)
             }
+        }
+
+
+        appViewModel.isGetPauketPoints?.observe(viewLifecycleOwner) { response ->
+            val remainingPoints = response?.data?.firstOrNull()?.remaining ?: 0
+            val spentPoints = response?.data?.firstOrNull()?.spent ?: 0
+            val earnedPoints = response?.data?.firstOrNull()?.earned ?: 0
+            binding.totalcoins.text = "$earnedPoints"
+            binding.usedcoins.text = "Used : $spentPoints"
+            binding.availablecoins.text = "Available : $remainingPoints"
         }
 
 
@@ -122,6 +134,15 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             AppCredentials.PARTNER_NAME, AppCredentials.API_KEY
         )
     }
+
+
+    private fun fetchPauketPoints() {
+        val mobileNumberLong = AppCredentials.isMobileNumber.toLong()
+        appViewModel.isGetPauketPoints(isAccessToken ?: "", mobileNumberLong, 1)
+    }
+
+
+
 
     private fun fetchCouponSummary() {
         showProgressBar()

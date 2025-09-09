@@ -49,9 +49,10 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = "Report & Analytics"
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
+        binding.toolbarLayout.lblDropDownMonth.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
 
@@ -85,6 +86,12 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 binding.rvWeekly.adapter = WeeklyReportAdapter(weeklyReport)
 
                 val topPerformers = calculateTopPerformers(allDetails)
+                if (topPerformers.isNotEmpty()) {
+                    binding.rvTopPerformance.visibility = View.VISIBLE
+                    binding.rvTopPerformance.adapter = TopPerformanceAdapter(topPerformers)
+                } else {
+                    binding.rvTopPerformance.visibility = View.GONE
+                }
                 binding.rvTopPerformance.layoutManager = LinearLayoutManager(this)
                 binding.rvTopPerformance.adapter = TopPerformanceAdapter(topPerformers)
 
@@ -110,13 +117,14 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
 
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, monthList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerDropdown.adapter = adapter
+        binding.toolbarLayout.lblDropDownMonth.adapter = adapter
+
 
 
         val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
-        binding.spinnerDropdown.setSelection(currentMonthIndex)
+        binding.toolbarLayout.lblDropDownMonth.setSelection(currentMonthIndex)
 
-        binding.spinnerDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.toolbarLayout.lblDropDownMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -151,6 +159,9 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun calculateWeeklyReport(details: List<AvgStudentSubmission>): List<WeeklyReportItem> {
+
+
+
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault())
         val currentMonth = LocalDate.now().monthValue
         val currentYear = LocalDate.now().year
@@ -182,7 +193,9 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 className = "Class ${it.std_sec}",
                 percentage = it.remark.replace("%", "").toIntOrNull() ?: 0
             )
-        }.sortedByDescending { it.percentage }
+        }
+            .filter {it.percentage > 0}
+            .sortedByDescending { it.percentage }
     }
 
 
