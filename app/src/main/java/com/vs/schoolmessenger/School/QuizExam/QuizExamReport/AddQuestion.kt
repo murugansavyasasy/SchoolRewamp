@@ -41,6 +41,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     var isQuizID=""
     var isQuizTitle=""
     var isSubjectID=""
+    var isUpdatedQBankQuestions=-1
     var isSavedQuestionLimit=-1
     var isSubmittedCount=-1
     var isOkFlag=false
@@ -411,7 +412,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         val allQuestions = adapter.getUpdatedList()
 
         val apiUserQuestions = allQuestions
-            .filter { it.sourceType == QuestionSource.API || it.sourceType == QuestionSource.USER }
+            .filter { it.sourceType == QuestionSource.API || it.sourceType == QuestionSource.USER ||it.sourceType == QuestionSource.QBANK}
             .map {
                 QuizQuestionRequest(
                     ques_no = it.id,
@@ -447,44 +448,39 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 )
             }
 
-        val updateQBankList = allQuestions
+        val updateQBankList: List<UpdateQBankItem> = allQuestions
             .filter { it.sourceType == QuestionSource.QBANK }
-            .map {
-                UpdateQBankItem(
-                    ques_no = it.id,
-                    chapter = it.chapter,
-                    question = it.question,
-                    a_option = it.a_option,
-                    b_option = it.b_option,
-                    c_option = it.c_option,
-                    d_option = it.d_option,
-                    answer = it.answer,
-                    mark = it.mark ,
-                    iframe = it.iframe?:"",
-                    file_size = "4",
-                    thumbnail = it.thumbnail?:"",
-                    file_path = listOf(
-                        FilePath(
-                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782816.jpg",
-                            type = "IMAGE"
-                        ),
-                        FilePath(
-                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_150kB.pdf",
-                            type = "PDF"
-                        ),
-                        FilePath(
-                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782401.jpg",
-                            type = "IMAGE"
-                        ),
-                        FilePath(
-                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_100kB.docx",
-                            type = "WORD"
+            .mapNotNull { updatedItem ->
+                val originalItem = pickQBankList.find { it.id == updatedItem.id }
+
+                if (originalItem != null) {
+                    if (
+                        updatedItem.question != originalItem.question ||
+                        updatedItem.chapter != originalItem.chapter ||
+                        updatedItem.a_option != originalItem.a_option ||
+                        updatedItem.b_option != originalItem.b_option ||
+                        updatedItem.c_option != originalItem.c_option ||
+                        updatedItem.d_option != originalItem.d_option ||
+                        updatedItem.answer != originalItem.answer ||
+                        updatedItem.mark != originalItem.mark
+                    ) {
+                        UpdateQBankItem(
+                            ques_no = updatedItem.id,
+                            chapter = updatedItem.chapter,
+                            question = updatedItem.question,
+                            a_option = updatedItem.a_option,
+                            b_option = updatedItem.b_option,
+                            c_option = updatedItem.c_option,
+                            d_option = updatedItem.d_option,
+                            answer = updatedItem.answer,
+                            mark = updatedItem.mark
                         )
-                    )
-                )
+                    } else null
+                } else null
             }
 
-        val totalMaxMark = allQuestions.sumOf { it.mark }
+        isUpdatedQBankQuestions=updateQBankList.size
+        val totalMaxMark = apiUserQuestions.sumOf { it.mark }
 
         val body = QuizRequestBody(
             quiz_id = isQuizID,
@@ -497,9 +493,38 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         val jsonObject = Gson().toJsonTree(body).asJsonObject
         Log.d("FinalJSON", jsonObject.toString())
 
+        Log.d("isUpdatedQBankQuestion",isUpdatedQBankQuestions.toString())
         Constant.hideLoading(this)
 
-        appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+        if (isUpdatedQBankQuestions>0){
+
+            val textQuestion = if (isUpdatedQBankQuestions == 1) {
+                getString(R.string.question_)  // e.g. "question"
+            } else {
+                getString(R.string.questions) // e.g. "questions"
+            }
+
+            val isMessage = "${getString(R.string.You_have_modified)} $isUpdatedQBankQuestions $textQuestion ${getString(R.string.from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank)}"
+
+            Constant.showSendConfirmationDialog(
+                this,
+                getString(R.string.confirmation),
+                getString(R.string.Update),
+                getString(R.string.Cancel),
+                "",
+                isMessage
+            ) { confirmed ->
+                if (confirmed) {
+                    Constant.showLoading(this)
+                    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+                }
+            }
+
+        }
+        else{
+            Constant.showLoading(this)
+            appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+        }
     }
 
 

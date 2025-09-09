@@ -39,10 +39,10 @@ data class UpdateQBankItem(
     val d_option: String,
     val answer: String,
     val mark: Int,
-    val iframe: String? = null,
-    val file_size: String? = null,
-    val thumbnail: String? = null,
-    val file_path: List<FilePath> = emptyList()
+//    val iframe: String? = null,
+//    val file_size: String? = null,
+//    val thumbnail: String? = null,
+//    val file_path: List<FilePath> = emptyList()
 //    val ques_no: String,
 //    val chapter: String,
 //    val question: String,

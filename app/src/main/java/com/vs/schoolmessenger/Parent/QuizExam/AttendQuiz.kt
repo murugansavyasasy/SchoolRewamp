@@ -500,7 +500,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
         val jsonObject=buildAnswerJson()
         Log.d("FinalAnswer",jsonObject.toString())
-//        appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
+        appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
 
     }
 }
