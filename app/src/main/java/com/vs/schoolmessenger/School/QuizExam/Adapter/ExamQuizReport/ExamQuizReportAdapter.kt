@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
 import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
+import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.SubmitReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -140,8 +141,9 @@ class ExamQuizReportAdapter(
 
             }
             lblSubmitted.setOnClickListener{
-//                val intent1 = Intent(context, QuizExam::class.java)
-//                context.startActivity(intent1)
+                val intent1 = Intent(context, SubmitReport::class.java)
+                intent1.putExtra("quiz_Id", data.id)
+                context.startActivity(intent1)
             }
 
         }
