@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.MarkYourAttendance.Adapter
 
 import android.content.Context
+import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.LocationHistoryClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import java.util.Locale
 
 class LocationHistoryAdapter(
     private var itemList: List<LocationHistoryData>?,
@@ -69,9 +71,27 @@ class LocationHistoryAdapter(
         private val lblPlaceName: TextView = itemView.findViewById(R.id.lblPlace)
         private val lblAddress: TextView = itemView.findViewById(R.id.lblAddress)
         private val lblDistance: TextView = itemView.findViewById(R.id.lblDistance)
+        private val lblLatLang: TextView = itemView.findViewById(R.id.lblLatLang)
         private val rytImgEdit: RelativeLayout = itemView.findViewById(R.id.rytImgEdit)
         private val rytImgDelete: RelativeLayout = itemView.findViewById(R.id.rytImgDelete)
 
+
+
+        private fun getAddressFromLocation(latitude: String, longitude: String): String {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            val lat: Double? = latitude.toDoubleOrNull()
+            val lang: Double? = longitude.toDoubleOrNull()
+
+            return try {
+                val addresses = geocoder.getFromLocation(lat!!, lang!!, 1)
+                if (!addresses.isNullOrEmpty()) {
+                    addresses[0].getAddressLine(0) ?: "Address not found"
+                } else "No address found"
+            } catch (e: Exception) {
+                e.printStackTrace()
+                "Geocoder error"
+            }
+        }
 
 
         fun bind(
@@ -81,8 +101,10 @@ class LocationHistoryAdapter(
             adapter: LocationHistoryAdapter
         ) {
             lblPlaceName.text = data.location
-            lblAddress.text = data.latitude + " - " + data.longitude
-            lblDistance.text = data.distance + context.getString(R.string.Meters)
+            lblAddress.text = getAddressFromLocation(data.latitude,data.longitude)
+            lblLatLang.text = data.latitude + " - " + data.longitude
+            lblDistance.text = data.distance + " "+context.getString(R.string.Meters)
+
 
             rytImgDelete.setOnClickListener {
                 listener.onItemClick(data, Constant.isDelete)

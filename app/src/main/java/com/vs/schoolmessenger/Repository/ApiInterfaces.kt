@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Repository
 
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.PreSignedUrl
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
@@ -882,7 +883,7 @@ interface ApiInterfaces {
     @POST(APIMethods.isCreateSlots)
     fun isCreateSlots(
         @Header(APIKeyNames.Authorization) token: String,
-        @Body jsonObject: JsonObject,
+        @Body jsonObject: JsonArray,
     ): Call<StatusMessageModel?>?
 
     @GET(APIMethods.isSlotDetailsForStaff)
@@ -942,7 +943,7 @@ interface ApiInterfaces {
     @POST(APIMethods.isValidateForStaffToSlot)
     fun isSlotValidationForStaff(
         @Header(APIKeyNames.Authorization) token: String,
-        @Body jsonObject: JsonObject,
+        @Body jsonObject: JsonArray,
     ): Call<SlotValidationResponse?>?
 
 

@@ -1,81 +1,156 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/rect_white"
     android:fitsSystemWindows="true"
-    android:background="@drawable/rect_shadow_white"
     android:orientation="vertical"
-    android:padding="@dimen/sixteen">
+    android:layout_marginVertical="@dimen/five"
+    android:padding="@dimen/ten">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/twele"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/image1"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_marginEnd="@dimen/twele"
-            android:contentDescription="Image 1"
-            android:src="@drawable/stopwatch" />
 
-        <TextView
-            android:id="@+id/lblTime"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/lnrImage"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:background="@drawable/rect_grey">
+
+            <ImageView
+
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_centerInParent="true"
+                android:src="@drawable/mobile" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_toEndOf="@+id/lnrImage"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Text 1"
-            android:textSize="@dimen/thirteen_sp" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/twele"
-        android:gravity="center_vertical"
-        android:visibility="gone"
-        android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/image2"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_marginEnd="@dimen/twele"
-            android:contentDescription="Image 2"
-            android:src="@drawable/fingerprint_scanner" />
+            <TextView
+                android:id="@+id/lblPhoneModel"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_toStartOf="@+id/rytVerified"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Xiomi 21Xret"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
 
-        <TextView
-            android:id="@+id/lblType"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Text 2"
-            android:textSize="@dimen/thirteen_sp" />
-    </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/rytVerified"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/five"
+                    android:paddingHorizontal="@dimen/fifteen"
+                    android:background="@drawable/bg_leave_approved">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgVerified"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:src="@drawable/time_icon" />
 
-        <ImageView
-            android:id="@+id/image3"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_marginEnd="@dimen/twele"
-            android:contentDescription="Image 3"
-            android:src="@drawable/smartphone" />
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_toEndOf="@+id/imgVerified"
+                        android:id="@+id/lblVerified"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verified"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/thirteen_sp" />
 
-        <TextView
-            android:id="@+id/lblMobile"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Text 3"
-            android:textSize="@dimen/thirteen_sp" />
-    </LinearLayout>
+                </RelativeLayout>
 
-</LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rytTimeIcon"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:background="@drawable/rect_grey">
+
+                    <ImageView
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/time_icon" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/rytTimeIcon"
+                    android:id="@+id/lblTime"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="10:10 AM"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp" />
+
+                <RelativeLayout
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_toEndOf="@+id/lblTime"
+                    android:id="@+id/rytType"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:background="@drawable/rect_grey">
+
+                    <ImageView
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_fingerprint_primary" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/rytType"
+                    android:id="@+id/lblPunchType"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Punch"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
