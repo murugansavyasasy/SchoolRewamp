@@ -43,12 +43,13 @@
                 </ImageView>
 
                 <TextView
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_toEndOf="@+id/imgClose"
                     android:id="@+id/lblTitle"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:gravity="center"
                     android:text="@string/your_locations"
                     android:textColor="@color/bpBlue"
                     android:textSize="@dimen/fifteen_sp" />

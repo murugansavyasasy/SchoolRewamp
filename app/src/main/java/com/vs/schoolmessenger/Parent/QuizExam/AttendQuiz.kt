@@ -34,6 +34,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
     var isQuizID=""
+    var isUnansweredCount=0
     private val selectedAnswersMap = mutableMapOf<String, Int>()
 
 
@@ -298,7 +299,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
         binding.progressBar.max = totalQuestions
         binding.progressBar.progress = answeredCount
-        binding.questionCounter.text = "Answered $answeredCount / $totalQuestions"
+        binding.questionCounter.text = "Questions $answeredCount / $totalQuestions"
     }
 
     private fun selectOption(index: Int) {
@@ -473,21 +474,33 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
 
     private fun showSubmitDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Submit Quiz")
-            .setMessage("Are you sure you want to submit the quiz?")
-            .setPositiveButton("Yes") { _, _ -> showQuizCompletion() }
-            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
-            .show()
+        isUnansweredCount = questionList.size - selectedAnswersMap.values.count { it != 0 }
+        if (isUnansweredCount>0){
+            var ques=if (isUnansweredCount==1)"question" else "questions"
+            AlertDialog.Builder(this)
+                .setTitle("Submit Quiz")
+
+                .setMessage("Are you sure you want to submit the quiz? because you not answered ${isUnansweredCount} ${ques}! ")
+                .setPositiveButton("Anyway submit") { _, _ -> showQuizCompletion() }
+                .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+                .show()
+        }
+        else{
+            AlertDialog.Builder(this)
+                .setTitle("Submit Quiz")
+                .setMessage("Are you sure you want to submit the quiz?")
+                .setPositiveButton("Yes") { _, _ -> showQuizCompletion() }
+                .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+                .show()
+
+        }
     }
 
     private fun showQuizCompletion() {
-        buildAnswerJson()
-        val unansweredCount = questionList.size - selectedAnswersMap.values.count { it != 0 }
-        Log.d("UnAnsweredCount",unansweredCount.toString())
 
-//        val jsonObject=buildAnswerJson()
-//        appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
+        val jsonObject=buildAnswerJson()
+        Log.d("FinalAnswer",jsonObject.toString())
+        appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
 
     }
 }

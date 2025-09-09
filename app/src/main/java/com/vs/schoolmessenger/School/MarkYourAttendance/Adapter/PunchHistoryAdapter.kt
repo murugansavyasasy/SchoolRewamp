@@ -52,8 +52,8 @@ class PunchHistoryAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
-        private val lblMobile: TextView = itemView.findViewById(R.id.lblMobile)
-        private val lblType: TextView = itemView.findViewById(R.id.lblType)
+        private val lblMobile: TextView = itemView.findViewById(R.id.lblPhoneModel)
+        private val lblType: TextView = itemView.findViewById(R.id.lblPunchType)
 
         fun bind(
             data: PunchTimingsData,
