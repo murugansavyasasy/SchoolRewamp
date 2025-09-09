@@ -5,6 +5,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
@@ -1108,7 +1109,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun isSlotCreating(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonArray
     ) {
         apiSchoolRepositories.isPtmSlotCreating(isToken, jsonObject)
     }
@@ -1168,7 +1169,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isSlotValidationForStaff(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonArray
     ) {
         apiSchoolRepositories.isSlotValidationForStaff(isToken, jsonObject)
     }

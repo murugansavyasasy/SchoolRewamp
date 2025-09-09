@@ -764,5 +764,6 @@
     <string name="not_answered1">Not answered</string>
     <string name="quiz_submission">Quiz Submission</string>
     <string name="your_answer">Your Answer</string>
+    <string name="create_slots">Create slots</string>
 
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
@@ -3059,7 +3060,7 @@ class SchoolServices {
         get() = getassignmentlist
 
     fun isPtmSlotCreating(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonArray
     ) {
         RestClient.apiInterfaces.isCreateSlots(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
@@ -3254,7 +3255,7 @@ class SchoolServices {
 
 
     fun isSlotValidationForStaff(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonArray
     ) {
         RestClient.apiInterfaces.isSlotValidationForStaff(isToken, jsonObject)
             ?.enqueue(object : Callback<SlotValidationResponse?> {

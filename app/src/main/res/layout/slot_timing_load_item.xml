@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/ten">
+
+    <TextView
+        android:id="@+id/lblTiming"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="10:00 - 11:00"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp" />
+
+    <TextView
+        android:id="@+id/lblSlotStatus"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTiming"
+        android:layout_marginTop="@dimen/five"
+        android:gravity="center_vertical"
+        android:text="Available"
+        android:textColor="@color/green"
+        android:textSize="@dimen/ten" />
+
+    <ImageView
+        android:id="@+id/imgRemove"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/close_red_color" />
+</RelativeLayout>
