@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQ
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+
 class AddQuestionAdapter(
     private var itemList: MutableList<GetQuizQuestionReportData>?,
     private var context: Context,
@@ -22,12 +23,14 @@ class AddQuestionAdapter(
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
@@ -52,6 +55,17 @@ class AddQuestionAdapter(
         return if (isLoading) 20 else itemList!!.size
     }
 
+    fun removeItemsByIds(ids: List<String>) {
+        if (ids.isEmpty()) return
+        val iterator = itemList!!.iterator()
+        while (iterator.hasNext()) {
+            val q = iterator.next()
+            if (ids.contains(q.id)) {
+                iterator.remove()
+            }
+        }
+        notifyDataSetChanged()
+    }
 
 
     fun addItems(newItems: List<GetQuizQuestionReportData>) {
@@ -81,9 +95,14 @@ class AddQuestionAdapter(
                 correct_answer_counts = 0,
                 incorrect_answer_counts = 0,
                 correct_answer = "",
-                sourceType = QuestionSource.USER
+                iframe="",
+                file_size="",
+                thumbnail="",
+                sourceType = QuestionSource.USER,
+                file_path = emptyList()
             )
         )
+        Constant.isQuestionLimit -= 1
         notifyItemInserted(itemList!!.size - 1)
     }
 
@@ -148,11 +167,16 @@ class AddQuestionAdapter(
                 if (isAllValid) holder.edtCorrectAns.requestFocus()
                 isAllValid = false
             }
-            if (item.mark==0 ||item.mark==null) {
+            if (item.mark == null) {
                 holder.edtMark.error = "This is required!"
                 if (isAllValid) holder.edtMark.requestFocus()
                 isAllValid = false
+            } else if (item.mark <= 0) {
+                holder.edtMark.error = "Mark should be greater than zero!"
+                if (isAllValid) holder.edtMark.requestFocus()
+                isAllValid = false
             }
+
         }
 
         return isAllValid
@@ -164,28 +188,6 @@ class AddQuestionAdapter(
         notifyDataSetChanged()
     }
 
-
-fun updateItems(newQBankItems: List<GetQuizQuestionReportData>) {
-    // 1. User-created (id == "" && sourceType == USER)
-    // 2. API questions that are still in API response
-    // 3. Replace/update QBank questions
-
-    val userItems = itemList!!.filter { it.sourceType == QuestionSource.USER }
-    val apiItems = itemList!!.filter { it.sourceType == QuestionSource.API && it.id.isNotEmpty() }
-    val qbankItems = newQBankItems.map { it.copy(sourceType = QuestionSource.QBANK) }
-
-    // Filter API items → keep only still present
-    val newApiIds = apiItems.mapNotNull { it.id }.toHashSet()
-    val filteredApi = apiItems.filter { it.id in newApiIds }
-
-    itemList = mutableListOf<GetQuizQuestionReportData>().apply {
-        addAll(userItems)
-        addAll(filteredApi)
-        addAll(qbankItems)
-    }
-
-    notifyDataSetChanged()
-}
 
     fun getUpdatedList(): List<GetQuizQuestionReportData> = itemList!!
 
@@ -267,3 +269,5 @@ fun updateItems(newQBankItems: List<GetQuizQuestionReportData>) {
         }
     }
 }
+
+

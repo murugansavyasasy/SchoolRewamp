@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport
 
+import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
+
 enum class QuestionSource {
     USER, API, QBANK
 }
@@ -22,5 +24,10 @@ data class GetQuizQuestionReportData (
     val correct_answer_counts: Int,
     val incorrect_answer_counts: Int,
     val correct_answer: String,
-    var sourceType: QuestionSource = QuestionSource.API
+    val iframe: String? = null,
+    val file_size: String? = null,
+    val thumbnail: String? = null,
+    var sourceType: QuestionSource = QuestionSource.API,
+    val file_path: List<FilePath> = emptyList()
+
 )

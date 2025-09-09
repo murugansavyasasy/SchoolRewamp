@@ -393,7 +393,7 @@
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
-                        android:src="@drawable/calendar" />
+                        android:src="@drawable/calendar_black" />
 
                     <TextView
                         android:id="@+id/lblDatePick"

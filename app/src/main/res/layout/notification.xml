@@ -69,9 +69,10 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearch"
+        android:layout_below="@+id/rlaLblNotification"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:padding="@dimen/sixteen">
 
     </LinearLayout>
@@ -79,14 +80,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyNotification"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/header"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginEnd="@dimen/twenty"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlaLblNotification"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginBottom="@dimen/twenty"
         android:background="@drawable/bg_notification_rounded_container"
         android:clipToPadding="false"
         android:divider="@null"
+        android:layout_marginTop="@dimen/fifteen"
         android:dividerHeight="0dp"
         android:scrollbars="none"
         tools:listitem="@layout/resent_notifications" />

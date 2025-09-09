@@ -39,12 +39,19 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWork
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
 import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
+import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.FrequentParentlyUsedMenuItems
+import com.vs.schoolmessenger.Utils.Constant.isParentAdItem
+import com.vs.schoolmessenger.Utils.Constant.isParentContactDetails
+import com.vs.schoolmessenger.Utils.Constant.isParentDashBoardData
+import com.vs.schoolmessenger.Utils.Constant.isParentMenuCountDetails
+import com.vs.schoolmessenger.Utils.Constant.isParentMenuDetails
 import com.vs.schoolmessenger.Utils.ScrollItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
@@ -59,16 +66,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private lateinit var aditems: List<AdItem>
     private var isSearchVisible = false
     var childDetails: ChildDetails? = null
-    var FrequentlyUsedMenuItems: List<MenuDetail>? = null
     var userDetails: UserDetails? = null
     private var appViewModel: App? = null
     var isDashBoardCountData: List<DashboardCountData>? = null
-    var isMenuCountDetails: ArrayList<MenuCountDetail>? = null
-    var isDashBoardData: List<DashboardData>? = null
     private lateinit var items: List<ScrollItem>
     var isContactDetails: ContactDetails? = null
-    var isMenuDetails: List<MenuDetail>? = null
-    var isAdItem: List<AdItem>? = null
     var access_token = ""
 
     var isAdsDisplayOptions: AdsDisplayOptions? = null
@@ -89,31 +91,28 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding = ParentHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
-//        binding.imgSearchClick.setOnClickListener(this)
-//        binding.lblChangeRoll.setOnClickListener(this)
-//        binding.imgSearchCancel.setOnClickListener(this)
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
         access_token = childDetails!!.access_token
 
-
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         dateFormat.format(currentDate)
-//        binding.lblDate.text = formattedDate
-//        binding.lblStudentName.text = childDetails!!.name
         binding.username.text = childDetails!!.name
         binding.lblSchoolName.text = childDetails!!.school_name
-//        binding.lblSchoolAddress.text = childDetails!!.student_address
-//        binding.lblChangeRoll.paintFlags =
-//            binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
         Constant.checkBiometricSupport(requireActivity())
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        isDashBoardData()
+
+        if (isParentDashBoardData == null || isParentDashBoardData!!.isEmpty()) {
+            isDashBoardData()
+        }
+        else{
+            isLoadData()
+            setupRecyclerView()
+
+        }
 
         binding.imgBurgerMenu.setOnClickListener(this)
 
@@ -121,90 +120,24 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             (activity as? ParentDashboard)?.openDrawer()
         }
 
-
-//        if (userDetails!!.is_parent && userDetails!!.is_staff) {
-//            binding.lblChangeRoll.visibility = View.VISIBLE
-//        } else {
-//            if (userDetails!!.child_details.size > 1) {
-//                binding.lblChangeRoll.visibility = View.VISIBLE
-//            } else {
-//                binding.lblChangeRoll.visibility = View.GONE
-//            }
-//        }
-
-//        Glide.with(requireActivity())
-//            .load(childDetails!!.school_logo_url)
-//            .listener(object : RequestListener<Drawable> {
-//
-//                override fun onLoadFailed(
-//                    e: GlideException?,
-//                    model: Any?,
-//                    target: com.bumptech.glide.request.target.Target<Drawable?>,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    Handler(Looper.getMainLooper()).post {
-//                        Glide.with(requireActivity())
-//                            .load(R.drawable.school_sample)
-//                            .into(binding.imgSchoolLogo)
-//                    }
-//                    return false
-//                }
-//
-//                override fun onResourceReady(
-//                    resource: Drawable,
-//                    model: Any,
-//                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
-//                    dataSource: com.bumptech.glide.load.DataSource,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    Log.d("Glide", "Image load success")
-//                    return false
-//                }
-//            })
-//            .into(binding.imgSchoolLogo)
-//
-//        binding.lblViewDetails.paintFlags =
-//            binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
-
-//        binding.lblViewDetails.setOnClickListener {
-//            this.startActivity(
-//                Intent(
-//                    requireActivity(), AttendanceReport::class.java
-//                )
-//            )
-//        }
-//
-//        binding.lblGif.playAnimation()
-//        binding.lblGif.setAnimation(R.raw.mathematics)
-
-//        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {}
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                filter(s.toString())
-//            }
-//        })
-
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
                 val status = response.status
                 response.message
                 if (status) {
                     val isDashboardResponse = response.data
-                    isDashBoardData = isDashboardResponse
-                    isContactDetails = isDashBoardData!![0].contactDetails
-                    isMenuDetails = isDashBoardData!![0].menus
-                    FrequentlyUsedMenuItems = isDashBoardData!![0].frequently_used
-                    allMenuItems = isMenuDetails!!
+                    isParentDashBoardData = isDashboardResponse
+
+                    isParentContactDetails = isParentDashBoardData!![0].contactDetails
+                    isParentMenuDetails = isParentDashBoardData!![0].menus
+                    FrequentParentlyUsedMenuItems = isParentDashBoardData!![0].frequently_used
+                    allMenuItems = isParentMenuDetails!!
 
                     appViewModel!!.isDashBoardCountData(
                         access_token, Constant.parent, requireActivity()
                     )
 
-                    Log.d("isMenuDetails", isMenuDetails!!.size.toString())
+                    Log.d("isMenuDetails", isParentMenuDetails!!.size.toString())
                     setupRecyclerView()
 
                 }
@@ -218,7 +151,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 if (status) {
                     val isDashboardResponse = response.data
                     isDashBoardCountData = isDashboardResponse
-                    isMenuCountDetails = isDashBoardCountData!![0].menu_details
+                    isParentMenuCountDetails = isDashBoardCountData!![0].menu_details
                     isGetAds()
                 }
             }
@@ -229,15 +162,15 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val status = response.status
                 response.message
                 if (status) {
-                    isAdItem = response.data
+                    isParentAdItem = response.data
                     val filteredAds = response.data.filter { it.id != null }
-                    isAdsDisplayOptions = isAdItem!![0].ads_display_options
+                    isAdsDisplayOptions = isParentAdItem!![0].ads_display_options
                     val adList: List<AdItem> = filteredAds.map { ad ->
                         AdItem(
                             ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
                         )
                     }
-                    isAdItem = adList
+                    isParentAdItem = adList
                 }
                 isLoadData()
             }
@@ -247,14 +180,14 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun setupRecyclerView() {
 
-        if (!FrequentlyUsedMenuItems.isNullOrEmpty()) {
+        if (!FrequentParentlyUsedMenuItems.isNullOrEmpty()) {
             binding.autoScrollRecyclerView.visibility = View.VISIBLE
 
             layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
-            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!, this)
+            adapter = AutoScrollAdapterWithDots(FrequentParentlyUsedMenuItems!!, this)
             binding.autoScrollRecyclerView.adapter = adapter
 
             if (binding.autoScrollRecyclerView.onFlingListener == null) {
@@ -271,35 +204,15 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
 
-    private fun createSampleData(): List<ScrollItem> {
-        return listOf(
-            ScrollItem(R.drawable.home_work_icon_school, "Daily Homework"),
-            ScrollItem(R.drawable.fee_pending_reports, "Fee Payment"),
-            ScrollItem(R.drawable.attachment_icon, "Attendance"),
-            ScrollItem(R.drawable.event_icon_school, "School Events"),
-            ScrollItem(R.drawable.fee_details, "Grades"),
-            ScrollItem(R.drawable.message_f_management, "Messages")
-        )
-    }
-
     private fun isLoadData() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         isMenuAdapter = ChildMenuAdapter(
             requireActivity(),
             this,
-            isMenuDetails,
-            isMenuCountDetails,
-            isAdItem,
+            isParentMenuDetails,
+            isParentMenuCountDetails,
             Constant.isShimmerViewDisable
         )
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return when (isMenuAdapter.getItemViewType(position)) {
-                    2 -> 3
-                    else -> 1
-                }
-            }
-        }
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
     }
@@ -307,18 +220,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private fun isDashBoardData() {
 
         val adapter =
-            ChildMenuAdapter(requireActivity(), this, null, null, null, Constant.isShimmerViewShow)
+            ChildMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-
-        // Adjust span count for special layout
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return when (adapter.getItemViewType(position)) {
-                    2 -> 3 // TYPE_AD: Span across all 3 columns
-                    else -> 1 // Default: 1 span per item
-                }
-            }
-        }
 
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = adapter
@@ -352,28 +255,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val intent = Intent(requireActivity(), Notification::class.java)
                 startActivity(intent)
             }
-
-//            R.id.lblChangeRoll -> {
-//                requireActivity().onBackPressedDispatcher.onBackPressed()
-//            }
-
-
-//            R.id.imgSearchClick -> {
-//                if (isSearchVisible) {
-//                    binding.txtSearchMenu.setText("")
-//                    isSearchVisible = false
-//                    binding.rytSearchBar.visibility = View.GONE
-//                } else {
-//                    isSearchVisible = true
-//                    binding.rytSearchBar.visibility = View.VISIBLE
-//                }
-//            }
-//
-//            R.id.imgSearchCancel -> {
-//                binding.txtSearchMenu.setText("")
-//                isSearchVisible = false
-//                binding.rytSearchBar.visibility = View.GONE
-//            }
         }
     }
 
@@ -426,17 +307,19 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 CertificateRequest::class.java
             )
-
             Constant.M_COUPON_PACKET -> Intent(
                 requireActivity(),
                 CouponDashboardActivity::class.java
             )
-
             Constant.M_EXAM -> Intent(
                 requireActivity(),
                 ExamMark::class.java
             )
 
+            Constant.M_PTM -> Intent(
+                requireActivity(),
+                PTM::class.java
+            )
 
             else -> null
         }

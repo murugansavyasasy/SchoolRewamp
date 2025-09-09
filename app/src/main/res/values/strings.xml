@@ -613,7 +613,7 @@
     <string name="type">Type</string>
     <string name="cause">Cause</string>
     <string name="add_attachment">Add Attachment</string>
-    <string name="assignment_progress">Assignment Progress</string>
+    <string name="assignment_progress">Submission Progress</string>
     <string name="pending">Pending</string>
     <string name="activate_coupon">ACTIVATE COUPON</string>
     <string name="go_to_website">GO TO WEBSITE</string>
@@ -633,7 +633,7 @@
     <string name="notice_display_date_range">Notice Display Date Range</string>
     <string name="quit_earning">Quit Earning?</string>
     <string name="ok">Ok</string>
-    <string name="total_collection_today">TOTAL COLLECTION TODAY</string>
+    <string name="total_collection_today">TOTAL COLLECTION</string>
     <string name="payment_history">Payment history</string>
     <string name="cancel_2">CANCEL</string>
     <string name="OK_2">OK</string>
@@ -741,6 +741,28 @@
     <string name="fee_details">Fee Details</string>
     <string name="certificate_request">Certificate Request</string>
     <string name="level">Level</string>
-
+    <string name="this_question_has_already_been_submitted_by">This question has already been submitted by</string>
+    <string name="do_you_want_to_update_it">.Do you want to update it?</string>
+    <string name="students">students</string>
+    <string name="student_">student</string>
+    <string name="questions">questions</string>
+    <string name="question_">question</string>
+    <string name="are_you_sure_want_to_send_the_quiz">Are you sure want to send the quiz?</string>
+    <string name="almost_there_You_ve_entered">Almost there! You’ve entered</string>
+    <string name="just">Just</string>
+    <string name="more_to_complete_the_quiz_but_don_t_worry_you_can_add_them_later"> more to complete the quiz but don’t worry, you can add them later.</string>
+    <string name="no_of_question_greater_than_zero">No of questions should be greater than zero</string>
+    <string name="ReOpen">ReOpen</string>
+    <string name="emergency_voice">Emergency voice</string>
+    <string name="post_on">Post on</string>
+    <string name="posted_by">Posted by</string>
+    <string name="correct_answer">Correct answer :</string>
+    <string name="correct_answer1">Correct answer</string>
+    <string name="wrong_answer">Wrong answer :</string>
+    <string name="wrong_answer1">Wrong answer</string>
+    <string name="not_answered">Not answered :</string>
+    <string name="not_answered1">Not answered</string>
+    <string name="quiz_submission">Quiz Submission</string>
+    <string name="your_answer">Your Answer</string>
 
 </resources>

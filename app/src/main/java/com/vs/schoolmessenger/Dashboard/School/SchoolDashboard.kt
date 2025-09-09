@@ -60,45 +60,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
     override fun setupViews() {
         super.setupViews()
-//        val menuIcon = binding.drawerLayout.menuIcon
-//        val drawerLayout = binding.drawerLayout.drawerLayout
-//        val navigationView = binding.drawerLayout.navigationView
-
-
-//        menuIcon.setOnClickListener {
-//            Log.d("menuIcon", "Menu icon clicked. Opening navigation drawer.")
-//            drawerLayout.openDrawer(GravityCompat.START)
-//        }
-
-
-//        navigationView.setNavigationItemSelectedListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.nav_home -> {
-//                    startActivity(Intent(this, SchoolHomeFragment::class.java))
-//                }
-//                R.id.nav_profile -> {
-//                    startActivity(Intent(this, ProfileFragment::class.java))
-//                }
-//                R.id.nav_settings -> {
-//                    startActivity(Intent(this, SettingsFragment::class.java))
-//                }
-//                R.id.nav_logout -> {
-//                    startActivity(Intent(this, HelpFragment::class.java))
-//                }
-//            }
-//            drawerLayout.closeDrawer(GravityCompat.START)
-//            true
-//        }
-
-        // Access a specific view using its ID
-
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            val window = this.window
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-//            window.statusBarColor = this.resources.getColor(R.color.primary_light)
-//            window.navigationBarColor = this.resources.getColor(R.color.primary_light)
-//        }
 
         userDetails = SharedPreference.getUserDetails(this)
         access_token = userDetails!!.staff_details[0].access_token
@@ -109,7 +70,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         authViewModel!!.init()
 
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
-        setupToolbarBlue()
+        setupToolbarBlueWhite()
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navigationView
@@ -141,8 +102,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         }
 
 
-
-
         accessChildView(
             binding,
             R.id.nav_home,
@@ -153,6 +112,10 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             R.id.icon_help,
             R.id.icon_settings,
             R.id.icon_profile,
+            R.id.lblHome,
+            R.id.lblHelp,
+            R.id.lblSettings,
+            R.id.lblProfile,
             R.id.fragment_container,
             R.id.customBottomNav
         )

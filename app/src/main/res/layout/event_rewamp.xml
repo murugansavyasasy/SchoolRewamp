@@ -53,8 +53,8 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="" />
+                android:text=""
+                android:textColor="@color/white" />
         </LinearLayout>
 
 
@@ -67,18 +67,16 @@
             android:layout_marginEnd="@dimen/twenty"
             android:visibility="visible">
 
-
             <ImageView
                 android:id="@+id/imgSearch"
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
-                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/fifteen"
                 android:src="@drawable/search_icon_white" />
 
         </RelativeLayout>
 
     </RelativeLayout>
-
 
     <ScrollView
         android:id="@+id/scroll_container"
@@ -257,7 +255,6 @@
                 android:fadeScrollbars="false"
                 android:paddingHorizontal="@dimen/ten"
                 android:scrollbars="none" />
-
 
         </RelativeLayout>
     </ScrollView>

@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/two_hundred_thirty"
     android:layout_height="@dimen/ninety"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:elevation="@dimen/fifteen"
-    app:cardElevation="@dimen/fifteen"
-    android:layout_margin="@dimen/eight">
+    android:layout_margin="@dimen/eight"
+    app:cardCornerRadius="@dimen/six">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/five"
-        >
+        android:padding="@dimen/five">
 
         <ImageView
             android:id="@+id/itemImage"
-            android:layout_width="@dimen/sixty"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/fifteen"
-            android:background="@android:color/transparent"
-            android:src="@drawable/user_icon" />
+            android:background="@android:color/transparent" />
 
         <TextView
             android:id="@+id/itemText"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/twenty"
             android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/twenty"
             android:layout_toEndOf="@+id/itemImage"
-            style="@style/CustomTextStylePoppinsBold"
+            android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="Sample Text"
-            android:textSize="@dimen/thirteen_sp" />
+            android:textColor="@color/dark_blue_color"
+            android:textSize="@dimen/twele_sp" />
 
         <ImageView
             android:layout_width="@dimen/ten"
+            android:layout_height="@dimen/ten"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/bg_red_circle"
-            android:layout_height="@dimen/ten">
+            android:src="@drawable/bg_red_circle">
 
         </ImageView>
 

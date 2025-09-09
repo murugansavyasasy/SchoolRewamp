@@ -20,18 +20,14 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsDisplayOptions
-import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountData
-import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
-import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
-import com.vs.schoolmessenger.Parent.QuizExam.QuizExam
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
@@ -54,11 +50,16 @@ import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 
 import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
-import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.FrequentSchoollyUsedMenuItems
+import com.vs.schoolmessenger.Utils.Constant.isSchoolAdItem
+import com.vs.schoolmessenger.Utils.Constant.isSchoolContactDetails
+import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
+import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuCountDetails
+import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuDetails
 import com.vs.schoolmessenger.Utils.ScrollItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
@@ -77,13 +78,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
     var staffDetails: StaffDetails? = null
-    var isDashBoardData: List<DashboardData>? = null
     var isDashBoardCountData: List<DashboardCountData>? = null
-    var FrequentlyUsedMenuItems: List<MenuDetail>? = null
-    var isContactDetails: ContactDetails? = null
-    var isMenuDetails: List<MenuDetail>? = null
-    var isMenuCountDetails: ArrayList<MenuCountDetail>? = null
-    var isAdItem: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
     var access_token = ""
     private lateinit var allMenuItems: List<MenuDetail>
@@ -115,11 +110,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         dateFormat.format(currentDate)
-//        binding.lblDate.text = formattedDate
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-//        binding.changeroll.paintFlags = binding.changeroll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
         Constant.checkBiometricSupport(requireActivity())
 
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
@@ -165,24 +157,22 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             (activity as? SchoolDashboard)?.openDrawer()
         }
 
-
-
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
                 val status = response.status
                 response.message
                 if (status) {
                     val isDashboardResponse = response.data
-                    isDashBoardData = isDashboardResponse
-                    isContactDetails = isDashBoardData!![0].contactDetails
+                    isSchoolDashBoardData = isDashboardResponse
+
+                    isSchoolContactDetails = isSchoolDashBoardData!![0].contactDetails
 
                     appViewModel!!.isDashBoardCountData(
                         access_token, Constant.staff_, requireActivity()
                     )
-
-                    isMenuDetails = isDashBoardData!![0].menus
-                    FrequentlyUsedMenuItems = isDashBoardData!![0].frequently_used
-                    allMenuItems = isMenuDetails!!
+                    isSchoolMenuDetails = isSchoolDashBoardData!![0].menus
+                    FrequentSchoollyUsedMenuItems = isSchoolDashBoardData!![0].frequently_used
+                    allMenuItems = isSchoolMenuDetails!!
                     setupRecyclerView()
 
                 }
@@ -196,7 +186,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 if (status) {
                     val isDashboardResponse = response.data
                     isDashBoardCountData = isDashboardResponse
-                    isMenuCountDetails = isDashBoardCountData!![0].menu_details
+                    isSchoolMenuCountDetails = isDashBoardCountData!![0].menu_details
                     isGetAds()
                 }
             }
@@ -207,21 +197,19 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val status = response.status
                 response.message
                 if (status) {
-                    isAdItem = response.data
+                    isSchoolAdItem = response.data
                     val filteredAds = response.data.filter { it.id != null }
-                    isAdsDisplayOptions = isAdItem!![0].ads_display_options
+                    isAdsDisplayOptions = isSchoolAdItem!![0].ads_display_options
                     val adList: List<AdItem> = filteredAds.map { ad ->
                         AdItem(
                             ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
                         )
                     }
-                    isAdItem = adList
+                    isSchoolAdItem = adList
                 }
                 isLoadData()
             }
         }
-
-
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (userDetails!!.is_parent && userDetails!!.is_staff) {
@@ -234,20 +222,17 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
         return binding.root
     }
-
-
     private fun setupRecyclerView() {
-        if (!FrequentlyUsedMenuItems.isNullOrEmpty()) {
+        if (!FrequentSchoollyUsedMenuItems.isNullOrEmpty()) {
             binding.autoScrollRecyclerView.visibility = View.VISIBLE
 
             layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
-            adapter = AutoScrollAdapterWithDots(FrequentlyUsedMenuItems!!, this)
+            adapter = AutoScrollAdapterWithDots(FrequentSchoollyUsedMenuItems!!, this)
             binding.autoScrollRecyclerView.adapter = adapter
 
             if (binding.autoScrollRecyclerView.onFlingListener == null) {
@@ -262,19 +247,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
     }
 
-
-//    private fun updateDotsIndicator(position: Int) {
-//        if (position < dots.size && position != currentDotPosition) {
-//            if (currentDotPosition < dots.size) {
-//                dots[currentDotPosition].setImageDrawable(createDotDrawable(false))
-//            }
-//
-//            dots[position].setImageDrawable(createDotDrawable(true))
-//            currentDotPosition = position
-//        }
-//    }
-
-
     private fun createSampleData(): List<ScrollItem> {
         return listOf(
             ScrollItem(R.drawable.home_work_icon_school, "Daily Homework"),
@@ -288,13 +260,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
 
-        Log.d("isMenuCountDetails", isMenuCountDetails!!.size.toString())
+        Log.d("isMenuCountDetails", isSchoolMenuCountDetails!!.size.toString())
         isMenuAdapter = SchoolMenuAdapter(
             requireActivity(),
             this,
-            isMenuDetails,
-            isMenuCountDetails,
-            isAdItem,
+            isSchoolMenuDetails,
+            isSchoolMenuCountDetails,
             Constant.isShimmerViewDisable
         )
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
@@ -337,18 +308,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private fun isDashBoardData() {
 
         isMenuAdapter =
-            SchoolMenuAdapter(requireActivity(), this, null, null, null, Constant.isShimmerViewShow)
+            SchoolMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-
-        // Adjust span count for special layout
-//        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//            override fun getSpanSize(position: Int): Int {
-//                return when (isMenuAdapter.getItemViewType(position)) {
-//                    2 -> 3 // TYPE_AD: Span across all 3 columns
-//                    else -> 1 // Default: 1 span per item
-//                }
-//            }
-//        }
 
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
@@ -369,10 +330,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onResume() {
         super.onResume()
         Log.d("Loading", "Dashboard Data is Loading")
-        isDashBoardData()
+        if(isSchoolDashBoardData == null) {
+            isDashBoardData()
+        }
+        else{
+            isLoadData()
+            setupRecyclerView()
+        }
         Log.d("Loading", "Dashboard Data is Refreshed")
-
-        Log.d("Status", "onResume")
     }
 
     override fun onPause() {
@@ -592,7 +557,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
-
             Constant.M_ATTACHMENTS -> {
                 Attachment::class.java
             }
@@ -600,14 +564,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_LEAVE_REQUEST -> {
                 LeaveRequests::class.java
             }
-
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
 //            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
             Constant.M_SCHOOL_NEEDS -> LsrwMain::class.java
             else -> null
         }
-
         activityClass?.let {
             startActivity(Intent(requireActivity(), it))
         }

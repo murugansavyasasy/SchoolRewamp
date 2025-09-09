@@ -1,6 +1,8 @@
+
 package com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +18,14 @@ class PickQuestionAdapter(
     private var itemList: MutableList<GetPickFromQBankData>?,
     private var context: Context,
     private var isLoading: Boolean,
-    private val onItemCheckedChange: (() -> Unit)? = null,
+    var onSelectionChanged: ((allSelected: Boolean) -> Unit)? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val tempSelection = mutableMapOf<String, Boolean>()
+
+    // PickQuestionAdapter
+    val currentTempSelection: Map<String, Boolean>
+        get() = tempSelection.toMap() // return a copy to keep encapsulation
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
@@ -39,6 +45,7 @@ class PickQuestionAdapter(
         }
     }
 
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             itemList!![position].let { holder.bind(it) }
@@ -51,36 +58,12 @@ class PickQuestionAdapter(
         return itemList?.filter { !it.checked } ?: emptyList()
     }
 
-//
-//    fun clearSelections() {
-//        itemList?.forEach { it.checked = false }
-//        notifyDataSetChanged()
-//    }
-
-
 
     override fun getItemCount(): Int {
         return if (isLoading) 20 else itemList!!.size
     }
 
     fun getUpdatedList(): List<GetPickFromQBankData> = itemList!!
-
-//    // Select/Deselect All
-//    fun selectAll(isChecked: Boolean) {
-//        itemList!!.forEach { it.checked = isChecked }
-//        notifyDataSetChanged()
-//    }
-
-//    fun selectAll(isChecked: Boolean) {
-//        if (isChecked) {
-//            // Mark all as selected
-//            itemList?.forEach { it.checked = true }
-//        } else {
-//            // Just clear all
-//            itemList?.forEach { it.checked = false }
-//        }
-//        notifyDataSetChanged()
-//    }
 
 
     // Select/Deselect All (temporary only)
@@ -97,17 +80,13 @@ class PickQuestionAdapter(
 
 
 
-    // Return selected items
-//    fun getSelectedQuestions(): List<GetPickFromQBankData> {
-//        return itemList!!.filter { it.checked }
-//    }
-
     fun uncheckItemById(id: String) {
-        val index = itemList?.indexOfFirst { it.id == id }
-        if (index != null && index >= 0) {
+        val index = itemList?.indexOfFirst { it.id == id } ?: -1
+        if (index != -1) {
             itemList!![index].checked = false
             notifyItemChanged(index)
         }
+        notifySelectionChanged()
     }
 
 
@@ -115,33 +94,44 @@ class PickQuestionAdapter(
         imported.forEach { imp ->
             val index = itemList!!.indexOfFirst { it.id == imp.id }
             if (index != -1) {
-                itemList!![index].checked = true   //permanent
-                tempSelection.remove(imp.id)  //  clear temp
+                itemList!![index].checked = true   // permanent
+                tempSelection.remove(imp.id)       // clear temp
                 notifyItemChanged(index)
             }
         }
+        notifySelectionChanged()
     }
+
+
+    fun notifySelectionChanged() {
+        val allSelected = itemList!!.all { item ->
+            // If user explicitly interacted, respect tempSelection
+            tempSelection[item.id] ?: item.checked
+        }
+        onSelectionChanged?.invoke(allSelected)
+    }
+
+
 
     fun getSelected(): List<GetPickFromQBankData> {
         return itemList!!.filter { tempSelection[it.id] ?: it.checked }
     }
 
-    fun clearSelections() {
-        // Clear only temporary selections
-        tempSelection.clear()
 
-        // Refresh only items that were temporarily selected
-        itemList?.forEachIndexed { index, item ->
-            if (!item.checked) {   // refresh only non-imported
-                notifyItemChanged(index)
-            }
+
+    fun clearSelections() {
+        tempSelection.clear()
+        itemList!!.forEachIndexed { index, item ->
+            if (!item.checked) notifyItemChanged(index)
         }
+        notifySelectionChanged()
     }
 
 
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val cbQuestion: CheckBox = itemView.findViewById(R.id.cbQuestion)
+        private val lnrEntireQuestion: LinearLayout = itemView.findViewById(R.id.lnrEntireQuestion)
         val edtChapterName: EditText = itemView.findViewById(R.id.edtChapterName)
         val edtQuestion: EditText = itemView.findViewById(R.id.edtQuestion)
         val edtOptionA: EditText = itemView.findViewById(R.id.edtOptionA)
@@ -157,15 +147,6 @@ class PickQuestionAdapter(
 
         fun bind(data: GetPickFromQBankData) {
 
-            // Show stored state
-//            cbQuestion.setOnCheckedChangeListener(null)
-//            cbQuestion.isChecked = data.checked
-//
-//            cbQuestion.setOnCheckedChangeListener { _, isChecked ->
-//                data.checked = isChecked
-//                onItemCheckedChange?.invoke()
-//            }
-
             cbQuestion.setOnCheckedChangeListener(null)
 
             // show from tempSelection first, else permanent checked
@@ -173,9 +154,8 @@ class PickQuestionAdapter(
 
             cbQuestion.setOnCheckedChangeListener { _, isChecked ->
                 tempSelection[data.id] = isChecked
+                notifySelectionChanged()
             }
-
-
 
             lblremove.visibility = View.GONE
             lnrAttachment.visibility=View.GONE
@@ -222,4 +202,3 @@ class PickQuestionAdapter(
         }
     }
 }
-

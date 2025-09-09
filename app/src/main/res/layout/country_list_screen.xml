@@ -35,9 +35,10 @@
 
                 <ImageView
                     android:id="@+id/imgBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/fifteen"
                     android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
                     android:src="@drawable/ic_arrow_back_black" />
 
             </RelativeLayout>
@@ -152,10 +153,10 @@
             android:layout_marginTop="@dimen/ten" />
 
         <LinearLayout
+           android:layout_above="@+id/lnrPowered"
             android:id="@+id/lnrNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -224,7 +225,35 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:id="@+id/lnrPowered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/imgSavyasasy"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:src="@drawable/savyasasy"/>
+
+            <TextView
+                android:layout_toEndOf="@+id/imgSavyasasy"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:text="Powered by savyasasy"/>
+        </RelativeLayout>
+
+
 
     </RelativeLayout>
+
+
 
 </RelativeLayout>

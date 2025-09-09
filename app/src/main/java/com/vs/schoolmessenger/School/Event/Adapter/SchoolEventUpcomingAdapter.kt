@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
@@ -144,6 +145,7 @@ class SchoolEventUpcomingAdapter(
         private val options: ImageView = itemView.findViewById(R.id.options)
 
         private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
+        private val rytList2: LinearLayout = itemView.findViewById(R.id.rytList2)
 
 
         @SuppressLint("ClickableViewAccessibility")
@@ -158,8 +160,6 @@ class SchoolEventUpcomingAdapter(
             event_location.text = data.venue
             eventdesc.text = data.description
 
-
-
             loadingBar.visibility = View.GONE
 
             if (data.can_edit && data.can_delete) {
@@ -167,43 +167,20 @@ class SchoolEventUpcomingAdapter(
             } else {
                 imgEditAndDelete.visibility = View.GONE
             }
-
             imgEditAndDelete.setOnClickListener {
                 listener.onEditAndDelete(data, it, adapterPosition)
             }
 
-
             options.setOnClickListener {
-                if (data.can_edit != true && data.can_delete != true) {
-                    return@setOnClickListener
-                }
+                if (data.can_edit != true && data.can_delete != true) return@setOnClickListener
                 val popup = PopupMenu(context, options)
                 popup.menuInflater.inflate(R.menu.notice_options_menu, popup.menu)
                 popup.menu.findItem(R.id.menu_edit).isVisible = data.can_edit == true
                 popup.menu.findItem(R.id.menu_delete).isVisible = data.can_delete == true
 
-                try {
-                    val fields = popup.javaClass.declaredFields
-                    for (field in fields) {
-                        if (field.name == "mPopup") {
-                            field.isAccessible = true
-                            val menuPopupHelper = field.get(popup)
-                            val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
-                            val setForceIcons =
-                                classPopupHelper.getMethod("setForceShowIcon", Boolean::class.java)
-                            setForceIcons.invoke(menuPopupHelper, true)
-                            break
-                        }
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
                 popup.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.menu_edit -> {
-                            // Uncomment
-                            // listener.onEditNotice(noticeData)
                             true
                         }
 
@@ -215,55 +192,76 @@ class SchoolEventUpcomingAdapter(
                         else -> false
                     }
                 }
-
                 popup.show()
             }
 
-            header.setOnClickListener {
-                val convertedList = data.file_path.map {
-                    GetFilePathDetails(
-                        type = it.type,
-                        url = it.url,
-                    )
-                }
-                val isHomeWorkData = FilePreview(
-                    id = "",
-                    title = data.title,
-                    description = data.description,
-                    subjectName = "",
-                    sentBy = "",
-                    thumbnail = data.thumbnail,
-                    isUnread = true,
-                    isCompleted = true,
-                    isMenuType = Constant.M_SCHOOL_CLASS_EVENTS,
-                    fileList = convertedList,
-                )
+            setupPreviewListeners(data)
 
-                val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                context.startActivity(intent)
-            }
-                if (data.file_path.isNullOrEmpty()) {
-                    rcyImgPDF.visibility = View.GONE
-                    total_numbers.visibility = View.GONE
+            if (data.file_path.isNullOrEmpty()) {
+                rcyImgPDF.visibility = View.GONE
+                total_numbers.visibility = View.GONE
+            } else {
+                rytList.visibility = View.VISIBLE
+                rcyImgPDF.visibility = View.VISIBLE
+
+                val fileList = data.file_path
+                val totalFiles = fileList.size
+
+                val adapter = EventFilePathAdapter(fileList, context, Constant.isShimmerViewDisable)
+                rcyImgPDF.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rcyImgPDF.adapter = adapter
+
+                if (totalFiles > 3) {
+                    total_numbers.text = "+${totalFiles - 3}"
+                    total_numbers.visibility = View.VISIBLE
                 } else {
-                    rytList.visibility = View.VISIBLE
-                    rcyImgPDF.visibility = View.VISIBLE
-                    val fileList = data.file_path
-                    val totalFiles = fileList.size
-                    val adapter =
-                        EventFilePathAdapter(fileList, context, Constant.isShimmerViewDisable)
-                    rcyImgPDF.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    rcyImgPDF.adapter = adapter
-                    if (totalFiles > 3) {
-                        total_numbers.text = "+${totalFiles - 3}"
-                        total_numbers.visibility = View.VISIBLE
-                    } else {
-                        total_numbers.visibility = View.GONE
-                    }
+                    total_numbers.visibility = View.GONE
                 }
+            }
+        }
+
+        private fun openPreview(data: SchoolEventItem) {
+            val convertedList = data.file_path.map {
+                GetFilePathDetails(type = it.type, url = it.url)
+            }
+
+            val isHomeWorkData = FilePreview(
+                id = "",
+                title = data.title,
+                description = data.description,
+                subjectName = "",
+                sentBy = "",
+                thumbnail = data.thumbnail,
+                isUnread = true,
+                isCompleted = true,
+                isMenuType = Constant.M_SCHOOL_CLASS_EVENTS,
+                fileList = convertedList,
+            )
+
+            val intent = Intent(context, ChildHomeWork::class.java)
+            intent.putExtra("isPreViewData", isHomeWorkData)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            context.startActivity(intent)
+        }
+
+        private fun setupPreviewListeners(data: SchoolEventItem) {
+            header.setOnClickListener {
+                openPreview(data)
+            }
+            rcyImgPDF.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    val child = rv.findChildViewUnder(e.x, e.y)
+                    if (child != null && e.action == MotionEvent.ACTION_UP) {
+                        openPreview(data)
+                    }
+                    return false
+                }
+            })
         }
     }
 }
+
+
+
+

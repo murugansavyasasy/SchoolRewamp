@@ -13,14 +13,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cltDateSelection"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/hundred"
-            android:background="@drawable/bottom_right_left_radious"
+            android:layout_height="@dimen/eighty"
+            android:background="@color/PrimaryColor"
             app:layout_constraintTop_toTopOf="parent">
-            
+
             <ImageView
                 android:id="@+id/imgBack"
-                android:layout_width="@dimen/thirty_five"
-                android:layout_height="@dimen/thirty_five"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/twenty_five"
                 android:src="@drawable/arrow_left_white"
@@ -33,11 +33,10 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
                 android:text="Sathish"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty"
+                app:layout_constraintBottom_toBottomOf="@+id/imgBack"
                 app:layout_constraintStart_toEndOf="@+id/imgBack"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -48,7 +47,6 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
                 android:text="XII - A"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
@@ -109,11 +107,10 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
-            android:text="@string/certificate_request"
-            android:textSize="@dimen/eighteen_sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/request_for_certificate"
+            android:textSize="@dimen/twenty"
+            app:layout_constraintStart_toStartOf="@+id/rytRequestTap"
             app:layout_constraintTop_toBottomOf="@+id/cltDateSelection" />
 
         <RelativeLayout
@@ -133,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
                 android:text="@string/select_certificate"
                 />
 
@@ -162,9 +159,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lnrSpinnner"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginTop="@dimen/five"
                 android:text="@string/select_urgency_level"
-                 />
+                />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -194,7 +191,7 @@
 
                     <TextView
                         android:id="@+id/rb_not_urgent"
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -223,7 +220,7 @@
 
                     <TextView
                         android:id="@+id/rb_urgent"
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -244,7 +241,7 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/reason"
-               />
+                />
 
             <EditText
                 android:id="@+id/txtReason"
@@ -256,10 +253,9 @@
                 android:layout_marginEnd="@dimen/ten"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:background="@drawable/text_bg"
-                android:gravity="top"
                 android:hint="Enter your reason here...."
                 android:padding="@dimen/ten"
-                 />
+                />
 
             <Button
                 android:id="@+id/btnSendCertificateRequest"
@@ -268,7 +264,7 @@
                 android:layout_height="@dimen/fourty"
                 android:layout_below="@+id/txtReason"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/twenty"
                 android:layout_marginBottom="@dimen/twele"
                 android:background="@drawable/bg_orange"
                 android:gravity="center"
@@ -283,12 +279,11 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
             android:text="Certificate History"
             android:textColor="@color/black"
-            android:textSize="@dimen/eighteen_sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/twenty"
+            app:layout_constraintStart_toStartOf="@+id/rytRequestTap"
             app:layout_constraintTop_toBottomOf="@+id/rytRequestTap" />
 
 

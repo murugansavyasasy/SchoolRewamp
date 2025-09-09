@@ -50,9 +50,6 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
-        binding.btnCreate.setOnClickListener(this)
-        binding.btnHistory.setOnClickListener(this)
-
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
@@ -75,7 +72,31 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             }
         }
 
+
         loadlpAllClassdata("allclass")
+
+        binding.lnrTabOneName.setOnClickListener {
+            binding.lnrTabOneName.isEnabled = false
+            binding.lnrTabTwoName.isEnabled = true
+            binding.line1.setBackgroundResource(R.color.iconBlue)
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.line2.setBackgroundResource(R.color.athens_gray)
+            binding.txtSearchMenu1.text.clear()
+            loadlpAllClassdata("allclass")
+        }
+
+        binding.lnrTabTwoName.setOnClickListener {
+            binding.lnrTabOneName.isEnabled = true
+            binding.lnrTabTwoName.isEnabled = false
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.line2.setBackgroundResource(R.color.iconBlue)
+            binding.line1.setBackgroundResource(R.color.athens_gray)
+            binding.txtSearchMenu1.text.clear()
+            loadlpAllClassdata("myclass")
+
+        }
 
 
         binding.txtSearchMenu1.addTextChangedListener(object : TextWatcher {
@@ -100,14 +121,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     }
 
     private fun loadlpAllClassdata(requestType: String) {
-        if (requestType == "allclass") {
-            binding.btnCreate.isEnabled = false
-            binding.btnHistory.isEnabled = true
-        }
-        if (requestType == "myclass") {
-            binding.btnHistory.isEnabled = false
-            binding.btnCreate.isEnabled = true
-        }
+
         currentRequestType = requestType
         lessonplanAdapter =
             LessonPlanPicChartAdapter(null, this, this, Constant.isShimmerViewShow, requestType)
@@ -137,25 +151,6 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.btnCreate -> {
-                binding.txtSearchMenu1.text.clear()
-                binding.btnCreate.setTextColor(Color.BLACK)
-                binding.btnCreate.background =
-                    ContextCompat.getDrawable(this, R.drawable.white_radious)
-                binding.btnHistory.setTextColor(Color.BLACK)
-                binding.btnHistory.setBackgroundResource(R.drawable.bg_light_blue)
-                loadlpAllClassdata("allclass")
-            }
-
-            R.id.btnHistory -> {
-                binding.txtSearchMenu1.text.clear()
-                binding.btnHistory.setTextColor(Color.BLACK)
-                binding.btnHistory.background =
-                    ContextCompat.getDrawable(this, R.drawable.white_radious)
-                binding.btnCreate.setTextColor(Color.BLACK)
-                binding.btnCreate.setBackgroundResource(R.drawable.bg_light_blue)
-                loadlpAllClassdata("myclass")
-            }
 
             R.id.imgBack -> onBackPressed()
         }

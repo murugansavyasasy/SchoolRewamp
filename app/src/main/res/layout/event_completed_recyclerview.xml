@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
 
-
     <LinearLayout
         android:id="@+id/linear_layout5"
         android:layout_width="match_parent"
@@ -52,7 +51,7 @@
 
         <TextView
             android:id="@+id/eventdesc"
-            style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
@@ -62,8 +61,6 @@
             android:text="Festival 10:00 AM -17/07"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp" />
-
-
         <LinearLayout
             android:id="@+id/datelinear_layout1"
             android:layout_width="wrap_content"
@@ -90,7 +87,6 @@
                 android:textSize="@dimen/fifteen_sp" />
 
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/location_linearlayout1"
             android:layout_width="wrap_content"

@@ -45,7 +45,12 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
+import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
@@ -189,6 +194,7 @@ object Constant {
     var isParentMenuName = ""
 
     var isSchoolMenuName = ""
+    var isSchoolMenuCount =-1
 
 
 //    var isForward = false
@@ -201,6 +207,22 @@ object Constant {
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null
     var isAbsenteesReportDataSending: ClassWise? = null
+
+    var isParentDashBoardData: List<DashboardData>? = null
+    var isSchoolDashBoardData: List<DashboardData>? = null
+
+    var isParentContactDetails: ContactDetails? = null
+    var isParentMenuDetails: List<MenuDetail>? = null
+    var isParentMenuCountDetails: ArrayList<MenuCountDetail>? = null
+    var FrequentParentlyUsedMenuItems: List<MenuDetail>? = null
+    var isParentAdItem: List<AdItem>? = null
+
+    var isSchoolContactDetails: ContactDetails? = null
+    var isSchoolMenuDetails: List<MenuDetail>? = null
+    var isSchoolMenuCountDetails: ArrayList<MenuCountDetail>? = null
+    var FrequentSchoollyUsedMenuItems: List<MenuDetail>? = null
+    var isSchoolAdItem: List<AdItem>? = null
+
 
     var secondHalf = "SH"
     var firstHalf = "FH"
@@ -374,6 +396,7 @@ object Constant {
     var upload = "upload"
     var view = "view"
     var attachment = "Attachment"
+    var ATTACHMENT_ = "ATTACHMENT"
     var unlisted = "unlisted"
     var download = "download"
     var privacy = "privacy"
@@ -694,6 +717,57 @@ object Constant {
             else -> outputFormat.format(inputDate)
         }
     }
+
+    //"dd-MM-yyyy" to "dd MMM yyyy"
+
+    fun isFormatDate(dateStr: String): String {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+
+        val inputDate = inputFormat.parse(dateStr) ?: return dateStr
+
+        val calendar = Calendar.getInstance()
+
+        // Today
+        val today = Calendar.getInstance()
+
+        // Yesterday
+        val yesterday = Calendar.getInstance()
+        yesterday.add(Calendar.DAY_OF_YEAR, -1)
+
+        return when {
+            isSameDay(calendar = today, date = inputDate) -> "Today"
+            isSameDay(calendar = yesterday, date = inputDate) -> "Yesterday"
+            else -> outputFormat.format(inputDate)
+        }
+    }
+
+    fun getNameInitials(fullName: String): String {
+        val prefixes = listOf("dr", "mr", "ms", "mrs", "miss")
+
+        val parts = fullName
+            .trim()
+            .split("[\\s.]+".toRegex()) // split by space or dot
+            .filter { part ->
+                part.isNotEmpty() && !prefixes.contains(part.lowercase())
+            }
+
+        return when {
+            parts.isEmpty() -> ""
+            parts.size == 1 -> {
+                // Only one word → just first letter
+                parts[0].first().uppercaseChar().toString()
+            }
+            else -> {
+                val first = parts.first().first().uppercaseChar()
+                val last = parts.last().last().uppercaseChar()
+                "$first$last"
+            }
+        }
+    }
+
+
+
 
     private fun isSameDay(calendar: Calendar, date: Date): Boolean {
         val cal = Calendar.getInstance()
@@ -1345,8 +1419,10 @@ object Constant {
         val month = SimpleDateFormat(MMMM, Locale.getDefault()).format(date) // "April"
         val day = calendar.get(Calendar.DAY_OF_MONTH) // 29
         val dayOfWeek = SimpleDateFormat(EEEE, Locale.getDefault()).format(date) // "Tuesday"
+        val shortDay = dayOfWeek.take(3) // First 3 characters
 
-        return Triple(month, day, dayOfWeek)
+
+        return Triple(month, day, shortDay)
     }
 
     fun getDeviceName(): String {

@@ -23,7 +23,7 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_toEndOf="@+id/imgReadUnRead"
         android:layout_marginTop="@dimen/fifteen"
-        android:src="@drawable/calendar"></ImageView>
+        android:src="@drawable/calendar_black"></ImageView>
 
     <TextView
         android:id="@+id/lblDate"

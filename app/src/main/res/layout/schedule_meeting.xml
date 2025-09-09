@@ -24,7 +24,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:textStyle="bold"
-                android:drawableStart="@drawable/calendar"
+                android:drawableStart="@drawable/calendar_black"
                 android:textSize="@dimen/twenty_sp"
                 android:drawablePadding="@dimen/ten"
                 android:textColor="@color/black"

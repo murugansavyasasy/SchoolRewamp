@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
@@ -131,55 +132,24 @@ class NoticeBoardAdapter(
         private val remaindertag: TextView = itemView.findViewById(R.id.remaindertag)
         private val header: CardView = itemView.findViewById(R.id.header)
 
-        @SuppressLint("ClickableViewAccessibility", "SuspiciousIndentation")
+        @SuppressLint("SetTextI18n")
         fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
-
 
             lblTitleImage.text = noticeData.title
             lblContentImage.text = noticeData.description
+
             val dateTime = noticeData.created_on
             val parts = dateTime.split(" ")
             val date = parts.getOrNull(0) ?: ""
-            val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
+            val time = (parts.getOrNull(1) ?: "") + " " + (parts.getOrNull(2) ?: "")
             lblDateImage.text = Constant.convertDateTimeFormat(date)
             lblTimeImage.text = time
+
             loadingBar.visibility = View.GONE
 
-            val hasIframe = !noticeData.iframe.isNullOrEmpty()
             val hasFiles = !noticeData.file_path.isNullOrEmpty()
-
-
-
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.INVISIBLE
             total_numbers.visibility = View.INVISIBLE
-
-            header.setOnClickListener {
-
-                val convertedList = noticeData.file_path.map {
-                    GetFilePathDetails(
-                        type = it.type,
-                        url = it.url,
-                    )
-                }
-
-                val isHomeWorkData = FilePreview(
-                    id = "",
-                    title = noticeData.title,
-                    description = noticeData.description,
-                    subjectName = "",
-                    sentBy = "",
-                    thumbnail = "",
-                    isUnread = true,
-                    isCompleted = true,
-                    isMenuType = Constant.M_NOTICEBOARD,
-                    fileList = convertedList,
-                )
-
-                val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                context.startActivity(intent)
-            }
 
             if (hasFiles) {
                 val fileList = noticeData.file_path!!
@@ -195,43 +165,78 @@ class NoticeBoardAdapter(
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 rcyImgPDF.adapter =
                     FilePathAdapter(visibleList, fileList, context, Constant.isShimmerViewDisable)
+
+                setupPreviewListeners(noticeData)
             }
 
-            remaindertag.setOnClickListener {
-                val context = it.context
-                val calendar = Calendar.getInstance()
+            remaindertag.setOnClickListener { showReminderPicker(context) }
+        }
 
+        private fun openPreview(noticeData: Notice) {
+            val convertedList = noticeData.file_path?.map {
+                GetFilePathDetails(type = it.type, url = it.url)
+            } ?: emptyList()
 
-                DatePickerDialog(
-                    context,
-                    { _, year, month, day ->
-                        calendar.set(Calendar.YEAR, year)
-                        calendar.set(Calendar.MONTH, month)
-                        calendar.set(Calendar.DAY_OF_MONTH, day)
+            val preview = FilePreview(
+                id = "",
+                title = noticeData.title,
+                description = noticeData.description,
+                subjectName = "",
+                sentBy = "",
+                thumbnail = "",
+                isUnread = true,
+                isCompleted = true,
+                isMenuType = Constant.M_NOTICEBOARD,
+                fileList = convertedList
+            )
 
-                        TimePickerDialog(
-                            context,
-                            { _, hour, minute ->
-                                calendar.set(Calendar.HOUR_OF_DAY, hour)
-                                calendar.set(Calendar.MINUTE, minute)
-                                calendar.set(Calendar.SECOND, 0)
+            val intent = Intent(context, ChildHomeWork::class.java)
+            intent.putExtra("isPreViewData", preview)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            context.startActivity(intent)
+        }
 
-                                scheduleNotification(context, calendar.timeInMillis)
-
-                            },
-                            calendar.get(Calendar.HOUR_OF_DAY),
-                            calendar.get(Calendar.MINUTE),
-                            false
-                        ).show()
-
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                ).show()
+        private fun setupPreviewListeners(noticeData: Notice) {
+            header.setOnClickListener {
+                openPreview(noticeData)
             }
+            rcyImgPDF.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    val child = rv.findChildViewUnder(e.x, e.y)
+                    if (child != null && e.action == MotionEvent.ACTION_UP) {
+                        openPreview(noticeData)
+                    }
+                    return false
+                }
+            })
+        }
 
+        private fun showReminderPicker(context: Context) {
+            val calendar = Calendar.getInstance()
+            DatePickerDialog(
+                context,
+                { _, year, month, day ->
+                    calendar.set(Calendar.YEAR, year)
+                    calendar.set(Calendar.MONTH, month)
+                    calendar.set(Calendar.DAY_OF_MONTH, day)
 
+                    TimePickerDialog(
+                        context,
+                        { _, hour, minute ->
+                            calendar.set(Calendar.HOUR_OF_DAY, hour)
+                            calendar.set(Calendar.MINUTE, minute)
+                            calendar.set(Calendar.SECOND, 0)
+                            scheduleNotification(context, calendar.timeInMillis)
+                        },
+                        calendar.get(Calendar.HOUR_OF_DAY),
+                        calendar.get(Calendar.MINUTE),
+                        false
+                    ).show()
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
 
 

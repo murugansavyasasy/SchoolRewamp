@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cltDateSelection"
@@ -12,7 +12,6 @@
         android:layout_height="@dimen/two_hundred_thirty"
         android:background="@drawable/bottom_right_left_radious"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <ImageView
             android:id="@+id/imgBack"
@@ -22,36 +21,7 @@
             android:layout_marginTop="@dimen/twenty_five"
             android:src="@drawable/arrow_left_white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </ImageView>
-
-        <TextView
-            android:id="@+id/lblName"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:text="Sathish"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twenty_five"
-            app:layout_constraintStart_toEndOf="@+id/imgBack"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/lblSection"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:text="XII - A"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"
-            app:layout_constraintStart_toEndOf="@+id/imgBack"
-            app:layout_constraintTop_toBottomOf="@+id/lblName">
-        </TextView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imgSearch"
@@ -63,16 +33,47 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/lblName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Sathish"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen"
+            app:layout_constraintStart_toEndOf="@id/imgBack"
+            app:layout_constraintEnd_toStartOf="@id/imgSearch"
+            app:layout_constraintTop_toTopOf="@id/imgBack"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten" />
+
+        <TextView
+            android:id="@+id/lblSection"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="XII - A"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintStart_toStartOf="@id/lblName"
+            app:layout_constraintEnd_toEndOf="@id/lblName"
+            app:layout_constraintTop_toBottomOf="@id/lblName" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCalendar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/one_twenty"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:padding="@dimen/eight"
-            app:layout_constraintTop_toBottomOf="@+id/lblSection" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgBack" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,43 +88,50 @@
         android:textColor="@color/black"
         android:textSize="@dimen/twenty"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cltDateSelection">
-    </TextView>
+        app:layout_constraintTop_toBottomOf="@id/cltDateSelection" />
 
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lytSearch"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:background="@drawable/rect_shadow_white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/fifteen"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/twenty"
+        android:background="@drawable/rect_grey"
+        android:padding="@dimen/seven"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/lblHomeWork">
+        app:layout_constraintTop_toBottomOf="@id/lblHomeWork"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:src="@drawable/search_icon">
-
-        </ImageView>
+            android:id="@+id/iconSearch"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <EditText
             android:id="@+id/edtSearch"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:inputType="text"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
             android:imeOptions="actionSearch"
-            android:background="@null"
-            android:hint="@string/search_dot">
+            android:inputType="text"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintStart_toEndOf="@id/iconSearch"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/ten" />
 
-        </EditText>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -134,31 +142,29 @@
         android:layout_marginEnd="@dimen/ten"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lytSearch" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lytSearch"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cytNoDataFound"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifty"
-        app:layout_constraintTop_toBottomOf="@+id/lytSearch"
-
-        >
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/lytSearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/imgNoDataFound"
             android:layout_width="match_parent"
             android:layout_height="@dimen/two_hundred"
             android:src="@drawable/no_data_found"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </ImageView>
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             style="@style/CustomTextStylePoppinsBold"
@@ -168,9 +174,8 @@
             android:gravity="center"
             android:text="@string/no_homework_found"
             android:textSize="@dimen/thirteen_sp"
-            app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound">
+            app:layout_constraintTop_toBottomOf="@id/imgNoDataFound" />
 
-        </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/imgCalender"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
+            android:layout_width="@dimen/twenty_eight"
+            android:layout_height="@dimen/twenty_five"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/five"
             android:src="@drawable/calendar_circle_fill">
@@ -30,19 +30,19 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:layout_toEndOf="@+id/imgCalender"
-            android:text="01 Apr, 2025"
-            >
+            android:textSize="@dimen/thirteen_sp"
+            android:text="01 Apr, 2025">
 
         </TextView>
 
         <TextView
             android:id="@+id/lblCertificateTitle"
-            style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsMedium1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgCalender"
             android:layout_marginStart="@dimen/five"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
             android:maxLines="1"
             android:text="Study Certificate"
             android:textSize="@dimen/fifteen_sp">
@@ -60,6 +60,7 @@
             android:layout_marginBottom="@dimen/ten"
             android:layout_toStartOf="@+id/imgNext"
             android:maxLines="1"
+            android:visibility="gone"
             android:text="Study Certificate"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
@@ -68,11 +69,10 @@
 
         <ImageView
             android:id="@+id/imgNext"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
             android:layout_below="@+id/lblCertificateTitle"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
             android:src="@drawable/arrow_right_circle">
 

@@ -25,7 +25,7 @@ class EventCategoryAdapter(
     private val TYPE_DATA = 1
     private val TYPE_STATIC = 2
 
-    private var selectedPosition = 0 // "All" selected by default
+    private var selectedPosition = 0
 
     override fun getItemViewType(position: Int): Int {
         return when {

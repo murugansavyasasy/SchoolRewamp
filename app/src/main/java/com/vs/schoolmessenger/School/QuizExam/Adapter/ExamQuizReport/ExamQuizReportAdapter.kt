@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -52,6 +53,7 @@ class ExamQuizReportAdapter(
         return if (isLoading) 20 else itemList?.size ?: 0
     }
 
+
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblQuizDescription: TextView = itemView.findViewById(R.id.lblQuizDescription)
@@ -92,12 +94,50 @@ class ExamQuizReportAdapter(
 
 
             lblAdd.setOnClickListener{
-                val intent = Intent(context, AddQuestion::class.java)
-                intent.putExtra("quiz_Id", data.id)
-                intent.putExtra("quiz_Title", data.title)
-                intent.putExtra("limitQuestion", data.no_of_questions)
-                intent.putExtra("subjectID", data.subject_id)
-                context.startActivity(intent)
+                if (data.submitted_count <= 0) {
+                    val intent = Intent(context, AddQuestion::class.java)
+                    intent.putExtra("quiz_Id", data.id)
+                    intent.putExtra("quiz_Title", data.title)
+                    intent.putExtra("limitQuestion", data.no_of_questions)
+                    intent.putExtra("submittedCount", data.submitted_count)
+                    intent.putExtra("subjectID", data.subject_id)
+                    context.startActivity(intent)
+                }
+                else{
+                    val studentText = if (data.submitted_count == 1) {
+                        context.getString(R.string.student_)
+                    } else {
+                        context.getString(R.string.students)
+                    }
+
+                    val isMessage = context.getString(R.string.this_question_has_already_been_submitted_by) +
+                            " ${data.submitted_count} $studentText " +
+                            context.getString(R.string.do_you_want_to_update_it)
+
+                    val activity = context as? Activity
+                    activity?.let {
+                        Constant.showSendConfirmationDialog(
+                            it,
+                            context.getString(R.string.confirmation),
+                            context.getString(R.string.permission_ok),
+                            context.getString(R.string.Cancel),
+                            "",
+                            isMessage
+                        ) { confirmed ->
+                            if (confirmed) {
+                                Constant.showLoading(it)
+                                val intent = Intent(context, AddQuestion::class.java)
+                                intent.putExtra("quiz_Id", data.id)
+                                intent.putExtra("quiz_Title", data.title)
+                                intent.putExtra("limitQuestion", data.no_of_questions)
+                                intent.putExtra("submittedCount", data.submitted_count)
+                                intent.putExtra("subjectID", data.subject_id)
+                                context.startActivity(intent)
+                            }
+                        }
+                    }
+                }
+
             }
             lblSubmitted.setOnClickListener{
 //                val intent1 = Intent(context, QuizExam::class.java)

@@ -288,7 +288,6 @@ class MySubmissionAdapter(
 
         }
 
-
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

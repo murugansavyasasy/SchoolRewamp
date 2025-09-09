@@ -118,29 +118,99 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/lblUpComingMeeting"
-        style="@style/CustomTextStylePoppinsBold"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/cltDateSelection"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/ten"
-        android:text="UpComing Meeting"
-        android:textColor="@color/black"
-        android:textSize="@dimen/fifteen_sp">
+        android:layout_height="match_parent">
 
-    </TextView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcySlots"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblUpComingMeeting"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:id="@+id/lblToday"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:text="Today Meeting"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyToday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblToday"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/lblUpComing"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rcyToday"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:text="UpComing Meeting"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyUpcoming"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblUpComing"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/lblComplete"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rcyUpcoming"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:text="Complete Meeting"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyComplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblComplete"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 
 
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamListData
-import com.vs.schoolmessenger.Parent.QuizExam.QuizExam
+import com.vs.schoolmessenger.Parent.QuizExam.SubmittedQuizPreview
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -100,7 +100,8 @@ class CompletedQuizAdapter(
 
             // Open QuizExam on click
             val openExam = View.OnClickListener {
-                val intent = Intent(context, QuizExam::class.java)
+                val intent = Intent(context, SubmittedQuizPreview::class.java)
+                intent.putExtra("isRSSubmittedQuizId", data.quiz_id)
                 context.startActivity(intent)
             }
             rlaAttendance.setOnClickListener(openExam)

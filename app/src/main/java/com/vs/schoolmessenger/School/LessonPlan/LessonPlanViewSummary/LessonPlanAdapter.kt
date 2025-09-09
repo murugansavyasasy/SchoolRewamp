@@ -94,12 +94,12 @@ class LessonPlanAdapter(
 
             when (item.lesson_plan_status) {
                 3 -> {
-                    status_text1label.setImageResource(R.drawable.correcticonsvg)
+                    status_text1label.setImageResource(R.drawable.completed_icon_3)
 
                 }
 
                 2 -> {
-                    status_text1label.setImageResource(R.drawable.refreshicon)
+                    status_text1label.setImageResource(R.drawable.progress_icon_2)
 
                 }
 

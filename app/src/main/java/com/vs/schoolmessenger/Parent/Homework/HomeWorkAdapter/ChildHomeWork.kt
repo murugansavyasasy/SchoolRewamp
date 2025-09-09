@@ -97,7 +97,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
         binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
         binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener {
@@ -110,18 +110,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         isAccessToken = childDetails?.access_token
 
 
-
-        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblParentToolBar.text = childDetails!!.name
-        binding.toolbarLayout.lblSchoolName.text = childDetails!!.school_name
-
         binding.lbltitle.text = data!!.title
         binding.lblDescription.text = data!!.description
 
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
+            binding.lblPostedDate.visibility = View.GONE
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
-            binding.createdDate.text = (data?.created_date ?: "")
+            binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
             Log.d("createddatevalue", data?.created_date ?: "")
             binding.category.text = data?.category ?: ""
             binding.subject.text = data?.assignmentsubject ?: ""
@@ -136,15 +132,16 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 )
             )
         } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == true) {
+            binding.lblPostedDate.visibility = View.GONE
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
-            binding.createdDate.text = (data?.created_date ?: "")
+            binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
             binding.category.text = data?.category ?: ""
             binding.subject.text = data?.assignmentsubject ?: ""
             binding.fragmentContainer.visibility = View.GONE
 
         } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
-            binding.toolbarLayout.imgBack.visibility = View.GONE
+            binding.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.txtTitle.text = data!!.title
@@ -152,7 +149,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.txtDescription.text = data!!.description
             binding.childlsrwlayoutxml.lsrwgragmentcontainer.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.txtDate.text =
-                Constant.convertDateFormat(data?.created_date ?: "")
+                Constant.convertToReadableDate(data?.created_date ?: "")
             Log.d("FragmentCheck", "Loading LsrwStudentListFragment with ID: ${data!!.id}")
             subloadFragment(
                 LsrwStudentListFragment.newInstance(
@@ -288,7 +285,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (data!!.isMenuType == Constant.M_HOMEWORK) {
             isHomeworkId = data!!.id
             isHomeWorkDate = intent.getStringExtra("isHomeWorkDate")
-            Log.d("isHomeWorkDate2", isHomeWorkDate.toString())
+//            Log.d("isHomeWorkDate2", isHomeWorkDate.toString())
 
             if (data!!.subjectName != "") {
                 binding.lblSubjectName.visibility = View.VISIBLE
@@ -307,6 +304,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.lblPostedDate.text =
                     "Posted on : " + Constant.formatDateSmart(isHomeWorkDate.toString())
             }
+
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
                 binding.lblPostedBy.text = "Posted by : " + data!!.sentBy

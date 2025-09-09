@@ -34,11 +34,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
 
         // Toolbar setup
         binding.imgBack.setOnClickListener(this)
-        binding.lblParentToolBar.text = getString(R.string.AttendanceReport)
-
-        binding.rytSearch.visibility = View.VISIBLE
-
-
+        binding.lblParentToolBar.text = getString(R.string.leave_history)
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.lblStudentName.text = isChildDetails?.name ?: ""
         binding.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -91,7 +87,6 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
 
                 if (!dataList.isNullOrEmpty()) {
 
-                    binding.rytSearch.visibility = View.VISIBLE
                     binding.rcyAttendanceReport.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
 
@@ -107,13 +102,11 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                 } else {
 
                     binding.rcyAttendanceReport.visibility = View.GONE
-                    binding.rytSearch.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
                 }
             } else {
 
                 binding.rcyAttendanceReport.visibility = View.GONE
-                binding.rytSearch.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
             }
         }

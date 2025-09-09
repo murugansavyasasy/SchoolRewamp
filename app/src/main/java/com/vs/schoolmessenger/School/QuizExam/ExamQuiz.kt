@@ -154,6 +154,11 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             binding.edtQuestion.requestFocus()
             return
         }
+        if (no_of_questions=="0") {
+            binding.edtQuestion.error = getString(R.string.no_of_question_greater_than_zero)
+            binding.edtQuestion.requestFocus()
+            return
+        }
         val SaveCreateExamQuizDetails =
             SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked)
         Log.d("SaveCreateExamQuizDetails", SaveCreateExamQuizDetails.toString())
