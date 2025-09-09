@@ -197,7 +197,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 Log.d("FinalListSize", adapter.getUpdatedList().size.toString())
                 if (Constant.isQuestionLimit > 0) {
                     adapter.addItem()
-//                    Constant.isQuestionLimit -= 1
                 }
                 else {
                     Constant.showErrorAlert(
@@ -281,11 +280,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 //                    Constant.isQuestionLimit -= totalToSelect
                     adapter2.markAsImported(allQuestions)
                     cbSelect.isChecked = true
-                    Log.d("isComing","BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
 
                 } else {
 
-                    Log.d("isComing","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
                     // Over limit → error
                     Constant.showErrorAlert(
                         this,
@@ -499,9 +496,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         if (isUpdatedQBankQuestions>0){
 
             val textQuestion = if (isUpdatedQBankQuestions == 1) {
-                getString(R.string.question_)  // e.g. "question"
+                getString(R.string.question_)
             } else {
-                getString(R.string.questions) // e.g. "questions"
+                getString(R.string.questions)
             }
 
             val isMessage = "${getString(R.string.You_have_modified)} $isUpdatedQBankQuestions $textQuestion ${getString(R.string.from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank)}"

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -32,11 +33,11 @@ class CompletedQuizAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.quiz_upcominglist)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.reciver_quiz_upcoming_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.quiz_upcominglist, parent, false)
+                .inflate(R.layout.reciver_quiz_upcoming_item, parent, false)
             DataViewHolder(view)
         }
     }
@@ -57,54 +58,41 @@ class CompletedQuizAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblQuizDescription: TextView = itemView.findViewById(R.id.lblQuizDescription)
-        private val subjectvalue: TextView = itemView.findViewById(R.id.subjectvalue)
-        private val lblPostedBy: TextView = itemView.findViewById(R.id.lblPostedBy)
+        private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
+        private val lblMaxMarks: TextView = itemView.findViewById(R.id.lblMaxMarks)
+        private val lblPostedby: TextView = itemView.findViewById(R.id.lblPostedby)
         private val lblCreatedOn: TextView = itemView.findViewById(R.id.lblCreatedOn)
-        private val imgItem: ImageView = itemView.findViewById(R.id.imgItem)
-        private val rlaAttendance: RelativeLayout = itemView.findViewById(R.id.rlaAttendance)
-        private val lblAttendanceStatus: TextView = itemView.findViewById(R.id.lblAttendanceStatus)
-        private val playnow2: ImageView = itemView.findViewById(R.id.playnow2)
-        private val next: ImageView = itemView.findViewById(R.id.next)
-        private val lblSubmitttedOn: TextView = itemView.findViewById(R.id.lblSubmitttedOn)
+        private val lnrEntireQuiz: LinearLayout = itemView.findViewById(R.id.lnrEntireQuiz)
+        private val lblLevel: TextView = itemView.findViewById(R.id.lblLevel)
+        private val lblQuestion: TextView = itemView.findViewById(R.id.lblQuestion)
+        private val lblPlayNow: TextView = itemView.findViewById(R.id.lblPlayNow)
+        private val lblnext: ImageView = itemView.findViewById(R.id.lblnext)
 
         fun bind(data: GetQuizExamListData, position: Int) {
-            playnow2.visibility=View.GONE
-            next.visibility=View.VISIBLE
-            lblSubmitttedOn.visibility=View.VISIBLE
             lblTitle.text = data.title
             lblQuizDescription.text = data.description
-            subjectvalue.text = data.subject
-            lblAttendanceStatus.text = "Level " + data.level.toString()
-            lblPostedBy.text = "Posted By: " + data.SentBy
-            lblCreatedOn.text = "Created On " + Constant.convertDateFormatType(data.created_on)
-            lblSubmitttedOn.text = "Submitted On " + Constant.convertDateFormatType(data.submitted_on)
+            lblSubject.text = data.subject
+            lblMaxMarks.text = data.max_mark.toString()
+            lblLevel.text = data.level.toString()
+            lblQuestion.text = data.no_of_questions.toString()
+            lblPostedby.text = "Posted by: ${data.SentBy}"
+            lblCreatedOn.text = "Created on ${Constant.convertDateFormatType(data.created_on)}"
 
-            val images = listOf(
-                R.drawable.quiz1,
-                R.drawable.quiz2,
-                R.drawable.quiz3
-            )
-
-            // pick drawable based on position
-            val imageRes = if (position < 3) {
-                images[position]
-            } else {
-                images[position % 3]   // loop 0,1,2
+            lblPlayNow.visibility = View.GONE
+            lblnext.visibility = View.VISIBLE
+            (lblPostedby.layoutParams as RelativeLayout.LayoutParams).apply {
+                addRule(RelativeLayout.START_OF, R.id.lblnext)
             }
-
-
-            Glide.with(itemView.context)
-                .load(imageRes)
-                .placeholder(R.drawable.image_placeholder)
-                .into(imgItem)
 
             // Open QuizExam on click
             val openExam = View.OnClickListener {
                 val intent = Intent(context, SubmittedQuizPreview::class.java)
                 intent.putExtra("isRSSubmittedQuizId", data.quiz_id)
+                intent.putExtra("isRSSubmittedSubject", data.subject)
+                intent.putExtra("isRSSubmittedSubmittedOn", data.submitted_on)
                 context.startActivity(intent)
             }
-            rlaAttendance.setOnClickListener(openExam)
+            lnrEntireQuiz.setOnClickListener(openExam)
         }
     }
 

@@ -1,7 +1,10 @@
 package com.vs.schoolmessenger.Parent.QuizExam
 
+import android.animation.ObjectAnimator
 import android.util.Log
 import android.view.View
+import android.view.animation.DecelerateInterpolator
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +29,8 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
     var isQuizID=""
+    var isSubmittedOn=""
+    var isSubject=""
 
 
     override fun getViewBinding(): SubmittedQuizPreviewBinding {
@@ -51,6 +56,8 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
         isQuizID = intent.getStringExtra("isRSSubmittedQuizId").toString()
+        isSubject = intent.getStringExtra("isRSSubmittedSubject").toString()
+        isSubmittedOn = intent.getStringExtra("isRSSubmittedSubmittedOn").toString()
 
         appViewModel?.isGetMySubmission?.observe(this) { response ->
 
@@ -79,9 +86,39 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
     }
 
     private fun isLoadSubmittedQuiz(data: List<GetMySubmissionData>) {
-        binding.txtCount.text=data.get(0).right_answer
-        binding.txtCount1.text=data.get(0).wrong_answer
-        binding.txtCount2.text=data.get(0).un_answer
+
+        val rightAnswer = data.get(0).right_answer
+        val wrongAnswer =  data.get(0).wrong_answer
+        val unAnswer =  data.get(0).un_answer
+
+        val rightParts = rightAnswer.split("/")
+        val wrongParts = wrongAnswer.split("/")
+        val unParts = unAnswer.split("/")
+
+        val right = rightParts[0].toInt()
+        val total = rightParts[1].toInt() // denominator is same for all
+
+        val wrong = wrongParts[0].toInt()
+        val un_answer = unParts[0].toInt()
+
+        val percentage = if (total > 0) {
+            (right * 100) / total
+        } else 0
+
+
+        binding.lblCompletedAt.text="Completed at : ${Constant.convertDateFormatType(isSubmittedOn)}"
+        binding.lblSubjectTitle.text=isSubject
+        animateProgress(binding.quizPercent,percentage, 100)
+
+        binding.lblCorrectAnswer.text=rightAnswer
+        if (total==right){
+            binding.lblWrongAnswer.text=wrong.toString()
+            binding.lblNotAnswer.text=un_answer.toString()
+        }
+        else{
+            binding.lblWrongAnswer.text=wrongAnswer
+            binding.lblNotAnswer.text=unAnswer
+        }
 
         if (data.get(0).quiz_details.size>0){
             binding.lytList.visibility = View.GONE
@@ -120,6 +157,18 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         }
     }
 
+    fun animateProgress(progressBar: ProgressBar, current: Int, max: Int, duration: Long = 1000) {
+        val safeMax = if (max <= 0) 1 else max           // Avoid divide by zero
+        val safeCurrent = current.coerceIn(0, safeMax)   // Clamp current within valid range
+
+        val percentage = ((safeCurrent.toFloat() / safeMax) * 100).toInt()
+
+        progressBar.max = 100
+        val animator = ObjectAnimator.ofInt(progressBar, "progress", 0, percentage)
+        animator.duration = duration
+        animator.interpolator = DecelerateInterpolator()
+        animator.start()
+    }
 
 
 }

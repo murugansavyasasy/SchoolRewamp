@@ -54,6 +54,7 @@
             </LinearLayout>
 
             <ScrollView
+                android:scrollbars="none"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <LinearLayout
@@ -66,31 +67,42 @@
                     android:orientation="vertical"
                     android:id="@+id/lnrQuiz"
                     android:layout_height="wrap_content">
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/ten"
-                        android:layout_marginTop="@dimen/twenty"
-                        android:max="100"
-                        android:progress="0"
-                        android:progressDrawable="@android:drawable/progress_horizontal"
-                        android:progressTint="@color/azure_radiance" />
+
+                    <TextView
+                        android:id="@+id/lblQuestion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity=""
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:text="@string/question"
+                        android:textSize="@dimen/twele_sp"
+                        />
 
                     <TextView
                         android:id="@+id/questionCounter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity=""
-                        android:padding="@dimen/eight"
                         android:text="0/0"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_marginStart="@dimen/three"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sixteen_sp"
-                        android:textStyle="bold" />
+                        />
 
-
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ten"
+                        android:layout_marginTop="@dimen/five"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@android:drawable/progress_horizontal"
+                        android:progressTint="@color/azure_radiance" />
 
                     <LinearLayout
+                        android:layout_marginTop="@dimen/ten"
                         android:orientation="vertical"
                         android:background="@drawable/white_bg_card"
                         android:layout_width="match_parent"

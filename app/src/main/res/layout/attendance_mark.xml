@@ -541,7 +541,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@+id/radioButtonSecondHalf"
-                            android:text="@string/half_day"
+                            android:text="@string/second_half"
                             style="@style/CustomTextStylePoppinsMedium"
                             ></TextView>
                     </RelativeLayout>

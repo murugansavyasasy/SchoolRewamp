@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_shadow_white">
+
+        <RelativeLayout
+            android:paddingBottom="@dimen/ten"
+
+            android:id="@+id/rlaHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblSubmitStatus"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/rounded_top_left_bottom_end_primary"
+                android:elevation="@dimen/ten"
+                android:gravity="center"
+                android:padding="@dimen/five"
+                android:text="Submitted"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:gravity="start"
+                android:layout_toStartOf="@+id/lblSubmitStatus"
+                android:layout_alignParentStart="true"
+                android:text="SaranRaj"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomTextStylePoppinsBold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblSubmitttedOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:gravity="start"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/lblName"
+                android:text="Submitted on 16,Oct 2025 06:32 PM"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone"
+                style="@style/CustomTextStylePoppinsMedium">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/lblStandardSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:gravity="start"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_below="@+id/lblSubmitttedOn"
+                android:text="@string/online_quiz"
+                android:textSize="@dimen/thirteen_sp"
+                >
+
+            </TextView>
+
+            <RelativeLayout
+                android:layout_below="@+id/lblStandardSection"
+                android:layout_width="match_parent"
+                android:id="@+id/rlaSubmittedOn"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginTop="@dimen/five"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/lblSubmittedOn"
+                    android:layout_width="wrap_content"
+                    android:text="@string/submitted_on"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:layout_toEndOf="@+id/lblSubmittedOn"
+                    android:id="@+id/tvSubmittedOn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:text="16,Oct 2025 06:32 PM"
+                    >
+
+                </TextView>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

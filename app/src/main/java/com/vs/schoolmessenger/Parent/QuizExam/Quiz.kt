@@ -50,17 +50,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
         binding.toolbarLayout.lblParentToolBar.text =getString(R.string.quiz)
 
-
         isFetchUpcomingEQList()
-
-//        isUpcoming()
-//        setupRecyclerView()
-
-//        loadHardcodedData()
-
-//        setupRecyclerView1()
-//        loadHardcodedData1()
-
 
         appViewModel?.isQuizExamList?.observe(this) { response ->
             if(response != null){
@@ -152,24 +142,6 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.txtNoData.text = errorMessage
     }
 
-
-
-
-
-//    private fun setupRecyclerView1() {
-//        adapter1 = QuizCompletedAdapter(quizcompletedlist, object : QuizCompletedListener {
-//            override fun onItemClick(
-//                data: QuizCompletedData,
-//                holder: QuizCompletedAdapter.DataViewHolder
-//            ) {
-//                // Handle item click
-//            }
-//        }, this, false)
-//
-//        binding.rcCompleted.layoutManager = LinearLayoutManager(this)
-//        binding.rcCompleted.adapter = adapter1
-//    }
-
     private fun isFetchUpcomingEQList() {
         adapter = QuizUpcomingAdapter(null,this, false)
         binding.rcUpcoming.layoutManager = LinearLayoutManager(this)
@@ -186,98 +158,15 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         appViewModel?.isQuizExamList(isAccessToken ?: "",isType,isStatusType)
     }
 
-//    private fun loadHardcodedData1() {
-//        quizcompletedlist.apply {
-//            add(
-//                QuizCompletedData(
-//                    "What is the capital of Germany",
-//                    "Berlin",
-//                    "Munich",
-//                    "Frankurt",
-//                    "Hamburg"
-//                )
-//            )
-//            add(
-//                QuizCompletedData(
-//                    "What is the capital of Germany",
-//                    "Berlin ",
-//                    "Munich",
-//                    "Frankurt",
-//                    "Hamburg"
-//                )
-//            )
-//            add(
-//                QuizCompletedData(
-//                    "What is the capital of Germany",
-//                    "Berlin",
-//                    "Munich",
-//                    "1Frankurt",
-//                    "Hamburg"
-//                )
-//            )
-//            add(
-//                QuizCompletedData(
-//                    "What is the capital of Germany",
-//                    "Berlin ",
-//                    "Munich",
-//                    "Frankurt",
-//                    "Hamburg"
-//                )
-//            )
-//            add(
-//                QuizCompletedData(
-//                    "What is the capital of Germany",
-//                    "Berlin",
-//                    "Munich",
-//                    "Frankurt",
-//                    "Hamburg"
-//                )
-//            )
-//        }
-//        adapter1.notifyDataSetChanged()
-//    }
-
 
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-//            R.id.lblLeftSideBar ->{
-//
-//                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
-//                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-//                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.white_radious)
-//                binding.recyclerView.visibility = View.VISIBLE
-//                isCompleted()
-//            }
-//            R.id.lblRightSideBar ->{
-//                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
-//                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-//                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
-//                binding.recyclerView.visibility = View.VISIBLE
-//                isUpcoming()
-//            }
-
 
             R.id.imgBack -> onBackPressed()
 
         }
     }
 
-//    fun isUpcoming() {
-//
-//        binding.correctanswers.visibility = View.GONE
-//        binding.incorrectanswers.visibility = View.GONE
-//        binding.recyclerView1.visibility = View.GONE
-//        binding.recyclerView.visibility = View.VISIBLE
-//    }
-//
-//    fun isCompleted() {
-//
-//        binding.correctanswers.visibility = View.VISIBLE
-//        binding.incorrectanswers.visibility = View.VISIBLE
-//        binding.recyclerView1.visibility = View.VISIBLE
-//        binding.recyclerView.visibility = View.GONE
-//
-//
-//    }
+
 }

@@ -766,6 +766,10 @@
     <string name="your_answer">Your Answer</string>
     <string name="from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank">from the Question Bank. Do you want to update the Question Bank?</string>
     <string name="You_have_modified">You have modified</string>
+    <string name="second_half">Second Half</string>
+    <string name="not_submitted"> Not Submitted</string>
+    <string name="submitted_on">Submitted On :</string>
+    <string name="quiz_submission_list">Quiz Submission List</string>
 
 
 </resources>
