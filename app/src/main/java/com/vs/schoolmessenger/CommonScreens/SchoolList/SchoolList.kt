@@ -34,6 +34,7 @@ import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
+import com.vs.schoolmessenger.School.LSRW.LsrwMain
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
@@ -55,6 +56,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_DAILY_COLLECTION
 import com.vs.schoolmessenger.Utils.Constant.M_FEE_PENDING_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_LESSON_PLAN
+import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_MARK_YOUR_ATTENDANCE
 import com.vs.schoolmessenger.Utils.Constant.M_MESSAGES_FROM_MANAGEMENT
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
@@ -124,7 +126,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_LESSON_PLAN || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == Constant.M_PTM || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM|| SELECTED_SCHOOL_MENU == Constant.M_MESSAGES_FROM_MANAGEMENT) {
+        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_LESSON_PLAN || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION|| SELECTED_SCHOOL_MENU == M_LSRW || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == Constant.M_PTM || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM|| SELECTED_SCHOOL_MENU == Constant.M_MESSAGES_FROM_MANAGEMENT) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
 
@@ -348,6 +350,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION) {
                 val intent = Intent(this, DailyCollection::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }else if (SELECTED_SCHOOL_MENU == M_LSRW) {
+                val intent = Intent(this, LsrwMain::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_STUDENT_REPORT) {

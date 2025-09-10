@@ -23,7 +23,8 @@ class StudentSubmittedListRemarkAdapter(
     private var context: Context,
     private var filePathDetails: List<GetFilePathDetails>,
     var isSubjectName: String,
-    var selectedSchoolMenu: Int
+    var selectedSchoolMenu: Int,
+    var isParentAssignment: Boolean,
 ) : RecyclerView.Adapter<StudentSubmittedListRemarkAdapter.DataViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
@@ -39,7 +40,8 @@ class StudentSubmittedListRemarkAdapter(
             context,
             filePathDetails,
             isSubjectName,
-            selectedSchoolMenu
+            selectedSchoolMenu,
+            isParentAssignment,
         )
     }
 
@@ -54,7 +56,8 @@ class StudentSubmittedListRemarkAdapter(
             context: Context,
             fullList: List<GetFilePathDetails>,
             isSubjectName: String,
-            selectedSchoolMenu: Int
+            selectedSchoolMenu: Int,
+            isParentAssignment: Boolean
         ) {
             binding.relativelayoutHeader.visibility = View.VISIBLE
             binding.imgView.visibility = View.VISIBLE

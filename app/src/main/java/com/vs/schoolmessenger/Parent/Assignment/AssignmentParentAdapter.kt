@@ -136,8 +136,8 @@ class AssignmentParentAdapter(
             lblTitle.text = data.title
             lblCategory.text = data.category
             lblsubject.text = data.subject
-            lblassigned.text = "Assigned : " + Constant.formatCreatedDate(data.created_date)
-            lbldeadline.text = "Deadline" + Constant.formatCreatedDate(data.end_date)
+            lblassigned.text = "${context.getString(R.string.Assigned)} : ${Constant.formatCreatedDate(data.created_date)}"
+            lbldeadline.text = "${context.getString(R.string.Deadline)} ${Constant.formatCreatedDate(data.end_date)}"
 
             if(data.submitted_count == 0) {
                 lblSubmitted.visibility = View.GONE
@@ -179,7 +179,7 @@ class AssignmentParentAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -212,7 +212,7 @@ class AssignmentParentAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -248,7 +248,7 @@ class AssignmentParentAdapter(
                         )
 
                         val intent = Intent(context, ChildHomeWork::class.java)
-                        intent.putExtra("isPreViewData", isHomeWorkData)
+                        intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         context.startActivity(intent)
                     }
@@ -258,16 +258,16 @@ class AssignmentParentAdapter(
 
             lblSubmitted.setOnClickListener {
                 val intent = Intent(context, Mysubmission::class.java)
-                intent.putExtra("assignment_id", data.header_id)
-                intent.putExtra("title", data.title)
-                intent.putExtra("subject", data.subject)
+                intent.putExtra(Constant.assignment_id, data.header_id)
+                intent.putExtra(Constant.title_, data.title)
+                intent.putExtra(Constant.subject, data.subject)
                 context.startActivity(intent)
             }
             lblNotSubmitted.setOnClickListener {
                 val intent = Intent(context, MyAssignmentSubmit::class.java)
-                intent.putExtra("assignment_id", data.header_id)
-                intent.putExtra("title", data.title)
-                intent.putExtra("subject", data.subject)
+                intent.putExtra(Constant.assignment_id, data.header_id)
+                intent.putExtra(Constant.title_, data.title)
+                intent.putExtra(Constant.subject, data.subject)
                 context.startActivity(intent)
             }
 

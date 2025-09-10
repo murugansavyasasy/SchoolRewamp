@@ -104,6 +104,7 @@ class SchoolMenuAdapter(
                 Constant.M_ATTACHMENTS -> imgMenu.setImageResource(R.drawable.attachement_icon)
                 Constant.M_ONLINE_MEETING -> imgMenu.setImageResource(R.drawable.online_meeting_icon)
                 Constant.M_DAILY_COLLECTION -> imgMenu.setImageResource(R.drawable.collect)
+                Constant.M_LSRW -> imgMenu.setImageResource(R.drawable.lsrw_icon)
                 Constant.M_STUDENT_REPORT -> imgMenu.setImageResource(R.drawable.student_report)
                 Constant.M_LESSON_PLAN -> imgMenu.setImageResource(R.drawable.lessonplanimage)
                 Constant.M_FEEDBACK -> imgMenu.setImageResource(R.drawable.fee_pending_reports)

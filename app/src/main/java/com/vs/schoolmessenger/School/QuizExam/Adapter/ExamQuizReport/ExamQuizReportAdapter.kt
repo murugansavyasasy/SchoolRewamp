@@ -126,7 +126,6 @@ class ExamQuizReportAdapter(
                             isMessage
                         ) { confirmed ->
                             if (confirmed) {
-                                Constant.showLoading(it)
                                 val intent = Intent(context, AddQuestion::class.java)
                                 intent.putExtra("quiz_Id", data.id)
                                 intent.putExtra("quiz_Title", data.title)

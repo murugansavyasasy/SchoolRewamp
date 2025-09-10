@@ -50,7 +50,7 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
         binding.toolbarLayout.lblSchoolName.text = childDetails!!.school_name
 
         val adapter = StudentSubmittedListRemarkAdapter(
-            this, data!!.fileList, data!!.subjectName!!, SELECTED_SCHOOL_MENU
+            this, data!!.fileList, data!!.subjectName!!, SELECTED_SCHOOL_MENU, false
         )
         binding.rcChildHW.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)

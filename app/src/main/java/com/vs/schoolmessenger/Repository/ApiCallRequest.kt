@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Repository
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import java.text.SimpleDateFormat
+import java.util.Locale
 import com.vs.schoolmessenger.Utils.Constant
 
 object ApiCallRequest {
@@ -319,9 +321,12 @@ object ApiCallRequest {
     }
 
 
+
+
     fun isSendLsrwSkill(
         targetType: Int,
         iframe: String,
+        thumbnail: String,
         file_size: String,
         selectedIds: MutableList<String>,
         title: String,
@@ -332,33 +337,42 @@ object ApiCallRequest {
     ): JsonObject {
 
         val jsonObject = JsonObject()
-        val sectionArray = JsonArray()
-        selectedIds.forEach { sectionArray.add(it) }
-        val filePathArray = JsonArray()
 
-        for (i in Constant.isAwsUploadedFiles.indices) {
-            val isSelectedObject = JsonObject()
-            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
-            isSelectedObject.addProperty(
-                APIKeyNames.type,
-                Constant.isAwsUploadedFiles[i].isFileType.toString()
-            )
-            filePathArray.add(isSelectedObject)
+        val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+        val outputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+        val formattedDate = try {
+            val date = inputFormat.parse(submission_date)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            submission_date
         }
 
-        jsonObject.add(APIKeyNames.target_code, sectionArray)
-        jsonObject.addProperty(APIKeyNames.target_type, targetType)
+
+        val sectionArray = JsonArray()
+        selectedIds.forEach { sectionArray.add(it) }
+
+
+        val filePathArray = JsonArray()
+        for (file in Constant.isAwsUploadedFiles) {
+            val fileObj = JsonObject()
+            fileObj.addProperty(APIKeyNames.url, file.isFileUrl)
+            fileObj.addProperty(APIKeyNames.type, file.isFileType.toString())
+            filePathArray.add(fileObj)
+        }
+
+
         jsonObject.addProperty(APIKeyNames.title, title)
-        jsonObject.addProperty("activity_type", isLsrwType)
-        jsonObject.addProperty(APIKeyNames.iframe, iframe)
-        jsonObject.addProperty(APIKeyNames.file_size, file_size)
         jsonObject.addProperty(APIKeyNames.description, description)
-        jsonObject.addProperty(APIKeyNames.submission_date, submission_date)
-        jsonObject.addProperty(
-            APIKeyNames.subject_id,
-            subjectId.toString()
-        )
+        jsonObject.addProperty(APIKeyNames.subject_id, subjectId.toString())
+        jsonObject.addProperty(APIKeyNames.target_type, targetType)
+        jsonObject.add(APIKeyNames.target_code, sectionArray)
+        jsonObject.addProperty("activity_type", isLsrwType)
+        jsonObject.addProperty(APIKeyNames.submission_date, formattedDate)
+        jsonObject.addProperty(APIKeyNames.iframe, iframe)
+        jsonObject.addProperty(APIKeyNames.thumbnail, thumbnail)
+        jsonObject.addProperty(APIKeyNames.file_size, file_size)
         jsonObject.add(APIKeyNames.file_path, filePathArray)
+
         return jsonObject
     }
 

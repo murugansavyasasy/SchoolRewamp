@@ -45,7 +45,7 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        assignmentId = intent.getStringExtra("assignment_id")
+        assignmentId = intent.getStringExtra(Constant.assignment_id)
         type = intent.getStringExtra("type")
         submittedCount = intent.getIntExtra("submitted_count", 0)
         totalCount = intent.getIntExtra("Total_Count", 0)
