@@ -105,18 +105,26 @@
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/time_icon" />
+                    android:src="@drawable/ic_star" />
 
             </RelativeLayout>
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/lblSchoolName"
+
+                <LinearLayout
                     android:layout_marginStart="@dimen/ten"
                     android:layout_toEndOf="@+id/rytInstitute"
+                    android:layout_centerVertical="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/lblInsti"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
                     android:text="Institution"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/thirteen_sp" />
@@ -124,14 +132,15 @@
                 <TextView
                     android:id="@+id/lblSchoolName"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
                     android:text="App rewamp testing school"
                     android:textColor="@color/PrimaryColor"
                     android:textSize="@dimen/thirteen_sp" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -156,18 +165,23 @@
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/user_icon" />
+                    android:src="@drawable/ic_user_icon" />
 
             </RelativeLayout>
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/lblStaffName"
+                <LinearLayout
                     android:layout_marginStart="@dimen/ten"
                     android:layout_toEndOf="@+id/rytStaffIcon"
+                    android:layout_centerVertical="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
                     android:text="Staff Name"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/thirteen_sp" />
@@ -175,14 +189,15 @@
                 <TextView
                     android:id="@+id/lblStaffName"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
                     android:text="MURUGAN N"
                     android:textColor="@color/PrimaryColor"
                     android:textSize="@dimen/thirteen_sp" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -206,18 +221,23 @@
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/time_icon" />
+                    android:src="@drawable/ic_checked_icon" />
 
             </RelativeLayout>
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/lblDesignation"
+                <LinearLayout
                     android:layout_marginStart="@dimen/ten"
                     android:layout_toEndOf="@+id/rytDesignationIcon"
+                    android:layout_centerVertical="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
                     android:text="Designation"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/thirteen_sp" />
@@ -225,14 +245,15 @@
                 <TextView
                     android:id="@+id/lblDesignation"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
                     android:text="Principal"
                     android:textColor="@color/PrimaryColor"
                     android:textSize="@dimen/thirteen_sp" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 

@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/five"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/rect_white_light_radious">
+    android:background="@drawable/rect_white_light_radious"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/rlaHeader"
@@ -15,80 +15,78 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardSchoolLogo"
+        <CheckBox
+            android:id="@+id/chMultipleSchool"
+            style="@style/CustomCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:visibility="visible">
+
+        </CheckBox>
+
+
+        <RelativeLayout
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/chMultipleSchool"
+            android:id="@+id/rytSchoolImage"
             android:layout_width="@dimen/sixty"
-            android:visibility="gone"
             android:layout_height="@dimen/sixty"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/ten"
-            app:cardCornerRadius="@dimen/thirty"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="@drawable/rect_grey">
 
             <ImageView
                 android:id="@+id/imgSchoolLogo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/schoolad" />
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_centerInParent="true"
+                android:src="@drawable/school_sample" />
 
-        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/fifteen"
             android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
             android:layout_toStartOf="@+id/imgSingleSchoolArrow"
-            android:layout_toEndOf="@+id/chMultipleSchool"
-
-            >
+            android:layout_toEndOf="@+id/rytSchoolImage">
 
             <TextView
                 android:id="@+id/lblSchoolName"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Savyasasy software solution pvt ltd.,"
-               style="@style/CustomTextStylePoppinsBold" />
+                android:text="Savyasasy software solution pvt ltd.," />
 
             <TextView
                 android:id="@+id/lblSchoolRegionalName"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/ten"
                 android:layout_below="@+id/lblSchoolName"
-                android:visibility="gone"
+                android:layout_marginEnd="@dimen/ten"
                 android:text=""
-                style="@style/CustomTextStylePoppinsMedium"
-                >
+                android:visibility="gone">
 
             </TextView>
 
             <TextView
                 android:id="@+id/lblSchoolAddress"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSchoolRegionalName"
                 android:layout_marginTop="@dimen/five"
                 android:text="Chennai, Nungambakkam"
                 android:textColor="@color/grey"
-                android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsRegular" />
+                android:textSize="@dimen/thirteen_sp" />
 
 
         </RelativeLayout>
 
-            <CheckBox
-                android:id="@+id/chMultipleSchool"
-                android:layout_width="wrap_content"
-                android:visibility="visible"
-                style="@style/CustomCheckBox"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content">
-
-            </CheckBox>
 
         <ImageView
             android:id="@+id/imgSingleSchoolArrow"
@@ -100,5 +98,5 @@
             android:visibility="gone" />
 
 
-        </RelativeLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

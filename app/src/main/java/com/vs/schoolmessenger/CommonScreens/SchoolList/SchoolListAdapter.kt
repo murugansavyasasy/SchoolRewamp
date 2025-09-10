@@ -90,9 +90,12 @@ class SchoolListAdapter(
             }
             lblSchoolAddress.text = data.school_address
 
-            Glide.with(context)
-                .load(data.school_logo)
-                .into(imgSchoolLogo)
+            if(data.school_logo != "") {
+                Glide.with(context)
+                    .load(data.school_logo)
+                    .error(R.drawable.school_sample)
+                    .into(imgSchoolLogo)
+            }
 
             rlaHeader.setOnClickListener {
                 if (!isMultipleSchool) {

@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -124,30 +125,39 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
             access_token = staffDetails!!.access_token
             binding.lblSchoolName.text = staffDetails!!.school_name
-            binding.username.text = userDetails!!.staff_details[0].role
+            binding.username.text = userDetails!!.staff_details[0].name
+            binding.lblRole.text = userDetails!!.staff_details[0].role
+            binding.profileImage.visibility = View.VISIBLE
 
-            if (staffDetails!!.school_name_regional != "") {
-//                binding.lblSchoolRegionalName.visibility = View.GONE
-//                binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
-            } else {
-                //   binding.lblSchoolRegionalName.visibility = View.GONE
+            if(userDetails!!.staff_details[0].school_logo != "") {
+                Glide.with(this)
+                    .load(userDetails!!.staff_details[0].school_logo)
+                    .error(R.drawable.school_sample)
+                    .into(binding.profileImage)
             }
+
 
         } else {
             access_token = userDetails!!.staff_details[0].access_token
             if (userDetails!!.staff_details.size > 1) {
-                binding.username.text = userDetails!!.role_name
+                binding.username.text = userDetails!!.staff_details[0].name
+                binding.lblRole.text = userDetails!!.staff_details[0].role
                 binding.lblSchoolName.visibility = View.GONE
+                binding.profileImage.visibility = View.GONE
             } else {
                 binding.lblSchoolName.visibility = View.VISIBLE
+                binding.profileImage.visibility = View.VISIBLE
                 binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
-                binding.username.text = userDetails!!.staff_details[0].role
-                if (staffDetails!!.school_name_regional != "") {
-//                    binding.lblSchoolRegionalName.visibility = View.GONE
-//                    binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
-                } else {
-//                    binding.lblSchoolRegionalName.visibility = View.GONE
+                binding.username.text = userDetails!!.staff_details[0].name
+                binding.lblRole.text = userDetails!!.staff_details[0].role
+
+                if(userDetails!!.staff_details[0].school_logo != "") {
+                    Glide.with(this)
+                        .load(userDetails!!.staff_details[0].school_logo)
+                        .error(R.drawable.school_sample)
+                        .into(binding.profileImage)
                 }
+
             }
         }
 
