@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -101,6 +102,12 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         dateFormat.format(currentDate)
         binding.username.text = childDetails!!.name
         binding.lblSchoolName.text = childDetails!!.school_name
+        if(childDetails!!.school_logo_url != "") {
+            Glide.with(this)
+                .load(childDetails!!.school_logo_url)
+                .error(R.drawable.school_sample)
+                .into(binding.profileImage)
+        }
         Constant.checkBiometricSupport(requireActivity())
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
