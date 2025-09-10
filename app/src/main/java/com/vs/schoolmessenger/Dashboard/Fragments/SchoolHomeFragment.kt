@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 
 import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
+import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
@@ -566,8 +567,22 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
-//            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
-            Constant.M_SCHOOL_NEEDS -> LsrwMain::class.java
+            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
+
+            Constant.M_LSRW -> {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    LsrwMain::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        LsrwMain::class.java
+                    }
+                }
+            }
+
+
+
             else -> null
         }
         activityClass?.let {

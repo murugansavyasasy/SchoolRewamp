@@ -1,7 +1,9 @@
 package com.vs.schoolmessenger.School.LSRW.Adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,17 +54,55 @@ class LsRwDashboardAdapter(
             txtCount.text = item.value
             txtTitle.text = item.title
             txtSubTitle.text = item.subtitle
+
+            if (item.title == "Active Tasks") {
+                imgIcon.setImageResource(R.drawable.exampadsvg)
+            } else if (item.title == "Avg. Performance") {
+                imgIcon.setImageResource(R.drawable.graphsvgformat)
+            } else if (item.title == "Completed Tasks"){
+                imgIcon.setImageResource(R.drawable.correcticonsvg)
+            } else {
+                imgIcon.setImageResource(R.drawable.questionmark)
+            }
+
             root_linearlayout.setOnClickListener {
 
+
+
                 if (item.title == "Active Tasks") {
-                    onDashboardClick(item)
+                    if (item.value == "0") {
+                        showNoDataPopup("No Active Tasks Available")
+                    } else {
+                        onDashboardClick(item)
+                    }
+
                 } else if (item.title == "Avg. Performance") {
-                    val intent = Intent(context, LsrwReportAndStatics::class.java)
-                    context.startActivity(intent)
-                } else if (item.title == "Completed Tasks" ) {
-                    onCompletedClick(item)
+                    if (item.value == "0") {
+                        showNoDataPopup("No Performance Data Available")
+                    } else {
+                        val intent = Intent(context, LsrwReportAndStatics::class.java)
+                        context.startActivity(intent)
+                    }
+
+                } else if (item.title == "Completed Tasks") {
+                    if (item.value == "0") {
+                        showNoDataPopup("No Completed Tasks Available")
+                    } else {
+                        onCompletedClick(item)
+                    }
                 }
             }
         }
+
+        private fun showNoDataPopup(message: String) {
+            AlertDialog.Builder(context)
+                .setTitle("Info")
+                .setMessage(message)
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+
     }
 }
