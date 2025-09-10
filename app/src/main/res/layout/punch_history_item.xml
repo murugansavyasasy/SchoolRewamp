@@ -26,7 +26,7 @@
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_centerInParent="true"
-                android:src="@drawable/mobile" />
+                android:src="@drawable/ic_mobile_icon" />
 
         </RelativeLayout>
 
@@ -67,7 +67,7 @@
                         android:id="@+id/imgVerified"
                         android:layout_width="@dimen/fifteen"
                         android:layout_height="@dimen/fifteen"
-                        android:src="@drawable/time_icon" />
+                        android:src="@drawable/ic_time_icon_white" />
 
                     <TextView
                         android:layout_centerVertical="true"

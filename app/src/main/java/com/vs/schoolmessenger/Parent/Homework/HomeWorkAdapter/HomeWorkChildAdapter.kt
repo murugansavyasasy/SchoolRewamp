@@ -37,7 +37,8 @@ class HomeWorkChildAdapter(
     private var context: Context,
     private var filePathDetails: List<GetFilePathDetails>,
     var isSubjectName: String,
-    var selectedSchoolMenu: Int
+    var selectedSchoolMenu: Int,
+    var isParentAssignment: Boolean
 ) : RecyclerView.Adapter<HomeWorkChildAdapter.DataViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
@@ -53,7 +54,8 @@ class HomeWorkChildAdapter(
             context,
             filePathDetails,
             isSubjectName,
-            selectedSchoolMenu
+            selectedSchoolMenu,
+            isParentAssignment
         )
     }
 
@@ -71,7 +73,8 @@ class HomeWorkChildAdapter(
             context: Context,
             fullList: List<GetFilePathDetails>,
             isSubjectName: String,
-            selectedSchoolMenu: Int
+            selectedSchoolMenu: Int,
+            isParentAssignment: Boolean
         ) {
 
             binding.relativelayoutHeader.visibility = View.VISIBLE
@@ -162,7 +165,7 @@ class HomeWorkChildAdapter(
                         binding.progressBar.visibility = View.GONE
                     }
                 }
-            } else if (selectedSchoolMenu == M_LSRW) {
+            } else if (selectedSchoolMenu == M_LSRW && isParentAssignment == true) {
                 Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
                 binding.imgView.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
@@ -243,7 +246,7 @@ class HomeWorkChildAdapter(
                         binding.progressBar.visibility = View.GONE
                     }
                 }
-            } else if (selectedSchoolMenu == M_SCHOOL_NEEDS) {
+            } else if (selectedSchoolMenu == M_LSRW && isParentAssignment == false) {
                 Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
                 binding.imgView.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE

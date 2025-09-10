@@ -109,7 +109,8 @@ class LSRWAdapter(
                     assignmentid = item.activity_type,
                     created_date = item.submitted_date,
                     category = "",
-                    assignmentsubject = ""
+                    assignmentsubject = "",
+                    isParentAssignment = true
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -142,7 +143,7 @@ class LSRWAdapter(
                     created_date = item.submitted_date,
                     category = "",
                     assignmentsubject = "",
-                    isParentAssignment = false
+                    isParentAssignment = true
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -180,7 +181,7 @@ class LSRWAdapter(
                                 created_date = item.submitted_date,
                                 category = "",
                                 assignmentsubject = "",
-                                isParentAssignment = false
+                                isParentAssignment = true
                             )
 
                             val intent = Intent(context, ChildHomeWork::class.java)

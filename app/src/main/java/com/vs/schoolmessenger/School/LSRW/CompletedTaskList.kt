@@ -1,15 +1,17 @@
 package com.vs.schoolmessenger.School.LSRW
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwCompletedAdapter
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
 import com.vs.schoolmessenger.databinding.ActivityTasklistBinding
 import com.vs.schoolmessenger.databinding.CompletedTasklistBinding
 
-class CompletedTaskList : AppCompatActivity() {
+class CompletedTaskList : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: CompletedTasklistBinding
     private lateinit var adapter: LsrwCompletedAdapter
@@ -18,7 +20,8 @@ class CompletedTaskList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = CompletedTasklistBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = "Completed Task"
         val taskList =
             intent.getParcelableArrayListExtra<LsrwTask>("COMPLETED_TASK_LIST") ?: arrayListOf()
 
@@ -30,5 +33,12 @@ class CompletedTaskList : AppCompatActivity() {
             noDataText = binding.noDataFound
         )
         binding.rcycompletedtaskrcy.adapter = adapter
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.imgBack -> onBackPressed()
+
+        }
     }
 }
