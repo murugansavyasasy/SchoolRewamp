@@ -96,10 +96,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         userDetails = SharedPreference.getUserDetails(requireActivity())
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
         access_token = childDetails!!.access_token
-
-        val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
-        dateFormat.format(currentDate)
         binding.username.text = childDetails!!.name
         binding.lblSchoolName.text = childDetails!!.school_name
         if(childDetails!!.school_logo_url != "") {
@@ -120,9 +116,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             setupRecyclerView()
 
         }
-
         binding.imgBurgerMenu.setOnClickListener(this)
-
         binding.imgBurgerMenu.setOnClickListener {
             (activity as? ParentDashboard)?.openDrawer()
         }
@@ -275,9 +269,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         super.onResume()
         Log.d("Loading", "Dashboard Data is Loading")
         // isDashBoardData()
-        Log.d("Loading", "Dashboard Data is Refreshed")
-
-
     }
 
     override fun onPause() {
@@ -292,7 +283,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_HOMEWORK -> Intent(requireActivity(), HomeWork::class.java)
             Constant.M_NOTICEBOARD -> Intent(requireActivity(), NoticeBoard::class.java)
             Constant.M_PARENT_CLASS_EVENTS -> Intent(requireActivity(), Event::class.java)
-//            Constant.M_ATTENDANCE_REPORT -> Intent(requireActivity(), Attendance::class.java)
             Constant.M_ATTENDANCE_REPORT -> Intent(requireActivity(), Attendance::class.java)
             Constant.M_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
             Constant.M_FEE_DETAILS -> Intent(requireActivity(), FeeDetails::class.java)
@@ -301,15 +291,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 InteractionWithStaff::class.java
             )
-//            15 -> Intent(requireActivity(), OnlineTextBook::class.java)
             Constant.M_ASSIGNMENT -> Intent(requireActivity(), Assignment::class.java)
-//            19 -> Intent(requireActivity(), Attachments::class.java)
             Constant.M_QUIZ_EXAM -> Intent(requireActivity(), Quiz::class.java)
             Constant.M_LSRW -> Intent(requireActivity(), LSRW::class.java)
             Constant.M_CLASS_TIME_TABLE -> Intent(requireActivity(), TimeTable::class.java)
             Constant.M_PARENT_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
-
-//            24 -> Intent(requireActivity(), UserProfile::class.java)
             Constant.M_CERTIFICATE_REQUEST -> Intent(
                 requireActivity(),
                 CertificateRequest::class.java
