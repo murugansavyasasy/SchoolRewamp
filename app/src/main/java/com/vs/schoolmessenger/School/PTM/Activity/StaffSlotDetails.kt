@@ -78,6 +78,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         isLoadClasses(isSlotsDetails.std_sec_details)
     }
 
+
     fun isLoadClasses(slotDetail: List<ClassSection>) {
         isAdapter = ClassesLoadAdapter(slotDetail, this, Constant.isShimmerViewDisable)
         binding.rcyClasses.layoutManager = GridLayoutManager(this, 5)
@@ -92,7 +93,9 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
     }
 
     override fun onClick(v: View?) {
-
+        if (v?.id == binding.toolbarLayout.imgBack.id) {
+            onBackPressed()
+        }
     }
 
     override fun onStaffSlotCancelReOpenClickListener(

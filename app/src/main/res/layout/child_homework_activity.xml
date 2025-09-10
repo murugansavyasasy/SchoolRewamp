@@ -26,6 +26,30 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <TextView
+            android:id="@+id/lblSubjectName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="@dimen/hundred_fifty"
+            android:layout_height="wrap_content"
+            android:text="Sathish"
+            android:textColor="@color/white"
+            android:textSize="@dimen/eighteen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lblPostedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/five"
+            android:text="Posted on : Today"
+           android:textColor="@color/white"
+            android:textSize="@dimen/twenty"
+            app:layout_constraintBottom_toBottomOf="@+id/lblSubjectName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblSubjectName" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -47,41 +71,14 @@
 
 
             <TextView
-                android:id="@+id/lblSubjectName"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
-                android:text="Sathish"
-                android:textSize="@dimen/twenty_five_sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/lblPostedDate"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/lblPostedDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/ten"
-                android:text="Posted on : Today"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/lblSubjectName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/lblSubjectName" />
-
-            <TextView
                 android:id="@+id/lbltitle"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="@dimen/zero"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty"
                 android:text="Mahatma Gandhi: The Peaceful Revolutionary Who Freed a Nation"
-                android:textSize="@dimen/eighteen_sp"
+                android:textSize="@dimen/twenty_three"
                 android:layout_marginTop="@dimen/twenty"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +86,7 @@
 
             <LinearLayout
                 android:id="@+id/linearlayout_container"
-                android:layout_width="@dimen/zero"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
                 android:gravity="center"
@@ -196,7 +193,7 @@
             <TextView
                 android:id="@+id/lblDescription"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="@dimen/zero"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/five"
@@ -249,14 +246,14 @@
 
             <LinearLayout
                 android:id="@+id/attachments_container"
-                android:layout_width="@dimen/zero"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/lblDescription"
                 app:layout_constraintStart_toStartOf="@+id/lblDescription"
                 app:layout_constraintTop_toBottomOf="@id/thumbContainer">
 
@@ -292,12 +289,12 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcChildHW"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="@dimen/five"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
+                app:layout_constraintEnd_toEndOf="@+id/attachments_container"
                 app:layout_constraintStart_toStartOf="@+id/attachments_container"
                 app:layout_constraintTop_toBottomOf="@id/rcSeekBarAndTitle" />
 

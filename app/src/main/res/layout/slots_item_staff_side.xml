@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/ten"
-        android:background="@drawable/bg_light_blue"
+        android:background="@drawable/bg_gradient"
         android:padding="@dimen/ten">
 
         <TextView
@@ -19,11 +19,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/rounded_bg"
+            android:background="@drawable/white_bg_radius"
             android:padding="@dimen/ten"
             android:text="10 MAY 2005"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textSize="@dimen/thirteen_sp">
+        </TextView>
 
         <TextView
             android:id="@+id/lblTime"
@@ -33,11 +34,12 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
             android:layout_toEndOf="@+id/lblDate"
-            android:background="@drawable/rounded_bg"
+            android:background="@drawable/white_bg_radius"
             android:padding="@dimen/ten"
             android:text="12:00 PM - 03:00 PM"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textSize="@dimen/thirteen_sp">
+        </TextView>
 
         <ImageView
             android:id="@+id/imgDot"
@@ -46,36 +48,37 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
-            android:background="@drawable/rounded_bg"
+            android:background="@drawable/rounded_grey_background"
             android:padding="@dimen/ten"
-            android:src="@drawable/threedot"></ImageView>
+            android:src="@drawable/threedot">
+        </ImageView>
 
 
         <TextView
             android:id="@+id/lblTitle"
             style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblDate"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
             android:text="Exam Meeting"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp">
+            android:textSize="@dimen/sixteen">
 
         </TextView>
 
         <TextView
             android:id="@+id/lblMode"
-            style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
             android:text="Mode - Online"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp">
+            android:textSize="@dimen/thirteen">
 
         </TextView>
 
@@ -84,7 +87,7 @@
             android:layout_width="@dimen/fourty"
             android:layout_height="@dimen/fourty"
             android:layout_below="@+id/lblMode"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_marginBottom="@dimen/ten"
             android:background="@drawable/bg_image_background_white_coupon"
             android:scaleType="fitXY"
@@ -98,7 +101,7 @@
             android:layout_height="@dimen/fourty"
             android:layout_below="@+id/lblMode"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_marginBottom="@dimen/ten"
             android:background="@drawable/bg_image_background_white_coupon"
             android:scaleType="fitXY"
@@ -112,7 +115,7 @@
             android:layout_height="@dimen/fourty"
             android:layout_below="@+id/lblMode"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_marginBottom="@dimen/ten"
             android:background="@drawable/bg_image_background_white_coupon"
             android:scaleType="fitXY"
