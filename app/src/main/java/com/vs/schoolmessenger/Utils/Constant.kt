@@ -381,6 +381,19 @@ object Constant {
 
     var isCommonTitle = ""
     var isCommonDescription = ""
+    var assignment_id = "assignment_id"
+    var title_ = "title"
+    var subject = "subject"
+    var file_ = "file"
+    var content_ = "content"
+    var IMG_ = "IMG_"
+    var jpg = ".jpg"
+    var quiz = "quiz"
+    var dd_MM_yyyy_hh_mm_ss_a = "dd-MM-yyyy hh:mm:ss a"
+    var dd_MMM = "dd MMM"
+    var isPreViewData = "isPreViewData"
+    var MMM_ = "MMM"
+    var dd = "dd"
 
     // VIMEO
     var isVimeoToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"

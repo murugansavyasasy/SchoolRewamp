@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/ten">
+    android:layout_marginBottom="@dimen/fifteen">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,10 +12,21 @@
         android:orientation="vertical"
         android:padding="@dimen/ten">
 
+        <TextView
+            android:id="@+id/questionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginTop="@dimen/ten"
+            android:text="@string/question_will_appear_here"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcAttachement"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred"
+            android:layout_height="@dimen/one_fifty"
             android:layout_marginTop="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
 
         <me.relex.circleindicator.CircleIndicator2
@@ -28,26 +39,6 @@
             android:elevation="@dimen/four"
             android:visibility="gone" />
 
-        <!-- Question Text -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            app:cardCornerRadius="@dimen/fifteen">
-
-            <TextView
-                android:id="@+id/questionText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/onahau"
-                android:gravity="center"
-                android:padding="@dimen/sixteen"
-                android:text="@string/question_will_appear_here"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold" />
-        </androidx.cardview.widget.CardView>
-
         <!-- Options -->
         <TextView
             android:id="@+id/option1"
@@ -57,11 +48,10 @@
             android:background="@drawable/quiz_option_bg"
             android:clickable="true"
             android:gravity="center"
-            android:minHeight="@dimen/fourty_nine"
-            android:padding="10dp"
+            android:padding="@dimen/ten"
             android:text="Option 1"
             android:textColor="@color/azure_radiance"
-            android:textSize="16sp" />
+            android:textSize="@dimen/fourteen_sp" />
 
 
         <TextView
@@ -72,11 +62,10 @@
             android:background="@drawable/quiz_option_bg"
             android:clickable="true"
             android:gravity="center"
-            android:minHeight="@dimen/fourty_nine"
             android:padding="@dimen/ten"
             android:text="Option 2"
             android:textColor="@color/azure_radiance"
-            android:textSize="@dimen/sixteen_sp" />
+            android:textSize="@dimen/fourteen_sp" />
 
         <TextView
             android:id="@+id/option3"
@@ -86,11 +75,10 @@
             android:background="@drawable/quiz_option_bg"
             android:clickable="true"
             android:gravity="center"
-            android:minHeight="@dimen/fourty_nine"
             android:padding="@dimen/ten"
             android:text="Option 3"
             android:textColor="@color/azure_radiance"
-            android:textSize="@dimen/sixteen_sp" />
+            android:textSize="@dimen/fourteen_sp" />
 
         <TextView
             android:id="@+id/option4"
@@ -100,11 +88,10 @@
             android:background="@drawable/quiz_option_bg"
             android:clickable="true"
             android:gravity="center"
-            android:minHeight="@dimen/fourty_nine"
             android:padding="@dimen/ten"
             android:text="Option 4"
             android:textColor="@color/azure_radiance"
-            android:textSize="@dimen/sixteen_sp" />
+            android:textSize="@dimen/fourteen_sp" />
 
         <LinearLayout
             android:id="@+id/lnrAnswerDetails"
@@ -127,12 +114,12 @@
 
                     <ImageView
                         android:id="@+id/imgCA"
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
                         android:src="@drawable/correct_answer"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -140,7 +127,7 @@
                         android:layout_toEndOf="@+id/imgCA"
                         android:text="@string/correct_answer1"
                         android:drawablePadding="@dimen/five"
-                        android:textSize="@dimen/fourteen_sp"></TextView>
+                        android:textSize="@dimen/thirteen_sp"></TextView>
 
                 </RelativeLayout>
                 <TextView
@@ -148,7 +135,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/thirty_five"
+                    android:layout_marginStart="@dimen/twenty_five"
                     android:textSize="@dimen/fourteen_sp"></TextView>
             </LinearLayout>
 
@@ -166,21 +153,21 @@
                     <ImageView
                         android:id="@+id/imgYA"
                         android:layout_centerVertical="true"
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
                         android:src="@drawable/checked_icon">
 
                     </ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/your_answer"
                         android:layout_toEndOf="@+id/imgYA"
                         android:drawablePadding="@dimen/five"
-                        android:textSize="@dimen/fourteen_sp">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
                 </RelativeLayout>
@@ -188,9 +175,9 @@
                     android:id="@+id/lblYourResponse"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
-                    android:layout_marginStart="@dimen/thirty_five"
+                    android:layout_marginStart="@dimen/twenty_five"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/fourteen_sp"></TextView>
+                    android:textSize="@dimen/thirteen_sp"></TextView>
             </LinearLayout>
 
         </LinearLayout>
@@ -199,170 +186,3 @@
 
 
 </LinearLayout>
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="wrap_content"-->
-    <!--    android:layout_marginBottom="@dimen/ten"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
-
-    <!--    <LinearLayout-->
-    <!--        android:orientation="vertical"-->
-    <!--        android:background="@drawable/white_bg_card"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:padding="@dimen/ten"-->
-    <!--        android:layout_height="wrap_content">-->
-
-    <!--        <androidx.recyclerview.widget.RecyclerView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:id="@+id/rcAttachement"-->
-    <!--            android:layout_marginTop="@dimen/five"-->
-    <!--            android:layout_height="@dimen/two_hundred">-->
-    <!--        </androidx.recyclerview.widget.RecyclerView>-->
-
-    <!--        <me.relex.circleindicator.CircleIndicator2-->
-    <!--            android:id="@+id/indicator"-->
-    <!--            style="@style/IndicatorStyle"-->
-    <!--            android:layout_marginTop="@dimen/five"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="@dimen/twenty"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:elevation="@dimen/four"-->
-    <!--            android:visibility="gone" />-->
-
-    <!--        &lt;!&ndash; Question Text &ndash;&gt;-->
-    <!--        <androidx.cardview.widget.CardView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            app:cardCornerRadius="@dimen/fifteen">-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/questionText"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:background="@color/onahau"-->
-    <!--                android:padding="@dimen/sixteen"-->
-    <!--                android:text="@string/question_will_appear_here"-->
-    <!--                android:textSize="@dimen/fifteen_sp"-->
-    <!--                android:gravity="center"-->
-    <!--                android:textColor="@color/black"-->
-    <!--                android:textStyle="bold" />-->
-    <!--        </androidx.cardview.widget.CardView>-->
-
-    <!--        &lt;!&ndash; Options &ndash;&gt;-->
-    <!--        <TextView-->
-    <!--            android:id="@+id/option1"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:background="@drawable/quiz_option_bg"-->
-    <!--            android:clickable="true"-->
-    <!--            android:gravity="center"-->
-    <!--            android:minHeight="@dimen/fourty_nine"-->
-    <!--            android:padding="10dp"-->
-    <!--            android:text="Option 1"-->
-    <!--            android:textColor="@color/azure_radiance"-->
-    <!--            android:textSize="16sp" />-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/option2"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:background="@drawable/quiz_option_bg"-->
-    <!--            android:clickable="true"-->
-    <!--            android:gravity="center"-->
-    <!--            android:minHeight="@dimen/fourty_nine"-->
-    <!--            android:padding="@dimen/ten"-->
-    <!--            android:text="Option 2"-->
-    <!--            android:textColor="@color/azure_radiance"-->
-    <!--            android:textSize="@dimen/sixteen_sp" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/option3"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:background="@drawable/quiz_option_bg"-->
-    <!--            android:clickable="true"-->
-    <!--            android:gravity="center"-->
-    <!--            android:minHeight="@dimen/fourty_nine"-->
-    <!--            android:padding="@dimen/ten"-->
-    <!--            android:text="Option 3"-->
-    <!--            android:textColor="@color/azure_radiance"-->
-    <!--            android:textSize="@dimen/sixteen_sp" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/option4"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:background="@drawable/quiz_option_bg"-->
-    <!--            android:clickable="true"-->
-    <!--            android:gravity="center"-->
-    <!--            android:minHeight="@dimen/fourty_nine"-->
-    <!--            android:padding="@dimen/ten"-->
-    <!--            android:text="Option 4"-->
-    <!--            android:textColor="@color/azure_radiance"-->
-    <!--            android:textSize="@dimen/sixteen_sp" />-->
-
-    <!--        <LinearLayout-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:orientation="horizontal"-->
-    <!--            android:weightSum="2"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content">-->
-    <!--            <RelativeLayout-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content">-->
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/imgCA"-->
-    <!--                    android:layout_width="@dimen/thirty"-->
-    <!--                    android:src="@drawable/correct_answer"-->
-    <!--                    android:layout_height="@dimen/thirty">-->
-    <!--                </ImageView>-->
-    <!--                <TextView-->
-    <!--                    android:layout_toEndOf="@+id/imgCA"-->
-    <!--                    android:layout_centerVertical="true"-->
-    <!--                    android:id="@+id/lblCorrectanswer"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_marginStart="@dimen/five"-->
-    <!--                    android:textSize="@dimen/sixteen_sp"-->
-    <!--                    style="@style/CustomTextStylePoppinsBold"-->
-    <!--                    android:drawablePadding="@dimen/five"-->
-    <!--                    android:layout_height="wrap_content">-->
-    <!--                </TextView>-->
-    <!--            </RelativeLayout>-->
-    <!--            <RelativeLayout-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content">-->
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/imgYA"-->
-    <!--                    android:layout_width="@dimen/thirty"-->
-    <!--                    android:src="@drawable/checked_icon"-->
-    <!--                    android:layout_height="@dimen/thirty">-->
-    <!--                </ImageView>-->
-    <!--                <TextView-->
-    <!--                    android:layout_toEndOf="@+id/imgYA"-->
-    <!--                    android:layout_centerVertical="true"-->
-    <!--                    android:id="@+id/lblYourResponse"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_marginStart="@dimen/five"-->
-    <!--                    android:textSize="@dimen/sixteen_sp"-->
-    <!--                    style="@style/CustomTextStylePoppinsBold"-->
-    <!--                    android:drawablePadding="@dimen/five"-->
-    <!--                    android:layout_height="wrap_content">-->
-    <!--                </TextView>-->
-    <!--            </RelativeLayout>-->
-
-    <!--        </LinearLayout>-->
-
-    <!--    </LinearLayout>-->
-
-
-    <!--</LinearLayout>-->
