@@ -5,6 +5,7 @@ import android.text.Html
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -34,6 +35,10 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
     private var howToUseText: String? = ""
 
     private var termsAndConditions: String? = ""
+    private var earnedPoints: Int = 0
+    private var spentPoints: Int = 0
+    private var remainingPoints: Int = 0
+    private var pointspercoupon: Int = 0
 
     private var isExpanded = false
     private var isExpanded1 = false
@@ -43,7 +48,8 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 
         bottomSheetBehavior = BottomSheetBehavior.from<View?>(binding.bottomLayout.bottomSheet)
 
@@ -79,6 +85,11 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         source_link = intent.getStringExtra("source_link") ?: ""
         coupon_status = intent.getStringExtra("coupon_status") ?: ""
         merchant_logo = intent.getStringExtra("merchant_logo") ?: ""
+
+        earnedPoints = intent.getIntExtra("earnedPoints", 0)
+        spentPoints = intent.getIntExtra("spentPoints", 0)
+        remainingPoints = intent.getIntExtra("remainingPoints", 0)
+        pointspercoupon = intent.getIntExtra("pointspercoupon", 0)
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
@@ -131,10 +142,19 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
 
 
         binding.btnActivateCoupon.setOnClickListener {
+            if (remainingPoints < pointspercoupon || remainingPoints == 0) {
+                Toast.makeText(
+                    this@CouponActivateActivity,
+                    "You need more points! Use the app to keep earning points",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             binding.btnActivateCoupon.isEnabled = false
             binding.isProgressBar.visibility = View.VISIBLE
             appViewModel?.sendactivatecoupon(
-                source_link, "91${AppCredentials.isMobileNumber}",
+                source_link,
+                "91${AppCredentials.isMobileNumber}",
                 AppCredentials.PARTNER_NAME,
                 AppCredentials.API_KEY
             )

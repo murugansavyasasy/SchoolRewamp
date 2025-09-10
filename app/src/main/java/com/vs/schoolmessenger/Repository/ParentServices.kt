@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.PauketPointsResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.SpentPointsModel
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
@@ -87,6 +88,7 @@ class ParentServices {
     var islsrwSkilllist: MutableLiveData<LsrwSkillResponse?>
     var islsrwSkillSubmit: MutableLiveData<LSRWSkillSubmitResponse?>
     var isGetPauketPoints: MutableLiveData<PauketPointsResponse?>
+    var isSpentPoints: MutableLiveData<SpentPointsModel?>
 
     init {
         client_auth = RestClient()
@@ -127,6 +129,7 @@ class ParentServices {
         islsrwSkilllist = MutableLiveData()
         islsrwSkillSubmit = MutableLiveData()
         isGetPauketPoints = MutableLiveData()
+        isSpentPoints = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1476,6 +1479,51 @@ class ParentServices {
 
     val isSubmitQuizLiveData: LiveData<SubmitQuizResponse?>
         get() = isSubmitQuiz
+
+
+
+
+
+    fun isSpentPoints(
+        isToken: String,
+        jsonObject: JsonObject,
+    ) {
+        RestClient.apiInterfaces.isSpentPoints(isToken,jsonObject)
+            ?.enqueue(object : Callback<SpentPointsModel?> {
+                override fun onResponse(
+                    call: Call<SpentPointsModel?>,
+                    response: Response<SpentPointsModel?>
+                ) {
+                    Log.d(
+                        "SubmitQuizResponse Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("SubmitQuizResponse", response.body().toString())
+                                isSpentPoints.postValue(response.body())
+                            } else {
+                                Log.d("SubmitQuizResponse", response.body().toString())
+                                isSpentPoints.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SpentPointsModel?>,
+                    t: Throwable
+                ) {
+                    isSpentPoints.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSpentPointsLiveData: LiveData<SpentPointsModel?>
+        get() = isSpentPoints
 
 
 
