@@ -53,6 +53,7 @@ class LsrwCompletedAdapter (
         private val txtDate: TextView = itemView.findViewById(R.id.txtDate)
         private val txtSubmitted: TextView = itemView.findViewById(R.id.txtSubmitted)
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
+        private val imgIcon: ImageView = itemView.findViewById(R.id.imgIcon)
         private val txtsubdesc: TextView = itemView.findViewById(R.id.txtsubdesc)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
@@ -63,8 +64,23 @@ class LsrwCompletedAdapter (
             txtSubTitle.text = item.activity_type
             txtDescription.text = item.title
             txtsubdesc.text = item.description
-            txtDate.text = item.created_on
-            txtSubmitted.text = item.submitted_average + "submitted"
+            txtDate.text =Constant.convertDateTimeFormat(item.created_on)
+            txtSubmitted.text = item.submitted_average + " submitted"
+
+
+
+            if (item.activity_type == "Listening") {
+                imgIcon.setImageResource(R.drawable.headphonesvgformat)
+            } else if (item.activity_type == "Speaking") {
+                imgIcon.setImageResource(R.drawable.micsvgformatstyle)
+            } else if (item.activity_type == "Reading"){
+                imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
+            } else if (item.activity_type == "Writing"){
+                imgIcon.setImageResource(R.drawable.pensvgformatstyle)
+            } else {
+                imgIcon.setImageResource(R.drawable.questionmark)
+            }
+
 
 
             val hasFiles = !item.file_path.isNullOrEmpty()
@@ -89,14 +105,15 @@ class LsrwCompletedAdapter (
                     thumbnail = item.thumbnail,
                     isUnread = true,
                     isCompleted = true,
-                    isMenuType = Constant.M_SCHOOL_NEEDS,
+                    isMenuType = Constant.M_LSRW,
                     fileList = convertedList,
                     submittedCount = 0,
                     totalCount = 0,
                     assignmentid = item.activity_type,
                     created_date = item.created_on,
                     category = "",
-                    assignmentsubject = ""
+                    assignmentsubject = "",
+                    isParentAssignment = false
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -121,7 +138,7 @@ class LsrwCompletedAdapter (
                     thumbnail = item.thumbnail,
                     isUnread = true,
                     isCompleted = true,
-                    isMenuType = Constant.M_SCHOOL_NEEDS,
+                    isMenuType = Constant.M_LSRW,
                     fileList = convertedList,
                     submittedCount = 0,
                     totalCount = 0,
@@ -159,7 +176,7 @@ class LsrwCompletedAdapter (
                                 thumbnail = item.thumbnail,
                                 isUnread = true,
                                 isCompleted = true,
-                                isMenuType = Constant.M_SCHOOL_NEEDS,
+                                isMenuType = Constant.M_LSRW,
                                 fileList = convertedList,
                                 submittedCount = 0,
                                 totalCount = 0,

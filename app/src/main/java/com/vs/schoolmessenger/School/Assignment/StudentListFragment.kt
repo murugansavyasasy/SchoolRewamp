@@ -45,7 +45,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            assignmentId = it.getString("assignment_id")
+            assignmentId = it.getString(Constant.assignment_id)
             type = it.getString("type")
             submittedCount = it.getInt("submitted_count", 0)
             totalCount = it.getInt("Total_Count", 0)
@@ -204,7 +204,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             created_date: String
         ) = StudentListFragment().apply {
             arguments = Bundle().apply {
-                putString("assignment_id", assignmentId)
+                putString(Constant.assignment_id, assignmentId)
                 putString("type", type)
                 putInt("submitted_count", submittedCount)
                 putInt("Total_Count", totalCount)

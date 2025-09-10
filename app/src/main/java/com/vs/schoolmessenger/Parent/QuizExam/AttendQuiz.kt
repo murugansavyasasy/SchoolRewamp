@@ -109,6 +109,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                         quizStatus.visibility = View.VISIBLE
                     }
                 } else {
+                    Constant.hideLoading(this@AttendQuiz)
                     Constant.showDataValidation(
                         resources.getString(R.string.fail), response.message, this
                     )
@@ -141,9 +142,6 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         selectedAnswers = IntArray(questionList.size) { -1 }
         displayQuestion()
 
-        optionsArray.forEachIndexed { index, option ->
-            option.setOnClickListener { selectOption(index) }
-        }
     }
 
     fun ErrorMessage(errorMessage:String){
@@ -206,7 +204,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         val currentQuestion = questionList[currentQuestionIndex]
 
         // Set question text
-        binding.questionText.text = currentQuestion.question
+        binding.questionText.text ="${currentQuestionIndex+1}) ${currentQuestion.question}"
 
         val options = listOf(
             currentQuestion.option1,
@@ -284,7 +282,8 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         updateProgressBar()
         binding.prevButton.isEnabled = currentQuestionIndex > 0
         binding.nextButton1.text =
-            if (currentQuestionIndex == questionList.size - 1) "SUBMIT" else "NEXT"
+            if (currentQuestionIndex == questionList.size - 1) getString(R.string.SUBMIT) else getString(R.string.NEXT)
+        binding.nextButton.background.setTint(ContextCompat.getColor(this,R.color.navi_blue1))
 
 
         if (currentQuestionIndex == 0){
@@ -328,7 +327,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
     private fun resetOptionColors() {
         optionsArray.forEach { textView ->
-            textView.setTextColor(resources.getColor(R.color.black))
+            textView.setTextColor(resources.getColor(R.color.azure_radiance))
             textView.setBackgroundResource(R.drawable.quiz_option_bg)
         }
     }
@@ -343,23 +342,9 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         updateQuestionCounter(answeredCount,totalQuestions) //Just Changing the Colour in UI
     }
 
-    private fun selectOption(index: Int) {
-        resetOptionColors()
-        optionsArray[index].apply {
-            setTextColor(resources.getColor(R.color.white))
-            setBackgroundResource(R.drawable.quiz_option_selected_bg)
-        }
-
-        val currentQuestion = questionList[currentQuestionIndex]
-        selectedAnswersMap[currentQuestion.id] = index + 1 // store 1–4
-
-        binding.nextButton.isEnabled = true
-        updateProgressBar()
-    }
-
     private fun buildAnswerJson(): JsonObject {
         val json = JsonObject()
-        json.addProperty("id", isQuizID) // quiz id or paper id
+        json.addProperty("id", isQuizID)
 
         val answersObj = JsonObject()
 
@@ -370,7 +355,6 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         }
 
         json.add("answers", answersObj)
-        Log.d("FinalAnswer", json.toString())
         return json
     }
 
@@ -378,32 +362,41 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
     private fun showSubmitDialog() {
         isUnansweredCount = questionList.size - selectedAnswersMap.values.count { it != 0 }
         if (isUnansweredCount>0){
-            var ques=if (isUnansweredCount==1)"question" else "questions"
-            AlertDialog.Builder(this)
-                .setTitle("Submit Quiz")
-
-                .setMessage("Are you sure you want to submit the quiz? because you not answered ${isUnansweredCount} ${ques}! ")
-                .setPositiveButton("Anyway submit") { _, _ -> showQuizCompletion() }
-                .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
-                .show()
+            var ques=if (isUnansweredCount==1)getString(R.string.question_) else getString(R.string.questions_)
+            Constant.showSendConfirmationDialog(
+                this,
+                getString(R.string.confirmation),
+                getString(R.string.anyway_submit),
+                getString(R.string.Cancel),
+                "",
+                "${getString(R.string.Are_you_sure_you_want_to_submit_the_quiz_because_you_not_answered)} ${isUnansweredCount} ${ques}! "
+            ) { confirmed ->
+                if (confirmed) {
+                    Constant.showLoading(this)
+                    val jsonObject=buildAnswerJson()
+                    Log.d("FinalAnswer",jsonObject.toString())
+                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
+                }
+            }
         }
         else{
-            AlertDialog.Builder(this)
-                .setTitle("Submit Quiz")
-                .setMessage("Are you sure you want to submit the quiz?")
-                .setPositiveButton("Yes") { _, _ -> showQuizCompletion() }
-                .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
-                .show()
-
+            Constant.showSendConfirmationDialog(
+                this,
+                getString(R.string.confirmation),
+                getString(R.string.submit),
+                getString(R.string.Cancel),
+                "",
+                getString(R.string.Are_you_sure_you_want_to_submit_the_quiz)
+            ) { confirmed ->
+                if (confirmed) {
+                    Constant.showLoading(this)
+                    val jsonObject=buildAnswerJson()
+                    Log.d("FinalAnswer",jsonObject.toString())
+                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
+                }
+            }
         }
     }
 
-    private fun showQuizCompletion() {
-
-        val jsonObject=buildAnswerJson()
-        Log.d("FinalAnswer",jsonObject.toString())
-        appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
-
-    }
 }
 

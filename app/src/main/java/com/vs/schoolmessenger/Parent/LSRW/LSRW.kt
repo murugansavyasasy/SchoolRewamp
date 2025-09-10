@@ -30,10 +30,8 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblParentToolBar.text = "LSRW"
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-
         binding.toolbarLayout.lblStudentName.text = childDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
             "${childDetails?.standard_name ?: ""} - ${childDetails?.section_name ?: ""}"
@@ -65,7 +63,9 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
                 adapter.updateList(allItems)
             } else {
                 binding.rcyrecyclerview.visibility = View.GONE
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
+                binding.noDataFound.text = "No data found"
             }
         }
 

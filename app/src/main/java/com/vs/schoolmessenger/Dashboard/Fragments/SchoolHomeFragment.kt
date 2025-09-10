@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -50,6 +51,7 @@ import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 
 import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
+import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
@@ -107,9 +109,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
-        val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
-        dateFormat.format(currentDate)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         Constant.checkBiometricSupport(requireActivity())
@@ -117,37 +116,44 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
         userDetails = SharedPreference.getUserDetails(requireActivity())
         staffDetails = SharedPreference.getStaffDetails(requireActivity())
-
-
         Log.d("school_logo", staffDetails!!.school_logo)
 
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
             access_token = staffDetails!!.access_token
             binding.lblSchoolName.text = staffDetails!!.school_name
-            binding.username.text = userDetails!!.staff_details[0].role
+            binding.username.text = userDetails!!.staff_details[0].name
+            binding.lblRole.text = userDetails!!.staff_details[0].role
+            binding.profileImage.visibility = View.VISIBLE
 
-            if (staffDetails!!.school_name_regional != "") {
-//                binding.lblSchoolRegionalName.visibility = View.GONE
-//                binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
-            } else {
-                //   binding.lblSchoolRegionalName.visibility = View.GONE
+            if(userDetails!!.staff_details[0].school_logo != "") {
+                Glide.with(this)
+                    .load(userDetails!!.staff_details[0].school_logo)
+                    .error(R.drawable.school_sample)
+                    .into(binding.profileImage)
             }
+
 
         } else {
             access_token = userDetails!!.staff_details[0].access_token
             if (userDetails!!.staff_details.size > 1) {
-                binding.username.text = userDetails!!.role_name
+                binding.username.text = userDetails!!.staff_details[0].name
+                binding.lblRole.text = userDetails!!.staff_details[0].role
                 binding.lblSchoolName.visibility = View.GONE
+                binding.profileImage.visibility = View.GONE
             } else {
                 binding.lblSchoolName.visibility = View.VISIBLE
+                binding.profileImage.visibility = View.VISIBLE
                 binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
-                binding.username.text = userDetails!!.staff_details[0].role
-                if (staffDetails!!.school_name_regional != "") {
-//                    binding.lblSchoolRegionalName.visibility = View.GONE
-//                    binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
-                } else {
-//                    binding.lblSchoolRegionalName.visibility = View.GONE
+                binding.username.text = userDetails!!.staff_details[0].name
+                binding.lblRole.text = userDetails!!.staff_details[0].role
+
+                if(userDetails!!.staff_details[0].school_logo != "") {
+                    Glide.with(this)
+                        .load(userDetails!!.staff_details[0].school_logo)
+                        .error(R.drawable.school_sample)
+                        .into(binding.profileImage)
                 }
+
             }
         }
 
@@ -247,17 +253,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
     }
 
-    private fun createSampleData(): List<ScrollItem> {
-        return listOf(
-            ScrollItem(R.drawable.home_work_icon_school, "Daily Homework"),
-            ScrollItem(R.drawable.fee_pending_reports, "Fee Payment"),
-            ScrollItem(R.drawable.attachment_icon, "Attendance"),
-            ScrollItem(R.drawable.event_icon_school, "School Events"),
-            ScrollItem(R.drawable.fee_details, "Grades"),
-            ScrollItem(R.drawable.message_f_management, "Messages")
-        )
-    }
-
     private fun isLoadData() {
 
         Log.d("isMenuCountDetails", isSchoolMenuCountDetails!!.size.toString())
@@ -329,7 +324,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onResume() {
         super.onResume()
-        Log.d("Loading", "Dashboard Data is Loading")
         if(isSchoolDashBoardData == null) {
             isDashBoardData()
         }
@@ -343,7 +337,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onPause() {
         super.onPause()
         Constant.stopDelay()
-        Log.d("Status", "onPause")
     }
 
     override fun onClick(data: MenuDetail) {
@@ -387,9 +380,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
-
-
-
 
             Constant.M_ATTENDANCE_MARKING -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
@@ -566,8 +556,20 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
-//            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
-            Constant.M_SCHOOL_NEEDS -> LsrwMain::class.java
+            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
+
+            Constant.M_LSRW -> {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    LsrwMain::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        LsrwMain::class.java
+                    }
+                }
+            }
+
             else -> null
         }
         activityClass?.let {

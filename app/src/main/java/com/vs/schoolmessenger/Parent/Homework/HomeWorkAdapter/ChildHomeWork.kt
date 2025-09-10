@@ -140,7 +140,21 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.subject.text = data?.assignmentsubject ?: ""
             binding.fragmentContainer.visibility = View.GONE
 
-        } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
+        } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false) {
+            if (data!!.assignmentid == "Listening") {
+               binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.headphonesvgformat)
+            } else if (data!!.assignmentid == "Speaking") {
+                binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.micsvgformatstyle)
+            } else if (data!!.assignmentid == "Reading"){
+                binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
+            } else if (data!!.assignmentid == "Writing"){
+                binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.pensvgformatstyle)
+            } else {
+                binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.questionmark)
+            }
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text = "Listening,Speaking,Reading,Writing"
             binding.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
@@ -172,7 +186,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
             }
 
-        } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
+        } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text = "Listening,Speaking,Reading,Writing"
             if (data!!.assignmentid == "Listening") {
                 binding.descriptionLabel.visibility = View.GONE
                 binding.editDescription.visibility = View.GONE
@@ -321,78 +338,74 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             Log.d("isComingFilePath", data!!.fileList[i].url)
         }
 
-        val adapter = HomeWorkChildAdapter(
-            this, data!!.fileList, data!!.subjectName!!, SELECTED_SCHOOL_MENU
-        )
-        if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-            binding.rcChildHW.layoutManager =
-                GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-            binding.rcChildHW.adapter = adapter
-        } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_NEEDS) {
-            binding.childlsrwlayoutxml.rcChildHW.layoutManager =
-                GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-            binding.childlsrwlayoutxml.rcChildHW.adapter = adapter
-        } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
-            binding.rcChildHW.layoutManager =
-                GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-            binding.rcChildHW.adapter = adapter
-        } else {
-            binding.rcChildHW.layoutManager =
-                GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-            binding.rcChildHW.adapter = adapter
+        val isParentAssignment = (SELECTED_SCHOOL_MENU == M_LSRW && data?.isParentAssignment == true)
 
+
+        val adapter = HomeWorkChildAdapter(
+            this,
+            data!!.fileList,
+            data!!.subjectName!!,
+            SELECTED_SCHOOL_MENU,
+            isParentAssignment
+        )
+
+        val recyclerView = if (SELECTED_SCHOOL_MENU == M_LSRW && !isParentAssignment) {
+            binding.childlsrwlayoutxml.rcChildHW
+        } else {
+            binding.rcChildHW
         }
+
+        val spanCount = when {
+            SELECTED_SCHOOL_MENU == M_ASSIGNMENT -> 2
+            SELECTED_SCHOOL_MENU == M_LSRW && !isParentAssignment -> 2
+            SELECTED_SCHOOL_MENU == M_LSRW && isParentAssignment -> 2
+            else -> 3
+        }
+
+        recyclerView.layoutManager = GridLayoutManager(this, spanCount, RecyclerView.VERTICAL, false)
+        recyclerView.adapter = adapter
 
         appViewModel?.isHomeWorkComplete?.observe(this) { response ->
-            if (response!!.status) {
-                isSuccessFullCompleteHomework()
-            }
+            if (response?.status == true) isSuccessFullCompleteHomework()
         }
 
-        appViewModel!!.islsrwSkillSubmit?.observe(this) { response ->
-            Constant.hideLoading(this@ChildHomeWork)
-            if (response != null) {
-                Log.d("Response", response.status.toString())
-                Constant.showTopAlertPopup(response.message, this)
 
+        appViewModel?.islsrwSkillSubmit?.observe(this) { response ->
+            Constant.hideLoading(this@ChildHomeWork)
+            response?.let {
+                Log.d("Response", it.status.toString())
+                Constant.showTopAlertPopup(it.message, this)
             }
         }
 
 
         if (adapter.itemCount == 0) {
+            val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+            params.topToBottom = binding.lblClickComplete.id
+            params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
+            binding.lblPostedBy.layoutParams = params
+
             if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
-                params.topToBottom = binding.lblClickComplete.id
-                params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
-                binding.lblPostedBy.layoutParams = params
                 binding.childlsrwlayoutxml.rcChildHW.visibility = View.GONE
                 binding.childlsrwlayoutxml.lblAttachments.visibility = View.GONE
                 binding.childlsrwlayoutxml.imgAttachmentIcon.visibility = View.GONE
             } else {
-                val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
-                params.topToBottom = binding.lblClickComplete.id
-                params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
-                binding.lblPostedBy.layoutParams = params
-                binding.rcChildHW.visibility = View.GONE
+                recyclerView.visibility = View.GONE
                 binding.lblAttachments.visibility = View.GONE
                 binding.imgAttachmentIcon.visibility = View.GONE
             }
         } else {
-            if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
-                params.topToBottom = binding.childlsrwlayoutxml.rcChildHW.id
-                params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
-                binding.lblPostedBy.layoutParams = params
+            val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+            params.topToBottom = recyclerView.id
+            params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
+            binding.lblPostedBy.layoutParams = params
 
+            if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
                 binding.childlsrwlayoutxml.rcChildHW.visibility = View.VISIBLE
                 binding.childlsrwlayoutxml.lblAttachments.visibility = View.VISIBLE
                 binding.childlsrwlayoutxml.imgAttachmentIcon.visibility = View.VISIBLE
             } else {
-                val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
-                params.topToBottom = binding.rcChildHW.id
-                params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
-                binding.lblPostedBy.layoutParams = params
-                binding.rcChildHW.visibility = View.VISIBLE
+                recyclerView.visibility = View.VISIBLE
                 binding.lblAttachments.visibility = View.VISIBLE
                 binding.imgAttachmentIcon.visibility = View.VISIBLE
             }

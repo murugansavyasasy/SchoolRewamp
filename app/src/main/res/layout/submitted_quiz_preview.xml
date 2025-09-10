@@ -27,11 +27,13 @@
     </TextView>
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:scrollbars="none"
         android:layout_below="@+id/lblParentToolBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,12 +132,16 @@
                     android:layout_marginTop="@dimen/five"
                     android:layout_height="wrap_content">
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/eleven_sp"
                         android:id="@+id/lblCorrectAnswer"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:drawableStart="@drawable/correct_answer"
                         android:text="Correct : 15/20"
                         android:padding="@dimen/five"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/green"
                         android:drawablePadding="@dimen/five"
                         android:background="@drawable/gray_bg_radius"
                         android:layout_marginEnd="@dimen/five"
@@ -143,11 +149,15 @@
                     </TextView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/eleven_sp"
                         android:id="@+id/lblWrongAnswer"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:drawableStart="@drawable/wrong_answer"
                         android:text="Wrong : 03/20"
+                        android:textColor="@color/red"
+                        android:gravity="center_vertical"
                         android:layout_marginEnd="@dimen/five"
                         android:padding="@dimen/five"
                         android:drawablePadding="@dimen/five"
@@ -156,8 +166,12 @@
                     </TextView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/eleven_sp"
                         android:id="@+id/lblNotAnswer"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/orange"
                         android:layout_width="match_parent"
                         android:drawableStart="@drawable/not_answered"
                         android:text="Not Answer : 02/20"
@@ -187,7 +201,9 @@
                 android:layout_marginTop="@dimen/ten"
                 android:id="@+id/rcSubmitedQuiz"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                >
             </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
@@ -222,184 +238,8 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 
 </RelativeLayout>
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:fitsSystemWindows="true"-->
-<!--    android:background="@color/very_light_grey"-->
-<!--    android:layout_height="match_parent">-->
-
-
-<!--    <include-->
-<!--        android:id="@+id/toolbarLayout"-->
-<!--        layout="@layout/parent_side_tool_bar" />-->
-
-
-
-
-
-<!--    <LinearLayout-->
-<!--        android:layout_below="@+id/toolbarLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="@dimen/sixteen">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/lblParentToolBar"-->
-<!--            style="@style/CustomTextStylePoppinsBold"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/quiz_submission"-->
-<!--            android:layout_marginTop="@dimen/ten"-->
-<!--            android:layout_marginStart="@dimen/five"-->
-<!--            android:layout_below="@+id/rytHeader"-->
-<!--            -->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="@dimen/twenty">-->
-
-<!--        </TextView>-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_marginTop="@dimen/ten"-->
-<!--            android:id="@+id/lnrMarkDetails"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:orientation="vertical"-->
-<!--            android:layout_height="wrap_content">-->
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-<!--                <TextView-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:id="@+id/lblCorrectanswer"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:text="@string/correct_answer"-->
-<!--                    android:gravity="center"-->
-<!--                    android:textSize="@dimen/fourteen_sp"-->
-<!--                    style="@style/CustomTextStylePoppinsBold"-->
-<!--                    android:drawablePadding="@dimen/five"-->
-<!--                    android:drawableStart="@drawable/correct_answer"-->
-<!--                    android:layout_height="wrap_content">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:layout_marginStart="@dimen/ten"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:textSize="@dimen/fourteen_sp"-->
-<!--                    android:layout_toEndOf="@+id/lblCorrectanswer"-->
-<!--                    android:id="@+id/tvCorrectanswer"-->
-<!--                    style="@style/CustomTextStylePoppinsMedium"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-<!--                </TextView>-->
-<!--            </RelativeLayout>-->
-
-<!--            <RelativeLayout-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--                <TextView-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:id="@+id/lblWrongAnwer"-->
-<!--                    style="@style/CustomTextStylePoppinsBold"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:drawableStart="@drawable/wrong_answer"-->
-<!--                    android:drawablePadding="@dimen/five"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="@string/wrong_answer"-->
-<!--                    android:textSize="@dimen/fourteen_sp"></TextView>-->
-<!--                <TextView-->
-<!--                    android:layout_marginStart="@dimen/ten"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_toEndOf="@+id/lblWrongAnwer"-->
-<!--                    android:id="@+id/tvWrongAnwer"-->
-<!--                    style="@style/CustomTextStylePoppinsMedium"-->
-<!--                    android:textSize="@dimen/fourteen_sp"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-<!--                </TextView>-->
-<!--            </RelativeLayout>-->
-
-<!--            <RelativeLayout-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--                <TextView-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:id="@+id/lblNotAnswer"-->
-<!--                    style="@style/CustomTextStylePoppinsBold"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:gravity="center"-->
-<!--                    android:textSize="@dimen/fourteen_sp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:drawableStart="@drawable/not_answered"-->
-<!--                    android:drawablePadding="@dimen/five"-->
-<!--                    android:text="@string/not_answered"-->
-<!--                    ></TextView>-->
-<!--                <TextView-->
-<!--                    android:layout_marginStart="@dimen/ten"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_toEndOf="@+id/lblNotAnswer"-->
-<!--                    android:id="@+id/tvNotAnswer"-->
-<!--                    style="@style/CustomTextStylePoppinsMedium"-->
-<!--                    android:textSize="@dimen/fourteen_sp"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-<!--                </TextView>-->
-<!--            </RelativeLayout>-->
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:id="@+id/rcSubmitedQuiz"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-<!--            </androidx.recyclerview.widget.RecyclerView>-->
-
-
-<!--        </LinearLayout>-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lytList"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:visibility="gone"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/nomessage"-->
-<!--                android:layout_width="@dimen/two_fifty"-->
-<!--                android:layout_height="@dimen/two_fifty"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginTop="@dimen/twenty"-->
-<!--                android:src="@drawable/nomessages"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/fifteen_sp"-->
-<!--                />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/txtNoData"-->
-<!--                style="@style/CustomTextStylePoppinsBold"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/twenty"-->
-<!--                android:gravity="center"-->
-<!--                android:text="@string/no_list_found"-->
-<!--                android:textSize="@dimen/fifteen_sp" />-->
-<!--        </LinearLayout>-->
-
-<!--    </LinearLayout>-->
-
-
-
-<!--</RelativeLayout>-->
