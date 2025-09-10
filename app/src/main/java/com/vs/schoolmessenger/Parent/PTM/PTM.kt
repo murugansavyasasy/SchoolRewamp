@@ -1,43 +1,237 @@
 package com.vs.schoolmessenger.Parent.PTM
 
-import android.graphics.Color
+import android.app.AlertDialog
+import android.util.Log
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.PTM.Adapter.MeetingHistoryAdapter
+import com.vs.schoolmessenger.Parent.PTM.Adapter.MeetingListItem
+import com.vs.schoolmessenger.Parent.PTM.Adapter.ParentMeetingAdapter
+import com.vs.schoolmessenger.Parent.PTM.Adapter.PtmParentCalender
+import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingData
+import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingDataWrapper
+import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
+import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PtmBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
-class PTM : BaseActivity<PtmBinding>(), View.OnClickListener {
+class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListener {
 
     override fun getViewBinding(): PtmBinding {
         return PtmBinding.inflate(layoutInflater)
     }
 
+    private var lastCancelledPosition: Int = -1
+
+    var isSelectedDate = ""
+
+    private var isParentMeetingAdapter: ParentMeetingAdapter? = null
+    lateinit var isMeetingHistoryAdapter: MeetingHistoryAdapter
+    private var isAccessToken: String? = null
+    private var appViewModel: App? = null
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.smtext.setOnClickListener(this)
-        binding.mhtext.setOnClickListener(this)
+        binding.lblScheduleMeeting.setOnClickListener(this)
+        binding.lblYourMeeting.setOnClickListener(this)
+        appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+        val childDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = childDetails?.access_token
+
+        val dates = generateDates(60)
+        isSelectedDate = Constant.getCurrentDate()
+
+        val adapter = PtmParentCalender(dates) { selectedDate ->
+            isSelectedDate = selectedDate
+            isScheduleCallList()
+        }
+
+
+        binding.recyclerViewDates.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewDates.adapter = adapter
+        val calendar = Calendar.getInstance()
+        val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val todayMonth = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
+
+        val todayPos = dates.indexOfFirst { it.first == todayMonth && it.second == todayDay }
+
+        if (todayPos != -1) {
+            adapter.setDefaultSelected(todayPos)
+            binding.recyclerViewDates.scrollToPosition(todayPos)
+        }
+
+        appViewModel?.isStudentSlotResponse?.observe(this) { response ->
+            if (response!!.status) {
+                if (response.data.isNotEmpty()) {
+                    binding.rytNoDataFound.visibility = View.GONE
+                    binding.recyclerViewSlots.visibility = View.VISIBLE
+                    isLoadData(response.data)
+                } else {
+                    binding.rytNoDataFound.visibility = View.VISIBLE
+                    binding.recyclerViewSlots.visibility = View.GONE
+                }
+            } else {
+                binding.rytNoDataFound.visibility = View.VISIBLE
+                binding.recyclerViewSlots.visibility = View.GONE
+            }
+        }
+
+        appViewModel?.isSlotCancelByStudent?.observe(this) { response ->
+            if (response?.status == true) {
+                AlertDialog.Builder(this)
+                    .setTitle("Success")
+                    .setMessage(response.message)
+                    .setPositiveButton("OK") { dialog, _ ->
+                        dialog.dismiss()
+                        if (::isMeetingHistoryAdapter.isInitialized && lastCancelledPosition >= 0) {
+                            isMeetingHistoryAdapter.removeItem(lastCancelledPosition)
+                            lastCancelledPosition = -1
+                        }
+                    }
+                    .show()
+            }
+        }
+
+
+        appViewModel?.isSlotDetailsHistory?.observe(this) { response ->
+            if (response!!.status) {
+                if (response.data.isNotEmpty()) {
+                    binding.rytNoDataFound.visibility = View.GONE
+                    binding.recyclerViewSlots.visibility = View.VISIBLE
+                    isLoadMeetingData(response.data)
+                } else {
+                    binding.rytNoDataFound.visibility = View.VISIBLE
+                    binding.recyclerViewSlots.visibility = View.GONE
+                }
+            } else {
+                binding.rytNoDataFound.visibility = View.VISIBLE
+                binding.recyclerViewSlots.visibility = View.GONE
+            }
+        }
+
+        isScheduleCallList()
+    }
+
+    fun isLoadData(data: List<MeetingData>) {
+        isParentMeetingAdapter = ParentMeetingAdapter(data) { meeting, slot ->
+            Toast.makeText(
+                this,
+                "Selected ${slot.slot_from} - ${slot.slot_to} for ${meeting.staff_name}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        binding.recyclerViewSlots.layoutManager =
+            GridLayoutManager(this, 1, RecyclerView.VERTICAL, false)
+        binding.recyclerViewSlots.adapter = isParentMeetingAdapter
+        binding.recyclerViewSlots.setHasFixedSize(true)
+    }
+
+    fun isLoadMeetingData(data: List<MeetingDataWrapper>) {
+        binding.rcyMeetingHistory.layoutManager = LinearLayoutManager(this)
+
+        val meetingItems = mutableListOf<MeetingListItem>()
+
+        val todayMeetings = data.firstOrNull()?.today ?: emptyList()
+        val upcomingMeetings = data.firstOrNull()?.upcoming ?: emptyList()
+        val completedMeetings = data.firstOrNull()?.completed ?: emptyList()
+
+        if (todayMeetings.isNotEmpty()) {
+            meetingItems.add(MeetingListItem.Header("Today"))
+            todayMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
+        }
+
+        if (upcomingMeetings.isNotEmpty()) {
+            meetingItems.add(MeetingListItem.Header("Upcoming"))
+            upcomingMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
+        }
+
+        if (completedMeetings.isNotEmpty()) {
+            meetingItems.add(MeetingListItem.Header("Completed"))
+            completedMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
+        }
+
+        val adapter = MeetingHistoryAdapter(meetingItems,this)
+
+        binding.rcyMeetingHistory.adapter = adapter
+    }
+
+
+    fun isScheduleCallList() {
+        appViewModel!!.isSlotAvailableForStudent(isAccessToken!!, isSelectedDate, "0", "0")
+    }
+
+    fun isMeetingHistoryList() {
+        appViewModel!!.isSlotHistoryStudent(isAccessToken!!)
     }
 
 
     override fun onClick(v: View?) {
-        if (v == null) return
-
-        when (v.id) {
-            R.id.smtext -> {
-                binding.smtext.setBackgroundResource(R.color.emerald)
-                binding.mhcardview.setBackgroundResource(0)
-                binding.smtext.setTextColor(Color.BLACK)
-                binding.mhtext.setTextColor(Color.GRAY)
+        when (v!!.id) {
+            R.id.lblScheduleMeeting -> {
+                isChangeBackGroundTab(binding.lblScheduleMeeting)
             }
 
-            R.id.mhtext -> {
-                binding.mhtext.setBackgroundResource(R.color.emerald)
-                binding.smcardview.setBackgroundResource(0)
-                binding.mhtext.setTextColor(Color.BLACK)
-                binding.smtext.setTextColor(Color.GRAY)
+            R.id.lblYourMeeting -> {
+                isChangeBackGroundTab(binding.lblYourMeeting)
             }
         }
     }
 
+    fun isChangeBackGroundTab(isSelectedTab: TextView) {
+        binding.lblScheduleMeeting.background = null
+        binding.lblYourMeeting.background = null
+        isSelectedTab.background = this.getDrawable(R.drawable.white_radious)
+
+        if (isSelectedTab == binding.lblYourMeeting) {
+            binding.rytScheduleMeeting.visibility = View.GONE
+            binding.rytYourMeeting.visibility = View.VISIBLE
+            isMeetingHistoryList()
+        } else {
+            binding.rytYourMeeting.visibility = View.GONE
+            binding.rytScheduleMeeting.visibility = View.VISIBLE
+        }
+
+    }
+
+    fun generateDates(daysCount: Int): List<Pair<String, Int>> {
+        val list = mutableListOf<Pair<String, Int>>()
+        val calendar = Calendar.getInstance() // Start from today
+        val monthFormat = SimpleDateFormat("MMM", Locale.getDefault()) // e.g., Sep
+
+        repeat(daysCount) {
+            val month = monthFormat.format(calendar.time)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            list.add(month to day)
+            calendar.add(Calendar.DAY_OF_MONTH, 1) // move forward by 1 day
+        }
+
+        return list
+    }
+
+    override fun onCancelClick(
+        meeting: MeetingItem,
+        position: Int
+    ) {
+        lastCancelledPosition = position
+        val jsonObject= JsonObject()
+        jsonObject.addProperty("slot_id",meeting.id)
+        jsonObject.addProperty("cancelled_reason","")
+        Log.d("jsonObject",jsonObject.toString())
+        appViewModel!!.isSlotCancelByStudent(isAccessToken!!,jsonObject)
+    }
 }

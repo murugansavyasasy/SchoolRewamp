@@ -26,20 +26,22 @@
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_marginStart="@dimen/five"
-                android:src="@drawable/checkmark_circle"></ImageView>
+                android:src="@drawable/checkmark_circle">
+            </ImageView>
 
             <TextView
                 android:id="@+id/lblStatus"
-                style="@style/CustomTextStylePoppinsBold"
+                style="@style/CustomTextStylePoppinsMedium1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginStart="@dimen/five"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/imgStatus"
                 android:text="Booked"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+            </TextView>
 
 
         </RelativeLayout>
@@ -54,7 +56,8 @@
             android:layout_marginEnd="@dimen/fifteen"
             android:background="@drawable/rounded_bg"
             android:padding="@dimen/ten"
-            android:src="@drawable/threedot"></ImageView>
+            android:src="@drawable/threedot">
+        </ImageView>
 
         <TextView
             android:id="@+id/lblTime"
@@ -66,7 +69,8 @@
             android:text="12:00 PM - 03:00 PM"
             android:layout_marginStart="@dimen/ten"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"></TextView>
+            android:textSize="@dimen/fifteen_sp">
+        </TextView>
 
         <TextView
             android:id="@+id/lblDuration"
@@ -78,16 +82,17 @@
             android:layout_marginTop="@dimen/ten"
             android:text="Duraction - 10 Minutes"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textSize="@dimen/thirteen_sp">
+        </TextView>
 
         <TextView
             android:id="@+id/lblWaitingBooking"
             android:layout_width="match_parent"
             android:layout_below="@+id/lblDuration"
-            android:textColor="@color/bpBlue"
+            android:textColor="@color/dark_blue_2"
             android:layout_marginTop="@dimen/fifteen"
             android:text="Waiting for booking"
-            style="@style/CustomTextStylePoppinsBold1"
+            style="@style/CustomTextStylePoppinsMedium1"
             android:gravity="center"
             android:padding="@dimen/ten"
             android:layout_marginStart="@dimen/twenty_five"

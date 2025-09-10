@@ -45,7 +45,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         binding.lblDatePicking.setOnClickListener(this)
         binding.imgDelete.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
-        binding.lblCreateSlot.setOnClickListener(this)
+        binding.layoutCreateSlot.setOnClickListener(this)
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -150,7 +150,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 onBackPressed()
             }
 
-            R.id.lblCreateSlot -> {
+            R.id.layoutCreateSlot -> {
                 val intent = Intent(this, CreateSlots::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)

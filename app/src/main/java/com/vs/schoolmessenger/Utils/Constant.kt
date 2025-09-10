@@ -64,6 +64,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
+import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat

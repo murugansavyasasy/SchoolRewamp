@@ -24,10 +24,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty_five"
                 android:text="Function Meeting"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp">
+                android:textSize="@dimen/eighteen">
 
             </TextView>
 
@@ -65,7 +65,7 @@
                         android:id="@+id/imgCalender"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
-                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
                         android:src="@drawable/calendar_black">
 
@@ -73,15 +73,15 @@
 
                     <TextView
                         android:id="@+id/lblMeetingDate"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_toEndOf="@+id/imgCalender"
                         android:text="Date"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp">
-                    </TextView>
+                        android:textColor="@color/light_gray_5"
+                        android:textSize="@dimen/fourteen"></TextView>
 
                     <TextView
                         android:id="@+id/lblDate"
@@ -92,8 +92,7 @@
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/fifteen"
                         android:text="April 1, 2002"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
+                        android:textSize="@dimen/fifteen">
 
                     </TextView>
 
@@ -103,7 +102,7 @@
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_below="@+id/lblDate"
-                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty_five"
                         android:src="@drawable/alarm">
 
@@ -111,15 +110,16 @@
 
                     <TextView
                         android:id="@+id/lblSlotDuration"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblDate"
-                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/twenty_five"
                         android:layout_toEndOf="@+id/imgCalender"
                         android:text="Slot Duration"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp">
+                        android:textColor="@color/light_gray_5"
+                        android:textSize="@dimen/fourteen">
 
                     </TextView>
 
@@ -133,8 +133,7 @@
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/fifteen"
                         android:text="10 minutes"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
+                        android:textSize="@dimen/fifteen">
 
                     </TextView>
                 </RelativeLayout>
@@ -145,28 +144,26 @@
                     android:layout_weight="1">
 
 
-                    <TextView
-                        android:id="@+id/lblMeetingTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/twenty"
-                        android:layout_toEndOf="@+id/imgTime"
-                        android:text="Time"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp">
-
-                    </TextView>
-
                     <ImageView
                         android:id="@+id/imgTime"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
+                        android:layout_alignParentStart="true"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/twenty"
-                        android:src="@drawable/clock_circle">
+                        android:src="@drawable/clock_circle" />
 
-                    </ImageView>
+                    <TextView
+                        android:id="@+id/lblMeetingTime"
+                        style="@style/CustomTextStylePoppinsMedium1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_toEndOf="@id/imgTime"
+                        android:text="Time"
+                        android:textColor="@color/light_gray_5"
+                        android:textSize="@dimen/fourteen" />
+
 
                     <TextView
                         android:id="@+id/lblTime"
@@ -177,22 +174,7 @@
                         android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginEnd="@dimen/twenty"
                         android:text="03:00 PM to 05:00 PM"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/lblMode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/lblTime"
-                        android:layout_marginTop="@dimen/twenty_five"
-                        android:layout_marginEnd="@dimen/twenty"
-                        android:layout_toEndOf="@+id/imgMode"
-                        android:text="Mode"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp">
+                        android:textSize="@dimen/fifteen">
 
                     </TextView>
 
@@ -202,10 +184,23 @@
                         android:layout_height="@dimen/twenty"
                         android:layout_below="@id/lblTime"
                         android:layout_marginTop="@dimen/twenty_five"
-                        android:layout_marginEnd="@dimen/twenty"
-                        android:src="@drawable/person_2_fill">
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/person_2_fill" />
 
-                    </ImageView>
+                    <TextView
+                        android:id="@+id/lblMode"
+                        style="@style/CustomTextStylePoppinsMedium1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/imgMode"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/two"
+                        android:layout_toEndOf="@id/imgMode"
+                        android:includeFontPadding="false"
+                        android:text="Mode"
+                        android:textColor="@color/light_gray_5"
+                        android:textSize="@dimen/fourteen" />
+
 
                     <TextView
                         android:id="@+id/lblModeMeeting"
@@ -216,8 +211,7 @@
                         android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginEnd="@dimen/twenty"
                         android:text="In Person"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
+                        android:textSize="@dimen/fifteen">
 
                     </TextView>
                 </RelativeLayout>
@@ -229,7 +223,7 @@
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_below="@+id/ltyMeetingDetails"
-                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty_five"
                 android:src="@drawable/list_bullet_clipboard_fill">
 
@@ -237,16 +231,16 @@
 
             <TextView
                 android:id="@+id/lblClasses"
-                style="@style/CustomTextStylePoppinsBold"
+                style="@style/CustomTextStylePoppinsMedium1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ltyMeetingDetails"
-                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginStart="@dimen/five"
                 android:layout_marginTop="@dimen/twenty_five"
                 android:layout_toEndOf="@+id/imgSlotClasses"
                 android:text="Classes"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/fifteen_sp">
+                android:textColor="@color/light_gray_5"
+                android:textSize="@dimen/fourteen">
 
             </TextView>
 
@@ -311,7 +305,7 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/twenty"
                 android:text="Meeting slots"
-                android:textColor="@color/grey"
+                android:textColor="@color/light_gray_5"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
@@ -332,5 +326,6 @@
 
         </RelativeLayout>
     </ScrollView>
+
 
 </RelativeLayout>
