@@ -569,6 +569,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
+
             else -> null
         }
         activityClass?.let {
