@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays
 
+import com.vs.schoolmessenger.Utils.Constant
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -18,7 +19,7 @@ data class CustomDateItem(
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month - 1)
         calendar.set(Calendar.DAY_OF_MONTH, day)
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateFormat = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.getDefault())
         return dateFormat.format(calendar.time)
     }
 }

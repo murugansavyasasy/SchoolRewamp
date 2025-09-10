@@ -81,7 +81,7 @@ class CertificateRequestAdapter(
         ) {
             lblCertificateTitle.text = data.type
             lblCertificateReason.text = buildSpannedString {
-                bold { color(Color.BLACK) { append("Reason : ") } }
+                bold { color(Color.BLACK) { append(context.getString(R.string.reason_2)) } }
 
                 val reasonText = data.reason ?: ""
                 val shortReason = if (reasonText.length > 10) {

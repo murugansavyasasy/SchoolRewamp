@@ -18,7 +18,9 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponMenuClickListen
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FragmentHomeBinding
 
@@ -66,7 +68,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             hideProgressBar()
             val campaignsList = response?.data?.campaigns?.data
             if (campaignsList.isNullOrEmpty()) {
-                showCouponSummaryErrorUI("No coupon summary data available")
+                showCouponSummaryErrorUI(getString(R.string.no_coupon_summary_data_available))
             } else {
                 isLoadCouponSummaryData(campaignsList)
             }
@@ -76,7 +78,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             hideProgressBar()
             val campaignsList = response?.data?.campaigns?.data
             if (campaignsList.isNullOrEmpty()) {
-                showCategorySummaryErrorUI("No coupon summary data available")
+                showCategorySummaryErrorUI(getString(R.string.no_coupon_summary_data_available))
             } else {
                 isLoadCouponSummaryData(campaignsList)
             }
@@ -88,8 +90,8 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             val spentPoints = response?.data?.firstOrNull()?.spent ?: 0
             val earnedPoints = response?.data?.firstOrNull()?.earned ?: 0
             binding.totalcoins.text = "$earnedPoints"
-            binding.usedcoins.text = "Used : $spentPoints"
-            binding.availablecoins.text = "Available : $remainingPoints"
+            binding.usedcoins.text = "${getString(R.string.Used)} : $spentPoints"
+            binding.availablecoins.text = "${getString(R.string.Available)} : $remainingPoints"
         }
 
 
@@ -170,7 +172,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         binding.recyclerView.visibility = View.VISIBLE
 
         val allCategory = Category(
-            id = null, categoryName = "All", categoryImage = ""
+            id = null, categoryName = Constant.All_, categoryImage = ""
         )
 
         val updatedList = listOf(allCategory) + data
@@ -195,10 +197,10 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         Log.d("CategoryClicked", category?.categoryName ?: "null")
         if (!categoryId.isNullOrEmpty()) {
             fetchCategoryCouponSummary(categoryId)
-            binding.textView.text = category?.categoryName + " Coupons"
+            binding.textView.text = "${category?.categoryName} ${getString(R.string.Coupons)}"
         } else {
             fetchCouponSummary()
-            binding.textView.text = "All Coupons"
+            binding.textView.text = getString(R.string.all_coupons)
         }
     }
 
@@ -211,7 +213,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
 
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching coupon found"
+            binding.txtNoData.text = getString(R.string.no_matching_coupon_found)
             binding.recyclerView.visibility = View.GONE
         } else {
 

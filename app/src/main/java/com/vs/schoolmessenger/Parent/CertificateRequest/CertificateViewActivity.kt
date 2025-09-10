@@ -124,7 +124,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
 
                 webChromeClient = WebChromeClient()
 
-                loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=${Constant.isCertificateData!!.url}")
+                loadUrl("${Constant.google_embredded_url}${Constant.isCertificateData!!.url}")
 
             }
 
@@ -155,7 +155,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
     fun isDirectPreviewActivity(){
         Constant.commonFileList.isEmpty()
         Constant.commonFileList.clear()
-        Constant.commonFileList.add(CommonFileData(type = "PDF", path =Constant.isCertificateData!!.url ))
+        Constant.commonFileList.add(CommonFileData(type = Constant.PDF, path =Constant.isCertificateData!!.url ))
         Log.d("File",Constant.commonFileList.toString())
         Log.d("FileSize",Constant.commonFileList.size.toString())
         Constant.selectedFileIndex = 0
@@ -341,11 +341,11 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
         try {
             val fields = menu.javaClass.declaredFields
             for (field in fields) {
-                if (field.name == "mPopup") {
+                if (field.name == Constant.mPopup) {
                     field.isAccessible = true
                     val helper = field.get(menu)
                     val classPopup = Class.forName(helper.javaClass.name)
-                    val setIcons = classPopup.getMethod("setForceShowIcon", Boolean::class.java)
+                    val setIcons = classPopup.getMethod(Constant.setForceShowIcon, Boolean::class.java)
                     setIcons.invoke(helper, true)
                 }
             }
