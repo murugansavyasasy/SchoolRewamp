@@ -16,22 +16,18 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.os.HandlerCompat.postDelayed
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentFilePathAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -39,11 +35,9 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.AttachmentMediaAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.MessageFromStaffAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
-import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.RoundedBackgroundSpan
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_New
 import com.vs.schoolmessenger.databinding.MessageFromManagementBinding
 import me.relex.circleindicator.CircleIndicator2
 

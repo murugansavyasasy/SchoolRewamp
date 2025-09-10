@@ -1,21 +1,16 @@
 package com.vs.schoolmessenger.School.MessageFromManagement.Adapter
 
 import android.content.Context
-import android.content.Intent
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
 import com.vs.schoolmessenger.School.MessageFromManagement.MsgStaffListener
-import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
