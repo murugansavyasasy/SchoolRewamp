@@ -18,6 +18,8 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponListener.TicketCouponClickList
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummary
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.MycouponViewActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class TicketCouponAdapter(
@@ -101,7 +103,7 @@ class TicketCouponAdapter(
         fun bind(data: TicketSummary, position: Int) {
             categoryName.text = data.merchant_name
             discount.text = data.offer_to_show
-            merchantName.text = "Expires in ${data.expires_in} days"
+            merchantName.text = "${context.getString(R.string.Expires_in)} ${data.expires_in} ${context.getString(R.string.days)}"
 
             Log.d(
                 "TicketCouponAdapter",
@@ -123,22 +125,22 @@ class TicketCouponAdapter(
             }
 
             when (data.coupon_status) {
-                "activated" -> {
+                Constant.activated -> {
                     couponStatus.visibility = View.GONE
                 }
 
-                "claimed" -> {
+                Constant.claimed -> {
                     couponStatus.visibility = View.VISIBLE
                     couponStatus.background =
                         ContextCompat.getDrawable(context, R.drawable.redeemed_backgroundgreen)
-                    couponStatus.text = "Redeemed"
+                    couponStatus.text = context.getString(R.string.redeemed)
                 }
 
-                "expired" -> {
+                Constant.expired -> {
                     couponStatus.visibility = View.VISIBLE
                     couponStatus.background =
                         ContextCompat.getDrawable(context, R.drawable.redeemed_backgroundgrey)
-                    couponStatus.text = "Expired"
+                    couponStatus.text =context.getString(R.string.expired)
                 }
 
                 else -> {
@@ -152,15 +154,15 @@ class TicketCouponAdapter(
                 val locationList: MutableList<TicketSummary.Location?> =
                     data.location_list ?: mutableListOf()
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                intent.putExtra("merchant_name", data.merchant_name)
-                intent.putExtra("offer_to_show", data.offer_to_show)
-                intent.putExtra("how_to_use", data.how_to_use)
-                intent.putExtra("coupon_code", data.coupon_code)
-                intent.putExtra("cover_image", data.cover_image)
-                intent.putExtra("expiry_date", data.expiry_date)
-                intent.putExtra("expiry_type", data.expiry_type)
-                intent.putExtra("merchant_logo", data.merchant_logo)
-                intent.putExtra("location_list", ArrayList(locationList))
+                intent.putExtra(Constant.merchant_name, data.merchant_name)
+                intent.putExtra(Constant.offer_to_show, data.offer_to_show)
+                intent.putExtra(Constant.how_to_use, data.how_to_use)
+                intent.putExtra(Constant.coupon_code, data.coupon_code)
+                intent.putExtra(Constant.cover_image, data.cover_image)
+                intent.putExtra(Constant.expiry_date, data.expiry_date)
+                intent.putExtra(Constant.expiry_type, data.expiry_type)
+                intent.putExtra(Constant.merchant_logo, data.merchant_logo)
+                intent.putExtra(Constant.location_list, ArrayList(locationList))
                 context.startActivity(intent)
             }
         }

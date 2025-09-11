@@ -16,6 +16,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -29,7 +30,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
     private var isChildDetails: ChildDetails? = null
     private lateinit var certificateRequestList: List<CertificateListData>
     private var isSelectedCertificateName: String? = null
-    private var urgency_level: String? = "Not Urgent"
+    private var urgency_level: String? = getString(R.string.not_urgent)
 
     override fun getViewBinding(): CertificateRequestParentBinding {
         return CertificateRequestParentBinding.inflate(layoutInflater)
@@ -84,7 +85,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
             } else {
                 binding.recyclerView.visibility = View.GONE
                 binding.lnrNoRecords.visibility = View.VISIBLE
-                binding.txtNoData.text = "No data found!"
+                binding.txtNoData.text = getString(R.string.no_data_found)
             }
         }
 
@@ -244,13 +245,13 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
             }
 
             R.id.ivradio -> {
-                urgency_level = "Not Urgent"
+                urgency_level = getString(R.string.not_urgent)
                 binding.ivradio.setImageResource(R.drawable.selected_radio_button)
                 binding.ivradio1.setImageResource(R.drawable.unselected_radio_button)
             }
 
             R.id.ivradio1 -> {
-                urgency_level = "Urgent"
+                urgency_level = getString(R.string.urgent)
                 binding.ivradio.setImageResource(R.drawable.unselected_radio_button)
                 binding.ivradio1.setImageResource(R.drawable.selected_radio_button)
             }
@@ -261,15 +262,15 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 if (binding.txtReason.text.isNotEmpty()) {
                     Constant.showLoading(this)
                     val jsonObject = JsonObject()
-                    jsonObject.addProperty("requested_for", isSelectedCertificateName)
-                    jsonObject.addProperty("urgency_level", urgency_level)
-                    jsonObject.addProperty("reason", binding.txtReason.text.toString())
+                    jsonObject.addProperty(APIKeyNames.requested_for, isSelectedCertificateName)
+                    jsonObject.addProperty(APIKeyNames.urgency_level, urgency_level)
+                    jsonObject.addProperty(APIKeyNames.reason, binding.txtReason.text.toString())
                     appViewModel?.sendCertificateRequest(
                         isAccessToken.orEmpty(), jsonObject, activity = this
                     )
                 } else {
                     Toast.makeText(
-                        this, "Please enter the reason", Toast.LENGTH_SHORT
+                        this, getString(R.string.please_enter_the_reason), Toast.LENGTH_SHORT
                     ).show()
                 }
             }

@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSummary.ActivateCouponSummary
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.BottomSheetBinding
 
 class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickListener {
@@ -78,13 +79,13 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         binding.imageTopLeft.setOnClickListener {
             onBackPressed()
         }
-        category_name = intent.getStringExtra("category_name") ?: ""
-        discount = intent.getStringExtra("discount") ?: ""
-        merchant_name = intent.getStringExtra("merchant_name") ?: ""
-        thumbnail = intent.getStringExtra("thumbnail") ?: ""
-        source_link = intent.getStringExtra("source_link") ?: ""
-        coupon_status = intent.getStringExtra("coupon_status") ?: ""
-        merchant_logo = intent.getStringExtra("merchant_logo") ?: ""
+        category_name = intent.getStringExtra(Constant.category_name) ?: ""
+        discount = intent.getStringExtra(Constant.discount) ?: ""
+        merchant_name = intent.getStringExtra(Constant.merchant_name) ?: ""
+        thumbnail = intent.getStringExtra(Constant.thumbnail) ?: ""
+        source_link = intent.getStringExtra(Constant.source_link) ?: ""
+        coupon_status = intent.getStringExtra(Constant.coupon_status) ?: ""
+        merchant_logo = intent.getStringExtra(Constant.merchant_logo) ?: ""
 
         earnedPoints = intent.getIntExtra("earnedPoints", 0)
         spentPoints = intent.getIntExtra("spentPoints", 0)
@@ -95,11 +96,8 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         appViewModel.init()
 
         fetchactivatecoupondata(source_link)
-
-        coupon_status = intent.getStringExtra("coupon_status") ?: ""
-
         Log.d("coupon_status", coupon_status)
-        if ("activated".equals(coupon_status, ignoreCase = true)) {
+        if (Constant.activated.equals(coupon_status, ignoreCase = true)) {
             binding.btnActivateCoupon.visibility = View.GONE
         } else {
             binding.btnActivateCoupon.visibility = View.VISIBLE
@@ -119,21 +117,21 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
             binding.isProgressBar.visibility = View.GONE
             response?.data?.let { data ->
                 val intent = Intent(this, CouponOrderActivity::class.java).apply {
-                    putExtra("coupon_code", data.coupon_code)
-                    putExtra("qr_code", data.coupons?.getOrNull(0)?.qr_code)
-                    putExtra("expiry_date", data.coupons?.getOrNull(0)?.expiry_date)
-                    putExtra("merchant_logo", data.merchant_logo)
-                    putExtra("offer", data.offer)
-                    putExtra("redirect_url", data.redirect_url)
-                    putExtra("isCTAvalid", data.isCTAvalid)
-                    putExtra("CTAname", data.cTAname)
-                    putExtra("CTAredirect", data.cTAredirect)
-                    putExtra("category_name", category_name)
-                    putExtra("how_to_use", howToUseText)
-                    putExtra("Terms and Conditions", termsAndConditions)
-                    putExtra("thumbnail", thumbnail)
-                    putExtra("merchant_name", merchant_name)
-                    putExtra("offer_show", binding.bottomLayout.offerText.text.toString())
+                    putExtra(Constant.coupon_code, data.coupon_code)
+                    putExtra(Constant.qr_code, data.coupons?.getOrNull(0)?.qr_code)
+                    putExtra(Constant.expiry_date, data.coupons?.getOrNull(0)?.expiry_date)
+                    putExtra(Constant.merchant_logo, data.merchant_logo)
+                    putExtra(Constant.offer, data.offer)
+                    putExtra(Constant.redirect_url, data.redirect_url)
+                    putExtra(Constant.isCTAvalid, data.isCTAvalid)
+                    putExtra(Constant.CTAname, data.cTAname)
+                    putExtra(Constant.CTAredirect, data.cTAredirect)
+                    putExtra(Constant.category_name, category_name)
+                    putExtra(Constant.how_to_use, howToUseText)
+                    putExtra(Constant.Terms_and_Conditions, termsAndConditions)
+                    putExtra(Constant.thumbnail, thumbnail)
+                    putExtra(Constant.merchant_name, merchant_name)
+                    putExtra(Constant.offer_show, binding.bottomLayout.offerText.text.toString())
                 }
                 startActivity(intent)
                 finish()
@@ -175,7 +173,7 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         binding.bottomLayout.headerTextview.text = category_name
         binding.bottomLayout.offerText.text = data.offer_to_show
         binding.bottomLayout.offerText1.text = data.merchant_name
-        binding.bottomLayout.offerText4.text = "Valid Until: " + data.expiry_date
+        binding.bottomLayout.offerText4.text = "${getString(R.string.valid_until)} ${data.expiry_date}"
         binding.bottomLayout.expandableText.text = convertHtmlToBullets(data.how_to_use)
         binding.bottomLayout.expandableText1.text = convertHtmlToBullets(data.terms_and_conditions)
 

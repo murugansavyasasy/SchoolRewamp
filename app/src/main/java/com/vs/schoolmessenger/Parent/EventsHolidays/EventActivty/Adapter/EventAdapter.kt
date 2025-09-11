@@ -101,7 +101,7 @@ class EventAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<EventItem> ?: listOf()
-                listener.onSearchResultEmpty("ONGOING", filteredList.isEmpty())
+                listener.onSearchResultEmpty(Constant.ONGOING, filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }
@@ -136,9 +136,9 @@ class EventAdapter(
         ) {
             event_header.text = data.title
             event_time.text =
-                "Event started at" + " " + data.time + " - " + Constant.convertDateTimeFormat(data.date)
+                "${context.getString(R.string.Event_started_at)} ${data.time} - ${Constant.convertDateTimeFormat(data.date)}"
             event_location.text = data.venue
-            status_event.text = "Today's Event"
+            status_event.text = context.getString(R.string.today_s_event)
             eventdesc.text = data.description
 
             loadingBar.visibility = View.GONE
@@ -166,7 +166,7 @@ class EventAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }

@@ -115,7 +115,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
             binding.lytList.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching report found"
+            binding.txtNoData.text = getString(R.string.no_matching_report_found)
             binding.rcyAttendanceReport.visibility = View.GONE
         } else {
             binding.lytList.visibility = View.GONE

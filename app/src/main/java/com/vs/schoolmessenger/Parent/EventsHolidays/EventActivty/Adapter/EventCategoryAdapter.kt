@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class EventCategoryAdapter(
@@ -122,7 +123,7 @@ class EventCategoryAdapter(
         fun bind(
             isSelected: Boolean, adapter: EventCategoryAdapter
         ) {
-            categoryName.text = "All"
+            categoryName.text = context.getString(R.string.all)
             categoryImage.setImageResource(R.drawable.allimage)
 
             layout.setBackgroundResource(
@@ -132,7 +133,7 @@ class EventCategoryAdapter(
 
             itemView.setOnClickListener {
                 adapter.onCategorySelected(adapterPosition)
-                adapter.listener.onCategoryClicked(Category(0, "All", ""))
+                adapter.listener.onCategoryClicked(Category(0, Constant.All_, ""))
             }
         }
     }

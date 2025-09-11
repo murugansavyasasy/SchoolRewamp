@@ -96,7 +96,7 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         val unParts = unAnswer.split("/")
 
         val right = rightParts[0].toInt()
-        val total = rightParts[1].toInt() // denominator is same for all
+        val total = rightParts[1].toInt()
 
         val wrong = wrongParts[0].toInt()
         val un_answer = unParts[0].toInt()
@@ -106,25 +106,31 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         } else 0
 
 
-        binding.lblCompletedAt.text="Completed at : ${Constant.convertDateFormatType(isSubmittedOn)}"
+        binding.lblCompletedAt.text="${getString(R.string.completed_at)} ${Constant.convertDateFormatType(isSubmittedOn)}"
         binding.lblSubjectTitle.text=isSubject
+        binding.lblQuizPercent.text=percentage.toString()
         animateProgress(binding.quizPercent,percentage, 100)
 
-        binding.lblCorrectAnswer.text=rightAnswer
+        binding.lblCorrectAnswer.text="${getString(R.string.correct)}: ${rightAnswer}"
         if (total==right){
-            binding.lblWrongAnswer.text=wrong.toString()
-            binding.lblNotAnswer.text=un_answer.toString()
+
+            binding.lblWrongAnswer.text="${getString(R.string.wrong)}: ${wrong}"
+            binding.lblNotAnswer.text="${getString(R.string.not_answered)}${un_answer}"
         }
         else{
-            binding.lblWrongAnswer.text=wrongAnswer
-            binding.lblNotAnswer.text=unAnswer
+            binding.lblWrongAnswer.text="${getString(R.string.wrong)}: ${wrongAnswer}"
+            binding.lblNotAnswer.text="${getString(R.string.not_answered)} ${unAnswer}"
         }
 
         if (data.get(0).quiz_details.size>0){
             binding.lytList.visibility = View.GONE
             binding.rcSubmitedQuiz.visibility = View.VISIBLE
             adapter1 = QuizCompletedAdapter(data.get(0).quiz_details,this, false)
-            binding.rcSubmitedQuiz.layoutManager = LinearLayoutManager(this)
+            binding.rcSubmitedQuiz.layoutManager = object : LinearLayoutManager(this) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
             binding.rcSubmitedQuiz.adapter = adapter1
         }
         else{
@@ -142,9 +148,13 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
 
     private fun isFetchSubmittedQuiz() {
         adapter1 = QuizCompletedAdapter(null, this,true)
-        binding.rcSubmitedQuiz.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        binding.rcSubmitedQuiz.adapter = adapter1
+        binding.rcSubmitedQuiz.layoutManager = object : LinearLayoutManager(this) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
 
+        binding.rcSubmitedQuiz.adapter = adapter1
         appViewModel?.isGetMySubmission(isAccessToken ?: "",isQuizID)
     }
 

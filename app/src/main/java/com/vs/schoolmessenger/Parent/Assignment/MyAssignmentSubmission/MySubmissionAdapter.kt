@@ -129,19 +129,19 @@ class MySubmissionAdapter(
 
 
             try {
-                val apiFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+                val apiFormat = SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_ss_a, Locale.getDefault())
                 val parsedDate = apiFormat.parse(data.submitted_on)
 
                 if (parsedDate != null) {
 
-                    submitteddetails.text = "submitted: " + DateUtils.getRelativeTimeSpanString(
+                    submitteddetails.text = "${context.getString(R.string.submitted1)}: ${DateUtils.getRelativeTimeSpanString(
                         parsedDate.time,
                         System.currentTimeMillis(),
                         DateUtils.MINUTE_IN_MILLIS
-                    )
+                    )}"
 
 
-                    val shortDateFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
+                    val shortDateFormat = SimpleDateFormat(Constant.dd_MMM, Locale.getDefault())
                     datevalue.text = shortDateFormat.format(parsedDate)
                 } else {
                     submitteddetails.text = data.submitted_on
@@ -183,7 +183,7 @@ class MySubmissionAdapter(
                     assignmentsubject = ""
                 )
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -213,7 +213,7 @@ class MySubmissionAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -248,7 +248,7 @@ class MySubmissionAdapter(
                             )
 
                             val intent = Intent(context, ChildHomeWork::class.java)
-                            intent.putExtra("isPreViewData", isHomeWorkData)
+                            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             context.startActivity(intent)
                         }

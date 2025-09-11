@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponListener.TicketCouponClickList
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummary
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.FragmentTicketBinding
 
 
@@ -47,13 +48,13 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        fetchticketsummary("all")
+        fetchticketsummary(Constant.all__)
 
         appViewModel.getmycouponsSummary?.observe(viewLifecycleOwner) { response ->
             hideProgressBar()
             val couponList = response?.data?.coupon_list?.data?.filterNotNull()
             if (couponList.isNullOrEmpty()) {
-                showMyCouponSummaryErrorUI("No coupon summary data available")
+                showMyCouponSummaryErrorUI(getString(R.string.no_coupon_summary_data_available))
             } else {
                 isLoadCouponSummaryData(couponList)
             }
@@ -113,10 +114,10 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
 
             // Show progress bar when changing tabs (new fetch begins)
             when (v.id) {
-                R.id.alltext -> fetchticketsummary("all")
-                R.id.activetext -> fetchticketsummary("activated")
-                R.id.expiredtext -> fetchticketsummary("claimed")
-                R.id.redeemedtext -> fetchticketsummary("expired")
+                R.id.alltext -> fetchticketsummary(Constant.all__)
+                R.id.activetext -> fetchticketsummary(Constant.activated)
+                R.id.expiredtext -> fetchticketsummary(Constant.claimed)
+                R.id.redeemedtext -> fetchticketsummary(Constant.expired)
             }
         }
     }
@@ -126,7 +127,7 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
 
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching coupon found"
+            binding.txtNoData.text = getString(R.string.no_matching_coupon_found)
             binding.recyclerView.visibility = View.GONE
         } else {
 

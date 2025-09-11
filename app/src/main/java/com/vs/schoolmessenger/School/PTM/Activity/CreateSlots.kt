@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -247,9 +248,12 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
 
             R.id.imgCountDown -> {
-                isSlotsCount--
+                if (isSlotsCount > 0) {
+                    isSlotsCount--
+                }
                 binding.lblSlotsCount.text = isSlotsCount.toString()
             }
+
 
             R.id.rytPickDurationBreak -> {
                 isLoadSlotDuration()
@@ -612,15 +616,29 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         binding.lblTenMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblTwentyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblThirtyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
-        isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.bg_light_blue))
+        isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.bg_green_light_radious))
         isBreakDuration = isSelectedTextView.text.toString()
     }
 
     private fun isChangeTheBackRound(isSelectedTextView: TextView) {
-        binding.lblPerson.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
-        binding.lblOnline.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
-        binding.lblPhoneCall.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
-        isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.bg_light_blue))
+        binding.lblPerson.apply {
+            setBackgroundResource(R.drawable.gray_bg_radius)
+            setTextColor(ContextCompat.getColor(context, R.color.black))
+        }
+        binding.lblOnline.apply {
+            setBackgroundResource(R.drawable.gray_bg_radius)
+            setTextColor(ContextCompat.getColor(context, R.color.black))
+        }
+        binding.lblPhoneCall.apply {
+            setBackgroundResource(R.drawable.gray_bg_radius)
+            setTextColor(ContextCompat.getColor(context, R.color.black))
+        }
+
+        isSelectedTextView.apply {
+            setBackgroundResource(R.drawable.bg_button_blue_color)
+            setTextColor(ContextCompat.getColor(context, R.color.white))
+        }
+
         isMeetingMode = isSelectedTextView.text.toString()
         if (isSelectedTextView.text.toString() == "Online") {
             binding.edtMobileOrLink.visibility = View.VISIBLE
@@ -632,4 +650,5 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             isOnlineMeeting = false
         }
     }
+
 }

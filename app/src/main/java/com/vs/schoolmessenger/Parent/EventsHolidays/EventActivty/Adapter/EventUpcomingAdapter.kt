@@ -103,7 +103,7 @@ class EventUpcomingAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<EventItem> ?: listOf()
-                listener.onSearchResultEmpty("UPCOMING", filteredList.isEmpty())
+                listener.onSearchResultEmpty(Constant.UPCOMING, filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }
@@ -191,7 +191,7 @@ class EventUpcomingAdapter(
             )
 
             val intent = Intent(context, ChildHomeWork::class.java)
-            intent.putExtra("isPreViewData", isHomeWorkData)
+            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             context.startActivity(intent)
         }

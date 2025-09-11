@@ -109,11 +109,21 @@
                         android:padding="@dimen/ten"
                         android:layout_height="wrap_content">
 
+                        <TextView
+                            android:id="@+id/questionText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/question_will_appear_here"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="match_parent"
                             android:id="@+id/rcAttachement"
-                            android:layout_marginTop="@dimen/five"
-                            android:layout_height="@dimen/two_hundred">
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_height="@dimen/one_fifty">
                         </androidx.recyclerview.widget.RecyclerView>
 
                         <me.relex.circleindicator.CircleIndicator2
@@ -126,28 +136,6 @@
                             android:elevation="@dimen/four"
                             android:visibility="gone" />
 
-                        <!-- Question Text -->
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ten"
-
-                            app:cardCornerRadius="@dimen/fifteen">
-
-                            <TextView
-                                android:id="@+id/questionText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/onahau"
-                                android:padding="@dimen/sixteen"
-                                android:text="@string/question_will_appear_here"
-                                android:textSize="@dimen/fifteen_sp"
-                                android:gravity="center"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-                        </androidx.cardview.widget.CardView>
-
-                        <!-- Options -->
                         <TextView
                             android:id="@+id/option1"
                             android:layout_width="match_parent"
@@ -156,26 +144,26 @@
                             android:background="@drawable/quiz_option_bg"
                             android:clickable="true"
                             android:gravity="center"
-                            android:minHeight="@dimen/fourty_nine"
                             android:padding="10dp"
                             android:text="Option 1"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:textColor="@color/azure_radiance"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/fourteen_sp" />
 
 
                         <TextView
                             android:id="@+id/option2"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:background="@drawable/quiz_option_bg"
                             android:clickable="true"
                             android:gravity="center"
-                            android:minHeight="@dimen/fourty_nine"
                             android:padding="@dimen/ten"
                             android:text="Option 2"
                             android:textColor="@color/azure_radiance"
-                            android:textSize="@dimen/sixteen_sp" />
+                            android:textSize="@dimen/fourteen_sp" />
 
                         <TextView
                             android:id="@+id/option3"
@@ -185,13 +173,14 @@
                             android:background="@drawable/quiz_option_bg"
                             android:clickable="true"
                             android:gravity="center"
-                            android:minHeight="@dimen/fourty_nine"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:padding="@dimen/ten"
                             android:text="Option 3"
                             android:textColor="@color/azure_radiance"
-                            android:textSize="@dimen/sixteen_sp" />
+                            android:textSize="@dimen/fourteen_sp" />
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:id="@+id/option4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -199,11 +188,10 @@
                             android:background="@drawable/quiz_option_bg"
                             android:clickable="true"
                             android:gravity="center"
-                            android:minHeight="@dimen/fourty_nine"
                             android:padding="@dimen/ten"
                             android:text="Option 4"
                             android:textColor="@color/azure_radiance"
-                            android:textSize="@dimen/sixteen_sp" />
+                            android:textSize="@dimen/fourteen_sp" />
 
                     </LinearLayout>
 
@@ -247,6 +235,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+
                             android:layout_marginStart="@dimen/five"
                             android:gravity="center"
                             android:id="@+id/nextButton"

@@ -175,7 +175,7 @@ class UnifiedVoiceAdapter(
                 rlaSendVoice.visibility = View.GONE
                 lblContentText.text = data.content ?: ""
                 lblEndDuration.text = String.format(
-                    "%02d:%02d", data.duration!!.toInt() / 60, data.duration!!.toInt() % 60
+                   Constant.dateForMate, data.duration!!.toInt() / 60, data.duration!!.toInt() % 60
                 )
 
                 imgVoicePlay.setOnClickListener {
@@ -225,7 +225,7 @@ class UnifiedVoiceAdapter(
                         lblnewiconText.visibility = View.GONE
                         lblContentText.maxLines = 3
                         lblContentText.ellipsize = TextUtils.TruncateAt.END
-                        lblSeeMore.text = "see more"
+                        lblSeeMore.text = context.getString(R.string.see_more_2)
                     } else {
                         lblSeeMore.visibility = View.GONE
                     }

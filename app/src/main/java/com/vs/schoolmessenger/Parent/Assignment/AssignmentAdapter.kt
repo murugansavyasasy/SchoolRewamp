@@ -150,15 +150,15 @@ class AssignmentAdapter(
             lblTitle.text = data.title
             lblCategory.text = data.category
             lblassigned.text =
-                "Assigned" + " - " + Constant.convertToReadableDate(data.created_date)
+                 "${context.getString(R.string.Assigned)} - ${Constant.convertToReadableDate(data.created_date)}"
             createddate.text = Constant.convertToReadableDate(data.created_date)
             lblSubject.text = data.subject
             lbldeadline.text =
-                "Submission date" + " " + Constant.convertToReadableDate(data.end_date)
+                "${context.getString(R.string.Submission_date)} ${Constant.convertToReadableDate(data.end_date)}"
             lblSendby.text = data.created_date
 
-            lblSubmitted.text = "Submitted" + " - " + data.submitted_count
-            lblNotSubmitted.text = "Not Submitted" + " - " + data.total_count
+            lblSubmitted.text = "${context.getString(R.string.submitted)} - ${data.submitted_count}"
+            lblNotSubmitted.text = "${context.getString(R.string.not_submitted)} - ${data.total_count}"
 
             lblSubmittedCount.text = data.submitted_count.toString()+"/"+data.total_count.toString()
 
@@ -201,7 +201,7 @@ class AssignmentAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -234,7 +234,7 @@ class AssignmentAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -272,7 +272,7 @@ class AssignmentAdapter(
                             )
 
                             val intent = Intent(context, ChildHomeWork::class.java)
-                            intent.putExtra("isPreViewData", isHomeWorkData)
+                            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             context.startActivity(intent)
                         }

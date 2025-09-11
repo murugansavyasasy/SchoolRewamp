@@ -57,8 +57,9 @@ import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
-import com.vs.schoolmessenger.Parent.PTM.DataClass.StaffSlotResponse
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamList
@@ -924,7 +925,7 @@ interface ApiInterfaces {
         @Query("event_date") event_date: String,
         @Query("subject_id") subject_id: String,
         @Query("class_teacher_id") class_teacher_id: String
-    ): Call<StaffSlotResponse?>?
+    ): Call<MeetingResponse?>?
 
     @GET(APIMethods.isAvailableSlotsCountForStudent)
     fun isAvailableSlotsCountForStudent(
@@ -950,7 +951,7 @@ interface ApiInterfaces {
     @GET(APIMethods.isSlotHistoryForStudent)
     fun isSlotHistoryForStudent(
         @Header(APIKeyNames.Authorization) token: String
-    ): Call<SlotDetailsResponse?>?
+    ): Call<MeetingHistoryResponse?>?
 
     @GET(APIMethods.isGetQuizExamList)
     fun isQuizExamList(

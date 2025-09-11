@@ -44,9 +44,9 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        assignmentId = intent.getStringExtra("assignment_id")
-        titleName = intent.getStringExtra("title")
-        subjectName = intent.getStringExtra("subject")
+        assignmentId = intent.getStringExtra(Constant.assignment_id)
+        titleName = intent.getStringExtra(Constant.title_)
+        subjectName = intent.getStringExtra(Constant.subject)
 
 
         binding.rcyAssignment.layoutManager = LinearLayoutManager(this)

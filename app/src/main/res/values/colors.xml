@@ -276,5 +276,9 @@
     <color name="amber_yellow">#FFC107</color>
     <color name="light_white_3">#F8F9FA</color>
 
+    <color name="gradient_top">#B8C9EA</color>
+    <color name="gradient_bottom">#D3E0F5</color>
+
+
 
 </resources>

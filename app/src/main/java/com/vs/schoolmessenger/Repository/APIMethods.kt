@@ -151,7 +151,7 @@ object APIMethods {
     const val isDatewiseBookedSlots = "ptm/api/ptm-schedule/datewise-booked-slots"
     const val isBookingForStudent = "ptm/api/ptm-schedule/book-slots-for-student"
     const val isSlotsAvailabilityForStudent =
-        "ptm-schedule/teacherwise-slots-availability-for-student"
+        "ptm/api/ptm-schedule/teacherwise-slots-availability-for-student"
     const val isAvailableSlotsCountForStudent =
         "ptm/api/ptm-schedule/available-slots-count-for-student"
     const val isCancelByStudent = "ptm/api/ptm-schedule/cancel-slot-by-student"

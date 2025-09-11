@@ -64,10 +64,10 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         appViewModel!!.init()
 
         val dateDetails = Constant.getCurrentDateDetails()
-        binding.lblDate.text = dateDetails["day"]
-        binding.lblDateSuffix.text = Constant.getDaySuffix(dateDetails["day"]?.toIntOrNull() ?: 1)
-        binding.lblDay.text = dateDetails["weekday"]
-        binding.lblMonthYear.text = dateDetails["monthYear"]
+        binding.lblDate.text = dateDetails[Constant.day]
+        binding.lblDateSuffix.text = Constant.getDaySuffix(dateDetails[Constant.day]?.toIntOrNull() ?: 1)
+        binding.lblDay.text = dateDetails[Constant.weekday]
+        binding.lblMonthYear.text = dateDetails[Constant.monthYear]
         loadStudentStats()
         binding.imgInfo.setOnClickListener {
             val popupMenu = PopupMenu(this, binding.imgInfo)
@@ -134,7 +134,7 @@ class Attendance : BaseActivity<AttendanceBinding>() {
 
         val attList = data.weekly_status.att_list
 
-        val days = listOf("M", "T", "W", "T", "F", "S", "S")
+        val days = listOf(Constant.M, Constant.allPresent, Constant.W, Constant.allPresent, Constant.fullDay, Constant.section,Constant.section)
 
         if (attList.isNotEmpty()) {
             binding.rcWeekStatus.visibility = View.VISIBLE
@@ -158,7 +158,7 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         val percentage = ((safeCurrent.toFloat() / safeMax) * 100).toInt()
 
         progressBar.max = 100
-        val animator = ObjectAnimator.ofInt(progressBar, "progress", 0, percentage)
+        val animator = ObjectAnimator.ofInt(progressBar, Constant.progress, 0, percentage)
         animator.duration = duration
         animator.interpolator = DecelerateInterpolator()
         animator.start()
@@ -172,11 +172,11 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         try {
             val fields = menu.javaClass.declaredFields
             for (field in fields) {
-                if (field.name == "mPopup") {
+                if (field.name == Constant.mPopup) {
                     field.isAccessible = true
                     val helper = field.get(menu)
                     val classPopup = Class.forName(helper.javaClass.name)
-                    val setIcons = classPopup.getMethod("setForceShowIcon", Boolean::class.java)
+                    val setIcons = classPopup.getMethod(Constant.setForceShowIcon, Boolean::class.java)
                     setIcons.invoke(helper, true)
                 }
             }

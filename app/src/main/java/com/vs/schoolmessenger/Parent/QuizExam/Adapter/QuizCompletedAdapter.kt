@@ -103,7 +103,7 @@ class QuizCompletedAdapter(
             }
 
 
-            questionText.text=data.question
+            questionText.text="${position+1}) ${data.question}"
             option1.text=data.a_option
             option2.text=data.b_option
             option3.text=data.c_cption
@@ -114,7 +114,7 @@ class QuizCompletedAdapter(
                 val defaultDrawable = ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
                 defaultDrawable?.setTint(ContextCompat.getColor(context, R.color.mild_grey3)) // default color
                 option.background = defaultDrawable
-                option.setTextColor(ContextCompat.getColor(context, R.color.black))
+                option.setTextColor(ContextCompat.getColor(context, R.color.azure_radiance))
             }
 
             val studentAns = data.student_answer?.trim()

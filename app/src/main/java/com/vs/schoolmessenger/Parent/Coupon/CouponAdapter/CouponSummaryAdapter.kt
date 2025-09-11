@@ -16,6 +16,8 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickLis
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponActivateActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -115,13 +117,13 @@ class CouponSummaryAdapter(
         fun bind(data: CampaignItem, position: Int) {
 
             lblProductName.text = data.category_name
-            lblProductOffer.text = "${data.discount ?: "0"}% Off"
+            lblProductOffer.text = "${data.discount ?: "0"}${context.getString(R.string.Off)}"
             lblCompanyName.text = data.merchant_name
 
 
             val expiryDateStr: String = data.expiry_date
 
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val sdf = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.getDefault())
 
             try {
                 val expiryDate = sdf.parse(expiryDateStr)
@@ -131,13 +133,13 @@ class CouponSummaryAdapter(
                 val daysLeft = TimeUnit.MILLISECONDS.toDays(diffInMillies)
 
                 if (daysLeft >= 0) {
-                    lblDays.text = (daysLeft.toString() + " days")
+                    lblDays.text = "${daysLeft.toString()} ${context.getString(R.string.days)}"
                 } else {
-                    lblDays.text = "Expired"
+                    lblDays.text = context.getString(R.string.expired)
                 }
             } catch (e: ParseException) {
                 e.printStackTrace()
-                lblDays.text = "Invalid date"
+                lblDays.text = context.getString(R.string.Invalid_date)
             }
 
             Glide.with(context)
@@ -155,18 +157,19 @@ class CouponSummaryAdapter(
             header.setOnClickListener {
                 val intent = Intent(itemView.context, CouponActivateActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                intent.putExtra("category_name", data.category_name)
-                intent.putExtra("discount", data.discount)
-                intent.putExtra("merchant_name", data.merchant_name)
-                intent.putExtra("thumbnail", data.thumbnail)
-                intent.putExtra("source_link", data.source_link)
-                intent.putExtra("coupon_status", data.coupon_status)
+                intent.putExtra(Constant.category_name, data.category_name)
+                intent.putExtra(Constant.discount, data.discount)
+                intent.putExtra(Constant.merchant_name, data.merchant_name)
+                intent.putExtra(Constant.thumbnail, data.thumbnail)
+                intent.putExtra(Constant.source_link, data.source_link)
+                intent.putExtra(Constant.coupon_status, data.coupon_status)
 //                Log.d("coupon_status",data.coupon_status)
-                intent.putExtra("merchant_logo", data.merchant_logo)
                 intent.putExtra("earnedPoints", earnedPoints)
                 intent.putExtra("spentPoints", spentPoints)
                 intent.putExtra("remainingPoints", remainingPoints)
                 intent.putExtra("pointspercoupon", pointspercoupon)
+                intent.putExtra(Constant.merchant_logo, data.merchant_logo)
+
                 itemView.context.startActivity(intent)
             }
         }

@@ -551,7 +551,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 isMessage
             ) { confirmed ->
                 if (confirmed) {
-                    Constant.showLoading(this)
                     isAddQuestionSubmit()
                 }
             }

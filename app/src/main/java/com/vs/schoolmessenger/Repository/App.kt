@@ -47,8 +47,9 @@ import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
-import com.vs.schoolmessenger.Parent.PTM.DataClass.StaffSlotResponse
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamList
@@ -339,11 +340,11 @@ class App(application: Application) : AndroidViewModel(application) {
     var isPtmSlotCancelClose: LiveData<StatusMessageModel?>? = null
     var isDateWiseSlot: LiveData<SlotBookingResponse?>? = null
     var isSlotBookingForStudent: LiveData<StatusMessageModel?>? = null
-    var isStaffSlotResponse: LiveData<StaffSlotResponse?>? = null
+    var isStudentSlotResponse: LiveData<MeetingResponse?>? = null
     var isAvailableSlotsResponse: LiveData<AvailableSlotsResponse?>? = null
     var isSlotCancelByStudent: LiveData<StatusMessageModel?>? = null
     var isSlotValidation: LiveData<SlotValidationResponse?>? = null
-    var isSlotDetailsHistory: LiveData<SlotDetailsResponse?>? = null
+    var isSlotDetailsHistory: LiveData<MeetingHistoryResponse?>? = null
     var isQuizExamList: LiveData<GetQuizExamList?>? = null
     var isGetQuestion: LiveData<GetQuizQuestions?>? = null
     var isSubmitQuiz: LiveData<SubmitQuizResponse?>? = null
@@ -487,7 +488,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isPtmSlotCancelClose = apiSchoolRepositories.isPtmSlotCancelCloseLiveData
         isDateWiseSlot = apiSchoolRepositories.isDateWiseSlotLiveData
         isSlotBookingForStudent = apiParentRepositories.isSlotBookingStudentLiveData
-        isStaffSlotResponse = apiParentRepositories.isStaffSlotResponseLiveData
+        isStudentSlotResponse = apiParentRepositories.isStudentSlotResponseLiveData
         isAvailableSlotsResponse = apiParentRepositories.isAvailableSlotsResponseLiveData
         isSlotCancelByStudent = apiParentRepositories.isSlotCancelByStudentLiveData
         isSlotValidation = apiSchoolRepositories.isSlotValidationLiveData
@@ -1162,13 +1163,13 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
 
-    fun isSlotAvailableForStudent(
+    fun isSlotAvailableForCountStudent(
         isToken: String
     ) {
         apiParentRepositories.isAvailableSlotsCountForStudent(isToken)
     }
 
-    fun isSlotAvailableForStudent(
+    fun isSlotCancelByStudent(
         isToken: String, jsonObject: JsonObject
     ) {
         apiParentRepositories.isASlotCancelByStudent(isToken, jsonObject)

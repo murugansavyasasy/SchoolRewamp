@@ -112,7 +112,7 @@ class AttendanceReportAdapter(
             adapter: AttendanceReportAdapter
         ) {
 
-            if (data.type == "Absent") {
+            if (data.type == Constant.Absent) {
                 lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle))
                 tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge))
                 tvFullDate.text = Constant.convertDateTimeFormat(data.date)
@@ -120,9 +120,9 @@ class AttendanceReportAdapter(
                 tvDayName.text = data.day
 
                 val inputDate = data.date
-                val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                val outputMonthFormat = SimpleDateFormat("MMM", Locale.getDefault())
-                val outputDayFormat = SimpleDateFormat("dd", Locale.getDefault())
+                val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+                val outputMonthFormat = SimpleDateFormat(Constant.MMM_, Locale.getDefault())
+                val outputDayFormat = SimpleDateFormat(Constant.dd, Locale.getDefault())
 
                 try {
                     val dateObj = inputFormat.parse(inputDate)

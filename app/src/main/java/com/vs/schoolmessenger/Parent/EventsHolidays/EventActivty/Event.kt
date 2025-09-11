@@ -288,13 +288,13 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
         when (adapterTag) {
-            "ONGOING" -> binding.rcyongoingevent.visibility =
+            Constant.ONGOING -> binding.rcyongoingevent.visibility =
                 if (isEmpty) View.GONE else View.VISIBLE
 
-            "COMPLETED" -> binding.rcycompletedevent.visibility =
+            Constant.COMPLETED -> binding.rcycompletedevent.visibility =
                 if (isEmpty) View.GONE else View.VISIBLE
 
-            "UPCOMING" -> binding.rcyupcomingevent.visibility =
+            Constant.UPCOMING -> binding.rcyupcomingevent.visibility =
                 if (isEmpty) View.GONE else View.VISIBLE
         }
 

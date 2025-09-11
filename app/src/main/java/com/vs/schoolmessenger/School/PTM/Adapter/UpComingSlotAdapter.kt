@@ -67,11 +67,11 @@ class UpComingSlotAdapter(
 
             if (position % 2 == 0) {
                 rytSlots.setBackgroundDrawable(
-                    context.resources.getDrawable(R.drawable.bg_light_green)
+                    context.resources.getDrawable(R.drawable.bg_gradient)
                 )
             } else {
                 rytSlots.setBackgroundDrawable(
-                    context.resources.getDrawable(R.drawable.bg_light_blue)
+                    context.resources.getDrawable(R.drawable.bg_gradient)
                 )
             }
 

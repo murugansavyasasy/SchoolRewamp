@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_height="match_parent">
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/cltDateSelection"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/one_sixty"
+        android:layout_height="@dimen/two_hundred_fifty"
         android:background="@drawable/bottom_right_left_radious">
 
         <ImageView
@@ -45,41 +45,42 @@
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"></TextView>
-
-        <TextView
-            android:id="@+id/lblCreateSlot"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblSchoolName"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="@dimen/ten"
-            android:background="@drawable/outline_whitecolor"
-            android:drawablePadding="@dimen/five"
-            android:padding="@dimen/ten"
-            android:text="Create Slot"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textSize="@dimen/thirteen_sp">
+        </TextView>
 
 
-        <TextView
-            android:id="@+id/lblDatePicking"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/layoutDatePicking"
+            android:layout_width="@dimen/hundred_thirty"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblSchoolName"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty"
             android:layout_toEndOf="@+id/imgBack"
             android:background="@drawable/outline_whitecolor"
-            android:drawableRight="@drawable/arrow_down_white"
-            android:drawablePadding="@dimen/five"
-            android:padding="@dimen/ten"
-            android:text="All Slots"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:padding="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblDatePicking"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All"
+                android:layout_marginStart="@dimen/thirty"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <ImageView
+                android:id="@+id/imgArrowDown"
+                android:layout_width="@dimen/fourteen"
+                android:layout_height="@dimen/fourteen"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_toEndOf="@id/lblDatePicking"
+                android:src="@drawable/arrow_down_white" />
+
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/imgDelete"
@@ -99,13 +100,50 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblDatePicking"
+            android:layout_below="@+id/layoutDatePicking"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_toEndOf="@+id/imgBack"
             android:text="You have a 10 meeting's todat"
             android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textSize="@dimen/sixteen">
+
+        </TextView>
+
+        <RelativeLayout
+            android:id="@+id/layoutCreateSlot"
+            android:layout_width="@dimen/hundred_thirty"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblSlotCount"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:background="@drawable/black_background"
+            android:padding="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/imgAdd"
+                android:layout_width="@dimen/fourteen"
+                android:layout_height="@dimen/fourteen"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/fifteen"
+                android:src="@drawable/add_icon" />
+
+            <TextView
+                android:id="@+id/lblCreateSlot"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:layout_toEndOf="@id/imgAdd"
+                android:text="Create"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen" />
+
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/imgSearch"
@@ -114,14 +152,15 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
-            android:src="@drawable/ic_search_white_color" />
+            android:src="@drawable/ic_search_white_color"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_below="@+id/cltDateSelection"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/cltDateSelection">
 
 
         <RelativeLayout
@@ -147,11 +186,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblToday"
-                android:nestedScrollingEnabled="false"
-                android:overScrollMode="never"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten">
+                android:layout_marginEnd="@dimen/ten"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -174,11 +213,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblUpComing"
-                android:nestedScrollingEnabled="false"
-                android:overScrollMode="never"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten">
+                android:layout_marginEnd="@dimen/ten"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -201,11 +240,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblComplete"
-                android:nestedScrollingEnabled="false"
-                android:overScrollMode="never"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten">
+                android:layout_marginEnd="@dimen/ten"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never">
 
             </androidx.recyclerview.widget.RecyclerView>
 
