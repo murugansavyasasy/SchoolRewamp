@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.PTM.Activity
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.util.Log
@@ -47,11 +48,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     override fun getViewBinding(): CreateSlotsBinding {
         return CreateSlotsBinding.inflate(layoutInflater)
     }
-
     private var isAccessToken: String? = null
     private lateinit var selectedDatesAdapter: SelectedDatesAdapter
     private var selectedSlots: List<Pair<String, SlotAvailability>> = emptyList()
-
     private var isStaffDetails: StaffDetails? = null
     private var appViewModel: App? = null
     var isValidAcademicYear = false
@@ -62,22 +61,17 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     var startCalendar: Calendar? = null
     var endCalendar: Calendar? = null
     var isSlotsCount = 1
-
+    private var bottomSheetDialog: BottomSheetDialog? = null
     private val itemsCategory = listOf(
         "Select Slot Duration", "10", "15", "20", "30", "Custom"
     )
     private lateinit var isSlotCreateValues: MutableList<Pair<String, List<SlotAvailability>>>
-
-
-
-
     var isSlotDuration = ""
     var isMeetingMode = ""
     var isBreakDuration = ""
     private var isSelectedList: MutableList<SelectedClassSection> = mutableListOf()
     var isSlotDurationCustom = false
     var isOnlineMeeting = false
-
 
     override fun setupViews() {
         super.setupViews()
@@ -123,6 +117,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         appViewModel!!.isPtmSlotCreate?.observe(this) { response ->
             if (response != null) {
+                bottomSheetDialog!!.dismiss()
                 if (response.status) {
                     Constant.showTopAlertPopup(response.message, this)
                 }
@@ -396,9 +391,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 addProperty("event_name", meetingData.purpose)
                 addProperty("from_time", meetingData.fromTime)
                 addProperty("to_time", meetingData.toTime)
-                addProperty("duration", meetingData.slotDuration)
+                addProperty("duration", meetingData.slotDuration.toInt())
                 addProperty("event_link", meetingData.meetingLink)
-                addProperty("break_time", meetingData.breakDuration)
+                addProperty("break_time", 0)
                 addProperty("meeting_mode", meetingData.meetingMode)
             }
 
@@ -430,9 +425,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     }
 
     private fun isShowAvailableSlot(data: List<ValidatedSlot>) {
-        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+         bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view = layoutInflater.inflate(R.layout.checkslot_create, null)
-        bottomSheetDialog.setContentView(view)
+        bottomSheetDialog!!.setContentView(view)
 
         val isRcySlotDate = view.findViewById<RecyclerView>(R.id.rcySlotDate)
         val lblCreateSlot = view.findViewById<TextView>(R.id.lblCreateSlot)
@@ -466,7 +461,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         }
 
-        bottomSheetDialog.show()
+        bottomSheetDialog!!.show()
     }
 
 
@@ -586,6 +581,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showCalendarDialog() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_calendar)
@@ -611,6 +607,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         dialog.show()
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun isChangeTheBackRoundBreakDuration(isSelectedTextView: TextView) {
         binding.lblFiveMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblTenMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))

@@ -122,7 +122,7 @@ class AttendanceReportAdapter(
                 val inputDate = data.date
                 val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
                 val outputMonthFormat = SimpleDateFormat(Constant.MMM_, Locale.getDefault())
-                val outputDayFormat = SimpleDateFormat("dd", Locale.getDefault())
+                val outputDayFormat = SimpleDateFormat(Constant.dd, Locale.getDefault())
 
                 try {
                     val dateObj = inputFormat.parse(inputDate)

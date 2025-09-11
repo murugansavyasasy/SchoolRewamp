@@ -291,7 +291,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         val popupView = LayoutInflater.from(this).inflate(R.layout.edit_location, null)
         val edtLocationName = popupView.findViewById<EditText>(R.id.edtLocationName)
         val edtDistance = popupView.findViewById<EditText>(R.id.edtDistance)
-        val btnCancel = popupView.findViewById<Button>(R.id.btnCancel)
+        val btnCancel = popupView.findViewById<TextView>(R.id.btnCancel)
         val btnUpdate = popupView.findViewById<Button>(R.id.btnUpdate)
 
         val dimView = View(this).apply {

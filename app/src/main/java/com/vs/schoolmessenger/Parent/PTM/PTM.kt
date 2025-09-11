@@ -36,11 +36,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
     override fun getViewBinding(): PtmBinding {
         return PtmBinding.inflate(layoutInflater)
     }
-
     private var lastCancelledPosition: Int = -1
-
     var isSelectedDate = ""
-
     private var isParentMeetingAdapter: ParentMeetingAdapter? = null
     lateinit var isMeetingHistoryAdapter: MeetingHistoryAdapter
     private var isAccessToken: String? = null
@@ -155,7 +152,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                 binding.recyclerViewSlots.visibility = View.GONE
             }
         }
-
         isScheduleCallList()
     }
 
@@ -197,6 +193,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             completedMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
         }
 
+
         val adapter = MeetingHistoryAdapter(meetingItems, this) { isEmpty ->
             binding.lytList.visibility = if (isEmpty) View.VISIBLE else View.GONE
             binding.rcyMeetingHistory.visibility = if (isEmpty) View.GONE else View.VISIBLE
@@ -237,7 +234,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         if (isSelectedTab == binding.lblYourMeeting) {
             binding.rytScheduleMeeting.visibility = View.GONE
             binding.rytYourMeeting.visibility = View.VISIBLE
-
             binding.imgSearch.visibility = View.VISIBLE
             binding.rytsearch.visibility = View.GONE
             binding.txtSearchMeeting.setText("")
@@ -246,7 +242,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         } else {
             binding.rytYourMeeting.visibility = View.GONE
             binding.rytScheduleMeeting.visibility = View.VISIBLE
-
             binding.imgSearch.visibility = View.GONE
             binding.rytsearch.visibility = View.GONE
             binding.txtSearchMeeting.setText("")

@@ -142,19 +142,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false) {
             if (data!!.assignmentid == "Listening") {
-               binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.headphonesvgformat)
+                binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.headphonesvgformat)
             } else if (data!!.assignmentid == "Speaking") {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.micsvgformatstyle)
-            } else if (data!!.assignmentid == "Reading"){
+            } else if (data!!.assignmentid == "Reading") {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
-            } else if (data!!.assignmentid == "Writing"){
+            } else if (data!!.assignmentid == "Writing") {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.pensvgformatstyle)
             } else {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.questionmark)
             }
             binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text = "Listening,Speaking,Reading,Writing"
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
+                "Listening,Speaking,Reading,Writing"
             binding.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
@@ -189,7 +190,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
             binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text = "Listening,Speaking,Reading,Writing"
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
+                "Listening,Speaking,Reading,Writing"
             if (data!!.assignmentid == "Listening") {
                 binding.descriptionLabel.visibility = View.GONE
                 binding.editDescription.visibility = View.GONE
@@ -338,7 +340,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             Log.d("isComingFilePath", data!!.fileList[i].url)
         }
 
-        val isParentAssignment = (SELECTED_SCHOOL_MENU == M_LSRW && data?.isParentAssignment == true)
+        val isParentAssignment =
+            (SELECTED_SCHOOL_MENU == M_LSRW && data?.isParentAssignment == true)
 
 
         val adapter = HomeWorkChildAdapter(
@@ -362,7 +365,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             else -> 3
         }
 
-        recyclerView.layoutManager = GridLayoutManager(this, spanCount, RecyclerView.VERTICAL, false)
+        recyclerView.layoutManager =
+            GridLayoutManager(this, spanCount, RecyclerView.VERTICAL, false)
         recyclerView.adapter = adapter
 
         appViewModel?.isHomeWorkComplete?.observe(this) { response ->
@@ -379,40 +383,58 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if (adapter.itemCount == 0) {
-            val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+        val isEmpty = adapter.itemCount == 0
+        val isAssignment = SELECTED_SCHOOL_MENU == M_ASSIGNMENT
+        val isLsrw = SELECTED_SCHOOL_MENU == M_LSRW
+
+        val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+        if (isEmpty) {
             params.topToBottom = binding.lblClickComplete.id
             params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
-            binding.lblPostedBy.layoutParams = params
-
-            if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                binding.childlsrwlayoutxml.rcChildHW.visibility = View.GONE
-                binding.childlsrwlayoutxml.lblAttachments.visibility = View.GONE
-                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility = View.GONE
-            } else {
-                recyclerView.visibility = View.GONE
-                binding.lblAttachments.visibility = View.GONE
-                binding.imgAttachmentIcon.visibility = View.GONE
-            }
         } else {
-            val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
             params.topToBottom = recyclerView.id
             params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
-            binding.lblPostedBy.layoutParams = params
+        }
+        binding.lblPostedBy.layoutParams = params
 
-            if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                binding.childlsrwlayoutxml.rcChildHW.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.lblAttachments.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility = View.VISIBLE
-            } else {
-                recyclerView.visibility = View.VISIBLE
-                binding.lblAttachments.visibility = View.VISIBLE
-                binding.imgAttachmentIcon.visibility = View.VISIBLE
+        when {
+            isAssignment -> {
+                binding.childlsrwlayoutxml.rcChildHW.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.lblAttachments.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+            }
+
+            isLsrw && data!!.isParentAssignment == true -> {
+                binding.childlsrwlayoutxml.rcChildHW.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.lblAttachments.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+            }
+
+            isLsrw && data!!.isParentAssignment == false -> {
+                binding.childlsrwlayoutxml.rcChildHW.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.lblAttachments.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+            }
+
+            else -> {
+                recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.lblAttachments.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.imgAttachmentIcon.visibility = if (isEmpty) View.GONE else View.VISIBLE
             }
         }
+
     }
 
-    override fun onClick(v: View?) {
+        override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
                 onBackPressed()

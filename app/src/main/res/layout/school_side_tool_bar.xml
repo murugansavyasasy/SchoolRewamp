@@ -54,19 +54,35 @@
 
         </LinearLayout>
 
-        <Spinner
-            android:id="@+id/lblDropDownMonth"
+        <LinearLayout
+            android:id="@+id/monthSelectorLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:spinnerMode="dropdown"
-            android:padding="4dp"
+            android:orientation="horizontal"
             android:visibility="gone"
-            android:popupBackground="@color/white"
-            android:textColor="@color/white"
-            android:entries="@array/months" />
+            android:gravity="center_vertical">
+
+            <Spinner
+                android:id="@+id/lblDropDownMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:spinnerMode="dropdown"
+                android:padding="4dp"
+                android:popupBackground="@android:color/white"
+                android:entries="@array/months" />
+
+            <ImageView
+                android:id="@+id/imgMonthIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/down_arrow" />
+        </LinearLayout>
+
 
 
         <RelativeLayout

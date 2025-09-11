@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.Attendance.Model.GetWeekStatusData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 
 class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
     RecyclerView.Adapter<WeekStatusAdapter.WeekStatusViewHolder>() {
@@ -27,17 +28,17 @@ class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
         val status = item.status.trim()
         holder.lblDay.text = item.day
 
-        if (status == "x" || status == "X") {
+        if (status == Constant.x || status == Constant.X_) {
             holder.lnrBackground.setBackgroundResource(R.drawable.present_icon)
-        } else if (status == "A") {
+        } else if (status == Constant.school) {
             holder.lnrBackground.setBackgroundResource(R.drawable.absent_icon)
-        } else if (status == "-") {
+        } else if (status == Constant.iffin) {
             holder.lnrBackground.setBackgroundResource(R.drawable.not_taken_icon)
-        } else if (status == "/") {
+        } else if (status == Constant.slash) {
             holder.lnrBackground.setBackgroundResource(R.drawable.first_half_icon)
-        } else if (status == "SH") {
+        } else if (status == Constant.secondHalf) {
             holder.lnrBackground.setBackgroundResource(R.drawable.second_half_icon)
-        } else if (status == "S") {
+        } else if (status == Constant.section) {
             holder.lnrBackground.setBackgroundResource(R.drawable.holiday_icon)
         }
     }

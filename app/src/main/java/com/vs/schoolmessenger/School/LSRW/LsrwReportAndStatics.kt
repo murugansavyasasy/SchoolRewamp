@@ -3,9 +3,13 @@ package com.vs.schoolmessenger.School.LSRW
 import android.R
 import android.os.Build
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -20,6 +24,7 @@ import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgStudentSubmissi
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwHeaderItem
 import com.vs.schoolmessenger.School.LSRW.Model.TopPerformanceItem
 import com.vs.schoolmessenger.School.LSRW.Model.WeeklyReportItem
+
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwReportstaticsBinding
@@ -29,6 +34,7 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.Calendar
 import java.util.Locale
+
 
 class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnClickListener {
 
@@ -52,7 +58,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         binding.toolbarLayout.lblParentToolBar.text = "Report & Analytics"
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
-        binding.toolbarLayout.lblDropDownMonth.visibility = View.VISIBLE
+        binding.toolbarLayout.monthSelectorLayout.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
 
@@ -64,13 +70,44 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 val data = response.data[0]
 
                 val headerItems = mutableListOf<LsrwHeaderItem>()
-                headerItems.add(LsrwHeaderItem("Today Submitted", "", "${data.today_submitted?.size ?: 0} Students"))
-                headerItems.add(LsrwHeaderItem("Listening", data.listening?.over_all_percentage ?: "0%", "${data.listening?.student_count ?: "0"} Students"))
-                headerItems.add(LsrwHeaderItem("Speaking", data.speaking?.over_all_percentage ?: "0%", "${data.speaking?.student_count ?: "0"} Students"))
-                headerItems.add(LsrwHeaderItem("Reading", data.reading?.over_all_percentage ?: "0%", "${data.reading?.student_count ?: "0"} Students"))
-                headerItems.add(LsrwHeaderItem("Writing", data.writing?.over_all_percentage ?: "0%", "${data.writing?.student_count ?: "0"} Students"))
+                headerItems.add(
+                    LsrwHeaderItem(
+                        "Today Submitted",
+                        "",
+                        "${data.today_submitted?.size ?: 0} Students"
+                    )
+                )
+                headerItems.add(
+                    LsrwHeaderItem(
+                        "Listening",
+                        data.listening?.over_all_percentage ?: "0%",
+                        "${data.listening?.student_count ?: "0"} Students"
+                    )
+                )
+                headerItems.add(
+                    LsrwHeaderItem(
+                        "Speaking",
+                        data.speaking?.over_all_percentage ?: "0%",
+                        "${data.speaking?.student_count ?: "0"} Students"
+                    )
+                )
+                headerItems.add(
+                    LsrwHeaderItem(
+                        "Reading",
+                        data.reading?.over_all_percentage ?: "0%",
+                        "${data.reading?.student_count ?: "0"} Students"
+                    )
+                )
+                headerItems.add(
+                    LsrwHeaderItem(
+                        "Writing",
+                        data.writing?.over_all_percentage ?: "0%",
+                        "${data.writing?.student_count ?: "0"} Students"
+                    )
+                )
 
-                binding.rclsrwheader.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                binding.rclsrwheader.layoutManager =
+                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                 val headerAdapter = LsrwHeaderAdapter(headerItems) { selected ->
                     filterByHeader(selected, data)
                 }
@@ -98,14 +135,20 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
 
                 binding.rclsrwheader.visibility = View.VISIBLE
                 binding.rvWeekly.visibility = View.VISIBLE
+                binding.monthlyLabel.visibility = View.VISIBLE
                 binding.rvTopPerformance.visibility = View.VISIBLE
+                binding.lytNoDataFound.visibility = View.GONE
                 binding.noDataFound.visibility = View.GONE
             } else {
 
                 binding.rclsrwheader.visibility = View.GONE
                 binding.rvWeekly.visibility = View.GONE
+                binding.monthlyLabel.visibility = View.GONE
+                binding.studentsLabel.visibility = View.GONE
                 binding.rvTopPerformance.visibility = View.GONE
-                binding.noDataFound.visibility = View.VISIBLE
+                binding.lytNoDataFound.visibility = View.VISIBLE
+                binding.noDataFound.text = response?.message
+                binding.noDataImage.visibility = View.VISIBLE
             }
         }
 
@@ -115,31 +158,52 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         val months = DateFormatSymbols().months
         val monthList = months.take(12)
 
-        val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, monthList)
+        val adapter = object : ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item,
+            monthList
+        ) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getView(position, convertView, parent) as TextView
+
+                view.setTextColor(ContextCompat.getColor(context, android.R.color.white))
+                view.textSize = 16f
+                return view
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getDropDownView(position, convertView, parent) as TextView
+                view.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+                view.textSize = 16f
+                view.setPadding(24, 20, 24, 20)
+                return view
+            }
+        }
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.toolbarLayout.lblDropDownMonth.adapter = adapter
-
-
 
         val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
         binding.toolbarLayout.lblDropDownMonth.setSelection(currentMonthIndex)
 
-        binding.toolbarLayout.lblDropDownMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedMonthNumber = position + 1
-                fetchLsrwstatsReportData(selectedMonthNumber)
-            }
+        binding.toolbarLayout.lblDropDownMonth.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedMonthNumber = position + 1
+                    fetchLsrwstatsReportData(selectedMonthNumber)
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        }
     }
+
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun filterByHeader(selected: LsrwHeaderItem, data: AvgSkillData) {
@@ -154,12 +218,18 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
 
         binding.rcstudents.layoutManager = LinearLayoutManager(this)
         binding.rcstudents.adapter = StudentListAdapter(details)
-        binding.rcstudents.visibility = View.VISIBLE
+        if (details.isEmpty()) {
+            binding.studentsLabel.visibility = View.GONE
+            binding.rcstudents.visibility = View.GONE
+            binding.studentsLabel.visibility = View.GONE
+        } else {
+            binding.studentsLabel.visibility = View.VISIBLE
+            binding.rcstudents.visibility = View.VISIBLE
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun calculateWeeklyReport(details: List<AvgStudentSubmission>): List<WeeklyReportItem> {
-
 
 
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault())
@@ -194,7 +264,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 percentage = it.remark.replace("%", "").toIntOrNull() ?: 0
             )
         }
-            .filter {it.percentage > 0}
+            .filter { it.percentage > 0 }
             .sortedByDescending { it.percentage }
     }
 

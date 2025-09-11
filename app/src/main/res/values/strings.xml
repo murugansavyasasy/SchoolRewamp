@@ -805,6 +805,30 @@
     <string name="phone_call">Phone Call</string>
     <string name="time">Time</string>
     <string name="cancel">Cancel</string>
+    <string name="please_enter_the_reason">Please enter the reason</string>
+    <string name="reason_2">Reason : </string>
+    <string name="see_more_2">see more</string>
+    <string name="Off">% Off</string>
+    <string name="days"> days</string>
+    <string name="Invalid_date"> Invalid date</string>
+    <string name="Expires_in"> Expires in</string>
+    <string name="no_coupon_summary_data_available">No coupon summary data available</string>
+    <string name="Used">Used</string>
+    <string name="Available">Available</string>
+    <string name="Coupons">Coupons</string>
+    <string name="no_matching_coupon_found">No matching coupon found</string>
+    <string name="valid_until">Valid Until:</string>
+    <string name="expires_on">Expires on</string>
+    <string name="Invalid_expiry_date">Invalid expiry date</string>
+    <string name="nothing_to_copy">Nothing to copy</string>
+    <string name="copied_text">Copied Text</string>
+    <string name="copied">Copied</string>
+    <string name="failed_to_access_clipboard">Failed to access clipboard</string>
+    <string name="Event_started_at">Event started at</string>
+    <string name="today_s_event">Today\'s Event</string>
+    <string name="Holidays_for">Holidays for</string>
+    <string name="No_holidays_in">No holidays in </string>
+    <string name="Marks">Marks</string>
 
 
 </resources>

@@ -149,6 +149,10 @@ object APIKeyNames {
     const val t_session = "t_session"
     const val offset = "offset"
     const val is_class_teacher = "is_class_teacher"
+    const val requested_for = "requested_for"
+    const val urgency_level = "urgency_level"
+
+
 
 
 }

@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.BottomSheetOrderBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -94,20 +95,20 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
         }
 
 
-        coupon_code = intent.getStringExtra("coupon_code") ?: ""
-        qr_code = intent.getStringExtra("qr_code") ?: ""
-        expiry_date = intent.getStringExtra("expiry_date") ?: ""
-        merchant_logo = intent.getStringExtra("merchant_logo") ?: ""
-        offer = intent.getStringExtra("offer") ?: ""
-        redirect_url = intent.getStringExtra("redirect_url") ?: ""
-        cTAname = intent.getStringExtra("cTAname") ?: ""
-        cTAredirect = intent.getStringExtra("cTAredirect") ?: ""
-        category_name = intent.getStringExtra("category_name") ?: ""
-        how_to_use = intent.getStringExtra("how_to_use") ?: ""
-        TermsandConditions = intent.getStringExtra("Terms and Conditions") ?: ""
-        thumbnail = intent.getStringExtra("thumbnail") ?: ""
-        merchant_name = intent.getStringExtra("merchant_name") ?: ""
-        offer_show = intent.getStringExtra("offer_show") ?: ""
+        coupon_code = intent.getStringExtra(Constant.coupon_code) ?: ""
+        qr_code = intent.getStringExtra(Constant.qr_code) ?: ""
+        expiry_date = intent.getStringExtra(Constant.expiry_date) ?: ""
+        merchant_logo = intent.getStringExtra(Constant.merchant_logo) ?: ""
+        offer = intent.getStringExtra(Constant.offer) ?: ""
+        redirect_url = intent.getStringExtra(Constant.redirect_url) ?: ""
+        cTAname = intent.getStringExtra(Constant.CTAname) ?: ""
+        cTAredirect = intent.getStringExtra(Constant.CTAredirect) ?: ""
+        category_name = intent.getStringExtra(Constant.category_name) ?: ""
+        how_to_use = intent.getStringExtra(Constant.how_to_use) ?: ""
+        TermsandConditions = intent.getStringExtra(Constant.Terms_and_Conditions) ?: ""
+        thumbnail = intent.getStringExtra(Constant.thumbnail) ?: ""
+        merchant_name = intent.getStringExtra(Constant.merchant_name) ?: ""
+        offer_show = intent.getStringExtra(Constant.offer_show) ?: ""
 
 
         binding.bottomLayout.frameText.text = coupon_code
@@ -126,21 +127,21 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
             .into(binding.bottomLayout.thumbnail)
 
         try {
-            val apiFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val apiFormat = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.getDefault())
             val expiryDateParsed = apiFormat.parse(expiry_date)
 
             val calendar = Calendar.getInstance()
             calendar.time = expiryDateParsed!!
 
             val day = calendar.get(Calendar.DAY_OF_MONTH)
-            val month = SimpleDateFormat("MMMM", Locale.getDefault()).format(expiryDateParsed)
+            val month = SimpleDateFormat(Constant.MMMM, Locale.getDefault()).format(expiryDateParsed)
             val suffix = getDaySuffix(day)
 
-            val displayText = "Expires on $day$suffix $month"
+            val displayText = "${getString(R.string.expires_on)} $day$suffix $month"
             binding.bottomLayout.expiryText.text = displayText
         } catch (e: ParseException) {
             e.printStackTrace()
-            binding.bottomLayout.expiryText.text = "Invalid expiry date"
+            binding.bottomLayout.expiryText.text = getString(R.string.Invalid_expiry_date)
         }
 
         showFullScreenConfetti()
@@ -206,16 +207,16 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
         val textToCopy = binding.bottomLayout.frameText.text.toString()
 
         if (textToCopy.isEmpty()) {
-            Toast.makeText(this, "Nothing to copy", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.nothing_to_copy), Toast.LENGTH_SHORT).show()
             return
         }
         val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-        val clip = ClipData.newPlainText("Copied Text", textToCopy)
+        val clip = ClipData.newPlainText(getString(R.string.copied_text), textToCopy)
         if (clipboard != null) {
             clipboard.setPrimaryClip(clip)
-            Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Failed to access clipboard", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.failed_to_access_clipboard), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -277,13 +278,13 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
 
     private fun getDaySuffix(day: Int): String {
         if (day >= 11 && day <= 13) {
-            return "th"
+            return Constant.th
         }
         when (day % 10) {
-            1 -> return "st"
-            2 -> return "nd"
-            3 -> return "rd"
-            else -> return "th"
+            1 -> return Constant.st
+            2 -> return Constant.nd
+            3 -> return Constant.rd
+            else -> return Constant.th
         }
     }
 

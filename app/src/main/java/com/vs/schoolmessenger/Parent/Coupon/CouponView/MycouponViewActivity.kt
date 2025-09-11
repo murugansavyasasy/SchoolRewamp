@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummary
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.MycouponViewBinding
 
 class MycouponViewActivity : BaseActivity<MycouponViewBinding>(), View.OnClickListener {
@@ -34,16 +35,16 @@ class MycouponViewActivity : BaseActivity<MycouponViewBinding>(), View.OnClickLi
         setContentView(binding.root)
         binding.back.setOnClickListener(this)
         binding.copyIcon.setOnClickListener(this)
-        merchant_name = intent.getStringExtra("merchant_name") ?: ""
-        offer_to_show = intent.getStringExtra("offer_to_show") ?: ""
-        how_to_use = intent.getStringExtra("how_to_use") ?: ""
-        coupon_code = intent.getStringExtra("coupon_code") ?: ""
-        cover_image = intent.getStringExtra("cover_image") ?: ""
-        expiry_date = intent.getStringExtra("expiry_date") ?: ""
-        expiry_type = intent.getStringExtra("expiry_type") ?: ""
-        merchant_logo = intent.getStringExtra("merchant_logo") ?: ""
+        merchant_name = intent.getStringExtra(Constant.merchant_name) ?: ""
+        offer_to_show = intent.getStringExtra(Constant.offer_to_show) ?: ""
+        how_to_use = intent.getStringExtra(Constant.how_to_use) ?: ""
+        coupon_code = intent.getStringExtra(Constant.coupon_code) ?: ""
+        cover_image = intent.getStringExtra(Constant.cover_image) ?: ""
+        expiry_date = intent.getStringExtra(Constant.expiry_date) ?: ""
+        expiry_type = intent.getStringExtra(Constant.expiry_type) ?: ""
+        merchant_logo = intent.getStringExtra(Constant.merchant_logo) ?: ""
         val locationList: ArrayList<TicketSummary.Location?>? =
-            intent.getParcelableArrayListExtra("location_list")
+            intent.getParcelableArrayListExtra(Constant.location_list)
         locationList?.forEach { location ->
             Log.d(
                 "Location",
@@ -78,16 +79,16 @@ class MycouponViewActivity : BaseActivity<MycouponViewBinding>(), View.OnClickLi
         val textToCopy = coupon_code
 
         if (textToCopy.isEmpty()) {
-            Toast.makeText(this, "Nothing to copy", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.nothing_to_copy), Toast.LENGTH_SHORT).show()
             return
         }
         val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-        val clip = ClipData.newPlainText("Copied Text", textToCopy)
+        val clip = ClipData.newPlainText(getString(R.string.copied_text), textToCopy)
         if (clipboard != null) {
             clipboard.setPrimaryClip(clip)
-            Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Failed to access clipboard", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.failed_to_access_clipboard), Toast.LENGTH_SHORT).show()
         }
     }
 

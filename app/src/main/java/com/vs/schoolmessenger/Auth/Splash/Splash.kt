@@ -58,7 +58,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         val context = ChangeLanguage.setLocale(newBase, savedLanguage)
         super.attachBaseContext(context)
     }
-
     private lateinit var appUpdateManager: AppUpdateManager
 
     private lateinit var notificationPermissionLauncher: ActivityResultLauncher<String>

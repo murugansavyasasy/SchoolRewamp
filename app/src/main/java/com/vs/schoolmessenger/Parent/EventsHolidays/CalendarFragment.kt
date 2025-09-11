@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter.HolidayAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.FragmentCalendarBinding
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -122,7 +124,7 @@ class CalendarFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun isSunday(dateString: String, pattern: String = "yyyy-MM-dd"): Boolean {
+    fun isSunday(dateString: String, pattern: String = Constant.yyyy_MM_dd): Boolean {
         val formatter = DateTimeFormatter.ofPattern(pattern)
         val date = LocalDate.parse(dateString, formatter)
         return date.dayOfWeek == DayOfWeek.SUNDAY
@@ -131,8 +133,8 @@ class CalendarFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateCalendar() {
-        val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
-        val fullDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val monthFormat = SimpleDateFormat(Constant.MMMM_yyyy, Locale.getDefault())
+        val fullDateFormat = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.getDefault())
 
         val currentMonthYear = monthFormat.format(calendar.time)
         binding.currentMonthText.text = currentMonthYear
@@ -190,8 +192,8 @@ class CalendarFragment : Fragment() {
 
 
         if (visibleHolidays.isNotEmpty()) {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.getDefault())
+            val outputFormat = SimpleDateFormat(Constant.dd_MMM_yyyy, Locale.getDefault())
 
             val holidayModels = visibleHolidays.map {
                 val formattedDate = try {
@@ -213,14 +215,14 @@ class CalendarFragment : Fragment() {
             binding.holidaylabel.setTextColor(
                 ContextCompat.getColor(requireContext(), android.R.color.black)
             )
-            binding.holidaylabel.text = "Holidays for $currentMonthYear"
+            binding.holidaylabel.text = "${getString(R.string.Holidays_for)} $currentMonthYear"
         } else {
             binding.holidayRecyclerView.visibility = View.GONE
             binding.holidaylabel.visibility = View.VISIBLE
             binding.holidaylabel.setTextColor(
                 ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
             )
-            binding.holidaylabel.text = "No holidays in $currentMonthYear"
+            binding.holidaylabel.text = "${getString(R.string.No_holidays_in)}$currentMonthYear"
         }
 
     }
