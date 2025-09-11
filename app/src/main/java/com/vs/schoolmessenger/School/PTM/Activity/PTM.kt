@@ -27,14 +27,11 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     override fun getViewBinding(): PtmStaffBinding {
         return PtmStaffBinding.inflate(layoutInflater)
     }
-
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     var isAllSlot = true
     var isSlotCategory: List<SlotCategory>? = null
-    var isSlotDetail: ArrayList<SlotDetail> = ArrayList()
     var isSelectedDate = ""
-
     lateinit var mAdapter: UpComingSlotAdapter
     private var appViewModel: App? = null
 
@@ -108,7 +105,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     }
 
     fun loadData() {
-        // Shimmer loading state
         val shimmerAdapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
 
         binding.rcyToday.layoutManager = LinearLayoutManager(this)
@@ -119,9 +115,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
 
         binding.rcyComplete.layoutManager = LinearLayoutManager(this)
         binding.rcyComplete.adapter = shimmerAdapter
-
-        isAccessToken =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGFmZl9pZCI6IjEwMDc3NjQ4Iiwic2Nob29sX2lkIjoiNzA0NCIsImlhdCI6MTc1NjcwNTIxM30.EkV33rNEvCE51bw7wpM1JZK41rq9ySydWFmGrxPmTiU"
         appViewModel!!.isSlotForStaff(isAccessToken!!, "ALL")
     }
 
@@ -166,5 +159,4 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }
-
 }

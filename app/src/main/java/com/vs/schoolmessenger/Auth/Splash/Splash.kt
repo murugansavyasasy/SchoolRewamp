@@ -58,7 +58,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         val context = ChangeLanguage.setLocale(newBase, savedLanguage)
         super.attachBaseContext(context)
     }
-
     private lateinit var appUpdateManager: AppUpdateManager
 
     private lateinit var notificationPermissionLauncher: ActivityResultLauncher<String>
@@ -327,8 +326,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = this.resources.getColor(R.color.white)
-        window.navigationBarColor = this.resources.getColor(R.color.white)
+        window.statusBarColor = this.resources.getColor(R.color.sky_blue)
+        window.navigationBarColor = this.resources.getColor(R.color.sky_blue)
     }
 
     override fun onClick(v: View?) {

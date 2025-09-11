@@ -36,14 +36,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSubmitSkillDataClass
+//import com.vs.schoolmessenger.Parent.LSRW.MySubmissionView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
@@ -105,7 +106,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             onBackPressed()
         }
         binding.lblClickComplete.setOnClickListener(this)
-        data = intent.getParcelableExtra(Constant.isPreViewData)
+        data = intent.getParcelableExtra("isPreViewData")
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
@@ -126,7 +127,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             loadFragment(
                 StudentListFragment.newInstance(
                     data!!.assignmentid ?: "",
-                    Constant.TOTAL,
+                    "TOTAL",
                     data!!.submittedCount ?: 0,
                     data!!.totalCount ?: 0,
                     data!!.created_date ?: ""
@@ -142,22 +143,21 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.fragmentContainer.visibility = View.GONE
 
         } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false) {
-            if (data!!.assignmentid == Constant.Listening) {
-               binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.headphonesvgformat)
-            } else if (data!!.assignmentid == Constant.Speaking) {
+            if (data!!.assignmentid == "Listening") {
+                binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.headphonesvgformat)
+            } else if (data!!.assignmentid == "Speaking") {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.micsvgformatstyle)
-            } else if (data!!.assignmentid == Constant.Reading){
+            } else if (data!!.assignmentid == "Reading") {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
-            } else if (data!!.assignmentid == Constant.Writing){
+            } else if (data!!.assignmentid == "Writing") {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.pensvgformatstyle)
             } else {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.questionmark)
             }
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text =
-                getString(R.string.lsrw)
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
-                getString(R.string.listening_speaking_reading_writing)
+                "Listening,Speaking,Reading,Writing"
             binding.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
@@ -190,28 +190,42 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
 
         } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text = getString(R.string.listening_speaking_reading_writing)
-            if (data!!.assignmentid == Constant.Listening) {
-                binding.descriptionLabel.visibility = View.GONE
-                binding.editDescription.visibility = View.GONE
-                binding.rytRecyclewview.visibility = View.GONE
-                binding.rcyImages.visibility = View.GONE
-                binding.btnSubmit.visibility = View.GONE
-            } else if (data!!.assignmentid == Constant.Reading) {
-                binding.descriptionLabel.visibility = View.GONE
-                binding.editDescription.visibility = View.GONE
-                binding.rytRecyclewview.visibility = View.GONE
-                binding.rcyImages.visibility = View.GONE
-                binding.btnSubmit.visibility = View.GONE
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
+                "Listening,Speaking,Reading,Writing"
+            binding.imgBack.visibility = View.GONE
+            binding.scrollView.visibility = View.GONE
+            binding.childlsrwlayoutxml.footerLabel.visibility = View.GONE
+            binding.childlsrwlayoutxml.headerLabel.visibility = View.GONE
+            binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
+            binding.childlsrwlayoutxml.txtTitle.text = data!!.subjectName
+            binding.childlsrwlayoutxml.txtSubTitle.text = data!!.assignmentid
+            binding.childlsrwlayoutxml.txtDescription.text = data!!.title
+            binding.childlsrwlayoutxml.txtDescription1.text = data!!.description
+            binding.childlsrwlayoutxml.txtDate.text = data!!.sentBy
+            if (data!!.assignmentid == "Listening") {
+                binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
+                binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
+                binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
+                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
+            } else if (data!!.assignmentid == "Reading") {
+                binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
+                binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
+                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
+                binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
             } else {
-                binding.descriptionLabel.visibility = View.VISIBLE
-                binding.editDescription.visibility = View.VISIBLE
-                binding.rytRecyclewview.visibility = View.VISIBLE
-                binding.lblviewSubmissions.visibility = View.VISIBLE
-                binding.rcyImages.visibility = View.VISIBLE
-                binding.btnSubmit.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.rcyImages.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
             }
             saveDrawableToCache(R.drawable.add_image)?.let {
                 Constant.selectedFiles.add(
@@ -221,8 +235,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 )
             }
             mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
-            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-            binding.rcyImages.adapter = mAdapter
+            binding.childlsrwlayoutxml.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.childlsrwlayoutxml.rcyImages.adapter = mAdapter
             albumResultLauncher =
                 registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
@@ -234,7 +248,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         selectedUris?.take(remaining)?.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
                             val path = when (uri.scheme) {
-                                Constant.file_ -> uri.path
+                                "file" -> uri.path
                                 else -> getPathFromUri(uri)
                             }
 
@@ -283,29 +297,30 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
                     .map { it.url }
             if (audioList.isNotEmpty()) {
-                binding.rcSeekBarAndTitle.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
                 val audioAdapter = AudioAdapter(audioList)
-                binding.rcSeekBarAndTitle.layoutManager = LinearLayoutManager(binding.root.context)
-                binding.rcSeekBarAndTitle.adapter = audioAdapter
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager = LinearLayoutManager(binding.root.context)
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
             } else {
-                binding.rcSeekBarAndTitle.visibility = View.GONE
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
             }
         } else {
-            binding.lblviewSubmissions.visibility = View.GONE
-            binding.linearlayoutContainer.visibility = View.GONE
-            binding.fragmentContainer.visibility = View.GONE
+            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
         }
 
 
-        binding.lblviewSubmissions.setOnClickListener(this)
+        binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener(this)
 
-        binding.lblviewSubmissions.setOnClickListener {
-
+        binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener {
+//            val intent = Intent(this, MySubmissionView::class.java)
+//            intent.putExtra(Constant.id, data!!.id)
+            startActivity(intent)
         }
+
 
         if (data!!.isMenuType == Constant.M_HOMEWORK) {
             isHomeworkId = data!!.id
-            isHomeWorkDate = intent.getStringExtra(Constant.isHomeWorkDate)
+            isHomeWorkDate = intent.getStringExtra("isHomeWorkDate")
 //            Log.d("isHomeWorkDate2", isHomeWorkDate.toString())
 
             if (data!!.subjectName != "") {
@@ -314,7 +329,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
             if (!data!!.isCompleted) {
                 binding.lblClickComplete.visibility = View.VISIBLE
-                binding.lblClickComplete.text = "Click \"here\" when you're done"
+                binding.lblClickComplete.text = "Click \"here\" when you're done "
                 binding.thumbContainer.visibility = View.VISIBLE
             } else {
                 binding.lblClickComplete.visibility = View.GONE
@@ -323,12 +338,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             if (isHomeWorkDate != "") {
                 binding.lblPostedDate.visibility = View.VISIBLE
                 binding.lblPostedDate.text =
-                    "${getString(R.string.posted_on)}: ${Constant.formatDateSmart(isHomeWorkDate.toString())}"
+                    "Posted on : " + Constant.formatDateSmart(isHomeWorkDate.toString())
             }
 
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
-                binding.lblPostedBy.text = "${getString(R.string.posted_on)}: ${data!!.sentBy}"
+                binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
             }
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS) {
             binding.lblSubjectName.visibility = View.GONE
@@ -341,7 +356,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             Log.d("isComingFilePath", data!!.fileList[i].url)
         }
 
-        val isParentAssignment = (SELECTED_SCHOOL_MENU == M_LSRW && data?.isParentAssignment == true)
+        val isParentAssignment =
+            (SELECTED_SCHOOL_MENU == M_LSRW && data?.isParentAssignment == true)
 
 
         val adapter = HomeWorkChildAdapter(
@@ -352,11 +368,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             isParentAssignment
         )
 
-        val recyclerView = if (SELECTED_SCHOOL_MENU == M_LSRW && !isParentAssignment) {
+        val recyclerView = if (SELECTED_SCHOOL_MENU == M_LSRW && isParentAssignment) {
             binding.childlsrwlayoutxml.rcChildHW
         } else {
             binding.rcChildHW
         }
+
+        Log.d("ParentAssigmentValue",isParentAssignment.toString())
 
         val spanCount = when {
             SELECTED_SCHOOL_MENU == M_ASSIGNMENT -> 2
@@ -365,7 +383,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             else -> 3
         }
 
-        recyclerView.layoutManager = GridLayoutManager(this, spanCount, RecyclerView.VERTICAL, false)
+        recyclerView.layoutManager =
+            GridLayoutManager(this, spanCount, RecyclerView.VERTICAL, false)
         recyclerView.adapter = adapter
 
         appViewModel?.isHomeWorkComplete?.observe(this) { response ->
@@ -382,37 +401,55 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if (adapter.itemCount == 0) {
-            val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+        val isEmpty = adapter.itemCount == 0
+        val isAssignment = SELECTED_SCHOOL_MENU == M_ASSIGNMENT
+        val isLsrw = SELECTED_SCHOOL_MENU == M_LSRW
+
+        val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
+        if (isEmpty) {
             params.topToBottom = binding.lblClickComplete.id
             params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
-            binding.lblPostedBy.layoutParams = params
-
-            if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                binding.childlsrwlayoutxml.rcChildHW.visibility = View.GONE
-                binding.childlsrwlayoutxml.lblAttachments.visibility = View.GONE
-                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility = View.GONE
-            } else {
-                recyclerView.visibility = View.GONE
-                binding.lblAttachments.visibility = View.GONE
-                binding.imgAttachmentIcon.visibility = View.GONE
-            }
         } else {
-            val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
             params.topToBottom = recyclerView.id
             params.topMargin = resources.getDimensionPixelSize(R.dimen.ten)
-            binding.lblPostedBy.layoutParams = params
+        }
+        binding.lblPostedBy.layoutParams = params
 
-            if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                binding.childlsrwlayoutxml.rcChildHW.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.lblAttachments.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility = View.VISIBLE
-            } else {
-                recyclerView.visibility = View.VISIBLE
-                binding.lblAttachments.visibility = View.VISIBLE
-                binding.imgAttachmentIcon.visibility = View.VISIBLE
+        when {
+            isAssignment -> {
+                binding.childlsrwlayoutxml.rcChildHW.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.lblAttachments.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+            }
+
+            isLsrw && data!!.isParentAssignment == true -> {
+                binding.childlsrwlayoutxml.rcChildHW.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.lblAttachments.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+            }
+
+            isLsrw && data!!.isParentAssignment == false -> {
+                binding.childlsrwlayoutxml.rcChildHW.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.lblAttachments.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+            }
+
+            else -> {
+                recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.lblAttachments.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.imgAttachmentIcon.visibility = if (isEmpty) View.GONE else View.VISIBLE
             }
         }
+
     }
 
     override fun onClick(v: View?) {
@@ -437,16 +474,16 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.imgThumbsUp.visibility = View.GONE
         binding.lottieView.playAnimation()
         val jsonObject = JsonObject()
-        jsonObject.addProperty(APIKeyNames.id, isHomeworkId)
+        jsonObject.addProperty("id", isHomeworkId)
         appViewModel?.isHomeWorkComplete(isAccessToken!!, jsonObject)
     }
 
     fun isSuccessFullCompleteHomework() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("That\\'s it! Homework done you\\'re")
-        builder.setTitle(getString(R.string.Well_done))
+        builder.setMessage("That's it! Homework done you're amazing")
+        builder.setTitle("Well done!")
         builder.setCancelable(false)
-        builder.setPositiveButton(getString(R.string.ok)) { dialog, which ->
+        builder.setPositiveButton("Ok") { dialog, which ->
             finish()
         }
         val alertDialog = builder.create()
@@ -520,21 +557,21 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     private fun showCameraPermissionSettingsDialog() {
-        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
-            .setMessage(getString(R.string.camera_permission_is_permanently_denied_please_enable_it_from_app_settings))
-            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
+        AlertDialog.Builder(this).setTitle("Permission Required")
+            .setMessage("Camera permission is permanently denied. Please enable it from app settings.")
+            .setCancelable(false).setPositiveButton("Go to Settings") { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
+            }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }.show()
     }
@@ -608,7 +645,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -659,10 +696,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -674,7 +711,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val remaining = ChildHomeWork.Companion.MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
             Toast.makeText(
-                this, "${getString(R.string.Max)} ${ChildHomeWork.Companion.MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT
+                this, "Max ${ChildHomeWork.Companion.MAX_FILES} files allowed", Toast.LENGTH_SHORT
             ).show()
             return
         }
@@ -724,11 +761,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         val uri = Uri.fromFile(file)
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
+                        Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -751,7 +788,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
-        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
+        if (uri.scheme.equals("content", ignoreCase = true)) {
             val projection = arrayOf(MediaStore.Images.Media.DATA)
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
@@ -762,7 +799,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         // File scheme fallback
-        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
+        if (uri.scheme.equals("file", ignoreCase = true)) {
             return uri.path
         }
         return null
@@ -771,7 +808,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     @SuppressLint("Range")
     private fun getFileName(uri: Uri): String {
         var result: String? = null
-        if (uri.scheme == Constant.content_) {
+        if (uri.scheme == "content") {
             val cursor = contentResolver.query(uri, null, null, null, null)
             cursor?.use {
                 if (it.moveToFirst()) {
@@ -792,9 +829,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
+        return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
     }
 
 

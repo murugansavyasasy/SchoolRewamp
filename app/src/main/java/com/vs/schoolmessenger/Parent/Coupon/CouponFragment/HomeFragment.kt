@@ -36,6 +36,14 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
     private var isAccessToken: String? = null
 
 
+
+    private var earnedPoints: Int = 0
+    private var pointspercoupon: Int = 0
+    private var spentPoints: Int = 0
+    private var remainingPoints: Int = 0
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -89,6 +97,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             val remainingPoints = response?.data?.firstOrNull()?.remaining ?: 0
             val spentPoints = response?.data?.firstOrNull()?.spent ?: 0
             val earnedPoints = response?.data?.firstOrNull()?.earned ?: 0
+            val pointspercoupon = response?.data?.firstOrNull()?.per_coupon ?: 0
             binding.totalcoins.text = "$earnedPoints"
             binding.usedcoins.text = "${getString(R.string.Used)} : $spentPoints"
             binding.availablecoins.text = "${getString(R.string.Available)} : $remainingPoints"
@@ -144,8 +153,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
     }
 
 
-
-
     private fun fetchCouponSummary() {
         showProgressBar()
         appViewModel.getCouponsSummary(
@@ -188,7 +195,16 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         binding.lblNoRecord.visibility = View.GONE
         binding.recyclerview1.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.VISIBLE
-        summaryadapter = CouponSummaryAdapter(data, this, this, false)
+        summaryadapter = CouponSummaryAdapter(
+            data,
+            this,
+            this,
+            false,
+            earnedPoints,
+            spentPoints,
+            remainingPoints,
+            pointspercoupon
+        )
         binding.recyclerView.adapter = summaryadapter
     }
 

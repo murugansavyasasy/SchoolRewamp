@@ -44,7 +44,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     override fun getViewBinding(): SpecificStudentBinding {
         return SpecificStudentBinding.inflate(layoutInflater)
     }
-
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var selectedIds = mutableListOf<String>()
@@ -601,7 +600,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             isSpecificStudent.add(data)
         }
         binding.toolbarLayout.cbSelect.isChecked = isSpecificStudent.size == isStudentList.size
-
     }
 
     override fun onIdUnchecked(data: NameAndIds) {

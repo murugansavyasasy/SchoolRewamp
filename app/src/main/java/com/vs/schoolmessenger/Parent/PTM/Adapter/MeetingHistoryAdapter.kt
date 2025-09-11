@@ -1,9 +1,17 @@
 package com.vs.schoolmessenger.Parent.PTM.Adapter
 
+import android.app.AlertDialog
 import android.graphics.Color
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
@@ -11,9 +19,12 @@ import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
 import com.vs.schoolmessenger.R
 
 class MeetingHistoryAdapter(
-    private val items: MutableList<MeetingListItem>, // mutable so we can remove items
-    private val listener: OnCancelClickListener
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var items: MutableList<MeetingListItem>, // current displayed list
+    private val listener: OnCancelClickListener,
+    private val onEmptyList: (Boolean) -> Unit,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+
+    private var fullList: MutableList<MeetingListItem> = ArrayList(items) // backup copy
 
     companion object {
         private const val TYPE_HEADER = 0
@@ -55,6 +66,7 @@ class MeetingHistoryAdapter(
         }
     }
 
+
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val tvPurpose: TextView = view.findViewById(R.id.tvPurpose)
         private val tvStaff: TextView = view.findViewById(R.id.tvStaff)
@@ -79,17 +91,36 @@ class MeetingHistoryAdapter(
 
             tvStatus.setBackgroundColor(
                 if (meeting.status.equals("Completed", true)) Color.parseColor("#4CAF50")
-                else Color.parseColor("#FFA500")
+                else Color.parseColor("#4085ef")
             )
 
             cancelButton.visibility =
                 if (meeting.status.equals("Completed", true)) View.GONE else View.VISIBLE
 
             cancelButton.setOnClickListener {
-                listener.onCancelClick(meeting, bindingAdapterPosition)
+                val context = itemView.context
+                val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_cancel_meeting, null)
+                val etReason = dialogView.findViewById<EditText>(R.id.etReason)
+                val btnCancelMeeting = dialogView.findViewById<Button>(R.id.btnCancelMeeting)
+                val ivClose = dialogView.findViewById<ImageView>(R.id.ivClose)
+
+                val alertDialog = AlertDialog.Builder(context)
+                    .setView(dialogView)
+                    .create()
+
+                btnCancelMeeting.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+
+                ivClose.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+
+                alertDialog.show()
             }
         }
     }
+
     fun removeItem(position: Int) {
         if (position in items.indices) {
             items.removeAt(position)
@@ -97,33 +128,78 @@ class MeetingHistoryAdapter(
             cleanUpEmptyHeaders()
         }
     }
+
     private fun cleanUpEmptyHeaders() {
-        val iterator = items.iterator()
-        var lastHeaderIndex = -1
-        var hasItemUnderHeader = false
+        val newList = mutableListOf<MeetingListItem>()
+        var currentHeader: MeetingListItem.Header? = null
 
-        var index = 0
-        while (iterator.hasNext()) {
-            when (iterator.next()) {
-                is MeetingListItem.Header -> {
-                    if (lastHeaderIndex != -1 && !hasItemUnderHeader) {
-                        items.removeAt(lastHeaderIndex)
-                        notifyItemRemoved(lastHeaderIndex)
-                        index--
-                    }
-                    lastHeaderIndex = index
-                    hasItemUnderHeader = false
-                }
-
+        items.forEach {
+            when (it) {
+                is MeetingListItem.Header -> currentHeader = it
                 is MeetingListItem.Item -> {
-                    hasItemUnderHeader = true
+                    currentHeader?.let { newList.add(it) }
+                    newList.add(it)
+                    currentHeader = null
                 }
             }
-            index++
         }
-        if (lastHeaderIndex != -1 && !hasItemUnderHeader) {
-            items.removeAt(lastHeaderIndex)
-            notifyItemRemoved(lastHeaderIndex)
+
+        items = newList
+        notifyDataSetChanged()
+    }
+
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val filteredList: MutableList<MeetingListItem> = mutableListOf()
+
+                if (query.isEmpty()) {
+                    filteredList.addAll(fullList)
+                } else {
+                    var currentHeader: MeetingListItem.Header? = null
+                    val tempList: MutableList<MeetingListItem> = mutableListOf()
+
+                    fullList.forEach { listItem ->
+                        when (listItem) {
+                            is MeetingListItem.Header -> {
+                                currentHeader = listItem
+                            }
+                            is MeetingListItem.Item -> {
+                                val meeting = listItem.meeting
+                                if (
+                                    meeting.purpose.lowercase().contains(query) ||
+                                    meeting.staff_name.lowercase().contains(query) ||
+                                    meeting.subject_name.lowercase().contains(query) ||
+                                    meeting.status.lowercase().contains(query)
+                                ) {
+                                    currentHeader?.let {
+                                        if (!tempList.contains(it)) tempList.add(it)
+                                    }
+                                    tempList.add(listItem)
+                                }
+                            }
+                        }
+                    }
+
+                    filteredList.addAll(tempList)
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = filteredList
+                return filterResults
+            }
+
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                items = (results?.values as? MutableList<MeetingListItem>) ?: mutableListOf()
+                notifyDataSetChanged()
+
+                val hasItem = items.any { it is MeetingListItem.Item }
+                onEmptyList(!hasItem)
+            }
+
         }
     }
 }

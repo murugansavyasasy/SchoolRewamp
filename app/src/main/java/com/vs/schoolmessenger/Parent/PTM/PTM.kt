@@ -1,10 +1,13 @@
 package com.vs.schoolmessenger.Parent.PTM
 
 import android.app.AlertDialog
+import android.content.Context
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,11 +36,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
     override fun getViewBinding(): PtmBinding {
         return PtmBinding.inflate(layoutInflater)
     }
-
     private var lastCancelledPosition: Int = -1
-
     var isSelectedDate = ""
-
     private var isParentMeetingAdapter: ParentMeetingAdapter? = null
     lateinit var isMeetingHistoryAdapter: MeetingHistoryAdapter
     private var isAccessToken: String? = null
@@ -46,6 +46,10 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
+
+        binding.imgSearch.visibility = View.GONE
+        binding.rytsearch.visibility = View.GONE
+        binding.txtSearchMeeting.setText("")
         binding.lblScheduleMeeting.setOnClickListener(this)
         binding.lblYourMeeting.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
@@ -60,7 +64,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             isScheduleCallList()
         }
 
-
         binding.recyclerViewDates.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewDates.adapter = adapter
@@ -74,6 +77,32 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             adapter.setDefaultSelected(todayPos)
             binding.recyclerViewDates.scrollToPosition(todayPos)
         }
+
+
+        binding.txtSearchMeeting.addTextChangedListener { editable ->
+            val query = editable.toString()
+            if (::isMeetingHistoryAdapter.isInitialized) {
+                isMeetingHistoryAdapter.filter.filter(query)
+            }
+        }
+
+
+
+        binding.imgSearch.setOnClickListener {
+            if (binding.rytsearch.visibility == View.VISIBLE) {
+                binding.rytsearch.visibility = View.GONE
+                binding.txtSearchMeeting.setText("")
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMeeting.windowToken, 0)
+            } else {
+                binding.rytsearch.visibility = View.VISIBLE
+                binding.txtSearchMeeting.setText("")
+                binding.txtSearchMeeting.requestFocus()
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.txtSearchMeeting, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
+
 
         appViewModel?.isStudentSlotResponse?.observe(this) { response ->
             if (response!!.status) {
@@ -123,7 +152,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                 binding.recyclerViewSlots.visibility = View.GONE
             }
         }
-
         isScheduleCallList()
     }
 
@@ -165,10 +193,16 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             completedMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
         }
 
-        val adapter = MeetingHistoryAdapter(meetingItems,this)
 
+        val adapter = MeetingHistoryAdapter(meetingItems, this) { isEmpty ->
+            binding.lytList.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.rcyMeetingHistory.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        }
+
+        isMeetingHistoryAdapter = adapter
         binding.rcyMeetingHistory.adapter = adapter
     }
+
 
 
     fun isScheduleCallList() {
@@ -200,13 +234,20 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         if (isSelectedTab == binding.lblYourMeeting) {
             binding.rytScheduleMeeting.visibility = View.GONE
             binding.rytYourMeeting.visibility = View.VISIBLE
+            binding.imgSearch.visibility = View.VISIBLE
+            binding.rytsearch.visibility = View.GONE
+            binding.txtSearchMeeting.setText("")
+
             isMeetingHistoryList()
         } else {
             binding.rytYourMeeting.visibility = View.GONE
             binding.rytScheduleMeeting.visibility = View.VISIBLE
+            binding.imgSearch.visibility = View.GONE
+            binding.rytsearch.visibility = View.GONE
+            binding.txtSearchMeeting.setText("")
         }
-
     }
+
 
     fun generateDates(daysCount: Int): List<Pair<String, Int>> {
         val list = mutableListOf<Pair<String, Int>>()

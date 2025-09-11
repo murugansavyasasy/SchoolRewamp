@@ -799,6 +799,12 @@
     <string name="Submission_date">Submission date</string>
     <string name="Deadline">Deadline</string>
     <string name="no_matching_report_found">No matching report found</string>
+    <string name="cancel_meeting">Cancel Meeting</string>
+    <string name="reason_for_cancelation">Reason for Cancelation</string>
+    <string name="report_card_meeting">Report card Meeting</string>
+    <string name="phone_call">Phone Call</string>
+    <string name="time">Time</string>
+    <string name="cancel">Cancel</string>
     <string name="please_enter_the_reason">Please enter the reason</string>
     <string name="reason_2">Reason : </string>
     <string name="see_more_2">see more</string>

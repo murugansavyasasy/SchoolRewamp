@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/cltDateSelection"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/one_fourty"
+        android:layout_height="@dimen/one_sixty"
         android:background="@drawable/bottom_right_left_radious">
 
         <ImageView
@@ -59,14 +59,25 @@
             android:textSize="@dimen/thirteen_sp"></TextView>
 
 
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+        <RelativeLayout
+            android:id="@+id/rytSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/thirty_five"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/twenty"
-            android:src="@drawable/ic_search_white_color" />
+            android:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search_icon_white" />
+
+        </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,46 +123,45 @@
     <RelativeLayout
         android:id="@+id/rytScheduleMeeting"
         android:layout_width="match_parent"
-        android:layout_below="@+id/cltDateSelection"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cltDateSelection">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewDates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:padding="16dp" />
+            android:padding="@dimen/sixteen" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSlots"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/recyclerViewDates"
-            android:padding="16dp" />
+            android:padding="@dimen/sixteen" />
 
         <LinearLayout
             android:id="@+id/rytNoDataFound"
             android:layout_width="match_parent"
-            android:visibility="gone"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/recyclerViewDates"
-            android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:src="@drawable/nodataimage"
-                android:layout_height="@dimen/two_hundred"></ImageView>
+                android:layout_height="@dimen/two_hundred"
+                android:src="@drawable/nodataimage"></ImageView>
 
 
             <TextView
-                android:layout_width="match_parent"
-                android:textColor="@color/black"
                 style="@style/CustomTextStylePoppinsBold1"
-                android:textSize="@dimen/fifteen_sp"
-                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fifteen"
+                android:gravity="center"
                 android:text="No meeting found."
-                android:layout_height="wrap_content">
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp">
 
             </TextView>
         </LinearLayout>
@@ -161,19 +171,76 @@
     <RelativeLayout
         android:id="@+id/rytYourMeeting"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/cltDateSelection"
-        android:layout_height="wrap_content">
+        android:visibility="gone">
 
+        <RelativeLayout
+            android:id="@+id/rytsearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_grey">
+
+            <ImageView
+                android:id="@+id/imgSearch1"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:src="@drawable/ic_search_grey" />
+
+            <EditText
+                android:id="@+id/txtSearchMeeting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/imgSearch1"
+                android:background="@android:color/transparent"
+                android:hint="Search meetings..."
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/lytList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rytsearch"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgNoData"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:contentDescription="@string/no_data"
+                android:src="@drawable/nomessages" />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_data_found"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyMeetingHistory"
             android:layout_width="match_parent"
-            android:layout_marginEnd="@dimen/ten"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rytsearch"
             android:layout_marginStart="@dimen/ten"
-            android:layout_height="wrap_content">
+            android:layout_marginEnd="@dimen/ten" />
 
-        </androidx.recyclerview.widget.RecyclerView>
 
     </RelativeLayout>
 
