@@ -335,7 +335,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
 
     private fun isMarkAttendance() {
-        AllPresent = if (isSelectedIds.isNullOrEmpty()) "T" else "F"
+        AllPresent = if (isSelectedIds.isNullOrEmpty()) Constant.allPresent else "F"
         if (Constant.isMarkAttendanceDataSending?.class_id != "" && Constant.isMarkAttendanceDataSending?.section_id != ""
             && Constant.isMarkAttendanceDataSending?.attendance_date != null
         ) {

@@ -30,7 +30,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
     private var isChildDetails: ChildDetails? = null
     private lateinit var certificateRequestList: List<CertificateListData>
     private var isSelectedCertificateName: String? = null
-    private var urgency_level: String? = getString(R.string.not_urgent)
+    private var urgency_level: String? = ""
 
     override fun getViewBinding(): CertificateRequestParentBinding {
         return CertificateRequestParentBinding.inflate(layoutInflater)
@@ -40,9 +40,9 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-
         binding.ivradio.setOnClickListener(this)
         binding.ivradio1.setOnClickListener(this)
+        urgency_level=getString(R.string.not_urgent)
 
         binding.imgBack.setOnClickListener(this)
 //        binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)

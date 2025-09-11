@@ -67,13 +67,13 @@ class LSRWAdapter(
             txtProfile.text = item.sent_by ?: "-"
 
 
-            if (item.activity_type == "Listening") {
+            if (item.activity_type == Constant.Listening) {
                 imgIcon.setImageResource(R.drawable.headphonesvgformat)
-            } else if (item.activity_type == "Speaking") {
+            } else if (item.activity_type == Constant.Speaking) {
                 imgIcon.setImageResource(R.drawable.micsvgformatstyle)
-            } else if (item.activity_type == "Reading"){
+            } else if (item.activity_type == Constant.Reading){
                 imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
-            } else if (item.activity_type == "Writing"){
+            } else if (item.activity_type == Constant.Writing){
                 imgIcon.setImageResource(R.drawable.pensvgformatstyle)
             } else {
                 imgIcon.setImageResource(R.drawable.questionmark)
@@ -114,7 +114,7 @@ class LSRWAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -147,7 +147,7 @@ class LSRWAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -185,7 +185,7 @@ class LSRWAdapter(
                             )
 
                             val intent = Intent(context, ChildHomeWork::class.java)
-                            intent.putExtra("isPreViewData", isHomeWorkData)
+                            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             context.startActivity(intent)
                         }

@@ -43,6 +43,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSubmitSkillDataClass
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
@@ -104,7 +105,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             onBackPressed()
         }
         binding.lblClickComplete.setOnClickListener(this)
-        data = intent.getParcelableExtra("isPreViewData")
+        data = intent.getParcelableExtra(Constant.isPreViewData)
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
@@ -125,7 +126,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             loadFragment(
                 StudentListFragment.newInstance(
                     data!!.assignmentid ?: "",
-                    "TOTAL",
+                    Constant.TOTAL,
                     data!!.submittedCount ?: 0,
                     data!!.totalCount ?: 0,
                     data!!.created_date ?: ""
@@ -141,20 +142,22 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.fragmentContainer.visibility = View.GONE
 
         } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false) {
-            if (data!!.assignmentid == "Listening") {
+            if (data!!.assignmentid == Constant.Listening) {
                binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.headphonesvgformat)
-            } else if (data!!.assignmentid == "Speaking") {
+            } else if (data!!.assignmentid == Constant.Speaking) {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.micsvgformatstyle)
-            } else if (data!!.assignmentid == "Reading"){
+            } else if (data!!.assignmentid == Constant.Reading){
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
-            } else if (data!!.assignmentid == "Writing"){
+            } else if (data!!.assignmentid == Constant.Writing){
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.pensvgformatstyle)
             } else {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.questionmark)
             }
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text =
+                getString(R.string.lsrw)
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text = "Listening,Speaking,Reading,Writing"
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
+                getString(R.string.listening_speaking_reading_writing)
             binding.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
@@ -187,16 +190,16 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
 
         } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text = "Listening,Speaking,Reading,Writing"
-            if (data!!.assignmentid == "Listening") {
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text = getString(R.string.listening_speaking_reading_writing)
+            if (data!!.assignmentid == Constant.Listening) {
                 binding.descriptionLabel.visibility = View.GONE
                 binding.editDescription.visibility = View.GONE
                 binding.rytRecyclewview.visibility = View.GONE
                 binding.rcyImages.visibility = View.GONE
                 binding.btnSubmit.visibility = View.GONE
-            } else if (data!!.assignmentid == "Reading") {
+            } else if (data!!.assignmentid == Constant.Reading) {
                 binding.descriptionLabel.visibility = View.GONE
                 binding.editDescription.visibility = View.GONE
                 binding.rytRecyclewview.visibility = View.GONE
@@ -231,7 +234,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         selectedUris?.take(remaining)?.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
                             val path = when (uri.scheme) {
-                                "file" -> uri.path
+                                Constant.file_ -> uri.path
                                 else -> getPathFromUri(uri)
                             }
 
@@ -302,7 +305,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         if (data!!.isMenuType == Constant.M_HOMEWORK) {
             isHomeworkId = data!!.id
-            isHomeWorkDate = intent.getStringExtra("isHomeWorkDate")
+            isHomeWorkDate = intent.getStringExtra(Constant.isHomeWorkDate)
 //            Log.d("isHomeWorkDate2", isHomeWorkDate.toString())
 
             if (data!!.subjectName != "") {
@@ -311,7 +314,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
             if (!data!!.isCompleted) {
                 binding.lblClickComplete.visibility = View.VISIBLE
-                binding.lblClickComplete.text = "Click \"here\" when you're done "
+                binding.lblClickComplete.text = "Click \"here\" when you're done"
                 binding.thumbContainer.visibility = View.VISIBLE
             } else {
                 binding.lblClickComplete.visibility = View.GONE
@@ -320,12 +323,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             if (isHomeWorkDate != "") {
                 binding.lblPostedDate.visibility = View.VISIBLE
                 binding.lblPostedDate.text =
-                    "Posted on : " + Constant.formatDateSmart(isHomeWorkDate.toString())
+                    "${getString(R.string.posted_on)}: ${Constant.formatDateSmart(isHomeWorkDate.toString())}"
             }
 
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
-                binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
+                binding.lblPostedBy.text = "${getString(R.string.posted_on)}: ${data!!.sentBy}"
             }
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS) {
             binding.lblSubjectName.visibility = View.GONE
@@ -434,16 +437,16 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.imgThumbsUp.visibility = View.GONE
         binding.lottieView.playAnimation()
         val jsonObject = JsonObject()
-        jsonObject.addProperty("id", isHomeworkId)
+        jsonObject.addProperty(APIKeyNames.id, isHomeworkId)
         appViewModel?.isHomeWorkComplete(isAccessToken!!, jsonObject)
     }
 
     fun isSuccessFullCompleteHomework() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("That's it! Homework done you're amazing")
-        builder.setTitle("Well done!")
+        builder.setMessage("That\\'s it! Homework done you\\'re")
+        builder.setTitle(getString(R.string.Well_done))
         builder.setCancelable(false)
-        builder.setPositiveButton("Ok") { dialog, which ->
+        builder.setPositiveButton(getString(R.string.ok)) { dialog, which ->
             finish()
         }
         val alertDialog = builder.create()
@@ -517,21 +520,21 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     private fun showCameraPermissionSettingsDialog() {
-        AlertDialog.Builder(this).setTitle("Permission Required")
-            .setMessage("Camera permission is permanently denied. Please enable it from app settings.")
-            .setCancelable(false).setPositiveButton("Go to Settings") { _, _ ->
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.camera_permission_is_permanently_denied_please_enable_it_from_app_settings))
+            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }.setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
                 dialog.dismiss()
             }.show()
     }
@@ -605,7 +608,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -656,10 +659,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -671,7 +674,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val remaining = ChildHomeWork.Companion.MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
             Toast.makeText(
-                this, "Max ${ChildHomeWork.Companion.MAX_FILES} files allowed", Toast.LENGTH_SHORT
+                this, "${getString(R.string.Max)} ${ChildHomeWork.Companion.MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT
             ).show()
             return
         }
@@ -721,11 +724,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         val uri = Uri.fromFile(file)
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -748,7 +751,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
-        if (uri.scheme.equals("content", ignoreCase = true)) {
+        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
             val projection = arrayOf(MediaStore.Images.Media.DATA)
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
@@ -759,7 +762,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         // File scheme fallback
-        if (uri.scheme.equals("file", ignoreCase = true)) {
+        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
             return uri.path
         }
         return null
@@ -768,7 +771,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     @SuppressLint("Range")
     private fun getFileName(uri: Uri): String {
         var result: String? = null
-        if (uri.scheme == "content") {
+        if (uri.scheme == Constant.content_) {
             val cursor = contentResolver.query(uri, null, null, null, null)
             cursor?.use {
                 if (it.moveToFirst()) {
@@ -789,9 +792,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
+        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
     }
 
 

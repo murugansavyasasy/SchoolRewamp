@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class TimeTableAdapter(
@@ -68,26 +69,26 @@ class TimeTableAdapter(
             endTime.text = data.end_time.replace(" ", "\n")
 
             val durationOnly = data.duration.trim()
-            durationValue.text = "Duration – $durationOnly"
+            durationValue.text = "${context.getString(R.string.Duration)} – $durationOnly"
 
             when (data.hour_type) {
-                "1" -> {
+                Constant.one -> {
                     // Hour Type 1: Show subject_name and faculty_name
                     subjectValue.text =
-                        if (data.subject_name.isNotEmpty()) data.subject_name else "—"
+                        if (data.subject_name.isNotEmpty()) data.subject_name else Constant.iffin
                     facultyName.text =
-                        if (data.facalty_name.isNotEmpty()) data.facalty_name else "—"
+                        if (data.facalty_name.isNotEmpty()) data.facalty_name else Constant.iffin
                 }
 
-                "2" -> {
+                Constant.two -> {
                     // Hour Type 2: Show name and staff_name
-                    subjectValue.text = if (data.name.isNotEmpty()) data.name else "—"
-                    facultyName.text = if (data.staff_name.isNotEmpty()) data.staff_name else "—"
+                    subjectValue.text = if (data.name.isNotEmpty()) data.name else Constant.iffin
+                    facultyName.text = if (data.staff_name.isNotEmpty()) data.staff_name else Constant.iffin
                 }
 
                 else -> {
-                    subjectValue.text = "—"
-                    facultyName.text = "—"
+                    subjectValue.text = Constant.iffin
+                    facultyName.text = Constant.iffin
                 }
             }
         }

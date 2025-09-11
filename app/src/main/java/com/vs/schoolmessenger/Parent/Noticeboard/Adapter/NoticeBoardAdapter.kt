@@ -191,7 +191,7 @@ class NoticeBoardAdapter(
             )
 
             val intent = Intent(context, ChildHomeWork::class.java)
-            intent.putExtra("isPreViewData", preview)
+            intent.putExtra(Constant.isPreViewData, preview)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             context.startActivity(intent)
         }
@@ -250,7 +250,7 @@ class NoticeBoardAdapter(
                     context.startActivity(intent)
                     Toast.makeText(
                         context,
-                        "Please allow exact alarm permission to schedule reminders",
+                        context.getString(R.string.please_allow_exact_alarm_permission_to_schedule_reminders),
                         Toast.LENGTH_LONG
                     ).show()
                     return

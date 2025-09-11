@@ -57,12 +57,12 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
                 if (response.status == true) {
                     binding.lytList.visibility = View.GONE
 
-                    if (isStatusType=="1"&& isType=="2"){
+                    if (isStatusType==Constant.one&& isType==Constant.two){
                         binding.rcCompleted.visibility = View.GONE
                         binding.rcUpcoming.visibility = View.VISIBLE
                         isLoadUpcomingEQ(response.data)
                     }
-                    if (isStatusType=="2"&& isType=="2"){
+                    if (isStatusType==Constant.two&& isType==Constant.two){
                         binding.rcUpcoming.visibility = View.GONE
                         binding.rcCompleted.visibility = View.VISIBLE
                         isLoadCompletedEQ(response.data)

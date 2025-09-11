@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.ExamMarks
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.vs.schoolmessenger.R
 
 class ExamTimeTableAdapter(
     private var fullList: List<ExamData>,
+    private var context: Context,
     private val listener: ExamMarkListener
 ) :
     RecyclerView.Adapter<ExamTimeTableAdapter.ExamTimeTableViewHolder>(), Filterable {
@@ -25,14 +27,16 @@ class ExamTimeTableAdapter(
         private val subjectRecyclerView: RecyclerView =
             itemView.findViewById(R.id.subjectRecyclerView)
 
-        fun bind(examTimeTable: ExamData) {
+        fun bind(examTimeTable: ExamData, context: Context) {
             subjectName.text = examTimeTable.name
 
             if (examTimeTable.exam_subject_details.isNotEmpty()) {
                 subjectRecyclerView.visibility = View.VISIBLE
                 subjectRecyclerView.layoutManager =
                     LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
-                val examSubjectAdapter = ExamSubjectAdapter(examTimeTable.exam_subject_details)
+                val examSubjectAdapter = ExamSubjectAdapter(examTimeTable.exam_subject_details,
+                    this@ExamTimeTableAdapter.context
+                )
                 subjectRecyclerView.isNestedScrollingEnabled = false
                 subjectRecyclerView.adapter = examSubjectAdapter
             } else {
@@ -48,7 +52,7 @@ class ExamTimeTableAdapter(
     }
 
     override fun onBindViewHolder(holder: ExamTimeTableViewHolder, position: Int) {
-        holder.bind(filteredList[position])
+        holder.bind(filteredList[position],context)
     }
 
     override fun getItemCount(): Int = filteredList.size

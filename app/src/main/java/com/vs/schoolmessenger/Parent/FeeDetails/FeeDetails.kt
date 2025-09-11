@@ -79,7 +79,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             }
         }
         loadPaymentPage(binding.payWebview)
-        binding.payWebview.loadUrl("https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063/app")
+        binding.payWebview.loadUrl(Constant.online_fee_payment_link)
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -278,9 +278,9 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 startActivity(intent)
                 return true
             } catch (e: Exception) {
-                alertDialogView!!.setTitle("Error")
-                alertDialogView!!.setMessage("Check if you have UPI apps installed or not !")
-                alertDialogView!!.setButton("OK") { dialog: DialogInterface, _: Int ->
+                alertDialogView!!.setTitle(getString(R.string.error))
+                alertDialogView!!.setMessage(getString(R.string.check_if_you_have_upi_apps_installed_or_not))
+                alertDialogView!!.setButton(getString(R.string.OK_2)) { dialog: DialogInterface, _: Int ->
                     // Do nothing
                 }
                 alertDialogView!!.show()

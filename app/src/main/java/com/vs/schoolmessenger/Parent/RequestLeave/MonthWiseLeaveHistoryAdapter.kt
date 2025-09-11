@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class MonthWiseLeaveHistoryAdapter(
@@ -56,7 +57,7 @@ class MonthWiseLeaveHistoryAdapter(
     }
 
     fun filterByStatus(status: String) {
-        filteredList = if (status.equals("All", ignoreCase = true)) {
+        filteredList = if (status.equals(Constant.All_, ignoreCase = true)) {
             fullList
         } else {
             fullList.mapNotNull { monthData ->

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class InteractionWithStaffChatAdapter(
@@ -56,7 +57,7 @@ class InteractionWithStaffChatAdapter(
         fun bind(chat: AnswerData, position: Int) {
             questionText.text = chat.question
             answerText.text = chat.answer
-            if (chat.answer == "Not answered yet") {
+            if (chat.answer == Constant.Not_answered_yet) {
                 answerText.visibility = View.GONE
             } else {
                 answerText.visibility = View.VISIBLE

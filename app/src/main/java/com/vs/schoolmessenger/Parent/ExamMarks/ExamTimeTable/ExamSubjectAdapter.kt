@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,10 @@ import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamSubjectDetail
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
-class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
+class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>,
+                         private var context: Context,
+
+                         ) :
     RecyclerView.Adapter<ExamSubjectAdapter.SubjectViewHolder>() {
 
     fun updateData(newList: List<ExamSubjectDetail>) {
@@ -28,12 +32,12 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
         private val rootHeader: LinearLayout = itemView.findViewById(R.id.rootHeader)
         private val layoutAlarm: LinearLayout = itemView.findViewById(R.id.layoutAlarm)
 
-        fun bind(subject: ExamSubjectDetail) {
+        fun bind(subject: ExamSubjectDetail, context: Context) {
             subjectname.text = subject.subject_name
             datevalue.text = Constant.convertToReadableDate(subject.exam_date)
             syllabusvalue.text = subject.syllabus
             lblTime.text = subject.start_time
-            maxmarkvalue.text = "Marks : ${subject.max_mark}"
+            maxmarkvalue.text = "${this@ExamSubjectAdapter.context.getString(R.string.Marks)} : ${subject.max_mark}"
 
             val background = rootHeader.background?.mutate()
 
@@ -51,12 +55,12 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
 
                     // Parse the date: "dd-MM-yyyy"
                     val dateFormat =
-                        java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault())
+                        java.text.SimpleDateFormat(Constant.ddMMyyyy, java.util.Locale.getDefault())
                     val date = dateFormat.parse(subject.exam_date)
 
                     // Parse start and end time: "hh:mm a"
                     val timeFormat =
-                        java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault())
+                        java.text.SimpleDateFormat(Constant.hh_mm_a, java.util.Locale.getDefault())
                     val startTime = timeFormat.parse(subject.start_time)
                     val endTime = timeFormat.parse(subject.end_time)
 
@@ -99,7 +103,7 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
                                 )
                                 putExtra(
                                     android.provider.CalendarContract.Events.DESCRIPTION,
-                                    "Exam Reminder: ${subject.subject_name}"
+                                    "${context.getString(R.string.Exam_Reminder)}: ${subject.subject_name}"
                                 )
                                 putExtra(
                                     android.provider.CalendarContract.EXTRA_EVENT_BEGIN_TIME,
@@ -116,14 +120,14 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
                         } else {
                             android.widget.Toast.makeText(
                                 context,
-                                "No Calendar app found!",
+                                context.getString(R.string.no_calendar_app_found),
                                 android.widget.Toast.LENGTH_SHORT
                             ).show()
                         }
                     } else {
                         android.widget.Toast.makeText(
                             context,
-                            "Invalid time/date",
+                            context.getString(R.string.invalid_time_date),
                             android.widget.Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -132,7 +136,7 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
                     e.printStackTrace()
                     android.widget.Toast.makeText(
                         rootHeader.context,
-                        "Error creating calendar event",
+                        context.getString(R.string.error_creating_calendar_event),
                         android.widget.Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -149,7 +153,7 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>) :
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        holder.bind(subjectList[position])
+        holder.bind(subjectList[position],context)
     }
 
     override fun getItemCount(): Int = subjectList.size

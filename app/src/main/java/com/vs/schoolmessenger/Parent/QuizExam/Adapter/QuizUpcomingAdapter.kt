@@ -77,8 +77,8 @@ class QuizUpcomingAdapter(
             lblMaxMarks.text = data.max_mark.toString()
             lblLevel.text = data.level.toString()
             lblQuestion.text = data.no_of_questions.toString()
-            lblPostedby.text = "Posted by: ${data.SentBy}"
-            lblCreatedOn.text = "Created on ${Constant.convertDateFormatType(data.created_on)}"
+            lblPostedby.text = "${context.getString(R.string.posted_by)}: ${data.SentBy}"
+            lblCreatedOn.text = "${context.getString(R.string.created_on)}${Constant.convertDateFormatType(data.created_on)}"
 
             lblPlayNow.visibility = View.VISIBLE
             lblnext.visibility = View.GONE

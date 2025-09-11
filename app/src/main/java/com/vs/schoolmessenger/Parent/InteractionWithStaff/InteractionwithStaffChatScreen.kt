@@ -59,7 +59,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         appViewModel?.getstaffanswers?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null) {
-                showErrorUI("Something went wrong. Please try again.")
+                showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
             if (response.status) {
@@ -101,11 +101,11 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
 
     private fun isLoadChatData(data: List<AnswerData>) {
         if (data.isNullOrEmpty()) {
-            showErrorUI("No staff data available")
+            showErrorUI(getString(R.string.no_staff_data_available))
             return
         }
 
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+        val inputFormat = SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_a, Locale.getDefault())
 
         val sortedData = data.sortedBy {
             try {

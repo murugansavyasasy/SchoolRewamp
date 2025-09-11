@@ -27,13 +27,13 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblParentToolBar.text = "Fee Receipt"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.fee_receipt)
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         val pdfUrl =
             "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf"
-        val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$pdfUrl"
+        val googleDocsUrl = "${Constant.google_g_view_embedded}$pdfUrl"
         Constant.loadWebView(
             this,
             binding.feeReceiptWebview,

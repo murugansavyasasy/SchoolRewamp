@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.CalendarDate
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -33,7 +34,7 @@ class CalendarAdapter(
                 if (position != RecyclerView.NO_POSITION) {
                     val clickedDate = dateList[position]
                     val today = Calendar.getInstance().time
-                    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
                     val clicked = dateFormat.parse(clickedDate.fullDate)
                     if (clicked!!.after(today)) {
                         return@setOnClickListener

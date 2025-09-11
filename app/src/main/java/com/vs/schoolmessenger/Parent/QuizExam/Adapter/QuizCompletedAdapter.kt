@@ -127,7 +127,7 @@ class QuizCompletedAdapter(
                 data.d_option.trim() to option4
             )
 
-            if (studentAns.equals("N/A", ignoreCase = true)) {
+            if (studentAns.equals(Constant.N_A, ignoreCase = true)) {
                 //  No Answer Selected
                 optionMap[correctAns]?.let { tv ->
                     val drawable = ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
@@ -137,7 +137,7 @@ class QuizCompletedAdapter(
                 }
 
                 lnrAnswerDetails.visibility = View.VISIBLE
-                lblYourResponse.text = "Not Answered"
+                lblYourResponse.text = context.getString(R.string.not_answered1)
                 lblYourResponse.setTextColor(ContextCompat.getColor(context, R.color.orange))
 
                 lblCorrectanswer.text = data.correct_answer
