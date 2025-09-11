@@ -75,14 +75,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtDistance">
 
-        <Button
+        <TextView
             android:id="@+id/btnCancel"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingVertical="@dimen/ten"
             style="@style/CustomTextStylePoppinsRegular"
-            android:background="@drawable/rect_blue_light_radious"
-            android:backgroundTint="@android:color/transparent"
+            android:gravity="center"
             android:text="@string/Cancel"
             android:textColor="@color/navi_blue2" />
 
