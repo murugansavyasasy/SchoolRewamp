@@ -9,12 +9,14 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSummary.ActivateCouponSummary
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.BottomSheetBinding
 
 class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickListener {
@@ -31,6 +33,7 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
     private var thumbnail: String = ""
     private var source_link: String = ""
     private var coupon_status: String = ""
+    private var coupon_code: String = ""
     private var merchant_logo: String = ""
 
     private var howToUseText: String? = ""
@@ -45,6 +48,7 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
     private var isExpanded1 = false
 
     private var bottomSheetBehavior: BottomSheetBehavior<View?>? = null
+    private var isAccessToken: String? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -85,15 +89,19 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         thumbnail = intent.getStringExtra(Constant.thumbnail) ?: ""
         source_link = intent.getStringExtra(Constant.source_link) ?: ""
         coupon_status = intent.getStringExtra(Constant.coupon_status) ?: ""
+        coupon_code = intent.getStringExtra(Constant.coupon_code) ?: ""
         merchant_logo = intent.getStringExtra(Constant.merchant_logo) ?: ""
 
-        earnedPoints = intent.getIntExtra("earnedPoints", 0)
-        spentPoints = intent.getIntExtra("spentPoints", 0)
-        remainingPoints = intent.getIntExtra("remainingPoints", 0)
-        pointspercoupon = intent.getIntExtra("pointspercoupon", 0)
+        earnedPoints = intent.getIntExtra(Constant.earnedPoints, 0)
+        spentPoints = intent.getIntExtra(Constant.spentPoints, 0)
+        remainingPoints = intent.getIntExtra(Constant.remainingPoints, 0)
+        pointspercoupon = intent.getIntExtra(Constant.pointspercoupon, 0)
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
+
+        val isChildDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = isChildDetails?.access_token
 
         fetchactivatecoupondata(source_link)
         Log.d("coupon_status", coupon_status)
@@ -116,6 +124,14 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
             binding.btnActivateCoupon.isEnabled = true
             binding.isProgressBar.visibility = View.GONE
             response?.data?.let { data ->
+                val jsonObject = JsonObject().apply {
+                    addProperty(Constant.user_type, 1)
+                    addProperty(Constant.mobile_number, AppCredentials.isMobileNumber)
+                    addProperty(Constant.coupon_id, coupon_code)
+                    addProperty(Constant.coupon_link, source_link)
+                }
+                appViewModel?.isSpentPoints(isAccessToken ?: "", jsonObject)
+
                 val intent = Intent(this, CouponOrderActivity::class.java).apply {
                     putExtra(Constant.coupon_code, data.coupon_code)
                     putExtra(Constant.qr_code, data.coupons?.getOrNull(0)?.qr_code)
@@ -139,11 +155,12 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         }
 
 
+
         binding.btnActivateCoupon.setOnClickListener {
             if (remainingPoints < pointspercoupon || remainingPoints == 0) {
                 Toast.makeText(
                     this@CouponActivateActivity,
-                    "You need more points! Use the app to keep earning points",
+                    Constant.Youneedmore,
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -173,7 +190,8 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         binding.bottomLayout.headerTextview.text = category_name
         binding.bottomLayout.offerText.text = data.offer_to_show
         binding.bottomLayout.offerText1.text = data.merchant_name
-        binding.bottomLayout.offerText4.text = "${getString(R.string.valid_until)} ${data.expiry_date}"
+        binding.bottomLayout.offerText4.text =
+            "${getString(R.string.valid_until)} ${data.expiry_date}"
         binding.bottomLayout.expandableText.text = convertHtmlToBullets(data.how_to_use)
         binding.bottomLayout.expandableText1.text = convertHtmlToBullets(data.terms_and_conditions)
 

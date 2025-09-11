@@ -163,6 +163,7 @@ class CouponSummaryAdapter(
                 intent.putExtra(Constant.thumbnail, data.thumbnail)
                 intent.putExtra(Constant.source_link, data.source_link)
                 intent.putExtra(Constant.coupon_status, data.coupon_status)
+                intent.putExtra(Constant.coupon_code, data.coupon_code)
 //                Log.d("coupon_status",data.coupon_status)
                 intent.putExtra("earnedPoints", earnedPoints)
                 intent.putExtra("spentPoints", spentPoints)
