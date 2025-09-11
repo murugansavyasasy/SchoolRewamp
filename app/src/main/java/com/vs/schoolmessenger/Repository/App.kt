@@ -28,6 +28,7 @@ import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.PauketPointsResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.SpentPointsModel
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCoupon.ActivateCouponResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSummary.ActivateCouponSummaryResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
@@ -356,6 +357,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var islsrwSkillSubmit: LiveData<LSRWSkillSubmitResponse?>? = null
     var islsrwSkilllist: LiveData<LsrwSkillResponse?>? = null
     var isGetPauketPoints: LiveData<PauketPointsResponse?>? = null
+    var isSpentPoints: LiveData<SpentPointsModel?>? = null
     var isGetQuizQuestionReport: LiveData<GetQuizQuestionReport?>? = null
     var isGetQuizSubmissionList: LiveData<GetQuizSubmissionList?>? = null
     var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
@@ -508,6 +510,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isAddQuestion = apiSchoolRepositories.isAddQuestionLiveData
         isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
         isGetPauketPoints = apiParentRepositories.isGetPauketPointsLiveData
+        isSpentPoints = apiParentRepositories.isSpentPointsLiveData
 
 
     }
@@ -1285,6 +1288,14 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isGetPauketPoints(isToken: String,mobile_number:Long,user_type:Int) {
         apiParentRepositories.isGetPauketPoints(isToken,mobile_number,user_type)
+    }
+
+    fun isSpentPoints(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiParentRepositories.isSpentPoints(
+            isToken, jsonObject,
+        )
     }
 
 

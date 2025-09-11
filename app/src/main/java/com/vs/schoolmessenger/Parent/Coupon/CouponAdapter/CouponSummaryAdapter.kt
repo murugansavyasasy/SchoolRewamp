@@ -29,7 +29,11 @@ class CouponSummaryAdapter(
     private val itemList: List<CampaignItem>,
     private val listener: CouponSummaryClickListener,
     private val context: HomeFragment,
-    private val isLoading: Boolean
+    private val isLoading: Boolean,
+    private val earnedPoints: Int,
+    private val spentPoints: Int,
+    private val remainingPoints: Int,
+    private val pointspercoupon: Int
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder?>(), Filterable {
 
     private var fullList: List<CampaignItem> = itemList ?: listOf()
@@ -159,8 +163,14 @@ class CouponSummaryAdapter(
                 intent.putExtra(Constant.thumbnail, data.thumbnail)
                 intent.putExtra(Constant.source_link, data.source_link)
                 intent.putExtra(Constant.coupon_status, data.coupon_status)
+                intent.putExtra(Constant.coupon_code, data.coupon_code)
 //                Log.d("coupon_status",data.coupon_status)
+                intent.putExtra("earnedPoints", earnedPoints)
+                intent.putExtra("spentPoints", spentPoints)
+                intent.putExtra("remainingPoints", remainingPoints)
+                intent.putExtra("pointspercoupon", pointspercoupon)
                 intent.putExtra(Constant.merchant_logo, data.merchant_logo)
+
                 itemView.context.startActivity(intent)
             }
         }

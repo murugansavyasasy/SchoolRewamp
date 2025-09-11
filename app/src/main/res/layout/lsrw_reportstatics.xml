@@ -150,7 +150,7 @@
                     android:id="@+id/noDataImage"
                     android:layout_width="@dimen/two_hundred"
                     android:layout_height="@dimen/two_hundred"
-                    android:src="@drawable/no_data_found" />
+                    android:src="@drawable/nofilefoundsvg" />
 
                 <TextView
                     android:id="@+id/noDataFound"
