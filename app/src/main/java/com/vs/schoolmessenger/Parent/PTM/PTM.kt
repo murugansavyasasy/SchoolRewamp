@@ -33,11 +33,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
     override fun getViewBinding(): PtmBinding {
         return PtmBinding.inflate(layoutInflater)
     }
-
     private var lastCancelledPosition: Int = -1
-
     var isSelectedDate = ""
-
     private var isParentMeetingAdapter: ParentMeetingAdapter? = null
     lateinit var isMeetingHistoryAdapter: MeetingHistoryAdapter
     private var isAccessToken: String? = null
@@ -59,7 +56,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             isSelectedDate = selectedDate
             isScheduleCallList()
         }
-
 
         binding.recyclerViewDates.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -123,7 +119,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                 binding.recyclerViewSlots.visibility = View.GONE
             }
         }
-
         isScheduleCallList()
     }
 
@@ -166,7 +161,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         }
 
         val adapter = MeetingHistoryAdapter(meetingItems,this)
-
         binding.rcyMeetingHistory.adapter = adapter
     }
 
@@ -205,7 +199,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             binding.rytYourMeeting.visibility = View.GONE
             binding.rytScheduleMeeting.visibility = View.VISIBLE
         }
-
     }
 
     fun generateDates(daysCount: Int): List<Pair<String, Int>> {
