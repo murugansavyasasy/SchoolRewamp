@@ -42,8 +42,8 @@ import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
-import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSubmitSkillDataClass
-//import com.vs.schoolmessenger.Parent.LSRW.MySubmissionView
+
+import com.vs.schoolmessenger.Parent.LSRW.MySubmissionView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
@@ -299,7 +299,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             if (audioList.isNotEmpty()) {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
                 val audioAdapter = AudioAdapter(audioList)
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager = LinearLayoutManager(binding.root.context)
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
+                    LinearLayoutManager(binding.root.context)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
             } else {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
@@ -312,8 +313,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener(this)
 
         binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener {
-//            val intent = Intent(this, MySubmissionView::class.java)
-//            intent.putExtra(Constant.id, data!!.id)
+            val intent = Intent(this, MySubmissionView::class.java)
+            intent.putExtra(Constant.id_, data!!.id)
             startActivity(intent)
         }
 
@@ -374,7 +375,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.rcChildHW
         }
 
-        Log.d("ParentAssigmentValue",isParentAssignment.toString())
+        Log.d("ParentAssigmentValue", isParentAssignment.toString())
 
         val spanCount = when {
             SELECTED_SCHOOL_MENU == M_ASSIGNMENT -> 2

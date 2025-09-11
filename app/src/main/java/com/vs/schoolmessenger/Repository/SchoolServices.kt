@@ -13,6 +13,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
@@ -198,6 +199,7 @@ class SchoolServices {
     var isGetPickFromQBank: MutableLiveData<GetPickFromQBank?>
     var isAddQuestion: MutableLiveData<AddQuestionResponse?>
     var isGetMessageFromStaff: MutableLiveData<GetMessagesStaff?>
+    var isprofilelist: MutableLiveData<ProfileListResponse?>
 
 
     init {
@@ -299,6 +301,7 @@ class SchoolServices {
         isGetPickFromQBank= MutableLiveData()
         isAddQuestion= MutableLiveData()
         isGetMessageFromStaff= MutableLiveData()
+        isprofilelist= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -3803,6 +3806,47 @@ class SchoolServices {
 
     val isGetMessageStaffLiveData: LiveData<GetMessagesStaff?>
         get() = isGetMessageFromStaff
+
+
+
+
+    fun isprofilelist(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isprofilelist(isToken)
+            ?.enqueue(object : Callback<ProfileListResponse?> {
+                override fun onResponse(
+                    call: Call<ProfileListResponse?>, response: Response<ProfileListResponse?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isprofilelist.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isprofilelist.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ProfileListResponse?>, t: Throwable
+                ) {
+                    isprofilelist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isprofilelistLiveData: LiveData<ProfileListResponse?>
+        get() = isprofilelist
 
 
 

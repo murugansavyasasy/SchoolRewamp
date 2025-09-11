@@ -26,6 +26,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
+import com.vs.schoolmessenger.Parent.LSRW.MySubmissionModel.ActivityResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
@@ -90,6 +91,7 @@ class ParentServices {
     var islsrwSkillSubmit: MutableLiveData<LSRWSkillSubmitResponse?>
     var isGetPauketPoints: MutableLiveData<PauketPointsResponse?>
     var isSpentPoints: MutableLiveData<SpentPointsModel?>
+    var islsrwmysubmission: MutableLiveData<ActivityResponse?>
 
     init {
         client_auth = RestClient()
@@ -131,6 +133,7 @@ class ParentServices {
         islsrwSkillSubmit = MutableLiveData()
         isGetPauketPoints = MutableLiveData()
         isSpentPoints = MutableLiveData()
+        islsrwmysubmission = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1688,6 +1691,54 @@ class ParentServices {
     val isGetPauketPointsLiveData: LiveData<PauketPointsResponse?>
         get() = isGetPauketPoints
 
+
+
+
+
+
+
+
+
+    fun islsrwmysubmission(
+        isToken: String,
+        id: String,
+    ) {
+        RestClient.apiInterfaces.islsrwmysubmission(isToken,id)
+            ?.enqueue(object : Callback<ActivityResponse?> {
+                override fun onResponse(
+                    call: Call<ActivityResponse?>,
+                    response: Response<ActivityResponse?>
+                ) {
+                    Log.d(
+                        "SubmitQuizResponse Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("SubmitQuizResponse", response.body().toString())
+                                islsrwmysubmission.postValue(response.body())
+                            } else {
+                                Log.d("SubmitQuizResponse", response.body().toString())
+                                islsrwmysubmission.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ActivityResponse?>,
+                    t: Throwable
+                ) {
+                    islsrwmysubmission.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val islsrwmysubmissionLiveData: LiveData<ActivityResponse?>
+        get() = islsrwmysubmission
 
 
 

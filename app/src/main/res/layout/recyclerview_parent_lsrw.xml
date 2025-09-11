@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/imgIcon"
         android:text="TAMIL"
-        android:textStyle="bold"
+        style="@style/CustomTextStylePoppinsBold"
         android:textSize="16sp"
         android:textColor="@android:color/black" />
 
@@ -41,6 +41,7 @@
         android:layout_below="@id/txtTitle"
         android:layout_toEndOf="@id/imgIcon"
         android:text="Listening"
+        style="@style/CustomTextStylePoppinsMedium"
         android:textSize="14sp"
         android:textColor="@color/purple_700" />
 
@@ -53,7 +54,7 @@
         android:layout_marginEnd="25dp"
         android:text="I’m not sure what to say about the beach for"
         android:textSize="14sp"
-        android:textStyle="bold"
+       style="@style/CustomTextStylePoppinsBold"
         android:textColor="@android:color/black" />
 
     <TextView
@@ -67,7 +68,8 @@
         android:textSize="13sp"
         android:ellipsize="end"
         android:maxLines="3"
-        android:textColor="@android:color/darker_gray" />
+        style="@style/CustomTextStylePoppinsMedium"
+        android:textColor="@color/bpTransparent_black" />
 
 
 
@@ -179,9 +181,11 @@
         android:layout_below="@id/rytList"
         android:layout_alignParentStart="true"
         android:drawableLeft="@drawable/profile"
+        android:layout_marginTop="10dp"
         android:drawablePadding="6dp"
         android:text="CHANDHRU V"
         android:textSize="14sp"
+        style="@style/CustomTextStylePoppinsMedium"
         android:textColor="@android:color/black" />
 
     <TextView
@@ -191,6 +195,7 @@
         android:layout_alignBaseline="@id/txtProfile"
         android:layout_alignParentEnd="true"
         android:text="START"
+        android:layout_marginTop="10dp"
         android:textSize="14sp"
         style="@style/CustomTextStylePoppinsBold"
         android:textColor="@color/teal_900"

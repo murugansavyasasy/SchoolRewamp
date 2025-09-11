@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.LSRW
 
 import android.content.Context
 import android.content.Intent
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -56,6 +57,7 @@ class LSRWAdapter(
 
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
+        private val imgArrow: ImageView = itemView.findViewById(R.id.imgArrow)
         private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
 
 
@@ -66,6 +68,7 @@ class LSRWAdapter(
             txtSubDesc.text = item.description ?: "-"
             txtProfile.text = item.sent_by ?: "-"
 
+            imgArrow.visibility = View.GONE
 
             if (item.activity_type == Constant.Listening) {
                 imgIcon.setImageResource(R.drawable.headphonesvgformat)
@@ -83,7 +86,7 @@ class LSRWAdapter(
             val hasFiles = !item.file_path.isNullOrEmpty()
 
 
-            rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
+            rytList2.visibility = if (hasFiles) View.GONE else View.GONE
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
@@ -98,7 +101,7 @@ class LSRWAdapter(
                     title = item.title,
                     description = item.description,
                     subjectName = item.subject,
-                    sentBy = "",
+                    sentBy = item.created_on,
                     thumbnail = item.thumbnail,
                     isUnread = true,
                     isCompleted = true,
@@ -131,7 +134,7 @@ class LSRWAdapter(
                     title = item.title,
                     description = item.description,
                     subjectName = item.subject,
-                    sentBy = "",
+                    sentBy = item.created_on,
                     thumbnail = item.thumbnail,
                     isUnread = true,
                     isCompleted = true,
@@ -169,7 +172,7 @@ class LSRWAdapter(
                                 title = item.title,
                                 description = item.description,
                                 subjectName = item.subject,
-                                sentBy = "",
+                                sentBy = item.created_on,
                                 thumbnail = item.thumbnail,
                                 isUnread = true,
                                 isCompleted = true,

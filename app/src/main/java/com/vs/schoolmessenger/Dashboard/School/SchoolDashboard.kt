@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.ProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -78,7 +79,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.view_profile -> {
-                    loadFragment(this, ProfileFragment())
+                    loadFragment(this, ProfileRewampFragment())
                     updateNavBar(R.id.icon_profile)
                 }
 

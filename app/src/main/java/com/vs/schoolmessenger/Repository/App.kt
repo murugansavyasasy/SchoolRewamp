@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
@@ -45,6 +46,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
+import com.vs.schoolmessenger.Parent.LSRW.MySubmissionModel.ActivityResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
@@ -363,6 +365,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
     var isAddQuestion: LiveData<AddQuestionResponse?>? = null
     var isGetMessageStaff: LiveData<GetMessagesStaff?>? = null
+    var isprofilelist: LiveData<ProfileListResponse?>? = null
+    var islsrwmysubmission: LiveData<ActivityResponse?>? = null
 
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
@@ -511,6 +515,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
         isGetPauketPoints = apiParentRepositories.isGetPauketPointsLiveData
         isSpentPoints = apiParentRepositories.isSpentPointsLiveData
+        isprofilelist = apiSchoolRepositories.isprofilelistLiveData
+        islsrwmysubmission = apiParentRepositories.islsrwmysubmissionLiveData
 
 
     }
@@ -1080,11 +1086,12 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.islsrwskillsreport(isToken)
 
     }
+
     fun islsrwStudentlist(
         isToken: String,
         id: String
     ) {
-        apiSchoolRepositories.islsrwStudentlist(isToken,id)
+        apiSchoolRepositories.islsrwStudentlist(isToken, id)
 
     }
 
@@ -1103,8 +1110,8 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun islsrwstats(isToken: String,month_id:Int) {
-        apiSchoolRepositories.islsrwstats(isToken,month_id)
+    fun islsrwstats(isToken: String, month_id: Int) {
+        apiSchoolRepositories.islsrwstats(isToken, month_id)
     }
 
 
@@ -1193,8 +1200,8 @@ class App(application: Application) : AndroidViewModel(application) {
         type: String,
         status_type: String,
 
-    ) {
-        apiParentRepositories.isQuizExamList(isToken,type,status_type)
+        ) {
+        apiParentRepositories.isQuizExamList(isToken, type, status_type)
     }
 
     fun isGetQuestions(
@@ -1203,7 +1210,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
         ) {
-        apiParentRepositories.isGetQuestions(isToken,id)
+        apiParentRepositories.isGetQuestions(isToken, id)
     }
 
     fun isSubmitQuiz(
@@ -1217,8 +1224,8 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isGetMySubmission(
         isToken: String,
         id: String,
-        ) {
-        apiParentRepositories.isGetMySubmission(isToken,id)
+    ) {
+        apiParentRepositories.isGetMySubmission(isToken, id)
     }
 
 
@@ -1229,23 +1236,25 @@ class App(application: Application) : AndroidViewModel(application) {
             isToken, jsonObject,
         )
     }
+
     fun isGetQuizExamReport(
-        isToken: String, type:String
+        isToken: String, type: String
     ) {
         apiSchoolRepositories.isGetQuizExamReport(
             isToken, type,
         )
     }
+
     fun isGetCheckLevel(
-        isToken: String, class_id:String, subject_id:String, section_id:String
+        isToken: String, class_id: String, subject_id: String, section_id: String
     ) {
         apiSchoolRepositories.isGetCheckLevel(
-            isToken, class_id,subject_id,section_id
+            isToken, class_id, subject_id, section_id
         )
     }
 
     fun isGetQuizQuestionReport(
-        isToken: String, id:String
+        isToken: String, id: String
     ) {
         apiSchoolRepositories.isGetQuizQuestionReport(
             isToken, id
@@ -1253,7 +1262,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isGetQuizSubmissionList(
-        isToken: String, id:String
+        isToken: String, id: String
     ) {
         apiSchoolRepositories.isGetQuizSubmissionList(
             isToken, id
@@ -1261,7 +1270,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isGetPickFromQBank(
-        isToken: String, subject_id:String
+        isToken: String, subject_id: String
     ) {
         apiSchoolRepositories.isGetPickFromQBank(
             isToken, subject_id
@@ -1285,9 +1294,8 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-
-    fun isGetPauketPoints(isToken: String,mobile_number:Long,user_type:Int) {
-        apiParentRepositories.isGetPauketPoints(isToken,mobile_number,user_type)
+    fun isGetPauketPoints(isToken: String, mobile_number: Long, user_type: Int) {
+        apiParentRepositories.isGetPauketPoints(isToken, mobile_number, user_type)
     }
 
     fun isSpentPoints(
@@ -1298,6 +1306,13 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
 
+    fun isprofilelist(isToken: String) {
+        apiSchoolRepositories.isprofilelist(isToken)
+    }
+
+    fun islsrwmysubmission(isToken: String,id: String) {
+        apiParentRepositories.islsrwmysubmission(isToken,id)
+    }
 
 }
 
