@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/card_outline_border_white"
+    android:padding="@dimen/twenty">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_meeting"
+            android:textSize="@dimen/eighteen" />
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:contentDescription="close"
+            android:padding="8dp"
+            android:src="@drawable/close_icon_3" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/CustomTextStylePoppinsMedium1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sixteen"
+        android:text="@string/reason_for_cancelation"
+        android:textSize="@dimen/fourteen" />
+
+    <EditText
+        android:id="@+id/etReason"
+        style="@style/CustomTextStylePoppinsMedium1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/eight"
+        android:background="@drawable/bg_edittext"
+        android:hint="@string/enter_reason"
+        android:padding="@dimen/twele_sp" />
+
+    <Button
+        android:id="@+id/btnCancelMeeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/twenty"
+        android:backgroundTint="@color/PrimaryColor"
+        android:text="@string/cancel_meeting"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sixteen"
+        android:paddingLeft="@dimen/thirty"
+        android:paddingRight="@dimen/thirty" />
+
+</LinearLayout>

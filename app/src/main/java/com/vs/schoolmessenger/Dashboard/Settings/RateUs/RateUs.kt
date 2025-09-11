@@ -29,22 +29,6 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         setupToolbar()
 
 
-        //In app rating page
-//        val manager = ReviewManagerFactory.create(this@RateUs)
-//        val request = manager.requestReviewFlow()
-//        request.addOnCompleteListener { task ->
-//            if (task.isSuccessful) {
-//                val reviewInfo = task.result
-//                val flow = manager.launchReviewFlow(this@RateUs, reviewInfo)
-//                flow.addOnCompleteListener {
-//                    // Review dialog shown (or not, depending on Google's decision)
-//                }
-//            } else {
-//                // Fallback (e.g., open Play Store page)
-//                openAppInPlayStore(this@RateUs)
-//            }
-//        }
-
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
         } else {
@@ -159,7 +143,6 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         for (i in isRatingData.indices) {
             if (isRatingData[i].rating == isStarType) {
                 binding.lblContent.text = isRatingData[i].content
-                //  inPutRatingContent = isRatingData[i].input_content!!
                 binding.consRatingType.visibility = View.VISIBLE
                 binding.btnsubmit.isEnabled = true
                 for (k in inPutRatingContent.indices) {
@@ -197,48 +180,15 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         if (isRatingId.background.constantState == resources.getDrawable(R.drawable.bg_outline_light_blue).constantState) {
             isRatingId.setBackgroundResource(R.drawable.bg_choose_rating)
             isRatingId.setTextColor(resources.getColor(R.color.white))
-//            isRatingType.add(isRatingId.text.toString())
         } else {
             isRatingId.setBackgroundResource(R.drawable.bg_outline_light_blue)
             isRatingId.setTextColor(resources.getColor(R.color.navi_blue3))
-//            isRatingType.remove(isRatingId.text.toString())
         }
     }
 
 
     private fun isBackRoundFullChange() {
 
-        // Don't delete
-
-//        binding.lblAppUi.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lblAppUi.setTextColor(resources.getColor(R.color.black))
-//
-//        binding.lblWatchUi.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lblWatchUi.setTextColor(resources.getColor(R.color.black))
-//
-//        binding.lbPricing.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lbPricing.setTextColor(resources.getColor(R.color.black))
-//
-//        binding.lblConnection.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lblConnection.setTextColor(resources.getColor(R.color.black))
-//
-//        binding.lblPairing.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lblPairing.setTextColor(resources.getColor(R.color.black))
-//
-//        binding.lblWatchFaces.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lblWatchFaces.setTextColor(resources.getColor(R.color.black))
-//
-//        binding.lblWatchHardware.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lblWatchHardware.setTextColor(resources.getColor(R.color.black))
-//
-//        binding.lblAlumniAssistance.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lblAlumniAssistance.setTextColor(resources.getColor(R.color.black))
-//
-//        binding.lblLoginuser.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lblLoginuser.setTextColor(resources.getColor(R.color.black))
-//
-//        binding.lblRegistration.setBackgroundResource(R.drawable.bg_outline_black)
-//        binding.lblRegistration.setTextColor(resources.getColor(R.color.black))
 
     }
 
