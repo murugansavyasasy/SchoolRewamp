@@ -77,12 +77,15 @@ class HomeWorkChildAdapter(
             isParentAssignment: Boolean
         ) {
 
+
+
+
             binding.relativelayoutHeader.visibility = View.VISIBLE
             binding.progressBar.visibility = View.VISIBLE
             binding.imgView.visibility = View.VISIBLE
             binding.imgView.setBackgroundColor(Color.TRANSPARENT)
 
-
+            Log.d("ParentAssigmentValue",isParentAssignment.toString())
             if (selectedSchoolMenu == M_ASSIGNMENT) {
                 Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
                 binding.imgView.visibility = View.GONE

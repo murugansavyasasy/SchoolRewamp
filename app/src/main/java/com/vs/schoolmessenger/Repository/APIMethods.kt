@@ -176,6 +176,8 @@ object APIMethods {
     const val isGetMessageFromStaff = "comm/api/msg-from-management/get-messages-staff"
     const val isGetPauketPoints = "dashboard/api/pauket/get-points"
     const val isSpentPoints = "dashboard/api/pauket/spent-points"
+    const val isprofilelist = "admin/api/student-profile/list"
+    const val islsrwmysubmission = "lms/api/lsrw/my-submissions"
 
 
 }

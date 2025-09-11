@@ -436,6 +436,7 @@ object Constant {
     var user_type = "user_type"
     var coupon_link = "coupon_link"
     var coupon_id = "coupon_id"
+    var id = "id"
     var mobile_number = "mobile_number"
     var offer_to_show = "offer_to_show"
     var how_to_use = "how_to_use"
