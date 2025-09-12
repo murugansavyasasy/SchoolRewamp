@@ -46,10 +46,10 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
         arguments?.let {
             assignmentId = it.getString(Constant.assignment_id)
-            type = it.getString("type")
-            submittedCount = it.getInt("submitted_count", 0)
-            totalCount = it.getInt("Total_Count", 0)
-            created_date = it.getString("created_date")
+            type = it.getString(Constant.type)
+            submittedCount = it.getInt(Constant.submitted_count, 0)
+            totalCount = it.getInt(Constant.Total_Count, 0)
+            created_date = it.getString(Constant.created_date)
         }
     }
 
@@ -73,9 +73,9 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         binding.iconSearch.setOnClickListener(this)
 
         binding.tabLayout.apply {
-            addTab(newTab().setText("All Students (0)"))
-            addTab(newTab().setText("Submitted (0)"))
-            addTab(newTab().setText("Pending (0)"))
+            addTab(newTab().setText("${getString(R.string.All_Students)} (0)"))
+            addTab(newTab().setText("${getString(R.string.submitted)} (0)"))
+            addTab(newTab().setText("${getString(R.string.pending)} (0)"))
         }
 
 
@@ -118,7 +118,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
                 binding.rcystudentlist.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 
@@ -132,13 +132,13 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     private fun showSubmitted() {
         val filteredList =
-            allStudentsList.filter { it.submit_status.equals("SUBMITTED", ignoreCase = true) }
+            allStudentsList.filter { it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true) }
         isloadassignmentdata(filteredList)
     }
 
     private fun showPending() {
         val filteredList =
-            allStudentsList.filter { it.submit_status.equals("NOTSUBMITTED", ignoreCase = true) }
+            allStudentsList.filter { it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true) }
         isloadassignmentdata(filteredList)
     }
 
@@ -159,13 +159,13 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
     private fun updateTabTitles() {
         val allCount = allStudentsList.size
         val submittedCount =
-            allStudentsList.count { it.submit_status.equals("SUBMITTED", ignoreCase = true) }
+            allStudentsList.count { it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true) }
         val pendingCount =
-            allStudentsList.count { it.submit_status.equals("NOTSUBMITTED", ignoreCase = true) }
+            allStudentsList.count { it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true) }
 
-        binding.tabLayout.getTabAt(0)?.text = "All Students ($allCount)"
-        binding.tabLayout.getTabAt(1)?.text = "Submitted ($submittedCount)"
-        binding.tabLayout.getTabAt(2)?.text = "Pending ($pendingCount)"
+        binding.tabLayout.getTabAt(0)?.text = "${getString(R.string.All_Students)} ($allCount)"
+        binding.tabLayout.getTabAt(1)?.text = "${getString(R.string.submitted)} ($submittedCount)"
+        binding.tabLayout.getTabAt(2)?.text = "${getString(R.string.pending)} ($pendingCount)"
     }
 
 
@@ -205,10 +205,10 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         ) = StudentListFragment().apply {
             arguments = Bundle().apply {
                 putString(Constant.assignment_id, assignmentId)
-                putString("type", type)
-                putInt("submitted_count", submittedCount)
-                putInt("Total_Count", totalCount)
-                putString("created_date", created_date)
+                putString(Constant.type, type)
+                putInt(Constant.submitted_count, submittedCount)
+                putInt(Constant.Total_Count, totalCount)
+                putString(Constant.created_date, created_date)
             }
         }
     }

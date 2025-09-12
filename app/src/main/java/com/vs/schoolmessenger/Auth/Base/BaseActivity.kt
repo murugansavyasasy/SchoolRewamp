@@ -4,25 +4,20 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.PorterDuff
-import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
@@ -30,34 +25,22 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.PopupWindow
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.ProfileRewampFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.ParentProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.SchoolProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
-import com.vs.schoolmessenger.Utils.TimePickerAdapter
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import java.io.File
 import java.io.FileOutputStream
@@ -190,8 +173,19 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             updateNavBar(icon_settings)
         }
         nav_profile.setOnClickListener {
-            loadFragment(this, ProfileRewampFragment())
+
+
+            if (Constant.isParentChoose) {
+                loadFragment(this, ParentProfileRewampFragment())
+            } else {
+                loadFragment(this, SchoolProfileRewampFragment())
+            }
             updateNavBar(icon_profile)
+
+
+
+
+
         }
 
     }
