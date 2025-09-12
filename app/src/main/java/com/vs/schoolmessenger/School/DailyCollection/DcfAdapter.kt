@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionDisplayItem
+import com.vs.schoolmessenger.Utils.Constant
 
 
 class DcfAdapter(
@@ -23,7 +24,7 @@ class DcfAdapter(
     override fun getItemViewType(position: Int): Int {
         return when (itemList[position]) {
             is DailyCollectionDisplayItem.Header -> TYPE_HEADER
-            else -> throw IllegalArgumentException("Unknown view type")
+            else -> throw IllegalArgumentException(Constant.Unknown_view_type)
         }
     }
 
@@ -35,7 +36,7 @@ class DcfAdapter(
                 HeaderViewHolder(view)
             }
 
-            else -> throw IllegalArgumentException("Unknown view type")
+            else -> throw IllegalArgumentException(Constant.Unknown_view_type)
         }
     }
 

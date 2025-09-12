@@ -61,7 +61,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
             Log.d("response++", response.toString())
             if (response == null) {
-                showErrorUI("Something went wrong. Please try again.")
+                showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
             if (response.status) {
@@ -89,7 +89,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
     private fun isLoadDailyCollectionData(data: List<AbsenteeData>?) {
         if (data.isNullOrEmpty()) {
-            showErrorUI("No absentee data available")
+            showErrorUI(getString(R.string.no_absentee_data_available))
             return
         }
 
@@ -134,6 +134,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     override fun onClassSelected(data: ClassWise) {
-        Toast.makeText(this, "Class clicked: ${data.class_name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "${getString(R.string.class_clicked)} ${data.class_name}", Toast.LENGTH_SHORT).show()
     }
 }

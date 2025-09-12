@@ -149,7 +149,7 @@ class AttachmentReportAdapter(
 
             lblDate.text = Constant.convertDateAndTimeFormat(data.date)
             lblTitle.text = data.title
-            lblPostedBy.text = "Posted By : ${data.sent_by}"
+            lblPostedBy.text = "${context.getString(R.string.posted_by)} : ${data.sent_by}"
 
             lblDescription.text = data.description
             lblDescription.maxLines = 3
@@ -185,11 +185,11 @@ class AttachmentReportAdapter(
                 if (isExpanded) {
                     lblDescription.maxLines = Int.MAX_VALUE
                     lblDescription.ellipsize = null
-                    lblSeeMore.text = "See Less"
+                    lblSeeMore.text = context.getString(R.string.See_Less_1)
                 } else {
                     lblDescription.maxLines = 3
                     lblDescription.ellipsize = TextUtils.TruncateAt.END
-                    lblSeeMore.text = "See More"
+                    lblSeeMore.text = context.getString(R.string.see_more)
                 }
             }
 

@@ -116,7 +116,7 @@ class VoiceHistoryAdapter(
 
             rlaSendVoice.visibility = View.VISIBLE
             lblEndDuration.text = String.format(
-                "%02d:%02d",
+               Constant.dateForMate,
                 data.duration.toInt() / 60,
                 data.duration.toInt() % 60
             )

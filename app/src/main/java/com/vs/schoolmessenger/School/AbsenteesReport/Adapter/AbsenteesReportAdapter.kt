@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -79,12 +80,12 @@ class AbsenteesReportAdapter(
         ) {
             daytextview.text = data.day
 
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
             val dateObject: Date? = inputFormat.parse(data.date)
 
             dateObject?.let {
-                val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
-                val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())
+                val dayFormat = SimpleDateFormat(Constant.dd, Locale.getDefault())
+                val monthFormat = SimpleDateFormat(Constant.MMMM, Locale.getDefault())
 
                 datetextview.text = dayFormat.format(it)
                 monthtextview.text = monthFormat.format(it)
