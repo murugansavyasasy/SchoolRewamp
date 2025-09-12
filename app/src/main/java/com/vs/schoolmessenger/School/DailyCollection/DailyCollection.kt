@@ -26,14 +26,14 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var selectedDateTarget: Int = 0
-    private var selectedType: String = "1"
+    private var selectedType: String = Constant.one
     private var to_Date: String? = null
     private var from_Date: String? = null
     private var mAdapter: DcfAdapter? = null
     private var isStaffDetails: StaffDetails? = null
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
-    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
 
 
     override fun getViewBinding(): DailyCollectionBinding {
@@ -86,7 +86,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             Log.d("response++", response.toString())
 
             if (response == null) {
-                showErrorUI("Something went wrong. Please try again.")
+                showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
 
@@ -134,7 +134,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                     flatList.add(
                         DailyCollectionDisplayItem.Header(
                             item.category ?: "Unknown",
-                            item.total ?: "0",
+                            item.total ?: Constant.zero,
                             feeList
                         )
                     )
@@ -181,17 +181,17 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.totalsummary1.adapter = mAdapter
 
 
-        if (selectedType == "1") {
+        if (selectedType == Constant.one) {
             binding.categoryName.isEnabled = false
             binding.className.isEnabled = true
             binding.modeName.isEnabled = true
         }
-        if (selectedType == "2") {
+        if (selectedType == Constant.two) {
             binding.className.isEnabled = false
             binding.categoryName.isEnabled = true
             binding.modeName.isEnabled = true
         }
-        if (selectedType == "3") {
+        if (selectedType == Constant.three) {
             binding.modeName.isEnabled = false
             binding.categoryName.isEnabled = true
             binding.className.isEnabled = true
@@ -216,7 +216,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             }
 
             R.id.class_name -> {
-                selectedType = "2"
+                selectedType = Constant.two
                 binding.className.setBackgroundResource(R.drawable.white_radious)
                 binding.className.setTextColor(Color.BLACK)
                 binding.modeName.setBackgroundResource(R.drawable.bg_light_blue)
@@ -226,7 +226,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             }
 
             R.id.mode_name -> {
-                selectedType = "3"
+                selectedType = Constant.three
                 binding.modeName.setBackgroundResource(R.drawable.white_radious)
                 binding.modeName.setTextColor(Color.BLACK)
                 binding.className.setBackgroundResource(R.drawable.bg_light_blue)
@@ -235,7 +235,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             }
 
             R.id.category_name -> {
-                selectedType = "1"
+                selectedType = Constant.one
                 binding.categoryName.setBackgroundResource(R.drawable.white_radious)
                 binding.categoryName.setTextColor(Color.BLACK)
                 binding.modeName.setBackgroundResource(R.drawable.bg_light_blue)

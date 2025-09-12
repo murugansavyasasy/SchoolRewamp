@@ -624,7 +624,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 val studentArray = JsonArray().apply {
                     isSelectedIds?.forEach { id ->
                         add(JsonObject().apply {
-                            addProperty("ID", id)
+                            addProperty(APIKeyNames.id_, id)
                         })
                     }
                 }

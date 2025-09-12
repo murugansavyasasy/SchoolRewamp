@@ -207,7 +207,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             } else {
                 binding.rcyAssignmentReport.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.noDataFound.text = "No data found"
+                binding.noDataFound.text = getString(R.string.no_data_found)
             }
         }
 
@@ -244,7 +244,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                     selectedUris?.take(remaining)?.forEach { uri ->
                         val mimeType = contentResolver.getType(uri)
                         val path = when (uri.scheme) {
-                            "file" -> uri.path
+                            Constant.file_ -> uri.path
                             else -> getPathFromUri(uri)
                         }
 
@@ -283,7 +283,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                     if ((selectedUris?.size ?: 0) > remaining) {
                         Toast.makeText(
                             this,
-                            "Only $remaining files added (max ${MAX_FILES})",
+                            "${getString(R.string.Only)} $remaining ${getString(R.string.files_added_max)} ${MAX_FILES})",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -315,7 +315,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 } else {
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
-                    binding.noDataFound.text = "No data found"
+                    binding.noDataFound.text = getString(R.string.no_data_found)
                 }
             }
         }
@@ -373,7 +373,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
 
             R.id.btnChooseRecipient -> {
-                if (binding.btnChooseRecipient.text.toString() == "Update Event") {
+                if (binding.btnChooseRecipient.text.toString() == Constant.Update_Event) {
                     showSendConfirmationDialog(true)
                 } else {
                     isRedirectToSectionStudents()
@@ -412,7 +412,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 //                binding.btnCreate.isEnabled = true
 //                isBackRoundChange(binding.btnHistory)
 
-                binding.btnChooseRecipient.text = "Update Assignment"
+                binding.btnChooseRecipient.text = getString(R.string.update_assignment)
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.line3.setBackgroundResource(R.color.iconBlue)
@@ -493,21 +493,21 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     private fun showCameraPermissionSettingsDialog() {
-        AlertDialog.Builder(this).setTitle("Permission Required")
-            .setMessage("Camera permission is permanently denied. Please enable it from app settings.")
-            .setCancelable(false).setPositiveButton("Go to Settings") { _, _ ->
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.camera_permission_is_permanently_denied_please_enable_it_from_app_settings))
+            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }.setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }.show()
     }
@@ -582,7 +582,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -615,7 +615,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
     override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
-        binding.lblTimePick.text = String.format("%02d:%02d %s", hour, minute, amPm)
+        binding.lblTimePick.text = String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
     }
 
     override fun onDateSelected(date: String) {
@@ -642,10 +642,10 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -656,7 +656,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
         val remaining = MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
-            Toast.makeText(this, "Max ${MAX_FILES} files allowed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -705,11 +705,11 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                         val uri = Uri.fromFile(file)
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -732,7 +732,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
-        if (uri.scheme.equals("content", ignoreCase = true)) {
+        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
             val projection = arrayOf(MediaStore.Images.Media.DATA)
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
@@ -743,7 +743,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         }
 
         // File scheme fallback
-        if (uri.scheme.equals("file", ignoreCase = true)) {
+        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
             return uri.path
         }
         return null
@@ -752,7 +752,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     @SuppressLint("Range")
     private fun getFileName(uri: Uri): String {
         var result: String? = null
-        if (uri.scheme == "content") {
+        if (uri.scheme == Constant.content_) {
             val cursor = contentResolver.query(uri, null, null, null, null)
             cursor?.use {
                 if (it.moveToFirst()) {
@@ -773,9 +773,9 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
+        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
     }
 
     private fun isRedirectToSectionStudents() {
@@ -808,7 +808,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     override fun onSubmittedClick(data: AssignmentData) {
         val intent = Intent(this, AssignmentStudentList::class.java)
         intent.putExtra(Constant.assignment_id, data.id)
-        intent.putExtra("type", "SUBMITTED")
+        intent.putExtra(Constant.type, Constant.SUBMITTED)
         startActivity(intent)
     }
 
@@ -823,7 +823,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     override fun onNotSubmittedClick(data: AssignmentData) {
         val intent = Intent(this, AssignmentStudentList::class.java)
         intent.putExtra(Constant.assignment_id, data.id)
-        intent.putExtra("type", "NOTSUBMITTED")
+        intent.putExtra(Constant.type, Constant.NOTSUBMITTED)
         startActivity(intent)
     }
 
@@ -864,9 +864,9 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
         if (isEventUpdate) {
-            alertMessage.text = "Are you sure want to update this assignment?"
+            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_assignment)
         } else {
-            alertMessage.text = "Are you sure want to delete?"
+            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
         }
 
         lblSelectTarget.visibility = View.GONE
@@ -876,7 +876,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             if (isEventUpdate) {
                 ProgressDialogHelper.show(this)
                 ProgressDialogHelper.updateProgress(10)
-                isUploadFilesInServer("file")
+                isUploadFilesInServer(Constant.file_)
             } else {
                 val jsonObject = JsonObject()
                 jsonObject.addProperty(APIKeyNames.id, isAssignmentId)
@@ -1043,7 +1043,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
                 VimeoVideoUpload.uploadVideo(
-                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                    this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].path, this
                 )
             }
         } else {

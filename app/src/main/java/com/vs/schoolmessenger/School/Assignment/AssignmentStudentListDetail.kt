@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionDetail
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AssignmentStudentDetailreportBinding
 
@@ -28,7 +29,7 @@ class AssignmentStudentListDetail : BaseActivity<AssignmentStudentDetailreportBi
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
 
-        val submissionList = intent.getParcelableArrayListExtra<SubmissionDetail>("submission_list")
+        val submissionList = intent.getParcelableArrayListExtra<SubmissionDetail>(Constant.submission_list)
 
 
         submissionAdapter =

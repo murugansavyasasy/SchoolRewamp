@@ -159,8 +159,8 @@ class AssignmentStudentListAdapter(
             sectionlabel.text = data.standard + " - " + data.section
             val submissiondetails = data.submissions_details.firstOrNull()
 
-            if (data.submit_status == "NOTSUBMITTED") {
-                submittedLabel.text = "Due Date" + " : "
+            if (data.submit_status == Constant.NOTSUBMITTED) {
+                submittedLabel.text = "${context.getString(R.string.Due_Date)} : "
                 submittedDate.text = Constant.formatCreatedDate(createdDate)
                 Log.d("created_date", Constant.formatCreatedDate(createdDate))
 
@@ -185,10 +185,10 @@ class AssignmentStudentListAdapter(
 //            arrowIcon.visibility = if (data.submit_status.equals("SUBMITTED", true)) View.VISIBLE else View.GONE
 
             layout.setOnClickListener {
-                if (data.submit_status.equals("SUBMITTED", true)) {
+                if (data.submit_status.equals(Constant.SUBMITTED, true)) {
                     val intent = Intent(context, AssignmentStudentListDetail::class.java)
                     intent.putParcelableArrayListExtra(
-                        "submission_list",
+                        Constant.submission_list,
                         ArrayList(data.submissions_details)
                     )
                     context.startActivity(intent)
@@ -197,15 +197,15 @@ class AssignmentStudentListAdapter(
                 }
             }
 
-            if (data.submit_status == "SUBMITTED") {
-                statuslabel.text = "Submitted"
+            if (data.submit_status == Constant.SUBMITTED) {
+                statuslabel.text = context.getString(R.string.submitted)
                 cancelimage.setBackgroundResource(R.drawable.correcticonsvg)
                 statuslabel.setTextColor(
                     ContextCompat.getColor(context, R.color.clr_green)
                 )
                 statusButton.setBackgroundResource(R.drawable.completed_button_bg)
             } else {
-                statuslabel.text = "Pending"
+                statuslabel.text = context.getString(R.string.pending)
                 cancelimage.setBackgroundResource(R.drawable.downloadsvgformat)
                 statuslabel.setTextColor("#9e6e40".toColorInt())
 

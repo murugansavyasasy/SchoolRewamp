@@ -221,7 +221,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.lblDurationOfVoice.visibility = View.VISIBLE
             if (binding.SwitchEmergencyVoice.isChecked()) {
                 Constant.isAccessType = Constant.isEmergency
-                binding.lblDurationOfVoice.text = "00:00 / 00:30"
+                binding.lblDurationOfVoice.text = Constant._00_00_00_30
                 isEmergency = true
                 MAX_RECORDING_TIME = 30
                 val popupWindow = infosymbolload()
@@ -231,7 +231,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }, 2000)
             } else {
                 Constant.isAccessType = Constant.isNonEmergency
-                binding.lblDurationOfVoice.text = "00:00 / 03:00"
+                binding.lblDurationOfVoice.text = Constant._00_00_03_00
                 isEmergency = false
                 MAX_RECORDING_TIME = 180
             }
@@ -244,10 +244,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             if (isRecording) {
                 recordingTime++
                 binding.lblDurationOfVoice.text = String.format(
-                    "%02d:%02d / %s",
+                    Constant._02d__02d_s,
                     recordingTime / 60,
                     recordingTime % 60,
-                    if (MAX_RECORDING_TIME == 30) "00:30" else "03:00"
+                    if (MAX_RECORDING_TIME == 30) Constant._00_30 else Constant._03_00
                 )
 
                 if (recordingTime >= MAX_RECORDING_TIME) {
@@ -370,8 +370,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         if (checkAndRequestPermissions(this)) {
 
             val dir = externalCacheDir ?: cacheDir
-            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-            val fileName = "Communication_$timeStamp.wav"
+            val timeStamp = SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+            val fileName = "${Constant.Communication_}$timeStamp${Constant.wav}"
             val filePath = "${dir.absolutePath}/$fileName"
 
             audioFilePath = filePath
@@ -400,10 +400,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                             if (isRecording) {
                                 recordingTime++
                                 binding.lblDurationOfVoice.text = String.format(
-                                    "%02d:%02d / %s",
+                                    Constant._02d__02d_s,
                                     recordingTime / 60,
                                     recordingTime % 60,
-                                    if (MAX_RECORDING_TIME == 30) "00:30" else "03:00"
+                                    if (MAX_RECORDING_TIME == 30)Constant._00_30 else Constant._03_00
                                 )
                                 if (recordingTime >= MAX_RECORDING_TIME) {
                                     stopRecording()
@@ -737,7 +737,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaScheduleCall -> {
-                binding.lblDurationOfVoice.text = "00:00 / 03:00"
+                binding.lblDurationOfVoice.text = Constant._00_00_03_00
                 if (binding.SwitchEmergencyVoice.isChecked() == true) {
                     binding.SwitchEmergencyVoice.setChecked(true)
                 } else {
@@ -955,7 +955,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     }
                 }
 
-                binding.lblStartDuration.text = "00:00"
+                binding.lblStartDuration.text = Constant.time_zero
                 stopAudioProgressUpdate()
                 Constant.isVoiceType = 1
                 startRecording()
@@ -1091,7 +1091,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     fun isClearData() {
         binding.SwitchEmergencyVoice.setChecked(false)
-        binding.lblDurationOfVoice.text = "00:00 / 03:00"
+        binding.lblDurationOfVoice.text = Constant._00_00_03_00
         binding.rlaSeekBarAndTitle.visibility = View.GONE
         binding.rlaTitle.visibility = View.GONE
         Constant.selectedFiles.clear()
@@ -1346,7 +1346,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            showDurationLimitDialog("Failed to load audio duration")
+            showDurationLimitDialog(getString(R.string.failed_to_load_audio_duration))
             return
         } finally {
             mediaPlayer.release()
@@ -1400,7 +1400,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         val currentDate: String? = Constant.getCurrentDate()
         val isFileExtension = getFileExtensionFromAwsUrl(data.url)
-        isFileName = "sss_" + currentDate + "." + isFileExtension
+        isFileName = Constant.sss_ + currentDate + "." + isFileExtension
     }
 
     private fun openAudioFilePicker() {
@@ -1457,8 +1457,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     val timeStamp = SimpleDateFormat(
                         Constant.yyyyMMdd_HHmmss, Locale.getDefault()
                     ).format(Date())
-                    var isFileExtension = "wav"
-                    val fileName = "Communication_${timeStamp}.$isFileExtension"
+                    var isFileExtension = Constant.wav_
+                    val fileName = "${Constant.Communication_}${timeStamp}.$isFileExtension"
                     isFileName = fileName
 
                     val inputStream = contentResolver.openInputStream(uri)

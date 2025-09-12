@@ -104,7 +104,7 @@ class SchoolEventCompletedAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<SchoolEventItem> ?: listOf()
-                listener.onSearchResultEmpty("COMPLETED", filteredList.isEmpty())
+                listener.onSearchResultEmpty(Constant.COMPLETED, filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }
@@ -191,7 +191,7 @@ class SchoolEventCompletedAdapter(
             )
 
             val intent = Intent(context, ChildHomeWork::class.java)
-            intent.putExtra("isPreViewData", isHomeWorkData)
+            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             context.startActivity(intent)
         }
