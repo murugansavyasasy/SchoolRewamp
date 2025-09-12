@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
@@ -92,6 +93,7 @@ class ParentServices {
     var isGetPauketPoints: MutableLiveData<PauketPointsResponse?>
     var isSpentPoints: MutableLiveData<SpentPointsModel?>
     var islsrwmysubmission: MutableLiveData<ActivityResponse?>
+    var isParentprofilelist: MutableLiveData<ProfileListResponse?>
 
     init {
         client_auth = RestClient()
@@ -134,6 +136,7 @@ class ParentServices {
         isGetPauketPoints = MutableLiveData()
         isSpentPoints = MutableLiveData()
         islsrwmysubmission = MutableLiveData()
+        isParentprofilelist= MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1741,5 +1744,43 @@ class ParentServices {
         get() = islsrwmysubmission
 
 
+
+    fun isParentprofilelist(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isParentprofilelist(isToken)
+            ?.enqueue(object : Callback<ProfileListResponse?> {
+                override fun onResponse(
+                    call: Call<ProfileListResponse?>, response: Response<ProfileListResponse?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isParentprofilelist.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isParentprofilelist.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ProfileListResponse?>, t: Throwable
+                ) {
+                    isParentprofilelist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isprofilelistLiveData: LiveData<ProfileListResponse?>
+        get() = isParentprofilelist
 
 }

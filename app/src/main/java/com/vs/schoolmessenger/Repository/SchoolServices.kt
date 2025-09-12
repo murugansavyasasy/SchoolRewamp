@@ -199,7 +199,7 @@ class SchoolServices {
     var isGetPickFromQBank: MutableLiveData<GetPickFromQBank?>
     var isAddQuestion: MutableLiveData<AddQuestionResponse?>
     var isGetMessageFromStaff: MutableLiveData<GetMessagesStaff?>
-    var isprofilelist: MutableLiveData<ProfileListResponse?>
+    var isSchoolprofilelist: MutableLiveData<ProfileListResponse?>
 
 
     init {
@@ -301,7 +301,8 @@ class SchoolServices {
         isGetPickFromQBank= MutableLiveData()
         isAddQuestion= MutableLiveData()
         isGetMessageFromStaff= MutableLiveData()
-        isprofilelist= MutableLiveData()
+        isSchoolprofilelist= MutableLiveData()
+
     }
 
 //Old Dashboard Api
@@ -3809,11 +3810,10 @@ class SchoolServices {
 
 
 
-
-    fun isprofilelist(
+    fun isSchoolprofilelist(
         isToken: String
     ) {
-        RestClient.apiInterfaces.isprofilelist(isToken)
+        RestClient.apiInterfaces.isSchoolprofilelist(isToken)
             ?.enqueue(object : Callback<ProfileListResponse?> {
                 override fun onResponse(
                     call: Call<ProfileListResponse?>, response: Response<ProfileListResponse?>
@@ -3827,10 +3827,10 @@ class SchoolServices {
                             val status = response.body()!!.status
                             if (status) {
                                 Log.d("GetMessagesStaffData", response.body().toString())
-                                isprofilelist.postValue(response.body())
+                                isSchoolprofilelist.postValue(response.body())
                             } else {
                                 Log.d("GetMessagesStaffData", response.body().toString())
-                                isprofilelist.postValue(response.body())
+                                isSchoolprofilelist.postValue(response.body())
                             }
                         }
                     }
@@ -3839,16 +3839,14 @@ class SchoolServices {
                 override fun onFailure(
                     call: Call<ProfileListResponse?>, t: Throwable
                 ) {
-                    isprofilelist.postValue(null)
+                    isSchoolprofilelist.postValue(null)
                     t.printStackTrace()
                 }
             })
     }
 
-    val isprofilelistLiveData: LiveData<ProfileListResponse?>
-        get() = isprofilelist
-
-
+    val isSchoolprofilelistLiveData: LiveData<ProfileListResponse?>
+        get() = isSchoolprofilelist
 
 
 }

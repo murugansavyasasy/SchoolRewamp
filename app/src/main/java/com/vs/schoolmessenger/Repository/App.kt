@@ -365,7 +365,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
     var isAddQuestion: LiveData<AddQuestionResponse?>? = null
     var isGetMessageStaff: LiveData<GetMessagesStaff?>? = null
-    var isprofilelist: LiveData<ProfileListResponse?>? = null
+    var isParentprofilelist: LiveData<ProfileListResponse?>? = null
+    var isSchoolprofilelist: LiveData<ProfileListResponse?>? = null
     var islsrwmysubmission: LiveData<ActivityResponse?>? = null
 
     fun init() {
@@ -515,7 +516,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
         isGetPauketPoints = apiParentRepositories.isGetPauketPointsLiveData
         isSpentPoints = apiParentRepositories.isSpentPointsLiveData
-        isprofilelist = apiSchoolRepositories.isprofilelistLiveData
+        isParentprofilelist = apiParentRepositories.isprofilelistLiveData
+        isSchoolprofilelist = apiSchoolRepositories.isSchoolprofilelistLiveData
         islsrwmysubmission = apiParentRepositories.islsrwmysubmissionLiveData
 
 
@@ -1306,8 +1308,13 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
 
-    fun isprofilelist(isToken: String) {
-        apiSchoolRepositories.isprofilelist(isToken)
+    fun isParentprofilelist(isToken: String) {
+        apiParentRepositories.isParentprofilelist(isToken)
+    }
+
+
+    fun isSchoolprofilelist(isToken: String) {
+        apiSchoolRepositories.isSchoolprofilelist(isToken)
     }
 
     fun islsrwmysubmission(isToken: String,id: String) {

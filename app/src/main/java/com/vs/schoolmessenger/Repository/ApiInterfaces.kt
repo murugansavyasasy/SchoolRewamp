@@ -1046,8 +1046,14 @@ interface ApiInterfaces {
         @Body requestBody: JsonObject
     ): Call<SpentPointsModel?>
 
-    @GET(APIMethods.isprofilelist)
-    fun isprofilelist(
+    @GET(APIMethods.isParentprofilelist)
+    fun isParentprofilelist(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ProfileListResponse?>?
+
+
+    @GET(APIMethods.isSchoolprofilelist)
+    fun isSchoolprofilelist(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<ProfileListResponse?>?
 
