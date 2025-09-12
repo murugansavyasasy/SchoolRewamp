@@ -90,10 +90,10 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         }
 
         appViewModel!!.isLocationHistory?.observe(this) { response ->
-//            if (response != null && response.status) {
+            if (response != null && response.status) {
             val isLocationHistory = response!!.data
             isLoadLocationHistory(isLocationHistory, response.message)
-//            }
+            }
         }
 
         appViewModel!!.isUpdateLocation?.observe(this) { response ->

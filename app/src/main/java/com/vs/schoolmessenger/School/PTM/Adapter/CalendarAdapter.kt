@@ -55,7 +55,7 @@ class CalendarAdapter(
             // Highlight today
             when {
                 cellDateStr == todayStr -> {
-                    tvDay.setBackgroundResource(R.drawable.bg_light_blue_circle)
+                    tvDay.setBackgroundResource(R.drawable.bg_circle_selecto)
                     tvDay.setTextColor(Color.WHITE)
                 }
                 selectedDates.contains(cellDateStr) -> {

@@ -104,6 +104,11 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isGetStandardSection()
 
+        binding.imgBack.setOnClickListener {
+            onBackPressed()
+        }
+
+
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {

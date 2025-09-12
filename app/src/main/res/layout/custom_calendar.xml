@@ -1,7 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/bg_calendar_card">
 
     <!-- Month header -->
     <LinearLayout
@@ -9,31 +11,33 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:paddingVertical="@dimen/eight">
 
-        <TextView
+        <ImageView
             android:id="@+id/btnPrevMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginStart="@dimen/sixty"
             android:src="@drawable/left_arrow_blue"
-            android:padding="8dp"/>
+            android:contentDescription="Previous Month" />
 
         <TextView
             android:id="@+id/tvMonthYear"
-            android:layout_width="0dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="@dimen/eighteen"
+            android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:text="September 2025"/>
+            android:text="December 2026" />
 
-        <TextView
+        <ImageView
             android:id="@+id/btnNextMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
             android:src="@drawable/arrow_right_blue"
-            android:padding="8dp"/>
+            android:contentDescription="Next Month" />
+
     </LinearLayout>
 
     <!-- Weekdays row -->
@@ -43,7 +47,8 @@
         android:layout_height="wrap_content"
         android:numColumns="7"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="2dp"/>
+        android:horizontalSpacing="4dp"
+        android:verticalSpacing="4dp"/>
 
     <!-- Days grid -->
     <GridView
@@ -52,5 +57,19 @@
         android:layout_height="wrap_content"
         android:numColumns="7"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="2dp"/>
+        android:horizontalSpacing="4dp"
+        android:verticalSpacing="4dp"/>
+
+    <Button
+        android:id="@+id/btnSaveCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/twele"
+        android:backgroundTint="#4285F4"
+        android:text="Done"
+        android:textColor="@android:color/white"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="8dp"
+        android:layout_marginEnd="8dp"/>
 </LinearLayout>

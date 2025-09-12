@@ -8,7 +8,9 @@
         android:id="@+id/rcySlotDate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/lblCreateSlot"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_above="@+id/lblCreateSlot">
+    </androidx.recyclerview.widget.RecyclerView>
+
 
     <TextView
         android:id="@+id/lblCreateSlot"
