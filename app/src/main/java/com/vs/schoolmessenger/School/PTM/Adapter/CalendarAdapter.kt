@@ -54,8 +54,12 @@ class CalendarAdapter(
 
             // Highlight today
             when {
+                cellDateStr == todayStr && selectedDates.contains(cellDateStr) -> {
+                    tvDay.setBackgroundResource(R.drawable.bg_selected_day)
+                    tvDay.setTextColor(Color.WHITE)
+                }
                 cellDateStr == todayStr -> {
-                    tvDay.setBackgroundResource(R.drawable.bg_circle_selecto)
+                    tvDay.setBackgroundResource(R.drawable.circle_bg_primary)
                     tvDay.setTextColor(Color.WHITE)
                 }
                 selectedDates.contains(cellDateStr) -> {
@@ -67,6 +71,7 @@ class CalendarAdapter(
                     tvDay.setTextColor(Color.BLACK)
                 }
             }
+
 
         }
         return view

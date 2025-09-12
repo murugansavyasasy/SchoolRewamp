@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,26 +6,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcySlotDate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/lblCreateSlot">
-    </androidx.recyclerview.widget.RecyclerView>
-
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/lblCreateSlot"/>
 
     <TextView
         android:id="@+id/lblCreateSlot"
         style="@style/CustomTextStylePoppinsBold1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginBottom="@dimen/ten"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginBottom="@dimen/twenty"
         android:background="@drawable/bg_orange"
         android:padding="@dimen/ten"
-        android:text="@string/create_slots"
+        android:gravity="center"
+        android:text="@string/CreateMeeting"
         android:textColor="@color/white"
-        android:textSize="@dimen/fifteen_sp">
-
-    </TextView>
-
+        android:textSize="@dimen/fifteen_sp"/>
 </RelativeLayout>

@@ -8,6 +8,7 @@ data class SkillData(
     val description: String,
     val activity_type: String,
     val subject: String,
+    val created_on: String,
     val date: String,
     val time: String,
     val submitted_date: String,

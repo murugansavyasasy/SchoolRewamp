@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 
@@ -101,7 +102,7 @@ class InteractionWithStaffAdapter(
             subjectheader.text = staff.subject_name
             unreadcount.text = staff.unread_count
 
-            if (staff.unread_count > "0") {
+            if (staff.unread_count > Constant.zero) {
                 unreadcount.visibility = View.VISIBLE
                 yesterdayheader.visibility = View.GONE
             } else {

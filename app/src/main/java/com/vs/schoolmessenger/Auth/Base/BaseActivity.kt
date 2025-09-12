@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.ProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
@@ -189,7 +190,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             updateNavBar(icon_settings)
         }
         nav_profile.setOnClickListener {
-            loadFragment(this, ProfileFragment())
+            loadFragment(this, ProfileRewampFragment())
             updateNavBar(icon_profile)
         }
 

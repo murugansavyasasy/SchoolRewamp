@@ -74,7 +74,7 @@ class StaffSlotStatusAdapter(
         fun bind(data: Slot, position: Int, listener: StaffSlotCancelReOpenClickListener) {
             lblBookedName.text = data.booked_by
             lblStatus.text = data.status
-            lblDuration.text = "Meeting Duration - " + data.meeting_duration + " Minutes"
+            lblDuration.text = "Duration - " + data.meeting_duration + " Minutes"
 
             lblTime.text = data.from_time + " - " + data.to_time
             lblStandardAndSection.text = data.my_class + " - " + data.my_section

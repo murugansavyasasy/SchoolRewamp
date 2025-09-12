@@ -2,10 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="12dp"
-    android:background="@drawable/bg_calendar_card">
+    android:padding="12dp">
 
-    <!-- Month header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,30 +15,34 @@
             android:id="@+id/btnPrevMonth"
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
-            android:layout_marginStart="@dimen/sixty"
+            android:layout_weight="1"
             android:src="@drawable/left_arrow_blue"
-            android:contentDescription="Previous Month" />
+            android:contentDescription="Previous Month"
+            android:gravity="start"
+            android:layout_gravity="center_vertical|start"/>
 
         <TextView
             android:id="@+id/tvMonthYear"
-            android:layout_width="230dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:gravity="center"
             android:textSize="@dimen/eighteen"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:text="December 2026" />
+            android:text="December 2026"/>
 
         <ImageView
             android:id="@+id/btnNextMonth"
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
+            android:layout_weight="1"
             android:src="@drawable/arrow_right_blue"
-            android:contentDescription="Next Month" />
-
+            android:contentDescription="Next Month"
+            android:gravity="end"
+            android:layout_gravity="center_vertical|end"/>
     </LinearLayout>
 
-    <!-- Weekdays row -->
     <GridView
         android:id="@+id/gridWeekdays"
         android:layout_width="match_parent"
@@ -50,7 +52,6 @@
         android:horizontalSpacing="4dp"
         android:verticalSpacing="4dp"/>
 
-    <!-- Days grid -->
     <GridView
         android:id="@+id/gridCalendar"
         android:layout_width="match_parent"

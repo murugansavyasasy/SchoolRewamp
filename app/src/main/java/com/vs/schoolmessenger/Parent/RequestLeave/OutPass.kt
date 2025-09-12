@@ -57,10 +57,10 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
             Constant.isLeaveData!!.class_name + " - " + Constant.isLeaveData!!.section_name
         binding.lblFromDate.text = Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
         binding.lblToDate.text = Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
-        if (Constant.isLeaveData!!.no_of_days == "1") {
-            binding.lblDays.text = Constant.isLeaveData!!.no_of_days + " Day"
+        if (Constant.isLeaveData!!.no_of_days == Constant.one) {
+            binding.lblDays.text = "${Constant.isLeaveData!!.no_of_days} ${getString(R.string.Day)}"
         } else {
-            binding.lblDays.text = Constant.isLeaveData!!.no_of_days + " Days"
+            binding.lblDays.text = "${Constant.isLeaveData!!.no_of_days} ${getString(R.string.days)}"
         }
         binding.lblApprovalBy.text = Constant.isLeaveData!!.approved_by
         binding.lblReason.text = Constant.isLeaveData!!.reason

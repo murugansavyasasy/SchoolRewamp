@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResults
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class ExamMarkAdapter(
@@ -95,8 +96,8 @@ class ExamMarkAdapter(
     inner class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val textExamTitle: TextView = itemView.findViewById(R.id.textExamTitle)
-        private val btnViewMarks: Button = itemView.findViewById(R.id.btnViewMarks)
-        private val btnViewProgress: Button = itemView.findViewById(R.id.btnViewProgress)
+        private val btnViewMarks: TextView = itemView.findViewById(R.id.btnViewMarks)
+        private val btnViewProgress: TextView = itemView.findViewById(R.id.btnViewProgress)
         private val rootHeader: LinearLayout = itemView.findViewById(R.id.rootHeader)
 
         @SuppressLint("ClickableViewAccessibility")
@@ -110,8 +111,8 @@ class ExamMarkAdapter(
             btnViewMarks.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, ExamMarkResults::class.java)
-                intent.putExtra("exam_title", exam.name)
-                intent.putExtra("exam_id", exam.id)
+                intent.putExtra(Constant.exam_title, exam.name)
+                intent.putExtra(Constant.exam_id, exam.id)
                 context.startActivity(intent)
             }
             btnViewProgress.setOnClickListener {

@@ -36,12 +36,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
-import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSubmitSkillDataClass
+
+import com.vs.schoolmessenger.Parent.LSRW.MySubmissionView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
@@ -192,25 +194,38 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
                 "Listening,Speaking,Reading,Writing"
+            binding.imgBack.visibility = View.GONE
+            binding.scrollView.visibility = View.GONE
+            binding.childlsrwlayoutxml.footerLabel.visibility = View.GONE
+            binding.childlsrwlayoutxml.headerLabel.visibility = View.GONE
+            binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
+            binding.childlsrwlayoutxml.txtTitle.text = data!!.subjectName
+            binding.childlsrwlayoutxml.txtSubTitle.text = data!!.assignmentid
+            binding.childlsrwlayoutxml.txtDescription.text = data!!.title
+            binding.childlsrwlayoutxml.txtDescription1.text = data!!.description
+            binding.childlsrwlayoutxml.txtDate.text = data!!.sentBy
             if (data!!.assignmentid == "Listening") {
-                binding.descriptionLabel.visibility = View.GONE
-                binding.editDescription.visibility = View.GONE
-                binding.rytRecyclewview.visibility = View.GONE
-                binding.rcyImages.visibility = View.GONE
-                binding.btnSubmit.visibility = View.GONE
+                binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
+                binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
+                binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
+                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
             } else if (data!!.assignmentid == "Reading") {
-                binding.descriptionLabel.visibility = View.GONE
-                binding.editDescription.visibility = View.GONE
-                binding.rytRecyclewview.visibility = View.GONE
-                binding.rcyImages.visibility = View.GONE
-                binding.btnSubmit.visibility = View.GONE
+                binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
+                binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
+                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
+                binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
             } else {
-                binding.descriptionLabel.visibility = View.VISIBLE
-                binding.editDescription.visibility = View.VISIBLE
-                binding.rytRecyclewview.visibility = View.VISIBLE
-                binding.lblviewSubmissions.visibility = View.VISIBLE
-                binding.rcyImages.visibility = View.VISIBLE
-                binding.btnSubmit.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.rcyImages.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
             }
             saveDrawableToCache(R.drawable.add_image)?.let {
                 Constant.selectedFiles.add(
@@ -220,8 +235,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 )
             }
             mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
-            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-            binding.rcyImages.adapter = mAdapter
+            binding.childlsrwlayoutxml.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.childlsrwlayoutxml.rcyImages.adapter = mAdapter
             albumResultLauncher =
                 registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
@@ -282,25 +297,27 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
                     .map { it.url }
             if (audioList.isNotEmpty()) {
-                binding.rcSeekBarAndTitle.visibility = View.VISIBLE
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
                 val audioAdapter = AudioAdapter(audioList)
-                binding.rcSeekBarAndTitle.layoutManager = LinearLayoutManager(binding.root.context)
-                binding.rcSeekBarAndTitle.adapter = audioAdapter
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
+                    LinearLayoutManager(binding.root.context)
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
             } else {
-                binding.rcSeekBarAndTitle.visibility = View.GONE
+                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
             }
         } else {
-            binding.lblviewSubmissions.visibility = View.GONE
-            binding.linearlayoutContainer.visibility = View.GONE
-            binding.fragmentContainer.visibility = View.GONE
+            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
         }
 
 
-        binding.lblviewSubmissions.setOnClickListener(this)
+        binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener(this)
 
-        binding.lblviewSubmissions.setOnClickListener {
-
+        binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener {
+            val intent = Intent(this, MySubmissionView::class.java)
+            intent.putExtra(Constant.id_, data!!.id)
+            startActivity(intent)
         }
+
 
         if (data!!.isMenuType == Constant.M_HOMEWORK) {
             isHomeworkId = data!!.id
@@ -352,11 +369,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             isParentAssignment
         )
 
-        val recyclerView = if (SELECTED_SCHOOL_MENU == M_LSRW && !isParentAssignment) {
+        val recyclerView = if (SELECTED_SCHOOL_MENU == M_LSRW && isParentAssignment) {
             binding.childlsrwlayoutxml.rcChildHW
         } else {
             binding.rcChildHW
         }
+
+        Log.d("ParentAssigmentValue", isParentAssignment.toString())
 
         val spanCount = when {
             SELECTED_SCHOOL_MENU == M_ASSIGNMENT -> 2
@@ -434,7 +453,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     }
 
-        override fun onClick(v: View?) {
+    override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
                 onBackPressed()

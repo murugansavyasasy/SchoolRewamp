@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.LSRW
 
 import android.content.Context
 import android.content.Intent
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -56,6 +57,7 @@ class LSRWAdapter(
 
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
+        private val imgArrow: ImageView = itemView.findViewById(R.id.imgArrow)
         private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
 
 
@@ -66,14 +68,15 @@ class LSRWAdapter(
             txtSubDesc.text = item.description ?: "-"
             txtProfile.text = item.sent_by ?: "-"
 
+            imgArrow.visibility = View.GONE
 
-            if (item.activity_type == "Listening") {
+            if (item.activity_type == Constant.Listening) {
                 imgIcon.setImageResource(R.drawable.headphonesvgformat)
-            } else if (item.activity_type == "Speaking") {
+            } else if (item.activity_type == Constant.Speaking) {
                 imgIcon.setImageResource(R.drawable.micsvgformatstyle)
-            } else if (item.activity_type == "Reading"){
+            } else if (item.activity_type == Constant.Reading){
                 imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
-            } else if (item.activity_type == "Writing"){
+            } else if (item.activity_type == Constant.Writing){
                 imgIcon.setImageResource(R.drawable.pensvgformatstyle)
             } else {
                 imgIcon.setImageResource(R.drawable.questionmark)
@@ -83,7 +86,7 @@ class LSRWAdapter(
             val hasFiles = !item.file_path.isNullOrEmpty()
 
 
-            rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
+            rytList2.visibility = if (hasFiles) View.GONE else View.GONE
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
@@ -98,7 +101,7 @@ class LSRWAdapter(
                     title = item.title,
                     description = item.description,
                     subjectName = item.subject,
-                    sentBy = "",
+                    sentBy = item.created_on,
                     thumbnail = item.thumbnail,
                     isUnread = true,
                     isCompleted = true,
@@ -114,7 +117,7 @@ class LSRWAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -131,7 +134,7 @@ class LSRWAdapter(
                     title = item.title,
                     description = item.description,
                     subjectName = item.subject,
-                    sentBy = "",
+                    sentBy = item.created_on,
                     thumbnail = item.thumbnail,
                     isUnread = true,
                     isCompleted = true,
@@ -147,7 +150,7 @@ class LSRWAdapter(
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
-                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 context.startActivity(intent)
             }
@@ -169,7 +172,7 @@ class LSRWAdapter(
                                 title = item.title,
                                 description = item.description,
                                 subjectName = item.subject,
-                                sentBy = "",
+                                sentBy = item.created_on,
                                 thumbnail = item.thumbnail,
                                 isUnread = true,
                                 isCompleted = true,
@@ -185,7 +188,7 @@ class LSRWAdapter(
                             )
 
                             val intent = Intent(context, ChildHomeWork::class.java)
-                            intent.putExtra("isPreViewData", isHomeWorkData)
+                            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             context.startActivity(intent)
                         }

@@ -326,8 +326,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = this.resources.getColor(R.color.sky_blue)
-        window.navigationBarColor = this.resources.getColor(R.color.sky_blue)
+        window.statusBarColor = this.resources.getColor(R.color.white)
+        window.navigationBarColor = this.resources.getColor(R.color.white)
     }
 
     override fun onClick(v: View?) {

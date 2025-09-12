@@ -27,7 +27,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.toolbarLayout.lblParentToolBar.text = "LSRW"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         val childDetails = SharedPreference.getChildDetails(this)
@@ -65,7 +65,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
                 binding.rcyrecyclerview.visibility = View.GONE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.noDataFound.text = "No data found"
+                binding.noDataFound.text = getString(R.string.no_data_found)
             }
         }
 

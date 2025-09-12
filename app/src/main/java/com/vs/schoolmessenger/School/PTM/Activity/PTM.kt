@@ -133,7 +133,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             }
 
             R.id.imgDelete -> {
-                binding.lblDatePicking.text = "All Slots"
+                binding.lblDatePicking.text = "All"
                 binding.imgDelete.visibility = View.GONE
                 isAllSlot = true
                 isLoadData(isSlotCategory)

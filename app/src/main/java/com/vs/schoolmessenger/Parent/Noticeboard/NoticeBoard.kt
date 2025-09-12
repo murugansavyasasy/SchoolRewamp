@@ -72,13 +72,13 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                 binding.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 
         val channel = NotificationChannel(
-            "reminder_channel",
-            "Reminders",
+            Constant.reminder_channel,
+            Constant.Reminders,
             NotificationManager.IMPORTANCE_HIGH
         )
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager

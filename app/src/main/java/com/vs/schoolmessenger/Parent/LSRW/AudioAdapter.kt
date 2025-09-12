@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AudioItemBinding
 
 class AudioAdapter(
@@ -121,12 +122,12 @@ class AudioAdapter(
             tempPlayer.prepareAsync()
         } catch (e: Exception) {
             e.printStackTrace()
-            callback("00:00")
+            callback(Constant.time_zero)
         }
     }
 
     private fun formatDuration(seconds: Int): String {
-        return String.format("%02d:%02d", seconds / 60, seconds % 60)
+        return String.format(Constant.dateForMate, seconds / 60, seconds % 60)
     }
 
     private fun parseToSeconds(duration: String): Int {

@@ -52,6 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblMeetingMode"
                 android:layout_marginTop="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -223,7 +225,7 @@
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_below="@+id/ltyMeetingDetails"
-                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/twenty_five"
                 android:src="@drawable/list_bullet_clipboard_fill">
 
@@ -249,7 +251,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblClasses"
-                android:layout_marginStart="@dimen/ten"
+                android:layout_marginStart="@dimen/thirty_five"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten">
 

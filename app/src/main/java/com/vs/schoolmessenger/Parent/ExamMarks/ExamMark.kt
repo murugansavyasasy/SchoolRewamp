@@ -68,8 +68,8 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             lblStudentName.text = isChildDetails!!.name
             lblStudentSection.text =
                 "${isChildDetails.standard_name} - ${isChildDetails.section_name}"
-            tabOneName.text = "Exam TimeTable"
-            tabTwoName.text = "Exam Marks"
+            tabOneName.text = getString(R.string.exam_timetable)
+            tabTwoName.text = getString(R.string.exam_marks)
         }
 
         binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
@@ -99,7 +99,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             Log.d("response++", response.toString())
             if (response == null || !response.status || response.data.isNullOrEmpty()) {
                 Constant.hideLoading(this)
-                showErrorUI(response?.message ?: "No data available")
+                showErrorUI(response?.message ?: getString(R.string.no_data_available))
                 return@observe
             }
 
@@ -115,7 +115,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         appViewModel?.getexamslist?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null) {
-                showErrorUI("Something went wrong. Please try again.")
+                showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
             if (response.status) {
@@ -154,10 +154,10 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.line2.setBackgroundResource(R.color.white)
-            binding.rcExamTimeTable.visibility = View.VISIBLE
             binding.exammarkrecyclerview.visibility = View.GONE
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
+            binding.rcExamTimeTable.visibility = View.VISIBLE
             fetchexamtimetable()
         }
 
@@ -171,6 +171,8 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             binding.line2.setBackgroundResource(R.color.iconBlue)
             binding.line1.setBackgroundResource(R.color.white)
             binding.rcExamTimeTable.visibility = View.GONE
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
             binding.exammarkrecyclerview.visibility = View.VISIBLE
             fetchexammark()
         }
@@ -213,7 +215,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
     private fun isLoadExamList(data: List<ExamData>) {
         if (data.isNullOrEmpty()) {
-            showErrorUI("No staff data available")
+            showErrorUI(getString(R.string.no_staff_data_available))
             return
         }
         binding.nomessage.visibility = View.GONE
@@ -246,7 +248,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
     private fun isLoadexams(data: List<ExamData>?) {
         if (data.isNullOrEmpty()) {
-            showErrorUI("No examimage data available")
+            showErrorUI(getString(R.string.no_exam_mark_data_available))
             return
         }
         binding.nomessage.visibility = View.GONE
@@ -254,7 +256,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
         binding.rcExamTimeTable.apply {
             layoutManager = LinearLayoutManager(this@ExamMark)
-            examAdapter = ExamTimeTableAdapter(data, this@ExamMark)
+            examAdapter = ExamTimeTableAdapter(data,this@ExamMark, this@ExamMark)
             binding.rcExamTimeTable.adapter = examAdapter
         }
     }

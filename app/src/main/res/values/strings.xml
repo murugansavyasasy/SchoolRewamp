@@ -829,6 +829,46 @@
     <string name="Holidays_for">Holidays for</string>
     <string name="No_holidays_in">No holidays in </string>
     <string name="Marks">Marks</string>
+    <string name="Exam_Reminder">Exam Reminder</string>
+    <string name="no_calendar_app_found">No Calendar app found!</string>
+    <string name="invalid_time_date">Invalid time/date</string>
+    <string name="error_creating_calendar_event">Error creating calendar event</string>
+    <string name="no_data_available">No data available</string>
+    <string name="no_staff_data_available">No staff data available</string>
+    <string name="no_exam_mark_data_available">No exam mark data available</string>
+    <string name="error">Error</string>
+    <string name="check_if_you_have_upi_apps_installed_or_not">Check if you have UPI apps installed or not !</string>
+    <string name="fee_receipt">Fee Receipt</string>
+    <string name="lsrw">LSRW</string>
+    <string name="listening_speaking_reading_writing">Listening,Speaking,Reading,Writing</string>
+    <string name="posted_on">Posted on</string>
+    <string name="Well_done">Well done!</string>
+    <string name="img">IMG</string>
+    <string name="vid">VID</string>
+    <string name="pdf">PDF</string>
+    <string name="That">That</string>
+    <string name="docx">DOCX</string>
+    <string name="txt">TXT</string>
+    <string name="ppt">PPT</string>
+    <string name="exc">EXC</string>
+    <string name="pptx">PPTX</string>
+    <string name="no_matching_list_found">No matching list found</string>
+    <string name="please_allow_exact_alarm_permission_to_schedule_reminders">Please allow exact alarm permission to schedule reminders</string>
+    <string name="Hey_You_set_this_reminder">Hey! You set this reminder</string>
+    <string name="No_of_Days">No of Days</string>
+    <string name="Day">Day</string>
+    <string name="Application">Application</string>
+    <string name="leave_type_is_required">Leave type is required.</string>
+    <string name="reason_is_required">Reason is required.</string>
+    <string name="both_from_and_to_dates_are_required">Both From and To dates are required.</string>
+    <string name="to_date_cannot_be_before_from_date">To Date cannot be before From Date.</string>
+    <string name="from_session_cannot_be_after_to_session_on_the_same_day">From session cannot be after To session on the same day.</string>
+    <string name="Apply_for">Apply for</string>
+    <string name="Leave">Leave</string>
+    <string name="Update_for">Update for</string>
+    <string name="apply_leave">Apply Leave</string>
+    <string name="update_leave">Update Leave</string>
+    <string name="Duration">Duration</string>
 
 
 </resources>

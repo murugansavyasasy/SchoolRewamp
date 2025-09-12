@@ -39,7 +39,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
     private var totalLeaveDays: Int = 0
-    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val dateFormat = SimpleDateFormat(Constant.dd_MM_yyyy, Locale.getDefault())
     private var currentTab = TabType.LeaveRequest
 
 
@@ -91,7 +91,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         toDateMillis = parsedDate?.time ?: today.timeInMillis
 
         totalLeaveDays = 1
-        binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
+        binding.lblTotalDays.text = "${getString(R.string.No_of_Days)} - $totalLeaveDays"
 
 
         binding.lblParentToolBar.text = getString(R.string.leave_requests)
@@ -117,7 +117,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 
@@ -171,7 +171,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         val tabTitles = listOf("All", "Approved", "Rejected", "Waiting")
 
         val tabStatusMap = mapOf(
-            "All" to "All",
+            "All" to Constant.All_,
             "Approved" to Constant.approved,
             "Rejected" to Constant.rejected,
             "Waiting" to Constant.waiting_for_approval
@@ -187,7 +187,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val selectedTitle = tab.text.toString()
-                val filterStatus = tabStatusMap[selectedTitle] ?: "All"
+                val filterStatus = tabStatusMap[selectedTitle] ?: Constant.All_
                 mAdapter.filterByStatus(filterStatus)
 
                 if (mAdapter.itemCount == 0) {
@@ -271,7 +271,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                         toDateMillis = fromDateMillis
                         totalLeaveDays = 1
                     }
-                    binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
+                    binding.lblTotalDays.text = "${getString(R.string.No_of_Days)} - $totalLeaveDays"
                 }
             }
 
@@ -293,7 +293,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                         fromDateMillis = toDateMillis
                     }
 
-                    binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
+                    binding.lblTotalDays.text = "${getString(R.string.No_of_Days)} - $totalLeaveDays"
                     val dayOfMonth = getDayAndDate(selectedDate, dateFormat)
                     dayOfMonth?.let {
                         binding.lblEndDay.text = it
@@ -310,7 +310,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         val dateObj = dateFormat.parse(dateString)
         return dateObj?.let {
             val calendar = Calendar.getInstance().apply { time = it }
-            String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH)) // e.g., "18"
+            String.format(Constant.time02d, calendar.get(Calendar.DAY_OF_MONTH)) // e.g., "18"
         }
     }
 
@@ -330,7 +330,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.rcyLeaveRequestHistory.isNestedScrollingEnabled = false
         binding.rcyLeaveRequestHistory.adapter = mAdapter
         appViewModel!!.getleaverequest(
-            isAccessToken!!, "STUDENT", this
+            isAccessToken!!, Constant.STUDENT_, this
         )
     }
 
@@ -367,14 +367,14 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
     override fun onItemEditClick(data: LeaveData) {
         val intent = Intent(this, NewLeaveRequest::class.java)
-        intent.putExtra("isReason", data.reason)
-        intent.putExtra("isId", data.id)
-        intent.putExtra("isLeaveTo", data.leave_to)
-        intent.putExtra("isLeaveFrom", data.leave_from)
-        intent.putExtra("isFromSession", data.from_session)
-        intent.putExtra("isToSession", data.to_session)
-        intent.putExtra("isLeaveType", data.leave_type)
-        intent.putExtra("isRequestEdit", true)
+        intent.putExtra(Constant.isReason, data.reason)
+        intent.putExtra(Constant.isId, data.id)
+        intent.putExtra(Constant.isLeaveTo, data.leave_to)
+        intent.putExtra(Constant.isLeaveFrom, data.leave_from)
+        intent.putExtra(Constant.isFromSession, data.from_session)
+        intent.putExtra(Constant.isToSession, data.to_session)
+        intent.putExtra(Constant.isLeaveType, data.leave_type)
+        intent.putExtra(Constant.isRequestEdit, true)
         startActivity(intent)
     }
 }

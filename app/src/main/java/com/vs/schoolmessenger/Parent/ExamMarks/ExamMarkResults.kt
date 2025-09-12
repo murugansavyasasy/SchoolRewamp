@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ViewMarksAdapter.ExamGroupActivit
 import com.vs.schoolmessenger.Parent.ExamMarks.ViewMarksAdapter.ExamMarkResultsAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamMarkDetailBinding
 
@@ -45,14 +46,14 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
                 "${childDetails?.standard_name} - ${childDetails?.section_name}"
         }
 
-        exam_id = intent.getStringExtra("exam_id") ?: ""
-        exam_title = intent.getStringExtra("exam_title") ?: ""
+        exam_id = intent.getStringExtra(Constant.exam_id) ?: ""
+        exam_title = intent.getStringExtra(Constant.exam_title) ?: ""
         binding.lblexamTitle.text = exam_title
 
         appViewModel?.getviewmarks?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null) {
-                showErrorUI("Something went wrong. Please try again.")
+                showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
             if (response.status) {
@@ -71,7 +72,7 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
 
     private fun isLoadExamMarks(data: List<ExamMarkData>?) {
         if (data.isNullOrEmpty()) {
-            showErrorUI("No exam mark data available")
+            showErrorUI(getString(R.string.No_exam_mark_data_available))
             return
         }
 
@@ -81,14 +82,14 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
         val allSubjects = data.flatMap { it.subject_marks ?: emptyList() }
 
         if (allSubjects.isEmpty()) {
-            showErrorUI("No subject marks found")
+            showErrorUI(getString(R.string.No_subject_marks_found))
             return
         }
 
         binding.lblTotalObtainaed.text = data.get(0).assessments.get(0).total_obtained
-        binding.lblTotalMark.text = "Out of " + data.get(0).assessments.get(0).total_mark
+        binding.lblTotalMark.text = "${getString(R.string.Out_of)} ${data.get(0).assessments.get(0).total_mark}"
         binding.lblRemark.text = data.get(0).assessments.get(0).Remarks
-        binding.lblGrade.text = "Overall Grade: " + data.get(0).assessments.get(0).Rank
+        binding.lblGrade.text = "${getString(R.string.Overall_Grade)} ${data.get(0).assessments.get(0).Rank}"
 
 
         binding.nomessage.visibility = View.GONE
