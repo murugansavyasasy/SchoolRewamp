@@ -98,12 +98,12 @@ class LeaveRequestAdapter(
                 Constant.convertDateTimeFormat(data.leave_to ?: "")
             }"
             textNoOfDays.text =
-                "${data.no_of_days} ${if (data.no_of_days == "1") "Day" else "Days"} Application"
+                "${data.no_of_days} ${if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(R.string.days)} ${context.getString(R.string.Application)}"
             textReason.text = data.reason
 
             if (data.status == Constant.rejected) {
                 lnrButtons.visibility = View.GONE
-                btnStatus.text = "Rejected"
+                btnStatus.text = context.getString(R.string.rejected)
                 btnStatus.visibility = View.VISIBLE
                 applyTintedBackground(btnStatus, R.drawable.bg_leave_approved, R.color.light_red_1)
                 btnStatus.setTextColor(Color.parseColor("#D32F2F"))
@@ -114,7 +114,7 @@ class LeaveRequestAdapter(
 
             } else if (data.status == Constant.approved) {
                 lnrButtons.visibility = View.GONE
-                btnStatus.text = "Approved"
+                btnStatus.text = context.getString(R.string.approved)
                 btnStatus.visibility = View.VISIBLE
                 applyTintedBackground(
                     btnStatus,
@@ -135,8 +135,8 @@ class LeaveRequestAdapter(
                     R.color.light_green_2
                 )
 
-                btnCancel.text = "Reject"
-                btnApprove.text = "Approve"
+                btnCancel.text = context.getString(R.string.reject)
+                btnApprove.text = context.getString(R.string.approve)
 
             }
             if (data.leave_type == "") {

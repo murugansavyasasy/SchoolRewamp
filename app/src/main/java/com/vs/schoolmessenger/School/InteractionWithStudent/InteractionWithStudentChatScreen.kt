@@ -58,7 +58,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         appViewModel?.getstaffquestions?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null) {
-                showErrorUI("Something went wrong. Please try again.")
+                showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
             if (response.status) {
@@ -98,11 +98,11 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
 
     private fun isLoadChatQuestionData(data: List<QuestionData>) {
         if (data.isNullOrEmpty()) {
-            showErrorUI("No staff data available")
+            showErrorUI(getString(R.string.no_staff_data_available))
             return
         }
 
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+        val inputFormat = SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_a, Locale.getDefault())
 
         val sortedData = data.sortedBy {
             try {
@@ -140,7 +140,8 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         }
 
         if (selectedQuestionId.isNullOrEmpty()) {
-            Constant.showDataValidation("Error", "Invalid question ID", this)
+            Constant.showDataValidation(getString(R.string.error),
+                getString(R.string.invalid_question_id), this)
             return
         }
 
@@ -166,11 +167,11 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.replytext -> {
-                isMessageSend("2")
+                isMessageSend(Constant.two)
             }
 
             R.id.replyalltext -> {
-                isMessageSend("1")
+                isMessageSend(Constant.one)
             }
 
             R.id.imgBack -> {
@@ -187,7 +188,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
 
     override fun onAnswerClick(chat: QuestionData, position: Int) {
         binding.replyLinearlayout.visibility = View.VISIBLE
-        binding.txtReplyingTo.text = "Replying To ${chat.student_name}"
+        binding.txtReplyingTo.text = "${getString(R.string.Replying_To)} ${chat.student_name}"
         binding.btnAdd.visibility = View.VISIBLE
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question

@@ -42,6 +42,7 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
         )
+        binding.btnOk.visibility=View.GONE
 
 
         Glide.with(this)
@@ -56,7 +57,7 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
         binding.tvStandard.text =
             Constant.isLeaveData!!.class_name + " - " + Constant.isLeaveData!!.section_name
         binding.lblFromDate.text = Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
-        binding.lblToDate.text = Constant.convertToReadableDate(Constant.isLeaveData!!.leave_from)
+        binding.lblToDate.text = Constant.convertToReadableDate(Constant.isLeaveData!!.leave_to)
         if (Constant.isLeaveData!!.no_of_days == Constant.one) {
             binding.lblDays.text = "${Constant.isLeaveData!!.no_of_days} ${getString(R.string.Day)}"
         } else {

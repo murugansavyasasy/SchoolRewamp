@@ -127,6 +127,7 @@ object APIKeyNames {
     const val request_type = "request_type"
     const val particular_id = "particular_id"
     const val day_id = "day_id"
+    const val key_value_data = "key_value_data"
 
     const val staff_id = "staff_id"
     const val thumbnail = "thumbnail"

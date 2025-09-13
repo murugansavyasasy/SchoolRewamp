@@ -18,6 +18,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanClickListener
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryItem
+import com.vs.schoolmessenger.Utils.Constant
 
 class LessonPlanAdapter(
     private var itemList: List<LessonPlanViewSummaryItem>?,
@@ -71,8 +72,8 @@ class LessonPlanAdapter(
             val status_text1label = itemView.findViewById<ImageView>(R.id.status_text1label)
 
 
-            val activityDetail = item.details.find { it.name.equals("Activity", ignoreCase = true) }
-            val topicDetail = item.details.find { it.name.equals("Topic", ignoreCase = true) }
+            val activityDetail = item.details.find { it.name.equals(Constant.Activity, ignoreCase = true) }
+            val topicDetail = item.details.find { it.name.equals(Constant.Topic, ignoreCase = true) }
 
             lblSubjectId.text = topicDetail?.value ?: ""
             lblTeaching.text = activityDetail?.value ?: ""
@@ -86,7 +87,7 @@ class LessonPlanAdapter(
 
 
 
-            if (requestType == "allclass") {
+            if (requestType == Constant.allclass) {
                 btndelete.visibility = View.GONE
             } else {
                 btndelete.visibility = View.VISIBLE

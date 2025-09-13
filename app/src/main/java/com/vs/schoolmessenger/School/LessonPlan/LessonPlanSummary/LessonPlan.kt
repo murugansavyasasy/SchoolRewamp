@@ -26,7 +26,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         return LessonPlanBinding.inflate(layoutInflater)
     }
 
-    private var currentRequestType = "allclass"
+    private var currentRequestType = Constant.allclass
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -73,7 +73,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         }
 
 
-        loadlpAllClassdata("allclass")
+        loadlpAllClassdata(Constant.allclass)
 
         binding.lnrTabOneName.setOnClickListener {
             binding.lnrTabOneName.isEnabled = false
@@ -83,7 +83,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.line2.setBackgroundResource(R.color.athens_gray)
             binding.txtSearchMenu1.text.clear()
-            loadlpAllClassdata("allclass")
+            loadlpAllClassdata(Constant.allclass)
         }
 
         binding.lnrTabTwoName.setOnClickListener {
@@ -94,7 +94,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             binding.line2.setBackgroundResource(R.color.iconBlue)
             binding.line1.setBackgroundResource(R.color.athens_gray)
             binding.txtSearchMenu1.text.clear()
-            loadlpAllClassdata("myclass")
+            loadlpAllClassdata(Constant.myclass)
 
         }
 
@@ -138,7 +138,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching lesson plan found"
+            binding.txtNoData.text = getString(R.string.no_matching_lesson_plan_found)
             binding.rcyLessonPlan.visibility = View.GONE
         } else {
 
@@ -158,9 +158,9 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
     override fun onItem(data: AllClassData, requestType: String) {
         val intent = Intent(this@LessonPlan, LessonPlanViewDetails::class.java)
-        intent.putExtra("section_subject_id", data.section_subject_id)
+        intent.putExtra(Constant.section_subject_id, data.section_subject_id)
         Log.d("section_subject_id", data.section_subject_id.toString())
-        intent.putExtra("request_type", requestType)
+        intent.putExtra(Constant.request_type, requestType)
         Log.d("request_type", requestType)
         startActivity(intent)
     }
