@@ -45,9 +45,6 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
         ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent) as TextView
-                if (position == 0) {
-                    view.setTextColor(resources.getColor(android.R.color.holo_red_dark))
-                }
                 return view
             }
         }

@@ -90,7 +90,7 @@ class MeetingHistoryAdapter(
             tvStatus.text = meeting.status
 
             tvStatus.setBackgroundColor(
-                if (meeting.status.equals("Completed", true)) Color.parseColor("#4CAF50")
+                if (meeting.status.equals("Completed", true)) Color.parseColor("#5cc885")
                 else Color.parseColor("#4085ef")
             )
 

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     android:background="@color/gray">
 
     <RelativeLayout
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/five"
-                    android:text="PurPose of meeting"
+                    android:text="Purpose of meeting"
                     android:textSize="@dimen/sixteen">
 
                 </TextView>
@@ -222,11 +222,13 @@
             <RelativeLayout
                 android:id="@+id/rytSectionSelection"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/twenty"
-                android:background="@drawable/card_outline_border"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/rytMeetingTitle"
-                android:layout_margin="@dimen/ten">
+                android:layout_margin="@dimen/ten"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/card_outline_border"
+                android:padding="@dimen/twenty">
 
                 <RelativeLayout
                     android:id="@+id/lnrAcademicYearView"
@@ -254,8 +256,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/five"
                         android:layout_marginStart="@dimen/fifty"
+                        android:layout_marginEnd="@dimen/five"
                         android:layout_toEndOf="@+id/tvAcademicYearLabel"
                         android:background="@drawable/bg_white_light_radious"
                         android:gravity="center">
@@ -285,14 +287,13 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcySectionAndStandardList"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
                     android:layout_below="@+id/lblSelectAcademicYear"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten">
-
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_marginBottom="@dimen/ten"/>
 
             </RelativeLayout>
 

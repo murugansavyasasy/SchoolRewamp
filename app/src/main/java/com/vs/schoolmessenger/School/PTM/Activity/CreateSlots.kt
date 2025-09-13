@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
@@ -625,7 +626,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         binding.lblTenMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblTwentyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblThirtyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
-        isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.bg_green_radoius_10dp))
+        isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.green_bg_radius))
         isBreakDuration = isSelectedTextView.text.toString()
     }
 
