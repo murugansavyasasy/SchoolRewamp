@@ -94,6 +94,7 @@ class InteractionWithStaffAdapter(
         private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
         private val yesterdayheader: TextView = itemView.findViewById(R.id.yesterdayheader)
+        private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
         private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
 
         @SuppressLint("ClickableViewAccessibility")
@@ -101,6 +102,8 @@ class InteractionWithStaffAdapter(
             nameheader.text = staff.name
             subjectheader.text = staff.subject_name
             unreadcount.text = staff.unread_count
+            lblLogo.text = Constant.getNameInitials(staff.name)
+
 
             if (staff.unread_count > Constant.zero) {
                 unreadcount.visibility = View.VISIBLE

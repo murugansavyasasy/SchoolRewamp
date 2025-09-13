@@ -222,7 +222,7 @@ class CalendarFragment : Fragment() {
             binding.holidaylabel.setTextColor(
                 ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
             )
-            binding.holidaylabel.text = "${getString(R.string.No_holidays_in)}$currentMonthYear"
+            binding.holidaylabel.text = "${getString(R.string.No_holidays_in)} $currentMonthYear"
         }
 
     }

@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/thirty"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_marginEnd="@dimen/ten"
             android:layout_toStartOf="@+id/lnrNotifi"
             android:layout_toEndOf="@+id/imgBurgerMenu">
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:text="Madhuri Sharma"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fifteen_sp" />
