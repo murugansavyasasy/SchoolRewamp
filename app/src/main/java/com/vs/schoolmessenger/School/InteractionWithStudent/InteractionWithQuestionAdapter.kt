@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.InteractionWithStudent.Listener.ReplyClickListener
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionData
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class InteractionWithQuestionAdapter(
@@ -65,7 +66,7 @@ class InteractionWithQuestionAdapter(
             questionText.text = chat.question
             answerText.text = chat.answer
             answerText.visibility =
-                if (chat.answer == "Not answered yet") View.GONE else View.VISIBLE
+                if (chat.answer == Constant.Not_answered_yet) View.GONE else View.VISIBLE
 
 
             val popupHandler = View.OnClickListener {
@@ -90,7 +91,7 @@ class InteractionWithQuestionAdapter(
             val popup = PopupMenu(view.context, view)
             popup.menuInflater.inflate(R.menu.question_popup_menu, popup.menu)
 
-            if (chat.answer == "Not answered yet") {
+            if (chat.answer == Constant.Not_answered_yet) {
                 popup.menu.findItem(R.id.menu_reply_all)?.isVisible = false
             } else {
                 popup.menu.findItem(R.id.menu_reply)?.isVisible = false

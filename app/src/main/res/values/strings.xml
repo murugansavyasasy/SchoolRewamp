@@ -889,6 +889,26 @@
     <string name="no_fee_pending_data_available">No fee pending data available.</string>
     <string name="update_homework">Update HomeWork</string>
     <string name="are_you_sure_want_to_update_this_homework">Are you sure want to update this homework?</string>
+    <string name="no_matching_data_found">No matching data found</string>
+    <string name="invalid_question_id">Invalid question ID</string>
+    <string name="Replying_To">Replying To</string>
+    <string name="rejected">Rejected</string>
+    <string name="no_leave_request_found">No Leave Request found</string>
+    <string name="edit_lesson_plan">Edit Lesson Plan</string>
+    <string name="something_went_wrong_please_try_again_later">Something went wrong. Please try again later.</string>
+    <string name="no_editable_data_to_update">No editable data to update</string>
+    <string name="oops_couldn_t_go_back">Oops! Couldn’t go back.</string>
+    <string name="no_matching_lesson_plan_found">No matching lesson plan found</string>
+    <string name="Items_Completed">Items Completed:</string>
+    <string name="lesson_plan">Lesson Plan</string>
+    <string name="no_matching_details_found">No matching details found</string>
+    <string name="no_lesson_plans_found">No lesson plans found</string>
+    <string name="delete_popup_requires_android_o_or_higher">Delete popup requires Android O or higher</string>
+    <string name="no_active_tasks_available">No Active Tasks Available</string>
+    <string name="no_performance_data_available">No Performance Data Available</string>
+    <string name="no_completed_tasks_available">No Completed Tasks Available</string>
+    <string name="info">Info</string>
+    <string name="Class_">Class</string>
 
 
 </resources>

@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryDetail
+import com.vs.schoolmessenger.Utils.Constant
+
 class LessonPlanDetailAdapter(
     private val details: List<LessonPlanViewSummaryDetail>
 ) : RecyclerView.Adapter<LessonPlanDetailAdapter.DetailViewHolder>() {
@@ -27,7 +29,7 @@ class LessonPlanDetailAdapter(
         holder.flowLayout.removeAllViews()
 
         // Only include allowed items (skip Activity and Topic)
-        val filteredDetails = details.filter { it.name != "Activity" && it.name != "Topic" }
+        val filteredDetails = details.filter { it.name != Constant.Activity && it.name != Constant.Topic }
 
         filteredDetails.forEach { detail ->
             val chipView = LayoutInflater.from(holder.itemView.context)
@@ -50,11 +52,11 @@ class LessonPlanDetailAdapter(
 
     private fun getIconForName(name: String): Int {
         return when (name) {
-            "Month" -> R.drawable.ic_calendar
-            "Admin Remarks" -> R.drawable.id_card__1_
-            "From Date" -> R.drawable.time_icon
-            "To Date" -> R.drawable.time_icon
-            "Assesment" -> R.drawable.tag_icon
+            Constant.Month -> R.drawable.ic_calendar
+            Constant.Admin_Remarks -> R.drawable.id_card__1_
+            Constant.From_Date -> R.drawable.time_icon
+            Constant.To_Date -> R.drawable.time_icon
+            Constant.Assesment -> R.drawable.tag_icon
             else -> R.drawable.ic_circle_check_mark
         }
     }

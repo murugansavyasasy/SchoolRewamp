@@ -73,7 +73,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         val tabTitles = listOf("All", "Approved", "Rejected", "Waiting")
 
         val tabStatusMap = mapOf(
-            "All" to "All",
+            "All" to Constant.All_,
             "Approved" to Constant.approved,
             "Rejected" to Constant.rejected,
             "Waiting" to Constant.waiting_for_approval
@@ -89,7 +89,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val selectedTitle = tab.text.toString()
-                val filterStatus = tabStatusMap[selectedTitle] ?: "All"
+                val filterStatus = tabStatusMap[selectedTitle] ?: Constant.All_
                 mAdapter.filterByStatus(filterStatus)
 
                 if (mAdapter.itemCount == 0) {
@@ -133,7 +133,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
+                binding.txtNoData.text = response?.message ?:getString(R.string.no_data_found)
             }
         }
 
@@ -156,7 +156,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 pendingApprovalCallback = null
                 Constant.showDataValidation(
                     getString(R.string.fail),
-                    response?.message ?: "Something went wrong",
+                    response?.message ?: getString(R.string.Something_went_wrong_Please_try_again),
                     this
                 )
             }
@@ -175,7 +175,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No Leave Request found"
+            binding.txtNoData.text = getString(R.string.no_leave_request_found)
             binding.rcyleaverequest.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE
@@ -236,7 +236,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         binding.rcyleaverequest.isNestedScrollingEnabled = false
         binding.rcyleaverequest.adapter = mAdapter
         appViewModel!!.getleaverequest(
-            isAccessToken!!, "STAFF", this
+            isAccessToken!!, Constant.STAFF__, this
         )
     }
 }

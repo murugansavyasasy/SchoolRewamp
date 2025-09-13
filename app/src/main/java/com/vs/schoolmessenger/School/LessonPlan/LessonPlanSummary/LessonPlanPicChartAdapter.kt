@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomPieChartView
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -117,7 +118,7 @@ class LessonPlanPicChartAdapter(
             lblSubject.text = data.subject_name.orEmpty()
             lblSection.text = "${data.class_name} - ${data.section_name}"
             lblStaffName.text = data.staff_name.orEmpty()
-            lblStatus.text = "Items Completed: ${data.items_completed}"
+            lblStatus.text = "${context.getString(R.string.Items_Completed)} ${data.items_completed}"
 
             val itemscompleted = data.items_completed
 
@@ -157,14 +158,14 @@ class LessonPlanPicChartAdapter(
             lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.pale_white_3))
 
 
-            imgPunchHistory.visibility = if (itemscompleted == "0 / 0") {
+            imgPunchHistory.visibility = if (itemscompleted == Constant._0_0) {
                 View.INVISIBLE
             } else {
                 View.VISIBLE
             }
 
             totalrelative_layout.setOnClickListener {
-                if (itemscompleted == "0 / 0") {
+                if (itemscompleted == Constant._0_0) {
                     Log.d("Listener Status", "The percentage value is zero")
                 } else {
                     listener.onItem(data, requestType)

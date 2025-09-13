@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.EditClassData
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditClickListener
@@ -56,7 +57,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
-        binding.toolbarLayout.lblParentToolBar.text = "Edit Lesson Plan"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.edit_lesson_plan)
         binding.toolbarLayout.lblSchoolName.apply {
             visibility = View.VISIBLE
             text = isStaffDetails?.school_name
@@ -64,9 +65,9 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.updatebutton.setOnClickListener(this)
         binding.cancelbutton.setOnClickListener(this)
-        sectionSubjectId = intent.getStringExtra("section_subject_id") ?: ""
-        particularId = intent.getStringExtra("particular_id") ?: ""
-        requestType = intent.getStringExtra("request_type") ?: ""
+        sectionSubjectId = intent.getStringExtra(Constant.section_subject_id) ?: ""
+        particularId = intent.getStringExtra(Constant.particular_id) ?: ""
+        requestType = intent.getStringExtra(Constant.request_type) ?: ""
         Log.d("particular_id", particularId)
         Log.d("request_type", requestType)
         appViewModel?.getlpeditReport?.observe(this) { response ->
@@ -98,7 +99,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
                 }
             } else {
                 Log.e("UpdateError", "Null response received from server.")
-                showTopLessonPlanAlertPopup("Something went wrong. Please try again later.", this)
+                showTopLessonPlanAlertPopup(getString(R.string.something_went_wrong_please_try_again_later), this)
             }
         }
 
@@ -143,12 +144,12 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
     fun lessonplaneditupdate() {
         val keyValueData = lessonplaneditAdapter.getUpdatedFieldsForApi()
         if (keyValueData.length() == 0) {
-            Toast.makeText(this, "No editable data to update", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_editable_data_to_update), Toast.LENGTH_SHORT).show()
             return
         }
         val requestJson = JSONObject().apply {
-            put("particular_id", particularId)
-            put("key_value_data", keyValueData)
+            put(APIKeyNames.particular_id, particularId)
+            put(APIKeyNames.key_value_data, keyValueData)
         }
         Log.d("LessonPlanUpdateRequest", requestJson.toString())
         val requestBody = requestJson.toString()
@@ -251,13 +252,14 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
                 selectedFiles.clear()
                 val intent = Intent(activity, LessonPlanViewDetails::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                intent.putExtra("section_subject_id", sectionSubjectId)
-                intent.putExtra("request_type", requestType)
+                intent.putExtra(Constant.section_subject_id, sectionSubjectId)
+                intent.putExtra(Constant.request_type, requestType)
                 activity.startActivity(intent)
                 activity.finish()
             } catch (e: Exception) {
                 Log.e("LessonPlanPopup", "Redirection failed: ${e.localizedMessage}")
-                Toast.makeText(activity, "Oops! Couldn’t go back.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,
+                    getString(R.string.oops_couldn_t_go_back), Toast.LENGTH_SHORT).show()
             } finally {
                 closePopup()
             }

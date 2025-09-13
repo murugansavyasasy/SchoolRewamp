@@ -19,6 +19,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.EditClassData
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditClickListener
+import com.vs.schoolmessenger.Utils.Constant
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Calendar
@@ -69,8 +70,8 @@ class LessonPlanEditAdapter(
         val jsonArray = JSONArray()
         itemList?.filter { !it.is_disable && it.value.isNotEmpty() }?.forEach { data ->
             val obj = JSONObject()
-            obj.put("field_id", data.field_id)
-            obj.put("value", data.value)
+            obj.put(Constant.field_id, data.field_id)
+            obj.put(Constant.value, data.value)
             jsonArray.put(obj)
         }
         return jsonArray
@@ -87,7 +88,7 @@ class LessonPlanEditAdapter(
             nameTextView.text = "${data.name} :"
 
             when (data.field_type) {
-                "dropdown" -> {
+                Constant.dropdown -> {
                     val options = data.field_data ?: listOf()
                     val adapter = ArrayAdapter(
                         itemView.context, android.R.layout.simple_spinner_item, options
@@ -115,7 +116,7 @@ class LessonPlanEditAdapter(
                     isSpinner.isEnabled = data.is_disable != true
                 }
 
-                "text" -> {
+                Constant.text_ -> {
                     valueTextView.setText(data.value)
                     valueTextView.addTextChangedListener(object : TextWatcher {
                         override fun afterTextChanged(s: Editable?) {
@@ -142,7 +143,7 @@ class LessonPlanEditAdapter(
                     }
                 }
 
-                "datepicker" -> {
+                Constant.datepicker -> {
                     headerdatelabe1l.text = data.value
                     spinnerItem.visibility = View.GONE
                     valueTextView.visibility = View.GONE
@@ -161,7 +162,7 @@ class LessonPlanEditAdapter(
                                 itemView.context, { _, selectedYear, selectedMonth, selectedDay ->
                                     val cal = Calendar.getInstance()
                                     cal.set(selectedYear, selectedMonth, selectedDay)
-                                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                                    val sdf = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
                                     val formattedDate = sdf.format(cal.time)
                                     headerdatelabe1l.text = formattedDate
                                     data.value = formattedDate

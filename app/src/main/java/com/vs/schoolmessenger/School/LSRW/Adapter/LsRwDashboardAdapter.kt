@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LSRW.LsrwReportAndStatics
 import com.vs.schoolmessenger.School.LSRW.Model.Overview
+import com.vs.schoolmessenger.Utils.Constant
 
 class LsRwDashboardAdapter(
     private var itemList: List<Overview>,
@@ -55,11 +56,11 @@ class LsRwDashboardAdapter(
             txtTitle.text = item.title
             txtSubTitle.text = item.subtitle
 
-            if (item.title == "Active Tasks") {
+            if (item.title == Constant.Active_Tasks) {
                 imgIcon.setImageResource(R.drawable.exampadsvg)
-            } else if (item.title == "Avg. Performance") {
+            } else if (item.title == Constant.Avg_Performance) {
                 imgIcon.setImageResource(R.drawable.graphsvgformat)
-            } else if (item.title == "Completed Tasks"){
+            } else if (item.title == Constant.Completed_Tasks){
                 imgIcon.setImageResource(R.drawable.correcticonsvg)
             } else {
                 imgIcon.setImageResource(R.drawable.questionmark)
@@ -69,24 +70,24 @@ class LsRwDashboardAdapter(
 
 
 
-                if (item.title == "Active Tasks") {
-                    if (item.value == "0") {
-                        showNoDataPopup("No Active Tasks Available")
+                if (item.title == Constant.Active_Tasks) {
+                    if (item.value == Constant.zero) {
+                        showNoDataPopup(context.getString(R.string.no_active_tasks_available))
                     } else {
                         onDashboardClick(item)
                     }
 
-                } else if (item.title == "Avg. Performance") {
-                    if (item.value == "0") {
-                        showNoDataPopup("No Performance Data Available")
+                } else if (item.title == Constant.Avg_Performance) {
+                    if (item.value == Constant.zero) {
+                        showNoDataPopup(context.getString(R.string.no_performance_data_available))
                     } else {
                         val intent = Intent(context, LsrwReportAndStatics::class.java)
                         context.startActivity(intent)
                     }
 
-                } else if (item.title == "Completed Tasks") {
-                    if (item.value == "0") {
-                        showNoDataPopup("No Completed Tasks Available")
+                } else if (item.title == Constant.Completed_Tasks) {
+                    if (item.value == Constant.zero) {
+                        showNoDataPopup(context.getString(R.string.no_completed_tasks_available))
                     } else {
                         onCompletedClick(item)
                     }
@@ -96,9 +97,9 @@ class LsRwDashboardAdapter(
 
         private fun showNoDataPopup(message: String) {
             AlertDialog.Builder(context)
-                .setTitle("Info")
+                .setTitle(context.getString(R.string.info))
                 .setMessage(message)
-                .setPositiveButton("OK") { dialog, _ ->
+                .setPositiveButton(context.getString(R.string.permission_ok)) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .show()
