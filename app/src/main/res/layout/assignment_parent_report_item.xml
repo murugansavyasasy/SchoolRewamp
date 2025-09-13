@@ -106,7 +106,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fourty"
         android:id="@+id/linearassigned_layout"
         android:layout_below="@+id/lnrSendBy"
         android:layout_marginStart="@dimen/ten"
@@ -126,11 +126,12 @@
             android:id="@+id/lblassigned"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Assigned : 24 Aug 2025"
             android:textColor="@color/dark_blue_1"
             android:textSize="12sp"
-            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/five"
             android:maxLines="1"
             android:ellipsize="end"
             />
@@ -140,7 +141,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fourty"
         android:orientation="horizontal"
         android:layout_below="@+id/lnrSendBy"
         android:layout_marginStart="@dimen/ten"
@@ -162,11 +163,13 @@
             android:id="@+id/lblCategory"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="GENERAL"
+            android:maxLines="1"
+            android:gravity="center"
             android:textSize="12sp"
             android:textColor="@color/black"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             />
 
     </LinearLayout>
@@ -183,7 +186,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fourty"
             android:id="@+id/lbldeadline_linear"
             android:background="@drawable/rect_shadow_light_green1"
             android:gravity="center_vertical"
@@ -198,9 +201,11 @@
                 android:id="@+id/lblsubject"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/five"
                 android:text="TAMIL"
+                android:maxLines="1"
+                android:gravity="center"
                 android:textSize="12sp"
                 android:textColor="@color/dark_blue_1"
                 >
@@ -212,7 +217,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fourty"
             android:orientation="horizontal"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
@@ -232,11 +237,13 @@
                 android:id="@+id/lbldeadline"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="Deadline 24 Aug 2025"
                 android:textSize="12sp"
+                android:maxLines="1"
                 android:textColor="@color/jaffa"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 />
 
         </LinearLayout>
@@ -356,8 +363,9 @@
             android:background="@drawable/background_dark_blue"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsBold"
-            android:padding="@dimen/eight"
             android:text="My Submission"
+            android:paddingVertical="@dimen/five"
+            android:paddingHorizontal="@dimen/fifteen"
             android:textColor="@color/white"
             android:textSize="13sp">
         </TextView>
@@ -370,7 +378,8 @@
             android:background="@drawable/bg_green_radoius_10dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
-            android:padding="@dimen/ten"
+            android:paddingVertical="@dimen/five"
+            android:paddingHorizontal="@dimen/fifteen"
             android:text="Submit"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"

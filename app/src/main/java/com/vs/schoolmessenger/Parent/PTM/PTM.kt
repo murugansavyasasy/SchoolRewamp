@@ -64,6 +64,10 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             isScheduleCallList()
         }
 
+        binding.imgBack.setOnClickListener {
+            onBackPressed()
+        }
+
         binding.recyclerViewDates.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewDates.adapter = adapter
@@ -189,7 +193,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         }
 
         if (completedMeetings.isNotEmpty()) {
-            meetingItems.add(MeetingListItem.Header("Completed"))
+            meetingItems.add(MeetingListItem.Header("Completed Meetings"))
             completedMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
         }
 

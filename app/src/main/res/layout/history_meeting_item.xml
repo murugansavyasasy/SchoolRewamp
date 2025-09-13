@@ -7,6 +7,7 @@
     android:layout_marginEnd="@dimen/ten"
     android:background="@drawable/bg_gradient"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:padding="@dimen/sixteen">
 
     <RelativeLayout
@@ -61,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/twele"
         android:background="@drawable/white_bg_card"
-        android:backgroundTint="@color/purple_500"
+        android:backgroundTint="@color/violet_color"
         android:paddingHorizontal="@dimen/sixteen"
         android:paddingVertical="@dimen/eight"
         android:text="ENGLISH"
@@ -223,7 +224,7 @@
             android:layout_width="@dimen/hundred"
             android:layout_height="@dimen/fourty"
             android:layout_marginEnd="@dimen/eight"
-            android:background="@drawable/bg_red_circle"
+            android:background="@drawable/bg_red"
             android:drawableStart="@drawable/close_icon_3"
             android:gravity="center"
             android:paddingStart="@dimen/ten"

@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/outline_gray_card"
     android:layout_margin="4dp"
+    android:fitsSystemWindows="true"
     android:padding="12dp">
 
     <TextView

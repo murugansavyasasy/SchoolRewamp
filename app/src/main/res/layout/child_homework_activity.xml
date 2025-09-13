@@ -7,7 +7,8 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/lytHeader"
         android:layout_width="match_parent"
         android:layout_height="@dimen/eighty"
@@ -21,36 +22,42 @@
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:src="@drawable/arrow_left_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_centerVertical="true" />
+
+        <LinearLayout
+            android:layout_toEndOf="@+id/imgBack"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
         <TextView
             android:id="@+id/lblSubjectName"
             style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="@dimen/hundred_fifty"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/five"
             android:layout_height="wrap_content"
             android:text="Sathish"
             android:textColor="@color/white"
-            android:textSize="@dimen/eighteen"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="@dimen/fifteen_sp" />
 
-        <TextView
-            android:id="@+id/lblPostedDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/five"
-            android:text="Posted on : Today"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twenty"
-            app:layout_constraintBottom_toBottomOf="@+id/lblSubjectName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/lblSubjectName" />
+            <TextView
+                android:id="@+id/lblPostedDate"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_weight="1"
+                android:text="Posted on : Today "
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp" />
 
+        </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/scrollView"

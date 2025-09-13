@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white">
 
     <include
@@ -83,7 +84,8 @@
                         android:layout_toEndOf="@+id/imgCalender"
                         android:text="Date"
                         android:textColor="@color/light_gray_5"
-                        android:textSize="@dimen/fourteen"></TextView>
+                        android:textSize="@dimen/fourteen">
+                    </TextView>
 
                     <TextView
                         android:id="@+id/lblDate"

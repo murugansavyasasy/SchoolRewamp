@@ -8,6 +8,7 @@
     android:clipToPadding="false"
     android:clipChildren="false"
     android:padding="@dimen/eight"
+    android:fitsSystemWindows="true"
     android:backgroundTint="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
