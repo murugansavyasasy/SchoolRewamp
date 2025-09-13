@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
+    android:layout_marginTop="@dimen/four"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/lblClasses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_margin="6dp"
+        android:paddingVertical="@dimen/four"
+        android:paddingHorizontal="@dimen/eight"
+        android:layout_margin="@dimen/four"
         android:background="@drawable/gray_bg_radius"
         android:textColor="@color/black"
         android:gravity="center"

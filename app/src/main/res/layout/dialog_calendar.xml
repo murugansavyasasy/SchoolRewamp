@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:padding="12dp">
+    android:padding="2dp">
 
     <com.vs.schoolmessenger.School.PTM.Adapter.CustomCalendar
         android:id="@+id/customCalendar"

@@ -2,9 +2,8 @@
     android:id="@+id/meetingCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/eight"
-    android:layout_marginStart="@dimen/ten"
-    android:layout_marginEnd="@dimen/ten"
+    android:layout_marginVertical="@dimen/five"
+   android:layout_marginHorizontal="@dimen/ten"
     android:background="@drawable/bg_gradient"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
@@ -26,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/report_card_meeting"
-                android:textSize="@dimen/eighteen"
+                android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -36,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/two"
                 android:text="with Nicholas"
-                android:textSize="@dimen/sixteen" />
+                android:textSize="@dimen/thirteen_sp" />
 
         </LinearLayout>
 
@@ -47,11 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:background="@drawable/bg_orange"
-            android:paddingHorizontal="@dimen/sixteen"
-            android:paddingVertical="@dimen/eight"
+            android:paddingHorizontal="@dimen/fifteen"
+            android:paddingVertical="@dimen/five"
             android:text="@string/upcoming"
             android:textColor="@color/white"
-            android:textSize="@dimen/fourteen" />
+            android:textSize="@dimen/thirteen_sp" />
 
     </RelativeLayout>
 
@@ -63,11 +62,11 @@
         android:layout_marginTop="@dimen/twele"
         android:background="@drawable/white_bg_card"
         android:backgroundTint="@color/violet_color"
-        android:paddingHorizontal="@dimen/sixteen"
-        android:paddingVertical="@dimen/eight"
+        android:paddingHorizontal="@dimen/fifteen"
+        android:paddingVertical="@dimen/five"
         android:text="ENGLISH"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/twele" />
+        android:textSize="@dimen/twele_sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/phone_call"
-                android:textSize="@dimen/fourteen" />
+                android:textSize="@dimen/thirteen_sp" />
 
         </LinearLayout>
 
@@ -119,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="15 min"
-                android:textSize="@dimen/fourteen" />
+                android:textSize="@dimen/thirteen_sp" />
 
         </LinearLayout>
 
@@ -155,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/date"
-                    android:textSize="@dimen/thirteen" />
+                    android:textSize="@dimen/thirteen_sp" />
 
             </LinearLayout>
 
@@ -167,7 +166,7 @@
                 android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginTop="@dimen/four"
                 android:text="02 Sep 2025"
-                android:textSize="@dimen/fourteen" />
+                android:textSize="@dimen/thirteen_sp" />
 
         </LinearLayout>
 
@@ -195,7 +194,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/time"
-                    android:textSize="@dimen/thirteen" />
+                    android:textSize="@dimen/thirteen_sp" />
 
             </LinearLayout>
 
@@ -207,7 +206,7 @@
                 android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginTop="@dimen/four"
                 android:text="04:15 PM - 04:30 PM"
-                android:textSize="@dimen/fourteen" />
+                android:textSize="@dimen/thirteen_sp" />
 
         </LinearLayout>
 
@@ -216,34 +215,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/twenty_four"
+        android:layout_marginTop="@dimen/twenty"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/cancelButton"
-            android:layout_width="@dimen/hundred"
-            android:layout_height="@dimen/fourty"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/thirty_five"
             android:layout_marginEnd="@dimen/eight"
             android:background="@drawable/bg_red"
             android:drawableStart="@drawable/close_icon_3"
             android:gravity="center"
-            android:paddingStart="@dimen/ten"
             android:text="@string/cancel"
+            android:paddingHorizontal="@dimen/ten"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/twele" />
+            android:textSize="@dimen/twele_sp" />
 
         <Button
             android:id="@+id/callButton"
-            android:layout_width="@dimen/hundred"
-            android:layout_height="@dimen/fourty"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/thirty_five"
             android:layout_marginStart="@dimen/eight"
             android:background="@drawable/bg_orange"
             android:drawableStart="@drawable/phone_icon"
             android:gravity="center"
-            android:paddingHorizontal="@dimen/twenty"
+            android:paddingHorizontal="@dimen/ten"
             android:text="Call"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/twele" />
+            android:textSize="@dimen/twele_sp" />
 
     </LinearLayout>
 

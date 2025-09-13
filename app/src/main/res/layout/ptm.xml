@@ -130,14 +130,14 @@
             android:id="@+id/recyclerViewDates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/sixteen" />
+            android:padding="@dimen/ten" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSlots"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/recyclerViewDates"
-            android:padding="@dimen/sixteen" />
+            android:padding="@dimen/ten" />
 
         <LinearLayout
             android:id="@+id/rytNoDataFound"

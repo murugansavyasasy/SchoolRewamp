@@ -177,7 +177,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         }
 
-        binding.rcySectionAndStandardList.layoutManager = GridLayoutManager(this, 5)
+        binding.rcySectionAndStandardList.layoutManager = GridLayoutManager(this, 4)
         binding.rcySectionAndStandardList.adapter = adapter
     }
 
