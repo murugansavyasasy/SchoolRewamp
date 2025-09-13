@@ -2,13 +2,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:padding="2dp">
+    android:fitsSystemWindows="true">
 
     <com.vs.schoolmessenger.School.PTM.Adapter.CustomCalendar
         android:id="@+id/customCalendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/five"
         android:background="@drawable/bg_calendar_card" />
 
 </LinearLayout>
