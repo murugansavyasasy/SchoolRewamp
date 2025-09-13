@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="@dimen/two"
     android:background="@drawable/outline_gray"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:padding="12dp">
+    android:padding="@dimen/ten">
 
     <TextView
         android:id="@+id/tvSlotTime"
@@ -15,17 +15,17 @@
         android:gravity="start"
         android:text="10:00 am - 10:10 am"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="@dimen/thirteen_sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvSlotStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/five"
         android:gravity="center_horizontal"
         android:text="Available"
-        android:textColor="#4CAF50"
-        android:textSize="12sp" />
+        android:textColor="@color/green"
+        android:textSize="@dimen/twele_sp" />
 
 </LinearLayout>
