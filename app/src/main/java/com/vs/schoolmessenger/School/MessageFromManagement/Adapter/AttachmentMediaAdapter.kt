@@ -154,7 +154,7 @@ class AttachmentMediaAdapter(
                  googleDocsUrl = urlPath
             }
             else{
-                googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
+                googleDocsUrl = "${Constant.google_g_view_embedded}$urlPath"
             }
 
             DefaultImage.visibility = View.GONE

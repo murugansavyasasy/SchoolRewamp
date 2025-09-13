@@ -909,6 +909,24 @@
     <string name="no_completed_tasks_available">No Completed Tasks Available</string>
     <string name="info">Info</string>
     <string name="Class_">Class</string>
+    <string name="active_task">Active Task</string>
+    <string name="Completed_Task">Completed Task</string>
+    <string name="report_analytics"><![CDATA[Report & Analytics]]></string>
+    <string name="address_not_found">Address not found</string>
+    <string name="Lat">Lat</string>
+    <string name="Long">Long</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="use_fingerprint_face_pin_or_pattern">Use fingerprint, face, PIN, or pattern</string>
+    <string name="authentication_required">Authentication Required</string>
+    <string name="please_confirm_your_screen_lock_pin_or_pattern">Please confirm your screen lock PIN or pattern</string>
+    <string name="update_noticeboard">Update NoticeBoard</string>
+    <string name="are_you_sure_want_to_update_this_noticeboard">Are you sure want to update this noticeboard?</string>
+    <string name="No_results_found_for">No results found for</string>
+    <string name="no_notices_available">No notices available</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="Please_allow_exact_alarm_permission">Please allow exact alarm permission</string>
+    <string name="this_is_required">This is required!</string>
+    <string name="mark_should_be_greater_than_zero">Mark should be greater than zero!</string>
 
 
 </resources>

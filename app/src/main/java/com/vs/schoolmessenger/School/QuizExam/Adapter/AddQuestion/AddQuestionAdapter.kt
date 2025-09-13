@@ -133,46 +133,46 @@ class AddQuestionAdapter(
                     ?: return@forEachIndexed
 
             if (item.question.isBlank()) {
-                holder.edtChapterName.error = "This is required!"
+                holder.edtChapterName.error = context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtChapterName.requestFocus()
                 isAllValid = false
             }
             if (item.question.isBlank()) {
-                holder.edtQuestion.error = "This is required!"
+                holder.edtQuestion.error = context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtQuestion.requestFocus()
                 isAllValid = false
             }
             if (item.a_option.isBlank()) {
-                holder.edtOptionA.error = "This is required!"
+                holder.edtOptionA.error = context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtOptionA.requestFocus()
                 isAllValid = false
             }
             if (item.b_option.isBlank()) {
-                holder.edtOptionB.error = "This is required!"
+                holder.edtOptionB.error =context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtOptionB.requestFocus()
                 isAllValid = false
             }
             if (item.c_option.isBlank()) {
-                holder.edtOptionC.error = "This is required!"
+                holder.edtOptionC.error = context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtOptionC.requestFocus()
                 isAllValid = false
             }
             if (item.d_option.isBlank()) {
-                holder.edtOptionD.error = "This is required!"
+                holder.edtOptionD.error = context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtOptionD.requestFocus()
                 isAllValid = false
             }
             if (item.answer.isBlank()) {
-                holder.edtCorrectAns.error = "This is required!"
+                holder.edtCorrectAns.error = context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtCorrectAns.requestFocus()
                 isAllValid = false
             }
             if (item.mark == null) {
-                holder.edtMark.error = "This is required!"
+                holder.edtMark.error = context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtMark.requestFocus()
                 isAllValid = false
             } else if (item.mark <= 0) {
-                holder.edtMark.error = "Mark should be greater than zero!"
+                holder.edtMark.error = context.getString(R.string.mark_should_be_greater_than_zero)
                 if (isAllValid) holder.edtMark.requestFocus()
                 isAllValid = false
             }

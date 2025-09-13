@@ -120,11 +120,11 @@ class SchoolNoticeBoardAdapter(
         if (isEmpty && query.isNotEmpty()) {
             noDataImage?.visibility = View.VISIBLE
             noDataText?.visibility = View.VISIBLE
-            noDataText?.text = "No results found for '$query'"
+            noDataText?.text = "${context.getString(R.string.No_results_found_for)} '$query'"
         } else if (isEmpty && query.isEmpty() && originalList.isEmpty()) {
             noDataImage?.visibility = View.VISIBLE
             noDataText?.visibility = View.VISIBLE
-            noDataText?.text = "No notices available"
+            noDataText?.text = context.getString(R.string.no_notices_available)
         } else {
             noDataImage?.visibility = View.GONE
             noDataText?.visibility = View.GONE
@@ -187,7 +187,7 @@ class SchoolNoticeBoardAdapter(
             val date = parts.getOrNull(0) ?: ""
             val time = (parts.getOrNull(1) ?: "") + " " + (parts.getOrNull(2) ?: "")
 
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
             val parsedDate = try {
                 inputFormat.parse(date)
             } catch (_: Exception) {
@@ -201,10 +201,10 @@ class SchoolNoticeBoardAdapter(
 
             val outputText = when {
                 parsedDate != null -> {
-                    val sdf = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+                    val sdf = SimpleDateFormat(Constant.yyyyMMdd, Locale.getDefault())
                     when (sdf.format(parsedDate)) {
-                        sdf.format(today) -> "Today"
-                        sdf.format(yesterday) -> "Yesterday"
+                        sdf.format(today) -> context.getString(R.string.today)
+                        sdf.format(yesterday) -> context.getString(R.string.yesterday)
                         else -> Constant.CustomisedconvertDateTimeFormat(date)
                     }
                 }
@@ -267,7 +267,7 @@ class SchoolNoticeBoardAdapter(
                 fileList = convertedList
             )
             val intent = Intent(context, ChildHomeWork::class.java)
-            intent.putExtra("isPreViewData", preview)
+            intent.putExtra(Constant.isPreViewData, preview)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             context.startActivity(intent)
         }
@@ -323,7 +323,7 @@ class SchoolNoticeBoardAdapter(
                     context.startActivity(intent)
                     Toast.makeText(
                         context,
-                        "Please allow exact alarm permission",
+                        context.getString(R.string.Please_allow_exact_alarm_permission),
                         Toast.LENGTH_LONG
                     ).show()
                 }

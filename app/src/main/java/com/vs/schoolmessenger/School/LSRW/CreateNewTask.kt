@@ -101,7 +101,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
 
-    private var selectedSkill: String = "Listening"
+    private var selectedSkill: String = Constant.Listening
 
     private lateinit var tabList: List<LinearLayout>
 
@@ -160,7 +160,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                     selectedUris?.take(remaining)?.forEach { uri ->
                         val mimeType = contentResolver.getType(uri)
                         val path = when (uri.scheme) {
-                            "file" -> uri.path
+                            Constant.file_ -> uri.path
                             else -> getPathFromUri(uri)
                         }
 
@@ -199,7 +199,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                     if ((selectedUris?.size ?: 0) > remaining) {
                         Toast.makeText(
                             this,
-                            "Only $remaining files added (max ${CreateNewTask.Companion.MAX_FILES})",
+                            "${getString(R.string.Only)} $remaining ${getString(R.string.files_added_max)} ${CreateNewTask.Companion.MAX_FILES})",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -235,11 +235,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         tabList.forEach { it.setBackgroundResource(R.drawable.btn_unselected) }
         selected.setBackgroundResource(R.drawable.btn_selected)
         selectedSkill = when (selected.id) {
-            binding.listeningLayout.id -> "Listening"
-            binding.speakingLayout.id -> "Speaking"
-            binding.readingLayout.id -> "Reading"
-            binding.writingLayout.id -> "Writing"
-            else -> "Listening"
+            binding.listeningLayout.id -> Constant.Listening
+            binding.speakingLayout.id -> Constant.Speaking
+            binding.readingLayout.id -> Constant.Reading
+            binding.writingLayout.id -> Constant.Writing
+            else -> Constant.Listening
         }
     }
 
@@ -280,21 +280,21 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     private fun showCameraPermissionSettingsDialog() {
-        AlertDialog.Builder(this).setTitle("Permission Required")
-            .setMessage("Camera permission is permanently denied. Please enable it from app settings.")
-            .setCancelable(false).setPositiveButton("Go to Settings") { _, _ ->
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.camera_permission_is_permanently_denied_please_enable_it_from_app_settings))
+            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }.setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
                 dialog.dismiss()
             }.show()
     }
@@ -369,7 +369,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -420,10 +420,10 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -435,7 +435,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         val remaining = CreateNewTask.Companion.MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
             Toast.makeText(
-                this, "Max ${CreateNewTask.Companion.MAX_FILES} files allowed", Toast.LENGTH_SHORT
+                this, "${getString(R.string.Max)} ${CreateNewTask.Companion.MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT
             ).show()
             return
         }
@@ -512,7 +512,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
-        if (uri.scheme.equals("content", ignoreCase = true)) {
+        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
             val projection = arrayOf(MediaStore.Images.Media.DATA)
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
@@ -523,7 +523,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
 
         // File scheme fallback
-        if (uri.scheme.equals("file", ignoreCase = true)) {
+        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
             return uri.path
         }
         return null
@@ -532,7 +532,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     @SuppressLint("Range")
     private fun getFileName(uri: Uri): String {
         var result: String? = null
-        if (uri.scheme == "content") {
+        if (uri.scheme == Constant.content_) {
             val cursor = contentResolver.query(uri, null, null, null, null)
             cursor?.use {
                 if (it.moveToFirst()) {
@@ -553,9 +553,9 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
+        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
     }
 
     private fun isRedirectToSectionStudents() {

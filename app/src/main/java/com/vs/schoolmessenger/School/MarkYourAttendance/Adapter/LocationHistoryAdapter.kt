@@ -85,8 +85,8 @@ class LocationHistoryAdapter(
             return try {
                 val addresses = geocoder.getFromLocation(lat!!, lang!!, 1)
                 if (!addresses.isNullOrEmpty()) {
-                    addresses[0].getAddressLine(0) ?: "Address not found"
-                } else "No address found"
+                    addresses[0].getAddressLine(0) ?: context.getString(R.string.address_not_found)
+                } else  context.getString(R.string.address_not_found)
             } catch (e: Exception) {
                 e.printStackTrace()
                 "Geocoder error"

@@ -521,6 +521,18 @@ object Constant {
     var Active_Tasks = "Active Tasks"
     var Avg_Performance= "Avg. Performance"
     var Completed_Tasks= "Completed Tasks"
+    var TASK_LIST= "TASK_LIST"
+    var COMPLETED_TASK_LIST= "COMPLETED_TASK_LIST"
+    var Today_Submitted= "Today Submitted"
+    var Week= "Week"
+    var Class= "Class"
+    var double_iffin= "--"
+    var geo_= "geo:"
+    var camma= ","
+    var questionQEqual= "?q="
+    var leftBracket= "("
+    var rightBracket= ")"
+    var yyyyMMdd= "yyyyMMdd"
 
 
 

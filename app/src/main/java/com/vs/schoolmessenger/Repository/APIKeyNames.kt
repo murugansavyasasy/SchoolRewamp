@@ -25,6 +25,7 @@ object APIKeyNames {
     const val event_time = "event_time"
     const val category = "category"
     const val venue = "venue"
+    const val percentage = "percentage"
 
 
     const val name = "name"
