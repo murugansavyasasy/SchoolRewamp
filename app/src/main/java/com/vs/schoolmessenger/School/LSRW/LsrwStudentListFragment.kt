@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwStudentlistFragmentBinding
 
@@ -30,7 +32,7 @@ class LsrwStudentListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            id = it.getString("id")
+            id = it.getString(Constant.id_)
         }
     }
 
@@ -63,7 +65,7 @@ class LsrwStudentListFragment : Fragment() {
                 binding.rcystudentlist.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 
@@ -92,7 +94,7 @@ class LsrwStudentListFragment : Fragment() {
 
     companion object {
         fun newInstance(id: String) = LsrwStudentListFragment().apply {
-            arguments = Bundle().apply { putString("id", id) }
+            arguments = Bundle().apply { putString(Constant.id_, id) }
         }
     }
 }

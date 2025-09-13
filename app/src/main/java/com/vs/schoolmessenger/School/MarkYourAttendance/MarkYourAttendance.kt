@@ -152,7 +152,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                 binding.lblNoRecords.visibility = View.VISIBLE
                 binding.imgNorecord.visibility = View.VISIBLE
                 binding.linearagendalayout.visibility = View.GONE
-                binding.lblNoRecords.text = response?.message ?: "No Data Available"
+                binding.lblNoRecords.text = response?.message ?: getString(R.string.no_data_available)
             }
         }
 
@@ -244,7 +244,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
 
-                    val selectedMonthNumber = String.format("%02d", position + 1)
+                    val selectedMonthNumber = String.format(Constant.time02d, position + 1)
                     binding.lblNoRecords.visibility = View.GONE
                     binding.imgNorecord.visibility = View.GONE
 
@@ -255,7 +255,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             }
 
         // Trigger report call immediately for the default selected month
-        val selectedMonthNumber = String.format("%02d", currentMonthIndex + 1)
+        val selectedMonthNumber = String.format(Constant.time02d, currentMonthIndex + 1)
         getStaffAttendanceReport(selectedYear, selectedMonthNumber)
     }
 
@@ -491,8 +491,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                 }
             })
 
-        val promptInfo = PromptInfo.Builder().setTitle("Authenticate")
-            .setSubtitle("Use fingerprint, face, PIN, or pattern")
+        val promptInfo = PromptInfo.Builder().setTitle(getString(R.string.authenticate))
+            .setSubtitle(getString(R.string.use_fingerprint_face_pin_or_pattern))
             .setAllowedAuthenticators(authenticators).build()
 
         biometricPrompt?.authenticate(promptInfo)
@@ -504,7 +504,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
 
             if (keyguardManager.isKeyguardSecure) {
                 val intent = keyguardManager.createConfirmDeviceCredentialIntent(
-                    "Authentication Required", "Please confirm your screen lock PIN or pattern"
+                    getString(R.string.authentication_required),
+                    getString(R.string.please_confirm_your_screen_lock_pin_or_pattern)
                 )
                 startActivityForResult(intent, 1001)
             } else {

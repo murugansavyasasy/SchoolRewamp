@@ -38,7 +38,7 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-        data = intent.getParcelableExtra("isPreViewData")
+        data = intent.getParcelableExtra(Constant.isPreViewData)
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
@@ -110,9 +110,9 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
             Constant.showLoading(this@SubmittedStudentListRemarkSubmit)
             val progressValue = binding.seekBar.progress.toString()
             val jsonObject = JsonObject().apply {
-                addProperty("id", data!!.id.toString())
-                addProperty("student_id", data!!.title.toString())
-                addProperty("percentage", progressValue)
+                addProperty(APIKeyNames.id, data!!.id.toString())
+                addProperty(APIKeyNames.student_id, data!!.title.toString())
+                addProperty(APIKeyNames.percentage, progressValue)
             }
             appViewModel?.islsrwremarkupdate(isAccessToken!!, jsonObject, this)
         }

@@ -68,7 +68,7 @@ class SubmittedStudentlistAdapter (
             lblStudentName.text = item.student_name
             sectionlabel.text = item.standard +" - "+ item.section
 
-            if (item.submitted_date == "--") {
+            if (item.submitted_date == Constant.double_iffin) {
                 submittedDate.text = item.submit_status
                 submittedLabel.text = ""
             } else {
@@ -84,15 +84,15 @@ class SubmittedStudentlistAdapter (
             }
 
 
-            if (item.submit_status == "SUBMITTED") {
-                statuslabel.text = "Submitted"
+            if (item.submit_status == Constant.SUBMITTED) {
+                statuslabel.text = context.getString(R.string.submitted)
                 cancelimage.setBackgroundResource(R.drawable.correcticonsvg)
                 statuslabel.setTextColor(
                     ContextCompat.getColor(context, R.color.clr_green)
                 )
                 statusButton.setBackgroundResource(R.drawable.completed_button_bg)
             } else {
-                statuslabel.text = "Pending"
+                statuslabel.text = context.getString(R.string.pending)
                 cancelimage.setBackgroundResource(R.drawable.downloadsvgformat)
                 statuslabel.setTextColor("#9e6e40".toColorInt())
 
@@ -112,7 +112,7 @@ class SubmittedStudentlistAdapter (
 
 
                 rytList2.setOnClickListener {
-                    if(item.submit_status=="NOTSUBMITTED") {
+                    if(item.submit_status==Constant.NOTSUBMITTED) {
                         Log.d("Not Submitted the list"," Not submitted any records")
                         return@setOnClickListener
                     } else {
@@ -142,7 +142,7 @@ class SubmittedStudentlistAdapter (
                     )
 
                     val intent = Intent(context, SubmittedStudentListRemarkSubmit::class.java)
-                    intent.putExtra("isPreViewData", isHomeWorkData)
+                    intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     context.startActivity(intent)
                 }
@@ -150,7 +150,7 @@ class SubmittedStudentlistAdapter (
 
 
             headerrelative_layout.setOnClickListener {
-                if(item.submit_status=="NOTSUBMITTED") {
+                if(item.submit_status==Constant.NOTSUBMITTED) {
                     Log.d("Not Submitted the list"," Not submitted any records")
                     return@setOnClickListener
                 } else {
@@ -181,14 +181,14 @@ class SubmittedStudentlistAdapter (
                     )
 
                     val intent = Intent(context, SubmittedStudentListRemarkSubmit::class.java)
-                    intent.putExtra("isPreViewData", isHomeWorkData)
+                    intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     context.startActivity(intent)
                 }
             }
 
             rcyAssignment.addOnItemTouchListener(
-                if(item.submit_status=="NOTSUBMITTED") {
+                if(item.submit_status==Constant.NOTSUBMITTED) {
                     Log.d("Not Submitted the list"," Not submitted any records")
                     return
                 } else {
@@ -225,7 +225,7 @@ class SubmittedStudentlistAdapter (
 
                             val intent =
                                 Intent(context, SubmittedStudentListRemarkSubmit::class.java)
-                            intent.putExtra("isPreViewData", isHomeWorkData)
+                            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             context.startActivity(intent)
                         }

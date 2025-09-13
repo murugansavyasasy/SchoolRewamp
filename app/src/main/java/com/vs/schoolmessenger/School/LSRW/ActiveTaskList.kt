@@ -20,9 +20,9 @@ class ActiveTaskList : AppCompatActivity(), View.OnClickListener {
 
         binding = ActivityTasklistBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbarLayout.lblParentToolBar.text = "Active Task"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.active_task)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        val taskList = intent.getParcelableArrayListExtra<LsrwTask>("TASK_LIST") ?: arrayListOf()
+        val taskList = intent.getParcelableArrayListExtra<LsrwTask>(Constant.TASK_LIST) ?: arrayListOf()
 
         binding.rcyactivetaskrcy.layoutManager = LinearLayoutManager(this)
         adapter = LsrwAdapter(

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingVertical="@dimen/five">
+        android:paddingVertical="@dimen/eight">
 
         <ImageView
             android:id="@+id/btnPrevMonth"
