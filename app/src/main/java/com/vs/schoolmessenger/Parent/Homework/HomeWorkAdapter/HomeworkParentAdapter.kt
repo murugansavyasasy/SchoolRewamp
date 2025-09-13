@@ -91,11 +91,11 @@ class HomeworkParentAdapter(
             if (item.is_unread) {
                 binding.redDot.visibility = View.VISIBLE
             } else {
-                binding.redDot.visibility = View.GONE
+                binding.redDot.visibility = View.INVISIBLE
             }
             binding.cardRoot.setOnClickListener {
                 item.is_unread = false
-                binding.redDot.visibility = View.GONE
+                binding.redDot.visibility = View.INVISIBLE
                 listener.onItemClick(item, isDate)
             }
         }

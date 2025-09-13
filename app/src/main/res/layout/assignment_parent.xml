@@ -132,7 +132,8 @@
         android:layout_marginTop="@dimen/ten"
         android:clipToPadding="false"
         android:fadeScrollbars="false"
-        android:paddingHorizontal="@dimen/ten"
+        tools:listitem="@layout/assignment_report_item"
+        android:paddingHorizontal="@dimen/five"
         android:scrollbars="none" />
 
 
