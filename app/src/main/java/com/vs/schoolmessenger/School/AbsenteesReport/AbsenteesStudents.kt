@@ -73,7 +73,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
         appViewModel?.getabsenteesstudentbydate?.observe(this) { response ->
 
             if (response == null) {
-                showErrorUI("Something went wrong. Please try again.")
+                showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
             if (response.status) {
@@ -102,7 +102,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
 
     private fun isLoadDailyCollectionData(data: List<Student>?) {
         if (data.isNullOrEmpty()) {
-            showErrorUI("No absentee data available")
+            showErrorUI(getString(R.string.no_absentee_data_available))
             return
         }
 
@@ -140,7 +140,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
             binding.lytList.visibility = View.VISIBLE
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching report found"
+            binding.txtNoData.text = getString(R.string.no_matching_report_found)
             binding.studentlistreport.visibility = View.GONE
         } else {
             binding.lytList.visibility = View.GONE

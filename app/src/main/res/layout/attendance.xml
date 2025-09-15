@@ -258,7 +258,7 @@
                                         android:text="100"
                                         android:maxLength="4"
                                         style="@style/CustomTextStylePoppinsBold"
-                                        android:textSize="@dimen/eighteen_sp"
+                                        android:textSize="@dimen/fifteen_sp"
                                         android:textColor="@color/PrimaryColor"
                                         />
                                     <TextView
@@ -298,9 +298,7 @@
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:id="@+id/leaveTakenContainer"
-                                android:layout_height="@dimen/ninety"
-
-                                >
+                                android:layout_height="@dimen/ninety">
 
                                 <ProgressBar
                                     android:id="@+id/leaveTakenProgressBar"
@@ -322,7 +320,7 @@
                                     android:maxLength="3"
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:textColor="@color/PrimaryColor"
-                                    android:textSize="@dimen/eighteen_sp"
+                                    android:textSize="@dimen/fifteen_sp"
                                     />
                             </FrameLayout>
                             <TextView
@@ -372,7 +370,7 @@
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:maxLength="3"
                                     android:textColor="@color/PrimaryColor"
-                                    android:textSize="@dimen/eighteen_sp"
+                                    android:textSize="@dimen/fifteen_sp"
                                      />
                             </FrameLayout>
                             <TextView

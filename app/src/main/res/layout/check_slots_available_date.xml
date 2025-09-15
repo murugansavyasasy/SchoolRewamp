@@ -1,36 +1,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/eight"
     android:backgroundTint="@android:color/white"
     android:foreground="?attr/selectableItemBackground"
-    android:padding="8dp">
+    android:fitsSystemWindows="true"
+    android:padding="@dimen/eight">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layoutDateRow"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_orange"
+            android:backgroundTint="@color/light_lavender"
             android:layout_centerHorizontal="true"
-            android:padding="8dp"
-            android:text="12 Sep 2025"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:gravity="center"
+            android:padding="@dimen/five"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/imgCalendar"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_marginEnd="@dimen/six"
+                android:contentDescription="Calendar Icon"
+                android:src="@drawable/ic_calendar" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/four"
+                android:text="12 Sep 2025"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textColor="@color/iconBlue"
+                android:textSize="@dimen/sixteen" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcySlotTiming"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDate"
-            android:layout_marginTop="@dimen/ten">
+            android:layout_below="@id/layoutDateRow"
+            android:layout_marginTop="@dimen/ten" />
 
-        </androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>
 
 </RelativeLayout>

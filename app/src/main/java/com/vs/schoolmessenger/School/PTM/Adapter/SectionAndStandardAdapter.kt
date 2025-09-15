@@ -70,11 +70,12 @@ class SectionAndStandardAdapter(
                 class_id = data.standardId
             )
 
-            // Apply background based on selection state
             if (selectedItems.contains(itemKey)) {
-                lblClasses.background = context.getDrawable(R.drawable.bg_light_blue)
+                lblClasses.background = context.getDrawable(R.drawable.bg_button_blue_color)
+                lblClasses.setTextColor(context.getColor(R.color.white))
             } else {
                 lblClasses.background = context.getDrawable(R.drawable.gray_bg_radius)
+                lblClasses.setTextColor(context.getColor(R.color.black))
             }
 
             lblClasses.text = "${data.standardName} - ${data.sectionName}"
@@ -84,10 +85,12 @@ class SectionAndStandardAdapter(
                     // Unselect
                     selectedItems.remove(itemKey)
                     lblClasses.background = context.getDrawable(R.drawable.gray_bg_radius)
+                    lblClasses.setTextColor(context.getColor(R.color.black))
                 } else {
                     // Select
                     selectedItems.add(itemKey)
-                    lblClasses.background = context.getDrawable(R.drawable.bg_light_blue)
+                    lblClasses.background = context.getDrawable(R.drawable.bg_button_blue_color)
+                    lblClasses.setTextColor(context.getColor(R.color.white))
                 }
                 onSelectionChanged(selectedItems.toList())
             }

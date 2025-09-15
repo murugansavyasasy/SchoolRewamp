@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 
@@ -93,6 +94,7 @@ class InteractionWithStaffAdapter(
         private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
         private val yesterdayheader: TextView = itemView.findViewById(R.id.yesterdayheader)
+        private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
         private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
 
         @SuppressLint("ClickableViewAccessibility")
@@ -100,8 +102,10 @@ class InteractionWithStaffAdapter(
             nameheader.text = staff.name
             subjectheader.text = staff.subject_name
             unreadcount.text = staff.unread_count
+            lblLogo.text = Constant.getNameInitials(staff.name)
 
-            if (staff.unread_count > "0") {
+
+            if (staff.unread_count > Constant.zero) {
                 unreadcount.visibility = View.VISIBLE
                 yesterdayheader.visibility = View.GONE
             } else {

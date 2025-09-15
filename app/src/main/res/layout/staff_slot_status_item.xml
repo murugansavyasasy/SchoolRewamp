@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true">
 
 
     <RelativeLayout
@@ -122,7 +123,8 @@
                 android:layout_marginStart="@dimen/fifteen"
                 android:text="Booked By : "
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"></TextView>
+                android:textSize="@dimen/fifteen_sp">
+            </TextView>
 
 
             <ImageView
@@ -132,7 +134,8 @@
                 android:layout_below="@+id/lblBookedBy"
                 android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/fifteen"
-                android:src="@drawable/user_sample"></ImageView>
+                android:src="@drawable/user_sample">
+            </ImageView>
 
             <TextView
                 android:id="@+id/lblBookedName"
@@ -145,7 +148,8 @@
                 android:layout_toEndOf="@+id/imgUser"
                 android:text="Sathish G"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+            </TextView>
 
             <TextView
                 android:id="@+id/lblStandardAndSection"
@@ -159,7 +163,8 @@
                 android:layout_toEndOf="@+id/imgUser"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+            </TextView>
 
         </RelativeLayout>
 

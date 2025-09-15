@@ -8,10 +8,10 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventAdapter.DataViewHolder
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SchoolEventAdapter(
@@ -50,7 +50,7 @@ class SchoolEventAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             filteredList[position].let {
-                holder.bind(it, listener)
+                holder.bind(it, listener,context)
             }
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
@@ -80,7 +80,7 @@ class SchoolEventAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<SchoolEventItem> ?: listOf()
-                listener.onSearchResultEmpty("ONGOING", filteredList.isEmpty())
+                listener.onSearchResultEmpty(Constant.ONGOING, filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }
@@ -102,11 +102,11 @@ class SchoolEventAdapter(
         private val status_event: TextView = itemView.findViewById(R.id.status_event)
         private val eventdesc: TextView = itemView.findViewById(R.id.eventdesc)
 
-        fun bind(data: SchoolEventItem, listener: SchoolEventClickListener) {
+        fun bind(data: SchoolEventItem, listener: SchoolEventClickListener, context: Context) {
             event_header.text = data.title
-            event_time.text = "Event started at ${data.time} - ${data.date}"
+            event_time.text = "${context.getString(R.string.Event_started_at)} ${data.time} - ${data.date}"
             event_location.text = data.venue
-            status_event.text = "Today's Event"
+            status_event.text = context.getString(R.string.today_s_event)
             eventdesc.text = data.description
         }
     }

@@ -56,7 +56,7 @@ class LeaveRequestAdapter(
         if (holder is DataViewHolder && !isLoading) {
 
             val isExpanded = position == expandedPosition
-            holder.bind(filteredList[position], listener, isExpanded)
+            holder.bind(filteredList[position], listener, isExpanded,context)
             holder.itemView.findViewById<ImageView>(R.id.options).setOnClickListener {
                 if (expandedPosition != position) {
                     val prevPosition = expandedPosition
@@ -91,7 +91,11 @@ class LeaveRequestAdapter(
         private val lblGetOutPass: TextView = itemView.findViewById(R.id.lblGetOutPass)
 
         @SuppressLint("SetTextI18n")
-        fun bind(data: LeaveData, listener: LeaveRequestClickListener, isExpanded: Boolean) {
+        fun bind(
+            data: LeaveData,
+            listener: LeaveRequestClickListener,
+            isExpanded: Boolean,
+            context: Context,) {
             textName.text = data.student_name
             textFirstLetter.text = data.student_name.firstOrNull()?.toString() ?: "?"
 
@@ -99,7 +103,7 @@ class LeaveRequestAdapter(
                 Constant.convertDateTimeFormat(data.leave_to ?: "")
             }"
             textNoOfDays.text =
-                "${data.no_of_days} ${if (data.no_of_days == "1") "Day" else "Days"} Application"
+                "${data.no_of_days} ${if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(R.string.days)} ${context.getString(R.string.Application)}"
             textReason.text = data.reason
 
             if (data.leave_type == "") {

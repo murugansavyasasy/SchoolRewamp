@@ -50,7 +50,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         appViewModel?.getstudentdetailsforchat?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null) {
-                showErrorUI("Something went wrong. Please try again.")
+                showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
             if (response.status) {
@@ -92,7 +92,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
     private fun isLoadStaffData(data: List<StudentChatData>?) {
         if (data.isNullOrEmpty()) {
-            showErrorUI("No staff data available")
+            showErrorUI(getString(R.string.no_staff_data_available))
             return
         }
 
@@ -120,7 +120,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = ("No matching data found")
+            binding.txtNoData.text = (getString(R.string.no_matching_data_found))
             binding.rcystudentdata.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE

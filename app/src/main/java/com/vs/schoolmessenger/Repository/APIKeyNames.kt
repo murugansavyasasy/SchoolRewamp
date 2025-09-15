@@ -8,6 +8,7 @@ object APIKeyNames {
     const val description = "description"
     const val submission_date = "submission_date"
     const val id = "id"
+    const val id_ = "ID"
     const val latitude = "latitude"
     const val longitude = "longitude"
     const val location = "location"
@@ -20,6 +21,11 @@ object APIKeyNames {
     const val is_approve = "is_approve"
     const val section_subject_id = "section_subject_id"
     const val lesson_plan_status = "lesson_plan_status"
+    const val event_date = "event_date"
+    const val event_time = "event_time"
+    const val category = "category"
+    const val venue = "venue"
+    const val percentage = "percentage"
 
 
     const val name = "name"
@@ -122,6 +128,7 @@ object APIKeyNames {
     const val request_type = "request_type"
     const val particular_id = "particular_id"
     const val day_id = "day_id"
+    const val key_value_data = "key_value_data"
 
     const val staff_id = "staff_id"
     const val thumbnail = "thumbnail"
@@ -151,6 +158,7 @@ object APIKeyNames {
     const val is_class_teacher = "is_class_teacher"
     const val requested_for = "requested_for"
     const val urgency_level = "urgency_level"
+    const val answers = "answers"
 
 
 

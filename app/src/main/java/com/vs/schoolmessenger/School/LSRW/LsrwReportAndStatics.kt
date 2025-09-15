@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.LSRW
 
-import android.R
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwHeaderAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.StudentListAdapter
@@ -55,7 +55,8 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
 
-        binding.toolbarLayout.lblParentToolBar.text = "Report & Analytics"
+        binding.toolbarLayout.lblParentToolBar.text =
+            getString(com.vs.schoolmessenger.R.string.report_analytics)
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
         binding.toolbarLayout.monthSelectorLayout.visibility = View.VISIBLE
@@ -72,37 +73,37 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 val headerItems = mutableListOf<LsrwHeaderItem>()
                 headerItems.add(
                     LsrwHeaderItem(
-                        "Today Submitted",
+                        Constant.Today_Submitted,
                         "",
-                        "${data.today_submitted?.size ?: 0} Students"
+                        "${data.today_submitted?.size ?: 0} ${getString(R.string.Students)}"
                     )
                 )
                 headerItems.add(
                     LsrwHeaderItem(
-                        "Listening",
+                        Constant.Listening,
                         data.listening?.over_all_percentage ?: "0%",
-                        "${data.listening?.student_count ?: "0"} Students"
+                        "${data.listening?.student_count ?: "0"} ${getString(R.string.Students)}"
                     )
                 )
                 headerItems.add(
                     LsrwHeaderItem(
-                        "Speaking",
+                        Constant.Speaking,
                         data.speaking?.over_all_percentage ?: "0%",
-                        "${data.speaking?.student_count ?: "0"} Students"
+                        "${data.speaking?.student_count ?: "0"} ${getString(R.string.Students)}"
                     )
                 )
                 headerItems.add(
                     LsrwHeaderItem(
-                        "Reading",
+                        Constant.Reading,
                         data.reading?.over_all_percentage ?: "0%",
-                        "${data.reading?.student_count ?: "0"} Students"
+                        "${data.reading?.student_count ?: "0"} ${getString(R.string.Students)}"
                     )
                 )
                 headerItems.add(
                     LsrwHeaderItem(
-                        "Writing",
+                        Constant.Writing,
                         data.writing?.over_all_percentage ?: "0%",
-                        "${data.writing?.student_count ?: "0"} Students"
+                        "${data.writing?.student_count ?: "0"} ${getString(R.string.Students)}"
                     )
                 )
 
@@ -208,11 +209,11 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     @RequiresApi(Build.VERSION_CODES.O)
     private fun filterByHeader(selected: LsrwHeaderItem, data: AvgSkillData) {
         val details = when (selected.title) {
-            "Listening" -> data.listening?.details ?: emptyList()
-            "Speaking" -> data.speaking?.details ?: emptyList()
-            "Reading" -> data.reading?.details ?: emptyList()
-            "Writing" -> data.writing?.details ?: emptyList()
-            "Today Submitted" -> data.today_submitted ?: emptyList()
+            Constant.Listening -> data.listening?.details ?: emptyList()
+            Constant.Speaking -> data.speaking?.details ?: emptyList()
+            Constant.Reading -> data.reading?.details ?: emptyList()
+            Constant.Writing -> data.writing?.details ?: emptyList()
+            Constant.Today_Submitted -> data.today_submitted ?: emptyList()
             else -> emptyList()
         }
 
@@ -232,7 +233,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     private fun calculateWeeklyReport(details: List<AvgStudentSubmission>): List<WeeklyReportItem> {
 
 
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault())
+        val formatter = DateTimeFormatter.ofPattern(Constant.ddMMyyyy, Locale.getDefault())
         val currentMonth = LocalDate.now().monthValue
         val currentYear = LocalDate.now().year
 
@@ -251,7 +252,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         for (week in 1..6) {
             val values = weeks[week] ?: emptyList()
             val avg = if (values.isNotEmpty()) values.sum() / values.size else 0
-            weeklyReport.add(WeeklyReportItem("Week $week", avg))
+            weeklyReport.add(WeeklyReportItem("${Constant.Week} $week", avg))
         }
         return weeklyReport
     }
@@ -260,7 +261,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         return details.map {
             TopPerformanceItem(
                 studentName = it.student_name,
-                className = "Class ${it.std_sec}",
+                className = "${Constant.Class} ${it.std_sec}",
                 percentage = it.remark.replace("%", "").toIntOrNull() ?: 0
             )
         }

@@ -19,6 +19,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
@@ -55,6 +56,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
+import com.vs.schoolmessenger.Parent.LSRW.MySubmissionModel.ActivityResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
@@ -1028,8 +1030,6 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetMessagesStaff?>?
 
-
-
 //    Pauket Api
 
     @GET(APIMethods.isGetPauketPoints)
@@ -1039,8 +1039,6 @@ interface ApiInterfaces {
         @Query(APIKeyNames.user_type) user_type: Int
     ): Call<PauketPointsResponse?>?
 
-
-
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isSpentPoints)
     fun isSpentPoints(
@@ -1048,6 +1046,24 @@ interface ApiInterfaces {
         @Body requestBody: JsonObject
     ): Call<SpentPointsModel?>
 
+    @GET(APIMethods.isParentprofilelist)
+    fun isParentprofilelist(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ProfileListResponse?>?
+
+
+    @GET(APIMethods.isSchoolprofilelist)
+    fun isSchoolprofilelist(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ProfileListResponse?>?
+
+
+
+    @GET(APIMethods.islsrwmysubmission)
+    fun islsrwmysubmission(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: String
+    ): Call<ActivityResponse?>?
 
 
 }

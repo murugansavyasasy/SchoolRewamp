@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentListener
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class InteractionWithStudentAdapter(
@@ -91,6 +92,7 @@ class InteractionWithStudentAdapter(
         private val nameheader: TextView = itemView.findViewById(R.id.nameheader)
         private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
+        private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
         private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
 
         @SuppressLint("ClickableViewAccessibility")
@@ -98,6 +100,8 @@ class InteractionWithStudentAdapter(
             nameheader.text = student.name
             subjectheader.text = student.subject_name
 //            unreadcount.text = student.unread_count
+            lblLogo.text = Constant.getNameInitials(student.name)
+
 
             relative_layout.setOnClickListener {
                 listener.onClickItem(student)

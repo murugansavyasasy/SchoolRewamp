@@ -3,100 +3,129 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_margin="@dimen/five"
+    app:cardCornerRadius="@dimen/twele"
+    app:cardElevation="@dimen/four">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="@dimen/sixteen">
 
-        <!-- Header Title -->
         <TextView
             android:id="@+id/tvMeetingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Parents Meeting"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
 
-        <!-- Profile Row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/fifteen"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvProfileIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
                 android:background="@drawable/circle_bg_red"
+                android:backgroundTint="@color/purple_500"
                 android:gravity="center"
                 android:text="S"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="@dimen/twenty" />
 
-            <!-- Name & Subject -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="@dimen/five"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvParentName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Saran raj"
+                    android:text="Nicholas"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/fifteen_sp" />
 
                 <TextView
                     android:id="@+id/tvSubject"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/two"
                     android:text="TAMIL"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/thirteen_sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Meeting Type Button -->
-        <Button
-            android:id="@+id/btnMeetingType"
+<!--        <Button-->
+<!--            android:id="@+id/btnMeetingType"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/sixteen"-->
+<!--            android:backgroundTint="#7156b4"-->
+<!--            android:drawableLeft="@drawable/phone_icon_bg"-->
+<!--            android:drawablePadding="@dimen/eight"-->
+<!--            android:paddingHorizontal="@dimen/sixteen"-->
+<!--            android:paddingVertical="@dimen/twele"-->
+<!--            android:text="In Person"-->
+<!--            style="@style/CustomTextStylePoppinsBold"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/fourteen" />-->
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/fifteen"
             android:backgroundTint="@color/purple_500"
-            android:drawableLeft="@drawable/phone_call_icon"
-            android:drawablePadding="8dp"
-            android:padding="8dp"
-            android:text="In Person"
-            android:textColor="@android:color/white" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_meeting_type"
+            android:paddingHorizontal="@dimen/sixteen"
+            android:paddingVertical="@dimen/five">
 
-        <!-- Select Slot Label -->
+            <ImageView
+                android:id="@+id/imgMeetingType"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/eight"
+                android:src="@drawable/phone_icon_bg"
+                android:backgroundTint="@color/white"/>
+
+            <TextView
+                android:id="@+id/btnMeetingType"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="In Person"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tvSelectSlot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/fifteen"
             android:text="Select Meeting Slot"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/fifteen_sp" />
 
-        <!-- Child RecyclerView (Slots) -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSlots"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/twele"
             android:nestedScrollingEnabled="false"
             android:overScrollMode="never" />
 

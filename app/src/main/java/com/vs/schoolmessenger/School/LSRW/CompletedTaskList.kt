@@ -8,6 +8,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwCompletedAdapter
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ActivityTasklistBinding
 import com.vs.schoolmessenger.databinding.CompletedTasklistBinding
 
@@ -21,9 +22,9 @@ class CompletedTaskList : AppCompatActivity(), View.OnClickListener {
         binding = CompletedTasklistBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = "Completed Task"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.Completed_Task)
         val taskList =
-            intent.getParcelableArrayListExtra<LsrwTask>("COMPLETED_TASK_LIST") ?: arrayListOf()
+            intent.getParcelableArrayListExtra<LsrwTask>(Constant.COMPLETED_TASK_LIST) ?: arrayListOf()
 
         binding.rcycompletedtaskrcy.layoutManager = LinearLayoutManager(this)
         adapter = LsrwCompletedAdapter(

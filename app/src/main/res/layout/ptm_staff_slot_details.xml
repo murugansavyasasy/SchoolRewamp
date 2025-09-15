@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white">
 
     <include
@@ -27,7 +28,7 @@
                 android:layout_marginTop="@dimen/twenty_five"
                 android:text="Function Meeting"
                 android:textColor="@color/black"
-                android:textSize="@dimen/eighteen">
+                android:textSize="@dimen/sixteen_sp">
 
             </TextView>
 
@@ -52,6 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblMeetingMode"
                 android:layout_marginTop="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -81,7 +84,8 @@
                         android:layout_toEndOf="@+id/imgCalender"
                         android:text="Date"
                         android:textColor="@color/light_gray_5"
-                        android:textSize="@dimen/fourteen"></TextView>
+                        android:textSize="@dimen/fourteen_sp">
+                    </TextView>
 
                     <TextView
                         android:id="@+id/lblDate"
@@ -92,7 +96,7 @@
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/fifteen"
                         android:text="April 1, 2002"
-                        android:textSize="@dimen/fifteen">
+                        android:textSize="@dimen/fourteen_sp">
 
                     </TextView>
 
@@ -119,7 +123,7 @@
                         android:layout_toEndOf="@+id/imgCalender"
                         android:text="Slot Duration"
                         android:textColor="@color/light_gray_5"
-                        android:textSize="@dimen/fourteen">
+                        android:textSize="@dimen/fourteen_sp">
 
                     </TextView>
 
@@ -133,7 +137,7 @@
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/fifteen"
                         android:text="10 minutes"
-                        android:textSize="@dimen/fifteen">
+                        android:textSize="@dimen/fifteen_sp">
 
                     </TextView>
                 </RelativeLayout>
@@ -162,7 +166,7 @@
                         android:layout_toEndOf="@id/imgTime"
                         android:text="Time"
                         android:textColor="@color/light_gray_5"
-                        android:textSize="@dimen/fourteen" />
+                        android:textSize="@dimen/fourteen_sp" />
 
 
                     <TextView
@@ -174,7 +178,7 @@
                         android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginEnd="@dimen/twenty"
                         android:text="03:00 PM to 05:00 PM"
-                        android:textSize="@dimen/fifteen">
+                        android:textSize="@dimen/fifteen_sp">
 
                     </TextView>
 
@@ -199,7 +203,7 @@
                         android:includeFontPadding="false"
                         android:text="Mode"
                         android:textColor="@color/light_gray_5"
-                        android:textSize="@dimen/fourteen" />
+                        android:textSize="@dimen/fourteen_sp" />
 
 
                     <TextView
@@ -211,7 +215,7 @@
                         android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginEnd="@dimen/twenty"
                         android:text="In Person"
-                        android:textSize="@dimen/fifteen">
+                        android:textSize="@dimen/fourteen_sp">
 
                     </TextView>
                 </RelativeLayout>
@@ -223,7 +227,7 @@
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_below="@+id/ltyMeetingDetails"
-                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/twenty_five"
                 android:src="@drawable/list_bullet_clipboard_fill">
 
@@ -240,7 +244,7 @@
                 android:layout_toEndOf="@+id/imgSlotClasses"
                 android:text="Classes"
                 android:textColor="@color/light_gray_5"
-                android:textSize="@dimen/fourteen">
+                android:textSize="@dimen/fourteen_sp">
 
             </TextView>
 
@@ -249,7 +253,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblClasses"
-                android:layout_marginStart="@dimen/ten"
+                android:layout_marginStart="@dimen/thirty_five"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten">
 
@@ -306,7 +310,7 @@
                 android:layout_marginEnd="@dimen/twenty"
                 android:text="Meeting slots"
                 android:textColor="@color/light_gray_5"
-                android:textSize="@dimen/fifteen_sp">
+                android:textSize="@dimen/fourteen_sp">
 
             </TextView>
 

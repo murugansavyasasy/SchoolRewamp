@@ -29,10 +29,12 @@
             android:textSize="@dimen/seventeen_sp"
            />
 
-        <Button
+        <TextView
             android:id="@+id/btnViewMarks"
             android:layout_width="@dimen/one_twenty"
-            android:layout_height="@dimen/thirty"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/five"
+            android:paddingBottom="@dimen/five"
             android:text="@string/view_marks"
            style="@style/CustomTextStylePoppinsBold"
             android:textColor="@color/white"
@@ -41,10 +43,12 @@
             android:gravity="center"
             android:layout_marginTop="@dimen/twenty_five"/>
 
-        <Button
+        <TextView
             android:id="@+id/btnViewProgress"
             android:layout_width="@dimen/one_twenty"
-            android:layout_height="@dimen/thirty"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/five"
+            android:paddingBottom="@dimen/five"
             android:text="@string/view_progress"
             style="@style/CustomTextStylePoppinsBold"
             android:textColor="@color/white"

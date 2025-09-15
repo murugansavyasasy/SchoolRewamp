@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.TimeTableBinding
 import java.text.SimpleDateFormat
@@ -57,14 +58,14 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
 
         val today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
         val todayDayName = when (today) {
-            Calendar.SUNDAY -> "Sunday"
-            Calendar.MONDAY -> "Monday"
-            Calendar.TUESDAY -> "Tuesday"
-            Calendar.WEDNESDAY -> "Wednesday"
-            Calendar.THURSDAY -> "Thursday"
-            Calendar.FRIDAY -> "Friday"
-            Calendar.SATURDAY -> "Saturday"
-            else -> "Monday"
+            Calendar.SUNDAY -> Constant.Sunday
+            Calendar.MONDAY -> Constant.Monday
+            Calendar.TUESDAY -> Constant.Tuesday
+            Calendar.WEDNESDAY -> Constant.Wednesday
+            Calendar.THURSDAY -> Constant.Thursday
+            Calendar.FRIDAY -> Constant.Friday
+            Calendar.SATURDAY -> Constant.Saturday
+            else -> Constant.Monday
         }
 
         val todayIndex = allDays.indexOf(todayDayName)
@@ -100,7 +101,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
             recyclerViewSchedule.visibility = View.GONE
         }
         val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("EEE, dd MMM yy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat(Constant.EEE_comma_dd_MMM_yy, Locale.getDefault())
         val shortDate = dateFormat.format(calendar.time)
         binding.tvToday.text = shortDate
         binding.ivBack.setOnClickListener {
@@ -147,20 +148,20 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
     private fun loadHardcodedDays() {
         timetabledayList.apply {
             clear()
-            add(TimeTableDayData("Mon", 1))
-            add(TimeTableDayData("Tue", 2))
-            add(TimeTableDayData("Wed", 3))
-            add(TimeTableDayData("Thu", 4))
-            add(TimeTableDayData("Fri", 5))
-            add(TimeTableDayData("Sat", 6))
-            add(TimeTableDayData("Sun", 7))
+            add(TimeTableDayData(Constant.Mon, 1))
+            add(TimeTableDayData(Constant.Tue, 2))
+            add(TimeTableDayData(Constant.Wed, 3))
+            add(TimeTableDayData(Constant.Thu, 4))
+            add(TimeTableDayData(Constant.Fri, 5))
+            add(TimeTableDayData(Constant.Sat, 6))
+            add(TimeTableDayData(Constant.Sun, 7))
         }
         adapter2.notifyDataSetChanged()
     }
 
     private fun getUpcomingItemPosition(timetableList: List<TimeTableListData>): Int {
         val currentTime = Calendar.getInstance().time
-        val format = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val format = SimpleDateFormat(Constant.HH_mm, Locale.getDefault())
         for ((index, item) in timetableList.withIndex()) {
             try {
                 val itemTime = format.parse(item.start_time.trim())
@@ -224,7 +225,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
                 binding.bottomsheettimetable.imgNoData.visibility = View.VISIBLE
                 binding.bottomsheettimetable.txtNoData.visibility = View.VISIBLE
                 binding.bottomsheettimetable.txtNoData.text =
-                    response?.message ?: "No timetable available."
+                    response?.message ?: getString(R.string.no_timetable_available)
             }
         }
     }
@@ -248,14 +249,14 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
 
     private fun getDayNameFromId(id: Int): String {
         return when (id) {
-            1 -> "Monday"
-            2 -> "Tuesday"
-            3 -> "Wednesday"
-            4 -> "Thursday"
-            5 -> "Friday"
-            6 -> "Saturday"
-            7 -> "Sunday"
-            else -> "Unknown"
+            1 -> Constant.Monday
+            2 -> Constant.Tuesday
+            3 -> Constant.Wednesday
+            4 -> Constant.Thursday
+            5 -> Constant.Friday
+            6 -> Constant.Saturday
+            7 -> Constant.Sunday
+            else -> Constant.Unknown
         }
     }
 

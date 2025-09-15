@@ -8,7 +8,9 @@
     <RelativeLayout
         android:id="@+id/cltDateSelection"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/two_hundred_fifty"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/ten"
+        android:paddingBottom="@dimen/twenty"
         android:background="@drawable/bottom_right_left_radious">
 
         <ImageView
@@ -172,7 +174,6 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="Today Meeting"

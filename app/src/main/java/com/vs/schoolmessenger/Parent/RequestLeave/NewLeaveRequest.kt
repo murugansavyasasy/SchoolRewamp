@@ -132,7 +132,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             Constant.hideLoading(this@NewLeaveRequest)
             if (response != null) {
                 if (response.status) {
-                    leaveCategories.add("Select a leave type") // Default
+                    leaveCategories.add(Constant.Select_a_leave_type) // Default
                     leaveCategories.addAll(response.data)
                     isLeaveCategorySpinner()
                     getIntentValuesIfEditing()
@@ -178,7 +178,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             minDate = minFromDate.toString(),
             maxDate = maxFromDate.toString(),
             selectedDate = fromDate?.toString(),
-            tag = "FROM_DATE"
+            tag = Constant.FROM_DATE
         )
 
         supportFragmentManager.beginTransaction()
@@ -201,7 +201,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             minDate = fromDate.toString(),
             maxDate = maxToDate.toString(),
             selectedDate = toDate?.toString(),
-            tag = "TO_DATE"
+            tag = Constant.TO_DATE
         )
 
         supportFragmentManager.beginTransaction()
@@ -221,12 +221,12 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         val selected = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE)
 
         when (tag) {
-            "FROM_DATE" -> {
+            Constant.FROM_DATE -> {
                 fromDate = selected
                 binding.tvFromDate.text = formatDate(selected)
             }
 
-            "TO_DATE" -> {
+            Constant.TO_DATE -> {
                 toDate = selected
                 binding.tvToDate.text = formatDate(selected)
             }
@@ -237,7 +237,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun formatDate(date: LocalDate): String {
-        val formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy")
+        val formatter = DateTimeFormatter.ofPattern(Constant.EEE_comma_dd_MMM_yyyy)
         return formatter.format(date)
     }
 
@@ -366,15 +366,15 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         val jsonObject = JsonObject().apply {
             addProperty(
                 APIKeyNames.leave_from,
-                fromDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: ""
+                fromDate?.format(DateTimeFormatter.ofPattern(Constant.ddMMyyyy)) ?: ""
             )
             addProperty(
                 APIKeyNames.leave_to,
-                toDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: ""
+                toDate?.format(DateTimeFormatter.ofPattern(Constant.ddMMyyyy)) ?: ""
             )
             addProperty(APIKeyNames.reason, binding.etLeaveReason.text.toString().trim())
-            addProperty(APIKeyNames.f_session, if (isFromSession == "First Half") "FH" else "SH")
-            addProperty(APIKeyNames.t_session, if (isToSession == "First Half") "FH" else "SH")
+            addProperty(APIKeyNames.f_session, if (isFromSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf)
+            addProperty(APIKeyNames.t_session, if (isToSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf)
             addProperty(APIKeyNames.leave_type, isLeaveCategoryType)
 
 
@@ -388,12 +388,12 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     private fun isUpdateLeaveReq() {
         val updatedRequest = LeaveRequestUpdate(
-            id = intent.getStringExtra("isId") ?: "",
+            id = intent.getStringExtra(Constant.isId) ?: "",
             leave_from = fromDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: "",
             leave_to = toDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: "",
             reason = binding.etLeaveReason.text.toString().trim(),
-            f_session = if (isFromSession == "First Half") "FH" else "SH",
-            t_session = if (isToSession == "First Half") "FH" else "SH",
+            f_session = if (isFromSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf,
+            t_session = if (isToSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf,
             leave_type = isLeaveCategoryType
         )
         appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
@@ -402,23 +402,23 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getIntentValuesIfEditing() {
-        RequestEdit = intent.getBooleanExtra("isRequestEdit", false)
+        RequestEdit = intent.getBooleanExtra(Constant.isRequestEdit, false)
 
         if (RequestEdit) {
             binding.lblParentToolBar.text = getString(R.string.edit_leave_request)
             binding.btnApplyLeave.visibility = View.GONE
             binding.btnupdate.visibility = View.VISIBLE
-            originalReason = intent.getStringExtra("isReason") ?: ""
-            originalLeaveFrom = intent.getStringExtra("isLeaveFrom") ?: ""
-            originalLeaveTo = intent.getStringExtra("isLeaveTo") ?: ""
-            originalLeaveType = intent.getStringExtra("isLeaveType") ?: Session[0]
-            originalFromSession = intent.getStringExtra("isFromSession") ?: Session[0]
-            originalToSession = intent.getStringExtra("isToSession") ?: Session[1]
+            originalReason = intent.getStringExtra(Constant.isReason) ?: ""
+            originalLeaveFrom = intent.getStringExtra(Constant.isLeaveFrom) ?: ""
+            originalLeaveTo = intent.getStringExtra(Constant.isLeaveTo) ?: ""
+            originalLeaveType = intent.getStringExtra(Constant.isLeaveType) ?: Session[0]
+            originalFromSession = intent.getStringExtra(Constant.isFromSession) ?: Session[0]
+            originalToSession = intent.getStringExtra(Constant.isToSession) ?: Session[1]
 
             binding.etLeaveReason.setText(originalReason)
 
-            val backendFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-            val displayFormat = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy")
+            val backendFormat = DateTimeFormatter.ofPattern(Constant.ddMMyyyy)
+            val displayFormat = DateTimeFormatter.ofPattern(Constant.EEE_comma_dd_MMM_yyyy)
 
             try {
                 fromDate = LocalDate.parse(originalLeaveFrom, backendFormat)
@@ -454,8 +454,8 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     private fun hasChangesMade(): Boolean {
 
         val currentReason = binding.etLeaveReason.text.toString().trim()
-        val currentFrom = fromDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: ""
-        val currentTo = toDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: ""
+        val currentFrom = fromDate?.format(DateTimeFormatter.ofPattern(Constant.ddMMyyyy)) ?: ""
+        val currentTo = toDate?.format(DateTimeFormatter.ofPattern(Constant.ddMMyyyy)) ?: ""
         val currentFSession = isFromSession
         val currentTSession = isToSession
         val currentLeaveCatoryType = isLeaveCategoryType
@@ -474,13 +474,13 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         val reason = binding.etLeaveReason.text.toString().trim()
 
         // Validate Leave Type
-        if (isLeaveCategoryType.isNullOrBlank() || isLeaveCategoryType == "Select a leave type") {
-            errors.add("Leave type is required.")
+        if (isLeaveCategoryType.isNullOrBlank() || isLeaveCategoryType == Constant.Select_a_leave_type) {
+            errors.add(getString(R.string.leave_type_is_required))
         }
 
         // Validate Reason
         if (reason.isEmpty()) {
-            errors.add("Reason is required.")
+            errors.add(getString(R.string.reason_is_required))
         }
 
         // Validate Dates
@@ -490,21 +490,21 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             toDate == null || binding.tvToDate.text == getString(R.string.select_date)
 
         if (isFromDateInvalid || isToDateInvalid) {
-            errors.add("Both From and To dates are required.")
+            errors.add(getString(R.string.both_from_and_to_dates_are_required))
         }
 
 
         // Validate Session (only if dates are valid)
         if (!isFromDateInvalid && !isToDateInvalid && fromDate != null && toDate != null) {
             if (toDate!!.isBefore(fromDate)) {
-                errors.add("To Date cannot be before From Date.")
+                errors.add(getString(R.string.to_date_cannot_be_before_from_date))
             }
 
             val fromIndex = Session.indexOf(isFromSession)
             val toIndex = Session.indexOf(isToSession)
 
             if (fromDate == toDate && fromIndex > toIndex) {
-                errors.add("From session cannot be after To session on the same day.")
+                errors.add(getString(R.string.from_session_cannot_be_after_to_session_on_the_same_day))
             }
         }
 
@@ -537,10 +537,10 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
         val formattedDays =
             if (totalDays % 1 == 0f) totalDays.toInt().toString() else totalDays.toString()
-        val dayText = if (totalDays == 1f) "Day" else "Days"
+        val dayText = if (totalDays == 1f) getString(R.string.Day) else getString(R.string.days)
 
-        binding.btnApplyLeave.text = "Apply for $formattedDays $dayText Leave"
-        binding.btnupdate.text = "Update for $formattedDays $dayText Leave"
+        binding.btnApplyLeave.text = "${getString(R.string.Apply_for)} $formattedDays $dayText ${getString(R.string.Leave)}"
+        binding.btnupdate.text = "${getString(R.string.Update_for)} $formattedDays $dayText ${getString(R.string.Leave)}"
 
         enableButtons()
         return true
@@ -555,8 +555,8 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         binding.btnupdate.background = grayDrawable
         binding.btnApplyLeave.isEnabled = false
         binding.btnupdate.isEnabled = false
-        binding.btnApplyLeave.text = "Apply Leave"
-        binding.btnupdate.text = "Update Leave"
+        binding.btnApplyLeave.text = getString(R.string.apply_leave)
+        binding.btnupdate.text = getString(R.string.update_leave)
     }
 
     private fun enableButtons() {

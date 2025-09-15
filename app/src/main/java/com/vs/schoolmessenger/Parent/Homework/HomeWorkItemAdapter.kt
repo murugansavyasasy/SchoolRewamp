@@ -261,7 +261,7 @@ class HomeWorkItemAdapter(
                         webChromeClient = WebChromeClient()
 
                         // Use Google Drive viewer to load the PDF
-                        loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=${data.isLink}")
+                        loadUrl("${Constant.google_embredded_url}${data.isLink}")
 
 
                         setOnTouchListener { _, event ->

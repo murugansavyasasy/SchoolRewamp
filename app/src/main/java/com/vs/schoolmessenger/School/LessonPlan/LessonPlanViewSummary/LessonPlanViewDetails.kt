@@ -64,7 +64,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        binding.toolbarLayout.lblParentToolBar.text = "Lesson Plan"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lesson_plan)
         binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -75,8 +75,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         binding.inprogressbutton1.setOnClickListener(this)
         binding.completedbutton1.setOnClickListener(this)
 
-        sectionSubjectId = intent.getStringExtra("section_subject_id")
-        request_type = intent.getStringExtra("request_type")
+        sectionSubjectId = intent.getStringExtra(Constant.section_subject_id)
+        request_type = intent.getStringExtra(Constant.request_type)
 
         if (sectionSubjectId.isNullOrEmpty() || request_type.isNullOrEmpty()) {
             finish()
@@ -115,7 +115,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
                 showTopAlertLessonPlanViewPopup(response.message, this)
             } else {
                 showTopAlertLessonPlanViewPopup(
-                    "Something went wrong. Please try again later.", this
+                    getString(R.string.something_went_wrong_please_try_again_later), this
                 )
             }
         }
@@ -139,7 +139,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching details found"
+            binding.txtNoData.text = getString(R.string.no_matching_details_found)
             binding.rcyLessonViewPlan.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE
@@ -188,7 +188,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         if (filteredList.isEmpty()) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No lesson plans found"
+            binding.txtNoData.text = getString(R.string.no_lesson_plans_found)
             binding.rcyLessonViewPlan.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE
@@ -294,9 +294,9 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
     override fun onEditItem(data: LessonPlanViewSummaryItem) {
         val intent = Intent(this@LessonPlanViewDetails, LessonPlanEditActivity::class.java)
-        intent.putExtra("particular_id", data.particular_id)
-        intent.putExtra("request_type", request_type)
-        intent.putExtra("section_subject_id", sectionSubjectId)
+        intent.putExtra(Constant.particular_id, data.particular_id)
+        intent.putExtra(Constant.request_type, request_type)
+        intent.putExtra(Constant.section_subject_id, sectionSubjectId)
         startActivity(intent)
     }
 
@@ -336,7 +336,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
         okButton.setOnClickListener {
             val requestJson = JSONObject().apply {
-                put("particular_id", data.particular_id)
+                put(Constant.particular_id, data.particular_id)
             }
             val requestBody = requestJson.toString()
                 .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
@@ -353,7 +353,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             showTopDeleteAlertPopup(data)
         } else {
-            Toast.makeText(this, "Delete popup requires Android O or higher", Toast.LENGTH_SHORT)
+            Toast.makeText(this,
+                getString(R.string.delete_popup_requires_android_o_or_higher), Toast.LENGTH_SHORT)
                 .show()
         }
     }
@@ -401,8 +402,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             selectedFiles.clear()
             val intent = Intent(activity, LessonPlanViewDetails::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            intent.putExtra("section_subject_id", sectionSubjectId)
-            intent.putExtra("request_type", request_type)
+            intent.putExtra(Constant.section_subject_id, sectionSubjectId)
+            intent.putExtra(Constant.request_type, request_type)
             activity.startActivity(intent)
             closePopup()
         }

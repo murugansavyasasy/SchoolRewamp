@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/AthensGray"
     android:fitsSystemWindows="true">
 
@@ -138,6 +139,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rytsearch"
+        android:background="@color/gray_white"
+        tools:listitem="@layout/interaction_with_staff_report"
         android:layout_marginTop="@dimen/ten"
         android:nestedScrollingEnabled="false" />
 
@@ -147,6 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="@color/gray_white"
         android:orientation="vertical">
 
         <ImageView

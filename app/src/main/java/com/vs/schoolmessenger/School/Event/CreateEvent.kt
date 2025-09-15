@@ -188,7 +188,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     selectedUris?.take(remaining)?.forEach { uri ->
                         val mimeType = contentResolver.getType(uri)
                         val path = when (uri.scheme) {
-                            "file" -> uri.path
+                            Constant.file_ -> uri.path
                             else -> getPathFromUri(uri)
                         }
 
@@ -229,7 +229,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     if ((selectedUris?.size ?: 0) > remaining) {
                         Toast.makeText(
                             this,
-                            "Only $remaining files added (max ${MAX_FILES})",
+                            "${getString(R.string.Only)} $remaining ${getString(R.string.files_added_max)} ${MAX_FILES})",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -496,18 +496,18 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     override fun onSearchResultEmpty(type: String, isEmpty: Boolean) {
         when (type) {
-            "ONGOING" -> {
+            Constant.ONGOING -> {
                 binding.rcyongoingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
                 binding.headerview.visibility = if (isEmpty) View.GONE else View.VISIBLE
             }
 
-            "UPCOMING" -> {
+            Constant.UPCOMING -> {
                 binding.rcyupcomingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
                 binding.upcomingeventHeaderview.visibility =
                     if (isEmpty) View.GONE else View.VISIBLE
             }
 
-            "COMPLETED" -> {
+            Constant.COMPLETED -> {
                 binding.rcycompletedevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
                 binding.completedeventHeaderview.visibility =
                     if (isEmpty) View.GONE else View.VISIBLE
@@ -569,9 +569,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             rootView.removeView(dimView)
         }
 
-        okButton.text = "Confirm"
+        okButton.text = getString(R.string.confirm)
         cancelButton.visibility = View.VISIBLE
-        cancelButton.text = "Cancel"
+        cancelButton.text = getString(R.string.Cancel)
 
         okButton.setOnClickListener {
             closePopup()
@@ -586,12 +586,12 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     override fun onDeleteEvent(type: String?, id: String?, position: Int) {
         showConfirmationDialog(
-            title = "Delete Event",
-            message = "Are you sure you want to delete this event?",
+            title = getString(R.string.delete_event),
+            message = getString(R.string.are_you_sure_you_want_to_delete_this_event),
             activity = this
         ) {
             val json = JSONObject()
-            json.put("id", id)
+            json.put(APIKeyNames.id, id)
             json.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
 //            appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
@@ -656,7 +656,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -664,16 +664,16 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     private fun showCameraPermissionSettingsDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Permission Required")
-            .setMessage("Camera permission is permanently denied. Please enable it from app settings.")
+            .setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.camera_permission_is_permanently_denied_please_enable_it_from_app_settings))
             .setCancelable(false)
-            .setPositiveButton("Go to Settings") { _, _ ->
+            .setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -731,7 +731,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
 
             R.id.lnrTabTwoName -> {
-                binding.btnNext.text = "Update Event"
+                binding.btnNext.text = getString(R.string.update_event)
                 binding.eventCreate.visibility = View.GONE
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
@@ -774,7 +774,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
 
             R.id.btnNext -> {
-                if (binding.btnNext.text.toString() == "Update Event") {
+                if (binding.btnNext.text.toString() == getString(R.string.update_event)) {
                     showSendConfirmationDialog(true)
                 } else {
                     RedirectToRecepientActivity()
@@ -852,7 +852,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -905,10 +905,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -919,7 +919,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
         val remaining = MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
-            Toast.makeText(this, "Max ${MAX_FILES} files allowed", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT)
                 .show()
             return
         }
@@ -970,11 +970,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         val uri = Uri.fromFile(file)
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -997,7 +997,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
-        if (uri.scheme.equals("content", ignoreCase = true)) {
+        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
             val projection = arrayOf(MediaStore.Images.Media.DATA)
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
@@ -1008,7 +1008,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         }
 
         // File scheme fallback
-        if (uri.scheme.equals("file", ignoreCase = true)) {
+        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
             return uri.path
         }
         return null
@@ -1017,7 +1017,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     @SuppressLint("Range")
     private fun getFileName(uri: Uri): String {
         var result: String? = null
-        if (uri.scheme == "content") {
+        if (uri.scheme == Constant.content_) {
             val cursor = contentResolver.query(uri, null, null, null, null)
             cursor?.use {
                 if (it.moveToFirst()) {
@@ -1038,9 +1038,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
+        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
     }
 
 
@@ -1137,9 +1137,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
         if (isEventUpdate) {
-            alertMessage.text = "Are you sure want to update this event?"
+            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_event)
         } else {
-            alertMessage.text = "Are you sure want to delete?"
+            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
         }
 
         lblSelectTarget.visibility = View.GONE
@@ -1149,7 +1149,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             if (isEventUpdate) {
                 ProgressDialogHelper.show(this)
                 ProgressDialogHelper.updateProgress(10)
-                isUploadFilesInServer("file")
+                isUploadFilesInServer(Constant.file_)
             } else {
                 val jsonObject = JsonObject()
                 jsonObject.addProperty(APIKeyNames.id, isEventId)
@@ -1316,7 +1316,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
                 VimeoVideoUpload.uploadVideo(
-                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                    this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].path, this
                 )
             }
         } else {
@@ -1416,12 +1416,12 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         jsonObject.addProperty(APIKeyNames.file_size, "")
         jsonObject.addProperty(APIKeyNames.thumbnail, "")
         jsonObject.addProperty(
-            "event_date",
+            APIKeyNames.event_date,
             Constant.convertDateFormat(binding.txtStartDate.text.toString())
         )
-        jsonObject.addProperty("event_time", binding.txtStartTime.text.toString().trim())
-        jsonObject.addProperty("category", isSelectedCategory)
-        jsonObject.addProperty("venue", binding.txtLocation.text.toString())
+        jsonObject.addProperty(APIKeyNames.event_time, binding.txtStartTime.text.toString().trim())
+        jsonObject.addProperty(APIKeyNames.category, isSelectedCategory)
+        jsonObject.addProperty(APIKeyNames.venue, binding.txtLocation.text.toString())
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
             isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)

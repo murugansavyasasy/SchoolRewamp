@@ -148,7 +148,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 )
 
                 // 🔹 Skip content if VOICE
-                if (msgStaff.type?.uppercase() != "VOICE") {
+                if (msgStaff.type?.uppercase() != Constant.VOICE) {
                     fieldsToSearch.add(msgStaff.content?.lowercase().orEmpty())
                 }
 

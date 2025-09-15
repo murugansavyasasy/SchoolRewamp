@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeReceiptAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.StudentBustLocationBinding
 import io.socket.client.IO
 import org.json.JSONObject
@@ -25,8 +26,8 @@ class StudentBusLocation : BaseActivity<StudentBustLocationBinding>(), View.OnCl
         socket.connect()
         socket.on("busLocation_bus_101") { args ->
             val data = args[0] as JSONObject
-            val lat = data.getDouble("lat")
-            val lng = data.getDouble("lng")
+            val lat = data.getDouble(Constant.lat)
+            val lng = data.getDouble(Constant.lng)
 
             runOnUiThread {
                 LatLng(lat, lng)

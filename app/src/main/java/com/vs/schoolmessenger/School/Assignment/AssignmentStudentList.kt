@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
 import com.vs.schoolmessenger.School.Assignment.Model.StudentSubmission
@@ -46,9 +47,9 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
         isAccessToken = isStaffDetails!!.access_token
 
         assignmentId = intent.getStringExtra(Constant.assignment_id)
-        type = intent.getStringExtra("type")
-        submittedCount = intent.getIntExtra("submitted_count", 0)
-        totalCount = intent.getIntExtra("Total_Count", 0)
+        type = intent.getStringExtra(Constant.type)
+        submittedCount = intent.getIntExtra(Constant.submitted_count, 0)
+        totalCount = intent.getIntExtra(Constant.Total_Count, 0)
 
 
         binding.tabLayout.apply {
@@ -82,7 +83,7 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
                 binding.rcystudentlist.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 
@@ -95,13 +96,13 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
 
     private fun showSubmitted() {
         val filteredList =
-            allStudentsList.filter { it.submit_status.equals("SUBMITTED", ignoreCase = true) }
+            allStudentsList.filter { it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true) }
         isloadassignmentdata(filteredList)
     }
 
     private fun showPending() {
         val filteredList =
-            allStudentsList.filter { it.submit_status.equals("NOTSUBMITTED", ignoreCase = true) }
+            allStudentsList.filter { it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true) }
         isloadassignmentdata(filteredList)
     }
 

@@ -61,7 +61,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         dateList = generateCalendarDates()
 
         val todayDate =
-            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+            SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault()).format(Calendar.getInstance().time)
         isHomeWorkDate = todayDate
         calendarAdapter = CalendarAdapter(dateList, todayDate) {
             isHomeWorkDate = it.fullDate
@@ -81,7 +81,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         binding.recyclerViewCalendar.adapter = calendarAdapter
 
         binding.recyclerViewCalendar.post {
-            val todayDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val todayDate = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
                 .format(Calendar.getInstance().time)
 
             val todayPos = dateList.indexOfFirst { it.fullDate == todayDate }
@@ -147,10 +147,10 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
         calendar.add(Calendar.MONTH, -6)
 
-        val dayFormatter = SimpleDateFormat("EEE", Locale.getDefault())
-        val dateFormatter = SimpleDateFormat("dd", Locale.getDefault())
-        val fullFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val monthFormatter = SimpleDateFormat("MMM", Locale.getDefault())
+        val dayFormatter = SimpleDateFormat(Constant.EEE, Locale.getDefault())
+        val dateFormatter = SimpleDateFormat(Constant.dd, Locale.getDefault())
+        val fullFormatter = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+        val monthFormatter = SimpleDateFormat(Constant.MMM_, Locale.getDefault())
 
         while (!calendar.time.after(today)) {
             val date = calendar.time
@@ -205,7 +205,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     override fun onItemClick(data: GetHomeworkDetails, isHomeWorkDate: String) {
         if (data.is_unread) {
             val jsonObject = JsonObject().apply {
-                addProperty(APIKeyNames.type, "HOMEWORK")
+                addProperty(APIKeyNames.type, Constant.HOMEWORK)
                 addProperty(APIKeyNames.detail_id, data.id)
             }
             isAccessToken?.let {
@@ -227,8 +227,8 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         )
 
         val intent = Intent(this@HomeWork, ChildHomeWork::class.java)
-        intent.putExtra("isPreViewData", isHomeWorkData)
-        intent.putExtra("isHomeWorkDate", isHomeWorkDate)
+        intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+        intent.putExtra(Constant.isHomeWorkDate, isHomeWorkDate)
         Log.d("samekkeaaaaa", isHomeWorkDate)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)

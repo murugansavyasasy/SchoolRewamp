@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.RequestLeave.MonthWiseLeaveData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LeaveRequests.Listener.SchoolLRClickListener
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class MonthwiseLeaveAdapter(
@@ -48,7 +49,7 @@ class MonthwiseLeaveAdapter(
     }
 
     fun filterByStatus(status: String) {
-        filteredList = if (status.equals("All", ignoreCase = true)) {
+        filteredList = if (status.equals(Constant.All_, ignoreCase = true)) {
             fullList
         } else {
             fullList.mapNotNull { monthData ->

@@ -75,8 +75,8 @@ class CompletedQuizAdapter(
             lblMaxMarks.text = data.max_mark.toString()
             lblLevel.text = data.level.toString()
             lblQuestion.text = data.no_of_questions.toString()
-            lblPostedby.text = "Posted by: ${data.SentBy}"
-            lblCreatedOn.text = "Created on ${Constant.convertDateFormatType(data.created_on)}"
+            lblPostedby.text = "${context.getString(R.string.posted_by)}: ${data.SentBy}"
+            lblCreatedOn.text = "${context.getString(R.string.created_on)} ${Constant.convertDateFormatType(data.created_on)}"
 
             lblPlayNow.visibility = View.GONE
             lblnext.visibility = View.VISIBLE
@@ -87,9 +87,9 @@ class CompletedQuizAdapter(
             // Open QuizExam on click
             val openExam = View.OnClickListener {
                 val intent = Intent(context, SubmittedQuizPreview::class.java)
-                intent.putExtra("isRSSubmittedQuizId", data.quiz_id)
-                intent.putExtra("isRSSubmittedSubject", data.subject)
-                intent.putExtra("isRSSubmittedSubmittedOn", data.submitted_on)
+                intent.putExtra(Constant.isRSSubmittedQuizId, data.quiz_id)
+                intent.putExtra(Constant.isRSSubmittedSubject, data.subject)
+                intent.putExtra(Constant.isRSSubmittedSubmittedOn, data.submitted_on)
                 context.startActivity(intent)
             }
             lnrEntireQuiz.setOnClickListener(openExam)

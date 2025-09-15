@@ -52,7 +52,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         isAccessToken = isStaffDetails?.access_token
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblSchoolName.text = "Listening,Speaking,Reading,Writing"
+        binding.toolbarLayout.lblSchoolName.text = getString(R.string.listening_speaking_reading_writing)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.newtaskbutton.setOnClickListener(this)
 
@@ -84,13 +84,13 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
             context = this,
             onDashboardClick = { overviewItem ->
                 val intent = Intent(this, ActiveTaskList::class.java)
-                intent.putParcelableArrayListExtra("TASK_LIST", ArrayList(allTaskItems))
+                intent.putParcelableArrayListExtra(Constant.TASK_LIST, ArrayList(allTaskItems))
                 startActivity(intent)
             },
             onCompletedClick = { overviewItem ->
                 val intent = Intent(this, CompletedTaskList::class.java)
                 intent.putParcelableArrayListExtra(
-                    "COMPLETED_TASK_LIST",
+                    Constant.COMPLETED_TASK_LIST,
                     ArrayList(allCompletedItems)
                 )
                 startActivity(intent)
@@ -152,11 +152,11 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
     }
 
     private fun setupFilters(active: List<LsrwTask>, completed: List<LsrwTask>) {
-        val filters = mutableListOf("All")
+        val filters = mutableListOf(Constant.All_)
         filters.addAll((active + completed).map { it.activity_type }.distinct())
 
         filterAdapter = LsrwFilterAdapter(filters) { selectedFilter ->
-            if (selectedFilter == "All") {
+            if (selectedFilter == Constant.All_) {
                 adapter.updateList(active)
                 completedviewadapter.updateList(completed)
             } else {

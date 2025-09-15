@@ -14,8 +14,8 @@ class ReminderBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         val builder = NotificationCompat.Builder(context, "reminder_channel")
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("Reminder")
-            .setContentText("Hey! You set this reminder 🔔")
+            .setContentTitle(context.getString(R.string.reminder))
+            .setContentText("${context.getString(R.string.Hey_You_set_this_reminder)} 🔔")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
 

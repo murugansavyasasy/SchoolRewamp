@@ -74,7 +74,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                 isLoadDailyCollectionData(response.data)
                 binding.relativeLayout6.visibility = View.GONE
             } else {
-                showNoDataMessage(response?.message ?: "No fee pending data available.")
+                showNoDataMessage(response?.message ?: getString(R.string.no_fee_pending_data_available))
                 binding.relativeLayout6.visibility = View.GONE
             }
         }
@@ -89,7 +89,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                 isLoadDailyCollectionData(response.data)
                 binding.relativeLayout6.visibility = View.GONE
             } else {
-                showNoDataMessage(response?.message ?: "No fee pending data available.")
+                showNoDataMessage(response?.message ?: getString(R.string.no_fee_pending_data_available))
                 binding.relativeLayout6.visibility = View.GONE
             }
         }
@@ -99,7 +99,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         val flatList = mutableListOf<FeePendingCollectionDisplayItem>()
 
         if (data.isNullOrEmpty()) {
-            showNoDataMessage("No fee pending data available.")
+            showNoDataMessage(getString(R.string.no_fee_pending_data_available))
             return
         }
 
@@ -126,7 +126,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         }
 
         if (flatList.isEmpty()) {
-            showNoDataMessage("No fee pending data available.")
+            showNoDataMessage(getString(R.string.no_fee_pending_data_available))
         } else {
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE

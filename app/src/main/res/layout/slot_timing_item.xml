@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_margin="@dimen/two"
     android:background="@drawable/outline_gray"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:fitsSystemWindows="true"
+    android:padding="@dimen/ten">
 
     <TextView
         android:id="@+id/tvSlotTime"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="start"
         android:text="10:00 am - 10:10 am"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="@dimen/thirteen_sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvSlotStatus"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
+        android:layout_marginTop="@dimen/five"
+        android:gravity="center_horizontal"
         android:text="Available"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="12sp" />
+        android:textColor="@color/green"
+        android:textSize="@dimen/twele_sp" />
+
 </LinearLayout>

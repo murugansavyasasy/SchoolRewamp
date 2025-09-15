@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuestionDetai
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestionsData
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.QuestionData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.AttachmentMediaAdapter
 import com.vs.schoolmessenger.Utils.Constant
@@ -64,7 +65,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        isQuizID = intent.getStringExtra("isRSQuizId").toString()
+        isQuizID = intent.getStringExtra(Constant.isRSQuizId).toString()
 
         appViewModel?.isGetQuestion?.observe(this) { response ->
 
@@ -344,7 +345,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
     private fun buildAnswerJson(): JsonObject {
         val json = JsonObject()
-        json.addProperty("id", isQuizID)
+        json.addProperty(APIKeyNames.id, isQuizID)
 
         val answersObj = JsonObject()
 
@@ -354,7 +355,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             answersObj.addProperty(question.id, selectedValue.toString())
         }
 
-        json.add("answers", answersObj)
+        json.add(APIKeyNames.answers, answersObj)
         return json
     }
 

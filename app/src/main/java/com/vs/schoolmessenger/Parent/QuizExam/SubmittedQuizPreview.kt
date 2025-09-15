@@ -55,9 +55,9 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        isQuizID = intent.getStringExtra("isRSSubmittedQuizId").toString()
-        isSubject = intent.getStringExtra("isRSSubmittedSubject").toString()
-        isSubmittedOn = intent.getStringExtra("isRSSubmittedSubmittedOn").toString()
+        isQuizID = intent.getStringExtra(Constant.isRSSubmittedQuizId).toString()
+        isSubject = intent.getStringExtra(Constant.isRSSubmittedSubject).toString()
+        isSubmittedOn = intent.getStringExtra(Constant.isRSSubmittedSubmittedOn).toString()
 
         appViewModel?.isGetMySubmission?.observe(this) { response ->
 
@@ -174,7 +174,7 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         val percentage = ((safeCurrent.toFloat() / safeMax) * 100).toInt()
 
         progressBar.max = 100
-        val animator = ObjectAnimator.ofInt(progressBar, "progress", 0, percentage)
+        val animator = ObjectAnimator.ofInt(progressBar, Constant.progress, 0, percentage)
         animator.duration = duration
         animator.interpolator = DecelerateInterpolator()
         animator.start()

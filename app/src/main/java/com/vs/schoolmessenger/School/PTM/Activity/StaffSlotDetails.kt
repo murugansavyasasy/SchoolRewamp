@@ -45,6 +45,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
+
         isSlot = intent.getSerializableExtra("isSlot") as? ArrayList<Slot>
         val isSlotsDetails = intent.getSerializableExtra("isSlotDetails") as SlotDetail
 
@@ -61,6 +62,10 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         binding.lblMeetingMode.text = "Mode" + " - " + isSlotsDetails.event_mode
         binding.lblDate.text = isSlotsDetails.date
         binding.lblTime.text = isSlotsDetails.start_time + " - " + isSlotsDetails.end_time
+
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
+        }
 
         appViewModel!!.isPtmSlotCancelReOpen?.observe(this) { response ->
             if (response != null && response.status) {
@@ -81,10 +86,14 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
     fun isLoadClasses(slotDetail: List<ClassSection>) {
         isAdapter = ClassesLoadAdapter(slotDetail, this, Constant.isShimmerViewDisable)
-        binding.rcyClasses.layoutManager = GridLayoutManager(this, 5)
-        binding.rcyClasses.adapter = isAdapter
 
+        binding.rcyClasses.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        binding.rcyClasses.adapter = isAdapter
     }
+
+
 
     fun isLoadDataAdapter(slotDetail: List<Slot>?) {
         mAdapter = StaffSlotStatusAdapter(slotDetail, this, this, Constant.isShimmerViewDisable)
@@ -93,10 +102,8 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
     }
 
     override fun onClick(v: View?) {
-        if (v?.id == binding.toolbarLayout.imgBack.id) {
-            onBackPressed()
-        }
     }
+
 
     override fun onStaffSlotCancelReOpenClickListener(
         data: Slot,

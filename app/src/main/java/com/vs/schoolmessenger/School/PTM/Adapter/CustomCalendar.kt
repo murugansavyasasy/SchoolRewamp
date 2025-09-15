@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.GridView
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.vs.schoolmessenger.R
@@ -19,8 +21,8 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
     private val tvMonthYear: TextView
     private val gridCalendar: GridView
     private val gridWeekdays: GridView
-    private val btnPrevMonth: TextView
-    private val btnNextMonth: TextView
+    private val btnPrevMonth: ImageView
+    private val btnNextMonth: ImageView
     private val calendar = Calendar.getInstance()
     private val selectedDates = ArrayList<String>() // now stores "dd-MM-yyyy"
     private var adapter: CalendarAdapter? = null
@@ -43,9 +45,6 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
         ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent) as TextView
-                if (position == 0) {
-                    view.setTextColor(resources.getColor(android.R.color.holo_red_dark))
-                }
                 return view
             }
         }

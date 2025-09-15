@@ -90,17 +90,17 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         }
 
         appViewModel!!.isLocationHistory?.observe(this) { response ->
-//            if (response != null && response.status) {
+            if (response != null && response.status) {
             val isLocationHistory = response!!.data
             isLoadLocationHistory(isLocationHistory, response.message)
-//            }
+            }
         }
 
         appViewModel!!.isUpdateLocation?.observe(this) { response ->
             if (response != null && response.status) {
                 Constant.hideLoading(this@AddLocationActivity)
                 val dialogRootView = view as ViewGroup
-                showTopAlertPopup(response.message, dialogRootView, -1, response.status, "isUpdate")
+                showTopAlertPopup(response.message, dialogRootView, -1, response.status, Constant.isUpdate)
             }
         }
 
@@ -108,7 +108,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             if (response != null && response.status) {
                 Constant.hideLoading(this)
                 val dialogRootView = view as ViewGroup
-                showTopAlertPopup(response.message, dialogRootView, -1, response.status, "isRemove")
+                showTopAlertPopup(response.message, dialogRootView, -1, response.status, Constant.isRemove)
             }
         }
     }
@@ -132,7 +132,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
                 isLongitude = location.longitude
                 val isLocationName = getAddressFromLocation(isLatitude!!, isLongitude!!)
                 binding.lblAddress.text = isLocationName
-                binding.lbllatLong.text = "Lat : " + isLatitude + ", " + "Long : " + isLongitude
+                binding.lbllatLong.text = "${getString(R.string.Lat)} : ${isLatitude} , ${getString(R.string.Long)} : ${isLongitude}"
             } else {
                 println("Location is null. Try again later or enable location.")
             }
@@ -144,8 +144,8 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         return try {
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             if (!addresses.isNullOrEmpty()) {
-                addresses[0].getAddressLine(0) ?: "Address not found"
-            } else "No address found"
+                addresses[0].getAddressLine(0) ?: getString(R.string.address_not_found)
+            } else getString(R.string.address_not_found)
         } catch (e: Exception) {
             e.printStackTrace()
             "Geocoder error"
@@ -153,7 +153,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     }
 
     private fun openInGoogleMaps(lat: Double, lng: Double, isTitle: String) {
-        val uri = Uri.parse("geo:$lat,$lng?q=$lat,$lng(${Uri.encode(isTitle)})")
+        val uri = Uri.parse("${Constant.geo_}$lat${Constant.camma}$lng${Constant.questionQEqual}$lat${Constant.camma}$lng${Constant.leftBracket}${Uri.encode(isTitle)}${Constant.rightBracket}")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         intent.setPackage(Constant.googleMap)
         startActivity(intent)

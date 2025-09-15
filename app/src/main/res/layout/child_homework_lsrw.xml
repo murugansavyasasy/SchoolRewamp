@@ -1,5 +1,4 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -169,6 +168,9 @@
                     android:layout_marginBottom="@dimen/ten" />
 
 
+
+
+
                 <LinearLayout
                     android:id="@+id/bottomRow"
                     android:layout_width="match_parent"
@@ -179,7 +181,6 @@
                     android:layout_marginBottom="@dimen/five"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-
 
                     <ImageView
                         android:layout_width="@dimen/sixteen"
@@ -197,45 +198,104 @@
                         android:textColor="#444444"
                         android:textSize="@dimen/twele_sp" />
 
-
-                    <Space
-                        android:layout_width="@dimen/sixteen"
-                        android:layout_height="@dimen/one" />
-
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/txtexportrecord"
+                        android:id="@+id/lblviewSubmissions"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_purple_circle"
                         android:padding="@dimen/ten"
-                        android:text="Export Record"
+                        android:text="My Submission"
                         android:textColor="@color/white"
                         android:textSize="@dimen/twele_sp"
                         android:visibility="gone" />
-
-                    <Space
-                        android:layout_width="@dimen/sixteen"
-                        android:layout_height="@dimen/one" />
-
-                    <TextView
-                        android:id="@+id/txtremainder"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_green_radoius_10dp"
-                        android:padding="@dimen/ten"
-                        android:text="Remainder"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/twele_sp"
-                        android:visibility="gone" />
-
 
                 </LinearLayout>
 
 
+
             </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/attachment_label"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:text="Add Attachments"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <RelativeLayout
+                android:id="@+id/rytRecyclewview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@+id/attachment_label">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="vertical">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/description_label"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:visibility="gone"
+                android:text="Add description"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+
+            <EditText
+                android:id="@+id/edit_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/six"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/bg_edittext_rounded"
+                android:hint="description"
+                android:visibility="gone"
+                android:padding="12dp"
+                android:textSize="@dimen/fifteen_sp"
+                />
+
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_shadow_light_primary"
+                android:text="Submit"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fourteen_sp"
+                android:visibility="gone" />
+
+
 
 
             <TextView
@@ -243,7 +303,6 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/headerrelative_layout"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:text="Submitted Students"

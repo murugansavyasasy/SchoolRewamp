@@ -335,15 +335,15 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
 
     private fun isMarkAttendance() {
-        AllPresent = if (isSelectedIds.isNullOrEmpty()) "T" else "F"
+        AllPresent = if (isSelectedIds.isNullOrEmpty()) Constant.allPresent else Constant.fullDay
         if (Constant.isMarkAttendanceDataSending?.class_id != "" && Constant.isMarkAttendanceDataSending?.section_id != ""
             && Constant.isMarkAttendanceDataSending?.attendance_date != null
         ) {
 
-            if (Constant.isMarkAttendanceDataSending?.attendance_type == "F" && Constant.isMarkAttendanceDataSending?.session_type == "") {
+            if (Constant.isMarkAttendanceDataSending?.attendance_type == Constant.fullDay && Constant.isMarkAttendanceDataSending?.session_type == "") {
                 isUpdateMarkAtttendance()
 
-            } else if (Constant.isMarkAttendanceDataSending?.attendance_type == "H" && Constant.isMarkAttendanceDataSending?.session_type!!.isNotEmpty()) {
+            } else if (Constant.isMarkAttendanceDataSending?.attendance_type == Constant.halfDay && Constant.isMarkAttendanceDataSending?.session_type!!.isNotEmpty()) {
                 isUpdateMarkAtttendance()
             }
         }
@@ -369,7 +369,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             val studentArray = JsonArray().apply {
                 isSelectedIds?.forEach { id ->
                     add(JsonObject().apply {
-                        addProperty("ID", id)
+                        addProperty(APIKeyNames.id_, id)
                     })
                 }
             }
@@ -398,9 +398,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         val presentCount = studentsList?.size?.minus(isSpecificStudent.size) ?: 0
         val absentCount = isSpecificStudent.size
         binding.toolbarLayout.tvPresentCount.text =
-            if (presentCount > 0) String.format("%02d", presentCount) else "0"
+            if (presentCount > 0) String.format(Constant.time02d, presentCount) else Constant.zero
         binding.toolbarLayout.tvAbsentCount.text =
-            if (absentCount > 0) String.format("%02d", absentCount) else "0"
+            if (absentCount > 0) String.format(Constant.time02d, absentCount) else Constant.zero
     }
 
 

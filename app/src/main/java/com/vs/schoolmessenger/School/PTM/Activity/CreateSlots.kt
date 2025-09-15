@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
@@ -97,12 +98,20 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         isAccessToken = isStaffDetails!!.access_token
         binding.lblSchoolName.text = isStaffDetails!!.school_name
 
+        isChangeTheBackRound(binding.lblPerson)
+        isChangeTheBackRoundBreakDuration(binding.lblFiveMin)
+
         isAcademicYear = Constant.isAcademicYearList
         isLoadAcademicYear(isAcademicYear)
         isValidAcademicYear = isAcademicYear?.any { it.current_academic_year } == true
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isGetStandardSection()
+
+        binding.imgBack.setOnClickListener {
+            onBackPressed()
+        }
+
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             if (response != null) {
@@ -166,7 +175,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         ) { selectedList ->
             isSelectedList = selectedList.toMutableList()
         }
-        binding.rcySectionAndStandardList.layoutManager = GridLayoutManager(this, 5)
+        binding.rcySectionAndStandardList.layoutManager = GridLayoutManager(this, 4)
         binding.rcySectionAndStandardList.adapter = adapter
     }
 
@@ -241,7 +250,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
 
             R.id.imgCountDown -> {
-                if (isSlotsCount > 0) {
+                if (isSlotsCount > 1) {
                     isSlotsCount--
                 }
                 binding.lblSlotsCount.text = isSlotsCount.toString()
@@ -422,8 +431,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         )
     }
 
+
     private fun isShowAvailableSlot(data: List<ValidatedSlot>) {
-         bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view = layoutInflater.inflate(R.layout.checkslot_create, null)
         bottomSheetDialog!!.setContentView(view)
 
@@ -436,32 +446,35 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         val adapter = CheckAvailableSlotsDate(this, groupedData) { updatedList ->
             selectedSlots = updatedList
-            Log.d("MainActivity", "Updated slots = ${updatedList.size}")
         }
 
         isRcySlotDate.layoutManager = GridLayoutManager(this, 1)
         isRcySlotDate.adapter = adapter
 
         lblCreateSlot?.setOnClickListener {
-
             val availableSlots = selectedSlots.filter { (_, slot) ->
                 slot.slot_availablity.equals("Available", true)
             }
 
             isSlotCreateValues = availableSlots
                 .groupBy { it.first }
-                .map { (date, slots) ->
-                    date to slots.map { it.second }
-                }
+                .map { (date, slots) -> date to slots.map { it.second } }
                 .toMutableList()
 
             isCreateSlots()
-
         }
 
         bottomSheetDialog!!.show()
-    }
 
+        // Make BottomSheet full screen
+        val bottomSheet = bottomSheetDialog!!.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        bottomSheet?.let { sheet ->
+            val behavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(sheet)
+            behavior.state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+            behavior.isFitToContents = true
+            behavior.skipCollapsed = true
+        }
+    }
 
     private fun validateMeetingInputs(): MeetingCreationData? {
         if (binding.edtPurPose.text.toString().isEmpty()) {
@@ -611,7 +624,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         binding.lblTenMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblTwentyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblThirtyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
-        isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.bg_green_light_radious))
+        isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.green_bg_radius))
         isBreakDuration = isSelectedTextView.text.toString()
     }
 

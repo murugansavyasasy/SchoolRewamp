@@ -53,16 +53,26 @@ class CalendarAdapter(
                 SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(cellCal.time)
 
             // Highlight today
-            if (cellDateStr == todayStr) {
-                tvDay.setBackgroundResource(R.drawable.bg_light_blue_circle)
-                tvDay.setTextColor(Color.WHITE)
+            when {
+                cellDateStr == todayStr && selectedDates.contains(cellDateStr) -> {
+                    tvDay.setBackgroundResource(R.drawable.bg_selected_day)
+                    tvDay.setTextColor(Color.WHITE)
+                }
+                cellDateStr == todayStr -> {
+                    tvDay.setBackgroundResource(R.drawable.circle_bg_primary)
+                    tvDay.setTextColor(Color.WHITE)
+                }
+                selectedDates.contains(cellDateStr) -> {
+                    tvDay.setBackgroundResource(R.drawable.bg_selected_day)
+                    tvDay.setTextColor(Color.WHITE)
+                }
+                else -> {
+                    tvDay.setBackgroundResource(android.R.color.transparent)
+                    tvDay.setTextColor(Color.BLACK)
+                }
             }
 
-            // Highlight selected dates
-            if (selectedDates.contains(cellDateStr)) {
-                tvDay.setBackgroundResource(R.drawable.bg_green_radoius_10dp)
-                tvDay.setTextColor(Color.WHITE)
-            }
+
         }
         return view
     }
