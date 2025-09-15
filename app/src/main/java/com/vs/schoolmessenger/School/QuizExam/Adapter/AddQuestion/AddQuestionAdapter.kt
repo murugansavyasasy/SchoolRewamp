@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,10 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.QuizExam.AddQuestionListner
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
+import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
@@ -23,6 +26,7 @@ import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 class AddQuestionAdapter(
     private var itemList: MutableList<GetQuizQuestionReportData>?,
     private var context: Context,
+    var listener: AddQuestionListner,
     private var isLoading: Boolean,
     var onQBankItemRemoved: ((String) -> Unit)? = null
 
@@ -32,10 +36,7 @@ class AddQuestionAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
-    private val itemsCorrectAnswer = listOf(
-        "Select correct answer", "Option A", "Option B", "Option C", "Option D"
-    )
+    var isLastAnswerIndex=0
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -85,7 +86,7 @@ class AddQuestionAdapter(
     }
 
 
-    fun addItem() {
+    fun addItem(recyclerView: RecyclerView) {
         itemList!!.add(
             GetQuizQuestionReportData(
                 id = "",
@@ -107,6 +108,12 @@ class AddQuestionAdapter(
         )
         Constant.isQuestionLimit -= 1
         notifyItemInserted(itemList!!.size - 1)
+
+
+        recyclerView.post {
+            recyclerView.smoothScrollToPosition(itemList!!.size - 1)
+        }
+
     }
 
 
@@ -117,74 +124,110 @@ class AddQuestionAdapter(
             // If it's a QBANK question → notify PickQuestionAdapter
             if (removed.sourceType == QuestionSource.QBANK && removed.id.isNotEmpty()) {
                 onQBankItemRemoved?.invoke(removed.id)
-                Constant.isQuestionLimit += 1
+//                Constant.isQuestionLimit += 1
             }
 
             itemList!!.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemList!!.size)
             Constant.isQuestionLimit += 1
+            listener?.onCountUpdated()
         }
     }
 
     fun showValidationErrors(recyclerView: RecyclerView): Boolean {
         var isAllValid = true
+        var firstInvalidIndex: Int? = null
 
         itemList!!.forEachIndexed { index, item ->
-            val holder =
-                recyclerView.findViewHolderForAdapterPosition(index) as? DataViewHolder
-                    ?: return@forEachIndexed
+            val holder = recyclerView.findViewHolderForAdapterPosition(index) as? DataViewHolder
 
-            if (item.chapter.isBlank()) {
-                holder.edtChapterName.error = context.getString(R.string.this_is_required)
-                if (isAllValid) holder.edtChapterName.requestFocus()
-                isAllValid = false
+            when {
+                item.chapter.isBlank() -> {
+                    holder?.edtChapterName?.error = context.getString(R.string.this_is_required)
+                    if (firstInvalidIndex == null) firstInvalidIndex = index
+                    isAllValid = false
+                }
+                item.question.isBlank() -> {
+                    holder?.edtQuestion?.error = context.getString(R.string.this_is_required)
+                    if (firstInvalidIndex == null) firstInvalidIndex = index
+                    isAllValid = false
+                }
+                item.a_option.isBlank() -> {
+                    holder?.edtOptionA?.error = context.getString(R.string.this_is_required)
+                    if (firstInvalidIndex == null) firstInvalidIndex = index
+                    isAllValid = false
+                }
+                item.b_option.isBlank() -> {
+                    holder?.edtOptionB?.error = context.getString(R.string.this_is_required)
+                    if (firstInvalidIndex == null) firstInvalidIndex = index
+                    isAllValid = false
+                }
+                item.c_option.isBlank() -> {
+                    holder?.edtOptionC?.error = context.getString(R.string.this_is_required)
+                    if (firstInvalidIndex == null) firstInvalidIndex = index
+                    isAllValid = false
+                }
+                item.d_option.isBlank() -> {
+                    holder?.edtOptionD?.error = context.getString(R.string.this_is_required)
+                    if (firstInvalidIndex == null) firstInvalidIndex = index
+                    isAllValid = false
+                }
+                item.answer.isBlank() || item.answer == "0" -> {
+                    Toast.makeText(context, "Please select correct answer", Toast.LENGTH_SHORT).show()
+                    if (firstInvalidIndex == null) firstInvalidIndex = index
+                    isAllValid = false
+                }
+                item.mark == null -> {
+                    holder?.edtMark?.error = context.getString(R.string.this_is_required)
+                    if (firstInvalidIndex == null) firstInvalidIndex = index
+                    isAllValid = false
+                }
+                item.mark!! <= 0 -> {
+                    holder?.edtMark?.error = context.getString(R.string.mark_should_be_greater_than_zero)
+                    if (firstInvalidIndex == null) firstInvalidIndex = index
+                    isAllValid = false
+                }
             }
-            if (item.question.isBlank()) {
-                holder.edtQuestion.error = context.getString(R.string.this_is_required)
-                if (isAllValid) holder.edtQuestion.requestFocus()
-                isAllValid = false
-            }
-            if (item.a_option.isBlank()) {
-                holder.edtOptionA.error = context.getString(R.string.this_is_required)
-                if (isAllValid) holder.edtOptionA.requestFocus()
-                isAllValid = false
-            }
-            if (item.b_option.isBlank()) {
-                holder.edtOptionB.error =context.getString(R.string.this_is_required)
-                if (isAllValid) holder.edtOptionB.requestFocus()
-                isAllValid = false
-            }
-            if (item.c_option.isBlank()) {
-                holder.edtOptionC.error = context.getString(R.string.this_is_required)
-                if (isAllValid) holder.edtOptionC.requestFocus()
-                isAllValid = false
-            }
-            if (item.d_option.isBlank()) {
-                holder.edtOptionD.error = context.getString(R.string.this_is_required)
-                if (isAllValid) holder.edtOptionD.requestFocus()
-                isAllValid = false
-            }
+        }
 
-            if (item.answer.isBlank() || item.answer == "0") {
-                Toast.makeText(context, "Please select correct answer", Toast.LENGTH_SHORT).show()
-                isAllValid = false
-            }
+        // scroll & focus on first invalid field
+        firstInvalidIndex?.let { invalidIndex ->
+            recyclerView.smoothScrollToPosition(invalidIndex)
 
-            if (item.mark == null) {
-                holder.edtMark.error = context.getString(R.string.this_is_required)
-                if (isAllValid) holder.edtMark.requestFocus()
-                isAllValid = false
-            } else if (item.mark <= 0) {
-                holder.edtMark.error = context.getString(R.string.mark_should_be_greater_than_zero)
-                if (isAllValid) holder.edtMark.requestFocus()
-                isAllValid = false
-            }
+            recyclerView.post {
+                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(rv: RecyclerView, newState: Int) {
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            rv.removeOnScrollListener(this)
 
+                            val holder = rv.findViewHolderForAdapterPosition(invalidIndex) as? DataViewHolder
+                            holder?.let {
+                                when {
+                                    itemList!![invalidIndex].chapter.isBlank() -> it.edtChapterName.requestFocus()
+                                    itemList!![invalidIndex].question.isBlank() -> it.edtQuestion.requestFocus()
+                                    itemList!![invalidIndex].a_option.isBlank() -> it.edtOptionA.requestFocus()
+                                    itemList!![invalidIndex].b_option.isBlank() -> it.edtOptionB.requestFocus()
+                                    itemList!![invalidIndex].c_option.isBlank() -> it.edtOptionC.requestFocus()
+                                    itemList!![invalidIndex].d_option.isBlank() -> it.edtOptionD.requestFocus()
+                                    itemList!![invalidIndex].mark == null || itemList!![invalidIndex].mark!! <= 0 -> it.edtMark.requestFocus()
+                                    else -> {}
+                                }
+                            }
+                        }
+                    }
+                })
+            }
         }
 
         return isAllValid
     }
+
+
+
+
+
+
 
     fun updateList(newList: MutableList<GetQuizQuestionReportData>) {
         itemList!!.clear()
@@ -208,8 +251,11 @@ class AddQuestionAdapter(
         holder.spinnerCorrectAnswer.adapter = spinnerAdapter
 
         // restore previously selected answer
-        val selectedIndex = data.answer.toIntOrNull() ?: 0
-        holder.spinnerCorrectAnswer.setSelection(selectedIndex)
+        holder.spinnerCorrectAnswer.setSelection(isLastAnswerIndex)
+        spinnerAdapter.selectedPosition = isLastAnswerIndex
+        spinnerAdapter.notifyDataSetChanged()
+        Log.d("pos",isLastAnswerIndex.toString())
+
     }
 
 
@@ -255,11 +301,16 @@ class AddQuestionAdapter(
             // pre-select saved answer index
             val selectedIndex = data.answer.toIntOrNull() ?: 0
             spinnerCorrectAnswer.setSelection(selectedIndex)
+            spinnerAdapter.selectedPosition = selectedIndex
 
             spinnerCorrectAnswer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
                     if (adapterPosition != RecyclerView.NO_POSITION) {
                         itemList!![adapterPosition].answer = pos.toString()
+                        isLastAnswerIndex=pos
+                        spinnerAdapter.selectedPosition = pos
+
+                        spinnerAdapter.notifyDataSetChanged()
                     }
                 }
 

@@ -170,7 +170,7 @@ class PickQuestionAdapter(
             edtOptionB.setText(data.b_option)
             edtOptionC.setText(data.c_option)
             edtOptionD.setText(data.d_option)
-            edtCorrectAns.setText(data.answer)
+            edtCorrectAns.setText(data.correct_answer_text)
             edtMark.setText(data.mark.toString())
 
             edtChapterName.isFocusable = false

@@ -64,7 +64,6 @@
         </RelativeLayout>
         <EditText
             style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="@dimen/sixteen_sp"
             android:layout_marginTop="@dimen/five"
             android:id="@+id/edtChapterName"
             android:layout_width="match_parent"
@@ -98,7 +97,6 @@
         </RelativeLayout>
         <EditText
             style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="@dimen/sixteen_sp"
             android:layout_marginTop="@dimen/five"
             android:id="@+id/edtQuestion"
             android:hint="@string/enter_question_here"
@@ -134,7 +132,6 @@
             android:layout_marginTop="@dimen/five"
             android:id="@+id/edtOptionA"
             style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="@dimen/sixteen_sp"
             android:hint="@string/enter_option_a"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -168,7 +165,6 @@
             android:layout_marginTop="@dimen/five"
             android:id="@+id/edtOptionB"
             style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="@dimen/sixteen_sp"
             android:hint="@string/enter_option_b"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -202,7 +198,6 @@
             android:layout_marginTop="@dimen/five"
             android:id="@+id/edtOptionC"
             style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="@dimen/sixteen_sp"
             android:hint="@string/enter_option_c"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -237,7 +232,6 @@
             android:layout_marginTop="@dimen/five"
             android:id="@+id/edtOptionD"
             style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="@dimen/sixteen_sp"
             android:hint="Enter Option D"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -283,7 +277,6 @@
                     android:layout_marginTop="@dimen/five"
                     android:id="@+id/edtCorrectAns"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:textSize="@dimen/sixteen_sp"
                     android:hint="@string/enter_correct_answer_here"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -343,7 +336,6 @@
                     android:layout_marginTop="@dimen/five"
                     android:id="@+id/edtMark"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:textSize="@dimen/sixteen_sp"
                     android:hint="@string/drop_your_mark_here"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

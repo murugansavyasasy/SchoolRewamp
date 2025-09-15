@@ -15,5 +15,6 @@ package com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank
     val c_option: String,
     val d_option: String,
     val mark: Int,
+    val correct_answer_text: String,
     var checked: Boolean = false//This we added to handle the logic
 )

@@ -928,6 +928,7 @@
     <string name="this_is_required">This is required!</string>
     <string name="mark_should_be_greater_than_zero">Mark should be greater than zero!</string>
     <string name="sent_at">"Sent At "</string>
+    <string name="question_limit">Question Limit :</string>
 
 
 </resources>

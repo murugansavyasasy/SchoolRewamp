@@ -226,11 +226,12 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
-            android:background="@color/gray4"
+            android:layout_height="@dimen/one"
             android:layout_marginTop="@dimen/three"
-            android:layout_height="@dimen/one">
+            android:background="@color/gray4">
 
         </View>
 
@@ -238,6 +239,7 @@
             style="@style/CustomTextStylePoppinsMedium"
             android:id="@+id/lblCreatedOn"
             android:layout_marginTop="@dimen/five"
+            android:textColor="@color/mild_grey_dark"
             android:layout_width="match_parent"
             android:text="Created Date : 13 Jul 2002"
             android:layout_height="wrap_content">
