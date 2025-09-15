@@ -35,7 +35,7 @@
         </TextView>
 
         <TextView
-            android:id="@+id/lblSchoolName"
+            android:id="@+id/lblStudentName"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblSchoolName"
+            android:layout_below="@+id/lblStudentName"
             android:layout_marginStart="@dimen/ten"
             android:layout_toEndOf="@+id/imgBack"
             android:text="XII - A"
@@ -132,18 +132,39 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/ten" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSlots"
+        <RelativeLayout
+            android:id="@+id/rytSubjectList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/recyclerViewDates"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:background="@drawable/bg_white_light_radious"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/spinnerType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_spinner_background" />
+
+        </RelativeLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSlots"
+            android:layout_width="match_parent"
+            android:layout_above="@+id/lblBookSlots"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytSubjectList"
             android:padding="@dimen/ten" />
 
         <LinearLayout
             android:id="@+id/rytNoDataFound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/recyclerViewDates"
+            android:layout_below="@+id/rytSubjectList"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -165,6 +186,23 @@
 
             </TextView>
         </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/lblBookSlots"
+            android:text="Book Slot"
+            android:textColor="@color/white"
+            style="@style/CustomTextStylePoppinsBold1"
+            android:textSize="@dimen/fifteen_sp"
+           android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/ten"
+            android:background="@drawable/background_dark_blue"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
 
     </RelativeLayout>
 

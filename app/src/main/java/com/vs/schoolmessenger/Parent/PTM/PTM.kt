@@ -2,26 +2,31 @@ package com.vs.schoolmessenger.Parent.PTM
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.PTM.Adapter.MeetingHistoryAdapter
 import com.vs.schoolmessenger.Parent.PTM.Adapter.MeetingListItem
 import com.vs.schoolmessenger.Parent.PTM.Adapter.ParentMeetingAdapter
 import com.vs.schoolmessenger.Parent.PTM.Adapter.PtmParentCalender
+import com.vs.schoolmessenger.Parent.PTM.Adapter.SubjectListWithClassTeacherAdapter
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingData
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingDataWrapper
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
-import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotData
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SubjectData
 import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -39,12 +44,12 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
     }
     private var lastCancelledPosition: Int = -1
     var isSelectedDate = ""
-
-    private val selectedSlots = mutableListOf<SlotData>()
-    private var isParentMeetingAdapter: ParentMeetingAdapter? = null
+    private val selectedSlotIds = mutableListOf<String>()
     lateinit var isMeetingHistoryAdapter: MeetingHistoryAdapter
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
+    var isClassTeacherId = ""
+    var isSubjectId = ""
 
     override fun setupViews() {
         super.setupViews()
@@ -54,38 +59,21 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         binding.rytsearch.visibility = View.GONE
         binding.txtSearchMeeting.setText("")
         binding.lblScheduleMeeting.setOnClickListener(this)
+        binding.lblBookSlots.setOnClickListener(this)
         binding.lblYourMeeting.setOnClickListener(this)
+
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-
-        val dates = generateDates(60)
+        binding.lblStudentName.text = childDetails?.name
+        binding.lblSectionName.text =
+            childDetails?.standard_name + " - " + childDetails?.section_name
         isSelectedDate = Constant.getCurrentDate()
-
-        val adapter = PtmParentCalender(dates) { selectedDate ->
-            isSelectedDate = selectedDate
-            isScheduleCallList()
-        }
-
         binding.imgBack.setOnClickListener {
             onBackPressed()
         }
-
-        binding.recyclerViewDates.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerViewDates.adapter = adapter
-        val calendar = Calendar.getInstance()
-        val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
-        val todayMonth = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
-
-        val todayPos = dates.indexOfFirst { it.first == todayMonth && it.second == todayDay }
-
-        if (todayPos != -1) {
-            adapter.setDefaultSelected(todayPos)
-            binding.recyclerViewDates.scrollToPosition(todayPos)
-        }
-
-
+        isDateWiseSlotCount()
+        isGetSubjectList()
         binding.txtSearchMeeting.addTextChangedListener { editable ->
             val query = editable.toString()
             if (::isMeetingHistoryAdapter.isInitialized) {
@@ -143,6 +131,41 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             }
         }
 
+        appViewModel?.isSlotBookingForStudent?.observe(this) { response ->
+            if (response?.status!!) {
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
+        appViewModel?.isSubjectResponse?.observe(this) { response ->
+            if (response?.status!!) {
+                isLoadSubjectList(response.data)
+            }
+        }
+
+
+        appViewModel?.isSlotCountResponse?.observe(this) { response ->
+            val dates = generateDates(60)
+            val adapter = PtmParentCalender(dates, response!!.data) { selectedDate ->
+                isSelectedDate = selectedDate
+                isScheduleCallList()
+            }
+            binding.recyclerViewDates.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            binding.recyclerViewDates.adapter = adapter
+            val calendar = Calendar.getInstance()
+            val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
+            val todayMonth = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
+
+            val todayPos = dates.indexOfFirst { it.first == todayMonth && it.second == todayDay }
+
+            if (todayPos != -1) {
+                adapter.setDefaultSelected(todayPos)
+                binding.recyclerViewDates.scrollToPosition(todayPos)
+            }
+
+        }
+
 
         appViewModel?.isSlotDetailsHistory?.observe(this) { response ->
             if (response!!.status) {
@@ -159,21 +182,66 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                 binding.recyclerViewSlots.visibility = View.GONE
             }
         }
-        isScheduleCallList()
     }
 
     fun isLoadData(data: List<MeetingData>) {
-        isParentMeetingAdapter = ParentMeetingAdapter(data) { meeting, slot ->
-            Toast.makeText(
-                this,
-                "Selected ${slot.slot_from} - ${slot.slot_to} for ${meeting.staff_name}",
-                Toast.LENGTH_SHORT
-            ).show()
+        val adapter = ParentMeetingAdapter(data) { meeting, slot ->
+
+            val meetingKey = "${meeting.staff_id}_${meeting.start_time}_${meeting.event_name}"
+
+            // Remove old selected slot for this meeting if exists
+            selectedSlotIds.removeAll { existingId ->
+                // Find the slot with same meetingKey
+                data.any { meetingItem ->
+                    val key =
+                        "${meetingItem.staff_id}_${meetingItem.start_time}_${meetingItem.event_name}"
+                    key == meetingKey && meetingItem.slots.any { it.id == existingId }
+                }
+            }
+            selectedSlotIds.add(slot.id)
+
+            if (selectedSlotIds.isNotEmpty()) {
+                binding.lblBookSlots.visibility = View.VISIBLE
+            } else {
+                binding.lblBookSlots.visibility = View.GONE
+            }
+
+            println("Selected Slot IDs: $selectedSlotIds")
         }
+
         binding.recyclerViewSlots.layoutManager =
             GridLayoutManager(this, 1, RecyclerView.VERTICAL, false)
-        binding.recyclerViewSlots.adapter = isParentMeetingAdapter
+        binding.recyclerViewSlots.adapter = adapter
         binding.recyclerViewSlots.setHasFixedSize(true)
+    }
+
+    fun isLoadSubjectList(data: List<SubjectData>) {
+        val adapter = SubjectListWithClassTeacherAdapter(this, data)
+        binding.spinnerType.adapter = adapter
+
+        binding.spinnerType.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+
+                    val selectedSubject = data[position]
+                    println("Selected Subject -> ID: ${selectedSubject.id}, Name: ${selectedSubject.name}")
+                    if (position == 0) {
+                        isSubjectId = "0"
+                        isClassTeacherId = selectedSubject.id
+                    } else {
+                        isSubjectId = selectedSubject.id
+                        isClassTeacherId = "0"
+                    }
+
+                    isScheduleCallList()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     fun isLoadMeetingData(data: List<MeetingDataWrapper>) {
@@ -213,11 +281,24 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
 
 
     fun isScheduleCallList() {
-        appViewModel!!.isSlotAvailableForStudent(isAccessToken!!, isSelectedDate, "0", "0")
+        appViewModel!!.isSlotAvailableForStudent(
+            isAccessToken!!,
+            isSelectedDate,
+            isSubjectId,
+            isClassTeacherId
+        )
     }
 
     fun isMeetingHistoryList() {
         appViewModel!!.isSlotHistoryStudent(isAccessToken!!)
+    }
+
+    fun isGetSubjectList() {
+        appViewModel!!.isSubjectListWithClassTeacher(isAccessToken!!)
+    }
+
+    fun isDateWiseSlotCount() {
+        appViewModel!!.isSlotCountByDate(isAccessToken!!)
     }
 
 
@@ -230,7 +311,38 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             R.id.lblYourMeeting -> {
                 isChangeBackGroundTab(binding.lblYourMeeting)
             }
+
+            R.id.lblBookSlots -> {
+                showSendConfirmationDialog("Are you sure want to book this slots?")
+            }
         }
+    }
+
+    fun showSendConfirmationDialog(isMessage: String) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+        lblSelectTarget.visibility = View.GONE
+        alertMessage.text = isMessage
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            val jsonObject = JsonObject()
+            val jsonArray = JsonArray()
+            for (i in selectedSlotIds.indices) {
+                jsonArray.add(selectedSlotIds[i])
+            }
+            jsonObject.add("slot_ids", jsonArray)
+            appViewModel!!.isSlotBookingStudent(isAccessToken!!, jsonObject)
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
 
     fun isChangeBackGroundTab(isSelectedTab: TextView) {

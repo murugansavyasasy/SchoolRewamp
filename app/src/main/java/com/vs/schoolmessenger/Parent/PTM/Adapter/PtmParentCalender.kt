@@ -7,15 +7,19 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotCountData
 import com.vs.schoolmessenger.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.collections.find
 
 class PtmParentCalender(
-    private val dates: List<Pair<String, Int>>, // month, day
-    private val onDateClick: (String) -> Unit   // returns formatted date
+    private val dates: List<Pair<String, Int>>,       // month, day
+    private val slotCounts: List<SlotCountData>,      // response from API
+    private val onDateClick: (String) -> Unit         // returns formatted date
 ) : RecyclerView.Adapter<PtmParentCalender.DateViewHolder>() {
+
 
     private var selectedPos = -1
     private val currentYear = Calendar.getInstance().get(Calendar.YEAR)
@@ -24,6 +28,7 @@ class PtmParentCalender(
         val tvMonth: TextView = view.findViewById(R.id.tvMonth)
         val tvDay: TextView = view.findViewById(R.id.tvDay)
         val itemRoot: LinearLayout = view.findViewById(R.id.itemRoot)
+        val lblSlotCount: TextView = view.findViewById(R.id.lblSlotCount)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
@@ -38,24 +43,33 @@ class PtmParentCalender(
         holder.tvMonth.text = month
         holder.tvDay.text = day.toString()
 
+        // Highlight selected
         val isSelected = selectedPos == position
         holder.itemView.isSelected = isSelected
-        if (isSelected) {
-            holder.tvMonth.setTextColor(Color.WHITE)
+        holder.tvMonth.setTextColor(if (isSelected) Color.WHITE else Color.BLACK)
+
+        // Format this calendar item date
+        val formattedDate = formatDate(month, day) // dd-MM-yyyy
+
+        // Find if this date has a slot count
+        val countData = slotCounts.find { it.event_date == formattedDate }
+        if (countData != null && countData.count != "0") {
+            holder.lblSlotCount.visibility = View.VISIBLE
+            (holder.lblSlotCount as TextView).text = countData.count
         } else {
-            holder.tvMonth.setTextColor(Color.BLACK)
+            holder.lblSlotCount.visibility = View.GONE
         }
 
+        // Handle click
         holder.itemRoot.setOnClickListener {
             val prevPos = selectedPos
             selectedPos = position
             notifyItemChanged(prevPos)
             notifyItemChanged(selectedPos)
-
-            val formattedDate = formatDate(month, day)
             onDateClick(formattedDate)
         }
     }
+
 
     override fun getItemCount() = dates.size
 

@@ -407,42 +407,37 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun tapVisibility() {
         Log.d("Tap Visibility Check", "Tap Debug Check")
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
-            when (SELECTED_SCHOOL_MENU) {
-                M_HOMEWORK -> {
+            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
 
-                    binding.nomessage.visibility = View.GONE
-                    binding.nomessageEntire.visibility = View.GONE
-                    binding.tabLayout.visibility = View.GONE
-                    changeTapBg(Constant.isSection)
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tabLayout.visibility = View.GONE
+                changeTapBg(Constant.isSection)
 
-                }
-                M_ASSIGNMENT -> {
+            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
 
-                    binding.nomessage.visibility = View.GONE
-                    binding.nomessageEntire.visibility = View.GONE
-                    binding.tabLayout.visibility = View.GONE
-                    changeTapBg(Constant.isSection)
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tabLayout.visibility = View.GONE
+                changeTapBg(Constant.isSection)
 
-                    //show send and specific student button
-                }
-                M_LSRW -> {
-                    binding.nomessage.visibility = View.GONE
-                    binding.nomessageEntire.visibility = View.GONE
-                    binding.tabLayout.visibility = View.GONE
-                    changeTapBg(Constant.isSection)
-                }
-                else -> {
+                //show send and specific student button
+            } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tabLayout.visibility = View.GONE
+                changeTapBg(Constant.isSection)
+            }else {
 
-                    binding.nomessage.visibility = View.GONE
-                    binding.nomessageEntire.visibility = View.GONE
-                    binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.VISIBLE
-                    binding.tabSectionsStudent.visibility = View.VISIBLE
-                    binding.tabGroups.visibility = View.VISIBLE
-                    binding.tapStaffs.visibility = View.GONE
-                    changeTapBg(Constant.isStandard)
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tapEntireSchool.visibility = View.GONE
+                binding.tapStandards.visibility = View.VISIBLE
+                binding.tabSectionsStudent.visibility = View.VISIBLE
+                binding.tabGroups.visibility = View.VISIBLE
+                binding.tapStaffs.visibility = View.GONE
+                changeTapBg(Constant.isStandard)
 
-                }
             }
         } else {
             Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
