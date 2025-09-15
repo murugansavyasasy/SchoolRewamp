@@ -99,7 +99,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         isAcademicYear = Constant.isAcademicYearList
         isLoadAcademicYear(isAcademicYear)
-        isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
+        isValidAcademicYear = isAcademicYear?.any { it.current_academic_year } == true
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isGetStandardSection()
@@ -165,9 +165,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             Constant.isShimmerViewDisable
         ) { selectedList ->
             isSelectedList = selectedList.toMutableList()
-
         }
-
         binding.rcySectionAndStandardList.layoutManager = GridLayoutManager(this, 5)
         binding.rcySectionAndStandardList.adapter = adapter
     }
