@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/two"
+    android:id="@+id/lnrHeader"
     android:background="@drawable/outline_gray"
     android:orientation="vertical"
     android:fitsSystemWindows="true"

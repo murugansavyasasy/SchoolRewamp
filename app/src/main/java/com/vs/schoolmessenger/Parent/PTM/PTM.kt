@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.Parent.PTM.Adapter.PtmParentCalender
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingData
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingDataWrapper
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotData
 import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -38,6 +39,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
     }
     private var lastCancelledPosition: Int = -1
     var isSelectedDate = ""
+
+    private val selectedSlots = mutableListOf<SlotData>()
     private var isParentMeetingAdapter: ParentMeetingAdapter? = null
     lateinit var isMeetingHistoryAdapter: MeetingHistoryAdapter
     private var isAccessToken: String? = null
