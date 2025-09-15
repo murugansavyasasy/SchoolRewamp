@@ -272,24 +272,24 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         })
 
-        binding.edtTitleTextMessage.filters =
-            arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.lblCountOfTitleVoice.filters =
-            arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.edtContentTextMessage.filters =
-            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(
-            this,
-            binding.edtContentTextMessage,
-            Constant.isDescriptionLength,
-            binding.lblCountOfDescription
-        )
-        Constant.editTextCounter(
-            this, binding.edtTitleTextMessage, Constant.isTitleLength, binding.lblCountOfTitle
-        )
-        Constant.editTextCounter(
-            this, binding.edtTitle, Constant.isTitleLength, binding.lblCountOfTitleVoice
-        )
+//        binding.edtTitleTextMessage.filters =
+//            arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+//        binding.lblCountOfTitleVoice.filters =
+//            arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+//        binding.edtContentTextMessage.filters =
+//            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+//        Constant.editTextCounter(
+//            this,
+//            binding.edtContentTextMessage,
+//            Constant.isDescriptionLength,
+//            binding.lblCountOfDescription
+//        )
+//        Constant.editTextCounter(
+//            this, binding.edtTitleTextMessage, Constant.isTitleLength, binding.lblCountOfTitle
+//        )
+//        Constant.editTextCounter(
+//            this, binding.edtTitle, Constant.isTitleLength, binding.lblCountOfTitleVoice
+//        )
 
     }
 

@@ -37,7 +37,7 @@
                 android:padding="@dimen/four"
                 android:text="12 Sep 2025"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/iconBlue"
+                android:textColor="@color/Blue"
                 android:textSize="@dimen/sixteen" />
         </LinearLayout>
 

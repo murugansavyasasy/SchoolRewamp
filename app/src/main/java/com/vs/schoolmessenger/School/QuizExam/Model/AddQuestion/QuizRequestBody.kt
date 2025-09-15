@@ -31,6 +31,7 @@ data class QuizQuestionRequest(
 
 data class UpdateQBankItem(
     val ques_no: String,
+    val subject_id: String,
     val chapter: String,
     val question: String,
     val a_option: String,

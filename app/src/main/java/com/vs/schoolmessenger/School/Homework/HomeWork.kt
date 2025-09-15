@@ -166,15 +166,15 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isGetStandardSection()
 
-        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.edtDescription.filters =
-            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(
-            this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount
-        )
-        Constant.editTextCounter(
-            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
-        )
+//        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+//        binding.edtDescription.filters =
+//            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+//        Constant.editTextCounter(
+//            this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount
+//        )
+//        Constant.editTextCounter(
+//            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
+//        )
 
         appViewModel!!.isDeleteHomeWork?.observe(this) { response ->
             if (response != null) {

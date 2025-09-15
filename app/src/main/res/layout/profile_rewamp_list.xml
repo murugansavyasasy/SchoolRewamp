@@ -10,13 +10,15 @@
         android:id="@+id/containerFields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:divider="?android:attr/dividerHorizontal"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
         android:paddingHorizontal="16dp"
         android:showDividers="none">
 
         <LinearLayout
+
+            android:id="@+id/titlelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
@@ -67,8 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/datelabel"
@@ -121,19 +123,19 @@
             android:id="@+id/genderLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/genderLabel"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Gender"
-                android:textSize="16sp"
                 android:textColor="@color/black"
-               style="@style/CustomTextStylePoppinsMedium"
-                android:layout_marginBottom="8dp"/>
+                android:textSize="16sp" />
 
             <RadioGroup
                 android:id="@+id/radioGenderGroup"
@@ -145,77 +147,109 @@
                     android:id="@+id/radioMale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Male"/>
+                    android:text="Male" />
 
                 <RadioButton
                     android:id="@+id/radioFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Female"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginStart="16dp"
+                    android:text="Female" />
 
                 <RadioButton
                     android:id="@+id/radioOthers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Others"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginStart="16dp"
+                    android:text="Others" />
             </RadioGroup>
         </LinearLayout>
 
 
-
-    <LinearLayout
-        android:id="@+id/dropdownlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/dropdownlabel"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Blood Group"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dropdownlayout2"
+        <LinearLayout
+            android:id="@+id/dropdownlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:background="@drawable/field_background"
-            android:layout_marginBottom="12dp">
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/dropdownlabel"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood Group"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
 
-
-
-            <AutoCompleteTextView
-                android:id="@+id/dropdownvalue"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dropdownlayout2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/field_background">
+
+
+                <AutoCompleteTextView
+                    android:id="@+id/dropdownvalue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/down_arrow"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:padding="12dp"
+                    android:popupBackground="@android:color/white"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/remarks_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/remarkslabel"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remarks"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/remarksvalue"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/field_background"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
                 android:padding="12dp"
-                android:background="@android:color/transparent"
-                android:popupBackground="@android:color/white"
-                android:drawableEnd="@drawable/down_arrow"
-                android:focusable="false"
-                android:clickable="true"
-                android:inputType="none"
+                android:scrollbars="vertical"
+                android:overScrollMode="always"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
+        </LinearLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
+
 
     </LinearLayout>
-
-    </LinearLayout>
-
-
-
 
 
 </RelativeLayout>

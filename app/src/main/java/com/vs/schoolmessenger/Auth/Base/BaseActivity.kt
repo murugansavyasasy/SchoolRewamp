@@ -34,9 +34,9 @@ import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.ParentProfileRewampFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.SchoolProfileRewampFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant

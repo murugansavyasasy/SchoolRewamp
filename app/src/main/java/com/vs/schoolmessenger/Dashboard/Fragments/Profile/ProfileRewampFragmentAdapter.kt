@@ -1,6 +1,5 @@
-package com.vs.schoolmessenger.Dashboard.Fragments
+package com.vs.schoolmessenger.Dashboard.Fragments.Profile
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.util.Log
@@ -19,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileField
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import java.util.Calendar
-
 
 class ProfileRewampFragmentAdapter(
     private var itemList: List<ProfileItem>, private val context: Context
@@ -70,33 +69,43 @@ class ProfileRewampFragmentAdapter(
     inner class FieldViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val titlelabel: TextView = itemView.findViewById(R.id.titlelabel)
         private val titlevalue: EditText = itemView.findViewById(R.id.titlevalue)
+        private val remarksvalue: EditText = itemView.findViewById(R.id.remarksvalue)
         private val datelabel: TextView = itemView.findViewById(R.id.datelabel)
         private val datevalue: TextView = itemView.findViewById(R.id.datevalue)
 
         private val dropdownvalue: AutoCompleteTextView = itemView.findViewById(R.id.dropdownvalue)
         private val datelayout: LinearLayout = itemView.findViewById(R.id.datelayout)
         private val dropdownlayout: LinearLayout = itemView.findViewById(R.id.dropdownlayout)
+        private val remarkslayout: LinearLayout = itemView.findViewById(R.id.remarks_layout)
         private val dropdownlabel: TextView = itemView.findViewById(R.id.dropdownlabel)
+        private val remarkslabel: TextView = itemView.findViewById(R.id.remarkslabel)
         private val genderLayout: LinearLayout = itemView.findViewById(R.id.genderLayout)
+        private val titlelayout: LinearLayout = itemView.findViewById(R.id.titlelayout)
 
         fun bind(field: ProfileField) {
-            titlelabel.visibility = View.GONE
-            titlevalue.visibility = View.GONE
             datelayout.visibility = View.GONE
             dropdownlayout.visibility = View.GONE
             genderLayout.visibility = View.GONE
+            remarkslayout.visibility = View.GONE
+            titlelayout.visibility = View.GONE
+
 
             when (field.type) {
-                "text", "address", "mobile", "number", "image", "document" -> {
-                    titlelabel.visibility = View.VISIBLE
-                    titlevalue.visibility = View.VISIBLE
-
+                Constant.text_, Constant.mobile, Constant.number, Constant.image_, Constant.document_ -> {
+                    titlelayout.visibility = View.VISIBLE
                     titlelabel.text = field.title
                     titlevalue.setText(field.value ?: "")
                     titlevalue.isEnabled = field.is_editable
                 }
 
-                "calendar" -> {
+                Constant.address -> {
+                    remarkslayout.visibility = View.VISIBLE
+                    remarkslabel.text = field.title
+                    remarksvalue.setText(field.value ?: "")
+                    remarksvalue.isEnabled = field.is_editable
+                }
+
+                Constant .calendar -> {
                     datelayout.visibility = View.VISIBLE
                     val imagecalender: ImageView? = itemView.findViewById(R.id.imagecalender)
                     imagecalender?.visibility = View.VISIBLE
@@ -112,8 +121,7 @@ class ProfileRewampFragmentAdapter(
                             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
                             val datePicker = DatePickerDialog(
-                                itemView.context,
-                                { _, selectedYear, selectedMonth, selectedDay ->
+                                itemView.context, { _, selectedYear, selectedMonth, selectedDay ->
                                     val selectedDate = String.format(
                                         "%02d-%02d-%04d",
                                         selectedDay,
@@ -121,10 +129,7 @@ class ProfileRewampFragmentAdapter(
                                         selectedYear
                                     )
                                     datevalue.setText(selectedDate)
-                                },
-                                year,
-                                month,
-                                day
+                                }, year, month, day
                             )
                             datePicker.show()
                         } else {
@@ -133,7 +138,7 @@ class ProfileRewampFragmentAdapter(
                     }
                 }
 
-                "gender" -> {
+                Constant.gender -> {
                     genderLayout.visibility = View.VISIBLE
                     val genderLabel: TextView = itemView.findViewById(R.id.genderLabel)
                     val radioGroup: RadioGroup = itemView.findViewById(R.id.radioGenderGroup)
@@ -143,9 +148,9 @@ class ProfileRewampFragmentAdapter(
 
                     genderLabel.text = field.title
                     when (field.value?.lowercase()) {
-                        "male" -> radioMale.isChecked = true
-                        "female" -> radioFemale.isChecked = true
-                        "others" -> radioOthers.isChecked = true
+                        Constant.male -> radioMale.isChecked = true
+                        Constant.female -> radioFemale.isChecked = true
+                        Constant.others -> radioOthers.isChecked = true
                     }
 
                     if (!field.is_editable) {
@@ -156,25 +161,23 @@ class ProfileRewampFragmentAdapter(
 
                     radioGroup.setOnCheckedChangeListener { _, checkedId ->
                         val selected = when (checkedId) {
-                            R.id.radioMale -> "male"
-                            R.id.radioFemale -> "female"
-                            R.id.radioOthers -> "others"
+                            R.id.radioMale -> Constant.male
+                            R.id.radioFemale -> Constant.female
+                            R.id.radioOthers -> Constant.others
                             else -> null
                         }
                         Log.d("SelectedGender", "User selected: $selected")
                     }
                 }
 
-                "dropdown" -> {
+                Constant.dropdown -> {
                     dropdownlayout.visibility = View.VISIBLE
                     dropdownlabel.text = field.title
 
                     val options = field.options ?: emptyList()
 
                     val adapter = ArrayAdapter(
-                        itemView.context,
-                        android.R.layout.simple_dropdown_item_1line,
-                        options
+                        itemView.context, android.R.layout.simple_dropdown_item_1line, options
                     )
                     dropdownvalue.setAdapter(adapter)
 

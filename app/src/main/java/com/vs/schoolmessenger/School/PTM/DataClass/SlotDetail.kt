@@ -12,5 +12,6 @@ data class SlotDetail(
     val end_time: String,
     val profiles: List<Any>,
     val slots: List<Slot>,
-    val std_sec_details: List<ClassSection>
+    val std_sec_details: List<ClassSection>,
+    val join_url: String?
 ) : Serializable

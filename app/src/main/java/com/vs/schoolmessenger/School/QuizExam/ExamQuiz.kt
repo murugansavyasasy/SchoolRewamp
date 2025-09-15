@@ -46,15 +46,15 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
 
-        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.edtDescription.filters =
-            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(
-            this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount
-        )
-        Constant.editTextCounter(
-            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
-        )
+//        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+//        binding.edtDescription.filters =
+//            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+//        Constant.editTextCounter(
+//            this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount
+//        )
+//        Constant.editTextCounter(
+//            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
+//        )
 
         binding.rbNextLvl.setOnClickListener {
             isNextLevelChecked = !isNextLevelChecked

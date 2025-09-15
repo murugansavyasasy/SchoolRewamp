@@ -50,6 +50,7 @@
             android:layout_marginEnd="@dimen/five"
             android:background="@drawable/rounded_grey_background"
             android:padding="@dimen/ten"
+            android:visibility="gone"
             android:src="@drawable/threedot">
         </ImageView>
 
@@ -157,14 +158,16 @@
                 android:layout_height="wrap_content"
                 android:text="Join Now"
                 android:textColor="@color/PrimaryColor"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+            </TextView>
 
             <ImageView
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_marginStart="@dimen/five"
                 android:layout_toEndOf="@+id/lblJoin"
-                android:src="@drawable/arrow_right_blue"></ImageView>
+                android:src="@drawable/arrow_right_blue">
+            </ImageView>
 
         </RelativeLayout>
 

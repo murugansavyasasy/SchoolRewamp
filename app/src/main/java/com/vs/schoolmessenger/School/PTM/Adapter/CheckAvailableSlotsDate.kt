@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import java.text.SimpleDateFormat
+import java.util.Locale
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -33,9 +35,21 @@ class CheckAvailableSlotsDate(
         return ViewHolder(view)
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dayGroup = dates[position]
-        holder.tvDate.text = dayGroup.date
+
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+
+        val formattedDate = try {
+            val parsedDate = inputFormat.parse(dayGroup.date)
+            outputFormat.format(parsedDate!!)
+        } catch (e: Exception) {
+            dayGroup.date
+        }
+
+        holder.tvDate.text = formattedDate
 
         val adapter = SlotTimingLoadAdapter(dayGroup.slots, context) { updatedDaySlots ->
             allDaySlots[position] = dayGroup.date to updatedDaySlots
@@ -58,6 +72,7 @@ class CheckAvailableSlotsDate(
             onUpdate(combined)
         }
     }
+
 
 
     override fun getItemCount(): Int = dates.size

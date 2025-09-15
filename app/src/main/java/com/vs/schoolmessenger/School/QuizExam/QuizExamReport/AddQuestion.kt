@@ -72,14 +72,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             Log.d("FinalList",FinalList.toString())
         }
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
-        Constant.isQuestionLimit = intent.getIntExtra("limitQuestion", -1)
-        isSavedQuestionLimit= intent.getIntExtra("limitQuestion", -1)
+        Constant.isQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
+        isSavedQuestionLimit= intent.getIntExtra(Constant.limitQuestion, -1)
         Log.d("isQuestionLimit",Constant.isQuestionLimit.toString())
 
-        isSubmittedCount = intent.getIntExtra("submittedCount", -1)
-        isQuizID = intent.getStringExtra("quiz_Id").toString()
-        isSubjectID = intent.getStringExtra("subjectID").toString()
-        isQuizTitle = intent.getStringExtra("quiz_Title").toString()
+        isSubmittedCount = intent.getIntExtra(Constant.submittedCount, -1)
+        isQuizID = intent.getStringExtra(Constant.quiz_Id).toString()
+        isSubjectID = intent.getStringExtra(Constant.subjectID).toString()
+        isQuizTitle = intent.getStringExtra(Constant.quiz_Title).toString()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblImportQuestion.setOnClickListener(this)
         binding.lblSendQuiz.setOnClickListener(this)
@@ -390,13 +390,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             c_option = this.c_option,
             d_option = this.d_option,
             mark = this.mark,
-            option_a_counts = 0,
-            option_b_counts = 0,
-            option_c_counts = 0,
-            option_d_counts = 0,
-            correct_answer_counts = 0,
-            incorrect_answer_counts = 0,
-            correct_answer = this.answer,
             iframe="",
             file_size="",
             thumbnail="",
@@ -463,6 +456,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     ) {
                         UpdateQBankItem(
                             ques_no = updatedItem.id,
+                            subject_id=isSubjectID,
                             chapter = updatedItem.chapter,
                             question = updatedItem.question,
                             a_option = updatedItem.a_option,
@@ -491,37 +485,37 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         Log.d("FinalJSON", jsonObject.toString())
 
         Log.d("isUpdatedQBankQuestion",isUpdatedQBankQuestions.toString())
-        Constant.hideLoading(this)
+//        Constant.hideLoading(this)
 
-        if (isUpdatedQBankQuestions>0){
-
-            val textQuestion = if (isUpdatedQBankQuestions == 1) {
-                getString(R.string.question_)
-            } else {
-                getString(R.string.questions)
-            }
-
-            val isMessage = "${getString(R.string.You_have_modified)} $isUpdatedQBankQuestions $textQuestion ${getString(R.string.from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank)}"
-
-            Constant.showSendConfirmationDialog(
-                this,
-                getString(R.string.confirmation),
-                getString(R.string.Update),
-                getString(R.string.Cancel),
-                "",
-                isMessage
-            ) { confirmed ->
-                if (confirmed) {
-                    Constant.showLoading(this)
-                    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
-                }
-            }
-
-        }
-        else{
-            Constant.showLoading(this)
-            appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
-        }
+//        if (isUpdatedQBankQuestions>0){
+//
+//            val textQuestion = if (isUpdatedQBankQuestions == 1) {
+//                getString(R.string.question_)
+//            } else {
+//                getString(R.string.questions)
+//            }
+//
+//            val isMessage = "${getString(R.string.You_have_modified)} $isUpdatedQBankQuestions $textQuestion ${getString(R.string.from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank)}"
+//
+//            Constant.showSendConfirmationDialog(
+//                this,
+//                getString(R.string.confirmation),
+//                getString(R.string.Update),
+//                getString(R.string.Cancel),
+//                "",
+//                isMessage
+//            ) { confirmed ->
+//                if (confirmed) {
+//                    Constant.showLoading(this)
+//                    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+//                }
+//            }
+//
+//        }
+//        else{
+//            Constant.showLoading(this)
+//            appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+//        }
     }
 
 
@@ -575,43 +569,46 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
             }
             R.id.lblSendQuiz->{
+                if (adapter.showValidationErrors(binding.rcAddQuestion)) {
+                    if (adapter.getUpdatedList().size<=isSavedQuestionLimit) {
+                        if (isSubmittedCount <= 0) {
+                            isCallAddQuestion()
+                        } else {
+                            val studentText = if (isSubmittedCount == 1) {
+                                getString(R.string.student_)
+                            } else {
+                                getString(R.string.students)
+                            }
 
-               if (adapter.getUpdatedList().size<=isSavedQuestionLimit) {
-                   if (isSubmittedCount <= 0) {
-                       isCallAddQuestion()
-                   } else {
-                       val studentText = if (isSubmittedCount == 1) {
-                           getString(R.string.student_)
-                       } else {
-                           getString(R.string.students)
-                       }
+                            val isMessage =
+                                getString(R.string.this_question_has_already_been_submitted_by) +
+                                        " ${isSubmittedCount} $studentText " +
+                                        getString(R.string.do_you_want_to_update_it)
 
-                       val isMessage =
-                           getString(R.string.this_question_has_already_been_submitted_by) +
-                                   " ${isSubmittedCount} $studentText " +
-                                   getString(R.string.do_you_want_to_update_it)
+                            Constant.showSendConfirmationDialog(
+                                this,
+                                getString(R.string.confirmation),
+                                getString(R.string.permission_ok),
+                                getString(R.string.Cancel),
+                                "",
+                                isMessage
+                            ) { confirmed ->
+                                if (confirmed) {
+                                    isCallAddQuestion()
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        Constant.showErrorAlert(
+                            this,
+                            getString(R.string.alert),
+                            getString(R.string.question_limit_reached)
+                        )
+                    }
+                }
 
-                       Constant.showSendConfirmationDialog(
-                           this,
-                           getString(R.string.confirmation),
-                           getString(R.string.permission_ok),
-                           getString(R.string.Cancel),
-                           "",
-                           isMessage
-                       ) { confirmed ->
-                           if (confirmed) {
-                               isCallAddQuestion()
-                           }
-                       }
-                   }
-               }
-                else{
-                   Constant.showErrorAlert(
-                       this,
-                       getString(R.string.alert),
-                       getString(R.string.question_limit_reached)
-                   )
-               }
+
             }
 
 

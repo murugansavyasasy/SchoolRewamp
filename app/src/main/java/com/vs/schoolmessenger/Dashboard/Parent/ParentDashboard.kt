@@ -12,7 +12,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.ParentProfileRewampFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames

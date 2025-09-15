@@ -276,15 +276,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             }
         }
 
-
-        binding.txtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.txtDesc.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(
-            this, binding.txtDesc, Constant.isDescriptionLength, binding.lbTextCount
-        )
-        Constant.editTextCounter(
-            this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount
-        )
+//
+//        binding.txtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+//        binding.txtDesc.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+//        Constant.editTextCounter(
+//            this, binding.txtDesc, Constant.isDescriptionLength, binding.lbTextCount
+//        )
+//        Constant.editTextCounter(
+//            this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount
+//        )
 
         appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
