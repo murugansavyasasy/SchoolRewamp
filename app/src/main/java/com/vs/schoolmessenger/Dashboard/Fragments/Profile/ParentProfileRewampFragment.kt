@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.Fragments.Profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,20 +49,41 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener {
 
                 val sectionsMap = response.data.firstOrNull() ?: emptyMap()
 
+                var photoUrl: String? = null
 
                 for ((sectionName, fields) in sectionsMap) {
-
                     items.add(ProfileItem.Header(sectionName))
-
 
                     fields.forEach { field ->
                         items.add(ProfileItem.Field(field))
+
+                        if (sectionName.equals("PhotoPath", ignoreCase = true) &&
+                            field.node.equals("photoPath", ignoreCase = true)
+                        ) {
+                            photoUrl = field.value
+                            Log.d("Profile Image Details", "Photo URL -> $photoUrl")
+                        }
                     }
                 }
 
                 binding.recyclerview.adapter = ProfileRewampFragmentAdapter(items, requireContext())
                 binding.recyclerview.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
+
+
+                val defaultProfileRes = R.drawable.default_profile
+                if (!photoUrl.isNullOrEmpty()) {
+                    Glide.with(this)
+                        .load(photoUrl)
+                        .placeholder(defaultProfileRes)
+                        .error(defaultProfileRes)
+                        .into(binding.imgProfile)
+                } else {
+                    Glide.with(this)
+                        .load(defaultProfileRes)
+                        .into(binding.imgProfile)
+                }
+
             } else {
                 binding.recyclerview.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
@@ -69,19 +91,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener {
         }
 
 
-        val profileUrl: String? = isChildDetails!!.profile
-        val defaultProfileRes = R.drawable.default_profile
-        if (!profileUrl.isNullOrEmpty()) {
-            Glide.with(this)
-                .load(profileUrl)
-                .placeholder(defaultProfileRes)
-                .error(defaultProfileRes)
-                    .into(binding.imgProfile)
-        } else {
-            Glide.with(this)
-                .load(defaultProfileRes)
-                .into(binding.imgProfile)
-        }
 
         return binding.root
     }
