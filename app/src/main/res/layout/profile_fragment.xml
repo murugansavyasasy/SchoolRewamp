@@ -20,7 +20,7 @@
             <RelativeLayout
                 android:id="@+id/relative_layout"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="@dimen/one_sixty"
                 android:background="@color/PrimaryColor">
 
                 <FrameLayout
@@ -39,11 +39,11 @@
 
                     <ImageView
                         android:id="@+id/imgEdit"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="@dimen/twenty_eight"
+                        android:layout_height="@dimen/twenty_eight"
                         android:layout_gravity="bottom|end"
                         android:background="@drawable/circle_white_bg"
-                        android:padding="4dp"
+                        android:padding="@dimen/four"
                         android:src="@drawable/edit_icon_blue" />
                 </FrameLayout>
             </RelativeLayout>
