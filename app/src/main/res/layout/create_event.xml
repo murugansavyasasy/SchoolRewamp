@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/light_white"
     android:fitsSystemWindows="true">
 
     <include
@@ -112,20 +112,30 @@
                 android:textColor="@color/red"
                 />
 
+            <LinearLayout
+                android:id="@+id/lnrVenue"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_below="@+id/lblLocation"
+                android:layout_alignStart="@+id/lblLocation"
+                android:layout_marginTop="@dimen/fifteen"
+                android:background="@drawable/field_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
 
             <EditText
                 android:id="@+id/txtLocation"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblLocation"
-                android:layout_alignStart="@+id/lblLocation"
-                android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/ten"
-                android:background="@drawable/bg_edittext_view_line"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
                 android:inputType="text"
-                android:paddingBottom="@dimen/ten"
+                android:paddingHorizontal="@dimen/ten"
                 android:textSize="@dimen/thirteen_sp" />
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="@dimen/twenty"
@@ -140,8 +150,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtLocation"
-                android:layout_alignStart="@+id/txtLocation"
+                android:layout_below="@+id/lnrVenue"
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/Title"
                />
@@ -151,36 +160,46 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtLocation"
+                android:layout_below="@+id/lnrVenue"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_toEndOf="@id/lblEventTitle"
                 android:text="@string/mandatory"
                 android:textColor="@color/red"
                 android:textSize="@dimen/thirteen_sp" />
 
+            <LinearLayout
+                android:id="@+id/lnrTitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_below="@+id/lblEventTitle"
+                android:layout_marginTop="@dimen/fifteen"
+                android:background="@drawable/field_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
             <EditText
                 android:id="@+id/txtTitle"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblEventTitle"
-                android:layout_alignStart="@+id/lblEventTitle"
-                android:layout_alignEnd="@+id/txtLocation"
-                android:layout_marginTop="@dimen/fifteen"
-                android:background="@drawable/bg_edittext_view_line"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
                 android:inputType="text"
-                android:paddingBottom="@dimen/ten"
+                android:paddingHorizontal="@dimen/ten"
                 android:textSize="@dimen/thirteen_sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/lbtitleTextCount"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtTitle"
+                android:layout_below="@+id/lnrTitle"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
+                android:visibility="gone"
                 android:text="0 of 50"
                />
 
@@ -190,7 +209,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lbtitleTextCount"
-                android:layout_alignStart="@+id/txtTitle"
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/Description"
                 />
@@ -214,6 +232,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblEventDesc"
+                android:layout_marginTop="@dimen/fifteen"
+                android:background="@drawable/field_background"
                 android:layout_alignStart="@+id/lblEventDesc">
 
 
@@ -222,10 +242,9 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/hundred"
-                    android:layout_marginTop="@dimen/ten"
-                    android:background="@drawable/bg_stroke_rect_black"
                     android:editable="true"
                     android:focusable="true"
+                    android:background="@android:color/transparent"
                     android:focusableInTouchMode="true"
                     android:gravity="start"
                     android:hint="@string/Description"
@@ -247,6 +266,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
+                android:visibility="gone"
                 android:text="@string/_0_of_500"
                />
 
@@ -256,7 +276,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lbTextCount"
-                android:layout_alignStart="@+id/txtTitle"
+                android:layout_alignStart="@+id/lnrTitle"
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/select_category"
                 android:textColor="@color/black"
@@ -454,6 +474,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/eight"
                             android:layout_marginTop="@dimen/ten"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_toEndOf="@+id/lblAddPhoto"
                             android:text="@string/Optional"
                             android:textColor="@color/mild_grey1"

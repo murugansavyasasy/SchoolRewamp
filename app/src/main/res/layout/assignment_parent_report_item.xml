@@ -106,14 +106,14 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/fourty"
+        android:layout_height="@dimen/thirty"
         android:id="@+id/linearassigned_layout"
         android:layout_below="@+id/lnrSendBy"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"
-        android:padding="@dimen/eight"
         android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/five"
         android:background="@drawable/rect_shadow_light_green1"
         android:orientation="horizontal">
         <ImageView
@@ -141,13 +141,13 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/fourty"
+        android:layout_height="@dimen/thirty"
         android:orientation="horizontal"
         android:layout_below="@+id/lnrSendBy"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"
-        android:padding="@dimen/eight"
+        android:paddingHorizontal="@dimen/five"
         android:gravity="center_vertical"
         android:layout_toEndOf="@+id/linearassigned_layout"
         android:background="@drawable/rect_light_grey"
@@ -186,11 +186,11 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/fourty"
+            android:layout_height="@dimen/thirty"
             android:id="@+id/lbldeadline_linear"
             android:background="@drawable/rect_shadow_light_green1"
             android:gravity="center_vertical"
-            android:padding="@dimen/eight"
+            android:paddingHorizontal="@dimen/five"
             android:orientation="horizontal">
 
             <ImageView
@@ -217,11 +217,11 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/fourty"
+            android:layout_height="@dimen/thirty"
             android:orientation="horizontal"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
-            android:padding="@dimen/eight"
+            android:paddingHorizontal="@dimen/five"
             android:gravity="center_vertical"
             android:layout_toEndOf="@+id/lbldeadline_linear"
             android:background="@drawable/bg_icon_round_lightyellow"
@@ -363,7 +363,7 @@
             android:background="@drawable/background_dark_blue"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsBold"
-            android:text="My Submission"
+            android:text="My Submissions"
             android:paddingVertical="@dimen/five"
             android:paddingHorizontal="@dimen/fifteen"
             android:textColor="@color/white"
