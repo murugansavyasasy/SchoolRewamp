@@ -570,6 +570,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/ten"
                             android:text="0/50"
+                            android:visibility="gone"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp">
 
@@ -638,6 +639,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/ten"
                             android:padding="@dimen/ten"
+                            android:visibility="gone"
                             android:text="0/500"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp" />
