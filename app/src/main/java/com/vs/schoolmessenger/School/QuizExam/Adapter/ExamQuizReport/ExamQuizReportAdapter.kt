@@ -97,11 +97,11 @@ class ExamQuizReportAdapter(
             lblAdd.setOnClickListener{
                 if (data.submitted_count <= 0) {
                     val intent = Intent(context, AddQuestion::class.java)
-                    intent.putExtra("quiz_Id", data.id)
-                    intent.putExtra("quiz_Title", data.title)
-                    intent.putExtra("limitQuestion", data.no_of_questions)
-                    intent.putExtra("submittedCount", data.submitted_count)
-                    intent.putExtra("subjectID", data.subject_id)
+                    intent.putExtra(Constant.quiz_Id, data.id)
+                    intent.putExtra(Constant.quiz_Title, data.title)
+                    intent.putExtra(Constant.limitQuestion, data.no_of_questions)
+                    intent.putExtra(Constant.submittedCount, data.submitted_count)
+                    intent.putExtra(Constant.subjectID, data.subject_id)
                     context.startActivity(intent)
                 }
                 else{
@@ -127,11 +127,11 @@ class ExamQuizReportAdapter(
                         ) { confirmed ->
                             if (confirmed) {
                                 val intent = Intent(context, AddQuestion::class.java)
-                                intent.putExtra("quiz_Id", data.id)
-                                intent.putExtra("quiz_Title", data.title)
-                                intent.putExtra("limitQuestion", data.no_of_questions)
-                                intent.putExtra("submittedCount", data.submitted_count)
-                                intent.putExtra("subjectID", data.subject_id)
+                                intent.putExtra(Constant.quiz_Id, data.id)
+                                intent.putExtra(Constant.quiz_Title, data.title)
+                                intent.putExtra(Constant.limitQuestion, data.no_of_questions)
+                                intent.putExtra(Constant.submittedCount, data.submitted_count)
+                                intent.putExtra(Constant.subjectID, data.subject_id)
                                 context.startActivity(intent)
                             }
                         }
@@ -141,7 +141,7 @@ class ExamQuizReportAdapter(
             }
             lblSubmitted.setOnClickListener{
                 val intent1 = Intent(context, SubmitReport::class.java)
-                intent1.putExtra("quiz_Id", data.id)
+                intent1.putExtra(Constant.quiz_Id, data.id)
                 context.startActivity(intent1)
             }
 

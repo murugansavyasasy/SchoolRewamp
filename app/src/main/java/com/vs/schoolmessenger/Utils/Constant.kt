@@ -533,6 +533,11 @@ object Constant {
     var leftBracket= "("
     var rightBracket= ")"
     var yyyyMMdd= "yyyyMMdd"
+    var quiz_Id= "quiz_Id"
+    var quiz_Title= "quiz_Title"
+    var limitQuestion= "limitQuestion"
+    var submittedCount= "submittedCount"
+    var subjectID= "subjectID"
 
 
 
