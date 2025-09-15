@@ -10,6 +10,8 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.Spinner
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBankData
@@ -139,6 +141,7 @@ class PickQuestionAdapter(
         val edtOptionC: EditText = itemView.findViewById(R.id.edtOptionC)
         val edtOptionD: EditText = itemView.findViewById(R.id.edtOptionD)
         val edtCorrectAns: EditText = itemView.findViewById(R.id.edtCorrectAns)
+        val rytSpinnerHeader: RelativeLayout = itemView.findViewById(R.id.rytSpinnerHeader)
         val edtMark: EditText = itemView.findViewById(R.id.edtMark)
         val lblremove: ImageView = itemView.findViewById(R.id.lblremove)
         val lnrAttachment: LinearLayout = itemView.findViewById(R.id.lnrAttachment)
@@ -146,7 +149,8 @@ class PickQuestionAdapter(
 
 
         fun bind(data: GetPickFromQBankData) {
-
+            rytSpinnerHeader.visibility=View.GONE
+            edtCorrectAns.visibility=View.VISIBLE
             cbQuestion.setOnCheckedChangeListener(null)
 
             // show from tempSelection first, else permanent checked

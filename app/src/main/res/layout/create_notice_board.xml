@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/light_white"
     android:fitsSystemWindows="true">
 
     <include
@@ -95,7 +95,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
+                android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/twenty"
                 android:text="@string/Title"
                 />
@@ -113,6 +113,19 @@
                 android:textColor="@color/red"
                 />
 
+            <LinearLayout
+                android:id="@+id/lnrTitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_below="@+id/lblEventTitle"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/field_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
             <EditText
                 android:id="@+id/txtTitle"
                 style="@style/CustomTextStylePoppinsMedium"
@@ -120,23 +133,24 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblEventTitle"
                 android:layout_alignStart="@+id/lblEventTitle"
-                android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/ten"
-                android:background="@drawable/bg_edittext_view_line"
+                android:background="@android:color/transparent"
                 android:inputType="text"
-                android:paddingBottom="@dimen/ten"
-                />
+                android:paddingHorizontal="@dimen/ten"
+                android:paddingBottom="@dimen/ten" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/lbtitleTextCount"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtTitle"
+                android:layout_below="@+id/lnrTitle"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:text="0 / 50"
+                android:visibility="gone"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
@@ -145,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lbtitleTextCount"
-                android:layout_alignStart="@+id/txtTitle"
+                android:layout_alignStart="@+id/lnrTitle"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/Description"
                 />
@@ -170,9 +184,9 @@
                 android:layout_height="@dimen/one_twenty"
                 android:layout_below="@+id/lblEventDesc"
                 android:layout_alignStart="@+id/lblEventDesc"
-                android:layout_alignEnd="@+id/txtTitle"
+                android:layout_alignEnd="@+id/lnrTitle"
                 android:layout_marginTop="@dimen/fifteen"
-                android:background="@drawable/bg_stroke_rect_black"
+                android:background="@drawable/field_background"
                 android:paddingHorizontal="@dimen/ten"
                 android:paddingVertical="@dimen/ten">
 
@@ -198,6 +212,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
+                android:visibility="gone"
                 android:text="0 / 500"
                  />
 
@@ -438,6 +453,7 @@
                             android:layout_marginTop="@dimen/ten"
                             android:layout_toEndOf="@+id/lblAddPhoto"
                             android:text="@string/Optional"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:textColor="@color/mild_grey1"
                             android:textSize="@dimen/thirteen_sp">
 

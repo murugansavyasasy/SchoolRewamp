@@ -236,20 +236,20 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 }
             }
 
-        binding.txtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.txtDesc.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(
-            this,
-            binding.txtDesc,
-            Constant.isDescriptionLength,
-            binding.lbTextCount
-        )
-        Constant.editTextCounter(
-            this,
-            binding.txtTitle,
-            Constant.isTitleLength,
-            binding.lbtitleTextCount
-        )
+//        binding.txtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+//        binding.txtDesc.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+//        Constant.editTextCounter(
+//            this,
+//            binding.txtDesc,
+//            Constant.isDescriptionLength,
+//            binding.lbTextCount
+//        )
+//        Constant.editTextCounter(
+//            this,
+//            binding.txtTitle,
+//            Constant.isTitleLength,
+//            binding.lbtitleTextCount
+//        )
 
         appViewModel!!.isEditEvent?.observe(this) { response ->
             Constant.hideLoading(this@CreateEvent)

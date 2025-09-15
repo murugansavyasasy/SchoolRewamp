@@ -293,6 +293,22 @@
                     android:scrollHorizontally="true"
                     android:ellipsize="none"
                     />
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/five"
+                    android:id="@+id/rytSpinnerHeader"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/rect_gray_radius"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <Spinner
+                        android:id="@+id/spinnerCorrectAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_spinner_background" />
+
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
