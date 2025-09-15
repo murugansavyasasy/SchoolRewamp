@@ -9,7 +9,7 @@
         android:id="@+id/rlaLblContactSupport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary_light"
+        android:background="@color/PrimaryColor"
         android:paddingBottom="@dimen/thirty">
 
         <ImageView
@@ -19,7 +19,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/arrow_back_black">
+            android:src="@drawable/arrow_left_white">
         </ImageView>
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_toEndOf="@+id/imgBack"
             android:text="@string/lblContactSupport"
             android:layout_marginTop="@dimen/twenty"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/twenty_sp"
             android:textStyle="bold">
 

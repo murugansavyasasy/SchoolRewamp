@@ -18,6 +18,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.google.android.gms.tasks.Task
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
@@ -117,6 +119,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
             R.id.lnrFeedBack -> {
                 redirectToAppRating(requireActivity())
+                //showInAppReview(requireActivity())
                 //startActivity(Intent(requireActivity(), RateUs::class.java))
             }
 
@@ -141,6 +144,26 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             R.id.lnrSignalCheck -> {
                 val networkSpeedMonitor = NetworkSpeedMonitor(requireContext())
                 networkSpeedMonitor.showNetworkSpeedPopup()
+            }
+        }
+    }
+
+   private fun showInAppReview(requireActivity: FragmentActivity) {
+        val manager = ReviewManagerFactory.create(requireActivity())
+        val request: Task<com.google.android.play.core.review.ReviewInfo> = manager.requestReviewFlow()
+
+        request.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // We got the ReviewInfo object
+                val reviewInfo = task.result
+                val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
+                flow.addOnCompleteListener {
+                    // The flow has finished, you cannot know if user submitted or not
+                    // Do any post-review logic here (optional)
+                }
+            } else {
+                // If something fails, fallback to Play Store app page
+                redirectToAppRating(requireActivity)
             }
         }
     }
