@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Dashboard.Fragments
+package com.vs.schoolmessenger.Dashboard.Fragments.Profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,39 +11,37 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
+import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileRewampFragmentAdapter
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ProfileFragmentBinding
-import kotlin.collections.component1
-import kotlin.collections.component2
 import kotlin.collections.iterator
 
-class SchoolProfileRewampFragment : Fragment(), View.OnClickListener {
+class ParentProfileRewampFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: ProfileFragmentBinding
     private lateinit var appViewModel: App
     private var isAccessToken: String? = null
     var userDetails: UserDetails? = null
     var staffDetails: StaffDetails? = null
-    private var isStaffDetails: StaffDetails? = null
+    private var isChildDetails: ChildDetails? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = ProfileFragmentBinding.inflate(layoutInflater)
-        isStaffDetails = SharedPreference.getStaffDetails(requireContext())
-        isAccessToken = isStaffDetails!!.access_token
+        isChildDetails = SharedPreference.getChildDetails(requireContext())
+        isAccessToken = isChildDetails?.access_token
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
 
         fetchProfileData()
 
-        binding.btnupdateprofile.visibility = View.GONE
         binding.btnupdateprofile.setOnClickListener(this)
 
         binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
-        appViewModel.isSchoolprofilelist?.observe(viewLifecycleOwner) { response ->
+        appViewModel.isParentprofilelist?.observe(viewLifecycleOwner) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val items = mutableListOf<ProfileItem>()
 
@@ -74,7 +72,7 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener {
 
 
     private fun fetchProfileData() {
-        appViewModel!!.isSchoolprofilelist(isAccessToken!!)
+        appViewModel!!.isParentprofilelist(isAccessToken!!)
     }
 
     override fun onClick(v: View?) {

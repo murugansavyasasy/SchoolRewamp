@@ -1,6 +1,5 @@
-package com.vs.schoolmessenger.Dashboard.Fragments
+package com.vs.schoolmessenger.Dashboard.Fragments.Profile
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.util.Log
@@ -20,7 +19,6 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileField
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
 import com.vs.schoolmessenger.R
 import java.util.Calendar
-
 
 class ProfileRewampFragmentAdapter(
     private var itemList: List<ProfileItem>, private val context: Context
