@@ -231,21 +231,21 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 }
             }
 
-        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.edtDescription.filters =
-            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(
-            this,
-            binding.edtDescription,
-            Constant.isDescriptionLength,
-            binding.lblTextCount
-        )
-        Constant.editTextCounter(
-            this,
-            binding.edtTitle,
-            Constant.isTitleLength,
-            binding.lblTitleTextCount
-        )
+//        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+//        binding.edtDescription.filters =
+//            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+//        Constant.editTextCounter(
+//            this,
+//            binding.edtDescription,
+//            Constant.isDescriptionLength,
+//            binding.lblTextCount
+//        )
+//        Constant.editTextCounter(
+//            this,
+//            binding.edtTitle,
+//            Constant.isTitleLength,
+//            binding.lblTitleTextCount
+//        )
 
 
         binding.edtSearch.addTextChangedListener(object : TextWatcher {

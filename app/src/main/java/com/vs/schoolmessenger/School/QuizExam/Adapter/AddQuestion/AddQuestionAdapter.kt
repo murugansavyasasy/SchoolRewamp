@@ -4,9 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -14,6 +18,7 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQ
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 
 class AddQuestionAdapter(
     private var itemList: MutableList<GetQuizQuestionReportData>?,
@@ -21,11 +26,16 @@ class AddQuestionAdapter(
     private var isLoading: Boolean,
     var onQBankItemRemoved: ((String) -> Unit)? = null
 
+
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+
+    private val itemsCorrectAnswer = listOf(
+        "Select correct answer", "Option A", "Option B", "Option C", "Option D"
+    )
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -88,13 +98,6 @@ class AddQuestionAdapter(
                 c_option = "",
                 d_option = "",
                 mark = 0,
-                option_a_counts = 0,
-                option_b_counts = 0,
-                option_c_counts = 0,
-                option_d_counts = 0,
-                correct_answer_counts = 0,
-                incorrect_answer_counts = 0,
-                correct_answer = "",
                 iframe="",
                 file_size="",
                 thumbnail="",
@@ -132,7 +135,7 @@ class AddQuestionAdapter(
                 recyclerView.findViewHolderForAdapterPosition(index) as? DataViewHolder
                     ?: return@forEachIndexed
 
-            if (item.question.isBlank()) {
+            if (item.chapter.isBlank()) {
                 holder.edtChapterName.error = context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtChapterName.requestFocus()
                 isAllValid = false
@@ -162,11 +165,12 @@ class AddQuestionAdapter(
                 if (isAllValid) holder.edtOptionD.requestFocus()
                 isAllValid = false
             }
-            if (item.answer.isBlank()) {
-                holder.edtCorrectAns.error = context.getString(R.string.this_is_required)
-                if (isAllValid) holder.edtCorrectAns.requestFocus()
+
+            if (item.answer.isBlank() || item.answer == "0") {
+                Toast.makeText(context, "Please select correct answer", Toast.LENGTH_SHORT).show()
                 isAllValid = false
             }
+
             if (item.mark == null) {
                 holder.edtMark.error = context.getString(R.string.this_is_required)
                 if (isAllValid) holder.edtMark.requestFocus()
@@ -191,6 +195,24 @@ class AddQuestionAdapter(
 
     fun getUpdatedList(): List<GetQuizQuestionReportData> = itemList!!
 
+    private fun updateSpinnerOptions(holder: DataViewHolder, data: GetQuizQuestionReportData) {
+        val optionsList = listOf(
+            "Select correct answer",
+            data.a_option.ifBlank { "Option A" },
+            data.b_option.ifBlank { "Option B" },
+            data.c_option.ifBlank { "Option C" },
+            data.d_option.ifBlank { "Option D" }
+        )
+
+        val spinnerAdapter = SpinnerLoadingAdapter(context, optionsList)
+        holder.spinnerCorrectAnswer.adapter = spinnerAdapter
+
+        // restore previously selected answer
+        val selectedIndex = data.answer.toIntOrNull() ?: 0
+        holder.spinnerCorrectAnswer.setSelection(selectedIndex)
+    }
+
+
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val edtChapterName: EditText = itemView.findViewById(R.id.edtChapterName)
         val edtQuestion: EditText = itemView.findViewById(R.id.edtQuestion)
@@ -198,6 +220,8 @@ class AddQuestionAdapter(
         val edtOptionB: EditText = itemView.findViewById(R.id.edtOptionB)
         val edtOptionC: EditText = itemView.findViewById(R.id.edtOptionC)
         val edtOptionD: EditText = itemView.findViewById(R.id.edtOptionD)
+        val spinnerCorrectAnswer: Spinner = itemView.findViewById(R.id.spinnerCorrectAnswer)
+        val rytSpinnerHeader: RelativeLayout = itemView.findViewById(R.id.rytSpinnerHeader)
         val edtCorrectAns: EditText = itemView.findViewById(R.id.edtCorrectAns)
         val edtMark: EditText = itemView.findViewById(R.id.edtMark)
         val lblremove: ImageView = itemView.findViewById(R.id.lblremove)
@@ -205,14 +229,43 @@ class AddQuestionAdapter(
 
         fun bind(data: GetQuizQuestionReportData, position: Int) {
 
+            rytSpinnerHeader.visibility=View.VISIBLE
+            edtCorrectAns.visibility=View.GONE
+
             edtChapterName.setText(data.chapter)
             edtQuestion.setText(data.question)
             edtOptionA.setText(data.a_option)
             edtOptionB.setText(data.b_option)
             edtOptionC.setText(data.c_option)
             edtOptionD.setText(data.d_option)
-            edtCorrectAns.setText(data.answer)
+//            edtCorrectAns.setText(data.answer)
             edtMark.setText(data.mark.toString())
+
+            val optionsList = listOf(
+                "Select correct answer",
+                data.a_option.ifBlank { "Option A" },
+                data.b_option.ifBlank { "Option B" },
+                data.c_option.ifBlank { "Option C" },
+                data.d_option.ifBlank { "Option D" }
+            )
+
+            val spinnerAdapter = SpinnerLoadingAdapter(context, optionsList)
+            spinnerCorrectAnswer.adapter = spinnerAdapter
+
+            // pre-select saved answer index
+            val selectedIndex = data.answer.toIntOrNull() ?: 0
+            spinnerCorrectAnswer.setSelection(selectedIndex)
+
+            spinnerCorrectAnswer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        itemList!![adapterPosition].answer = pos.toString()
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+
 
             edtChapterName.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
@@ -227,28 +280,31 @@ class AddQuestionAdapter(
             edtOptionA.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].a_option = text.toString()
+                    updateSpinnerOptions(this, itemList!![adapterPosition])
                 }
             }
             edtOptionB.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].b_option = text.toString()
+                    updateSpinnerOptions(this, itemList!![adapterPosition])
+
                 }
             }
             edtOptionC.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].c_option = text.toString()
+                    updateSpinnerOptions(this, itemList!![adapterPosition])
+
                 }
             }
             edtOptionD.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].d_option = text.toString()
+                    updateSpinnerOptions(this, itemList!![adapterPosition])
+
                 }
             }
-            edtCorrectAns.doAfterTextChanged { text ->
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    itemList!![adapterPosition].answer = text.toString()
-                }
-            }
+
             edtMark.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].mark = text.toString().toIntOrNull() ?: 0
@@ -262,6 +318,7 @@ class AddQuestionAdapter(
             }
         }
     }
+
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

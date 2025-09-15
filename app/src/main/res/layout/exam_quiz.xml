@@ -109,36 +109,48 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/Title"
-                    style="@style/CustomTextStylePoppinsMedium"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textSize="@dimen/fifteen_sp"
                     >
 
                 </TextView>
 
-                <EditText
-                    android:id="@+id/edtTitle"
-                    android:hint="@string/Title"
+                <LinearLayout
+                    android:id="@+id/lnrTitle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/fourty_five"
                     android:layout_below="@+id/lblTitle"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    >
+                    android:background="@drawable/field_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtTitle"
+                    android:hint="@string/Title"
+                    android:background="@android:color/transparent"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblTitle"
+                    style="@style/CustomTextStylePoppinsMedium">
 
                 </EditText>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/lblTitleTextCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/edtTitle"
+                    android:layout_below="@+id/lnrTitle"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginEnd="@dimen/fifteen"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:text="0 / 50"
+                    android:visibility="gone"
                     android:textColor="@color/light_gray"
                     >
 
@@ -152,44 +164,54 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/five"
                     android:text="@string/Description"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:textSize="@dimen/fifteen_sp"
-                    >
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textSize="@dimen/fifteen_sp">
 
                 </TextView>
 
-                <EditText
-                    android:id="@+id/edtDescription"
+                <LinearLayout
+                    android:id="@+id/lnrDesc"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/hundred"
                     android:layout_below="@+id/lblDescription"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
-                    android:background="@drawable/bg_stroke_rect_black"
+                    android:background="@drawable/field_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/lblDescription"
                     android:editable="true"
                     android:focusable="true"
+                    android:background="@android:color/transparent"
                     android:focusableInTouchMode="true"
                     android:gravity="start"
                     android:hint="@string/Description"
                     android:padding="@dimen/ten"
                     style="@style/CustomTextStylePoppinsRegular"
-                    android:textSize="@dimen/thirteen_sp"
-                    >
+                    android:textSize="@dimen/thirteen_sp">
 
                 </EditText>
+
+                </LinearLayout>
 
 
                 <TextView
                     android:id="@+id/lblTextCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/edtDescription"
+                    android:layout_below="@+id/lnrDesc"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:text="0 / 500"
+                    android:visibility="gone"
                     android:textColor="@color/light_gray"
                     >
 
@@ -203,7 +225,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/five"
                     android:text="@string/no_of_question"
-                    style="@style/CustomTextStylePoppinsMedium"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textSize="@dimen/fifteen_sp"
                     >
 
