@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
+import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
@@ -94,6 +95,7 @@ class ParentServices {
     var isSpentPoints: MutableLiveData<SpentPointsModel?>
     var islsrwmysubmission: MutableLiveData<ActivityResponse?>
     var isParentprofilelist: MutableLiveData<ProfileListResponse?>
+    var ispresubmission: MutableLiveData<ProfileUpdateResponse?>
 
     init {
         client_auth = RestClient()
@@ -137,6 +139,7 @@ class ParentServices {
         isSpentPoints = MutableLiveData()
         islsrwmysubmission = MutableLiveData()
         isParentprofilelist= MutableLiveData()
+        ispresubmission= MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1531,6 +1534,50 @@ class ParentServices {
 
     val isSpentPointsLiveData: LiveData<SpentPointsModel?>
         get() = isSpentPoints
+
+
+
+    fun ispresubmission(
+        isToken: String,
+        jsonObject: JsonObject,
+    ) {
+        RestClient.apiInterfaces.ispresubmission(isToken,jsonObject)
+            ?.enqueue(object : Callback<ProfileUpdateResponse?> {
+                override fun onResponse(
+                    call: Call<ProfileUpdateResponse?>,
+                    response: Response<ProfileUpdateResponse?>
+                ) {
+                    Log.d(
+                        "SubmitQuizResponse Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("SubmitQuizResponse", response.body().toString())
+                                ispresubmission.postValue(response.body())
+                            } else {
+                                Log.d("SubmitQuizResponse", response.body().toString())
+                                ispresubmission.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ProfileUpdateResponse?>,
+                    t: Throwable
+                ) {
+                    ispresubmission.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val ispresubmissionLiveData: LiveData<ProfileUpdateResponse?>
+        get() = ispresubmission
+
 
 
 

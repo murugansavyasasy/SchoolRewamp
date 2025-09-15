@@ -15,6 +15,6 @@
         android:background="@color/gray"
         android:padding="16dp"
         android:text="General"
-        android:textColor="@android:color/black"
+        android:textColor="@color/PrimaryColor"
         android:textSize="16sp" />
 </RelativeLayout>

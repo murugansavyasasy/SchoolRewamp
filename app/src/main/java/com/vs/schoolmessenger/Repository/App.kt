@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearRes
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
+import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
@@ -364,6 +365,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetQuizSubmissionList: LiveData<GetQuizSubmissionList?>? = null
     var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
     var isAddQuestion: LiveData<AddQuestionResponse?>? = null
+    var ispresubmission: LiveData<ProfileUpdateResponse?>? = null
     var isGetMessageStaff: LiveData<GetMessagesStaff?>? = null
     var isParentprofilelist: LiveData<ProfileListResponse?>? = null
     var isSchoolprofilelist: LiveData<ProfileListResponse?>? = null
@@ -513,6 +515,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetQuizSubmissionList = apiSchoolRepositories.isGetQuizSubmissionListLiveData
         isGetPickFromQBank = apiSchoolRepositories.isGetPickFromQBankLiveData
         isAddQuestion = apiSchoolRepositories.isAddQuestionLiveData
+        ispresubmission = apiParentRepositories.ispresubmissionLiveData
         isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
         isGetPauketPoints = apiParentRepositories.isGetPauketPointsLiveData
         isSpentPoints = apiParentRepositories.isSpentPointsLiveData
@@ -1320,6 +1323,17 @@ class App(application: Application) : AndroidViewModel(application) {
     fun islsrwmysubmission(isToken: String,id: String) {
         apiParentRepositories.islsrwmysubmission(isToken,id)
     }
+
+
+
+    fun ispresubmission(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiParentRepositories.ispresubmission(
+            isToken, jsonObject,
+        )
+    }
+
 
 }
 

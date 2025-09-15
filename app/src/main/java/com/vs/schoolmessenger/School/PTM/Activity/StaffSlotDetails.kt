@@ -126,17 +126,32 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         val layout_reopen = popupView.findViewById<LinearLayout>(R.id.layout_reopen)
         val layout_cancel = popupView.findViewById<LinearLayout>(R.id.layout_cancel)
 
+        when (data.status) {
+            "Cancelled" -> {
+                layout_reopen.visibility = View.GONE
+                layout_cancel.visibility = View.VISIBLE
+            }
+            "Available" -> {
+                layout_reopen.visibility = View.VISIBLE
+                layout_cancel.visibility = View.VISIBLE
+            }
+        }
+
         layout_reopen.setOnClickListener {
-            showSendConfirmationDialog(true,data)
+            showSendConfirmationDialog(true, data)
             popupWindow.dismiss()
         }
 
         layout_cancel.setOnClickListener {
-            showSendConfirmationDialog(false,data)
+            showSendConfirmationDialog(false, data)
             popupWindow.dismiss()
         }
+
         popupWindow.showAsDropDown(anchor, 0, 10)
     }
+
+
+
 
     fun showSendConfirmationDialog(isSlotReOpen: Boolean, data: Slot) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
