@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/itemRoot"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/five"
-    android:background="@drawable/bg_item_root_selector">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/itemRoot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_item_root_selector"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/five">
+
 
     <TextView
         android:id="@+id/tvMonth"
@@ -30,5 +36,19 @@
         android:textStyle="bold"
         android:textColor="#000000"
         android:background="@drawable/bg_day_selector" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblSlotCount"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="10"
+        android:layout_marginTop="@dimen/ten"
+        android:textColor="@color/red"
+        android:textSize="@dimen/thirteen_sp">
+
+    </TextView>
 
 </LinearLayout>

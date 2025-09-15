@@ -61,7 +61,9 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotCountResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SubjectResponse
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamList
@@ -915,12 +917,11 @@ interface ApiInterfaces {
     ): Call<SlotBookingResponse?>?
 
 
-    @POST(APIMethods.isBookingForStudent)
+    @PUT(APIMethods.isBookingForStudent)
     fun isBookingForStudent(
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
     ): Call<StatusMessageModel?>?
-
     @GET(APIMethods.isSlotsAvailabilityForStudent)
     fun isSlotsAvailabilityForStudent(
         @Header(APIKeyNames.Authorization) token: String,
@@ -930,9 +931,9 @@ interface ApiInterfaces {
     ): Call<MeetingResponse?>?
 
     @GET(APIMethods.isAvailableSlotsCountForStudent)
-    fun isAvailableSlotsCountForStudent(
+    fun isSlotCountByDate(
         @Header(APIKeyNames.Authorization) token: String
-    ): Call<AvailableSlotsResponse?>?
+    ): Call<SlotCountResponse?>?
 
 
     @Headers("Content-Type: application/json")
@@ -954,6 +955,14 @@ interface ApiInterfaces {
     fun isSlotHistoryForStudent(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<MeetingHistoryResponse?>?
+
+    @GET(APIMethods.isSubjectListClassTeacher)
+    fun isSubjectListClassTeacher(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<SubjectResponse?>?
+
+
+
 
     @GET(APIMethods.isGetQuizExamList)
     fun isQuizExamList(

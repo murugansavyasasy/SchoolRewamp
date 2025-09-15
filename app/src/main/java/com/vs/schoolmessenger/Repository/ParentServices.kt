@@ -31,7 +31,9 @@ import com.vs.schoolmessenger.Parent.LSRW.MySubmissionModel.ActivityResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotCountResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SubjectResponse
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamList
@@ -81,9 +83,10 @@ class ParentServices {
     var getassignmentmysubmissionlist: MutableLiveData<MySubmittedAssignmentsResponse?>
     var isSlotBookingStudent: MutableLiveData<StatusMessageModel?>
     var isStudentSlotResponse: MutableLiveData<MeetingResponse?>
-    var isAvailableSlotsResponse: MutableLiveData<AvailableSlotsResponse?>
+    var isSlotCountResponse: MutableLiveData<SlotCountResponse?>
     var isSlotCancelByStudent: MutableLiveData<StatusMessageModel?>
     var isSlotDetailsHistory: MutableLiveData<MeetingHistoryResponse?>
+    var isSubjectResponse: MutableLiveData<SubjectResponse?>
     var isQuizExamList: MutableLiveData<GetQuizExamList?>
     var isGetQuestions: MutableLiveData<GetQuizQuestions?>
     var isSubmitQuiz: MutableLiveData<SubmitQuizResponse?>
@@ -124,9 +127,10 @@ class ParentServices {
         getassignmentmysubmissionlist = MutableLiveData()
         isSlotBookingStudent = MutableLiveData()
         isStudentSlotResponse = MutableLiveData()
-        isAvailableSlotsResponse = MutableLiveData()
+        isSlotCountResponse = MutableLiveData()
         isSlotCancelByStudent = MutableLiveData()
         isSlotDetailsHistory = MutableLiveData()
+        isSubjectResponse = MutableLiveData()
         isQuizExamList = MutableLiveData()
         isGetQuestions = MutableLiveData()
         isSubmitQuiz = MutableLiveData()
@@ -1235,14 +1239,14 @@ class ParentServices {
     val isStudentSlotResponseLiveData: LiveData<MeetingResponse?>
         get() = isStudentSlotResponse
 
-    fun isAvailableSlotsCountForStudent(
+    fun isSlotCountFromDate(
         isToken: String,
     ) {
-        RestClient.apiInterfaces.isAvailableSlotsCountForStudent(isToken)
-            ?.enqueue(object : Callback<AvailableSlotsResponse?> {
+        RestClient.apiInterfaces.isSlotCountByDate(isToken)
+            ?.enqueue(object : Callback<SlotCountResponse?> {
                 override fun onResponse(
-                    call: Call<AvailableSlotsResponse?>,
-                    response: Response<AvailableSlotsResponse?>
+                    call: Call<SlotCountResponse?>,
+                    response: Response<SlotCountResponse?>
                 ) {
                     Log.d(
                         "GetChildAttendanceReportData Response",
@@ -1253,27 +1257,27 @@ class ParentServices {
                             val status = response.body()!!.status
                             if (status) {
                                 Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAvailableSlotsResponse.postValue(response.body())
+                                isSlotCountResponse.postValue(response.body())
                             } else {
                                 Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAvailableSlotsResponse.postValue(response.body())
+                                isSlotCountResponse.postValue(response.body())
                             }
                         }
                     }
                 }
 
                 override fun onFailure(
-                    call: Call<AvailableSlotsResponse?>,
+                    call: Call<SlotCountResponse?>,
                     t: Throwable
                 ) {
-                    isAvailableSlotsResponse.postValue(null)
+                    isSlotCountResponse.postValue(null)
                     t.printStackTrace()
                 }
             })
     }
 
-    val isAvailableSlotsResponseLiveData: LiveData<AvailableSlotsResponse?>
-        get() = isAvailableSlotsResponse
+    val isSlotCountResponseLiveData: LiveData<SlotCountResponse?>
+        get() = isSlotCountResponse
 
 
     fun isASlotCancelByStudent(
@@ -1358,6 +1362,45 @@ class ParentServices {
     val isSlotDetailsHistoryLiveData: LiveData<MeetingHistoryResponse?>
         get() = isSlotDetailsHistory
 
+    fun isSubjectListWithClassTeacher(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isSubjectListClassTeacher(isToken)
+            ?.enqueue(object : Callback<SubjectResponse?> {
+                override fun onResponse(
+                    call: Call<SubjectResponse?>,
+                    response: Response<SubjectResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSubjectResponse.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSubjectResponse.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SubjectResponse?>,
+                    t: Throwable
+                ) {
+                    isSubjectResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSubjectResponseLiveData: LiveData<SubjectResponse?>
+        get() = isSubjectResponse
 
 
     fun isQuizExamList(
