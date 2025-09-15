@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileRewampFragmentAdapter
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ProfileFragmentBinding
@@ -21,8 +23,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: ProfileFragmentBinding
     private lateinit var appViewModel: App
     private var isAccessToken: String? = null
-    var userDetails: UserDetails? = null
-    var staffDetails: StaffDetails? = null
+
     private var isChildDetails: ChildDetails? = null
 
     override fun onCreateView(
@@ -45,7 +46,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener {
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val items = mutableListOf<ProfileItem>()
 
-
                 val sectionsMap = response.data.firstOrNull() ?: emptyMap()
 
 
@@ -67,6 +67,22 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener {
                 binding.lytNoDataFound.visibility = View.VISIBLE
             }
         }
+
+
+        val profileUrl: String? = isChildDetails!!.profile
+        val defaultProfileRes = R.drawable.default_profile
+        if (!profileUrl.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(profileUrl)
+                .placeholder(defaultProfileRes)
+                .error(defaultProfileRes)
+                    .into(binding.imgProfile)
+        } else {
+            Glide.with(this)
+                .load(defaultProfileRes)
+                .into(binding.imgProfile)
+        }
+
         return binding.root
     }
 
