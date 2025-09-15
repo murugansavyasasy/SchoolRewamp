@@ -70,9 +70,9 @@ class ExamQuizReportAdapter(
             lblTitle.text = data.title
             lblQuizDescription.text = data.description
             subjectvalue.text = data.subject
-            lblLevelStatus.text = "Level " + data.level.toString()
-            lblPostedBy.text = "Posted By: " + data.sent_by
-            lblCreatedOn.text = "Sent At " + Constant.convertDateFormatType(data.sent_time)
+            lblLevelStatus.text = context.getString(R.string.level) + data.level.toString()
+            lblPostedBy.text = context.getString(R.string.posted_by)+" : " + data.sent_by
+            lblCreatedOn.text = context.getString(R.string.sent_at) + Constant.convertDateFormatType(data.sent_time)
 
             val images = listOf(
                 R.drawable.quiz1,
