@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/mild0">
+    android:background="@color/light_white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:id="@+id/rlaLblReportBug"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_light"
+            android:background="@color/PrimaryColor"
             android:padding="@dimen/ten">
 
             <ImageView
@@ -25,7 +25,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_marginBottom="@dimen/ten"
-                android:src="@drawable/arrow_back_black"></ImageView>
+                android:src="@drawable/arrow_left_white"></ImageView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_toEndOf="@+id/imgBack"
                 android:text="@string/lblReportbug"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold">
 
@@ -63,10 +63,11 @@
                 </TextView>
 
                 <ImageView
+                    android:visibility="gone"
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:layout_toEndOf="@+id/lblSend"
-                    android:src="@drawable/send_feedback_icon">
+                    android:src="@drawable/send_feedback_icon_white">
 
                 </ImageView>
 
@@ -81,18 +82,28 @@
             android:layout_below="@+id/rlaLblReportBug"
             android:layout_margin="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/bg_white_box"></Spinner>
+            android:background="@drawable/field_background"></Spinner>
 
+
+
+        <LinearLayout
+            android:id="@+id/lnrDesc"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred"
+            android:layout_below="@+id/isMenuSpinner"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/field_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edtReportBug"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred"
+            android:layout_height="match_parent"
             android:layout_below="@+id/isMenuSpinner"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/twenty"
-            android:background="@drawable/bg_edittext"
+            android:background="@android:color/transparent"
             android:gravity="top"
             android:hint="@string/lblEntertheBug"
             android:padding="@dimen/ten"
@@ -100,15 +111,17 @@
 
         </EditText>
 
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/rlaPickImage"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sixty"
-            android:layout_below="@+id/edtReportBug"
-            android:layout_marginStart="@dimen/twenty"
+            android:layout_below="@+id/lnrDesc"
+            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/twenty"
-            android:background="@drawable/bg_dot_line"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/field_background"
             android:gravity="center">
 
             <ImageView
@@ -143,6 +156,24 @@
             android:stretchMode="columnWidth">
 
         </GridView>
+
+        <TextView
+            android:id="@+id/btnReportBug"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgPreview"
+            android:layout_marginStart="@dimen/twenty_five"
+            android:layout_marginEnd="@dimen/twenty_five"
+            android:layout_marginBottom="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_centerInParent="true"
+            android:background="@drawable/background_radius_button"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="Report a bug"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp" />
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>
 

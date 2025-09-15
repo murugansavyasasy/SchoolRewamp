@@ -50,7 +50,6 @@
             android:layout_marginEnd="@dimen/five"
             android:background="@drawable/rounded_grey_background"
             android:padding="@dimen/ten"
-            android:visibility="gone"
             android:src="@drawable/threedot">
         </ImageView>
 
@@ -122,6 +121,23 @@
             android:scaleType="fitXY"
             android:src="@drawable/user_sample"
             app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+
+
+        <TextView
+            android:id="@+id/tvNoProfiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblMode"
+            android:layout_alignStart="@id/img1"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="No slot booked yet"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fourteen_sp"
+            android:drawableStart="@drawable/expired"
+            android:drawablePadding="8dp"
+            android:visibility="gone"/>
 
 
         <TextView

@@ -39,14 +39,14 @@ class StaffSlotStatusAdapter(
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.staff_slot_status_item, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position,listener)
+            holder.bind(itemList!![position], position, listener)
 
         }
     }
@@ -67,6 +67,7 @@ class StaffSlotStatusAdapter(
         private val rltBookedBy: RelativeLayout = itemView.findViewById(R.id.rltBookedBy)
         private val imgStatus: ImageView = itemView.findViewById(R.id.imgStatus)
         private val imgDot: ImageView = itemView.findViewById(R.id.imgDot)
+        private val rytSlots: RelativeLayout = itemView.findViewById(R.id.rytSlots)
         private val lblStandardAndSection: TextView =
             itemView.findViewById(R.id.lblStandardAndSection)
 
@@ -74,27 +75,66 @@ class StaffSlotStatusAdapter(
         fun bind(data: Slot, position: Int, listener: StaffSlotCancelReOpenClickListener) {
             lblBookedName.text = data.booked_by
             lblStatus.text = data.status
-            lblDuration.text = "Duration - " + data.meeting_duration + " Minutes"
-
+            lblDuration.text = "Duration - ${data.meeting_duration} Minutes"
             lblTime.text = data.from_time + " - " + data.to_time
-            lblStandardAndSection.text = data.my_class + " - " + data.my_section
+            lblStandardAndSection.text = "${data.my_class} - ${data.my_section}"
 
-            if (data.status.equals("Available")){
-                rltStatus.setBackgroundDrawable(context.getDrawable(R.drawable.bg_light_radious_blue))
-                lblWaitingBooking.visibility= View.VISIBLE
-                rltBookedBy.visibility= View.GONE
-                imgStatus.setImageDrawable(context.getDrawable(R.drawable.exclamationmark_circle))
-            }else{
-                rltStatus.setBackgroundDrawable(context.getDrawable(R.drawable.bg_light_green))
-                lblWaitingBooking.visibility= View.GONE
-                rltBookedBy.visibility= View.VISIBLE
-                imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
+            when (data.status) {
+                "Available" -> {
+                    rltStatus.background = context.getDrawable(R.drawable.bg_light_radious_blue)
+                    lblWaitingBooking.visibility = View.VISIBLE
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.exclamationmark_circle))
+                    imgDot.visibility = View.VISIBLE
+                }
+
+                "Cancelled" -> {
+                    rltStatus.background = context.getDrawable(R.drawable.bg_light_red_radious)
+                    lblWaitingBooking.visibility = View.VISIBLE
+                    lblWaitingBooking.text = "Slot Cancelled"
+                    lblStatus.setTextColor(context.getColor(R.color.red))
+                    lblWaitingBooking.setTextColor(context.getColor(R.color.red))
+                    lblWaitingBooking.background = context.getDrawable(R.drawable.bg_light_red_radious)
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.cancelled))
+                    imgDot.visibility = View.VISIBLE
+                }
+
+
+                "Expired" -> {
+                    rltStatus.background = context.getDrawable(R.drawable.gray_bg_radius)
+                    lblWaitingBooking.visibility = View.VISIBLE
+                    lblWaitingBooking.text = "Slot Expired"
+                    lblWaitingBooking.setTextColor(context.getColor(R.color.black))
+                    lblWaitingBooking.background = context.getDrawable(R.drawable.gray_bg_radius)
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.expired))
+                    imgDot.visibility = View.GONE
+                }
+
+                "Completed" -> {
+                    rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
+                    lblWaitingBooking.visibility = View.VISIBLE
+                    lblWaitingBooking.text = "Slot Completed"
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
+                    lblWaitingBooking.setTextColor(context.getColor(R.color.black))
+                    lblWaitingBooking.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
+                    imgDot.visibility = View.GONE
+                }
+
+                "Booked" -> {
+                    rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
+                    lblWaitingBooking.visibility = View.GONE
+                    lblBookedName.visibility = View.VISIBLE
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
+                    imgDot.visibility = View.VISIBLE
+                }
+
             }
+
 
             imgDot.setOnClickListener {
-                listener.onStaffSlotCancelReOpenClickListener(data,it, adapterPosition)
+                listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
             }
         }
+
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -287,6 +287,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-process:2.7.0")
 
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
+    implementation ("com.google.android.play:review-ktx:2.0.1")
 
 
 
