@@ -91,7 +91,7 @@ class ProfileRewampFragmentAdapter(
 
 
             when (field.type) {
-                Constant.text_, Constant.mobile, Constant.number, Constant.image, Constant.document -> {
+                Constant.text_, Constant.mobile, Constant.number, Constant.image_, Constant.document_ -> {
                     titlelayout.visibility = View.VISIBLE
                     titlelabel.text = field.title
                     titlevalue.setText(field.value ?: "")
