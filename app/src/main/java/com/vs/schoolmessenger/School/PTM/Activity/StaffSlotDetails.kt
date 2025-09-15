@@ -10,12 +10,13 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import java.text.SimpleDateFormat
+import java.util.*
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.PTM.Adapter.ClassesLoadAdapter
 import com.vs.schoolmessenger.School.PTM.Adapter.StaffSlotStatusAdapter
@@ -61,6 +62,24 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         binding.lblMeetingTitle.text = isSlotsDetails.event_name
         binding.lblMeetingMode.text = "Mode" + " - " + isSlotsDetails.event_mode
         binding.lblDate.text = isSlotsDetails.date
+
+        val inputDateStr = isSlotsDetails.date
+        val formattedDate = try {
+            val inputFormat = when {
+                inputDateStr.contains("-") -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                inputDateStr.contains("/") -> SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+                else -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            }
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(inputDateStr)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            inputDateStr
+        }
+
+        binding.lblDate.text = formattedDate
+
+
         binding.lblTime.text = isSlotsDetails.start_time + " - " + isSlotsDetails.end_time
 
         binding.toolbarLayout.imgBack.setOnClickListener {
@@ -126,17 +145,32 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         val layout_reopen = popupView.findViewById<LinearLayout>(R.id.layout_reopen)
         val layout_cancel = popupView.findViewById<LinearLayout>(R.id.layout_cancel)
 
+        when (data.status) {
+            "Cancelled" -> {
+                layout_reopen.visibility = View.VISIBLE
+                layout_cancel.visibility = View.GONE
+            }
+            "Available" -> {
+                layout_reopen.visibility = View.GONE
+                layout_cancel.visibility = View.VISIBLE
+            }
+        }
+
         layout_reopen.setOnClickListener {
-            showSendConfirmationDialog(true,data)
+            showSendConfirmationDialog(true, data)
             popupWindow.dismiss()
         }
 
         layout_cancel.setOnClickListener {
-            showSendConfirmationDialog(false,data)
+            showSendConfirmationDialog(false, data)
             popupWindow.dismiss()
         }
+
         popupWindow.showAsDropDown(anchor, 0, 10)
     }
+
+
+
 
     fun showSendConfirmationDialog(isSlotReOpen: Boolean, data: Slot) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)

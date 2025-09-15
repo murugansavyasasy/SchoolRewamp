@@ -34,6 +34,7 @@
 
     <color name="darkGreen">#1B5E20</color>
     <color name="iconBlue">#0066FF</color>
+    <color name="Blue">#2929ff</color>
 
 
     <color name="azure_radiance">#0079fd</color>
@@ -166,6 +167,7 @@
     <color name="clr_red">#FF7575</color>
     <color name="light_red1">#f89696</color>
     <color name="dashboar_bg">#f2f4fb</color>
+
 
     <color name="mild0">#f6f3ff</color>
     <color name="mild1">#f1f8ff</color>

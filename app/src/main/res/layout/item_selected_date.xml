@@ -19,10 +19,9 @@
             android:id="@+id/btnRemove"
             android:layout_width="@dimen/twenty"
             android:layout_height="@dimen/twenty"
-            android:layout_margin="@dimen/four"
             android:src="@drawable/close_red_color"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvDate"
@@ -31,14 +30,14 @@
             android:text="12 Sep 2025"
             android:textSize="@dimen/fourteen"
             android:textStyle="bold"
-            android:layout_marginStart="@dimen/five"
             android:textColor="@android:color/black"
             android:padding="@dimen/eight"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnRemove"
+            app:layout_constraintStart_toEndOf="@id/btnRemove"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

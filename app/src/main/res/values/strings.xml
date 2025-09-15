@@ -35,6 +35,7 @@
     <string name="lblChangeLanguage">App Language</string>
     <string name="change_password">Change Password</string>
     <string name="save_contact_to_avoid">Save contact to avoid spam calls</string>
+    <string name="whats_new_updates">Whats New</string>
     <string name="lblFEEDBACK">FEEDBACK</string>
     <string name="lblReportbug">Report a bug</string>
     <string name="lblSendFeedback">Send Feedback</string>

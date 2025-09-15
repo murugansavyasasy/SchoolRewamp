@@ -123,6 +123,23 @@
             app:shapeAppearanceOverlay="@style/RoundedSquare" />
 
 
+
+        <TextView
+            android:id="@+id/tvNoProfiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblMode"
+            android:layout_alignStart="@id/img1"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="No slot booked yet"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fourteen_sp"
+            android:drawableStart="@drawable/expired"
+            android:drawablePadding="8dp"
+            android:visibility="gone"/>
+
+
         <TextView
             android:id="@+id/lblCount"
             style="@style/CustomTextStylePoppinsBold"
@@ -157,14 +174,16 @@
                 android:layout_height="wrap_content"
                 android:text="Join Now"
                 android:textColor="@color/PrimaryColor"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+            </TextView>
 
             <ImageView
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_marginStart="@dimen/five"
                 android:layout_toEndOf="@+id/lblJoin"
-                android:src="@drawable/arrow_right_blue"></ImageView>
+                android:src="@drawable/arrow_right_blue">
+            </ImageView>
 
         </RelativeLayout>
 

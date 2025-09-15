@@ -408,7 +408,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        android:text="@string/save_contact_to_avoid"
+                        android:text="@string/whats_new_updates"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 

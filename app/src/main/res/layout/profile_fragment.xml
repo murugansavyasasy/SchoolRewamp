@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/btnupdateprofile"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:fillViewport="true">
 
         <LinearLayout
@@ -17,16 +18,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/relative_layout"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/one_sixty"
-                android:background="@color/PrimaryColor">
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@color/PrimaryColor" />
 
                 <FrameLayout
                     android:layout_width="@dimen/hundred"
                     android:layout_height="@dimen/hundred"
-                    android:layout_centerInParent="true">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/one_sixty"
+                    android:translationY="-200dp">
 
                     <ImageView
                         android:id="@+id/imgProfile"
@@ -44,9 +50,10 @@
                         android:layout_gravity="bottom|end"
                         android:background="@drawable/circle_white_bg"
                         android:padding="@dimen/four"
-                        android:src="@drawable/edit_icon_blue" />
+                        android:src="@drawable/camerasvgformat" />
                 </FrameLayout>
-            </RelativeLayout>
+            </FrameLayout>
+
 
             <LinearLayout
                 android:id="@+id/lytNoDataFound"
@@ -74,20 +81,23 @@
                     android:textSize="@dimen/fifteen_sp" />
             </LinearLayout>
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-90dp"
                 android:scrollbars="none" />
+
         </LinearLayout>
     </ScrollView>
+
 
     <TextView
         android:id="@+id/btnupdateprofile"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/twenty_five"
         android:layout_marginBottom="@dimen/twenty"
@@ -97,5 +107,4 @@
         android:text="@string/UpdateProfile"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp" />
-
-</RelativeLayout>
+</LinearLayout>

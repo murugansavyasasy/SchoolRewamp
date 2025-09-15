@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearRes
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
+import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
@@ -51,7 +52,9 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotCountResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
+import com.vs.schoolmessenger.Parent.PTM.DataClass.SubjectResponse
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamList
@@ -343,10 +346,11 @@ class App(application: Application) : AndroidViewModel(application) {
     var isDateWiseSlot: LiveData<SlotBookingResponse?>? = null
     var isSlotBookingForStudent: LiveData<StatusMessageModel?>? = null
     var isStudentSlotResponse: LiveData<MeetingResponse?>? = null
-    var isAvailableSlotsResponse: LiveData<AvailableSlotsResponse?>? = null
+    var isSlotCountResponse: LiveData<SlotCountResponse?>? = null
     var isSlotCancelByStudent: LiveData<StatusMessageModel?>? = null
     var isSlotValidation: LiveData<SlotValidationResponse?>? = null
     var isSlotDetailsHistory: LiveData<MeetingHistoryResponse?>? = null
+    var isSubjectResponse: LiveData<SubjectResponse?>? = null
     var isQuizExamList: LiveData<GetQuizExamList?>? = null
     var isGetQuestion: LiveData<GetQuizQuestions?>? = null
     var isSubmitQuiz: LiveData<SubmitQuizResponse?>? = null
@@ -364,6 +368,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetQuizSubmissionList: LiveData<GetQuizSubmissionList?>? = null
     var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
     var isAddQuestion: LiveData<AddQuestionResponse?>? = null
+    var ispresubmission: LiveData<ProfileUpdateResponse?>? = null
     var isGetMessageStaff: LiveData<GetMessagesStaff?>? = null
     var isParentprofilelist: LiveData<ProfileListResponse?>? = null
     var isSchoolprofilelist: LiveData<ProfileListResponse?>? = null
@@ -494,10 +499,11 @@ class App(application: Application) : AndroidViewModel(application) {
         isDateWiseSlot = apiSchoolRepositories.isDateWiseSlotLiveData
         isSlotBookingForStudent = apiParentRepositories.isSlotBookingStudentLiveData
         isStudentSlotResponse = apiParentRepositories.isStudentSlotResponseLiveData
-        isAvailableSlotsResponse = apiParentRepositories.isAvailableSlotsResponseLiveData
+        isSlotCountResponse = apiParentRepositories.isSlotCountResponseLiveData
         isSlotCancelByStudent = apiParentRepositories.isSlotCancelByStudentLiveData
         isSlotValidation = apiSchoolRepositories.isSlotValidationLiveData
         isSlotDetailsHistory = apiParentRepositories.isSlotDetailsHistoryLiveData
+        isSubjectResponse = apiParentRepositories.isSubjectResponseLiveData
         isQuizExamList = apiParentRepositories.isQuizExamListLiveData
         isGetQuestion = apiParentRepositories.isGetQuestionLiveData
         isSubmitQuiz = apiParentRepositories.isSubmitQuizLiveData
@@ -513,6 +519,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetQuizSubmissionList = apiSchoolRepositories.isGetQuizSubmissionListLiveData
         isGetPickFromQBank = apiSchoolRepositories.isGetPickFromQBankLiveData
         isAddQuestion = apiSchoolRepositories.isAddQuestionLiveData
+        ispresubmission = apiParentRepositories.ispresubmissionLiveData
         isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
         isGetPauketPoints = apiParentRepositories.isGetPauketPointsLiveData
         isSpentPoints = apiParentRepositories.isSpentPointsLiveData
@@ -1172,10 +1179,10 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
 
-    fun isSlotAvailableForCountStudent(
+    fun isSlotCountByDate(
         isToken: String
     ) {
-        apiParentRepositories.isAvailableSlotsCountForStudent(isToken)
+        apiParentRepositories.isSlotCountFromDate(isToken)
     }
 
     fun isSlotCancelByStudent(
@@ -1194,6 +1201,12 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String
     ) {
         apiParentRepositories.isSlotHistoryForStudent(isToken)
+    }
+
+    fun isSubjectListWithClassTeacher(
+        isToken: String
+    ) {
+        apiParentRepositories.isSubjectListWithClassTeacher(isToken)
     }
 
 
@@ -1320,6 +1333,17 @@ class App(application: Application) : AndroidViewModel(application) {
     fun islsrwmysubmission(isToken: String,id: String) {
         apiParentRepositories.islsrwmysubmission(isToken,id)
     }
+
+
+
+    fun ispresubmission(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiParentRepositories.ispresubmission(
+            isToken, jsonObject,
+        )
+    }
+
 
 }
 

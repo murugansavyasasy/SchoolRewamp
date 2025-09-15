@@ -157,6 +157,7 @@ object APIMethods {
     const val isCancelByStudent = "ptm/api/ptm-schedule/cancel-slot-by-student"
     const val isValidateForStaffToSlot = "ptm/api/ptm-schedule/validate-slots-for-staff"
     const val isSlotHistoryForStudent = "ptm/api/ptm-schedule/slot-history-for-student"
+    const val isSubjectListClassTeacher = "ptm/api/ptm-schedule/subject-list-with-class-teacher"
 
 
     const val isGetQuizExamList = "lms/api/quiz/quiz-exam-list"
@@ -179,6 +180,7 @@ object APIMethods {
     const val isParentprofilelist = "admin/api/student-profile/list"
     const val isSchoolprofilelist = "admin/api/staff-profile/list"
     const val islsrwmysubmission = "lms/api/lsrw/my-submissions"
+    const val ispresubmission = "admin/api/student-profile/pre-submission"
 
 
 }

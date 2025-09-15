@@ -40,6 +40,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         setupToolbarBlueWhite()
 
         binding.lblDatePicking.setOnClickListener(this)
+        binding.layoutDatePicking.setOnClickListener(this)
         binding.imgDelete.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
         binding.layoutCreateSlot.setOnClickListener(this)
@@ -64,7 +65,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     fun isLoadData(isSlotCategory: List<SlotCategory>?) {
         if (isSlotCategory.isNullOrEmpty()) return
 
-        // Clear old data
         val todayList = ArrayList<SlotDetail>()
         val upcomingList = ArrayList<SlotDetail>()
         val completedList = ArrayList<SlotDetail>()
@@ -87,16 +87,48 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             }
         }
 
-        Log.d(
-            "PTM",
-            "Today: ${todayList.size}, Upcoming: ${upcomingList.size}, Complete: ${completedList.size}"
-        )
-
         // Load into adapters
         isLoadDataAdapter(todayList, binding.rcyToday)
         isLoadDataAdapter(upcomingList, binding.rcyUpcoming)
         isLoadDataAdapter(completedList, binding.rcyComplete)
+
+        if (todayList.isEmpty() && upcomingList.isEmpty() && completedList.isEmpty()) {
+            binding.tvNoData.visibility = View.VISIBLE
+        } else {
+            binding.tvNoData.visibility = View.GONE
+        }
+
+
+    Log.d("PTM", "Today: ${todayList.size}, Upcoming: ${upcomingList.size}, Complete: ${completedList.size}")
+
+        if (todayList.isNotEmpty()) {
+            binding.lblToday.visibility = View.VISIBLE
+            binding.rcyToday.visibility = View.VISIBLE
+            isLoadDataAdapter(todayList, binding.rcyToday)
+        } else {
+            binding.lblToday.visibility = View.GONE
+            binding.rcyToday.visibility = View.GONE
+        }
+
+        if (upcomingList.isNotEmpty()) {
+            binding.lblUpComing.visibility = View.VISIBLE
+            binding.rcyUpcoming.visibility = View.VISIBLE
+            isLoadDataAdapter(upcomingList, binding.rcyUpcoming)
+        } else {
+            binding.lblUpComing.visibility = View.GONE
+            binding.rcyUpcoming.visibility = View.GONE
+        }
+
+        if (completedList.isNotEmpty()) {
+            binding.lblComplete.visibility = View.VISIBLE
+            binding.rcyComplete.visibility = View.VISIBLE
+            isLoadDataAdapter(completedList, binding.rcyComplete)
+        } else {
+            binding.lblComplete.visibility = View.GONE
+            binding.rcyComplete.visibility = View.GONE
+        }
     }
+
 
     fun isLoadDataAdapter(list: ArrayList<SlotDetail>, recyclerView: RecyclerView) {
         val adapter = UpComingSlotAdapter(list, this, this, Constant.isShimmerViewDisable)
@@ -121,7 +153,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.lblDatePicking -> {
+            R.id.layoutDatePicking -> {
                 Constant.showDatePickerNormal(this) { selectedDate ->
                     Log.d("PTM", "Selected Date: $selectedDate")
                     binding.imgDelete.visibility = View.VISIBLE
