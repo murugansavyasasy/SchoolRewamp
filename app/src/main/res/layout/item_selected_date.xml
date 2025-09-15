@@ -21,8 +21,9 @@
             android:layout_height="@dimen/twenty"
             android:layout_margin="@dimen/four"
             android:src="@drawable/close_red_color"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="@+id/tvDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvDate" />
 
         <TextView
             android:id="@+id/tvDate"
