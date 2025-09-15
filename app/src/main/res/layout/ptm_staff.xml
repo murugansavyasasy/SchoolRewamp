@@ -67,8 +67,8 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="All"
                 android:layout_marginStart="@dimen/thirty"
+                android:text="All"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -248,6 +248,19 @@
                 android:overScrollMode="never">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+
+            <TextView
+                android:id="@+id/tvNoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/twenty"
+                android:text="No  Meeting Found"
+                android:layout_marginTop="@dimen/twenty"
+                android:textSize="@dimen/sixteen_sp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 
