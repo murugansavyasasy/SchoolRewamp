@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/childrelative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/relativelayout_header"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/bg_file_item"
+    android:visibility="visible"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/imgDelete"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/white_circle_bg"
+        android:src="@drawable/del_icon">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/imgFileType"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_icon_round"
+        android:gravity="center"
+        style="@style/CustomTextStylePoppinsBold"
+        android:text="IMG"
+        android:textColor="@color/PrimaryColor"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/txtFileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@id/imgFileType"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="BD84A0BAB151.jpg"
+        android:textColor="@android:color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/txtFileSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtFileName"
+        android:layout_alignStart="@id/txtFileName"
+        android:text="2.1 MB, IMAGE"
+        android:textColor="#888888"
+        android:textSize="11sp" />
+</RelativeLayout>

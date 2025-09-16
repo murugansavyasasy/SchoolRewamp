@@ -351,7 +351,6 @@ object ApiCallRequest {
         val sectionArray = JsonArray()
         selectedIds.forEach { sectionArray.add(it) }
 
-
         val filePathArray = JsonArray()
         for (file in Constant.isAwsUploadedFiles) {
             val fileObj = JsonObject()
