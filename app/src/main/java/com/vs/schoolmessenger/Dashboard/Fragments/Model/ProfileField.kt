@@ -8,5 +8,7 @@ data class ProfileField(
     val optional: Boolean,
     val options: List<String>?,
     val node: String,
-    val originalValue: String? = value
+    val originalValue: String? = value,
+    var isRcyImagesAttached: Boolean = false
+
 )
