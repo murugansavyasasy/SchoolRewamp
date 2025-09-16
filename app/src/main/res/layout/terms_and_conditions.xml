@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
@@ -7,24 +7,48 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/rytHeader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/PrimaryColor"
+        android:padding="@dimen/ten">
 
         <ImageView
             android:id="@+id/imgBack"
-            android:padding="@dimen/ten"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="@dimen/fourty"
-            android:layout_height="@dimen/fourty"
-            android:src="@drawable/arrow_back_black"/>
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:src="@drawable/arrow_left_white"></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text="@string/terms_amp_conditions"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_below="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <WebView
             android:id="@+id/webView"
-            android:layout_below="@+id/imgBack"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
     </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

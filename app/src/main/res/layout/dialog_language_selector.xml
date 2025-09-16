@@ -385,7 +385,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/twenty"
         android:background="@drawable/rect_btn_orange"
-        android:padding="@dimen/five"
+        android:paddingHorizontal="@dimen/thirteen"
+        android:paddingVertical="@dimen/four"
         android:text="@string/lblConfirm"
         android:textColor="@color/white"
         android:textStyle="bold">

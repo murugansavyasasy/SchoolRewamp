@@ -70,10 +70,10 @@
 
 
         <RelativeLayout
-            android:background="@drawable/rect_bg_stroke_blue"
+            android:background="@drawable/white_bg_primary_stoke"
             android:id="@+id/rytViewInvoice"
-            android:paddingHorizontal="@dimen/fifteen"
-            android:padding="@dimen/five"
+            android:paddingHorizontal="@dimen/thirteen"
+            android:paddingVertical="@dimen/four"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
