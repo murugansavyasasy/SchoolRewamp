@@ -28,7 +28,7 @@
                 android:layout_height="@dimen/twenty"
                 android:layout_marginEnd="@dimen/six"
                 android:contentDescription="Calendar Icon"
-                android:src="@drawable/ic_calendar" />
+                android:src="@drawable/ic_calendar_blue" />
 
             <TextView
                 android:id="@+id/tvDate"

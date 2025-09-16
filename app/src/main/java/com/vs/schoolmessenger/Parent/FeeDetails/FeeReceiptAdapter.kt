@@ -87,6 +87,7 @@ class FeeReceiptAdapter(
         private val lblInvoiceAmount: TextView = itemView.findViewById(R.id.lblInvoiceAmount)
         private val lblInvoiceTime: TextView = itemView.findViewById(R.id.lblInvoiceTime)
         private val rytView: RelativeLayout = itemView.findViewById(R.id.rytView)
+        private val rytViewInvoice: RelativeLayout = itemView.findViewById(R.id.rytViewInvoice)
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(

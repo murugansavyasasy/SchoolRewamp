@@ -53,7 +53,7 @@
 
         <RelativeLayout
             android:id="@+id/layoutDatePicking"
-            android:layout_width="@dimen/hundred_thirty"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblSchoolName"
             android:layout_marginStart="@dimen/ten"
@@ -67,8 +67,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/thirty"
+                android:paddingHorizontal="@dimen/fifteen"
                 android:text="All"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
 

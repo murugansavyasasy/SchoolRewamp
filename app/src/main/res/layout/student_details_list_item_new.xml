@@ -116,7 +116,7 @@
                 android:background="@color/light_primary_colour"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:paddingBottom="@dimen/thirty_five"
+                    android:paddingBottom="@dimen/twenty_five"
                     android:background="@drawable/corner_lright_curve_radius"
                     android:id="@+id/rlaStudentDetails"
                     android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/eight"
-                            android:text="Chandru"
+                            android:text="Chandru "
 
                             android:layout_marginEnd="@dimen/ten"
                             android:textColor="@color/black"

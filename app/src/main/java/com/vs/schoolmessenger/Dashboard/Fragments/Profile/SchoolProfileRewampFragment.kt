@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileField
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
+import com.vs.schoolmessenger.Dashboard.Fragments.Profile.Listener.DocumentClickListener
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileRewampFragmentAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -19,7 +21,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ProfileFragmentBinding
 import kotlin.collections.iterator
 
-class SchoolProfileRewampFragment : Fragment(), View.OnClickListener {
+class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentClickListener {
     private lateinit var binding: ProfileFragmentBinding
     private lateinit var appViewModel: App
     private var isAccessToken: String? = null
@@ -67,7 +69,7 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener {
                     }
                 }
 
-                binding.recyclerview.adapter = ProfileRewampFragmentAdapter(items, requireContext())
+                binding.recyclerview.adapter = ProfileRewampFragmentAdapter(items, requireContext(),this)
                 binding.recyclerview.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
 
@@ -104,5 +106,12 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
 
         }
+    }
+
+    override fun onDocumentClicked(
+        field: ProfileField,
+        position: Int
+    ) {
+        TODO("Not yet implemented")
     }
 }

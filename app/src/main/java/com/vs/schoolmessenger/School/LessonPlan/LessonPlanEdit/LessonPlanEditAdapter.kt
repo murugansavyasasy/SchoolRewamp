@@ -85,7 +85,7 @@ class LessonPlanEditAdapter(
             val isSpinner = itemView.findViewById<Spinner>(R.id.isSpinner)
             val spinnerItem = itemView.findViewById<LinearLayout>(R.id.SpinnerItem)
 
-            nameTextView.text = "${data.name} :"
+            nameTextView.text = "${data.name}"
 
             when (data.field_type) {
                 Constant.dropdown -> {

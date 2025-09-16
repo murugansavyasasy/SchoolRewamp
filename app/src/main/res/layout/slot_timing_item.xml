@@ -7,16 +7,15 @@
     android:background="@drawable/outline_gray"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:padding="@dimen/ten">
+    android:padding="@dimen/five">
 
     <TextView
         android:id="@+id/tvSlotTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start"
         android:text="10:00 am - 10:10 am"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/thirteen_sp"
+        android:textSize="@dimen/eight"
         android:textStyle="bold" />
 
     <TextView
@@ -27,6 +26,6 @@
         android:gravity="center_horizontal"
         android:text="Available"
         android:textColor="@color/green"
-        android:textSize="@dimen/twele_sp" />
+        android:textSize="@dimen/ten_sp" />
 
 </LinearLayout>

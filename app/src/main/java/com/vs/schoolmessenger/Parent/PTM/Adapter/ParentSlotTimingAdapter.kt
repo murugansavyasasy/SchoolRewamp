@@ -20,10 +20,11 @@ class ParentSlotTimingAdapter(
 ) : RecyclerView.Adapter<ParentSlotTimingAdapter.SlotViewHolder>() {
 
     private var selectedSlot: SlotData? = null
-    private var myBookedSlot: SlotData? = null  // only for this meeting
+    private var myBookedSlot: SlotData? = null
 
     inner class SlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvSlotTime: TextView = itemView.findViewById(R.id.tvSlotTime)
+        val tvSlotStatus: TextView = itemView.findViewById(R.id.tvSlotStatus)
         val card: LinearLayout = itemView.findViewById(R.id.lnrHeader)
     }
 
@@ -52,7 +53,9 @@ class ParentSlotTimingAdapter(
             }
 
             slot.my_booking -> {
-                holder.card.setBackgroundColor(Color.parseColor("#4CAF50"))
+                holder.card.setBackgroundResource(R.drawable.circle_background_green)
+                holder.tvSlotTime.setTextColor(Color.BLACK)
+                holder.tvSlotStatus.setTextColor(Color.BLACK)
                 holder.card.isEnabled = false
             }
 
@@ -72,17 +75,20 @@ class ParentSlotTimingAdapter(
             }
 
             selectedSlot == slot -> {
-                holder.card.setBackgroundColor(Color.BLUE)
+                holder.card.setBackgroundResource(R.drawable.bg_btn_blue)
+                holder.tvSlotTime.setTextColor(Color.WHITE)
+                holder.tvSlotStatus.setTextColor(Color.WHITE)
                 holder.card.isEnabled = true
             }
 
             selectedSlot != null && isOverlapping(slot, selectedSlot!!) -> {
-                holder.card.setBackgroundColor(Color.RED)
+
                 holder.card.isEnabled = false
             }
 
             else -> {
                 holder.card.setBackgroundColor(Color.WHITE)
+                holder.card.setBackgroundResource(R.drawable.outline_gray)
                 holder.card.isEnabled = true
             }
         }

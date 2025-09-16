@@ -13,6 +13,7 @@ import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
 import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
@@ -77,6 +78,8 @@ class MeetingHistoryAdapter(
         private val tvTime: TextView = view.findViewById(R.id.tvTime)
         private val tvStatus: TextView = view.findViewById(R.id.tvStatus)
         private val cancelButton: TextView = view.findViewById(R.id.cancelButton)
+        private val callButton: TextView = view.findViewById(R.id.callButton)
+
 
         fun bind(item: MeetingListItem.Item) {
             val meeting = item.meeting
@@ -93,6 +96,7 @@ class MeetingHistoryAdapter(
                 if (meeting.status.equals("Completed", true)) Color.parseColor("#5cc885")
                 else Color.parseColor("#4085ef")
             )
+
 
             cancelButton.visibility =
                 if (meeting.status.equals("Completed", true)) View.GONE else View.VISIBLE

@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="12 Sep 2025"
-            android:textSize="@dimen/fourteen"
+            android:textSize="@dimen/ten_sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:padding="@dimen/eight"
