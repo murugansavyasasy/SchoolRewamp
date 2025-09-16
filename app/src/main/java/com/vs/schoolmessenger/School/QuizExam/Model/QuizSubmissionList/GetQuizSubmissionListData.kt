@@ -11,4 +11,5 @@ class GetQuizSubmissionListData (
     val is_submit: Boolean,
     val submitted_on: String,
     val is_unread: Boolean,
+    val gender: String,
     )

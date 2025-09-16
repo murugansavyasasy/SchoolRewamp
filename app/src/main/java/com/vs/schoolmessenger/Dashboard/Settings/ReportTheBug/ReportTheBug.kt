@@ -67,13 +67,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         binding.imgBack.setOnClickListener(this)
 
         setupToolbar()
-        if (Constant.isParentChoose) {
-            isToolBarPrimaryTheme()
-            binding.rlaLblReportBug.setBackgroundResource(R.drawable.gradient_theme_parent)
-        } else {
-            setupToolbarBlueWhite()
-            binding.rlaLblReportBug.setBackgroundResource(R.drawable.gradient_theme_school)
-        }
+
 
         loadMenu()
     }
@@ -256,16 +250,26 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         val isMenuItem: MutableList<String> = ArrayList()
 
         isMenuItem.add("Select the menu")
-        isMenuItem.add("Attendance")
+        isMenuItem.add("Communication")
         isMenuItem.add("Assignment")
-        isMenuItem.add("Image")
-        isMenuItem.add("Video")
+        isMenuItem.add("Attachments")
+        isMenuItem.add("Homework")
+        isMenuItem.add("Student Attendance Marking")
+        isMenuItem.add("Punch Attendance")
+        isMenuItem.add("Fee Details")
+        isMenuItem.add("Events")
         isMenuItem.add("Notice Board")
-        isMenuItem.add("Message From Management")
-        isMenuItem.add("Staff Attendance")
-        isMenuItem.add("Leave Apply")
-        isMenuItem.add("Voice Message")
-        isMenuItem.add("Text Message")
+        isMenuItem.add("PTM")
+        isMenuItem.add("Lesson Plan")
+        isMenuItem.add("LSRW")
+        isMenuItem.add("QUIZ")
+        isMenuItem.add("Student Attendance Report")
+        isMenuItem.add("Staff Attendance Report")
+        isMenuItem.add("Messages from management")
+        isMenuItem.add("Student Report")
+        isMenuItem.add("Daily Collection")
+        isMenuItem.add("Fee Pending Report")
+
 
 
         val isMenuLoading = ArrayAdapter(this, R.layout.spinner_textview, isMenuItem)

@@ -1,0 +1,69 @@
+<!-- res/layout/custom_alert.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:padding="@dimen/twenty"
+    android:background="@drawable/rect_white">
+
+    <TextView
+        android:id="@+id/alertTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="sdsd"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="visible"
+        android:textSize="@dimen/eighteen_sp"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_marginTop="@dimen/ten"
+        android:textColor="@color/black"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/thumbs_up"
+        android:layout_width="@dimen/hundred"
+        android:layout_height="@dimen/hundred"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/payment_failed" />
+
+    <TextView
+        android:id="@+id/alertMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="sdsdsd"
+        android:textSize="@dimen/sixteen_sp"
+        android:layout_marginTop="@dimen/twenty"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:textColor="@color/light_gray_4"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/thirty"
+        android:layout_marginBottom="@dimen/twenty"
+        app:cardCornerRadius="@dimen/eight"
+        app:cardElevation="@dimen/four"
+        app:cardBackgroundColor="@color/sky_blue0">
+
+        <TextView
+            android:id="@+id/btnOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/permission_ok"
+            android:paddingStart="@dimen/thirty"
+            android:paddingEnd="@dimen/thirty"
+            android:paddingTop="@dimen/twele"
+            android:paddingBottom="@dimen/twele"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fourteen_sp"
+            style="@style/CustomTextStylePoppinsBold"/>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

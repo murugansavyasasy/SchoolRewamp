@@ -155,6 +155,7 @@
                     android:layout_marginEnd="@dimen/eight"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
+                    android:background="@drawable/rect_light_blue"
                     android:paddingStart="@dimen/twele_sp"
                     android:paddingTop="@dimen/six"
                     android:paddingEnd="@dimen/twele"

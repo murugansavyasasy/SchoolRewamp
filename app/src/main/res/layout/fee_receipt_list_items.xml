@@ -1,84 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/rytView"
-        android:padding="@dimen/fifteen"
-        android:layout_margin="@dimen/five"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/rect_shadow_white_2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/five"
+        android:background="@drawable/rect_shadow_white_2"
+        android:padding="@dimen/fifteen"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_centerVertical="true"
             android:id="@+id/imgPdf"
             android:layout_width="@dimen/fifty"
             android:layout_height="@dimen/fifty"
-            android:src="@drawable/pdf_icon"/>
+            android:layout_centerVertical="true"
+            android:src="@drawable/pdf_icon" />
 
         <LinearLayout
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toStartOf="@+id/lblViewReceipt"
-            android:layout_toEndOf="@+id/imgPdf"
             android:id="@+id/lnrInvoiceDetails"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toStartOf="@+id/rytViewInvoice"
+            android:layout_toEndOf="@+id/imgPdf"
+            android:orientation="vertical">
 
             <TextView
-                style="@style/CustomTextStylePoppinsRegular"
                 android:id="@+id/lblInvoiceNo"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Invoice No : INV001"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen"/>
+                android:textSize="@dimen/thirteen" />
 
             <TextView
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_marginTop="@dimen/five"
                 android:id="@+id/lblInvoiceDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Invoice Date : 01-05-2025"
-                android:textSize="@dimen/thirteen"/>
-
-            <TextView
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_marginTop="@dimen/five"
-                android:id="@+id/lblInvoiceAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Invoice Amount : 1200"
-                />
-
-            <TextView
                 style="@style/CustomTextStylePoppinsRegular"
-                android:layout_marginTop="@dimen/five"
-                android:id="@+id/lblInvoiceTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:text="Invoice Date : 01-05-2025"
+                android:textSize="@dimen/thirteen" />
+
+            <TextView
+                android:id="@+id/lblInvoiceAmount"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:text="Invoice Amount : 1200" />
+
+            <TextView
+                android:id="@+id/lblInvoiceTime"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
                 android:text="10:45 AM 234KB"
                 android:textColor="@color/grey"
-                android:textSize="@dimen/thirteen"/>
+                android:textSize="@dimen/thirteen" />
 
         </LinearLayout>
 
 
-        <TextView
-            android:layout_marginEnd="@dimen/five"
-            android:id="@+id/lblViewReceipt"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
+        <RelativeLayout
+            android:background="@drawable/white_bg_primary_stoke"
+            android:id="@+id/rytViewInvoice"
+            android:paddingHorizontal="@dimen/thirteen"
+            android:paddingVertical="@dimen/four"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View"
-            android:textColor="@color/navi_blue6"/>
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+
+            <ImageView
+                android:id="@+id/imgView"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_centerVertical="true"
+                android:src="@drawable/eye_icon_blue" />
+
+            <TextView
+
+                android:id="@+id/lblViewReceipt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_toEndOf="@+id/imgView"
+                android:text="View"
+                android:textColor="@color/navi_blue6" />
+
+        </RelativeLayout>
 
 
     </RelativeLayout>
