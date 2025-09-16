@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/btnPrevMonth"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/left_arrow_blue"
             android:contentDescription="Previous Month"
@@ -35,8 +35,8 @@
 
         <ImageView
             android:id="@+id/btnNextMonth"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/arrow_right_blue"
             android:contentDescription="Next Month"
@@ -62,16 +62,34 @@
         android:horizontalSpacing="2dp"
         android:verticalSpacing="2dp"/>
 
-    <Button
-        android:id="@+id/btnSaveCalendar"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:orientation="horizontal"
+        android:gravity="end"
         android:layout_marginTop="@dimen/twele"
-        android:backgroundTint="#4285F4"
-        android:text="Done"
-        android:textColor="@android:color/white"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="8dp"
-        android:layout_marginEnd="8dp"/>
+        android:layout_marginEnd="8dp">
+
+        <Button
+            android:id="@+id/btnCancelCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4285F4"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:paddingHorizontal="@dimen/twenty"
+            android:paddingVertical="@dimen/eight"
+            android:layout_marginEnd="@dimen/eight"/>
+
+        <Button
+            android:id="@+id/btnSaveCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4285F4"
+            android:text="Done"
+            android:textColor="@color/white"
+            android:paddingHorizontal="@dimen/twenty"
+            android:paddingVertical="@dimen/eight"/>
+    </LinearLayout>
+
 </LinearLayout>

@@ -93,8 +93,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
         val raw = apiDate.trim()
         android.util.Log.d("StaffSlotDetails", "formatApiDateToDisplay input: $raw")
-
-        // 1) epoch seconds (10) or millis (13)
         try {
             if (raw.matches(Regex("^\\d{10}\$")) || raw.matches(Regex("^\\d{13}\$"))) {
                 val millis = if (raw.length == 10) raw.toLong() * 1000L else raw.toLong()
@@ -104,21 +102,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             }
         } catch (_: Exception) { /* ignore */ }
 
-        // 2) try common text patterns (include timezone patterns)
-        val patterns = listOf(
-            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
-            "yyyy-MM-dd'T'HH:mm:ss.SSSX",
-            "yyyy-MM-dd'T'HH:mm:ssXXX",
-            "yyyy-MM-dd'T'HH:mm:ssX",
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-            "yyyy-MM-dd'T'HH:mm:ss'Z'",
-            "yyyy-MM-dd'T'HH:mm:ss",
-            "yyyy-MM-dd",
-            "dd-MM-yyyy",
-            "dd/MM/yyyy",
-            "MM/dd/yyyy"
-        )
-
+        val patterns = listOf("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", "yyyy-MM-dd'T'HH:mm:ss.SSSX", "yyyy-MM-dd'T'HH:mm:ssXXX", "yyyy-MM-dd'T'HH:mm:ssX", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd", "dd-MM-yyyy", "dd/MM/yyyy", "MM/dd/yyyy")
         for (pattern in patterns) {
             try {
                 val parser = java.text.SimpleDateFormat(pattern, Locale.getDefault())
@@ -131,11 +115,8 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                     return result
                 }
             } catch (e: Exception) {
-                // try next pattern
             }
         }
-
-        // 3) try java.time parsing (ISO with offset) - available on API 26+. Safe to attempt in try/catch.
         try {
             val odt = java.time.OffsetDateTime.parse(raw)
             val zoned = odt.atZoneSameInstant(java.time.ZoneId.systemDefault())

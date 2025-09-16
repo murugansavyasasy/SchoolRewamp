@@ -155,8 +155,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSlots"
             android:layout_width="match_parent"
-            android:layout_above="@+id/lblBookSlots"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/lblBookSlots"
             android:layout_below="@+id/rytSubjectList"
             android:padding="@dimen/ten" />
 
@@ -190,17 +190,23 @@
 
         <TextView
             android:id="@+id/lblBookSlots"
-            android:text="Book Slot"
-            android:textColor="@color/white"
             style="@style/CustomTextStylePoppinsBold1"
-            android:textSize="@dimen/fifteen_sp"
-           android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/ten"
-            android:background="@drawable/background_dark_blue"
             android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:background="@drawable/bg_orange"
+            android:backgroundTint="@color/PrimaryColor"
+            android:padding="@dimen/ten"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/sixteen"
+            android:text="Book Slot"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone">
+
 
         </TextView>
 

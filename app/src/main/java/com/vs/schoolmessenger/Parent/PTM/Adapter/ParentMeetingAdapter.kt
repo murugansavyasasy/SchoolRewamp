@@ -15,8 +15,7 @@ class ParentMeetingAdapter(
     private val onSlotSelected: (MeetingData, SlotData) -> Unit
 ) : RecyclerView.Adapter<ParentMeetingAdapter.ParentMeetingViewHolder>() {
 
-    // Track selected slot per meeting (multiple selection)
-    private val selectedSlotsMap = mutableMapOf<String, SlotData>() // key = unique meeting key
+    private val selectedSlotsMap = mutableMapOf<String, SlotData>()
 
     inner class ParentMeetingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvMeetingTitle: TextView = itemView.findViewById(R.id.tvMeetingTitle)

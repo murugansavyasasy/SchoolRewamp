@@ -61,20 +61,19 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         }
     }
 
-    private fun normalizeDate(date: String?): String? {
-        if (date.isNullOrBlank()) return null
-        val inputPatterns = listOf("dd-MM-yyyy", "yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-        for (pattern in inputPatterns) {
-            try {
-                val sdf = SimpleDateFormat(pattern, Locale.getDefault())
-                val parsed = sdf.parse(date)
-                if (parsed != null) {
-                    val out = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                    return out.format(parsed)
-                }
-            } catch (_: Exception) { }
+    private fun toDashDate(input: String?): String {
+        if (input.isNullOrBlank()) return ""
+        val trimmed = input.trim()
+        return try {
+            val parsed = when {
+                trimmed.contains("/") -> SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(trimmed)
+                trimmed.contains("-") -> SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(trimmed)
+                else -> null
+            }
+            if (parsed != null) SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(parsed) else trimmed
+        } catch (e: Exception) {
+            trimmed
         }
-        return null
     }
 
     fun isLoadData(isSlotCategory: List<SlotCategory>?) {
@@ -90,28 +89,16 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 upcomingList.addAll(category.upcoming.flatMap { it.details })
                 completedList.addAll(category.completed.flatMap { it.details })
             } else {
-                val selectedNorm = normalizeDate(isSelectedDate)
-                Log.d("PTM", "Selected (raw): $isSelectedDate, Normalized: $selectedNorm")
-
-                for (category in isSlotCategory) {
-                    for (group in category.today) {
-                        for (detail in group.details) {
-                            Log.d(
-                                "PTM",
-                                "API Date raw: ${detail.date}, normalized: ${normalizeDate(detail.date)}"
-                            )
-                        }
-                    }
-                }
+                Log.d("PTM", "Selected Date: '${isSelectedDate.trim()}'")
 
                 for (group in category.today) {
-                    todayList.addAll(group.details.filter { normalizeDate(it.date) == selectedNorm })
+                    todayList.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
                 }
                 for (group in category.upcoming) {
-                    upcomingList.addAll(group.details.filter { normalizeDate(it.date) == selectedNorm })
+                    upcomingList.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
                 }
                 for (group in category.completed) {
-                    completedList.addAll(group.details.filter { normalizeDate(it.date) == selectedNorm })
+                    completedList.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
                 }
             }
         }
@@ -163,26 +150,35 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         when (p0?.id) {
             R.id.layoutDatePicking -> {
                 Constant.showDatePickerNormal(this) { selectedDate ->
-                    Log.d("PTM", "Selected Date (picker): $selectedDate")
-
-                    val formattedDate = try {
+                    isSelectedDate = try {
                         val input = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                        val output = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                         val date = input.parse(selectedDate)
-                        output.format(date!!)
+                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date!!)
+                    } catch (e: Exception) {
+                        toDashDate(selectedDate)
+                    }
+
+                    val formattedForUI = try {
+                        val input = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                        val date = input.parse(selectedDate)
+                        SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date!!)
                     } catch (e: Exception) {
                         selectedDate
                     }
 
+                    Log.d("PTM_Date", "API Date to send: $isSelectedDate")
+                    Log.d("PTM_Date", "UI Date to show: $formattedForUI")
+
                     binding.imgDelete.visibility = View.VISIBLE
-                    binding.lblDatePicking.text = formattedDate
-                    isSelectedDate = selectedDate
+                    binding.lblDatePicking.text = formattedForUI
+
                     isAllSlot = false
                     isLoadData(isSlotCategory)
                 }
             }
 
             R.id.imgDelete -> {
+                isSelectedDate = ""
                 binding.lblDatePicking.text = "All"
                 binding.imgDelete.visibility = View.GONE
                 isAllSlot = true
