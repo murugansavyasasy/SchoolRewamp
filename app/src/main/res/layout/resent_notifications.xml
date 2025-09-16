@@ -51,10 +51,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
-                        android:layout_marginTop="@dimen/ten"
                         android:layout_marginBottom="@dimen/three"
                         android:text="Text Message"
-                        android:textSize="@dimen/twenty" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp" />
 
                     <TextView
                         android:id="@+id/lblContent"
@@ -64,9 +64,10 @@
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/thirty"
                         android:layout_marginBottom="@dimen/five"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:text="Probably at least one of the constraints in the following list is one you don't want."
                         android:textColor="@color/mild_grey6"
-                        android:textSize="@dimen/sixteen" />
+                        android:textSize="@dimen/fifteen_sp" />
 
                     <TextView
                         android:id="@+id/lblSendBy"
@@ -75,18 +76,18 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/lblContent"
                         android:layout_gravity="end"
-                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
                         android:text="Saranraj"
                         android:textColor="@color/sky_blue0"
-                        android:textSize="@dimen/fourteen" />
+                        android:textSize="@dimen/thirteen_sp" />
 
                     <View
                         android:id="@+id/line"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/one"
                         android:layout_above="@+id/lblSendBy"
-                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginTop="@dimen/fifteen"
                         android:background="@color/gray"
                         android:visibility="visible">
                     </View>

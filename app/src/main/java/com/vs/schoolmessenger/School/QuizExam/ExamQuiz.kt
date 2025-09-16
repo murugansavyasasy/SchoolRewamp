@@ -1,7 +1,9 @@
 package com.vs.schoolmessenger.School.QuizExam
 
 import android.content.Intent
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -15,6 +17,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport.ExamQuizReportAdapter
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionListData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamQuizBinding
@@ -32,6 +35,8 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     var isType = "2"
     var isNextLevelChecked = false
     private lateinit var adapter: ExamQuizReportAdapter
+    private var isSubmission: List<GetQuizExamReportData>? = emptyList()
+
 
     private var appViewModel: App? = null
     override fun setupViews() {
@@ -56,10 +61,38 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 //            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
 //        )
 
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rytSearch1.visibility == View.VISIBLE) {
+                binding.rytSearch1.visibility = View.GONE
+                binding.txtSearch1.text.clear()
+            } else {
+                binding.rytSearch1.visibility = View.VISIBLE
+                binding.txtSearch1.text.clear()
+
+            }
+        }
+
         binding.rbNextLvl.setOnClickListener {
             isNextLevelChecked = !isNextLevelChecked
             binding.rbNextLvl.isChecked = isNextLevelChecked
         }
+
+        binding.txtSearch1.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+                Log.d("Search",s.toString())
+
+
+            }
+        })
+
 
         appViewModel?.isGetQuizExamReport?.observe(this) { response ->
             if (response != null) {
@@ -68,6 +101,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
                     binding.lytList.visibility = View.GONE
                     if (isType == "2") {
                         isLoadEQReport(response.data)
+                        isSubmission=response.data
                     }
                 }
                 else {
@@ -104,6 +138,43 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             isFetchEQReport()
 
         }
+    }
+
+    private fun filter(text: String) {
+        val searchWords = text.trim().lowercase().split("\\s+".toRegex())
+
+        val filteredList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
+            isSubmission.orEmpty()
+        } else {
+            isSubmission.orEmpty().filter { isSubList ->
+                val fieldsToSearch = mutableListOf(
+                    isSubList.sent_by?.lowercase().orEmpty(),
+                    isSubList.title?.lowercase().orEmpty(),
+                    isSubList.description?.lowercase().orEmpty(),
+                    isSubList.subject?.lowercase().orEmpty(),
+                    isSubList.sent_time?.lowercase().orEmpty(),
+                    isSubList.level.toString()?.lowercase().orEmpty(),
+                )
+
+                searchWords.all { word ->
+                    fieldsToSearch.any { field -> field.contains(word) }
+                }
+            }
+        }
+
+        // 🔹 Update UI
+        if (filteredList.isNotEmpty()) {
+            ShowData()
+            adapter.updateData(filteredList)
+        } else {
+            binding.rcQuizExamReport.visibility = View.GONE
+            ErrorMessage(getString(R.string.no_data_found))
+        }
+    }
+
+    fun ShowData() {
+        binding.rcQuizExamReport.visibility=View.VISIBLE
+        binding.lytList.visibility = View.GONE
     }
 
     private fun isLoadEQReport(data: List<GetQuizExamReportData>) {
@@ -169,12 +240,16 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
     private fun showTabOne() {
         binding.lytList.visibility = View.GONE
+        binding.txtSearch1.text.clear()
+        binding.rytSearch1.visibility = View.GONE
         binding.rlaQuizExamReport.visibility = View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
         binding.svOverallCreateQE.visibility = View.VISIBLE
     }
 
     private fun showTabTwo() {
         binding.lytList.visibility = View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.svOverallCreateQE.visibility = View.GONE
         binding.rlaQuizExamReport.visibility = View.VISIBLE
     }

@@ -108,6 +108,7 @@ class NotificationAdapter(
                 "Assignment" -> imgHeader.setBackgroundResource(R.drawable.assignment_icon_school)
                 "Events" -> imgHeader.setBackgroundResource(R.drawable.graduationevent)
                 "Communication" -> imgHeader.setBackgroundResource(R.drawable.communication_icon_dashboard)
+                "Attachments" -> imgHeader.setBackgroundResource(R.drawable.attachement_icon)
             }
         }
     }

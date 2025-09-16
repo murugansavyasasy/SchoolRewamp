@@ -23,13 +23,7 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
         binding.arrowIcon4.setOnClickListener(this)
         binding.arrowIcon5.setOnClickListener(this)
 
-        if (Constant.isParentChoose) {
-            isToolBarPrimaryTheme()
-            binding.header.setBackgroundResource(R.drawable.gradient_theme_parent)
-        } else {
-            setupToolbarBlueWhite()
-            binding.header.setBackgroundResource(R.drawable.gradient_theme_school)
-        }
+
     }
 
     override fun onClick(p0: View?) {

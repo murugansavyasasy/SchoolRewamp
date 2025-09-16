@@ -5,10 +5,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionListData
 import com.vs.schoolmessenger.Utils.Constant
@@ -58,30 +61,52 @@ class QuizSubmitReportAdapter(
     }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val lblName: TextView = itemView.findViewById(R.id.lblName)
-        private val lblSubmitStatus: TextView = itemView.findViewById(R.id.lblSubmitStatus)
-        private val lblStandardSection: TextView = itemView.findViewById(R.id.lblStandardSection)
+        private val lblName: TextView = itemView.findViewById(R.id.tvName)
+        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
+        private val imgAvatar: ImageView = itemView.findViewById(R.id.imgAvatar)
+        private val tvStatus: LinearLayout = itemView.findViewById(R.id.tvStatus)
+        private val lblStandardSection: TextView = itemView.findViewById(R.id.tvClass)
         private val tvSubmittedOn: TextView = itemView.findViewById(R.id.tvSubmittedOn)
-        private val rlaSubmittedOn: RelativeLayout = itemView.findViewById(R.id.rlaSubmittedOn)
+
 
 
         fun bind(data: GetQuizSubmissionListData, position: Int) {
             lblName.text = data.student_name
-            lblStandardSection.text = "${data.standard} - ${data.section}"
+            lblStandardSection.text = "${context.getString(R.string.Class_)}: ${data.standard}-${data.section}"
             if (data.is_submit){
-                rlaSubmittedOn.visibility=View.VISIBLE
+//                tvSubmittedOn.visibility=View.VISIBLE
                 tvSubmittedOn.text =Constant.convertDateFormatType2(data.submitted_on)
-                lblSubmitStatus.text =context.getString(R.string.submitted)
-                lblSubmitStatus.background.setTint(ContextCompat.getColor(context, R.color.green))
-                lblSubmitStatus.setTextColor(ContextCompat.getColor(context,R.color.white))
+                tvStatus1.text =context.getString(R.string.submitted)
+                tvStatus.background.setTint(ContextCompat.getColor(context, R.color.green))
+                tvStatus1.setTextColor(ContextCompat.getColor(context,R.color.white))
 
             }
             else{
-                rlaSubmittedOn.visibility=View.GONE
-                tvSubmittedOn.text =context.getString(R.string.not_submitted)
-                lblSubmitStatus.background.setTint(ContextCompat.getColor(context,R.color.red))
-                lblSubmitStatus.setTextColor(ContextCompat.getColor(context,R.color.white))
+//                tvSubmittedOn.visibility=View.GONE
+                tvStatus1.text =context.getString(R.string.pending)
+                tvStatus.background.setTint(ContextCompat.getColor(context,R.color.orange))
+                tvStatus1.setTextColor(ContextCompat.getColor(context,R.color.white))
             }
+
+            if (data.gender.equals("male", ignoreCase = true)) {
+                Glide.with(imgAvatar.context)
+                    .load(R.drawable.avatar)   // your male drawable
+                    .placeholder(R.drawable.person_circle)
+                    .into(imgAvatar)
+            } else if (data.gender.equals("female", ignoreCase = true)) {
+                Glide.with(imgAvatar.context)
+                    .load(R.drawable.girl_avatar) // your female drawable
+                    .placeholder(R.drawable.person_circle)
+                    .into(imgAvatar)
+            } else {
+                Glide.with(imgAvatar.context)
+                    .load(R.drawable.girl_avatar) // default drawable
+                    .placeholder(R.drawable.person_circle)
+                    .into(imgAvatar)
+            }
+
+
+
 
 
         }

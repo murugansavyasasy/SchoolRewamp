@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionListData
 import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
 import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.SubmitReport
 import com.vs.schoolmessenger.Utils.Constant
@@ -54,6 +55,10 @@ class ExamQuizReportAdapter(
         return if (isLoading) 20 else itemList?.size ?: 0
     }
 
+    fun updateData(newList: List<GetQuizExamReportData>) {
+        itemList = newList
+        notifyDataSetChanged()
+    }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
@@ -70,7 +75,7 @@ class ExamQuizReportAdapter(
             lblTitle.text = data.title
             lblQuizDescription.text = data.description
             subjectvalue.text = data.subject
-            lblLevelStatus.text = context.getString(R.string.level) + data.level.toString()
+            lblLevelStatus.text = context.getString(R.string.level)+" "+data.level.toString()
             lblPostedBy.text = context.getString(R.string.posted_by)+" : " + data.sent_by
             lblCreatedOn.text = context.getString(R.string.sent_at) + Constant.convertDateFormatType(data.sent_time)
 
@@ -142,6 +147,9 @@ class ExamQuizReportAdapter(
             lblSubmitted.setOnClickListener{
                 val intent1 = Intent(context, SubmitReport::class.java)
                 intent1.putExtra(Constant.quiz_Id, data.id)
+                intent1.putExtra(Constant.title_, data.title)
+                intent1.putExtra(Constant.description, data.description)
+                intent1.putExtra(Constant.subjectName, data.subject)
                 context.startActivity(intent1)
             }
 

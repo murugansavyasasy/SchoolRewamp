@@ -18,13 +18,7 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
         binding.imgBack.setOnClickListener(this)
         binding.rytPhone.setOnClickListener(this)
         binding.rytMail.setOnClickListener(this)
-        if (Constant.isParentChoose) {
-            isToolBarPrimaryTheme()
-            binding.rlaLblContactSupport.setBackgroundResource(R.drawable.gradient_theme_parent)
-        } else {
-            setupToolbarBlueWhite()
-            binding.rlaLblContactSupport.setBackgroundResource(R.drawable.gradient_theme_school)
-        }
+
     }
 
     override fun onClick(p0: View?) {

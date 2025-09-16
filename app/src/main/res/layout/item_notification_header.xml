@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imgHeader"
-        android:layout_width="@dimen/fourty"
-        android:layout_height="@dimen/fourty" />
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty" />
 
     <TextView
         android:id="@+id/txtHeader"
@@ -18,7 +18,7 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_marginStart="12dp"
         android:text="Homework"
-        android:textSize="@dimen/eighteen" />
+        android:textSize="@dimen/fifteen_sp" />
 
 </LinearLayout>
 
