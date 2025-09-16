@@ -6,6 +6,7 @@
     <color name="PrimaryColor_80">#804085ef</color>
 
     <color name="dark_blue_5">#3668C2</color>
+    <color name="light_primary_colour">#4b99fd</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
