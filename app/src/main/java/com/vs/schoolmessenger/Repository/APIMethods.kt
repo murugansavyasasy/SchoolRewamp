@@ -180,6 +180,7 @@ object APIMethods {
     const val isParentprofilelist = "admin/api/student-profile/list"
     const val isSchoolprofilelist = "admin/api/staff-profile/list"
     const val islsrwmysubmission = "lms/api/lsrw/my-submissions"
+    const val ispresubmission = "admin/api/student-profile/pre-submission"
 
 
 }

@@ -57,7 +57,82 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/five">
 
+            <LinearLayout
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:orientation="vertical"
+                android:id="@+id/lnrSubjectDetails"
+                android:background="@drawable/white_bg_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/lblSubjectID"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/book__2_"
+                    android:drawablePadding="@dimen/five"
+                    android:text="Maths"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:drawableTint="@color/PrimaryColor"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+                <TextView
+                    android:text="@string/Title"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:id="@+id/lblTitle"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/ten"
+                    android:drawablePadding="@dimen/five"
+                    android:drawableStart="@drawable/pin_icon_2"
+                    android:drawableTint="@color/PrimaryColor"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginStart="@dimen/ten"
+                    android:drawableTint="@color/PrimaryColor"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:orientation="vertical"
+                android:layout_below="@+id/lnrSubjectDetails"
+                android:id="@+id/lnrDescription"
+                android:background="@drawable/white_bg_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:id="@+id/lblDescription"
+                    android:layout_width="match_parent"
+                    android:text="@string/Description"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:id="@+id/tvDescription"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/five"
+                    android:drawablePadding="@dimen/five"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+            </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@+id/lnrDescription"
+                android:layout_marginTop="@dimen/ten"
                 android:id="@+id/rcSubmitReport"
                 android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"

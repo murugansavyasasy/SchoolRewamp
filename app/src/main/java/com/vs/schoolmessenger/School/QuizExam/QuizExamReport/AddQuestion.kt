@@ -5,11 +5,15 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +25,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.AddQuestionAdapter
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
+import com.vs.schoolmessenger.School.QuizExam.AddQuestionListner
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizQuestionRequest
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizRequestBody
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.UpdateQBankItem
@@ -33,7 +38,7 @@ import com.vs.schoolmessenger.databinding.AddQuestionBinding
 
 
 class AddQuestion : BaseActivity<AddQuestionBinding>(),
-    View.OnClickListener {
+    View.OnClickListener,AddQuestionListner {
 
     override fun getViewBinding(): AddQuestionBinding {
         return AddQuestionBinding.inflate(layoutInflater)
@@ -170,12 +175,30 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             }
         }
         isFetchQuizQuestionReport()
+
+        binding.lblAddQuestion.setOnClickListener {
+            if (adapter.showValidationErrors(binding.rcAddQuestion)) {
+                Log.d("QuestionLimit", Constant.isQuestionLimit.toString())
+                Log.d("FinalListSize", adapter.getUpdatedList().size.toString())
+                if (Constant.isQuestionLimit > 0) {
+                    adapter.addItem(binding.rcAddQuestion)
+                    UpdateQuestionCount()
+                }
+                else {
+                    Constant.showErrorAlert(
+                        this,
+                        getString(R.string.alert),
+                        getString(R.string.question_limit_reached)
+                    )
+                }
+            }
+        }
     }
 
     private fun isLoadQuizQuestionReport() {
         Log.d("QuestionLimitInAdapter", Constant.isQuestionLimit.toString())
 
-        adapter = AddQuestionAdapter(editableQuizQuestionReportList.toMutableList(), this, false)
+        adapter = AddQuestionAdapter(editableQuizQuestionReportList.toMutableList(), this,this, false)
         binding.rcAddQuestion.layoutManager =
             LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.rcAddQuestion.isNestedScrollingEnabled = false
@@ -188,30 +211,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
         // Add an empty item only if list is empty
         if (editableQuizQuestionReportList.size <= 0) {
-            adapter.addItem()
+            adapter.addItem(binding.rcAddQuestion)
         }
 
-        binding.lblAddQuestion.setOnClickListener {
-            if (adapter.showValidationErrors(binding.rcAddQuestion)) {
-                Log.d("QuestionLimit", Constant.isQuestionLimit.toString())
-                Log.d("FinalListSize", adapter.getUpdatedList().size.toString())
-                if (Constant.isQuestionLimit > 0) {
-                    adapter.addItem()
-                }
-                else {
-                    Constant.showErrorAlert(
-                        this,
-                        getString(R.string.alert),
-                        getString(R.string.question_limit_reached)
-                    )
-                }
-            }
-        }
-
+        UpdateQuestionCount()
     }
 
     private fun isFetchQuizQuestionReport() {
-        adapter = AddQuestionAdapter(null, this,true)
+        adapter = AddQuestionAdapter(null, this,this,true)
         binding.rcAddQuestion.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.rcAddQuestion.isNestedScrollingEnabled = false
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
@@ -279,6 +286,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     // Within limit → mark all as imported
 //                    Constant.isQuestionLimit -= totalToSelect
                     adapter2.markAsImported(allQuestions)
+
                     cbSelect.isChecked = true
 
                 } else {
@@ -359,6 +367,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 //ensure the deselected items in pick adapter are unchecked (defensive)
                 deselectedIds.forEach { id -> adapter2.uncheckItemById(id) }
 
+                UpdateQuestionCount()
+
                 alertDialog.dismiss()
             } else {
                 // not enough slots; do nothing (no removals), just show error
@@ -374,6 +384,30 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         lblClose.setOnClickListener {
             alertDialog.dismiss()
         }
+
+
+    }
+    fun UpdateQuestionCount(){
+        val text = "${Constant.isQuestionLimit}/$isSavedQuestionLimit"
+        val spannable = SpannableString(text)
+
+        // Apply blue color only to part before "/"
+        val slashIndex = text.indexOf("/")
+        spannable.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.PrimaryColor)), // your blue color
+            0,
+            slashIndex,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        // Set black color for rest (after slash)
+        spannable.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)),
+            slashIndex,
+            text.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.tvQuestionCount.text=spannable
 
 
     }
@@ -487,42 +521,54 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         Log.d("isUpdatedQBankQuestion",isUpdatedQBankQuestions.toString())
 //        Constant.hideLoading(this)
 
-//        if (isUpdatedQBankQuestions>0){
-//
-//            val textQuestion = if (isUpdatedQBankQuestions == 1) {
-//                getString(R.string.question_)
-//            } else {
-//                getString(R.string.questions)
-//            }
-//
-//            val isMessage = "${getString(R.string.You_have_modified)} $isUpdatedQBankQuestions $textQuestion ${getString(R.string.from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank)}"
-//
-//            Constant.showSendConfirmationDialog(
-//                this,
-//                getString(R.string.confirmation),
-//                getString(R.string.Update),
-//                getString(R.string.Cancel),
-//                "",
-//                isMessage
-//            ) { confirmed ->
-//                if (confirmed) {
-//                    Constant.showLoading(this)
-//                    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
-//                }
-//            }
-//
-//        }
-//        else{
-//            Constant.showLoading(this)
-//            appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
-//        }
+        if (isUpdatedQBankQuestions>0){
+
+            val textQuestion = if (isUpdatedQBankQuestions == 1) {
+                getString(R.string.question_)
+            } else {
+                getString(R.string.questions)
+            }
+
+            val isMessage = "${getString(R.string.You_have_modified)} $isUpdatedQBankQuestions $textQuestion ${getString(R.string.from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank)}"
+
+            Constant.showSendConfirmationDialog(
+                this,
+                getString(R.string.confirmation),
+                getString(R.string.Update),
+                getString(R.string.Cancel),
+                "",
+                isMessage
+            ) { confirmed ->
+                if (confirmed) {
+                    Constant.showLoading(this)
+                    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+                }
+            }
+
+        }
+        else{
+            Constant.showLoading(this)
+            appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+        }
     }
 
 
     fun isCallAddQuestion() {
 
         if (isSavedQuestionLimit==adapter.getUpdatedList().size){
-            isAddQuestionSubmit()
+            Constant.showSendConfirmationDialog(
+                this,
+                getString(R.string.confirmation),
+                getString(R.string.send),
+                getString(R.string.Cancel),
+                "",
+                getString(R.string.are_you_sure_want_to_send_the_quiz)
+            ) { confirmed ->
+                if (confirmed) {
+                    isAddQuestionSubmit()
+                }
+            }
+
         }
         else{
             val currentCount = adapter.getUpdatedList().size
@@ -613,6 +659,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
 
         }
+    }
+
+    override fun onCountUpdated() {
+        UpdateQuestionCount()
     }
 }
 

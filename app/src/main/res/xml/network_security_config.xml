@@ -3,6 +3,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">apiv7.schoolchimes.net</domain>
         <domain includeSubdomains="true">api.pauket.com</domain>
+        <domain includeSubdomains="true">api.schoolchimes.com</domain>
     </domain-config>
 </network-security-config>
 

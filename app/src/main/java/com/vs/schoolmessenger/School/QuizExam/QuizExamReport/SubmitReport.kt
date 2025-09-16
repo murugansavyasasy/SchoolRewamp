@@ -138,10 +138,6 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
     }
 
 
-
-
-
-
     private fun isLoadisSubList(data: List<GetQuizSubmissionListData>) {
 
         if (data.isNotEmpty()) {

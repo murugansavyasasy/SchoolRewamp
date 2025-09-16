@@ -31,21 +31,58 @@
             android:layout_below="@+id/toolbarLayout"
             android:layout_marginTop="@dimen/ten"
             android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/lblImportQuestion"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:text="@string/import_from_question_bank"
-                android:textColor="@color/iconBlue"
-                android:drawablePadding="@dimen/three"
-                android:drawableStart="@drawable/import_icon"
+            <RelativeLayout
+                android:id="@+id/lnrQuesheader"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </TextView>
+                <RelativeLayout
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/lblImportQuestion"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/lblQuestionCount"
+                        android:layout_centerVertical="true"
+                        android:text="@string/question_limit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <TextView
+                        android:layout_marginStart="@dimen/two"
+                        android:layout_toEndOf="@+id/lblQuestionCount"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/PrimaryColor"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:id="@+id/tvQuestionCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/lblImportQuestion"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:text="@string/import_from_question_bank"
+                    android:textColor="@color/iconBlue"
+                    android:drawablePadding="@dimen/three"
+                    android:drawableStart="@drawable/import_icon"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_above="@+id/lblSendQuiz"
                 android:id="@+id/lnrCompleteQuestion"
-                android:layout_below="@+id/lblImportQuestion"
+                android:layout_below="@+id/lnrQuesheader"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

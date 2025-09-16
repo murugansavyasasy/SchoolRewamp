@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -24,7 +24,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/one_sixty"
+                    android:layout_height="70dp"
                     android:background="@color/PrimaryColor" />
 
                 <FrameLayout
@@ -32,7 +32,7 @@
                     android:layout_height="@dimen/hundred"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/one_sixty"
-                    android:translationY="-130dp">
+                    android:translationY="-200dp">
 
                     <ImageView
                         android:id="@+id/imgProfile"
@@ -86,7 +86,7 @@
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-45dp"
+                android:layout_marginTop="-90dp"
                 android:scrollbars="none" />
 
         </LinearLayout>
