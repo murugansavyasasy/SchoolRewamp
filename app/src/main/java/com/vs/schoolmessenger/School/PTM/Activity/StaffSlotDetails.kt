@@ -3,12 +3,14 @@ package com.vs.schoolmessenger.School.PTM.Activity
 import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
@@ -43,6 +45,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
     lateinit var isAdapter: ClassesLoadAdapter
 
     private var appViewModel: App? = null
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
@@ -58,27 +61,9 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-
         binding.lblMeetingTitle.text = isSlotsDetails.event_name
         binding.lblMeetingMode.text = "Mode" + " - " + isSlotsDetails.event_mode
-        binding.lblDate.text = isSlotsDetails.date
-
-        val inputDateStr = isSlotsDetails.date
-        val formattedDate = try {
-            val inputFormat = when {
-                inputDateStr.contains("-") -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                inputDateStr.contains("/") -> SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-                else -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            }
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            val date = inputFormat.parse(inputDateStr)
-            outputFormat.format(date!!)
-        } catch (e: Exception) {
-            inputDateStr
-        }
-
-        binding.lblDate.text = formattedDate
-
+        binding.lblDate.text = formatApiDateToDisplay(isSlotsDetails.date)
 
         binding.lblTime.text = isSlotsDetails.start_time + " - " + isSlotsDetails.end_time
 
@@ -100,6 +85,68 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
         isLoadDataAdapter(isSlot)
         isLoadClasses(isSlotsDetails.std_sec_details)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun formatApiDateToDisplay(apiDate: String?): String {
+        if (apiDate.isNullOrBlank()) return ""
+
+        val raw = apiDate.trim()
+        android.util.Log.d("StaffSlotDetails", "formatApiDateToDisplay input: $raw")
+
+        // 1) epoch seconds (10) or millis (13)
+        try {
+            if (raw.matches(Regex("^\\d{10}\$")) || raw.matches(Regex("^\\d{13}\$"))) {
+                val millis = if (raw.length == 10) raw.toLong() * 1000L else raw.toLong()
+                val out = java.text.SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(java.util.Date(millis))
+                android.util.Log.d("StaffSlotDetails", "parsed epoch -> $out")
+                return out
+            }
+        } catch (_: Exception) { /* ignore */ }
+
+        // 2) try common text patterns (include timezone patterns)
+        val patterns = listOf(
+            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSX",
+            "yyyy-MM-dd'T'HH:mm:ssXXX",
+            "yyyy-MM-dd'T'HH:mm:ssX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd",
+            "dd-MM-yyyy",
+            "dd/MM/yyyy",
+            "MM/dd/yyyy"
+        )
+
+        for (pattern in patterns) {
+            try {
+                val parser = java.text.SimpleDateFormat(pattern, Locale.getDefault())
+                parser.isLenient = false
+                val parsed = parser.parse(raw)
+                if (parsed != null) {
+                    val output = java.text.SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                    val result = output.format(parsed)
+                    android.util.Log.d("StaffSlotDetails", "parsed with pattern [$pattern] -> $result")
+                    return result
+                }
+            } catch (e: Exception) {
+                // try next pattern
+            }
+        }
+
+        // 3) try java.time parsing (ISO with offset) - available on API 26+. Safe to attempt in try/catch.
+        try {
+            val odt = java.time.OffsetDateTime.parse(raw)
+            val zoned = odt.atZoneSameInstant(java.time.ZoneId.systemDefault())
+            val fmt = java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.getDefault())
+            val s = zoned.format(fmt)
+            android.util.Log.d("StaffSlotDetails", "parsed with OffsetDateTime -> $s")
+            return s
+        } catch (_: Exception) { /* ignore */ }
+
+        android.util.Log.w("StaffSlotDetails", "Unable to parse date, returning raw -> $raw")
+        return raw
     }
 
 
