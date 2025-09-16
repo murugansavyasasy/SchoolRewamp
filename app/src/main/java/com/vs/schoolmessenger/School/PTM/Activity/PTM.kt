@@ -13,7 +13,6 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.PTM.Adapter.UpComingSlotAdapter
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotCategory
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotDetail
-import com.vs.schoolmessenger.School.PTM.DataClass.TimeSlot
 import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -27,12 +26,12 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     override fun getViewBinding(): PtmStaffBinding {
         return PtmStaffBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     var isAllSlot = true
     var isSlotCategory: List<SlotCategory>? = null
     var isSelectedDate = ""
-    lateinit var mAdapter: UpComingSlotAdapter
     private var appViewModel: App? = null
 
     override fun setupViews() {
@@ -62,6 +61,22 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         }
     }
 
+    private fun normalizeDate(date: String?): String? {
+        if (date.isNullOrBlank()) return null
+        val inputPatterns = listOf("dd-MM-yyyy", "yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+        for (pattern in inputPatterns) {
+            try {
+                val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+                val parsed = sdf.parse(date)
+                if (parsed != null) {
+                    val out = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    return out.format(parsed)
+                }
+            } catch (_: Exception) { }
+        }
+        return null
+    }
+
     fun isLoadData(isSlotCategory: List<SlotCategory>?) {
         if (isSlotCategory.isNullOrEmpty()) return
 
@@ -75,68 +90,62 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 upcomingList.addAll(category.upcoming.flatMap { it.details })
                 completedList.addAll(category.completed.flatMap { it.details })
             } else {
+                val selectedNorm = normalizeDate(isSelectedDate)
+                Log.d("PTM", "Selected (raw): $isSelectedDate, Normalized: $selectedNorm")
+
+                for (category in isSlotCategory) {
+                    for (group in category.today) {
+                        for (detail in group.details) {
+                            Log.d(
+                                "PTM",
+                                "API Date raw: ${detail.date}, normalized: ${normalizeDate(detail.date)}"
+                            )
+                        }
+                    }
+                }
+
                 for (group in category.today) {
-                    todayList.addAll(group.details.filter { it.date == isSelectedDate })
+                    todayList.addAll(group.details.filter { normalizeDate(it.date) == selectedNorm })
                 }
                 for (group in category.upcoming) {
-                    upcomingList.addAll(group.details.filter { it.date == isSelectedDate })
+                    upcomingList.addAll(group.details.filter { normalizeDate(it.date) == selectedNorm })
                 }
                 for (group in category.completed) {
-                    completedList.addAll(group.details.filter { it.date == isSelectedDate })
+                    completedList.addAll(group.details.filter { normalizeDate(it.date) == selectedNorm })
                 }
             }
         }
 
-        // Load into adapters
         isLoadDataAdapter(todayList, binding.rcyToday)
         isLoadDataAdapter(upcomingList, binding.rcyUpcoming)
         isLoadDataAdapter(completedList, binding.rcyComplete)
 
-        if (todayList.isEmpty() && upcomingList.isEmpty() && completedList.isEmpty()) {
-            binding.tvNoData.visibility = View.VISIBLE
-        } else {
-            binding.tvNoData.visibility = View.GONE
-        }
+        binding.tvNoData.visibility =
+            if (todayList.isEmpty() && upcomingList.isEmpty() && completedList.isEmpty())
+                View.VISIBLE else View.GONE
 
+        Log.d(
+            "PTM",
+            "Today: ${todayList.size}, Upcoming: ${upcomingList.size}, Complete: ${completedList.size}"
+        )
 
-    Log.d("PTM", "Today: ${todayList.size}, Upcoming: ${upcomingList.size}, Complete: ${completedList.size}")
+        binding.lblToday.visibility = if (todayList.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.rcyToday.visibility = binding.lblToday.visibility
 
-        if (todayList.isNotEmpty()) {
-            binding.lblToday.visibility = View.VISIBLE
-            binding.rcyToday.visibility = View.VISIBLE
-            isLoadDataAdapter(todayList, binding.rcyToday)
-        } else {
-            binding.lblToday.visibility = View.GONE
-            binding.rcyToday.visibility = View.GONE
-        }
+        binding.lblUpComing.visibility = if (upcomingList.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.rcyUpcoming.visibility = binding.lblUpComing.visibility
 
-        if (upcomingList.isNotEmpty()) {
-            binding.lblUpComing.visibility = View.VISIBLE
-            binding.rcyUpcoming.visibility = View.VISIBLE
-            isLoadDataAdapter(upcomingList, binding.rcyUpcoming)
-        } else {
-            binding.lblUpComing.visibility = View.GONE
-            binding.rcyUpcoming.visibility = View.GONE
-        }
-
-        if (completedList.isNotEmpty()) {
-            binding.lblComplete.visibility = View.VISIBLE
-            binding.rcyComplete.visibility = View.VISIBLE
-            isLoadDataAdapter(completedList, binding.rcyComplete)
-        } else {
-            binding.lblComplete.visibility = View.GONE
-            binding.rcyComplete.visibility = View.GONE
-        }
+        binding.lblComplete.visibility = if (completedList.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.rcyComplete.visibility = binding.lblComplete.visibility
     }
 
-
-    fun isLoadDataAdapter(list: ArrayList<SlotDetail>, recyclerView: RecyclerView) {
+    private fun isLoadDataAdapter(list: ArrayList<SlotDetail>, recyclerView: RecyclerView) {
         val adapter = UpComingSlotAdapter(list, this, this, Constant.isShimmerViewDisable)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
     }
 
-    fun loadData() {
+    private fun loadData() {
         val shimmerAdapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
 
         binding.rcyToday.layoutManager = LinearLayoutManager(this)
@@ -150,14 +159,23 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         appViewModel!!.isSlotForStaff(isAccessToken!!, "ALL")
     }
 
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.layoutDatePicking -> {
                 Constant.showDatePickerNormal(this) { selectedDate ->
-                    Log.d("PTM", "Selected Date: $selectedDate")
+                    Log.d("PTM", "Selected Date (picker): $selectedDate")
+
+                    val formattedDate = try {
+                        val input = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                        val output = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                        val date = input.parse(selectedDate)
+                        output.format(date!!)
+                    } catch (e: Exception) {
+                        selectedDate
+                    }
+
                     binding.imgDelete.visibility = View.VISIBLE
-                    binding.lblDatePicking.text = selectedDate
+                    binding.lblDatePicking.text = formattedDate
                     isSelectedDate = selectedDate
                     isAllSlot = false
                     isLoadData(isSlotCategory)
@@ -171,9 +189,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 isLoadData(isSlotCategory)
             }
 
-            R.id.imgBack -> {
-                onBackPressed()
-            }
+            R.id.imgBack -> onBackPressed()
 
             R.id.layoutCreateSlot -> {
                 val intent = Intent(this, CreateSlots::class.java)
