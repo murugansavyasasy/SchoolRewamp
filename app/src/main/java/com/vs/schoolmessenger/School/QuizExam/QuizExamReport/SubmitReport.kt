@@ -24,6 +24,9 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
     private lateinit var adapter: QuizSubmitReportAdapter
     private var isSubmission: List<GetQuizSubmissionListData>? = emptyList()
     var isQuizID=""
+    var isTittle=""
+    var isDescription=""
+    var isSubject=""
 
     override fun getViewBinding(): QuizSubmitReportBinding {
         return QuizSubmitReportBinding.inflate(layoutInflater)
@@ -37,12 +40,17 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.quiz_submission_list)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
-        isQuizID = intent.getStringExtra("quiz_Id").toString()
-
+        isQuizID = intent.getStringExtra(Constant.quiz_Id).toString()
+        isTittle = intent.getStringExtra(Constant.title_).toString()
+        isDescription = intent.getStringExtra(Constant.description).toString()
+        isSubject = intent.getStringExtra(Constant.subjectName).toString()
+        binding.lblSubjectID.text=isSubject
+        binding.tvTitle.text=isTittle
+        binding.tvDescription.text=isDescription
 
 
         isGetSubmittedList()
@@ -69,7 +77,7 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
         }
 
 
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+        binding.imgSearchicon.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
                 binding.txtSearch1.text.clear()

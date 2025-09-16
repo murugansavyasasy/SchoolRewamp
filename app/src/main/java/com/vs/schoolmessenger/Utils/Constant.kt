@@ -391,6 +391,7 @@ object Constant {
     var isCommonDescription = ""
     var assignment_id = "assignment_id"
     var title_ = "title"
+    var description = "description"
     var subject = "subject"
     var file_ = "file"
     var content_ = "content"

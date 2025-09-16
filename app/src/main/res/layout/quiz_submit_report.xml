@@ -11,39 +11,9 @@
         layout="@layout/school_side_tool_bar" />
 
 
-    <RelativeLayout
-        android:id="@+id/rytSearch1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_below="@id/toolbarLayout"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:background="@drawable/rect_grey"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/imgSearch1"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:src="@drawable/ic_search" />
-
-        <EditText
-            android:id="@+id/txtSearch1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/imgSearch1"
-            android:background="@android:color/transparent"
-            android:hint="@string/lblSearch"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
-    </RelativeLayout>
-
 
     <ScrollView
-        android:layout_below="@+id/rytSearch1"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -65,35 +35,66 @@
                 android:background="@drawable/white_bg_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/lblSubjectID"
-                    android:layout_width="match_parent"
-                    android:drawableStart="@drawable/book__2_"
-                    android:drawablePadding="@dimen/five"
-                    android:text="Maths"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:drawableTint="@color/PrimaryColor"
-                    android:layout_height="wrap_content">
-                </TextView>
 
-                <TextView
-                    android:text="@string/Title"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:id="@+id/lblTitle"
-                    android:gravity="center_vertical"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/ten"
-                    android:drawablePadding="@dimen/five"
-                    android:drawableStart="@drawable/pin_icon_2"
-                    android:drawableTint="@color/PrimaryColor"
                     android:layout_height="wrap_content">
-                </TextView>
+                    <ImageView
+                        android:id="@+id/bbokimg"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/PrimaryColor"
+                        android:layout_width="@dimen/twenty"
+                        android:src="@drawable/book__2_"
+                        android:layout_height="@dimen/twenty">
+
+                    </ImageView>
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_toEndOf="@+id/bbokimg"
+                        android:id="@+id/lblSubjectID"
+                        android:layout_width="match_parent"
+                        android:drawablePadding="@dimen/five"
+                        android:text="Maths"
+                        android:textSize="@dimen/sixteen_sp"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/titleimg"
+                        android:layout_centerVertical="true"
+                        android:layout_width="@dimen/twenty"
+                        android:src="@drawable/pin_icon_2"
+                        android:tint="@color/PrimaryColor"
+                        android:layout_height="@dimen/twenty">
+
+                    </ImageView>
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_toEndOf="@+id/titleimg"
+                        android:text="@string/Title"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:id="@+id/lblTitle"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                </RelativeLayout>
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
                     android:id="@+id/tvTitle"
+                    android:textSize="@dimen/fourteen_sp"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginStart="@dimen/twenty_five"
                     android:drawableTint="@color/PrimaryColor"
                     android:layout_height="wrap_content">
                 </TextView>
@@ -113,6 +114,7 @@
                 <TextView
                     style="@style/CustomTextStylePoppinsMedium"
                     android:id="@+id/lblDescription"
+                    android:textSize="@dimen/eighteen_sp"
                     android:layout_width="match_parent"
                     android:text="@string/Description"
                     android:layout_height="wrap_content">
@@ -121,55 +123,116 @@
                 <TextView
                     style="@style/CustomTextStylePoppinsMedium"
                     android:id="@+id/tvDescription"
+                    android:textSize="@dimen/sixteen_sp"
                     android:layout_width="match_parent"
                     android:layout_marginTop="@dimen/five"
-                    android:drawablePadding="@dimen/five"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_height="wrap_content">
                 </TextView>
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_below="@+id/lnrDescription"
-                android:layout_marginTop="@dimen/ten"
-                android:id="@+id/rcSubmitReport"
-                android:nestedScrollingEnabled="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-            </androidx.recyclerview.widget.RecyclerView>
-
-
             <LinearLayout
-                android:id="@+id/lytList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rcSubmitReport"
-                android:layout_centerInParent="true"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/ten"
-                android:visibility="gone">
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_below="@id/lnrDescription"
+                android:id="@+id/lnrOverallSubList"
+                android:background="@drawable/white_bg_card"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/noDataImage"
-                    android:layout_width="@dimen/two_hundred"
-                    android:layout_height="@dimen/two_hundred"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/no_data_found">
-                </ImageView>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:drawablePadding="@dimen/two"
+                        android:drawableStart="@drawable/student_degree"
+                        android:layout_width="match_parent"
+                        android:layout_centerVertical="true"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/eighteen_sp"
+                        android:text="@string/student_submissions"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <ImageView
+                        android:id="@+id/imgSearchicon"
+                        android:layout_centerVertical="true"
+                        android:layout_width="@dimen/twenty_five"
+                        android:src="@drawable/search_icon"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_alignParentEnd="true"
+                        android:layout_height="@dimen/twenty_five">
 
-                <TextView
-                    android:id="@+id/txtNoData"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
+                    </ImageView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rytSearch1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/thirty_five"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:background="@drawable/rect_grey"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imgSearch1"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:src="@drawable/ic_search" />
+
+                    <EditText
+                        android:id="@+id/txtSearch1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/imgSearch1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/lblSearch"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcSubmitReport"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="No Data"
-                    android:textSize="@dimen/fifteen_sp">
+                    android:layout_marginTop="@dimen/ten"
+                    android:nestedScrollingEnabled="false"></androidx.recyclerview.widget.RecyclerView>
 
-                </TextView>
+                <LinearLayout
+                    android:id="@+id/lytList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/ten"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/noDataImage"
+                        android:layout_width="@dimen/two_hundred"
+                        android:layout_height="@dimen/two_hundred"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/no_data_found">
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/txtNoData"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="No Data"
+                        android:textSize="@dimen/fifteen_sp">
+
+                    </TextView>
+                </LinearLayout>
+
             </LinearLayout>
+
         </RelativeLayout>
     </ScrollView>
 
