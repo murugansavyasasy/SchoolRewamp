@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -37,7 +38,6 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
 import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
-import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSubmitSkillDataClass
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
@@ -45,6 +45,7 @@ import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
+import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -304,6 +305,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
 
+        appViewModel!!.isCreateQuiz?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Constant.showTopAlertPopup(response.message, this)
+
+            }
+        }
+
         appViewModel!!.islsrwSkillCreate?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             ProgressDialogHelper.dismiss()
@@ -407,7 +416,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun tapVisibility() {
         Log.d("Tap Visibility Check", "Tap Debug Check")
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
-            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+            if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM) {
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -442,7 +451,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         } else {
             Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
             when (SELECTED_SCHOOL_MENU) {
-                M_HOMEWORK -> {
+                M_HOMEWORK, Constant.M_QUIZ_EXAM -> {
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
                     binding.tapEntireSchool.visibility = View.GONE
@@ -1068,6 +1077,16 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isUploadFilesInServer("audio")
                     }
                 }
+                Constant.M_QUIZ_EXAM -> {
+//                    val isQuizData = intent.getSerializableExtra(Constant.create_quiz_exam_data) as? SaveCreateExamQuizDetails
+//                    Log.d("isQuizData",isQuizData!!.title)
+//                    val jsonObject = JsonObject()
+//                    jsonObject.addProperty("title",isQuizData!!.title)
+//                    jsonObject.addProperty("description",isQuizData!!.description)
+//                    jsonObject.addProperty("no_of_question",isQuizData!!.no_of_question)
+//                    jsonObject.addProperty("level_flag",1)
+//                    appViewModel!!.isCreateQuiz(isAccessToken!!, jsonObject)
+                }
             }
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
@@ -1229,7 +1248,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW) {
+        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM) {
             isGetSubjectList(idString)
         }
         binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size
@@ -1262,7 +1281,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW) {
+        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM) {
             isGetSubjectList(idString)
         }
     }

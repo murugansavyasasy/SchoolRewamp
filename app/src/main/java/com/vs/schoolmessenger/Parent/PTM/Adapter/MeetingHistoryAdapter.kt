@@ -97,13 +97,25 @@ class MeetingHistoryAdapter(
                 else Color.parseColor("#4085ef")
             )
 
-
-            cancelButton.visibility =
-                if (meeting.status.equals("Completed", true)) View.GONE else View.VISIBLE
+            when {
+                meeting.status.equals("Completed", true) -> {
+                    cancelButton.visibility = View.GONE
+                    callButton.visibility = View.GONE
+                }
+                meeting.mode.equals("In Person", true) -> {
+                    cancelButton.visibility = View.VISIBLE
+                    callButton.visibility = View.GONE
+                }
+                else -> {
+                    cancelButton.visibility = View.VISIBLE
+                    callButton.visibility = View.VISIBLE
+                }
+            }
 
             cancelButton.setOnClickListener {
                 val context = itemView.context
-                val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_cancel_meeting, null)
+                val dialogView = LayoutInflater.from(context)
+                    .inflate(R.layout.dialog_cancel_meeting, null)
                 val etReason = dialogView.findViewById<EditText>(R.id.etReason)
                 val btnCancelMeeting = dialogView.findViewById<Button>(R.id.btnCancelMeeting)
                 val ivClose = dialogView.findViewById<ImageView>(R.id.ivClose)
@@ -115,12 +127,19 @@ class MeetingHistoryAdapter(
                 btnCancelMeeting.setOnClickListener {
                     alertDialog.dismiss()
                 }
-
                 ivClose.setOnClickListener {
                     alertDialog.dismiss()
                 }
 
                 alertDialog.show()
+            }
+
+            callButton.setOnClickListener {
+                val context = itemView.context
+                val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
+                    data = android.net.Uri.parse("tel:${meeting.staff_phone}")
+                }
+                context.startActivity(intent)
             }
         }
     }

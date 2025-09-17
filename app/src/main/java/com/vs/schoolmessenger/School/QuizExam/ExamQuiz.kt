@@ -230,9 +230,9 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             binding.edtQuestion.requestFocus()
             return
         }
+
         val SaveCreateExamQuizDetails =
             SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked)
-        Log.d("SaveCreateExamQuizDetails", SaveCreateExamQuizDetails.toString())
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
         startActivity(intent)
