@@ -12,23 +12,29 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileField
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
+import com.vs.schoolmessenger.Dashboard.Fragments.Profile.Listener.DocumentClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import java.util.Calendar
 
 class ProfileRewampFragmentAdapter(
-    private var itemList: List<ProfileItem>, private val context: Context
+    private var itemList: List<ProfileItem>,
+    private val context: Context,
+    private val listener: DocumentClickListener,
+    private val rcyImages: RecyclerView? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -58,7 +64,7 @@ class ProfileRewampFragmentAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = itemList[position]) {
             is ProfileItem.Header -> (holder as HeaderViewHolder).bind(item)
-            is ProfileItem.Field -> (holder as FieldViewHolder).bind(item.field)
+            is ProfileItem.Field -> (holder as FieldViewHolder).bind(item.field, position)
         }
     }
 
@@ -93,8 +99,13 @@ class ProfileRewampFragmentAdapter(
         private val titlelayout: LinearLayout = itemView.findViewById(R.id.titlelayout)
         private val imagelayout: LinearLayout = itemView.findViewById(R.id.imagelayout)
         private val imagelabel: TextView = itemView.findViewById(R.id.imagelabel)
+        private val addlabel: TextView = itemView.findViewById(R.id.addlabel)
+        private val selectedFilesContainer: FrameLayout = itemView.findViewById(R.id.selectedFilesContainer)  // New container
 
-        fun bind(field: ProfileField) {
+        var isRcyImagesAttached = false
+
+        fun bind(field: ProfileField, position: Int) {
+
 
             datelayout.visibility = View.GONE
             dropdownlayout.visibility = View.GONE
@@ -102,6 +113,7 @@ class ProfileRewampFragmentAdapter(
             remarkslayout.visibility = View.GONE
             titlelayout.visibility = View.GONE
             imagelayout.visibility = View.GONE
+            selectedFilesContainer.visibility = View.GONE
 
             if (field.node.equals("photoPath", ignoreCase = true)) return
 
@@ -113,13 +125,41 @@ class ProfileRewampFragmentAdapter(
                     titlevalue.isEnabled = field.is_editable
                 }
 
-                Constant.image_, Constant.document_ -> {
+                Constant.image_ -> {
                     imagelayout.visibility = View.VISIBLE
                     imagelabel.text = field.title
                     val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
                     recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
                     val urls = field.options ?: emptyList()
                     recyclerView.adapter = DocumentImageAdapter(urls)
+
+                    if (field.isRcyImagesAttached) {
+                        attachRcyImagesBelowField()
+                    }
+                    addlabel.isVisible = field.is_editable
+                    addlabel.setOnClickListener {
+                        listener.onDocumentClicked(field, position)
+                        field.isRcyImagesAttached = true
+                        attachRcyImagesBelowField()
+                    }
+                }
+                Constant.document_ -> {
+                    imagelayout.visibility = View.VISIBLE
+                    imagelabel.text = field.title
+                    val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
+                    recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
+                    val urls = field.options ?: emptyList()
+                    recyclerView.adapter = DocumentImageAdapter(urls)
+
+                    if (field.isRcyImagesAttached) {
+                        attachRcyImagesBelowField()
+                    }
+                    addlabel.isVisible = field.is_editable
+                    addlabel.setOnClickListener {
+                        listener.onDocumentClicked(field, position)
+                        field.isRcyImagesAttached = true
+                        attachRcyImagesBelowField()
+                    }
                 }
 
                 Constant.address -> {
@@ -142,8 +182,7 @@ class ProfileRewampFragmentAdapter(
                             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
                             DatePickerDialog(
-                                itemView.context,
-                                { _, selectedYear, selectedMonth, selectedDay ->
+                                itemView.context, { _, selectedYear, selectedMonth, selectedDay ->
                                     val selectedDate = String.format(
                                         "%02d-%02d-%04d",
                                         selectedDay,
@@ -152,8 +191,7 @@ class ProfileRewampFragmentAdapter(
                                     )
                                     datevalue.text = selectedDate
                                     field.value = selectedDate
-                                },
-                                year, month, day
+                                }, year, month, day
                             ).show()
                         }
                     }
@@ -194,6 +232,7 @@ class ProfileRewampFragmentAdapter(
                     dropdownlayout.visibility = View.VISIBLE
                     dropdownlabel.text = field.title
                     val options = field.options ?: emptyList()
+
                     val adapterDropdown = ArrayAdapter(
                         itemView.context,
                         android.R.layout.simple_dropdown_item_1line,
@@ -202,26 +241,49 @@ class ProfileRewampFragmentAdapter(
                     dropdownvalue.setAdapter(adapterDropdown)
 
                     dropdownvalue.setText(field.value ?: "", false)
-
                     dropdownvalue.isEnabled = field.is_editable
 
-                    dropdownvalue.setSafeDropdownListener(options) { selected ->
-                        field.value = selected
-                        Log.d("DropdownDebug", "Dropdown '${field.title}' selected: $selected")
-                    }
-
-                    (dropdownvalue.tag as? TextWatcher)?.let { dropdownvalue.removeTextChangedListener(it) }
+                    dropdownvalue.setSafeTextWatcher(field) { field.value = it }
                 }
-
-
-
             }
         }
-}
+
+        private fun attachRcyImagesBelowField() {
+            rcyImages?.let { rv ->
+                if (!isRcyImagesAttached) {
+                    (rv.parent as? ViewGroup)?.removeView(rv)
+                    selectedFilesContainer.addView(rv, FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT
+                    ))
+                    selectedFilesContainer.visibility = View.VISIBLE
+                    rv.visibility = View.VISIBLE
+                    isRcyImagesAttached = true
+                }
+            }
+        }
+
+        fun detachRcyImages() {
+            if (isRcyImagesAttached) {
+                rcyImages?.let { rv ->
+                    selectedFilesContainer.removeView(rv)
+                    rv.visibility = View.GONE
+                }
+                isRcyImagesAttached = false
+                selectedFilesContainer.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        super.onViewRecycled(holder)
+        if (holder is FieldViewHolder && holder.isRcyImagesAttached) {
+            holder.detachRcyImages()
+        }
+    }
 
     fun getUpdatedField(node: String): ProfileField? {
-        return itemList.filterIsInstance<ProfileItem.Field>()
-            .map { it.field }
+        return itemList.filterIsInstance<ProfileItem.Field>().map { it.field }
             .find { it.node.equals(node, ignoreCase = true) }
     }
 
@@ -245,8 +307,7 @@ class ProfileRewampFragmentAdapter(
     }
 
     fun AutoCompleteTextView.setSafeDropdownListener(
-        options: List<String>,
-        onChanged: (String) -> Unit
+        options: List<String>, onChanged: (String) -> Unit
     ) {
         (this.tag as? AdapterView.OnItemClickListener)?.let { onItemClickListener = null }
         val listener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -255,5 +316,4 @@ class ProfileRewampFragmentAdapter(
         onItemClickListener = listener
         this.tag = listener
     }
-
 }

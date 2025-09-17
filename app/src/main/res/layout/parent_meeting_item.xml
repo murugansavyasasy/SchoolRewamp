@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/five"
     app:cardCornerRadius="@dimen/twele"
+    android:background="@drawable/outline_gray"
     app:cardElevation="@dimen/four">
 
     <LinearLayout
@@ -33,8 +34,7 @@
                 android:id="@+id/tvProfileIcon"
                 android:layout_width="@dimen/fifty"
                 android:layout_height="@dimen/fifty"
-                android:background="@drawable/circle_bg_red"
-                android:backgroundTint="@color/purple_500"
+                android:background="@drawable/bg_card_gradient"
                 android:gravity="center"
                 android:text="S"
                 style="@style/CustomTextStylePoppinsBold"
@@ -78,7 +78,7 @@
 <!--            android:drawablePadding="@dimen/eight"-->
 <!--            android:paddingHorizontal="@dimen/sixteen"-->
 <!--            android:paddingVertical="@dimen/twele"-->
-<!--            android:text="In Person"-->
+<!--            android:text="In Person"-->`
 <!--            style="@style/CustomTextStylePoppinsBold"-->
 <!--            android:textColor="@color/white"-->
 <!--            android:textSize="@dimen/fourteen" />-->
@@ -87,7 +87,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fifteen"
-            android:backgroundTint="@color/purple_500"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:background="@drawable/bg_meeting_type"

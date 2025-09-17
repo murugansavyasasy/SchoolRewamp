@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamListData
 import com.vs.schoolmessenger.Parent.QuizExam.AttendQuiz
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -55,6 +56,10 @@ class QuizUpcomingAdapter(
 
     override fun getItemCount(): Int {
         return if (isLoading) 20 else itemList?.size ?: 0
+    }
+    fun updateData(newList: List<GetQuizExamListData>) {
+        itemList = newList
+        notifyDataSetChanged()
     }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

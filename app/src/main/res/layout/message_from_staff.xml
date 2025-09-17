@@ -13,7 +13,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/twenty"
+        app:cardCornerRadius="@dimen/fifteen"
         app:cardElevation="4dp">
 
         <RelativeLayout
@@ -66,7 +66,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/ten"
-                        android:padding="@dimen/five"
+                        android:paddingVertical="@dimen/four"
+                        android:paddingHorizontal="@dimen/thirteen"
                         android:text=" Vice Principal "
                         android:textSize="@dimen/twele_sp"
                         style="@style/CustomTextStylePoppinsBold"
@@ -77,8 +78,8 @@
                     android:id="@+id/imgReadStatus"
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/circle_bg_red"
-                    android:layout_width="@dimen/fifteen"
-                    android:layout_height="@dimen/fifteen">
+                    android:layout_width="@dimen/ten"
+                    android:layout_height="@dimen/ten">
 
                 </View>
             </RelativeLayout>
@@ -119,8 +120,9 @@
                         android:text="View"
                         android:layout_gravity="end"
                         android:id="@+id/lblView"
+                        android:paddingVertical="@dimen/four"
+                        android:paddingHorizontal="@dimen/thirteen"
                         android:textColor="@color/iconBlue"
-                        android:padding="@dimen/five"
                         android:drawableStart="@drawable/eye_icon"
                         android:drawableTint="@color/PrimaryColor"
                         android:gravity="center"

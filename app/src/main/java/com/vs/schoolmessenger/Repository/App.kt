@@ -1337,10 +1337,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun ispresubmission(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
         apiParentRepositories.ispresubmission(
-            isToken, jsonObject,
+            isToken, jsonObject,activity
         )
     }
 

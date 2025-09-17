@@ -1580,11 +1580,9 @@ class ParentServices {
 
 
 
-    fun ispresubmission(
-        isToken: String,
-        jsonObject: JsonObject,
-    ) {
-        RestClient.apiInterfaces.ispresubmission(isToken,jsonObject)
+    fun ispresubmission(isToken: String, jsonObject: JsonObject, activity: Activity ) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.ispresubmission(isToken, jsonObject)
             ?.enqueue(object : Callback<ProfileUpdateResponse?> {
                 override fun onResponse(
                     call: Call<ProfileUpdateResponse?>,

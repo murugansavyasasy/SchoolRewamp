@@ -124,13 +124,18 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
         }
 
-        appViewModel!!.isPtmSlotCreate?.observe(this) { response ->
-            if (response != null) {
-                bottomSheetDialog!!.dismiss()
-                if (response.status) {
-                    Constant.showTopAlertPopup(response.message, this)
+            appViewModel!!.isPtmSlotCreate?.observe(this) { response ->
+                Constant.hideLoading(this)
+
+                if (response != null) {
+                    bottomSheetDialog?.dismiss()
+                    if (response.status) {
+                        Constant.showTopAlertPopup(response.message, this)
+                    } else {
+                        Constant.showTopAlertPopup("Slot creation failed!", this)
+                    }
                 }
-            }
+
         }
 
         appViewModel!!.isSlotValidation?.observe(this) { response ->
@@ -460,7 +465,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 .groupBy { it.first }
                 .map { (date, slots) -> date to slots.map { it.second } }
                 .toMutableList()
-
+            Constant.showLoading(this)
             isCreateSlots()
         }
 

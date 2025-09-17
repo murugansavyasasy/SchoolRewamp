@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant.isParentDashBoardData
 import com.vs.schoolmessenger.databinding.StudentDetailsListItemBinding
+import com.vs.schoolmessenger.databinding.StudentDetailsListItemNewBinding
 
 class StudentDetailAdapter(
     private val itemList: List<ChildDetails>?, private var listener: PriorityClickListener,
@@ -24,11 +25,11 @@ class StudentDetailAdapter(
     RecyclerView.Adapter<StudentDetailAdapter.GridViewHolder>() {
     var isLoadImage = true
 
-    class GridViewHolder(val binding: StudentDetailsListItemBinding) :
+    class GridViewHolder(val binding: StudentDetailsListItemNewBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GridViewHolder {
-        val binding = StudentDetailsListItemBinding.inflate(
+        val binding = StudentDetailsListItemNewBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return GridViewHolder(binding)
@@ -38,46 +39,46 @@ class StudentDetailAdapter(
         val item = itemList!![position]
 
 
-        when (position) {
-
-            0 -> {
-
-
-                holder.binding.rlaSchoolName.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context, R.color.dark_bg_blue
-                    )
-                )
-            }
-
-            1 -> {
-
-
-                holder.binding.rlaSchoolName.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context, R.color.dark_bg_purple
-                    )
-                )
-            }
-
-            2 -> {
-
-
-                holder.binding.rlaSchoolName.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context, R.color.dark_bg_orange
-                    )
-                )
-            }
-
-            3 -> {
-                holder.binding.rlaSchoolName.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context, R.color.dark_bg_green
-                    )
-                )
-            }
-        }
+//        when (position) {
+//
+//            0 -> {
+//
+//
+//                holder.binding.rlaSchoolName.setBackgroundColor(
+//                    ContextCompat.getColor(
+//                        context, R.color.dark_bg_blue
+//                    )
+//                )
+//            }
+//
+//            1 -> {
+//
+//
+//                holder.binding.rlaSchoolName.setBackgroundColor(
+//                    ContextCompat.getColor(
+//                        context, R.color.dark_bg_purple
+//                    )
+//                )
+//            }
+//
+//            2 -> {
+//
+//
+//                holder.binding.rlaSchoolName.setBackgroundColor(
+//                    ContextCompat.getColor(
+//                        context, R.color.dark_bg_orange
+//                    )
+//                )
+//            }
+//
+//            3 -> {
+//                holder.binding.rlaSchoolName.setBackgroundColor(
+//                    ContextCompat.getColor(
+//                        context, R.color.dark_bg_green
+//                    )
+//                )
+//            }
+//        }
 
         holder.binding.rlaStudent.setOnClickListener {
             isParentDashBoardData = null
@@ -125,6 +126,35 @@ class StudentDetailAdapter(
                 }
             })
             .into(holder.binding.imgSchool)
+
+        Glide.with(context)
+            .load(item.profile)
+            .placeholder(R.drawable.default_profile) // Temporary image while loading
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    // Log the error if needed
+                    Log.e("GlideError", "Image load failed", e)
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+            })
+            .into(holder.binding.imgStudentProfile)
+
+
     }
 
     override fun getItemCount(): Int = itemList!!.size

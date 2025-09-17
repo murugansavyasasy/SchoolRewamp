@@ -1,13 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/meetingCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/five"
-   android:layout_marginHorizontal="@dimen/ten"
+    android:layout_marginHorizontal="@dimen/ten"
     android:background="@drawable/bg_gradient"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:padding="@dimen/sixteen">
+    android:padding="@dimen/ten">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -60,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/twele"
-        android:background="@drawable/white_bg_card"
+        android:background="@drawable/bg_orange"
         android:backgroundTint="@color/violet_color"
         android:paddingHorizontal="@dimen/fifteen"
         android:paddingVertical="@dimen/five"
@@ -215,34 +216,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/five"
         android:layout_marginTop="@dimen/twenty"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/thirty_five"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/eight"
             android:background="@drawable/bg_red"
-            android:drawableStart="@drawable/close_icon_3"
-            android:gravity="center"
+            android:drawableStart="@drawable/close_icon"
+            android:gravity="center_vertical"
             android:text="@string/cancel"
-            android:paddingHorizontal="@dimen/ten"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/twele_sp" />
+            android:paddingHorizontal="@dimen/eight"
+            android:paddingVertical="@dimen/eight"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ten_sp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"/>
 
-        <Button
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/callButton"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/thirty_five"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eight"
             android:background="@drawable/bg_orange"
-            android:drawableStart="@drawable/phone_icon"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/ten"
+            android:drawableStart="@drawable/phone_icon_bg"
+            android:gravity="center_vertical"
             android:text="Call"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/twele_sp" />
+            android:drawablePadding="@dimen/five"
+            android:paddingHorizontal="@dimen/fifteen"
+            android:paddingVertical="@dimen/ten"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ten_sp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"/>
+
 
     </LinearLayout>
 

@@ -20,10 +20,11 @@ class ParentSlotTimingAdapter(
 ) : RecyclerView.Adapter<ParentSlotTimingAdapter.SlotViewHolder>() {
 
     private var selectedSlot: SlotData? = null
-    private var myBookedSlot: SlotData? = null  // only for this meeting
+    private var myBookedSlot: SlotData? = null
 
     inner class SlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvSlotTime: TextView = itemView.findViewById(R.id.tvSlotTime)
+        val tvSlotStatus: TextView = itemView.findViewById(R.id.tvSlotStatus)
         val card: LinearLayout = itemView.findViewById(R.id.lnrHeader)
     }
 
@@ -47,42 +48,56 @@ class ParentSlotTimingAdapter(
 
         when {
             slot.is_booked && !slot.my_booking -> {
-                holder.card.setBackgroundResource(R.drawable.bg_light_orange)
+                holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
+                holder.tvSlotStatus.text = "Not Available"
+                holder.tvSlotStatus.setTextColor(Color.RED)
                 holder.card.isEnabled = false
             }
 
             slot.my_booking -> {
-                holder.card.setBackgroundColor(Color.parseColor("#4CAF50"))
+                holder.card.setBackgroundResource(R.drawable.circle_background_green)
+                holder.tvSlotTime.setTextColor(Color.BLACK)
+                holder.tvSlotStatus.setTextColor(Color.BLACK)
+                holder.tvSlotStatus.text = "Booked"
                 holder.card.isEnabled = false
             }
 
             myBookedSlot != null -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.card.isEnabled = false
+                holder.tvSlotStatus.text = "Not Available"
+                holder.tvSlotStatus.setTextColor(Color.RED)
             }
 
             isOverlappingWithAnyBooked -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.card.isEnabled = false
+                holder.tvSlotStatus.text = "Not Available"
+                holder.tvSlotStatus.setTextColor(Color.RED)
             }
 
             isOverlappingWithSelected -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.card.isEnabled = false
+                holder.tvSlotStatus.text = "Not Available"
+                holder.tvSlotStatus.setTextColor(Color.RED)
             }
 
             selectedSlot == slot -> {
-                holder.card.setBackgroundColor(Color.BLUE)
+                holder.card.setBackgroundResource(R.drawable.bg_btn_blue)
+                holder.tvSlotTime.setTextColor(Color.WHITE)
+                holder.tvSlotStatus.setTextColor(Color.WHITE)
                 holder.card.isEnabled = true
             }
 
             selectedSlot != null && isOverlapping(slot, selectedSlot!!) -> {
-                holder.card.setBackgroundColor(Color.RED)
+
                 holder.card.isEnabled = false
             }
 
             else -> {
                 holder.card.setBackgroundColor(Color.WHITE)
+                holder.card.setBackgroundResource(R.drawable.outline_gray)
                 holder.card.isEnabled = true
             }
         }

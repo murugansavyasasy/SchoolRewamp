@@ -71,18 +71,29 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             onBackPressed()
         }
 
-        appViewModel!!.isPtmSlotCancelReOpen?.observe(this) { response ->
-            if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, this)
-            }
-        }
-
         appViewModel!!.isPtmSlotCancelClose?.observe(this) { response ->
-            if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, this)
+            Constant.hideLoading(this)
+            if (response != null) {
+                val message = response.message ?: "Failed to cancel slot"
+                Constant.showTopAlertPopup(message, this)
+            } else {
+                Constant.showTopAlertPopup("No response from server", this)
             }
         }
 
+
+
+        appViewModel!!.isPtmSlotCancelReOpen?.observe(this) { response ->
+            Constant.hideLoading(this)
+
+            if (response != null) {
+                val message = response.message ?: "Failed to reopen slot"
+                Constant.showTopAlertPopup(message, this)
+            } else {
+                Constant.showTopAlertPopup("No response from server", this)
+            }
+
+    }
         isLoadDataAdapter(isSlot)
         isLoadClasses(isSlotsDetails.std_sec_details)
     }
@@ -93,8 +104,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
         val raw = apiDate.trim()
         android.util.Log.d("StaffSlotDetails", "formatApiDateToDisplay input: $raw")
-
-        // 1) epoch seconds (10) or millis (13)
         try {
             if (raw.matches(Regex("^\\d{10}\$")) || raw.matches(Regex("^\\d{13}\$"))) {
                 val millis = if (raw.length == 10) raw.toLong() * 1000L else raw.toLong()
@@ -104,21 +113,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             }
         } catch (_: Exception) { /* ignore */ }
 
-        // 2) try common text patterns (include timezone patterns)
-        val patterns = listOf(
-            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
-            "yyyy-MM-dd'T'HH:mm:ss.SSSX",
-            "yyyy-MM-dd'T'HH:mm:ssXXX",
-            "yyyy-MM-dd'T'HH:mm:ssX",
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-            "yyyy-MM-dd'T'HH:mm:ss'Z'",
-            "yyyy-MM-dd'T'HH:mm:ss",
-            "yyyy-MM-dd",
-            "dd-MM-yyyy",
-            "dd/MM/yyyy",
-            "MM/dd/yyyy"
-        )
-
+        val patterns = listOf("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", "yyyy-MM-dd'T'HH:mm:ss.SSSX", "yyyy-MM-dd'T'HH:mm:ssXXX", "yyyy-MM-dd'T'HH:mm:ssX", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd", "dd-MM-yyyy", "dd/MM/yyyy", "MM/dd/yyyy")
         for (pattern in patterns) {
             try {
                 val parser = java.text.SimpleDateFormat(pattern, Locale.getDefault())
@@ -131,11 +126,8 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                     return result
                 }
             } catch (e: Exception) {
-                // try next pattern
             }
         }
-
-        // 3) try java.time parsing (ISO with offset) - available on API 26+. Safe to attempt in try/catch.
         try {
             val odt = java.time.OffsetDateTime.parse(raw)
             val zoned = odt.atZoneSameInstant(java.time.ZoneId.systemDefault())
@@ -158,7 +150,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
         binding.rcyClasses.adapter = isAdapter
     }
-
 
 
     fun isLoadDataAdapter(slotDetail: List<Slot>?) {
@@ -241,6 +232,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             val jsonObject = JsonObject()
             jsonObject.addProperty("slot_id", data.slot_id)
             alertDialog.dismiss()
+            Constant.showLoading(this)
             if (isSlotReOpen) {
                 appViewModel!!.isSlotCancelReOpen(isAccessToken!!, jsonObject)
             } else {

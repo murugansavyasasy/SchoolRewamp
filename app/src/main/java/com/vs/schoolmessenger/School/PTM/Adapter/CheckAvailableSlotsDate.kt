@@ -5,15 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import java.text.SimpleDateFormat
-import java.util.Locale
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.PTM.DataClass.AvailableSlotGroup
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotAvailability
-import com.vs.schoolmessenger.School.PTM.DataClass.ValidatedSlot
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class CheckAvailableSlotsDate(
     private val context: Context,
@@ -21,12 +20,11 @@ class CheckAvailableSlotsDate(
     private val onUpdate: (List<Pair<String, SlotAvailability>>) -> Unit
 ) : RecyclerView.Adapter<CheckAvailableSlotsDate.ViewHolder>() {
 
-    // Store both date + slots per position
     private val allDaySlots = mutableMapOf<Int, Pair<String, List<SlotAvailability>>>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvDate: TextView = itemView.findViewById(R.id.tvDate)
-        val rcySlotTiming: RecyclerView = itemView.findViewById(R.id.rcySlotTiming)
+        val tvDate = itemView.findViewById<android.widget.TextView>(R.id.tvDate)
+        val rcySlotTiming = itemView.findViewById<RecyclerView>(R.id.rcySlotTiming)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,20 +33,12 @@ class CheckAvailableSlotsDate(
         return ViewHolder(view)
     }
 
+    override fun getItemCount(): Int = dates.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dayGroup = dates[position]
 
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-
-        val formattedDate = try {
-            val parsedDate = inputFormat.parse(dayGroup.date)
-            outputFormat.format(parsedDate!!)
-        } catch (e: Exception) {
-            dayGroup.date
-        }
-
+        val formattedDate = formatDateForDisplay(dayGroup.date)
         holder.tvDate.text = formattedDate
 
         val adapter = SlotTimingLoadAdapter(dayGroup.slots, context) { updatedDaySlots ->
@@ -73,9 +63,55 @@ class CheckAvailableSlotsDate(
         }
     }
 
+    private fun formatDateForDisplay(input: String?): String {
+        if (input.isNullOrBlank()) return ""
 
+        val s = input.trim()
+        val patterns = listOf("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ssXXX", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "dd-MM-yyyy", "dd/MM/yyyy", "dd MMM yyyy", "dd MMMM yyyy", "MM/dd/yyyy", "MM-dd-yyyy")
+        for (p in patterns) {
+            try {
+                val sdf = SimpleDateFormat(p, Locale.getDefault())
+                sdf.isLenient = false
+                val parsed = sdf.parse(s)
+                if (parsed != null) {
+                    val out = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(parsed)
+                    // convert month to lowercase: "16 Sep 2025" -> "16 sep 2025"
+                    val parts = out.split(" ")
+                    if (parts.size == 3) {
+                        return "${parts[0]} ${parts[1].lowercase(Locale.getDefault())} ${parts[2]}"
+                    }
+                    return out
+                }
+            } catch (_: Exception) {
 
-    override fun getItemCount(): Int = dates.size
+            }
+        }
+        try {
+            if (s.matches(Regex("^\\d{8}\$"))) {
+                val parsed = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).parse(s)
+                if (parsed != null) {
+                    val out = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(parsed)
+                    val parts = out.split(" ")
+                    if (parts.size == 3) {
+                        return "${parts[0]} ${parts[1].lowercase(Locale.getDefault())} ${parts[2]}"
+                    }
+                    return out
+                }
+            }
+        } catch (_: Exception) { }
+
+        Log.w("CheckAvailableSlotsDate", "Unable to parse date: '$input' (showing raw)")
+        return try {
+            val quick = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(s)
+            if (quick != null) {
+                val out = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(quick)
+                val parts = out.split(" ")
+                if (parts.size == 3) {
+                    "${parts[0]} ${parts[1].lowercase(Locale.getDefault())} ${parts[2]}"
+                } else out
+            } else s
+        } catch (_: Exception) {
+            s
+        }
+    }
 }
-
-

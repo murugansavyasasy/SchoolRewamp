@@ -54,6 +54,10 @@ class CompletedQuizAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 20 else itemList?.size ?: 0
     }
+    fun updateData(newList: List<GetQuizExamListData>) {
+        itemList = newList
+        notifyDataSetChanged()
+    }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)

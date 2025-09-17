@@ -11,10 +11,10 @@
         android:id="@+id/containerFields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/five"
         android:divider="?android:attr/dividerHorizontal"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
+        android:paddingHorizontal="@dimen/sixteen"
         android:showDividers="none">
 
         <LinearLayout
@@ -22,7 +22,7 @@
             android:id="@+id/titlelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical">
 
             <TextView
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="Student Name"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,23 +41,23 @@
                 android:background="@drawable/field_background"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="12dp">
+                android:paddingHorizontal="@dimen/twele">
 
                 <EditText
                     android:id="@+id/titlevalue"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:ellipsize="end"
                     android:imeOptions="actionDone"
                     android:inputType="textCapWords"
-                    android:padding="0dp"
+                    android:padding="@dimen/zero"
                     android:singleLine="true"
                     android:text="SARON"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
 
             </LinearLayout>
@@ -70,7 +70,7 @@
             android:id="@+id/datelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -81,31 +81,31 @@
                 android:layout_height="wrap_content"
                 android:text="Date of birth"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fourty_five"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/field_background"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="12dp">
+                android:paddingHorizontal="@dimen/twele">
 
                 <TextView
                     android:id="@+id/datevalue"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:ellipsize="end"
                     android:inputType="textCapWords"
-                    android:padding="0dp"
+                    android:padding="@dimen/zero"
                     android:singleLine="true"
                     android:text="SARON"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <ImageView
                     android:id="@+id/imagecalender"
@@ -125,7 +125,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp"
             android:visibility="gone">
 
             <TextView
@@ -133,7 +132,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="@dimen/eight"
                 android:text="Gender"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -147,21 +146,33 @@
                 <RadioButton
                     android:id="@+id/radioMale"
                     android:layout_width="wrap_content"
+                    android:background="@drawable/field_background"
+                    android:paddingVertical="@dimen/five"
+                    android:paddingHorizontal="@dimen/ten"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
                     android:text="Male" />
 
                 <RadioButton
                     android:id="@+id/radioFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:paddingVertical="@dimen/five"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:background="@drawable/field_background"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_marginStart="@dimen/sixteen"
                     android:text="Female" />
 
                 <RadioButton
                     android:id="@+id/radioOthers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:background="@drawable/field_background"
+                    android:paddingVertical="@dimen/five"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_marginStart="@dimen/sixteen"
                     android:text="Others" />
             </RadioGroup>
         </LinearLayout>
@@ -217,7 +228,7 @@
             android:id="@+id/remarks_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -252,30 +263,60 @@
             android:id="@+id/imagelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <TextView
-                android:id="@+id/imagelabel"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Document Name"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/imagelabel"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:text="Document Name"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/addlabel"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="+ Add"
+                    android:background="@drawable/background_radius_button"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcChildHW"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="@dimen/ten" />
+                />
 
+            <FrameLayout
+                android:id="@+id/selectedFilesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone" />
 
         </LinearLayout>
+
 
 
     </LinearLayout>

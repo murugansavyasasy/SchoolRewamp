@@ -5,12 +5,14 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -20,6 +22,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -254,14 +257,50 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
                 when {
                     url.contains("/#/paymentsucccess/success") -> {
-//                        showAlert("Payment Done!!", "Payment Successful. View/Download Receipt on Receipt Tab.")
+                        paymentSuccess("Payment Done!!", "Payment Successful. View/Download Receipt on Receipt Tab.")
                     }
-
                     url.contains("/#/paymentsucccess/failed") -> {
-//                        showAlert("Payment failed..", "Please try again later!!")
+                        paymentFailed("Payment failed..", "Please try again later!!")
                     }
                 }
             }
+        }
+    }
+
+
+    private fun paymentSuccess(title: String, msg: String) {
+        val dialogView = LayoutInflater.from(this@FeeDetails).inflate(R.layout.payment_success, null)
+        val builder = AlertDialog.Builder(this@FeeDetails)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.show()
+        // Access views
+        val titleText = dialogView.findViewById<TextView>(R.id.alertTitle)
+        val messageText = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        messageText.text = msg
+        titleText.text = title
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+    }
+
+    private fun paymentFailed(title: String, msg: String) {
+        val dialogView = LayoutInflater.from(this@FeeDetails).inflate(R.layout.payment_failed, null)
+        val builder = AlertDialog.Builder(this@FeeDetails)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.show()
+        // Access views
+        val titleText = dialogView.findViewById<TextView>(R.id.alertTitle)
+        val messageText = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        messageText.text = msg
+        titleText.text = title
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
         }
     }
 

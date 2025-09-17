@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.PTM.DataClass
 import java.io.Serializable
 
 data class SlotDetail(
+    val id: String,
     val date: String,
     val event_name: String,
     val event_mode: String,

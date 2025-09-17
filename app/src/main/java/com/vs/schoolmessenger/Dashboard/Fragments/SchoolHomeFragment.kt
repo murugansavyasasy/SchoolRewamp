@@ -29,6 +29,7 @@ import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
+import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
@@ -158,6 +159,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
 
         binding.imgBurgerMenu.setOnClickListener(this)
+        binding.imgNotification.setOnClickListener(this)
 
         binding.imgBurgerMenu.setOnClickListener {
             (activity as? SchoolDashboard)?.openDrawer()
@@ -287,6 +289,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
+            R.id.imgNotification -> {
+                val intent = Intent(requireActivity(), Notification::class.java)
+                startActivity(intent)
+            }
         }
     }
 
