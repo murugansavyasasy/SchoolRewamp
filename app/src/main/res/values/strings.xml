@@ -931,6 +931,8 @@
     <string name="sent_at">"Sent At "</string>
     <string name="question_limit">Question Limit :</string>
     <string name="student_submissions">Student Submissions</string>
+    <string name="attendance_options">Attendance Options</string>
+    <string name="attendance_type">Attendance Type</string>
 
 
 </resources>
