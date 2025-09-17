@@ -12,10 +12,9 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/fifteen"
         android:text="10:00 - 11:00"
         android:textColor="@color/black"
-        android:textSize="@dimen/thirteen_sp" />
+        android:textSize="@dimen/ten_sp" />
 
     <TextView
         android:id="@+id/lblSlotStatus"
@@ -27,7 +26,7 @@
         android:gravity="center"
         android:text="Available"
         android:textColor="@color/green"
-        android:textSize="@dimen/ten" />
+        android:textSize="@dimen/eight" />
 
     <ImageView
         android:id="@+id/imgRemove"
