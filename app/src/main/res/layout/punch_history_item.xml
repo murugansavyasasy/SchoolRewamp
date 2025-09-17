@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:paddingVertical="@dimen/five"
                     android:paddingHorizontal="@dimen/fifteen"
-                    android:background="@drawable/bg_leave_approved">
+                    android:background="@drawable/bg_dark_green_radius_10dp">
 
                     <ImageView
                         android:layout_centerVertical="true"
