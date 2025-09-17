@@ -268,7 +268,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"

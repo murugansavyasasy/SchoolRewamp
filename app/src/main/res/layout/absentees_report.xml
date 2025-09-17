@@ -1,57 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/AthensGray"
+    android:fitsSystemWindows="true">
 
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rlaabsenteesreport"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/toolbarLayout"
+                layout="@layout/school_side_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/calenderlayout"
+                layout="@layout/dialog_calendar"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/datevalue"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="September 03,2025"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rlaabsenteesreport2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fifteen"
+                android:nestedScrollingEnabled="false" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rlaabsenteesreport2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlaabsenteesreport"
-        android:layout_marginTop="@dimen/fifteen">
-    </androidx.recyclerview.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linear_layout"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/nomessage"
-        android:layout_width="@dimen/two_fifty"
-        android:layout_height="@dimen/two_fifty"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/twenty"
-        android:src="@drawable/nomessages"
-        android:textColor="@color/black"
-        android:textSize="@dimen/eighteen_sp"
-        android:visibility="gone" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/classvalue"
+                    android:text="Class : II . "
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textColor="@color/PrimaryColor"
+                    android:textSize="@dimen/twenty_sp"/>
 
-    <TextView
-        android:id="@+id/txtNoData"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/twenty"
-        android:text="@string/no_list_found"
-        android:textSize="@dimen/eighteen_sp"
-        android:gravity="center"
-        android:visibility="gone" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sectionvalue"
+                    android:text="Section : A"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twenty_sp"/>
 
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
-
-
