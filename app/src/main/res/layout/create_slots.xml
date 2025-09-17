@@ -102,7 +102,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:background="@drawable/outline_gray"
+                    android:background="@drawable/field_background"
                     android:hint="Purpose of meeting"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp">
@@ -329,7 +329,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:background="@drawable/outline_gray">
+                    android:background="@drawable/field_background">
 
 
                     <ImageView
@@ -396,7 +396,7 @@
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_marginBottom="@dimen/ten"
                         android:layout_weight="1"
-                        android:background="@drawable/outline_gray">
+                        android:background="@drawable/field_background">
 
 
                         <ImageView
@@ -447,7 +447,7 @@
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="1"
-                        android:background="@drawable/outline_gray">
+                        android:background="@drawable/field_background">
 
 
                         <ImageView
@@ -531,7 +531,7 @@
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="1"
-                        android:background="@drawable/outline_gray">
+                        android:background="@drawable/field_background">
 
 
                         <ImageView
@@ -653,13 +653,14 @@
                     <LinearLayout
                         android:id="@+id/rytBreakPick"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="@dimen/two"
                         android:layout_marginStart="@dimen/twenty_five"
                         android:layout_toEndOf="@+id/lblBreakAfter"
                         android:background="@drawable/rounded_bg"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:paddingHorizontal="10dp">
+                        android:paddingHorizontal="@dimen/thirteen">
 
                         <ImageView
                             android:id="@+id/imgCountDown"

@@ -71,18 +71,29 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             onBackPressed()
         }
 
-        appViewModel!!.isPtmSlotCancelReOpen?.observe(this) { response ->
-            if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, this)
-            }
-        }
-
         appViewModel!!.isPtmSlotCancelClose?.observe(this) { response ->
-            if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, this)
+            Constant.hideLoading(this)
+            if (response != null) {
+                val message = response.message ?: "Failed to cancel slot"
+                Constant.showTopAlertPopup(message, this)
+            } else {
+                Constant.showTopAlertPopup("No response from server", this)
             }
         }
 
+
+
+        appViewModel!!.isPtmSlotCancelReOpen?.observe(this) { response ->
+            Constant.hideLoading(this)
+
+            if (response != null) {
+                val message = response.message ?: "Failed to reopen slot"
+                Constant.showTopAlertPopup(message, this)
+            } else {
+                Constant.showTopAlertPopup("No response from server", this)
+            }
+
+    }
         isLoadDataAdapter(isSlot)
         isLoadClasses(isSlotsDetails.std_sec_details)
     }
@@ -139,7 +150,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
         binding.rcyClasses.adapter = isAdapter
     }
-
 
 
     fun isLoadDataAdapter(slotDetail: List<Slot>?) {
@@ -222,6 +232,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             val jsonObject = JsonObject()
             jsonObject.addProperty("slot_id", data.slot_id)
             alertDialog.dismiss()
+            Constant.showLoading(this)
             if (isSlotReOpen) {
                 appViewModel!!.isSlotCancelReOpen(isAccessToken!!, jsonObject)
             } else {

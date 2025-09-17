@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
@@ -117,6 +118,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         })
 
 
+
         appViewModel?.IsGetEventReport?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
@@ -155,7 +157,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             }
         }
     }
-
 
     private fun <T> updateVisibility(
         dataList: List<T>?, recyclerView: RecyclerView, vararg headers: View
@@ -244,22 +245,70 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     private fun filterAllEventLists() {
         val selectedId = selectedCategory?.name
+        Log.d("selectedId",selectedId.toString())
 
         if (selectedId.isNullOrEmpty()) {
             mAdapter.updateList(allOngoingEvents)
             eventupcomingadapter.updateList(allUpcomingEvents)
             eventcompletedadapter.updateList(allCompletedEvents)
-        } else {
-            val ongoingFiltered =
-                allOngoingEvents?.filter { eventItem -> eventItem.category == selectedId }
-            val upcomingFiltered =
-                allUpcomingEvents?.filter { eventItem -> eventItem.category == selectedId }
-            val completedFiltered =
-                allCompletedEvents?.filter { eventItem -> eventItem.category == selectedId }
+        }
+        else {
+            Log.d("isComing","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            val ongoingFiltered = if (selectedId == "All") {
+                allOngoingEvents // return full list
+            } else {
+                allOngoingEvents?.filter { it.category == selectedId }
+            }
 
-            mAdapter.updateList(ongoingFiltered)
-            eventupcomingadapter.updateList(upcomingFiltered)
-            eventcompletedadapter.updateList(completedFiltered)
+            val upcomingFiltered = if (selectedId == "All") {
+                allUpcomingEvents
+            } else {
+                allUpcomingEvents?.filter { it.category == selectedId }
+            }
+
+            val completedFiltered = if (selectedId == "All") {
+                allCompletedEvents
+            } else {
+                allCompletedEvents?.filter { it.category == selectedId }
+            }
+
+            Log.d("ongoingFiltered",ongoingFiltered!!.size.toString())
+            Log.d("ongoingFiltered",ongoingFiltered!!.toString())
+            Log.d("upcomingFiltered",upcomingFiltered!!.size.toString())
+            Log.d("upcomingFiltered",upcomingFiltered!!.toString())
+            Log.d("completedFiltered",completedFiltered!!.size.toString())
+            Log.d("completedFiltered",completedFiltered!!.toString())
+
+
+            if (ongoingFiltered.size> 0) {
+                mAdapter.updateList(ongoingFiltered)
+                binding.rcyongoingevent.visibility = View.VISIBLE
+                binding.headerview.visibility = View.VISIBLE
+                binding.dotindicator.visibility = View.VISIBLE
+            } else {
+                binding.rcyongoingevent.visibility = View.GONE
+                binding.headerview.visibility = View.GONE
+                binding.dotindicator.visibility = View.GONE
+            }
+
+            if (upcomingFiltered.size > 0) {
+                eventupcomingadapter.updateList(upcomingFiltered)
+                binding.rcyupcomingevent.visibility = View.VISIBLE
+                binding.upcomingeventHeaderview.visibility = View.VISIBLE
+            } else {
+                binding.rcyupcomingevent.visibility = View.GONE
+                binding.upcomingeventHeaderview.visibility = View.GONE
+            }
+
+            if (completedFiltered.size > 0) {
+                eventcompletedadapter.updateList(completedFiltered)
+                binding.rcycompletedevent.visibility = View.VISIBLE
+                binding.completedeventHeaderview.visibility = View.VISIBLE
+            } else {
+                binding.rcycompletedevent.visibility = View.GONE
+                binding.completedeventHeaderview.visibility = View.GONE
+            }
+
         }
     }
 
@@ -308,6 +357,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     override fun onCategoryClicked(data: Category) {
         selectedCategory = data
+        Log.d("selectedCategory",selectedCategory.toString())
         filterAllEventLists()
     }
 

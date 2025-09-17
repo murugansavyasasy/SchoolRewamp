@@ -108,7 +108,9 @@ class EventAdapter(
     }
 
     fun updateList(newList: List<EventItem>?) {
-        this.itemList = newList
+        if (newList != null) {
+            filteredList = newList
+        }
         notifyDataSetChanged()
     }
 

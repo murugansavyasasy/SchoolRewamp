@@ -8,7 +8,7 @@
     android:background="@drawable/bg_gradient"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:padding="@dimen/sixteen">
+    android:padding="@dimen/ten">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -232,8 +232,7 @@
             android:paddingHorizontal="@dimen/eight"
             android:paddingVertical="@dimen/eight"
             android:textColor="@color/white"
-            android:textSize="@dimen/twele_sp"
-            app:iconPadding="@dimen/eight"
+            android:textSize="@dimen/ten_sp"
             app:iconGravity="textStart"
             app:iconTint="@color/white"/>
 
@@ -244,15 +243,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eight"
             android:background="@drawable/bg_orange"
-            android:drawableStart="@drawable/phone_icon"
+            android:drawableStart="@drawable/phone_icon_bg"
             android:gravity="center_vertical"
             android:text="Call"
             android:drawablePadding="@dimen/five"
             android:paddingHorizontal="@dimen/fifteen"
             android:paddingVertical="@dimen/ten"
             android:textColor="@color/white"
-            android:textSize="@dimen/twele_sp"
-            app:iconPadding="@dimen/eight"
+            android:textSize="@dimen/ten_sp"
             app:iconGravity="textStart"
             app:iconTint="@color/white"/>
 

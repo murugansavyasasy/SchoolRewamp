@@ -48,7 +48,9 @@ class ParentSlotTimingAdapter(
 
         when {
             slot.is_booked && !slot.my_booking -> {
-                holder.card.setBackgroundResource(R.drawable.bg_light_orange)
+                holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
+                holder.tvSlotStatus.text = "Not Available"
+                holder.tvSlotStatus.setTextColor(Color.RED)
                 holder.card.isEnabled = false
             }
 
@@ -56,22 +58,29 @@ class ParentSlotTimingAdapter(
                 holder.card.setBackgroundResource(R.drawable.circle_background_green)
                 holder.tvSlotTime.setTextColor(Color.BLACK)
                 holder.tvSlotStatus.setTextColor(Color.BLACK)
+                holder.tvSlotStatus.text = "Booked"
                 holder.card.isEnabled = false
             }
 
             myBookedSlot != null -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.card.isEnabled = false
+                holder.tvSlotStatus.text = "Not Available"
+                holder.tvSlotStatus.setTextColor(Color.RED)
             }
 
             isOverlappingWithAnyBooked -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.card.isEnabled = false
+                holder.tvSlotStatus.text = "Not Available"
+                holder.tvSlotStatus.setTextColor(Color.RED)
             }
 
             isOverlappingWithSelected -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.card.isEnabled = false
+                holder.tvSlotStatus.text = "Not Available"
+                holder.tvSlotStatus.setTextColor(Color.RED)
             }
 
             selectedSlot == slot -> {

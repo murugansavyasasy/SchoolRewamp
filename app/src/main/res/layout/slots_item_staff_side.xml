@@ -20,8 +20,9 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/white_bg_radius"
-            android:padding="@dimen/ten"
             android:text="10 MAY 2005"
+            android:paddingVertical="@dimen/five"
+            android:paddingHorizontal="@dimen/ten"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
         </TextView>
@@ -35,8 +36,8 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_toEndOf="@+id/lblDate"
             android:background="@drawable/white_bg_radius"
-            android:padding="@dimen/ten"
-            android:text="12:00 PM - 03:00 PM"
+            android:paddingVertical="@dimen/five"
+            android:paddingHorizontal="@dimen/ten"            android:text="12:00 PM - 03:00 PM"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
         </TextView>
