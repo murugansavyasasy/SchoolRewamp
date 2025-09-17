@@ -28,6 +28,6 @@ data class GetQuizQuestionReportData (
     val file_size: String? = null,
     val thumbnail: String? = null,
     var sourceType: QuestionSource = QuestionSource.API,
-    val file_path: List<FilePath> = emptyList()
+    var file_path: List<FilePath> = emptyList()
 
 )
