@@ -119,18 +119,14 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     private var mAdapter: ImagePickingAdapter? = null
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
-
     var isFromTime = true
     private var isStaffDetails: StaffDetails? = null
     private var selectedDateField: Int = 0
-
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
     lateinit var schooleventAdapter: SchoolEventAdapter
     lateinit var eventupcomingadapter: SchoolEventUpcomingAdapter
     lateinit var eventcompletedadapter: SchoolEventCompletedAdapter
-
     private var allOngoingEvents: List<SchoolEventItem>? = null
     private var allUpcomingEvents: List<SchoolEventItem>? = null
     private var allCompletedEvents: List<SchoolEventItem>? = null
@@ -178,6 +174,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.lblDay.text = dayOfWeek
 
         binding.txtStartDate.text = fullDate
+
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {

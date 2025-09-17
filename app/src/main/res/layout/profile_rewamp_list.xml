@@ -11,7 +11,7 @@
         android:id="@+id/containerFields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
         android:divider="?android:attr/dividerHorizontal"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/sixteen"
@@ -22,7 +22,7 @@
             android:id="@+id/titlelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/twele"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical">
 
             <TextView
@@ -57,7 +57,7 @@
                     android:singleLine="true"
                     android:text="SARON"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
 
             </LinearLayout>
@@ -70,7 +70,7 @@
             android:id="@+id/datelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/twele"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -105,7 +105,7 @@
                     android:singleLine="true"
                     android:text="SARON"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <ImageView
                     android:id="@+id/imagecalender"
@@ -125,7 +125,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/eight"
             android:visibility="gone">
 
             <TextView
@@ -148,16 +147,22 @@
                     android:id="@+id/radioMale"
                     android:layout_width="wrap_content"
                     android:background="@drawable/field_background"
-                    android:padding="10dp"
+                    android:paddingVertical="@dimen/five"
+                    android:paddingHorizontal="@dimen/ten"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:text="Male" />
 
                 <RadioButton
                     android:id="@+id/radioFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/five"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:paddingHorizontal="@dimen/ten"
                     android:background="@drawable/field_background"
-                    android:padding="10dp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:layout_marginStart="@dimen/sixteen"
                     android:text="Female" />
 
@@ -165,9 +170,12 @@
                     android:id="@+id/radioOthers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:background="@drawable/field_background"
-                    android:padding="10dp"
-                    android:layout_marginStart="16dp"
+                    android:paddingVertical="@dimen/five"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_marginStart="@dimen/sixteen"
                     android:text="Others" />
             </RadioGroup>
         </LinearLayout>
@@ -206,13 +214,13 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:clickable="true"
-                    android:drawableEnd="@drawable/down_arrow"
                     android:focusable="false"
                     android:inputType="none"
-                    android:padding="12dp"
+                    android:padding="0dp"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:popupBackground="@android:color/white"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -223,7 +231,7 @@
             android:id="@+id/remarks_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -258,7 +266,7 @@
             android:id="@+id/imagelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical"
             android:visibility="gone">
 

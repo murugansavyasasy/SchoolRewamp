@@ -26,8 +26,13 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
 
     private val btnCancel: Button
     private val calendar = Calendar.getInstance()
-    private val selectedDates = ArrayList<String>() // now stores "dd-MM-yyyy"
+    private val selectedDates = ArrayList<String>()
     private var adapter: CalendarAdapter? = null
+
+    private var onCancelListener: (() -> Unit)? = null
+    fun setOnCancelListener(listener: () -> Unit) {
+        onCancelListener = listener
+    }
 
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_calendar, this, true)
@@ -67,8 +72,11 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
         btnCancel.setOnClickListener {
             selectedDates.clear()
             adapter?.notifyDataSetChanged()
+            onCancelListener?.invoke()
         }
+
     }
+
 
     private fun setupCalendar() {
         val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
@@ -107,7 +115,7 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
                 if (selectedDates.contains(fullDate)) {
                     selectedDates.remove(fullDate) // unselect
                 } else {
-                    selectedDates.add(fullDate) // select
+                    selectedDates.add(fullDate)
                 }
                 adapter?.notifyDataSetChanged()
             }

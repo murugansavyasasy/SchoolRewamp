@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +18,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.AddQuestionListner
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
-import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
+import com.vs.schoolmessenger.School.QuizExam.OnAttachmentListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
@@ -27,6 +27,7 @@ class AddQuestionAdapter(
     private var itemList: MutableList<GetQuizQuestionReportData>?,
     private var context: Context,
     var listener: AddQuestionListner,
+    var isListener: OnAttachmentListener,
     private var isLoading: Boolean,
     var onQBankItemRemoved: ((String) -> Unit)? = null
 
@@ -113,7 +114,6 @@ class AddQuestionAdapter(
         recyclerView.post {
             recyclerView.smoothScrollToPosition(itemList!!.size - 1)
         }
-
     }
 
 
@@ -223,18 +223,11 @@ class AddQuestionAdapter(
         return isAllValid
     }
 
-
-
-
-
-
-
     fun updateList(newList: MutableList<GetQuizQuestionReportData>) {
         itemList!!.clear()
         itemList!!.addAll(newList)
         notifyDataSetChanged()
     }
-
 
     fun getUpdatedList(): List<GetQuizQuestionReportData> = itemList!!
 
@@ -271,6 +264,7 @@ class AddQuestionAdapter(
         val edtCorrectAns: EditText = itemView.findViewById(R.id.edtCorrectAns)
         val edtMark: EditText = itemView.findViewById(R.id.edtMark)
         val lblremove: ImageView = itemView.findViewById(R.id.lblremove)
+        val lnrAttachmentPick: LinearLayout = itemView.findViewById(R.id.lnrAttachmentPick)
 
 
         fun bind(data: GetQuizQuestionReportData, position: Int) {
@@ -352,7 +346,6 @@ class AddQuestionAdapter(
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].d_option = text.toString()
                     updateSpinnerOptions(this, itemList!![adapterPosition])
-
                 }
             }
 
@@ -362,6 +355,9 @@ class AddQuestionAdapter(
                 }
             }
 
+            lnrAttachmentPick.setOnClickListener {
+                isListener.onAttachmentPick(adapterPosition, itemList)
+            }
 
             // remove item
             lblremove.setOnClickListener {

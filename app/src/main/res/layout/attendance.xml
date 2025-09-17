@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -420,7 +421,9 @@
                                     android:id="@+id/imgAskLeave"
                                     android:src="@drawable/leave_request_icon_school"
                                     android:layout_width="@dimen/thirty"
-                                    android:layout_height="@dimen/thirty">
+                                    android:layout_height="@dimen/thirty"
+                                    android:tint="@color/PrimaryColor"
+                                    tools:ignore="UseAppTint">
                                 </ImageView>
 
                                 <TextView
@@ -453,6 +456,8 @@
                                     android:id="@+id/imgLeaveRequest"
                                     android:layout_width="@dimen/thirty"
                                     android:layout_height="@dimen/thirty"
+                                    android:tint="@color/PrimaryColor"
+                                    tools:ignore="UseAppTint"
                                     android:src="@drawable/leave_request_icon_2"></ImageView>
 
                                 <TextView
@@ -483,6 +488,8 @@
                                 <ImageView
                                     android:id="@+id/imgAttendanceReport"
                                     android:src="@drawable/absentees_report_icon"
+                                    android:tint="@color/PrimaryColor"
+                                    tools:ignore="UseAppTint"
                                     android:layout_width="@dimen/thirty"
                                     android:layout_height="@dimen/thirty">
                                 </ImageView>
@@ -520,6 +527,8 @@
                                 android:layout_height="wrap_content">
                                 <ImageView
                                     android:src="@drawable/holidays_icon"
+                                    android:tint="@color/PrimaryColor"
+                                    tools:ignore="UseAppTint"
                                     android:layout_width="@dimen/thirty"
                                     android:layout_height="@dimen/thirty">
                                 </ImageView>

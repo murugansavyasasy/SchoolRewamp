@@ -51,6 +51,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
     var isClassTeacherId = ""
     var isSubjectId = ""
 
+    private var progressDialog: AlertDialog? = null
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
@@ -78,6 +80,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             val query = editable.toString()
             if (::isMeetingHistoryAdapter.isInitialized) {
                 isMeetingHistoryAdapter.filter.filter(query)
+
             }
         }
 
@@ -132,10 +135,16 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         }
 
         appViewModel?.isSlotBookingForStudent?.observe(this) { response ->
-            if (response?.status!!) {
-                Constant.showTopAlertPopup(response.message, this)
-            }
+            binding.rcyMeetingHistory.postDelayed({
+                Constant.hideLoading(this)
+                if (response?.status == true) {
+                    Constant.showTopAlertPopup(response.message, this)
+                } else {
+                    Constant.showTopAlertPopup("Booking failed!", this)
+                }
+            }, 2000)
         }
+
 
         appViewModel?.isSubjectResponse?.observe(this) { response ->
             if (response?.status!!) {
@@ -334,6 +343,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
+            Constant.showLoading(this)
             val jsonObject = JsonObject()
             val jsonArray = JsonArray()
             for (i in selectedSlotIds.indices) {

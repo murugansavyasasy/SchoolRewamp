@@ -72,7 +72,6 @@ class CalendarAdapter(
                 }
             }
 
-
         }
         return view
     }

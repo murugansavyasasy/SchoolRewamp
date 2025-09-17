@@ -126,7 +126,6 @@ class StaffSlotStatusAdapter(
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
                     imgDot.visibility = View.VISIBLE
                 }
-
             }
 
 
