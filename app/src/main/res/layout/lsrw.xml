@@ -1,55 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:background="@color/white"
+    android:id="@+id/main">
 
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
+        layout="@layout/parent_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyrecyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarLayout"
+    <RelativeLayout
+        android:id="@+id/rlRecyclerContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="10dp"
-        android:visibility="visible">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+        app:layout_constraintBottom_toTopOf="@id/rlNoDataContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <LinearLayout
-        android:id="@+id/lytNoDataFound"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyrecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlNoDataContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/rlRecyclerContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/noDataImage"
-            android:layout_width="@dimen/two_hundred"
-            android:layout_height="@dimen/two_hundred"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/no_data_found">
-        </ImageView>
-
-        <TextView
-            android:id="@+id/noDataFound"
-            style="@style/CustomTextStylePoppinsBold"
+        <LinearLayout
+            android:id="@+id/lytNoDataFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:text="No data found"
-            android:textSize="@dimen/fifteen_sp">
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
 
-        </TextView>
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/noDataImage"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:src="@drawable/no_data_found" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/noDataFound"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="No data found"
+                android:textSize="@dimen/fifteen_sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
