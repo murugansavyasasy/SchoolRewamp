@@ -126,6 +126,35 @@ class StudentDetailAdapter(
                 }
             })
             .into(holder.binding.imgSchool)
+
+        Glide.with(context)
+            .load(item.profile)
+            .placeholder(R.drawable.default_profile) // Temporary image while loading
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    // Log the error if needed
+                    Log.e("GlideError", "Image load failed", e)
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+            })
+            .into(holder.binding.imgStudentProfile)
+
+
     }
 
     override fun getItemCount(): Int = itemList!!.size

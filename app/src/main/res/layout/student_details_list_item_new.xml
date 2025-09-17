@@ -35,7 +35,7 @@
                 <ImageView
                     android:layout_gravity="center"
                     android:layout_weight="0.01"
-                    android:background="@drawable/white_circle_bg"
+                    android:background="@drawable/white_circle_with_stoke_bg"
                     android:id="@+id/imgSchool"
                     android:layout_width="@dimen/fourty"
                     android:layout_height="@dimen/fourty"
@@ -131,7 +131,7 @@
                         android:layout_height="@dimen/ninety"
                         android:scaleType="centerCrop"
                         android:layout_gravity="center"
-                        android:src="@drawable/student_image"
+                        android:src="@drawable/default_profile"
                         app:strokeColor="@color/violet"
                         app:strokeWidth="1dp"
                         app:shapeAppearanceOverlay="@style/RoundedRectangle">
