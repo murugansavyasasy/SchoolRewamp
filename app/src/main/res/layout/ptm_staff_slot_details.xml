@@ -309,7 +309,7 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/twenty"
                 android:text="Meeting slots"
-                android:textColor="@color/light_gray_5"
+                android:textColor="@color/black"
                 android:textSize="@dimen/fourteen_sp">
 
             </TextView>

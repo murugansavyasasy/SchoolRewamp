@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.PTM.Adapter
 
 import android.app.AlertDialog
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
@@ -92,10 +93,25 @@ class MeetingHistoryAdapter(
             tvTime.text = meeting.time
             tvStatus.text = meeting.status
 
-            tvStatus.setBackgroundColor(
-                if (meeting.status.equals("Completed", true)) Color.parseColor("#5cc885")
-                else Color.parseColor("#4085ef")
-            )
+
+//            tvStatus.setBackgroundColor(
+//                if (meeting.status.equals("Completed", true)) Color.parseColor("#5cc885")
+//                else Color.parseColor("#4085ef")
+//            )
+
+            val bgDrawable = GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = 16f
+                setColor(
+                    if (meeting.status.equals("Completed", true))
+                        Color.parseColor("#5cc885")
+                    else
+                        Color.parseColor("#4085ef")
+                )
+            }
+
+            tvStatus.background = bgDrawable
+
 
             when {
                 meeting.status.equals("Completed", true) -> {

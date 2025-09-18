@@ -5,6 +5,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
@@ -40,6 +41,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
@@ -373,6 +375,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isParentprofilelist: LiveData<ProfileListResponse?>? = null
     var isSchoolprofilelist: LiveData<ProfileListResponse?>? = null
     var islsrwmysubmission: LiveData<ActivityResponse?>? = null
+    var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
+        private set
+
 
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
@@ -526,6 +531,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isParentprofilelist = apiParentRepositories.isprofilelistLiveData
         isSchoolprofilelist = apiSchoolRepositories.isSchoolprofilelistLiveData
         islsrwmysubmission = apiParentRepositories.islsrwmysubmissionLiveData
+        isFeeInvoices = apiParentRepositories.isFeeInvoices
 
 
     }
@@ -1344,7 +1350,13 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
 
+    fun getStudentInvoices(isToken: String, activity: Activity) {
+        apiParentRepositories.getStudentInvoices(isToken, activity)
+    }
 
+    fun getInvoiceDetails(isToken: String, invoiceId: String) {
+        apiParentRepositories.getInvoiceDetails(isToken, invoiceId)
+    }
 }
 
 

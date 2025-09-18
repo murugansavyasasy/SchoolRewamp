@@ -38,6 +38,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
@@ -54,17 +56,11 @@ import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizQuestionRequ
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizRequestBody
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.UpdateQBankItem
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBankData
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizAttachmentData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
 import com.vs.schoolmessenger.School.QuizExam.OnAttachmentListener
-import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
-import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
-import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
-import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
-import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -77,19 +73,22 @@ import java.util.Date
 import java.util.Locale
 
 
-class AddQuestion : BaseActivity<AddQuestionBinding>(),
-    View.OnClickListener, AddQuestionListner, OnAttachmentListener,
-    VimeoVideoUpload.UploadCompletionListener {
+class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, AddQuestionListner,
+    OnAttachmentListener, VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): AddQuestionBinding {
         return AddQuestionBinding.inflate(layoutInflater)
     }
 
+    val quizAttachments: MutableList<QuizAttachmentData> = mutableListOf()
+    val isQuizUploadedFiles: MutableList<QuizAttachmentData> = mutableListOf()
+
+
     private var itemList: MutableList<GetQuizQuestionReportData> = mutableListOf()
     private var quizAdapter: AddQuestionAdapter? = null
     private var clickedPosition: Int = RecyclerView.NO_POSITION
 
-
+    var isAttachmentAdapterPosition = 0
     private var cameraPermissionDeniedCount = 0
 
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
@@ -106,14 +105,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
     var file_path: List<FilePath> = emptyList()
 
-    var isQuizID=""
-    var isQuizTitle=""
-    var isSubjectID=""
-    var isUpdatedQBankQuestions=-1
-    var isSavedQuestionLimit=-1
-    var isSubmittedCount=-1
-    var isOkFlag=false
-    var isFirstClick=true
+    var isQuizID = ""
+    var isQuizTitle = ""
+    var isSubjectID = ""
+    var isUpdatedQBankQuestions = -1
+    var isSavedQuestionLimit = -1
+    var isSubmittedCount = -1
+    var isOkFlag = false
+    var isFirstClick = true
     private lateinit var savedQuizQuestionReportList: List<GetQuizQuestionReportData>
     private lateinit var pickQBankList: List<GetPickFromQBankData>
     private lateinit var editableQuizQuestionReportList: MutableList<GetQuizQuestionReportData>
@@ -122,10 +121,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter2: PickQuestionAdapter
 
-    val isVideoSelectedArrayList = mutableListOf<FileItem>()
+    val isVideoSelectedArrayList = mutableListOf<QuizAttachmentData>()
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
 
 
     private var appViewModel: App? = null
@@ -138,14 +136,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         isAccessToken = isStaffDetails!!.access_token
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblParentToolBar.setOnClickListener{
-            val FinalList=quizAdapter!!.getUpdatedList()
-            Log.d("FinalList",FinalList.toString())
+        binding.toolbarLayout.lblParentToolBar.setOnClickListener {
+            val FinalList = quizAdapter!!.getUpdatedList()
+            Log.d("FinalList", FinalList.toString())
         }
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         Constant.isQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
-        isSavedQuestionLimit= intent.getIntExtra(Constant.limitQuestion, -1)
-        Log.d("isQuestionLimit",Constant.isQuestionLimit.toString())
+        isSavedQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
+        Log.d("isQuestionLimit", Constant.isQuestionLimit.toString())
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isSubmittedCount = intent.getIntExtra(Constant.submittedCount, -1)
         isQuizID = intent.getStringExtra(Constant.quiz_Id).toString()
@@ -154,11 +152,11 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblImportQuestion.setOnClickListener(this)
         binding.lblSendQuiz.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text=isQuizTitle
-        if (isSubmittedCount>0){
-            isOkFlag=true
-        }else{
-            isOkFlag=false
+        binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
+        if (isSubmittedCount > 0) {
+            isOkFlag = true
+        } else {
+            isOkFlag = false
         }
 
         appViewModel?.isGetQuizQuestionReport?.observe(this) { response ->
@@ -167,22 +165,21 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     savedQuizQuestionReportList = response.data
 
                     // Mark all as API type
-                    editableQuizQuestionReportList = savedQuizQuestionReportList.map { it.copy(sourceType = QuestionSource.API)
+                    editableQuizQuestionReportList = savedQuizQuestionReportList.map {
+                        it.copy(sourceType = QuestionSource.API)
                     }.toMutableList()
-                    Constant.isQuestionLimit-=savedQuizQuestionReportList.size
+                    Constant.isQuestionLimit -= savedQuizQuestionReportList.size
                     isLoadQuizQuestionReport()
-                }
-                else {
+                } else {
                     Constant.showErrorAlert(
-                        this,
-                        getString(R.string.alert),
-                        response.message
+                        this, getString(R.string.alert), response.message
                     )
 
                     savedQuizQuestionReportList = response.data
-                    editableQuizQuestionReportList = savedQuizQuestionReportList.map {it.copy(sourceType = QuestionSource.API)
+                    editableQuizQuestionReportList = savedQuizQuestionReportList.map {
+                        it.copy(sourceType = QuestionSource.API)
                     }.toMutableList()
-                    Constant.isQuestionLimit-=savedQuizQuestionReportList.size
+                    Constant.isQuestionLimit -= savedQuizQuestionReportList.size
                     isLoadQuizQuestionReport()
                 }
             } else {
@@ -194,7 +191,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             }
         }
 
-            appViewModel!!.isAddQuestion?.observe(this) { response ->
+        appViewModel!!.isAddQuestion?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this@AddQuestion)
@@ -207,11 +204,12 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                         resources.getString(R.string.fail), response.message, this
                     )
                 }
-            }
-            else {
+            } else {
                 Constant.hideLoading(this@AddQuestion)
                 Constant.showDataValidation(
-                    resources.getString(R.string.fail),getString(R.string.Something_went_wrong_Please_try_again), this
+                    resources.getString(R.string.fail),
+                    getString(R.string.Something_went_wrong_Please_try_again),
+                    this
                 )
             }
         }
@@ -222,13 +220,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     Constant.hideLoading(this)
                     pickQBankList = response.data.map { it.copy(checked = false) }
                     showResumeListDialog(this, pickQBankList)
-                }
-                else {
+                } else {
                     Constant.hideLoading(this)
                     Constant.showErrorAlert(
-                        this,
-                        getString(R.string.alert),
-                        response.message
+                        this, getString(R.string.alert), response.message
                     )
                 }
             } else {
@@ -249,12 +244,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 if (Constant.isQuestionLimit > 0) {
                     quizAdapter!!.addItem(binding.rcAddQuestion)
                     UpdateQuestionCount()
-                }
-                else {
+                } else {
                     Constant.showErrorAlert(
-                        this,
-                        getString(R.string.alert),
-                        getString(R.string.question_limit_reached)
+                        this, getString(R.string.alert), getString(R.string.question_limit_reached)
                     )
                 }
             }
@@ -290,42 +282,47 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                             mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                             fileName.endsWith(".pdf", true) -> FileType.PDF
                             fileName.endsWith(".doc", true) || fileName.endsWith(
-                                ".docx",
-                                true
+                                ".docx", true
                             ) -> FileType.DOC
 
                             fileName.endsWith(".xls", true) || fileName.endsWith(
-                                ".xlsx",
-                                true
+                                ".xlsx", true
                             ) -> FileType.EXCEL
 
                             fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                ".pptx",
-                                true
+                                ".pptx", true
                             ) -> FileType.PPT
 
                             fileName.endsWith(".txt", true) -> FileType.TXT
                             else -> FileType.OTHER
                         }
 
-                        Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                        Log.d("SelectedFile", "URI: $uri, Type: $type")
-                        Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                        if (clickedPosition != RecyclerView.NO_POSITION && clickedPosition < itemList!!.size) {
-                            val quizItem = itemList!![clickedPosition]
-                            val newFilePath = FilePath(uri.toString(), type.toString())
-                            val updatedFiles = quizItem.file_path.toMutableList()
-                            updatedFiles.add(newFilePath)
+                        val attachment = QuizAttachmentData(
+                            isUrl = uri.toString(),
+                            isType = type.toString(),
+                            isPosition = isAttachmentAdapterPosition
+                        )
 
-                            quizItem.file_path = updatedFiles
-//                            quizAdapter!!.notifyItemChanged(clickedPosition)
-                            Log.d("SaveFile", "Saved to item $clickedPosition => $newFilePath")
-                        } else {
-                            Log.w(
-                                "SaveFile",
-                                "Invalid clickedPosition=$clickedPosition, quizListSize=${itemList.size}"
-                            )
-                        }
+                        quizAttachments.add(attachment)
+
+//                        Constant.selectedFiles.add(FileItem(uri.toString(), type))
+//                        Log.d("SelectedFile", "URI: $uri, Type: $type")
+//                        Constant.selectedFiles.add(FileItem(uri.toString(), type))
+//                        if (clickedPosition != RecyclerView.NO_POSITION && clickedPosition < itemList!!.size) {
+//                            val quizItem = itemList!![clickedPosition]
+//                            val newFilePath = FilePath(uri.toString(), type.toString())
+//                            val updatedFiles = quizItem.file_path.toMutableList()
+//                            updatedFiles.add(newFilePath)
+//
+//                            quizItem.file_path = updatedFiles
+////                            quizAdapter!!.notifyItemChanged(clickedPosition)
+//                            Log.d("SaveFile", "Saved to item $clickedPosition => $newFilePath")
+//                        } else {
+//                            Log.w(
+//                                "SaveFile",
+//                                "Invalid clickedPosition=$clickedPosition, quizListSize=${itemList.size}"
+//                            )
+//                        }
 
                     }
 
@@ -344,11 +341,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
         Log.d("QuestionLimitInAdapter", Constant.isQuestionLimit.toString())
 
         quizAdapter = AddQuestionAdapter(
-            editableQuizQuestionReportList.toMutableList(),
-            this,
-            this,
-            this,
-            false
+            editableQuizQuestionReportList.toMutableList(), this, this, this, false
         )
         binding.rcAddQuestion.layoutManager =
             LinearLayoutManager(this, RecyclerView.VERTICAL, false)
@@ -370,24 +363,25 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
     private fun isFetchQuizQuestionReport() {
         quizAdapter = AddQuestionAdapter(null, this, this, this, true)
-        binding.rcAddQuestion.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.rcAddQuestion.layoutManager =
+            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.rcAddQuestion.isNestedScrollingEnabled = false
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         binding.rcAddQuestion.adapter = quizAdapter
         appViewModel?.isGetQuizQuestionReport(isAccessToken ?: "", isQuizID)
     }
 
-    private fun isFetchFromQuestionBank(){
+    private fun isFetchFromQuestionBank() {
         appViewModel?.isGetPickFromQBank(isAccessToken ?: "", isSubjectID)
     }
 
     fun showResumeListDialog(
-        activity: Activity,
-        pickFomQbank: List<GetPickFromQBankData>
+        activity: Activity, pickFomQbank: List<GetPickFromQBankData>
     ) {
         if (activity.isFinishing || activity.isDestroyed) return
 
-        val dialogView = LayoutInflater.from(activity).inflate(R.layout.pick_question_from_qbank, null)
+        val dialogView =
+            LayoutInflater.from(activity).inflate(R.layout.pick_question_from_qbank, null)
         val builder = AlertDialog.Builder(activity)
         builder.setView(dialogView)
         val alertDialog = builder.create()
@@ -411,9 +405,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
         adapter2.onSelectionChanged = { allSelected ->
             // Update cbSelect programmatically, but avoid infinite loop
-            Log.d("allSelectedBefore",allSelected.toString())
+            Log.d("allSelectedBefore", allSelected.toString())
             if (cbSelect.isChecked != allSelected) {
-                Log.d("allSelectedAfter",allSelected.toString()+"AAAAAAAAAAAAAAAAAAAAAA")
+                Log.d("allSelectedAfter", allSelected.toString() + "AAAAAAAAAAAAAAAAAAAAAA")
 
                 cbSelect.setOnCheckedChangeListener(null)
                 cbSelect.isChecked = allSelected
@@ -421,7 +415,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     adapter2.selectAll(isChecked)
                 }
             }
-            Log.d("allSelectedFinal",allSelected.toString())
+            Log.d("allSelectedFinal", allSelected.toString())
         }
         adapter2.notifySelectionChanged()
 
@@ -442,9 +436,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
                     // Over limit → error
                     Constant.showErrorAlert(
-                        this,
-                        getString(R.string.alert),
-                        getString(R.string.question_limit_reached)
+                        this, getString(R.string.alert), getString(R.string.question_limit_reached)
                     )
                     cbSelect.isChecked = false
                 }
@@ -466,9 +458,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             val alreadyAddedIds = currentAdded.map { it.id }.toSet()
 
             // QBANK items currently present in AddQuestionAdapter
-            val qbankAddedIds = currentAdded
-                .filter { it.sourceType == QuestionSource.QBANK && it.id.isNotEmpty() }
-                .map { it.id }
+            val qbankAddedIds =
+                currentAdded.filter { it.sourceType == QuestionSource.QBANK && it.id.isNotEmpty() }
+                    .map { it.id }
 
             // Items user just selected in dialog that are genuinely new to AddQuestionAdapter
             val newSelectedQuestions = selectedQuestions.filter { it.id !in alreadyAddedIds }
@@ -479,13 +471,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             // Effective available slots: current limit + slots freed by deselection
             val effectiveAvailableSlots = Constant.isQuestionLimit + deselectedIds.size
 
-            Log.d("ImportDebug", "selected=${selectedIds.size}, newSelected=${newSelectedQuestions.size}, alreadyAdded=${alreadyAddedIds.size}, deselected=${deselectedIds.size}, effectiveSlots=$effectiveAvailableSlots")
+            Log.d(
+                "ImportDebug",
+                "selected=${selectedIds.size}, newSelected=${newSelectedQuestions.size}, alreadyAdded=${alreadyAddedIds.size}, deselected=${deselectedIds.size}, effectiveSlots=$effectiveAvailableSlots"
+            )
 
             if (effectiveAvailableSlots <= 0) {
                 Constant.showErrorAlert(
-                    this,
-                    getString(R.string.alert),
-                    getString(R.string.question_limit_reached)
+                    this, getString(R.string.alert), getString(R.string.question_limit_reached)
                 )
                 return@setOnClickListener
             }
@@ -507,7 +500,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 }
 
                 //Update remaining limit: available - used
-                val newRemaining = (effectiveAvailableSlots - newSelectedQuestions.size).coerceAtLeast(0)
+                val newRemaining =
+                    (effectiveAvailableSlots - newSelectedQuestions.size).coerceAtLeast(0)
                 Constant.isQuestionLimit = newRemaining
 
                 // Sync PickQuestionAdapter: mark newly imported as imported (sets checked = true in pick adapter)
@@ -522,9 +516,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             } else {
                 // not enough slots; do nothing (no removals), just show error
                 Constant.showErrorAlert(
-                    this,
-                    getString(R.string.alert),
-                    getString(R.string.question_limit_reached)
+                    this, getString(R.string.alert), getString(R.string.question_limit_reached)
                 )
             }
         }
@@ -536,17 +528,21 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
 
 
     }
-    fun UpdateQuestionCount(){
+
+    fun UpdateQuestionCount() {
         val text = "${Constant.isQuestionLimit}/$isSavedQuestionLimit"
         val spannable = SpannableString(text)
 
         // Apply blue color only to part before "/"
         val slashIndex = text.indexOf("/")
         spannable.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.PrimaryColor)), // your blue color
-            0,
-            slashIndex,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            ForegroundColorSpan(
+                ContextCompat.getColor(
+                    this,
+                    R.color.PrimaryColor
+                )
+            ), // your blue color
+            0, slashIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
         // Set black color for rest (after slash)
@@ -556,7 +552,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             text.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        binding.tvQuestionCount.text=spannable
+        binding.tvQuestionCount.text = spannable
 
 
     }
@@ -573,17 +569,105 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             c_option = this.c_option,
             d_option = this.d_option,
             mark = this.mark,
-            iframe="",
-            file_size="",
-            thumbnail="",
+            iframe = "",
+            file_size = "",
+            thumbnail = "",
             sourceType = QuestionSource.QBANK,
             file_path = emptyList()
         )
     }
 
-    private fun isAddQuestionSubmit() {
-
+    fun isAddQuestionSubmit() {
+        Log.d("quizAttachments", quizAttachments.size.toString())
+        for (i in quizAttachments.indices) {
+            isUploadFilesInServer(
+                quizAttachments[i].isUrl,
+                quizAttachments.get(i).isType,
+                quizAttachments.get(i).isPosition
+            )
+        }
+//        Log.d("isQuizUploadedFiles==============", isQuizUploadedFiles.size.toString())
+//        for (i in isQuizUploadedFiles.indices) {
+//            Log.d("isFileUploading+++++++++++++++", isQuizUploadedFiles.get(i).isUrl.toString())
+//            Log.d(
+//                "isFileUploading+++++++++++++++",
+//                isQuizUploadedFiles.get(i).isPosition.toString()
+//            )
+//        }
+        Log.d("isQuizUploadedFiles___isPosition1",isQuizUploadedFiles.size.toString())
+        Log.d("isQuizUploadedFiles___isPosition2",quizAttachments.size.toString())
+if (isQuizUploadedFiles.size == quizAttachments.size){
         val allQuestions = quizAdapter!!.getUpdatedList()
+        val root = JsonObject()
+        for (i in allQuestions.indices) {
+            if (allQuestions[i].sourceType == QuestionSource.API ||
+                allQuestions[i].sourceType == QuestionSource.USER ||
+                allQuestions[i].sourceType == QuestionSource.QBANK
+            ) {
+
+                root.addProperty("quiz_id", "1308")
+                root.addProperty("max_mark", 7)
+                root.addProperty("ok_flag", false)
+
+                val questionsArray = JsonArray()
+
+                for (i in allQuestions.indices) {
+                    val q = allQuestions[i]
+
+//                    if (q.sourceType == QuestionSource.API ||
+//                        q.sourceType == QuestionSource.USER ||
+//                        q.sourceType == QuestionSource.QBANK
+//                    ) {
+                    val questionObj = JsonObject()
+                    questionObj.addProperty("a_option", q.a_option)
+                    questionObj.addProperty("b_option", q.b_option)
+                    questionObj.addProperty("c_option", q.c_option)
+                    questionObj.addProperty("d_option", q.d_option)
+                    questionObj.addProperty("answer", q.answer)
+                    questionObj.addProperty("chapter", q.chapter)
+                    questionObj.addProperty("ques_no", q.id)
+                    questionObj.addProperty("question", q.question)
+                    questionObj.addProperty("mark", q.mark)
+                    questionObj.addProperty("iframe", q.iframe ?: "")
+                    questionObj.addProperty("file_size", "4")
+                    questionObj.addProperty("thumbnail", q.thumbnail ?: "")
+
+                    val filePathArray = JsonArray()
+                    for (file in isQuizUploadedFiles) {
+                        if (file.isPosition.toString() == q.toString()) {
+                            val fileObj = JsonObject()
+                            fileObj.addProperty("type", file.isType)
+                            fileObj.addProperty("url", file.isUrl)
+                            filePathArray.add(fileObj)
+                        }
+                    }
+                    questionObj.add("file_path", filePathArray)
+
+                    questionsArray.add(questionObj)
+                    // }
+                }
+                root.add("questions", questionsArray)
+                val updateArray = JsonArray()
+                val updateObj = JsonObject()
+                updateObj.addProperty("a_option", "90°C")
+                updateObj.addProperty("b_option", "100°C")
+                updateObj.addProperty("c_option", "81°C")
+                updateObj.addProperty("d_option", "80°C")
+                updateObj.addProperty("answer", "2")
+                updateObj.addProperty("chapter", "Chapter-1")
+                updateObj.addProperty("ques_no", "")
+                updateObj.addProperty("question", "Modified question Bank")
+                updateObj.addProperty("mark", 2)
+                updateObj.addProperty("subject_id", "112613")
+
+                updateArray.add(updateObj)
+                root.add("update_question_bank", updateArray)
+
+            }
+
+            val jsonString = root.toString()
+            Log.d("QuizRequestJSON", jsonString)
+        }
 
         val apiUserQuestions = allQuestions
             .filter { it.sourceType == QuestionSource.API || it.sourceType == QuestionSource.USER || it.sourceType == QuestionSource.QBANK }
@@ -599,9 +683,26 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     answer = it.answer,
                     mark = it.mark,
                     iframe = it.iframe ?: "",
-                    file_size = "",
+                    file_size = "4",
                     thumbnail = it.thumbnail ?: "",
-                    file_path = it.file_path
+                    file_path = listOf(
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782816.jpg",
+                            type = "IMAGE"
+                        ),
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782401.jpg",
+                            type = "IMAGE"
+                        ),
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_150kB.pdf",
+                            type = "PDF"
+                        ),
+                        FilePath(
+                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_100kB.docx",
+                            type = "WORD"
+                        )
+                    )
                 )
             }
 
@@ -647,19 +748,25 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             ok_flag = isOkFlag,
             update_question_bank = updateQBankList
         )
-        apiUserQuestions.forEachIndexed { index, q ->
-            Log.d("PickedFiles", "Q$index -> ${q.file_path}")
-        }
+
         val jsonObject = Gson().toJsonTree(body).asJsonObject
         Log.d("FinalJSON", jsonObject.toString())
+
         Log.d("isUpdatedQBankQuestion", isUpdatedQBankQuestions.toString())
+//        Constant.hideLoading(this)
+
         if (isUpdatedQBankQuestions > 0) {
+
             val textQuestion = if (isUpdatedQBankQuestions == 1) {
                 getString(R.string.question_)
             } else {
                 getString(R.string.questions)
             }
-            val isMessage = "${getString(R.string.You_have_modified)} $isUpdatedQBankQuestions $textQuestion ${getString(R.string.from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank)}"
+
+            val isMessage =
+                "${getString(R.string.You_have_modified)} $isUpdatedQBankQuestions $textQuestion ${
+                    getString(R.string.from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank)
+                }"
             Constant.showSendConfirmationDialog(
                 this,
                 getString(R.string.confirmation),
@@ -669,140 +776,22 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 isMessage
             ) { confirmed ->
                 if (confirmed) {
-                     Constant.showLoading(this)
-                     appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+//                    Constant.showLoading(this)
+//                    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
                 }
             }
+
         } else {
-            Constant.showLoading(this)
-            appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+            // Constant.showLoading(this)
+            //    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
         }
     }
-
-
-//    fun isAddQuestionSubmit() {
-//        val allQuestions = quizAdapter!!.getUpdatedList()
-//        val apiUserQuestions = allQuestions
-//            .filter { it.sourceType == QuestionSource.API || it.sourceType == QuestionSource.USER ||it.sourceType == QuestionSource.QBANK}
-//            .map {
-//                QuizQuestionRequest(
-//                    ques_no = it.id,
-//                    chapter = it.chapter,
-//                    question = it.question,
-//                    a_option = it.a_option,
-//                    b_option = it.b_option,
-//                    c_option = it.c_option,
-//                    d_option = it.d_option,
-//                    answer = it.answer,
-//                    mark = it.mark,
-//                    iframe = it.iframe?:"",
-//                    file_size = "4",
-//                    thumbnail = it.thumbnail?:"",
-//                    file_path = listOf(
-//                        FilePath(
-//                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782816.jpg",
-//                            type = "IMAGE"
-//                        ),
-//                        FilePath(
-//                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782401.jpg",
-//                            type = "IMAGE"
-//                        ),
-//                        FilePath(
-//                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_150kB.pdf",
-//                            type = "PDF"
-//                        ),
-//                        FilePath(
-//                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_100kB.docx",
-//                            type = "WORD"
-//                        )
-//                    )
-//                )
-//            }
-//
-//        val updateQBankList: List<UpdateQBankItem> = allQuestions
-//            .filter { it.sourceType == QuestionSource.QBANK }
-//            .mapNotNull { updatedItem ->
-//                val originalItem = pickQBankList.find { it.id == updatedItem.id }
-//
-//                if (originalItem != null) {
-//                    if (
-//                        updatedItem.question != originalItem.question ||
-//                        updatedItem.chapter != originalItem.chapter ||
-//                        updatedItem.a_option != originalItem.a_option ||
-//                        updatedItem.b_option != originalItem.b_option ||
-//                        updatedItem.c_option != originalItem.c_option ||
-//                        updatedItem.d_option != originalItem.d_option ||
-//                        updatedItem.answer != originalItem.answer ||
-//                        updatedItem.mark != originalItem.mark
-//                    ) {
-//                        UpdateQBankItem(
-//                            ques_no = updatedItem.id,
-//                            subject_id=isSubjectID,
-//                            chapter = updatedItem.chapter,
-//                            question = updatedItem.question,
-//                            a_option = updatedItem.a_option,
-//                            b_option = updatedItem.b_option,
-//                            c_option = updatedItem.c_option,
-//                            d_option = updatedItem.d_option,
-//                            answer = updatedItem.answer,
-//                            mark = updatedItem.mark
-//                        )
-//                    } else null
-//                } else null
-//            }
-//
-//        isUpdatedQBankQuestions=updateQBankList.size
-//        val totalMaxMark = apiUserQuestions.sumOf { it.mark }
-//
-//        val body = QuizRequestBody(
-//            quiz_id = isQuizID,
-//            questions = apiUserQuestions,
-//            max_mark = totalMaxMark,
-//            ok_flag = isOkFlag,
-//            update_question_bank = updateQBankList
-//        )
-//
-//        val jsonObject = Gson().toJsonTree(body).asJsonObject
-//        Log.d("FinalJSON", jsonObject.toString())
-//
-//        Log.d("isUpdatedQBankQuestion",isUpdatedQBankQuestions.toString())
-////        Constant.hideLoading(this)
-//
-//        if (isUpdatedQBankQuestions>0){
-//
-//            val textQuestion = if (isUpdatedQBankQuestions == 1) {
-//                getString(R.string.question_)
-//            } else {
-//                getString(R.string.questions)
-//            }
-//
-//            val isMessage = "${getString(R.string.You_have_modified)} $isUpdatedQBankQuestions $textQuestion ${getString(R.string.from_the_Question_Bank_Do_you_want_to_update_the_Question_Bank)}"
-//
-//            Constant.showSendConfirmationDialog(
-//                this,
-//                getString(R.string.confirmation),
-//                getString(R.string.Update),
-//                getString(R.string.Cancel),
-//                "",
-//                isMessage
-//            ) { confirmed ->
-//                if (confirmed) {
-////                    Constant.showLoading(this)
-////                    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
-//                }
-//            }
-//
-//        }
-//        else{
-//            Constant.showLoading(this)
-//            appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
-//        }
-//    }
+    }
 
 
     fun isCallAddQuestion() {
 
-        if (isSavedQuestionLimit==quizAdapter!!.getUpdatedList().size){
+        if (isSavedQuestionLimit == quizAdapter!!.getUpdatedList().size) {
             Constant.showSendConfirmationDialog(
                 this,
                 getString(R.string.confirmation),
@@ -815,18 +804,19 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     isAddQuestionSubmit()
                 }
             }
-        }
-        else{
+        } else {
             val currentCount = quizAdapter!!.getUpdatedList().size
-            val isBalance = isSavedQuestionLimit -quizAdapter!!.getUpdatedList().size
+            val isBalance = isSavedQuestionLimit - quizAdapter!!.getUpdatedList().size
             val textQuestion = if (isBalance == 1) {
                 getString(R.string.question_)  // e.g. "question"
             } else {
                 getString(R.string.questions) // e.g. "questions"
             }
 
-            val isMessage = "${getString(R.string.almost_there_You_ve_entered)} $currentCount $textQuestion. " +
-                    "${getString(R.string.just)} $isBalance ${getString(R.string.more_to_complete_the_quiz_but_don_t_worry_you_can_add_them_later)}"
+            val isMessage =
+                "${getString(R.string.almost_there_You_ve_entered)} $currentCount $textQuestion. " + "${
+                    getString(R.string.just)
+                } $isBalance ${getString(R.string.more_to_complete_the_quiz_but_don_t_worry_you_can_add_them_later)}"
 
             Constant.showSendConfirmationDialog(
                 this,
@@ -849,20 +839,21 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
-            R.id.lblImportQuestion->{
-                if(isFirstClick){
+
+            R.id.lblImportQuestion -> {
+                if (isFirstClick) {
                     Constant.showLoading(this)
                     isFetchFromQuestionBank()
-                    isFirstClick=false
-                }
-                else{
+                    isFirstClick = false
+                } else {
                     showResumeListDialog(this, pickQBankList)
                 }
 
             }
-            R.id.lblSendQuiz->{
+
+            R.id.lblSendQuiz -> {
                 if (quizAdapter!!.showValidationErrors(binding.rcAddQuestion)) {
-                    if (quizAdapter!!.getUpdatedList().size<=isSavedQuestionLimit) {
+                    if (quizAdapter!!.getUpdatedList().size <= isSavedQuestionLimit) {
                         if (isSubmittedCount <= 0) {
                             isCallAddQuestion()
                         } else {
@@ -873,9 +864,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                             }
 
                             val isMessage =
-                                getString(R.string.this_question_has_already_been_submitted_by) +
-                                        " ${isSubmittedCount} $studentText " +
-                                        getString(R.string.do_you_want_to_update_it)
+                                getString(R.string.this_question_has_already_been_submitted_by) + " ${isSubmittedCount} $studentText " + getString(
+                                    R.string.do_you_want_to_update_it
+                                )
 
                             Constant.showSendConfirmationDialog(
                                 this,
@@ -890,8 +881,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                                 }
                             }
                         }
-                    }
-                    else{
+                    } else {
                         Constant.showErrorAlert(
                             this,
                             getString(R.string.alert),
@@ -912,10 +902,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     }
 
     override fun onAttachmentPick(
-        position: Int,
-        item: MutableList<GetQuizQuestionReportData>?
+        position: Int, item: MutableList<GetQuizQuestionReportData>?
     ) {
-        clickedPosition = position
+        isAttachmentAdapterPosition = position
         itemList = item!!
         showBottomDialog()
     }
@@ -961,9 +950,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                     showCameraPermissionSettingsDialog()
                 } else {
                     Toast.makeText(
-                        this,
-                        getString(R.string.camera_permission_is_required),
-                        Toast.LENGTH_SHORT
+                        this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT
                     ).show()
                 }
             }
@@ -1036,9 +1023,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
                 Toast.makeText(
-                    this,
-                    getString(R.string.only_2_videos_are_allowed),
-                    Toast.LENGTH_SHORT
+                    this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT
                 ).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
@@ -1091,9 +1076,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
                 Toast.makeText(
-                    this,
-                    getString(R.string.could_not_create_file_for_photo),
-                    Toast.LENGTH_SHORT
+                    this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT
                 ).show()
             }
         } else {
@@ -1140,22 +1123,30 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                 else -> FileType.OTHER
             }
 
-            Constant.selectedFiles.add(FileItem(uri.toString(), type))
-            if (clickedPosition != RecyclerView.NO_POSITION && clickedPosition < itemList!!.size) {
-                val quizItem = itemList!![clickedPosition]
-                val newFilePath = FilePath(uri.toString(), type.toString())
-                val updatedFiles = quizItem.file_path.toMutableList()
-                updatedFiles.add(newFilePath)
+            val attachment = QuizAttachmentData(
+                isUrl = uri.toString(),
+                isType = type.toString(),
+                isPosition = isAttachmentAdapterPosition
+            )
 
-                quizItem.file_path = updatedFiles
-                // quizAdapter!!.notifyItemChanged(clickedPosition)
-                Log.d("SaveFile", "Saved to item $clickedPosition => $newFilePath")
-            } else {
-                Log.w(
-                    "SaveFile",
-                    "Invalid clickedPosition=$clickedPosition, quizListSize=${itemList.size}"
-                )
-            }
+            quizAttachments.add(attachment)
+
+//            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+//            if (clickedPosition != RecyclerView.NO_POSITION && clickedPosition < itemList!!.size) {
+//                val quizItem = itemList!![clickedPosition]
+//                val newFilePath = FilePath(uri.toString(), type.toString())
+//                val updatedFiles = quizItem.file_path.toMutableList()
+//                updatedFiles.add(newFilePath)
+//
+//                quizItem.file_path = updatedFiles
+//                // quizAdapter!!.notifyItemChanged(clickedPosition)
+//                Log.d("SaveFile", "Saved to item $clickedPosition => $newFilePath")
+//            } else {
+//                Log.w(
+//                    "SaveFile",
+//                    "Invalid clickedPosition=$clickedPosition, quizListSize=${itemList.size}"
+//                )
+//            }
         }
 
         when (requestCode) {
@@ -1177,14 +1168,11 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                             this,
                             getString(R.string.camera_image_file_not_found),
                             Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        ).show()
                     }
                 } ?: run {
                     Toast.makeText(
-                        this,
-                        getString(R.string.camera_image_failed),
-                        Toast.LENGTH_SHORT
+                        this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT
                     ).show()
                 }
             }
@@ -1252,86 +1240,107 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
             SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile(
-            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
-            ".jpg",
-            storageDir
+            "${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir
         )
     }
 
 
-    fun isUploadFilesInServer(isFileType: String?) {
+    fun isUploadFilesInServer(isFileUrl: String?, isType: String, position: Int) {
 
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
-        }
         ProgressDialogHelper.updateProgress(50)
-        isTotalSelectedItem = Constant.selectedFiles.size
-        isVideoSelectedArrayList.clear()
-        Constant.isAwsUploadedFiles.clear()
-        val iterator = Constant.selectedFiles.iterator()
-        while (iterator.hasNext()) {
-            val file = iterator.next()
-            if (file.type == FileType.VIDEO) {
-                isVideoSelectedArrayList.add(file)
-                iterator.remove()
-            }
+
+//        val iterator = quizAttachments.iterator()
+//        while (iterator.hasNext()) {
+//            val file = iterator.next()
+        if (isType == FileType.VIDEO.toString()) {
+            isVideoSelectedArrayList.add(
+                QuizAttachmentData(
+                    isFileUrl.toString(), isType, position
+                )
+            )
+        } else {
+            isFileUploadInAws(isFileUrl, isType, position)
         }
-        when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
-        }
+        //  }
+//        when {
+//            quizAttachments.isNotEmpty() -> isFileUploadInAws(isFileType)
+//            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+//        }
         ProgressDialogHelper.updateProgress(80)
+
+
+//        Log.d("isFileType", isFileType.toString())
+//        ProgressDialogHelper.updateProgress(50)
+////        isTotalSelectedItem = Constant.selectedFiles.size
+////        isVideoSelectedArrayList.clear()
+////        Constant.isAwsUploadedFiles.clear()
+////        val iterator = Constant.selectedFiles.iterator()
+//        val iterator = quizAttachments.iterator()
+//        while (iterator.hasNext()) {
+//            val file = iterator.next()
+//            if (file.isType== FileType.VIDEO.toString()) {
+//                isVideoSelectedArrayList.add(file)
+//                iterator.remove()
+//            }
+//        }
+//        when {
+//            quizAttachments.isNotEmpty() -> isFileUploadInAws(isFileType)
+//            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+//        }
+//        ProgressDialogHelper.updateProgress(80)
     }
 
-
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileUrl: String?,
+        isType: String,
+        isAttachmentAdapterPosition: Int
     ) {
-        Constant.isAwsUploadedFiles.clear()
-        val iterator = Constant.selectedFiles.iterator()
-        while (iterator.hasNext()) {
-            val fileItem = iterator.next()
-            if (fileItem.path.contains("amazonaws.")) {
-                Constant.isAwsUploadedFiles.add(
-                    AwsUploadedFiles(
-                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
-                    )
-                )
-                iterator.remove()
-            }
-        }
+//        Constant.isAwsUploadedFiles.clear()
+//        val iterator = quizAttachments.iterator()
+//        while (iterator.hasNext()) {
+//            val fileItem = iterator.next()
+//            if (fileItem.isUrl.contains("amazonaws.")) {
+//                Constant.isAwsUploadedFiles.add(
+//                    AwsUploadedFiles(
+//                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+//                    )
+//                )
+//                iterator.remove()
+//            }
+//        }
 
         val isCountryId = SharedPreference.getCountryId(this)
-        if (Constant.selectedFiles.isEmpty()) {
-            if (isVideoSelectedArrayList.isEmpty()) {
-                ProgressDialogHelper.dismiss()
-                //isUpdateHomeWork()
-            } else {
-                videoUploading()
-            }
-        } else {
+        // if (quizAttachments.isEmpty()) {
+//            if (isVideoSelectedArrayList.isEmpty()) {
+//                ProgressDialogHelper.dismiss()
+//                //isUpdateHomeWork()
+//            } else {
+//                videoUploading()
+//            }
+        //  } else {
+        var isCompressUrl = ""
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             outputDir.mkdirs()
-            val newSelectedFiles = mutableListOf<FileItem>()
-            Constant.compressImageFilesOnly(
+        val newSelectedFiles = mutableListOf<QuizAttachmentData>()
+        Constant.quizCompressImageFilesOnly(
                 context = this,
-                files = Constant.selectedFiles,
+            files = isFileUrl!!,
                 outputDir = outputDir.absolutePath,
                 format = Bitmap.CompressFormat.JPEG,
                 quality = 80,
                 maxWidth = 1280,
                 maxHeight = 1280,
-                onEachProcessed = { original, outputPath, success ->
+            onEachProcessed = { outputPath, success ->
                     if (success && outputPath != null) {
                         val compressedFile = File(outputPath)
                         val originalSizeKB = try {
-                            if (original.path.startsWith("content://")) {
+                            if (outputPath.startsWith("content://")) {
                                 contentResolver.openFileDescriptor(
-                                    Uri.parse(original.path), "r"
+                                    Uri.parse(outputPath), "r"
                                 )?.statSize ?: 0
                             } else {
-                                File(original.path).length()
+                                File(outputPath).length()
                             }
                         } catch (e: Exception) {
                             0L
@@ -1342,22 +1351,29 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                             "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
                         )
 
-                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                        isCompressUrl = outputPath
+//                        newSelectedFiles.add(
+//                            QuizAttachmentData(
+//                                isUrl = outputPath,
+//                                isType = isType,
+//                                isPosition = isAttachmentAdapterPosition
+//                            )
+//                        )
                     } else {
-                        Log.e("Compressor", "Failed: ${original.path}")
+//                        Log.e("Compressor", "Failed: ${original.isType}")
                     }
                 },
                 onComplete = {
-                    Constant.selectedFiles.clear()
-                    Constant.selectedFiles.addAll(newSelectedFiles)
+//                    Constant.selectedFiles.clear()
+//                    isQuizUploadedFiles.addAll(newSelectedFiles)
                     val isAwsUploadingFile = ArrayList<String>()
 
-                    val isSelectedFileCount = Constant.selectedFiles.size
-                    for (i in Constant.selectedFiles.indices) {
+//                    val isSelectedFileCount = Constant.selectedFiles.size
+//                    for (i in isQuizUploadedFiles.indices) {
                         isAwsUploadingPreSigned?.getPreSignedUrl(
-                            Constant.selectedFiles[i].path,
+                            isCompressUrl,
                             isStaffDetails!!.school_id,
-                            isFileType!!,
+                            isType!!,
                             this,
                             isCountryId!!,
                             true,
@@ -1367,20 +1383,51 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                                 override fun onUploadSuccess(
                                     response: String?, isFileUploaded: String?
                                 ) {
-                                    isAwsUploadingFile.add(isFileUploaded!!)
-                                    Constant.isAwsUploadedFiles.add(
-                                        AwsUploadedFiles(
-                                            isFileUrl = isFileUploaded,
-                                            isFileType = Constant.selectedFiles[i].type.name
+                                    Log.d("isFileUploaded", isFileUploaded.toString())
+                                    //  isAwsUploadingFile.add(isFileUploaded!!)
+//                                    Constant.isAwsUploadedFiles.add(
+//                                        AwsUploadedFiles(
+//                                            isFileUrl = isFileUploaded,
+//                                            isFileType = Constant.selectedFiles[i].type.name
+//                                        )
+//                                    )
+
+//                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+//                                        ProgressDialogHelper.dismiss()
+//                                        //  isUpdateHomeWork()
+//                                    } else {
+//                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
+//                                            videoUploading()
+//                                        }
+//                                    }
+
+                                    isQuizUploadedFiles.add(
+                                        QuizAttachmentData(
+                                            isUrl = isFileUploaded.toString(),
+                                            isType = isType,
+                                            isPosition = isAttachmentAdapterPosition
                                         )
                                     )
+                                    Log.d(
+                                        "isQuizUploadedFiles",
+                                        isQuizUploadedFiles.size.toString()
+                                    )
 
-                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
-                                        ProgressDialogHelper.dismiss()
-                                        //  isUpdateHomeWork()
-                                    } else {
-                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
-                                            videoUploading()
+                                    if (quizAttachments.size == isQuizUploadedFiles.size) {
+                                        Log.d("isSameSize", "isSameSize")
+                                        for (i in isQuizUploadedFiles.indices) {
+                                            Log.d(
+                                                "isUploadedFileList++++++Url",
+                                                isQuizUploadedFiles.get(i).isUrl
+                                            )
+                                            Log.d(
+                                                "isUploadedFileList++++++Position",
+                                                isQuizUploadedFiles.get(i).isPosition.toString()
+                                            )
+                                            Log.d(
+                                                "isUploadedFileList++++++Type",
+                                                isQuizUploadedFiles.get(i).isType.toString()
+                                            )
                                         }
                                     }
                                 }
@@ -1389,30 +1436,30 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
                                     Log.d("isUploadIssue", error.toString())
                                 }
                             })
-                    }
+                    //   }
 
                     Log.d("Compressor", "All files compressed and uploaded.")
                 })
-        }
+        // }
     }
 
     private fun videoUploading() {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
-            if (fileItem.path.contains("player.vimeo.com")) {
-                Constant.isAwsUploadedFiles.add(
-                    AwsUploadedFiles(
-                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
-                    )
-                )
+            if (fileItem.isType.contains("player.vimeo.com")) {
+//                Constant.isAwsUploadedFiles.add(
+//                    AwsUploadedFiles(
+//                        isFileUrl = fileItem.isType, isFileType = fileItem.isType.name
+//                    )
+//                )
                 iterator.remove()
             }
         }
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
                 VimeoVideoUpload.uploadVideo(
-                    this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].path, this
+                    this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].isType, this
                 )
             }
         } else {
@@ -1426,11 +1473,11 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(),
     ) {
         runOnUiThread {
             Log.d("link", link.toString())
-            Constant.isAwsUploadedFiles.add(
-                AwsUploadedFiles(
-                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
-                )
-            )
+//            Constant.isAwsUploadedFiles.add(
+//                AwsUploadedFiles(
+//                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+//                )
+//            )
 
             if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()

@@ -438,6 +438,15 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
 
     private fun isShowAvailableSlot(data: List<ValidatedSlot>) {
+        val availableSlotsOnly = data.map { slot ->
+            val filteredSlots = slot.slots.filter { it.slot_availablity.equals("Available", true) }
+            slot.copy(slots = filteredSlots)
+        }.filter { it.slots.isNotEmpty() }
+        if (availableSlotsOnly.isEmpty()) {
+            Toast.makeText(this, "No available slots for selected date(s)", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view = layoutInflater.inflate(R.layout.checkslot_create, null)
         bottomSheetDialog!!.setContentView(view)
@@ -445,7 +454,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         val isRcySlotDate = view.findViewById<RecyclerView>(R.id.rcySlotDate)
         val lblCreateSlot = view.findViewById<TextView>(R.id.lblCreateSlot)
 
-        val groupedData = data.map { slot ->
+        val groupedData = availableSlotsOnly.map { slot ->
             AvailableSlotGroup(slot.date, slot.slots.toMutableList())
         }
 
@@ -471,7 +480,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         bottomSheetDialog!!.show()
 
-        // Make BottomSheet full screen
         val bottomSheet = bottomSheetDialog!!.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.let { sheet ->
             val behavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(sheet)
@@ -480,6 +488,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             behavior.skipCollapsed = true
         }
     }
+
 
     private fun validateMeetingInputs(): MeetingCreationData? {
         if (binding.edtPurPose.text.toString().isEmpty()) {
