@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray4"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <include
@@ -115,60 +115,60 @@
 
                 </LinearLayout>
 
-<!--                <RelativeLayout-->
-<!--                    android:id="@+id/lnrAcademicDetails"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@+id/lnrAttendance"-->
-<!--                    android:layout_marginTop="@dimen/ten"-->
-<!--                    android:gravity="center"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:visibility="visible">-->
+                <RelativeLayout
+                    android:id="@+id/lnrAcademicDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrAttendance"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/lblAcademicYearPick"-->
-<!--                        style="@style/CustomTextStylePoppinsBold"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentStart="true"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:layout_marginStart="@dimen/ten"-->
-<!--                        android:text="@string/choose_academic_year"-->
-<!--                        android:textSize="@dimen/fifteen_sp"-->
-<!--                        >-->
-<!--                    </TextView>-->
-
-
-<!--                    <RelativeLayout-->
-<!--                        android:id="@+id/rytAcademicYear"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentEnd="true"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:layout_marginEnd="@dimen/five"-->
-<!--                        android:layout_toEndOf="@+id/lblAcademicYearPick"-->
-<!--                        android:background="@drawable/bg_white_light_radious">-->
-
-<!--                        <Spinner-->
-<!--                            android:id="@+id/isSpinner"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:background="@drawable/custom_spinner_background" />-->
-
-<!--                    </RelativeLayout>-->
+                    <TextView
+                        android:id="@+id/lblAcademicYearPick"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:text="@string/choose_academic_year"
+                        android:textSize="@dimen/fifteen_sp"
+                        >
+                    </TextView>
 
 
-<!--                </RelativeLayout>-->
+                    <RelativeLayout
+                        android:id="@+id/rytAcademicYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_toEndOf="@+id/lblAcademicYearPick"
+                        android:background="@drawable/bg_white_light_radious">
+
+                        <Spinner
+                            android:id="@+id/isSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_spinner_background" />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
 
 
                 <RelativeLayout
                     android:id="@+id/rlaMarkAttendanceCommon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrAcademicDetails"
                     android:visibility="visible">
 
                     <RelativeLayout
-                        android:visibility="gone"
                         android:id="@+id/rlaSelectDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -234,7 +234,7 @@
                                     android:text="00"
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:textSize="@dimen/fifteen_sp"
-                                     />
+                                    />
 
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -279,305 +279,311 @@
                     </RelativeLayout>
 
 
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/lnrClasses"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_below="@+id/selectClassSection"-->
-<!--                        android:layout_marginTop="@dimen/ten"-->
-<!--                        android:weightSum="1">-->
-
-<!--                        <RelativeLayout-->
-<!--                            android:id="@+id/rlaStandard"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/fifteen"-->
-<!--                            android:layout_marginEnd="@dimen/fifteen"-->
-<!--                            android:layout_weight="0.5"-->
-<!--                            android:background="@drawable/bg_white_light_radious">-->
-
-<!--                            <Spinner-->
-<!--                                android:id="@+id/isSpinnerStandard"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:background="@drawable/custom_spinner_background" />-->
-
-<!--                        </RelativeLayout>-->
+                    <TextView
+                        android:id="@+id/selectClassSection"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlaSelectDate"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:text="@string/select_standard_and_section"
+                        />
 
 
-<!--                        <RelativeLayout-->
-<!--                            android:id="@+id/rlaSection"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/fifteen"-->
-<!--                            android:layout_marginEnd="@dimen/fifteen"-->
-<!--                            android:layout_weight="0.5"-->
-<!--                            android:background="@drawable/bg_white_light_radious">-->
+                    <TextView
+                        android:id="@+id/lblStar2"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlaSelectDate"
+                        android:layout_marginStart="@dimen/two"
+                        android:layout_marginTop="@dimen/eighteen"
+                        android:layout_toEndOf="@id/selectClassSection"
+                        android:text="@string/mandatory"
+                        android:textColor="@color/red"
+                        />
 
-<!--                            <Spinner-->
-<!--                                android:id="@+id/isSpinnerSection"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:background="@drawable/custom_spinner_background" />-->
 
-<!--                        </RelativeLayout>-->
+                    <LinearLayout
+                        android:id="@+id/lnrClasses"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/selectClassSection"
+                        android:layout_marginTop="@dimen/ten"
+                        android:weightSum="1">
 
-<!--                    </LinearLayout>-->
+                        <RelativeLayout
+                            android:id="@+id/rlaStandard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/fifteen"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/bg_white_light_radious">
+
+                            <Spinner
+                                android:id="@+id/isSpinnerStandard"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/custom_spinner_background" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlaSection"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/fifteen"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/bg_white_light_radious">
+
+                            <Spinner
+                                android:id="@+id/isSpinnerSection"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/custom_spinner_background" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
 
-            <FrameLayout
-                android:layout_marginTop="@dimen/ten"
-                android:paddingStart="@dimen/fifteen"
-                android:paddingEnd="@dimen/fifteen"
-                android:id="@+id/calendarFromFragmentContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <RelativeLayout
-                android:layout_marginTop="@dimen/ten"
                 android:id="@+id/rlaMarkAttendance"
                 android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
                 android:layout_height="wrap_content"
-                android:background="@drawable/white_bg_card"
                 android:layout_below="@+id/rlaAttendanceMarkCommonDetails"
                 android:visibility="visible">
 
-                <LinearLayout
-                    android:weightSum="1"
-                    android:id="@+id/rlaSelectedDateDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_marginEnd="@dimen/five"
-                        android:layout_weight="0.4"
-                        android:id="@+id/AttendanceSelectedDate"
-                        android:textSize="@dimen/eighteen_sp"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:text="Monday,October 13"
-
-                        android:layout_height="wrap_content">
-
-                    </TextView>
-
-                        <Spinner
-                            android:layout_weight="0.6"
-                            android:id="@+id/isSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_spinner_background" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/lnrClasses"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlaSelectedDateDetails"
-                    android:layout_marginTop="@dimen/ten"
-                    android:weightSum="1">
-
-                    <RelativeLayout
-                        android:id="@+id/rlaStandard"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/five"
-                        android:paddingVertical="@dimen/seven"
-
-                        android:layout_weight="0.5"
-                        android:background="@drawable/rect_blue_stoke_radius">
-                        <ImageView
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/five"
-                            android:id="@+id/imgClassIcon"
-                            android:layout_width="@dimen/twenty"
-                            android:src="@drawable/camera_pick_icon"
-                            android:layout_height="@dimen/twenty">
-
-                        </ImageView>
-
-                        <Spinner
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/two"
-                            android:layout_toEndOf="@+id/imgClassIcon"
-                            android:id="@+id/isSpinnerStandard"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_spinner_background" />
-
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:id="@+id/rlaSection"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/five"
-                        android:layout_weight="0.5"
-                        android:paddingVertical="@dimen/seven"
-                        android:background="@drawable/rect_blue_stoke_radius">
-
-                        <ImageView
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/five"
-                            android:id="@+id/imgSessionIcon"
-                            android:layout_width="@dimen/twenty"
-                            android:src="@drawable/camera_pick_icon"
-                            android:layout_height="@dimen/twenty">
-
-                        </ImageView>
-
-                        <Spinner
-                            android:layout_toEndOf="@+id/imgSessionIcon"
-                            android:id="@+id/isSpinnerSection"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_spinner_background" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
                 <TextView
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_below="@+id/lnrClasses"
-                    android:layout_width="match_parent"
-                    android:id="@+id/lblAttendanceOptions"
-                    android:text="@string/attendance_options"
+                    android:id="@+id/attendancetype_header"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/eighteen_sp"
-                    android:layout_height="wrap_content">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:text="@string/select_attendance_type"
+                    android:visibility="visible" />
 
-                </TextView>
+
+                <TextView
+                    android:id="@+id/lblStar3"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/two"
+                    android:layout_marginTop="@dimen/thirteen"
+                    android:layout_toEndOf="@id/attendancetype_header"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/thirteen_sp" />
+
 
                 <LinearLayout
                     android:id="@+id/lnrClasses1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblAttendanceOptions"
+                    android:layout_below="@+id/attendancetype_header"
                     android:layout_marginTop="@dimen/ten"
-                    android:gravity="center"
-                    android:orientation="horizontal"
                     android:visibility="visible"
                     android:weightSum="1">
-                    <TextView
-                        android:layout_weight="0.23"
-                        android:layout_width="match_parent"
-                        style="@style/CustomTextStylePoppinsRegular"
-                        android:textSize="@dimen/fourteen_sp"
-                        android:textColor="@color/mild_grey_dark"
-                        android:text="@string/attendance_type"
-                        android:layout_height="wrap_content">
 
-                    </TextView>
-                    <TextView
-                        android:layout_weight="0.33"
-                        android:layout_width="match_parent"
-                        android:text=":"
-                        style="@style/CustomTextStylePoppinsRegular"
-                        android:textSize="@dimen/fourteen_sp"
-                        android:textColor="@color/mild_grey_dark"
-                        android:layout_height="wrap_content">
 
-                    </TextView>
-                    <TextView
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:id="@+id/lblFullDay"
-                        android:layout_weight="0.22"
+                    <RelativeLayout
+                        android:id="@+id/rlaFullDay"
                         android:layout_width="match_parent"
-                        android:text="@string/full_day"
-                        android:gravity="center"
-                        android:layout_marginStart="@dimen/eight"
-                        android:layout_marginEnd="@dimen/five"
-                        android:background="@drawable/mild_gray_radius"
-                        android:paddingVertical="@dimen/five"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:layout_weight="0.5"
+                        android:background="@drawable/bg_white_light_radious"
+                        android:padding="@dimen/ten">
 
-                    </TextView>
-                    <TextView
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:id="@+id/lblHalfDay"
-                        android:layout_marginStart="@dimen/five"
-                        android:gravity="center"
-                        android:layout_weight="0.22"
+
+                        <RadioButton
+                            android:id="@+id/radioButtonFullDay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/ten"></RadioButton>
+
+                        <TextView
+                            android:id="@+id/fullday_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_toEndOf="@+id/radioButtonFullDay"
+                            android:text="@string/full_day"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            ></TextView>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlaHalfDay"
                         android:layout_width="match_parent"
-                        android:text="@string/half_day"
-                        android:paddingVertical="@dimen/five"
-                        android:background="@drawable/mild_gray_radius"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:layout_weight="0.5"
+                        android:background="@drawable/bg_white_light_radious"
+                        android:padding="@dimen/ten">
+
+
+                        <RadioButton
+                            android:id="@+id/radioButtonHalfDay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/ten">
+
+                        </RadioButton>
+
+                        <TextView
+                            android:id="@+id/halfday_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/radioButtonHalfDay"
+                            android:text="@string/half_day"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            ></TextView>
+                    </RelativeLayout>
 
                 </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/session_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrClasses1"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/fifteen"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:text="@string/select_session"
+                    android:visibility="gone" />
 
 
                 <LinearLayout
-                    android:gravity="center"
                     android:id="@+id/lnrClasses2"
-                    android:layout_marginTop="@dimen/ten"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/lnrClasses1"
+                    android:layout_below="@+id/session_header"
+                    android:visibility="gone"
                     android:weightSum="1">
 
-                    <TextView
-                        android:layout_weight="0.35"
-                        android:layout_width="match_parent"
-                        style="@style/CustomTextStylePoppinsRegular"
-                        android:textSize="@dimen/fourteen_sp"
-                        android:textColor="@color/mild_grey_dark"
-                        android:text="@string/session"
-                        android:layout_height="wrap_content">
 
-                    </TextView>
-                    <TextView
-                        android:layout_weight="0.49"
+                    <RelativeLayout
+                        android:id="@+id/rlaFirstHalf"
                         android:layout_width="match_parent"
-                        android:text=":"
-                        style="@style/CustomTextStylePoppinsRegular"
-                        android:textSize="@dimen/fourteen_sp"
-                        android:textColor="@color/mild_grey_dark"
-                        android:layout_height="wrap_content">
+                        android:layout_height="@dimen/thirty_five"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:layout_weight="0.5"
+                        android:background="@drawable/rect_white_light_radious"
+                        android:padding="@dimen/five">
 
-                    </TextView>
 
-                    <LinearLayout
-                        android:background="@drawable/gray_bg_radius"
-                        android:layout_width="match_parent"
-                        android:layout_weight="0.16"
-                        android:weightSum="0.16"
-                        android:padding="@dimen/three"
-                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:id="@+id/radioButtonFirstHalf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:enabled="false"></RadioButton>
+
                         <TextView
+                            android:id="@+id/firsthalf_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_toEndOf="@+id/radioButtonFirstHalf"
+                            android:text="@string/first_half"
                             style="@style/CustomTextStylePoppinsMedium"
-                            android:id="@+id/lblFirstHalf"
-                            android:layout_weight="0.08"
-                            android:layout_width="match_parent"
-                            android:text="F/N"
-                            android:gravity="center"
-                            android:background="@drawable/gray_bg_radius"
-                            android:paddingVertical="@dimen/five"
-                            android:layout_height="wrap_content">
 
-                        </TextView>
+                            ></TextView>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlaSecondHalf"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/thirty_five"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:layout_weight="0.5"
+                        android:background="@drawable/rect_white_light_radious"
+                        android:padding="@dimen/five">
+
+
+                        <RadioButton
+                            android:id="@+id/radioButtonSecondHalf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:enabled="false">
+
+                        </RadioButton>
+
                         <TextView
+                            android:id="@+id/secondhalf_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/radioButtonSecondHalf"
+                            android:text="@string/second_half"
                             style="@style/CustomTextStylePoppinsMedium"
-                            android:id="@+id/lblSecondHalf"
-                            android:layout_weight="0.08"
-                            android:gravity="center"
-                            android:layout_width="match_parent"
-                            android:text="A/F"
-                            android:paddingVertical="@dimen/five"
-                            android:layout_height="wrap_content">
-
-                        </TextView>
-                    </LinearLayout>
-
-
-
+                            ></TextView>
+                    </RelativeLayout>
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlaAttendanceType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/attendancetype_header"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/rect_grey"
+                    android:padding="@dimen/five"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:id="@+id/imgTypeOfAttendance"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:src="@drawable/ic_down_arrow">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/lblAttendanceType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:text="Full day"
+                        style="@style/CustomTextStylePoppinsBold"
+                        >
+
+                    </TextView>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/btnSelectPresent"
