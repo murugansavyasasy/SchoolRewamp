@@ -1576,7 +1576,7 @@ object Constant {
         if (dateStr.isNullOrBlank()) return "--"
         return try {
             val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
-            val outputFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd yyyy", Locale.getDefault())
+            val outputFormatter = DateTimeFormatter.ofPattern("EEE, MMM dd yyyy", Locale.getDefault())
             val localDate = LocalDate.parse(dateStr, inputFormatter)
             localDate.format(outputFormatter)
         } catch (e: Exception) {

@@ -8,10 +8,10 @@
 
     <TextView
         android:id="@+id/dateBox"
-        android:layout_width="@dimen/fourty"
-        android:layout_height="@dimen/fourty"
+        android:layout_width="@dimen/thirty_five"
+        android:layout_height="@dimen/thirty_five"
         android:gravity="center"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="@dimen/fourteen_sp" />
+        android:textSize="@dimen/twele_sp" />
 </LinearLayout>
