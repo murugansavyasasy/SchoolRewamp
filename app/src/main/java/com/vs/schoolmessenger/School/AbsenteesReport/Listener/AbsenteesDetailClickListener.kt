@@ -5,7 +5,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesDetailData
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 
 interface AbsenteesDetailClickListener {
-    fun onItemClick(data: AbsenteesDetailData, holder: AbsenteesReportDetailAdapter.DataViewHolder)
+    fun onItemClick(data: AbsenteesDetailData)
     fun onClassSelected(data: ClassWise)
 
 }

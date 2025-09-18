@@ -20,9 +20,9 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/white_bg_radius"
-            android:text="10 MAY 2005"
-            android:paddingVertical="@dimen/five"
             android:paddingHorizontal="@dimen/ten"
+            android:paddingVertical="@dimen/five"
+            android:text="10 MAY 2005"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
         </TextView>
@@ -36,8 +36,9 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_toEndOf="@+id/lblDate"
             android:background="@drawable/white_bg_radius"
+            android:paddingHorizontal="@dimen/ten"
             android:paddingVertical="@dimen/five"
-            android:paddingHorizontal="@dimen/ten"            android:text="12:00 PM - 03:00 PM"
+            android:text="12:00 PM - 03:00 PM"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
         </TextView>
@@ -124,7 +125,6 @@
             app:shapeAppearanceOverlay="@style/RoundedSquare" />
 
 
-
         <TextView
             android:id="@+id/tvNoProfiles"
             android:layout_width="wrap_content"
@@ -133,12 +133,12 @@
             android:layout_alignStart="@id/img1"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty"
+            android:drawableStart="@drawable/expired"
+            android:drawablePadding="8dp"
             android:text="No slot booked yet"
             android:textColor="@color/black"
             android:textSize="@dimen/fourteen_sp"
-            android:drawableStart="@drawable/expired"
-            android:drawablePadding="8dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
         <TextView
@@ -166,8 +166,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/twenty"
             android:background="@drawable/rounded_bg"
-            android:visibility="gone"
-            android:padding="@dimen/five">
+            android:padding="@dimen/five"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/lblJoin"

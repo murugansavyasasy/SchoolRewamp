@@ -171,7 +171,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/two_hundred"
-                android:src="@drawable/nodataimage"></ImageView>
+                android:src="@drawable/nodataimage">
+            </ImageView>
 
 
             <TextView

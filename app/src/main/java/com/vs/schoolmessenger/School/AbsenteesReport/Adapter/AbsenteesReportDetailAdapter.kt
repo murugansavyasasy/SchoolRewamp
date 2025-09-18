@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,78 +13,45 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesStudents
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesDetailClickListener
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeItem
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.SectionWise
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 
+
 class AbsenteesReportDetailAdapter(
-    private var itemList: List<ClassWise>?,
-    private var listener: AbsenteesDetailClickListener,
-    private var context: Context,
-    private var isLoading: Boolean,
-    private val selectedDate: String,
-    private var class_name: String? = null
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val TYPE_SHIMMER = 0
-    private val TYPE_DATA = 1
-    private var selectedPosition = 0
+    private val items: List<Pair<ClassWise, SectionWise>>
+) : RecyclerView.Adapter<AbsenteesReportDetailAdapter.AbsenteeViewHolder>() {
 
-    override fun getItemViewType(position: Int): Int {
-        return if (isLoading) TYPE_SHIMMER else TYPE_DATA
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AbsenteeViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.absentees_detail_list, parent, false)
+        return AbsenteeViewHolder(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_detail_list)
-            ShimmerViewHolder(shimmerView)
-        } else {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.absentees_detail_list, parent, false)
-            DataViewHolder(view, context)
-        }
+    override fun onBindViewHolder(holder: AbsenteeViewHolder, position: Int) {
+        val (classWise, sectionWise) = items[position]
+        holder.bind(classWise, sectionWise)
     }
 
+    override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is DataViewHolder) {
-            holder.bind(itemList!![position], position, listener, this, selectedDate)
-        } else if (holder is ShimmerViewHolder) {
-            holder.startShimmer()
-        }
-    }
+    class AbsenteeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvClassName = itemView.findViewById<TextView>(R.id.classvalue)
+        private val tvSectionName = itemView.findViewById<TextView>(R.id.sectionvalue)
+        private val tvAbsentCount = itemView.findViewById<TextView>(R.id.absentvalue)
+        private val progressBar = itemView.findViewById<ProgressBar>(R.id.progressAbsent)
 
-
-    override fun getItemCount(): Int {
-        return if (isLoading) 20
-        else itemList?.size ?: 0
-    }
-
-
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
-        private val classvalue: TextView = itemView.findViewById(R.id.classvalue)
-        private val sectionvalue: TextView = itemView.findViewById(R.id.sectionvalue)
-        private val absentvalue: TextView = itemView.findViewById(R.id.absentvalue)
-
-        fun bind(
-            data: ClassWise,
-            position: Int,
-            listener: AbsenteesDetailClickListener,
-            adapter: AbsenteesReportDetailAdapter,
-            selectedDate: String
-        ) {
-            classvalue.text = "Class : "+data.class_name
-            sectionvalue.text = data.section_wise[0].section_name
-            absentvalue.text = data.total_absentees + " / " + data.student_counts
-
-        }
-
-
-        class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            fun startShimmer() {
-                ShimmerUtil.startShimmer(itemView)
-            }
+        fun bind(classWise: ClassWise, sectionWise: SectionWise) {
+            tvClassName.text = "Class : ${classWise.class_name}"
+            tvSectionName.text = "Section : ${sectionWise.section_name}"
+            val absent = sectionWise.total_absentees.toIntOrNull() ?: 0
+            val total = classWise.student_counts.toIntOrNull() ?: 1
+            tvAbsentCount.text = "Absent : $absent / $total"
+            progressBar.max = total
+            progressBar.progress = absent
         }
     }
 }

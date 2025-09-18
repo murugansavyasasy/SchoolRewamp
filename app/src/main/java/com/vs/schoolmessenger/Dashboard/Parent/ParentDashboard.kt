@@ -32,6 +32,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
+
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         FirebaseMessaging.getInstance().isAutoInitEnabled = true

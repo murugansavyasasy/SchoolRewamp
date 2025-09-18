@@ -157,6 +157,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             val dates = generateDates(60)
             val adapter = PtmParentCalender(dates, response!!.data) { selectedDate ->
                 isSelectedDate = selectedDate
+                selectedSlotIds.clear()
+                binding.lblBookSlots.visibility = View.GONE
                 isScheduleCallList()
             }
             binding.recyclerViewDates.layoutManager =

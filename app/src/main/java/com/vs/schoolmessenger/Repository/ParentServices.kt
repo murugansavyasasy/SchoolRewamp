@@ -22,6 +22,8 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
@@ -1783,13 +1785,6 @@ class ParentServices {
         get() = isGetPauketPoints
 
 
-
-
-
-
-
-
-
     fun islsrwmysubmission(
         isToken: String,
         id: String,
@@ -1870,5 +1865,58 @@ class ParentServices {
 
     val isprofilelistLiveData: LiveData<ProfileListResponse?>
         get() = isParentprofilelist
+
+
+    var isFeeInvoices: MutableLiveData<FeeInvoiceResponse?> = MutableLiveData()
+
+    fun getStudentInvoices(
+        isToken: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.getStudentInvoices(isToken)
+            .enqueue(object : Callback<FeeInvoiceResponse?> {
+                override fun onResponse(
+                    call: Call<FeeInvoiceResponse?>,
+                    response: Response<FeeInvoiceResponse?>
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        isFeeInvoices.postValue(response.body())
+                    } else {
+                        isFeeInvoices.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<FeeInvoiceResponse?>, t: Throwable) {
+                    isFeeInvoices.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    var isInvoiceDetails: MutableLiveData<InvoiceDetailsResponse?> = MutableLiveData()
+
+    fun getInvoiceDetails(isToken: String, invoiceId: String) {
+        RestClient.apiInterfaces.getInvoiceDetails(isToken, invoiceId)
+            .enqueue(object : Callback<InvoiceDetailsResponse?> {
+                override fun onResponse(
+                    call: Call<InvoiceDetailsResponse?>,
+                    response: Response<InvoiceDetailsResponse?>
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        isInvoiceDetails.postValue(response.body())
+                    } else {
+                        isInvoiceDetails.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<InvoiceDetailsResponse?>, t: Throwable) {
+                    isInvoiceDetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+
 
 }

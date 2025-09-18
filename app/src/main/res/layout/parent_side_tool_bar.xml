@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fitsSystemWindows="true">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_theme_school"
-        android:paddingVertical="@dimen/fifteen">
+        android:paddingVertical="20dp">
 
         <ImageView
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
-            android:layout_centerVertical="true"
             android:src="@drawable/arrow_left_white">
         </ImageView>
 
@@ -72,7 +70,6 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/ten"
             android:padding="@dimen/five"
-            android:layout_centerVertical="true"
             android:src="@drawable/search_icon_white"
             android:visibility="gone" />
     </RelativeLayout>
@@ -84,7 +81,7 @@
         android:layout_below="@+id/rytHeader"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="@dimen/ten"
-        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginTop="0dp"
         android:background="@drawable/bg_light_green"
         android:visibility="gone">
 
@@ -123,19 +120,16 @@
 
     </LinearLayout>
 
-
     <RelativeLayout
         android:id="@+id/rytSearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
         android:layout_below="@id/lnrParent"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:background="@drawable/rect_grey"
         android:visibility="gone">
-
-
 
         <ImageView
             android:id="@+id/imgSearch"

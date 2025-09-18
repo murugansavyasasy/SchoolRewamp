@@ -34,6 +34,8 @@ class UpComingSlotAdapter(
         val rltJoinNow: RelativeLayout = itemView.findViewById(R.id.rltJoinNow)
         val rytSlots: RelativeLayout = itemView.findViewById(R.id.rytSlots)
         val tvNoProfiles: TextView = itemView.findViewById(R.id.tvNoProfiles)
+
+        val imgDot: View = itemView.findViewById(R.id.imgDot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlotViewHolder {
@@ -51,6 +53,10 @@ class UpComingSlotAdapter(
         holder.lblTitle.text = data.event_name
         holder.lblMode.text = "Mode - ${data.event_mode}"
         holder.lblTime.text = "${data.start_time} - ${data.end_time}"
+
+        holder.imgDot.setOnClickListener {
+            listener.onSlotCancelReOpenClick(data, it)
+        }
 
         val profiles = data.profiles.map { it.toString() }
         if (profiles.isEmpty()) {
@@ -159,6 +165,4 @@ class UpComingSlotAdapter(
         android.util.Log.w("UpComingSlotAdapter", "Unable to parse date: $raw")
         return raw
     }
-
-
 }
