@@ -45,9 +45,7 @@ class StaffSlotStatusAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
             holder.bind(itemList!![position], position, listener)
-
         }
     }
 
@@ -85,6 +83,7 @@ class StaffSlotStatusAdapter(
                     lblWaitingBooking.visibility = View.VISIBLE
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.exclamationmark_circle))
                     imgDot.visibility = View.VISIBLE
+                    imgDot.visibility = if (!data.can_cancel) View.VISIBLE else View.GONE
                 }
 
                 "Cancelled" -> {
@@ -127,7 +126,6 @@ class StaffSlotStatusAdapter(
                     imgDot.visibility = View.VISIBLE
                 }
             }
-
 
             imgDot.setOnClickListener {
                 listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)

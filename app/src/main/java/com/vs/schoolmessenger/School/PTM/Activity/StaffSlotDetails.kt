@@ -45,6 +45,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
     lateinit var isAdapter: ClassesLoadAdapter
 
     private var appViewModel: App? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -82,7 +83,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         }
 
 
-
         appViewModel!!.isPtmSlotCancelReOpen?.observe(this) { response ->
             Constant.hideLoading(this)
 
@@ -93,7 +93,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 Constant.showTopAlertPopup("No response from server", this)
             }
 
-    }
+        }
         isLoadDataAdapter(isSlot)
         isLoadClasses(isSlotsDetails.std_sec_details)
     }
@@ -107,13 +107,27 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         try {
             if (raw.matches(Regex("^\\d{10}\$")) || raw.matches(Regex("^\\d{13}\$"))) {
                 val millis = if (raw.length == 10) raw.toLong() * 1000L else raw.toLong()
-                val out = java.text.SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(java.util.Date(millis))
+                val out = java.text.SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                    .format(java.util.Date(millis))
                 android.util.Log.d("StaffSlotDetails", "parsed epoch -> $out")
                 return out
             }
-        } catch (_: Exception) { /* ignore */ }
+        } catch (_: Exception) { /* ignore */
+        }
 
-        val patterns = listOf("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", "yyyy-MM-dd'T'HH:mm:ss.SSSX", "yyyy-MM-dd'T'HH:mm:ssXXX", "yyyy-MM-dd'T'HH:mm:ssX", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd", "dd-MM-yyyy", "dd/MM/yyyy", "MM/dd/yyyy")
+        val patterns = listOf(
+            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSX",
+            "yyyy-MM-dd'T'HH:mm:ssXXX",
+            "yyyy-MM-dd'T'HH:mm:ssX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd",
+            "dd-MM-yyyy",
+            "dd/MM/yyyy",
+            "MM/dd/yyyy"
+        )
         for (pattern in patterns) {
             try {
                 val parser = java.text.SimpleDateFormat(pattern, Locale.getDefault())
@@ -122,7 +136,10 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 if (parsed != null) {
                     val output = java.text.SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                     val result = output.format(parsed)
-                    android.util.Log.d("StaffSlotDetails", "parsed with pattern [$pattern] -> $result")
+                    android.util.Log.d(
+                        "StaffSlotDetails",
+                        "parsed with pattern [$pattern] -> $result"
+                    )
                     return result
                 }
             } catch (e: Exception) {
@@ -131,11 +148,13 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         try {
             val odt = java.time.OffsetDateTime.parse(raw)
             val zoned = odt.atZoneSameInstant(java.time.ZoneId.systemDefault())
-            val fmt = java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.getDefault())
+            val fmt =
+                java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.getDefault())
             val s = zoned.format(fmt)
             android.util.Log.d("StaffSlotDetails", "parsed with OffsetDateTime -> $s")
             return s
-        } catch (_: Exception) { /* ignore */ }
+        } catch (_: Exception) { /* ignore */
+        }
 
         android.util.Log.w("StaffSlotDetails", "Unable to parse date, returning raw -> $raw")
         return raw
@@ -188,6 +207,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 layout_reopen.visibility = View.VISIBLE
                 layout_cancel.visibility = View.GONE
             }
+
             "Available" -> {
                 layout_reopen.visibility = View.GONE
                 layout_cancel.visibility = View.VISIBLE
@@ -208,8 +228,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
     }
 
 
-
-
     fun showSendConfirmationDialog(isSlotReOpen: Boolean, data: Slot) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
@@ -228,17 +246,33 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
         lblSelectTarget.visibility = View.GONE
 
+//        okButton.setOnClickListener {
+//            val jsonObject = JsonObject()
+//            jsonObject.addProperty("slot_id", data.slot_id)
+//            alertDialog.dismiss()
+//            Constant.showLoading(this)
+//            if (isSlotReOpen) {
+//                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, jsonObject)
+//            } else {
+//                appViewModel!!.isSlotCancelClose(isAccessToken!!, jsonObject)
+//            }
+//        }
         okButton.setOnClickListener {
             val jsonObject = JsonObject()
             jsonObject.addProperty("slot_id", data.slot_id)
-            alertDialog.dismiss()
-            Constant.showLoading(this)
+
             if (isSlotReOpen) {
+                jsonObject.addProperty("action", "ReOpen")
                 appViewModel!!.isSlotCancelReOpen(isAccessToken!!, jsonObject)
             } else {
+                jsonObject.addProperty("action", "Cancel")
                 appViewModel!!.isSlotCancelClose(isAccessToken!!, jsonObject)
             }
+
+            alertDialog.dismiss()
+            Constant.showLoading(this)
         }
+
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
 
