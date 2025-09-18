@@ -318,8 +318,8 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         okButton.setOnClickListener {
             alertDialog.dismiss()
             // if (isNoticeBoardUpdate) {
-            ProgressDialogHelper.show(this)
-            ProgressDialogHelper.updateProgress(10)
+//            ProgressDialogHelper.show(this)
+//            ProgressDialogHelper.updateProgress(10)
 //            isUploadFilesInServer(Constant.file_)
 //            } else {
                 val jsonObject = JsonObject()

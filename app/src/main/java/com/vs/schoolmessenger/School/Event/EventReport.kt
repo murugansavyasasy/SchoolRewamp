@@ -27,7 +27,6 @@ import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
-import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -36,18 +35,10 @@ import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventCompletedAdapter
 import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventUpcomingAdapter
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
-import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
-import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
-import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
-import com.vs.schoolmessenger.Utils.OnDateSelectedListener
-import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Utils.TimeSelectedListener
-import com.vs.schoolmessenger.databinding.CreateEventBinding
 import com.vs.schoolmessenger.databinding.EventReportBinding
-import com.vs.schoolmessenger.util.VimeoVideoUpload
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -156,19 +147,6 @@ class EventReport  : BaseActivity<EventReportBinding>(),
             }
         }
 
-        appViewModel!!.isEventDelete?.observe(this) { response ->
-            if (response != null) {
-                if (response.status) {
-                    Constant.hideLoading(this@EventReport)
-                    eventupcomingadapter.removeItemAt(isEventPosition)
-                } else {
-                    Constant.showDataValidation(
-                        resources.getString(R.string.fail), response.message, this
-                    )
-                }
-            }
-        }
-
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -236,6 +214,19 @@ class EventReport  : BaseActivity<EventReportBinding>(),
                     binding.noDataImage.visibility = View.GONE
                     binding.noDataText.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        appViewModel!!.isEventDelete?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@EventReport)
+                    eventupcomingadapter.removeItemAt(isEventPosition)
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
                 }
             }
         }

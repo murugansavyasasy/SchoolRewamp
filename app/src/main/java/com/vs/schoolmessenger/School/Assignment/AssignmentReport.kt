@@ -307,15 +307,15 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            if (isEventUpdate) {
-                ProgressDialogHelper.show(this)
-                ProgressDialogHelper.updateProgress(10)
-                //   isUploadFilesInServer(Constant.file_)
-            } else {
+//            if (isEventUpdate) {
+//                ProgressDialogHelper.show(this)
+//                ProgressDialogHelper.updateProgress(10)
+//                //   isUploadFilesInServer(Constant.file_)
+//            } else {
                 val jsonObject = JsonObject()
                 jsonObject.addProperty(APIKeyNames.id, isAssignmentId)
                 appViewModel?.isAssignmentDelete(isAccessToken!!, jsonObject, this)
-            }
+           // }
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
