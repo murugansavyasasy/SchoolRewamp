@@ -87,6 +87,7 @@ import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -115,6 +116,7 @@ class SchoolServices {
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
     var isSendAssignment: MutableLiveData<HomeWorkSendResponse?>
+    var isUpdateAssignment: MutableLiveData<HomeWorkSendResponse?>
     var isUpdateHomeWork: MutableLiveData<StatusMessageModel?>
     var isUpdateEvent: MutableLiveData<StatusMessageModel?>
     var isUpdateAttachment: MutableLiveData<StatusMessageModel?>
@@ -226,6 +228,7 @@ class SchoolServices {
         isSendText = MutableLiveData()
         isSendHomeWork = MutableLiveData()
         isSendAssignment = MutableLiveData()
+        isUpdateAssignment = MutableLiveData()
         isUpdateHomeWork = MutableLiveData()
         isUpdateEvent = MutableLiveData()
         isUpdateAttachment = MutableLiveData()
@@ -1549,6 +1552,33 @@ class SchoolServices {
 
     val isSendAssignmentLiveData: LiveData<HomeWorkSendResponse?>
         get() = isSendAssignment
+
+    fun assignmentUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.isAssignmentUpdate(isToken, jsonObject)
+            ?.enqueue(object : Callback<HomeWorkSendResponse?> {
+                override fun onResponse(
+                    call: Call<HomeWorkSendResponse?>, response: Response<HomeWorkSendResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        isUpdateAssignment.postValue(response.body())
+                    } else {
+                        isUpdateAssignment.postValue(response.body())
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<HomeWorkSendResponse?>, t: Throwable) {
+                    isUpdateAssignment.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isUpdateAssignmentLiveData: LiveData<HomeWorkSendResponse?>
+        get() = isUpdateAssignment
 
 
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
@@ -3179,37 +3209,39 @@ class SchoolServices {
     val isPtmSlotCancelReOpenLiveData: LiveData<StatusMessageModel?>
         get() = isPtmSlotCancelReOpen
 
-
     fun isSlotCancelAndClose(
         isToken: String, jsonObject: JsonObject
     ) {
         RestClient.apiInterfaces.isSlotCancelAndClose(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
                 ) {
-                    Log.d(
-                        "GetChildAttendanceReportData Response",
-                        response.code().toString() + " - " + response.toString()
+                    Log.d("GetChildAttendanceReportData Response", "${response.code()} - $response"
                     )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isPtmSlotCancelClose.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isPtmSlotCancelClose.postValue(response.body())
+                    if (response.isSuccessful && response.body() != null) {
+                        isPtmSlotCancelClose.postValue(response.body())
+                    } else {
+                        val errorMsg = try { response.errorBody()?.string() } catch (e: Exception) { null }
+                        val parsedMessage = if (!errorMsg.isNullOrEmpty()) {
+                            try { val json = JSONObject(errorMsg)
+                                json.optString("message", "Unknown server error")
+                            } catch (_: Exception) {
+                                errorMsg
                             }
+                        } else {
+                            "Server error ${response.code()}"
                         }
+                        isPtmSlotCancelClose.postValue(
+                            StatusMessageModel(false, parsedMessage, emptyList())
+                        )
                     }
                 }
-
-                override fun onFailure(
-                    call: Call<StatusMessageModel?>, t: Throwable
-                ) {
-                    isPtmSlotCancelClose.postValue(null)
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isPtmSlotCancelClose.postValue(
+                        StatusMessageModel(false, t.message ?: "Network failure", emptyList())
+                    )
                     t.printStackTrace()
                 }
             })
@@ -3848,6 +3880,4 @@ class SchoolServices {
 
     val isSchoolprofilelistLiveData: LiveData<ProfileListResponse?>
         get() = isSchoolprofilelist
-
-
 }

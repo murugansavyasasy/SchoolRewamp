@@ -16,22 +16,24 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesDetailCli
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesDetailData
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.SectionWise
 import com.vs.schoolmessenger.Utils.Constant
 
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener,
-    AbsenteesClickListener,
-    AbsenteesDetailClickListener {
+    AbsenteesClickListener {
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
 
-    private lateinit var dateadapter: AbsenteesReportAdapter
-    private lateinit var classadapter: AbsenteesReportDetailAdapter
+    private var absenteeList: List<AbsenteeData> = emptyList()
 
     override fun getViewBinding(): AbsenteesReportBinding {
         return AbsenteesReportBinding.inflate(layoutInflater)
@@ -42,6 +44,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         setupToolbarBlueWhite()
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name ?: ""
@@ -51,21 +54,22 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 
-        binding.rlaabsenteesreport.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
         fetchAbsenteeData()
 
 
-        appViewModel?.getabsenteescountbydate?.observe(this) { response ->
+        binding.calenderlayout.customCalendar.setOnDateSelectedListener { date ->
+            filterByDate(date)
+        }
 
-            Log.d("response++", response.toString())
+
+        appViewModel?.getabsenteescountbydate?.observe(this) { response ->
             if (response == null) {
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
             if (response.status) {
-                isLoadDailyCollectionData(response.data)
+                absenteeList = response.data ?: emptyList()
+                setDefaultDateData()
             } else {
                 showErrorUI(response.message ?: "No data available")
             }
@@ -79,61 +83,60 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         )
     }
 
+    private fun setDefaultDateData() {
+        val today = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+        filterByDate(today)
+    }
+
+    private fun filterByDate(date: String) {
+        val filtered = absenteeList.find { it.absent_date_only == date }
+
+        if (filtered != null) {
+            binding.selectedDateText.text = formatDateDisplay(date)
+            loadClassWiseRecycler(filtered.class_wise)
+        } else {
+            binding.rlaabsenteesreport2.visibility = View.GONE
+        }
+    }
+
+    private fun loadClassWiseRecycler(classWiseList: List<ClassWise>) {
+        binding.rlaabsenteesreport2.visibility = View.VISIBLE
+        binding.rlaabsenteesreport2.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+
+        val flatList = mutableListOf<Pair<ClassWise, SectionWise>>()
+        classWiseList.forEach { classWise ->
+            classWise.section_wise.forEach { section ->
+                flatList.add(classWise to section)
+            }
+        }
+
+        val adapter = AbsenteesReportDetailAdapter(flatList)
+        binding.rlaabsenteesreport2.adapter = adapter
+    }
+
+    private fun formatDateDisplay(date: String): String {
+        val input = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val output = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+        return try {
+            output.format(input.parse(date)!!)
+        } catch (e: Exception) {
+            date
+        }
+    }
+
     private fun showErrorUI(message: String) {
-        binding.nomessage.visibility = View.VISIBLE
-        binding.txtNoData.text = message
-        binding.txtNoData.visibility = View.VISIBLE
-        binding.rlaabsenteesreport.visibility = View.GONE
         binding.rlaabsenteesreport2.visibility = View.GONE
     }
 
-    private fun isLoadDailyCollectionData(data: List<AbsenteeData>?) {
-        if (data.isNullOrEmpty()) {
-            showErrorUI(getString(R.string.no_absentee_data_available))
-            return
-        }
-
-        binding.nomessage.visibility = View.GONE
-        binding.txtNoData.visibility = View.GONE
-        binding.rlaabsenteesreport.visibility = View.VISIBLE
-        binding.rlaabsenteesreport2.visibility = View.VISIBLE
-
-        dateadapter = AbsenteesReportAdapter(data, this, this, false)
-        binding.rlaabsenteesreport.adapter = dateadapter
-
-
-        dateadapter.setSelectedPosition(0)
-
-
-        onDateSelected(data[0])
-
-        Log.d("AbsenteesReport", "Class-wise size: ${data[0].class_wise.size}")
-    }
-
-
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgBack -> {
-                onBackPressed()
-            }
+            R.id.imgBack -> onBackPressed()
         }
     }
 
-
     override fun onDateSelected(data: AbsenteeData) {
-        classadapter = AbsenteesReportDetailAdapter(data.class_wise, this, this, false, data.date)
-        binding.rlaabsenteesreport2.layoutManager = LinearLayoutManager(this)
-        binding.rlaabsenteesreport2.adapter = classadapter
-    }
-
-    override fun onItemClick(
-        data: AbsenteesDetailData,
-        holder: AbsenteesReportDetailAdapter.DataViewHolder
-    ) {
-
-    }
-
-    override fun onClassSelected(data: ClassWise) {
-        Toast.makeText(this, "${getString(R.string.class_clicked)} ${data.class_name}", Toast.LENGTH_SHORT).show()
+        filterByDate(data.absent_date_only)
     }
 }

@@ -23,10 +23,12 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -44,7 +46,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     private var isChildDetails: ChildDetails? = null
 
     lateinit var mAdapter: FeeReceiptAdapter
-    private lateinit var invoiceList: List<InvoiceDetails>
+//    private lateinit var invoiceList: List<InvoiceDetails>
     private var appViewModel: App? = null
 
     private val popupWebViewStack = Stack<WebView>()
@@ -92,46 +94,74 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             override fun afterTextChanged(s: Editable?) {}
         })
 
+        mAdapter = FeeReceiptAdapter(listOf(), this, this, true)
+        binding.rvReceipts.layoutManager = LinearLayoutManager(this)
+        binding.rvReceipts.adapter = mAdapter
+
+        mAdapter.showShimmer()
+
+        appViewModel!!.isFeeInvoices?.observe(this) { response ->
+            Constant.hideLoading(this)
+            if (response != null && response.status && response.data.isNotEmpty()) {
+                mAdapter.setData(response.data)
+                Log.d("FeeDetails_Response", "Invoices received: $response")
+                binding.nomessage.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.rvReceipts.visibility = View.VISIBLE
+            } else {
+                Toast.makeText(this, "No invoice found", Toast.LENGTH_SHORT).show()
+                mAdapter.setData(listOf())
+                binding.nomessage.visibility = View.VISIBLE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.rvReceipts.visibility = View.GONE
+                Log.d("FeeDetails_Response", "No invoices found or response null")
+            }
+        }
 
 
-        invoiceList = listOf(
-            InvoiceDetails(
-                1,
-                "Invoice No: INV001",
-                "Invoice Date : 01-05-2025",
-                "Invoice Amount : 1200",
-                "10:45 AM 234 KB"
-            ),
-            InvoiceDetails(
-                2,
-                "Invoice No: INV001",
-                "Invoice Date : 01-05-2025",
-                "Invoice Amount : 1200",
-                "10:45 AM 234 KB"
+//        isAccessToken?.let { token ->
+//            appViewModel!!.getStudentInvoices(token, this)
+//            Log.d("FeeDetails_isAccessToken", "Access token: $token")
+//        }
 
-            ),
-            InvoiceDetails(
-                3,
-                "Invoice No: INV001",
-                "Invoice Date : 01-05-2025",
-                "Invoice Amount : 1200",
-                "10:45 AM 234 KB"
-            ),
-            InvoiceDetails(
-                4,
-                "Invoice No: INV001",
-                "Invoice Date : 01-05-2025",
-                "Invoice Amount : 1200",
-                "10:45 AM 234 KB"
-            ),
-            InvoiceDetails(
-                5,
-                "Invoice No: INV001",
-                "Invoice Date : 01-05-2025",
-                "Invoice Amount : 1200",
-                "10:45 AM 234 KB"
-            )
-        )
+//        invoiceList = listOf(
+//            InvoiceDetails(
+//                1,
+//                "Invoice No: INV001",
+//                "Invoice Date : 01-05-2025",
+//                "Invoice Amount : 1200",
+//                "10:45 AM 234 KB"
+//            ),
+//            InvoiceDetails(
+//                2,
+//                "Invoice No: INV001",
+//                "Invoice Date : 01-05-2025",
+//                "Invoice Amount : 1200",
+//                "10:45 AM 234 KB"
+//
+//            ),
+//            InvoiceDetails(
+//                3,
+//                "Invoice No: INV001",
+//                "Invoice Date : 01-05-2025",
+//                "Invoice Amount : 1200",
+//                "10:45 AM 234 KB"
+//            ),
+//            InvoiceDetails(
+//                4,
+//                "Invoice No: INV001",
+//                "Invoice Date : 01-05-2025",
+//                "Invoice Amount : 1200",
+//                "10:45 AM 234 KB"
+//            ),
+//            InvoiceDetails(
+//                5,
+//                "Invoice No: INV001",
+//                "Invoice Date : 01-05-2025",
+//                "Invoice Amount : 1200",
+//                "10:45 AM 234 KB"
+//            )
+//        )
     }
 
     override fun onClick(v: View?) {
@@ -162,6 +192,12 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.btnReceipt.setTextColor(Color.parseColor("#0D47A1"))
 
                 loadFeeReceipts()
+
+                Constant.showLoading(this)
+//                isAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGlsZF9pZCI6Ijk2NzQ2ODYiLCJzY2hvb2xfaWQiOiI3MDQzIiwiY2xhc3NfaWQiOjMyNTgyLCJzZWN0aW9uX2lkIjo5MDgxMywiaWF0IjoxNzU4MTcyNTUyfQ.juXR6Fk_DXQvPCX0RTV_iWNg36gWvLwu5XQI8piZ2CA"
+                appViewModel?.getStudentInvoices(isAccessToken!!, this)
+                Log.d("FeeDetails_Token", "Fetching invoices with token: $isAccessToken")
+
             }
 
         }
@@ -248,7 +284,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 failingUrl: String?
             ) {
                 Constant.hideLoading(this@FeeDetails)
-
             }
 
             override fun onPageFinished(view: WebView, url: String) {
@@ -268,12 +303,30 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     }
 
 
+    fun viewInvoice(invoiceId: String) {
+        Constant.showLoading(this)
+        appViewModel?.getInvoiceDetails(isAccessToken!!, invoiceId)
+
+        appViewModel?.apiParentRepositories?.isInvoiceDetails?.observe(this) { response ->
+            Constant.hideLoading(this)
+            if (response != null && response.status && response.data.isNotEmpty()) {
+//                val pdfUrl = response.data[0]
+                val pdfUrl = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                val intent = Intent(this, FeeReceiptViewActivity::class.java)
+                intent.putExtra("pdf_url", pdfUrl)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, response?.message ?: "Unable to fetch invoice", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun paymentSuccess(title: String, msg: String) {
         val dialogView = LayoutInflater.from(this@FeeDetails).inflate(R.layout.payment_success, null)
         val builder = AlertDialog.Builder(this@FeeDetails)
         builder.setView(dialogView)
         val alertDialog = builder.create()
-        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         alertDialog.show()
         // Access views
         val titleText = dialogView.findViewById<TextView>(R.id.alertTitle)
@@ -364,9 +417,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
 
     private fun loadFeeReceipts() {
-        binding.rvReceipts.layoutManager = LinearLayoutManager(this)
         mAdapter = FeeReceiptAdapter(
-            invoiceList,
+            listOf(),
             this,
             this,
             Constant.isShimmerViewDisable,
@@ -384,6 +436,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 }
             }
         )
+
+        binding.rvReceipts.layoutManager = LinearLayoutManager(this)
         binding.rvReceipts.adapter = mAdapter
     }
 
@@ -392,11 +446,12 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     }
 
 
+    override fun onItemClick(data: FeeInvoiceResponse.InvoiceData, holder: FeeReceiptAdapter.DataViewHolder) {
+        Log.d("InvoiceID", data.id)
 
-    override fun onItemClick(data: InvoiceDetails, holder: FeeReceiptAdapter.DataViewHolder) {
-        Log.d("InvoiceID", data.id.toString())
         val intent = Intent(this@FeeDetails, FeeReceiptViewActivity::class.java)
+        intent.putExtra("invoice_id", data.id)
         startActivity(intent)
-
     }
+
 }

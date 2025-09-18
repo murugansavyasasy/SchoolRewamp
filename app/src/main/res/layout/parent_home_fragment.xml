@@ -4,8 +4,7 @@
     android:id="@+id/main"
     android:background="@color/bpWhite"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/headerLayout"
@@ -19,7 +18,8 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/burger_menu"></ImageView>
+            android:src="@drawable/burger_menu">
+        </ImageView>
 
 
         <RelativeLayout

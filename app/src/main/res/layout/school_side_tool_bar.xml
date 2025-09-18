@@ -52,6 +52,42 @@
                 android:visibility="gone">
             </TextView>
 
+            <RelativeLayout
+                android:id="@+id/layoutCreateSlot"
+                android:layout_width="@dimen/hundred_thirty"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSlotCount"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginEnd="@dimen/ten"
+                android:visibility="gone"
+                android:layout_toEndOf="@+id/imgBack"
+                android:background="@drawable/black_background"
+                android:padding="@dimen/ten">
+
+                <ImageView
+                    android:id="@+id/imgAdd"
+                    android:layout_width="@dimen/fourteen"
+                    android:layout_height="@dimen/fourteen"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:src="@drawable/add_icon" />
+
+                <TextView
+                    android:id="@+id/lblCreateSlot"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@id/imgAdd"
+                    android:text="Create"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen" />
+
+            </RelativeLayout>
+
+
         </LinearLayout>
 
         <LinearLayout

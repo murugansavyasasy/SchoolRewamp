@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/light_white"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
+
+    <RelativeLayout
+        android:id="@+id/rlaHomeWorkReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/twenty"
+        android:layout_marginEnd="@dimen/fifteen"
+        >
+
+        <LinearLayout
+            android:id="@+id/AcademicYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_bg_radius"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:text="@string/academic_year"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/rytAcademicYearDropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <Spinner
+                    android:id="@+id/isSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_spinner_background" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/AcademicYear"
+            android:layout_marginTop="@dimen/fifteen"
+
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/lnrDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lblDateFormat"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten"
+                    android:alpha="0.5"
+                    android:text="@string/today"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ten_sp"></TextView>
+
+                <TextView
+                    android:id="@+id/selectdate"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen"
+                    android:textStyle="bold"></TextView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgCalendar"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:src="@drawable/calendar_black" />
+
+                <TextView
+                    android:id="@+id/lblDatePick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/eight"
+                    android:text="@string/select_date"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrClasses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Calendar"
+            android:layout_marginTop="@dimen/fifteen"
+            android:gravity="center"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:id="@+id/rytStandardDropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/bg_white_light_radious"
+                android:gravity="center">
+
+                <Spinner
+                    android:id="@+id/isSpinnerStandard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_spinner_background" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rytSectionDropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/bg_white_light_radious"
+                android:gravity="center">
+
+                <Spinner
+                    android:id="@+id/isSpinnerSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_spinner_background" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_below="@+id/lnrClasses"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/gray">
+
+        </View>
+
+        <LinearLayout
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line1"
+            android:layout_margin="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:background="@drawable/gray_bg_radius"
+            android:gravity="center"
+            android:padding="@dimen/five"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:alpha="0.4"
+                android:src="@drawable/search_icon"></ImageView>
+
+            <EditText
+                android:id="@+id/edtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:background="@null"
+                android:hint="@string/search"
+                android:text=""
+                android:textSize="@dimen/fifteen_sp">
+
+            </EditText>
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_below="@+id/search"
+            android:background="@color/gray">
+
+        </View>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyHomeWorkReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line2"></androidx.recyclerview.widget.RecyclerView>
+
+
+        <LinearLayout
+            android:id="@+id/lytNoDataFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:src="@drawable/no_data_found"></ImageView>
+
+            <TextView
+                android:id="@+id/noDataFound"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:text=""
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -64,7 +64,6 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
-import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -186,7 +185,7 @@ object Constant {
     var isCommunicationType = 1
     var isVoiceType = 1
     var isQuestionLimit = -1
-
+    var isClickEdit = false
 
     var isTitleLength = 50
     var isDescriptionLength = 500
@@ -274,6 +273,7 @@ object Constant {
     var notice_data = "notice_data"
     var event_data = "event_data"
     var assignment_data = "assignment_data"
+    var homework_data = "homework_data"
     var lsrwskill_data = "lsrwskill_data"
     var lsrwsubmitskill_data = "lsrwsubmitskill_data"
     var isFileUrl = "isFileUrl"
@@ -1767,6 +1767,69 @@ object Constant {
                     onEachProcessed(fileItem, null, false)
                 }
             }
+
+            Handler(Looper.getMainLooper()).post {
+                onComplete()
+            }
+        }.start()
+    }
+
+
+    fun quizCompressImageFilesOnly(
+        context: Context,
+        files: String,
+        outputDir: String,
+        format: Bitmap.CompressFormat,
+        quality: Int,
+        maxWidth: Int,
+        maxHeight: Int,
+        onEachProcessed: (outputPath: String?, success: Boolean) -> Unit,
+        onComplete: () -> Unit
+    ) {
+        Thread {
+//            val newList = mutableListOf<QuizAttachmentData>()
+
+//            for (fileItem in files.toList()) {
+                try {
+                    val uri = Uri.parse(files)
+                    val mimeType = context.contentResolver.getType(uri)
+
+                    val isImage = mimeType?.startsWith("image/") == true ||
+                            files.endsWith(".jpg", true) ||
+                            files.endsWith(".jpeg", true) ||
+                            files.endsWith(".png", true)
+
+//                    if (!isImage) {
+                        onEachProcessed(files, true)
+//                        continue
+//                    }
+
+                    val inputStream = context.contentResolver.openInputStream(uri)
+                    val bitmap = inputStream?.use { BitmapFactory.decodeStream(it) }
+
+                    if (bitmap != null) {
+                        val scaledBitmap = resizeBitmap(bitmap, maxWidth, maxHeight)
+
+                        val compressedFile = File(
+                            outputDir,
+                            "IMG_${System.currentTimeMillis()}.jpg"
+                        )
+                        FileOutputStream(compressedFile).use { out ->
+                            scaledBitmap.compress(format, quality, out)
+                            out.flush()
+                        }
+
+                        onEachProcessed(compressedFile.absolutePath, true)
+//                        newList.add(fileItem)
+                    } else {
+//                        Log.e("Compressor", "❌ Failed to decode: ${fileItem.isUrl}")
+                        onEachProcessed(null, false)
+                    }
+                } catch (e: Exception) {
+//                    Log.e("Compressor", "❌ Exception compressing ${fileItem.isUrl}", e)
+                    onEachProcessed(null, false)
+                }
+          //  }
 
             Handler(Looper.getMainLooper()).post {
                 onComplete()

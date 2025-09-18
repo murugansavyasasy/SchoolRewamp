@@ -1,79 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/AthensGray"
-    android:fitsSystemWindows="true">
+    android:id="@+id/main">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/PrimaryColor"
-        android:paddingVertical="@dimen/fifteen">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+<RelativeLayout
+    android:id="@+id/relative_layout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_marginStart="@dimen/ten"
-            android:src="@drawable/arrow_left_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <LinearLayout
-            android:id="@+id/rlaStudentName"
-            android:layout_width="@dimen/zero"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imgSearch"
-            app:layout_constraintStart_toEndOf="@id/imgBack"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/lblStudentName"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BALU SARAN"
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp" />
-
-            <TextView
-                android:id="@+id/lblStudentSection"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="II - A1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp" />
-        </LinearLayout>
-
-
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginEnd="@dimen/twenty"
-            android:src="@drawable/search_icon_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
         android:id="@+id/headerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
@@ -167,3 +128,6 @@
     </LinearLayout>
 
 </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,9 +3,13 @@ package com.vs.schoolmessenger.School.PTM.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
@@ -15,6 +19,7 @@ import com.vs.schoolmessenger.School.PTM.DataClass.SlotCategory
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotDetail
 import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotClickListener
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.showSendConfirmationDialog
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PtmStaffBinding
 import java.text.SimpleDateFormat
@@ -32,7 +37,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     var isAllSlot = true
     var isSlotCategory: List<SlotCategory>? = null
     var isSelectedDate = ""
-    private var appViewModel: App? = null
+    private lateinit var appViewModel: App
 
     override fun setupViews() {
         super.setupViews()
@@ -45,7 +50,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         binding.layoutCreateSlot.setOnClickListener(this)
 
         appViewModel = ViewModelProvider(this)[App::class.java]
-        appViewModel!!.init()
+        appViewModel.init()
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -53,10 +58,24 @@ class PTM : BaseActivity<PtmStaffBinding>(),
 
         loadData()
 
-        appViewModel!!.isPtmSlotResponse?.observe(this) { response ->
+        appViewModel.isPtmSlotResponse?.observe(this) { response ->
             if (response != null && response.status) {
                 isSlotCategory = response.data
                 isLoadData(isSlotCategory)
+            }
+        }
+
+        appViewModel.isPtmSlotCancelClose?.observe(this) { result ->
+            Constant.hideLoading(this)
+            if (result != null) {
+                if (result.status) {
+                    Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+                    loadData() // refresh slots
+                } else {
+                    Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -89,8 +108,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 upcomingList.addAll(category.upcoming.flatMap { it.details })
                 completedList.addAll(category.completed.flatMap { it.details })
             } else {
-                Log.d("PTM", "Selected Date: '${isSelectedDate.trim()}'")
-
                 for (group in category.today) {
                     todayList.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
                 }
@@ -111,11 +128,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             if (todayList.isEmpty() && upcomingList.isEmpty() && completedList.isEmpty())
                 View.VISIBLE else View.GONE
 
-        Log.d(
-            "PTM",
-            "Today: ${todayList.size}, Upcoming: ${upcomingList.size}, Complete: ${completedList.size}"
-        )
-
         binding.lblToday.visibility = if (todayList.isNotEmpty()) View.VISIBLE else View.GONE
         binding.rcyToday.visibility = binding.lblToday.visibility
 
@@ -132,51 +144,76 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         recyclerView.adapter = adapter
     }
 
+    private fun showSlotOptionsPopup(data: SlotDetail, anchor: View) {
+        val popupView = layoutInflater.inflate(R.layout.cancel_reopen_layout, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+        val layoutReopen = popupView.findViewById<View>(R.id.layout_reopen)
+        val layoutCancel = popupView.findViewById<View>(R.id.layout_cancel)
+
+        layoutReopen.visibility = View.GONE
+        layoutCancel.visibility = View.VISIBLE
+
+        layoutCancel.setOnClickListener {
+            showSendConfirmationDialog(
+                this,
+                "Cancel Slot",
+                "Yes",
+                "No",
+                "",
+                "Are you sure you want to cancel this slot?"
+            ) { confirmed ->
+                if (confirmed) callCancelReopenApi(data, "Cancel")
+            }
+            popupWindow.dismiss()
+        }
+
+        popupWindow.showAsDropDown(anchor)
+    }
+
+    private fun callCancelReopenApi(data: SlotDetail, action: String) {
+        try {
+            val json = JsonObject()
+            json.addProperty("slot_id", data.slots.firstOrNull()?.slot_id ?: "")
+            json.addProperty("action", action)
+
+            Constant.showLoading(this)
+            appViewModel.isSlotCancelClose(isAccessToken!!, json)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Invalid request", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun loadData() {
         val shimmerAdapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
-
         binding.rcyToday.layoutManager = LinearLayoutManager(this)
         binding.rcyToday.adapter = shimmerAdapter
-
         binding.rcyUpcoming.layoutManager = LinearLayoutManager(this)
         binding.rcyUpcoming.adapter = shimmerAdapter
-
         binding.rcyComplete.layoutManager = LinearLayoutManager(this)
         binding.rcyComplete.adapter = shimmerAdapter
-        appViewModel!!.isSlotForStaff(isAccessToken!!, "ALL")
+
+        appViewModel.isSlotForStaff(isAccessToken!!, "ALL")
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.layoutDatePicking -> {
                 Constant.showDatePickerNormal(this) { selectedDate ->
-                    isSelectedDate = try {
-                        val input = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                        val date = input.parse(selectedDate)
-                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date!!)
-                    } catch (e: Exception) {
-                        toDashDate(selectedDate)
-                    }
-
-                    val formattedForUI = try {
-                        val input = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                        val date = input.parse(selectedDate)
-                        SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date!!)
-                    } catch (e: Exception) {
-                        selectedDate
-                    }
-
-                    Log.d("PTM_Date", "API Date to send: $isSelectedDate")
-                    Log.d("PTM_Date", "UI Date to show: $formattedForUI")
-
+                    isSelectedDate = toDashDate(selectedDate)
                     binding.imgDelete.visibility = View.VISIBLE
-                    binding.lblDatePicking.text = formattedForUI
-
+                    binding.lblDatePicking.text = selectedDate
                     isAllSlot = false
                     isLoadData(isSlotCategory)
                 }
             }
-
             R.id.imgDelete -> {
                 isSelectedDate = ""
                 binding.lblDatePicking.text = "All"
@@ -184,9 +221,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 isAllSlot = true
                 isLoadData(isSlotCategory)
             }
-
             R.id.imgBack -> onBackPressed()
-
             R.id.layoutCreateSlot -> {
                 val intent = Intent(this, CreateSlots::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -202,5 +237,9 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         intent.putExtra("isSlotDetails", data)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
+    }
+
+    override fun onSlotCancelReOpenClick(data: SlotDetail, anchor: View) {
+        showSlotOptionsPopup(data, anchor)
     }
 }

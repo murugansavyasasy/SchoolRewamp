@@ -50,6 +50,8 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
@@ -351,6 +353,13 @@ interface ApiInterfaces {
     fun isAssignmentSend(
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<HomeWorkSendResponse>?
+
+    @PUT(APIMethods.isAssignmentUpdate)
+    fun isAssignmentUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
+    ): Call<HomeWorkSendResponse>?
+
+
 
     @POST(APIMethods.isSendVoice)
     fun isSendVoice(
@@ -1083,5 +1092,15 @@ interface ApiInterfaces {
     ): Call<ProfileUpdateResponse?>?
 
 
+    @GET("fee/api/fee-details/student-invoice")
+    fun getStudentInvoices(
+        @Header("Authorization") token: String
+    ): Call<FeeInvoiceResponse>
+
+    @GET("fee/api/fee-details-invoice-details")
+    fun getInvoiceDetails(
+        @Header("Authorization") token: String,
+        @Query("invoice_id") invoiceId: String
+    ): Call<InvoiceDetailsResponse>
 
 }

@@ -48,6 +48,7 @@ object APIMethods {
     const val isSendText = "comm/api/text-message/send-text"
     const val isSendHomeWork = "comm/api/homework/send-homework"
     const val isAssignmentSend = "comm/api/assignment/send-assignment"
+    const val isAssignmentUpdate = "comm/api/assignment/update"
     const val isSendVoice = "comm/api/voice/send-voice"
     const val isUpdateStatusArchive = "comm/api/communication/read-status-update-archive"
     const val isGetAcademicYear = "comm/api/recipient/get-academic-year-list"
@@ -182,6 +183,7 @@ object APIMethods {
     const val islsrwmysubmission = "lms/api/lsrw/my-submissions"
     const val ispresubmission = "admin/api/student-profile/pre-submission"
 
+    const val getStudentInvoices = "fee/api/fee-details/student-invoice"
 
 }
 
