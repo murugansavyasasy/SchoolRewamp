@@ -74,12 +74,10 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     private fun showErrorUI(message: String) {
-        binding.nomessage.visibility = View.VISIBLE
-        binding.txtNoData.text = message
-        binding.txtNoData.visibility = View.VISIBLE
 
         binding.rlaabsenteesreport2.visibility = View.GONE
     }
+
 
     private fun isLoadDailyCollectionData(data: List<AbsenteeData>?) {
 
