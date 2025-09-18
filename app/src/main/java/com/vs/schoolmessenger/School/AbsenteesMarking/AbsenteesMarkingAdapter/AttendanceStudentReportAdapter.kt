@@ -5,9 +5,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
 import com.vs.schoolmessenger.Utils.Constant
@@ -56,27 +60,68 @@ class AttendanceStudentReportAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
-        private val lblAdmissionValue: TextView = itemView.findViewById(R.id.lblAdmissionValue)
-        private val lblAttendanceStatus: TextView = itemView.findViewById(R.id.lblAttendanceStatus)
-        private val rlaAttendance: RelativeLayout = itemView.findViewById(R.id.rlaAttendance)
+        private val lblName: TextView = itemView.findViewById(R.id.tvName)
+        private val lblAdmissionNoValue: TextView = itemView.findViewById(R.id.lblAdmissionNoValue)
+        private val tvRollNo: TextView = itemView.findViewById(R.id.tvRollNo)
+        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
+        private val imgAvatar: ImageView = itemView.findViewById(R.id.imgAvatar)
+        private val tvStatus: LinearLayout = itemView.findViewById(R.id.tvStatus)
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StudentAttendanceReportData, position: Int) {
-            lblStudentName.text = data.student_name
-            lblAdmissionValue.text = ": " + data.admission_no
-            lblAttendanceStatus.text = data.att_status
+            lblName.text = data.student_name
 
-            if (data.att_status == Constant.school) {
-                lblAttendanceStatus.text = Constant.Absent
-                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
-            } else if (data.att_status == Constant.P) {
-                lblAttendanceStatus.text = Constant.Present
-                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
-            } else {
-                lblAttendanceStatus.text = data.att_status
-                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_orange))
+            if (data.admission_no.isEmpty()){
+                lblAdmissionNoValue.visibility=View.GONE
             }
+            else{
+                lblAdmissionNoValue.visibility=View.VISIBLE
+                lblAdmissionNoValue.text = data.admission_no
+            }
+
+            if (data.roll_no.isEmpty()){
+                tvRollNo.visibility=View.GONE
+            }
+            else{
+                tvRollNo.visibility=View.VISIBLE
+                tvRollNo.text = data.roll_no
+            }
+
+            if (data.att_status == Constant.P){
+                tvStatus1.text =context.getString(R.string.present)
+                tvStatus.background.setTint(ContextCompat.getColor(context, R.color.green))
+                tvStatus1.setTextColor(ContextCompat.getColor(context,R.color.white))
+
+            }
+            else{
+                tvStatus1.text =context.getString(R.string.absent)
+                tvStatus.background.setTint(ContextCompat.getColor(context,R.color.red))
+                tvStatus1.setTextColor(ContextCompat.getColor(context,R.color.white))
+            }
+
+            val profileUrl = data.profile
+
+            val defaultAvatar = when {
+                data.gender.equals(Constant.male, ignoreCase = true) -> R.drawable.avatar
+                data.gender.equals(Constant.female, ignoreCase = true) -> R.drawable.girl_avatar
+                else -> R.drawable.person_circle // fallback if gender is unknown
+            }
+
+            if (profileUrl.isNullOrEmpty()) {
+                // No profile URL → load gender-based default directly
+                Glide.with(imgAvatar.context)
+                    .load(defaultAvatar)
+                    .placeholder(R.drawable.person_circle)
+                    .into(imgAvatar)
+            } else {
+                // Load URL → if fails, fallback to gender-based drawable
+                Glide.with(imgAvatar.context)
+                    .load(profileUrl)
+                    .placeholder(R.drawable.person_circle)
+                    .error(defaultAvatar)
+                    .into(imgAvatar)
+            }
+
         }
     }
 

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
@@ -37,6 +38,14 @@
                     android:layout_width="@dimen/hundred"
                     android:layout_height="@dimen/hundred"
                     android:background="@drawable/rect_shadow_white"></ImageView>
+<!--                <com.google.android.material.imageview.ShapeableImageView-->
+<!--                    android:id="@+id/imgStudent"-->
+<!--                    android:layout_width="@dimen/seventy"-->
+<!--                    android:layout_height="@dimen/eighty_five"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:src="@drawable/default_profile"-->
+<!--                    app:shapeAppearanceOverlay="@style/RoundedRectangle"-->
+<!--                    android:adjustViewBounds="true"/>-->
 
                 <RelativeLayout
                     android:layout_centerVertical="true"

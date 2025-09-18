@@ -71,24 +71,34 @@ class CalendarAdapter(
             // Handle disabled state
             val isBeforeMin = minDate != null && date.isBefore(minDate)
             val isAfterMax = maxDate != null && date.isAfter(maxDate)
-            val isDisabled = isBeforeMin || isAfterMax
+            val isSunday = date.dayOfWeek == java.time.DayOfWeek.SUNDAY //Disabling the sunday
+            val isDisabled = isBeforeMin || isAfterMax||isSunday
 
             if (isDisabled) {
-                dateBox.setTextColor(Color.LTGRAY)
-                dateBox.setBackgroundResource(0)
-                dateBox.isClickable = false
+                when {
+                    isSunday -> {
+                        // Sunday → red text, no click
+                        dateBox.setTextColor(Color.RED)
+                        dateBox.setBackgroundResource(0)
+                        dateBox.isClickable = false
+                    }
+                    else -> {
+                        // Other disabled dates → light gray
+                        dateBox.setTextColor(Color.LTGRAY)
+                        dateBox.setBackgroundResource(0)
+                        dateBox.isClickable = false
+                    }
+                }
             } else {
                 when {
                     selectedDate == date -> {
-                        dateBox.setBackgroundResource(R.drawable.bg_circle_selecto)
+                        dateBox.setBackgroundResource(R.drawable.bg_today_primary)
                         dateBox.setTextColor(Color.WHITE)
                     }
-
                     date == today -> {
-                        dateBox.setBackgroundResource(R.drawable.red_selected_today)
+                        dateBox.setBackgroundResource(R.drawable.light_primary_selected_today)
                         dateBox.setTextColor(Color.WHITE)
                     }
-
                     else -> {
                         dateBox.setBackgroundResource(0)
                         dateBox.setTextColor(Color.BLACK)
