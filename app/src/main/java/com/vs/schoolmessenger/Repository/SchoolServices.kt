@@ -115,6 +115,7 @@ class SchoolServices {
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
     var isSendAssignment: MutableLiveData<HomeWorkSendResponse?>
+    var isUpdateAssignment: MutableLiveData<HomeWorkSendResponse?>
     var isUpdateHomeWork: MutableLiveData<StatusMessageModel?>
     var isUpdateEvent: MutableLiveData<StatusMessageModel?>
     var isUpdateAttachment: MutableLiveData<StatusMessageModel?>
@@ -226,6 +227,7 @@ class SchoolServices {
         isSendText = MutableLiveData()
         isSendHomeWork = MutableLiveData()
         isSendAssignment = MutableLiveData()
+        isUpdateAssignment = MutableLiveData()
         isUpdateHomeWork = MutableLiveData()
         isUpdateEvent = MutableLiveData()
         isUpdateAttachment = MutableLiveData()
@@ -1549,6 +1551,33 @@ class SchoolServices {
 
     val isSendAssignmentLiveData: LiveData<HomeWorkSendResponse?>
         get() = isSendAssignment
+
+    fun assignmentUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.isAssignmentUpdate(isToken, jsonObject)
+            ?.enqueue(object : Callback<HomeWorkSendResponse?> {
+                override fun onResponse(
+                    call: Call<HomeWorkSendResponse?>, response: Response<HomeWorkSendResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        isUpdateAssignment.postValue(response.body())
+                    } else {
+                        isUpdateAssignment.postValue(response.body())
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<HomeWorkSendResponse?>, t: Throwable) {
+                    isUpdateAssignment.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isUpdateAssignmentLiveData: LiveData<HomeWorkSendResponse?>
+        get() = isUpdateAssignment
 
 
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {

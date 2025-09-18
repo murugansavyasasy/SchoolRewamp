@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.Assignment
+package com.vs.schoolmessenger.School.Homework
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -15,17 +15,12 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
@@ -37,10 +32,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
@@ -50,33 +44,26 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
-import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
-import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
-import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
-import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
-import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
-import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportData
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
-import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
-import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
-import com.vs.schoolmessenger.Utils.TimeSelectedListener
-import com.vs.schoolmessenger.databinding.AssignmentBinding
+import com.vs.schoolmessenger.databinding.HomeWorkBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
@@ -84,134 +71,69 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageClickListener,
+      VimeoVideoUpload.UploadCompletionListener {
 
-class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, View.OnClickListener,
-    AssignmentStudentListClickListener, OnImageClickListener, TimeSelectedListener,
-    OnDateSelectedListener, VimeoVideoUpload.UploadCompletionListener {
-
-    private lateinit var adapter: AssignmentStudentListAdapter
-
-
-    override fun getViewBinding(): AssignmentBinding {
-        return AssignmentBinding.inflate(layoutInflater)
+    override fun getViewBinding(): HomeWorkBinding {
+        return HomeWorkBinding.inflate(layoutInflater)
     }
 
-
-    var isAssignmentId = ""
-    var isAssignmentPosition = 0
-    var isTotalSelectedItem = 0
-    val isVideoSelectedArrayList = mutableListOf<FileItem>()
-    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
-    private val itemsCategory = listOf(
-        "General", "Class Work", "Research Paper", "Project"
-    )
-    var isAssignmentType = ""
-    var isSelectedDate = ""
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
-    private var cameraPermissionDeniedCount = 0
-
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
-        private const val PICK_IMAGE_REQUEST = 1001
-        internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
 
-    var isAcademicServerLoad = false
-    private var isAssignmentReportData: List<AssignmentData>? = null
-    var isAssignmentAdapter: AssignmentAdapter? = null
-    var isValidAcademicYear = false
-    var isAcademicYearId = -1
-    var isCurrentAcademicYear = true
-    var isAcademicYear: List<AcademicYear>? = null
+    private var cameraPermissionDeniedCount = 0
+    private val CAMERA_IMAGE_REQUEST = 1001
+    var isFirstLoad = false
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
+    private var homeworkData: HomeWorkReportData? = null
+    var isAcademicYear: List<AcademicYear>? = null
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
+    var isValidAcademicYear = false
+    var isAcademicYearId = -1
+    var isCurrentAcademicYear = true
     private var isStaffDetails: StaffDetails? = null
+    var isSection: List<Section>? = null
+    var isGetStandard: List<Standard>? = null
+    private var isHomeWorkReportDataData: List<HomeWorkReportData>? = null
+    var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
+    private var fullHomeworkList: List<HomeWorkReportData> = listOf()
+    var isSectionId = -1
+    var isAcademicServerLoad = false
+    var isSelectedDate = ""
+    val isVideoSelectedArrayList = mutableListOf<FileItem>()
+    var isTotalSelectedItem = 0
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
+    var isHomeWorkId = ""
+    var isHomeWorkPosition = 0
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.btnChooseRecipient.setOnClickListener(this)
-        binding.lblDatePick.setOnClickListener(this)
-        binding.lnrTabOneName.setOnClickListener(this)
-        binding.lnrTabTwoName.setOnClickListener(this)
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
-        binding.lblTimePick.setOnClickListener(this)
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        isAwsUploadingPreSigned = AwsUploadingPreSigned()
+
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+//        binding.lnrTabOneName.setOnClickListener(this)
+//        binding.lnrTabTwoName.setOnClickListener(this)
+//        binding.AcademicYear.setOnClickListener(this)
+        binding.btnChooseRecipient.setOnClickListener(this)
+//        binding.Calendar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-
-
-        binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
-
-        adapter = AssignmentStudentListAdapter(
-            itemList = emptyList(),
-            listener = this,
-            context = this,
-            isLoading = false,
-            noDataImage = binding.noDataImage,
-            noDataText = binding.noDataFound
-        )
-
-        binding.rcyAssignmentReport.adapter = isAssignmentAdapter
-
-        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                isAssignmentAdapter?.filter?.filter(s)
-                binding.rcyAssignmentReport.post {
-                    if (isAssignmentAdapter?.itemCount == 0) {
-                        binding.rcyAssignmentReport.visibility = View.GONE
-                        binding.lytNoDataFound.visibility = View.VISIBLE
-                    } else {
-                        binding.rcyAssignmentReport.visibility = View.VISIBLE
-                        binding.lytNoDataFound.visibility = View.GONE
-                    }
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-
-
-
-
-        binding.txtSearchMenu.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
-                binding.txtSearchMenu.clearFocus()
-                true
-            } else false
-        }
-
-        appViewModel?.getassignmentlist?.observe(this) { response ->
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                adapter.updateList(response.data)
-                binding.rcyAssignmentReport.visibility = View.VISIBLE
-                binding.lytNoDataFound.visibility = View.GONE
-            } else {
-                binding.rcyAssignmentReport.visibility = View.GONE
-                binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.noDataFound.text = getString(R.string.no_data_found)
-            }
-        }
-
-
+        isAwsUploadingPreSigned = AwsUploadingPreSigned()
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -219,20 +141,99 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 )
             )
         }
-        binding.btnChooseRecipient.text = getString(R.string.ChooseRecipients)
+        binding.btnChooseRecipient.text = getString(R.string.TOSTANDARDORSECTION)
         binding.rcyImages.visibility = View.VISIBLE
-
-        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
-
-        isSelectedDate = Constant.getCurrentDate()
-
-        binding.lblDatePick.text = Constant.convertToReadableDate(isSelectedDate)
-        binding.lblTimePick.text = Constant.getCurrentTime()
+//        isSelectedDate = Constant.getCurrentDate()
+//        binding.selectdate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
 
 
+      //  isAcademicYear = Constant.isAcademicYearList
+     //   isLoadAcademicYear(isAcademicYear)
+//        isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
+//        isAcademicYearId = isAcademicYear!![0].id
+//        isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
+//        isGetStandardSection()
+
+//        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+//        binding.edtDescription.filters =
+//            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+//        Constant.editTextCounter(
+//            this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount
+//        )
+//        Constant.editTextCounter(
+//            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
+//        )
+
+//        appViewModel!!.isDeleteHomeWork?.observe(this) { response ->
+//            if (response != null) {
+//                if (response.status) {
+//                    Constant.hideLoading(this@HomeWorkCreate)
+//                    mHomeWorkReportAdapter!!.removeItemAt(isHomeWorkPosition)
+//                } else {
+//                    Constant.showDataValidation(
+//                        resources.getString(R.string.fail), response.message, this
+//                    )
+//                }
+//            }
+//        }
+
+//
+//        appViewModel!!.isStandardSectionList?.observe(this) { response ->
+//            if (response != null) {
+//                isGetStandard = response.data
+//                isGetStandard?.size?.let {
+//                    if (it > 0) {
+//                        binding.rytStandardDropDown.visibility = View.VISIBLE
+//                        binding.rytSectionDropDown.visibility = View.VISIBLE
+//                        isSectionId = isGetStandard!![0].sections[0].id
+//                        if (isGetStandard!!.get(0).sections.size > 0) {
+//                            isLoadStandard(isGetStandard)
+//                            isSection = isGetStandard!!.get(0).sections
+//                        }
+//                    } else {
+//                        binding.rytStandardDropDown.visibility = View.GONE
+//                        binding.rytSectionDropDown.visibility = View.GONE
+//                    }
+//                }
+//            }
+//        }
+
+        appViewModel!!.isEditHomeWork?.observe(this) { response ->
+            Constant.hideLoading(this@HomeWorkCreate)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
+//        appViewModel!!.isGetHomeWorkReport?.observe(this) { response ->
+//            if (response != null) {
+//                isFirstLoad = true
+//                if (response.status) {
+//                    binding.rcyHomeWorkReport.visibility = View.VISIBLE
+//                    binding.lytNoDataFound.visibility = View.GONE
+//                    binding.line1.visibility = View.VISIBLE
+//                    binding.line2.visibility = View.VISIBLE
+//                    val isHomeWorkReport = response.data
+//                    isHomeWorkReportData = isHomeWorkReport
+//                    loadHomeWorkReportData(isHomeWorkReportData!!)
+//                } else {
+//                    binding.line1.visibility = View.GONE
+//                    binding.line2.visibility = View.GONE
+//                    binding.rcyHomeWorkReport.visibility = View.GONE
+//                    binding.lytNoDataFound.visibility = View.VISIBLE
+//                    binding.noDataFound.text = response.message
+//                }
+//            }
+//        }
+//
+//        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+//            binding.search.visibility = View.VISIBLE
+//        }
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -276,185 +277,128 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                         }
 
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
-
-                        Log.d("SelectedFile", "URI: $uri, Type: $type")
                     }
 
                     if ((selectedUris?.size ?: 0) > remaining) {
                         Toast.makeText(
-                            this,
-                            "${getString(R.string.Only)} $remaining ${getString(R.string.files_added_max)} ${MAX_FILES})",
-                            Toast.LENGTH_SHORT
+                            this, "${getString(R.string.Only)} $remaining ${getString(R.string.files_added_max)}$MAX_FILES)", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
             }
 
-        appViewModel!!.isAssignmentDelete?.observe(this) { response ->
-            if (response != null) {
-                if (response.status) {
-                    Constant.hideLoading(this@Assignment)
-                    isAssignmentAdapter!!.removeItemAt(isAssignmentPosition)
-                } else {
-                    Constant.showDataValidation(
-                        resources.getString(R.string.fail), response.message, this
-                    )
-                }
-            }
-        }
-
-        appViewModel!!.isGetAssignmentReport?.observe(this) { response ->
-            Constant.hideLoading(this@Assignment)
-            if (response != null) {
-                if (response.status) {
-                    binding.rcyAssignmentReport.visibility = View.VISIBLE
-                    binding.lytNoDataFound.visibility = View.GONE
-                    val isAssignmentReport = response.data
-                    isAssignmentReportData = isAssignmentReport
-                    loadAssignmentReportData()
-                } else {
-                    binding.rcyAssignmentReport.visibility = View.GONE
-                    binding.lytNoDataFound.visibility = View.VISIBLE
-                    binding.noDataFound.text = getString(R.string.no_data_found)
-                }
-            }
-        }
-
-        spinnerType()
+//        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                val query = s.toString().trim().lowercase(Locale.ROOT)
+//                filterHomeWorkReport(query)
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {}
+//        })
     }
 
-    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
-        val adapter = AcademicYearAdapter(this, isAcademicYear)
-        binding.isSpinner.adapter = adapter
-        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View?, position: Int, id: Long
-            ) {
-                adapter.selectedPosition = position
-                val selectedOption = isAcademicYear!![position]
-                isAcademicYearId = selectedOption.id
-                isCurrentAcademicYear = selectedOption.current_academic_year
-                Log.d(
-                    "DropdownMenu",
-                    "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
-                )
-                fetchAssignmentReportData()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
-    }
-
-
-    private fun spinnerType() {
-
-        val adapter = SpinnerLoadingAdapter(this, itemsCategory)
-        binding.spinnerType.adapter = adapter
-
-        binding.spinnerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View?, position: Int, id: Long
-            ) {
-                adapter.selectedPosition = position
-                adapter.notifyDataSetChanged()
-
-                isAssignmentType = itemsCategory[position]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
-    }
-
-
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.imgBack -> {
-                onBackPressed()
-            }
-
-            R.id.btnChooseRecipient -> {
-                if (binding.btnChooseRecipient.text.toString() == Constant.Update_Event) {
-                    showSendConfirmationDialog(true)
-                } else {
-                    isRedirectToSectionStudents()
-                }
-            }
-
-            R.id.imgSearchToolBar -> {
-                if (binding.search.isVisible) {
-                    binding.search.visibility = View.GONE
-                } else {
-                    binding.search.visibility = View.VISIBLE
-                }
-            }
-
-            R.id.lblTimePick -> {
-                showTimePickerDialog(this, this)
-            }
-
-            R.id.lblDatePick -> {
-                showDatePickerDialog(this, this)
-            }
-
-            R.id.lnrTabOneName -> {
-                binding.btnChooseRecipient.text = getString(R.string.ChooseRecipients)
-                binding.line1.setBackgroundResource(R.color.iconBlue)
-                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-                binding.line3.setBackgroundResource(R.color.white)
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                binding.rlaAssignmentReport.visibility = View.GONE
-                binding.rytCreateAssignment.visibility = View.VISIBLE
-            }
-
-            R.id.lnrTabTwoName -> {
-//                binding.btnHistory.isEnabled = false
-//                binding.btnCreate.isEnabled = true
-//                isBackRoundChange(binding.btnHistory)
-
-                binding.btnChooseRecipient.text = getString(R.string.update_assignment)
-                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-                binding.line3.setBackgroundResource(R.color.iconBlue)
-                binding.line1.setBackgroundResource(R.color.white)
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-                binding.rlaAssignmentReport.visibility = View.VISIBLE
-                binding.rytCreateAssignment.visibility = View.GONE
-                isAcademicYear = Constant.isAcademicYearList
-                isLoadAcademicYear(isAcademicYear)
-                isValidAcademicYear =
-                    isAcademicYear?.any { it.current_academic_year == true } == true
-                isAcademicYearId = isAcademicYear!![0].id
-                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-
-            }
-        }
-    }
-
-    private fun fetchAssignmentReportData() {
-        Constant.showLoading(this@Assignment)
-        binding.rcyAssignmentReport.visibility = View.VISIBLE
-        isAssignmentAdapter =
-            AssignmentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
-        binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
-        binding.rcyAssignmentReport.isNestedScrollingEnabled = false
-        binding.rcyAssignmentReport.adapter = isAssignmentAdapter
-        appViewModel?.isGetAssignmentReport(
-            isAccessToken!!, isAcademicYearId, this
-        )
-    }
-
-
-    private fun loadAssignmentReportData() {
-        binding.rcyAssignmentReport.visibility = View.VISIBLE
-        isAssignmentAdapter = AssignmentAdapter(
-            isAssignmentReportData!!.toMutableList(), this, this, Constant.isShimmerViewDisable
-        )
-        binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
-        binding.rcyAssignmentReport.isNestedScrollingEnabled = false
-        binding.rcyAssignmentReport.adapter = isAssignmentAdapter
-
-    }
+//    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
+//        val adapter = AcademicYearAdapter(this, isAcademicYear)
+//        binding.isSpinner.adapter = adapter
+//        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(
+//                parent: AdapterView<*>, view: View?, position: Int, id: Long
+//            ) {
+//                adapter.selectedPosition = position
+//                if (isFirstLoad) {
+//                    val selectedOption = isAcademicYear!![position]
+//                    isAcademicYearId = selectedOption.id
+//                    isCurrentAcademicYear = selectedOption.current_academic_year
+//                    Log.d(
+//                        "DropdownMenu",
+//                        "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
+//                    )
+//                    fetchHomeWorkReportData()
+//                }
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>) {}
+//        }
+//    }
+//
+//    private fun isLoadStandard(isStandard: List<Standard>?) {
+//        val adapter = StandardDropDownListAdapter(this, isStandard)
+//        binding.isSpinnerStandard.adapter = adapter
+//        binding.isSpinnerStandard.onItemSelectedListener =
+//            object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+//                ) {
+//                    adapter.selectedPosition = position
+//                    adapter.notifyDataSetChanged()
+//                    isStandard!![position]
+//                    Log.d(
+//                        "DropdownMenu",
+//                        "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
+//                    )
+//
+//                    isSectionId = isStandard[position].id
+//                    isSection = isStandard[position].sections
+//                    isLoadSection(isSection)
+//                }
+//
+//                override fun onNothingSelected(parent: AdapterView<*>) {}
+//            }
+//    }
+//
+//    private fun isLoadSection(isSection: List<Section>?) {
+//        val adapter = SectionDropDownListAdapter(this, isSection)
+//        binding.isSpinnerSection.adapter = adapter
+//        binding.isSpinnerSection.onItemSelectedListener =
+//            object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+//                ) {
+//                    adapter.selectedPosition = position
+//                    adapter.notifyDataSetChanged()
+//                    val selectedOption = isSection!![position]
+//                    Log.d(
+//                        "DropdownMenu",
+//                        "Clicked Standard Year: ID = ${isSection[position].id}, Year = ${isSection[position].name}"
+//                    )
+//                    isSectionId = selectedOption.id
+//                    fetchHomeWorkReportData()
+//                }
+//
+//                override fun onNothingSelected(parent: AdapterView<*>) {}
+//            }
+//    }
+//
+//    private fun filterHomeWorkReport(query: String) {
+//        val lowerQuery = query.lowercase(Locale.getDefault())
+//
+//        val filteredList = if (query.isEmpty()) {
+//            fullHomeworkList
+//        } else {
+//            fullHomeworkList.filter {
+//                it.title.lowercase(Locale.getDefault())
+//                    .contains(lowerQuery) || it.description.lowercase(Locale.getDefault())
+//                    .contains(lowerQuery) || it.subject_name.lowercase(Locale.getDefault())
+//                    .contains(lowerQuery)
+//            }
+//        }
+//
+//        mHomeWorkReportAdapter = HomeWorkReportAdapter(this, filteredList, this, false)
+//        binding.rcyHomeWorkReport.layoutManager =
+//            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+//        binding.rcyHomeWorkReport.setHasFixedSize(true)
+//        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+//
+//        if (filteredList.isEmpty()) {
+//            binding.rcyHomeWorkReport.visibility = View.GONE
+//            binding.lytNoDataFound.visibility = View.VISIBLE
+//            binding.noDataFound.text = getString(R.string.no_matching_homework_found)
+//        } else {
+//            binding.rcyHomeWorkReport.visibility = View.VISIBLE
+//            binding.lytNoDataFound.visibility = View.GONE
+//        }
+//    }
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
@@ -507,9 +451,149 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
                 dialog.dismiss()
             }.show()
+    }
+
+
+    override fun onBackPressed() {
+        Constant.selectedFiles.clear()
+        Constant.isAwsUploadedFiles.clear()
+        super.onBackPressed()
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.imgBack -> {
+                Constant.selectedFiles.clear()
+                Constant.isAwsUploadedFiles.clear()
+                onBackPressed()
+            }
+
+//            R.id.Calendar -> {
+//                showDatePickerDialogSelectedDate(this, isSelectedDate, this)
+//
+//            }
+
+//            R.id.lnrTabOneName -> {
+//                binding.lnrTabTwoName.isEnabled = true
+//                binding.lnrTabOneName.isEnabled = false
+//                binding.edtTitle.setText("")
+//                binding.edtDescription.setText("")
+//                Constant.selectedFiles.clear()
+//                Constant.isAwsUploadedFiles.clear()
+//
+//                saveDrawableToCache(R.drawable.add_image)?.let {
+//                    Constant.selectedFiles.add(
+//                        FileItem(
+//                            it, FileType.IMAGE
+//                        )
+//                    )
+//                }
+//
+//                binding.rcyImages.visibility = View.VISIBLE
+//                mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+//                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+//                binding.rcyImages.adapter = mAdapter
+//
+//
+//                binding.line3.setBackgroundResource(R.color.iconBlue)
+//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+//                binding.line4.setBackgroundResource(R.color.white)
+//
+//                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+//                binding.btnChooseRecipient.text = getString(R.string.TOSTANDARDORSECTION)
+////                isBackRoundChange(binding.lnrTabOneName)
+//                binding.rlaHomeWorkReport.visibility = View.GONE
+//                binding.rlaHomework.visibility = View.VISIBLE
+//                isAcademicServerLoad = true
+//            }
+
+//            R.id.lnrTabTwoName -> {
+//                binding.lnrTabTwoName.isEnabled = false
+//                binding.lnrTabOneName.isEnabled = true
+//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+//                binding.line4.setBackgroundResource(R.color.iconBlue)
+//                binding.line3.setBackgroundResource(R.color.white)
+//
+//                binding.btnChooseRecipient.text = getString(R.string.update_homework)
+////                isBackRoundChange(binding.lnrTabTwoName)
+//                binding.rlaHomeWorkReport.visibility = View.VISIBLE
+//                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+//                binding.rlaHomework.visibility = View.GONE
+//                if (isAcademicServerLoad) {
+//                    fetchHomeWorkReportData()
+//                }
+//            }
+
+            R.id.btnChooseRecipient -> {
+                if (binding.btnChooseRecipient.text.toString() == getString(R.string.update_homework)) {
+                    showSendConfirmationDialog(true)
+                } else {
+                    isRedirectToSectionStudents()
+                }
+            }
+        }
+    }
+
+//    private fun fetchHomeWorkReportData() {
+//        binding.rcyHomeWorkReport.visibility = View.VISIBLE
+//        mHomeWorkReportAdapter =
+//            HomeWorkReportAdapter(this, emptyList(), this, Constant.isShimmerViewShow)
+//        binding.rcyHomeWorkReport.layoutManager =
+//            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+//        binding.rcyHomeWorkReport.setHasFixedSize(true)
+//        binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
+//        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+//        appViewModel?.isGetHomeWorkReport(
+//            isAccessToken!!, isSectionId, isAcademicYearId, isSelectedDate, this
+//        )
+//    }
+//
+//    private fun loadHomeWorkReportData(isHomeWorkReportDetails: List<HomeWorkReport>) {
+//        binding.rcyHomeWorkReport.visibility = View.VISIBLE
+//        mHomeWorkReportAdapter = HomeWorkReportAdapter(
+//            this, isHomeWorkReportDetails, this, Constant.isShimmerViewDisable
+//        )
+//        binding.rcyHomeWorkReport.layoutManager =
+//            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+//        binding.rcyHomeWorkReport.setHasFixedSize(true)
+//        binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
+//        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+//    }
+
+//    private fun isGetStandardSection() {
+//        appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
+//    }
+
+    override fun onImageClick(position: Int) {
+        if (position == 0) {
+            showBottomDialog()
+        }
+    }
+
+    private fun isRedirectToSectionStudents() {
+        val title = binding.edtTitle.text.toString().trim()
+        val description = binding.edtDescription.text.toString().trim()
+        if (title.isEmpty()) {
+            binding.edtTitle.error = getString(R.string.This_field_required)
+            binding.edtTitle.requestFocus()
+            return
+        }
+        if (description.isEmpty()) {
+            binding.edtDescription.error = getString(R.string.This_field_required)
+            binding.edtDescription.requestFocus()
+            return
+        }
+
+
+        val sectionDetails = SectionDetails(title, description)
+        val intent = Intent(this, RecipientActivity::class.java)
+        intent.putExtra(Constant.section_data, sectionDetails)
+        startActivity(intent)
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
@@ -525,6 +609,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         }
     }
 
+    // Opens the system file picker for DOCUMENT on Android 10 and below
     private fun openSystemDocumentPicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
@@ -534,25 +619,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         }
         startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
     }
-
-    override fun onBackPressed() {
-        Constant.selectedFiles.clear()
-        Constant.isAwsUploadedFiles.clear()
-        super.onBackPressed()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Constant.stopDelay()
-    }
-
-
-    override fun onImageClick(position: Int) {
-        if (position == 0) {
-            showBottomDialog()
-        }
-    }
-
 
     private fun showBottomDialog() {
         val dialog = Dialog(this)
@@ -594,6 +660,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
         }
 
+
         rlaDocument.setOnClickListener {
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.DOCUMENT)
@@ -614,16 +681,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         dialog.show()
     }
 
-    override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
-        binding.lblTimePick.text = String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
-    }
-
-    override fun onDateSelected(date: String) {
-        isSelectedDate = date
-        binding.lblDatePick.text = Constant.convertToReadableDate(date)
-        Log.d("isSelectedDate", date)
-    }
-
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
@@ -640,7 +697,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
+                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
                 Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
             }
@@ -656,7 +713,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
         val remaining = MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
-            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${getString(R.string.Max)} $MAX_FILES ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -691,7 +748,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         }
 
         when (requestCode) {
-            CreateEvent.Companion.CAMERA_IMAGE_REQUEST -> {
+            CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)
                     if (file.exists()) {
@@ -778,119 +835,28 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
     }
 
-    private fun isRedirectToSectionStudents() {
-        val title = binding.edtTitle.text.toString().trim()
-        val description = binding.edtDescription.text.toString().trim()
-        if (title.isEmpty()) {
-            binding.edtTitle.error = getString(R.string.This_field_required)
-            binding.edtTitle.requestFocus()
-            return
-        }
-        if (description.isEmpty()) {
-            binding.edtDescription.error = getString(R.string.This_field_required)
-            binding.edtDescription.requestFocus()
-            return
-        }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    override fun onDateSelected(date: String) {
+//        isSelectedDate = date
+//        if (Constant.getCurrentDate() == isSelectedDate) {
+//            binding.lblDateFormat.text = getString(R.string.today)
+//        } else {
+//            binding.lblDateFormat.text = getString(R.string.past_date)
+//        }
+//        binding.selectdate.text = Constant.convertToReadableDate(date)
+//        fetchHomeWorkReportData()
+//    }
 
-        val isAssignmentSendingData = AssignmentSendingData(
-            title,
-            description,
-            isAssignmentType,
-            isSelectedDate,
-            binding.lblTimePick.text.toString()
-        )
-//        Constant.selectedFiles.removeAt(0)
-        val intent = Intent(this, RecipientActivity::class.java)
-        intent.putExtra(Constant.assignment_data, isAssignmentSendingData)
-        startActivity(intent)
-    }
-
-    override fun onSubmittedClick(data: AssignmentData) {
-        val intent = Intent(this, AssignmentStudentList::class.java)
-        intent.putExtra(Constant.assignment_id, data.id)
-        intent.putExtra(Constant.type, Constant.SUBMITTED)
-        startActivity(intent)
-    }
-
-    override fun onEditAndDeleteClick(
-        data: AssignmentData, anchorView: View, adapterPosition: Int
-    ) {
-        isAssignmentId = data.id
-        isAssignmentPosition = adapterPosition
-        showEditDeletePopup(data, anchorView)
-    }
-
-    override fun onNotSubmittedClick(data: AssignmentData) {
-        val intent = Intent(this, AssignmentStudentList::class.java)
-        intent.putExtra(Constant.assignment_id, data.id)
-        intent.putExtra(Constant.type, Constant.NOTSUBMITTED)
-        startActivity(intent)
-    }
-
-
-    fun showEditDeletePopup(data: AssignmentData, anchor: View) {
-        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
-        val popupWindow = PopupWindow(
-            popupView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            true
-        )
-        popupWindow.elevation = 10f
-
-        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
-        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
-
-        layoutEdit.setOnClickListener {
-            isEditProcess(data)
-            popupWindow.dismiss()
-        }
-
-        layoutDelete.setOnClickListener {
-            showSendConfirmationDialog(false)
-            popupWindow.dismiss()
-        }
-        popupWindow.showAsDropDown(anchor, 0, 10)
-    }
-
-    fun showSendConfirmationDialog(isEventUpdate: Boolean) {
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
-        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
-        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        alertDialog.show()
-
-        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
-        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
-        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
-        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-        if (isEventUpdate) {
-            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_assignment)
-        } else {
-            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-        }
-
-        lblSelectTarget.visibility = View.GONE
-
-        okButton.setOnClickListener {
-            alertDialog.dismiss()
-            if (isEventUpdate) {
-                ProgressDialogHelper.show(this)
-                ProgressDialogHelper.updateProgress(10)
-                isUploadFilesInServer(Constant.file_)
-            } else {
-                val jsonObject = JsonObject()
-                jsonObject.addProperty(APIKeyNames.id, isAssignmentId)
-                appViewModel?.isAssignmentDelete(isAccessToken!!, jsonObject, this)
-            }
-        }
-        btnCancel.setOnClickListener { alertDialog.dismiss() }
-    }
-
+//    override fun onClickListener(data: HomeWorkReport, anchorView: View, isPosition: Int) {
+//        isHomeWorkId = data.id
+//        isHomeWorkPosition = isPosition
+//        showEditDeletePopup(data, anchorView)
+//    }
 
     // Edit Update code
     fun isUploadFilesInServer(isFileType: String?) {
 
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
         ProgressDialogHelper.updateProgress(50)
@@ -905,7 +871,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 iterator.remove()
             }
         }
-
         when {
             Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
@@ -935,7 +900,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
                 ProgressDialogHelper.dismiss()
-                //   isUpdateEvent()
+                isUpdateHomeWork()
             } else {
                 videoUploading()
             }
@@ -1007,7 +972,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
-                                        //   isUpdateEvent()
+                                        isUpdateHomeWork()
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
                                             videoUploading()
@@ -1039,7 +1004,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 iterator.remove()
             }
         }
-        Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
                 VimeoVideoUpload.uploadVideo(
@@ -1048,7 +1012,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
         } else {
             ProgressDialogHelper.dismiss()
-            //  isUpdateEvent()
+            isUpdateHomeWork()
         }
     }
 
@@ -1065,7 +1029,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
             if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()
-                //   isUpdateEvent()
+                isUpdateHomeWork()
             }
         }
     }
@@ -1077,8 +1041,88 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         }
     }
 
+    fun isUpdateHomeWork() {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(this).toString())
+        val jsonObject = JsonObject()
+        val filePathArray = JsonArray()
+        jsonObject.addProperty(APIKeyNames.id, homeworkData!!.id)
+        jsonObject.addProperty(APIKeyNames.title, binding.edtTitle.text.toString())
+        jsonObject.addProperty(APIKeyNames.description, binding.edtDescription.text.toString())
+        jsonObject.addProperty(APIKeyNames.iframe, "")
+        jsonObject.addProperty(APIKeyNames.file_size, "")
+        jsonObject.addProperty(APIKeyNames.thumbnail, "")
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType
+            )
+            filePathArray.add(isSelectedObject)
+        }
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+        appViewModel?.isHomeWorkUpdate(isAccessToken!!, jsonObject, this)
+    }
 
-    fun isEditProcess(data: AssignmentData) {
+    fun showSendConfirmationDialog(isHomeWorkUpdate: Boolean) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+        if (isHomeWorkUpdate) {
+            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_homework)
+        } else {
+            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
+        }
+
+        lblSelectTarget.visibility = View.GONE
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            if (isHomeWorkUpdate) {
+                ProgressDialogHelper.show(this)
+                ProgressDialogHelper.updateProgress(10)
+                isUploadFilesInServer(Constant.file_)
+            } else {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty(APIKeyNames.id, isHomeWorkId)
+                appViewModel?.isHomeWorkDelete(isAccessToken!!, jsonObject, this)
+            }
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+    fun showEditDeletePopup(data: HomeWorkReportData, anchor: View) {
+        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+        layoutEdit.setOnClickListener {
+            isEditProcess(data)
+            popupWindow.dismiss()
+        }
+
+        layoutDelete.setOnClickListener {
+            showSendConfirmationDialog(false)
+            popupWindow.dismiss()
+        }
+        popupWindow.showAsDropDown(anchor, 0, 10)
+    }
+
+    fun isEditProcess(data: HomeWorkReportData?) {
+
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
         saveDrawableToCache(R.drawable.add_image)?.let {
@@ -1089,19 +1133,15 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             )
         }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-        binding.rytRecyclewview.visibility = View.VISIBLE
-        binding.line1.setBackgroundResource(R.color.iconBlue)
-        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-        binding.line3.setBackgroundResource(R.color.white)
+//        binding.line3.setBackgroundResource(R.color.iconBlue)
+//        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+//        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+//        binding.line4.setBackgroundResource(R.color.white)
 
-        binding.rytCreateAssignment.visibility = View.VISIBLE
-        binding.rlaAssignmentReport.visibility = View.GONE
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-        binding.edtTitle.setText(data.title)
+//        binding.rlaHomeWorkReport.visibility = View.GONE
+//        binding.rlaHomework.visibility = View.VISIBLE
+        binding.edtTitle.setText(data!!.title)
         binding.edtDescription.setText(data.description)
-        binding.lblDatePick.text = Constant.covertDateFormate(data.created_date)
-        binding.lblTimePick.text = data.created_time
 
         if (data.file_path.isNotEmpty()) {
             val mappedList = data.file_path.map { filePath ->
@@ -1114,11 +1154,26 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
             Constant.selectedFiles.addAll(mappedList)
         }
-        binding.rcyImages.visibility = View.VISIBLE
-        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
-        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-        binding.rcyImages.adapter = mAdapter
+        if (Constant.selectedFiles.size > 1) {
+            binding.rcyImages.visibility = View.VISIBLE
+            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.rcyImages.adapter = mAdapter
+        } else {
+            binding.rcyImages.visibility = View.VISIBLE
+            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.rcyImages.adapter = mAdapter
+        }
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        if (Constant.isClickEdit) {
+            binding.btnChooseRecipient.text = getString(R.string.update_homework)
+            Constant.isClickEdit = false
+            homeworkData = intent.getParcelableExtra<HomeWorkReportData>(Constant.homework_data)
+            isEditProcess(homeworkData)
+        }
+    }
 }

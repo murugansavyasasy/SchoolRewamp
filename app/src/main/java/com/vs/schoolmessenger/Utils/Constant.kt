@@ -64,8 +64,6 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
-import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
-import com.vs.schoolmessenger.School.QuizExam.Model.QuizAttachmentData
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -187,7 +185,7 @@ object Constant {
     var isCommunicationType = 1
     var isVoiceType = 1
     var isQuestionLimit = -1
-
+    var isClickEdit = false
 
     var isTitleLength = 50
     var isDescriptionLength = 500
@@ -275,6 +273,7 @@ object Constant {
     var notice_data = "notice_data"
     var event_data = "event_data"
     var assignment_data = "assignment_data"
+    var homework_data = "homework_data"
     var lsrwskill_data = "lsrwskill_data"
     var lsrwsubmitskill_data = "lsrwsubmitskill_data"
     var isFileUrl = "isFileUrl"

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/light_white"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
+
+
+        <RelativeLayout
+            android:id="@+id/rytSearch323"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_margin="@dimen/ten"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/edtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/imgSearch"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                />
+        </RelativeLayout>
+
+        <Spinner
+            android:id="@+id/schoollistfilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytSearch323"
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            app:layout_constraintTop_toBottomOf="@+id/rytSearch323"
+            android:background="@drawable/spinner_bg"
+            android:padding="@dimen/twele"
+            android:spinnerMode="dropdown"
+         />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyNoticeBoard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           app:layout_constraintTop_toBottomOf="@+id/schoollistfilter"
+            android:layout_marginTop="@dimen/ten"
+            android:clipToPadding="false"
+            android:fadeScrollbars="false"
+            android:paddingHorizontal="@dimen/ten"
+            android:scrollbars="none"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/lytList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/schoollistfilter"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/nomessage"
+                android:layout_width="@dimen/three_hundred"
+                android:layout_height="@dimen/three_hundred"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/ten"
+                android:src="@drawable/nomessages"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/five"
+                android:text="@string/no_data_found"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -237,6 +237,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isAssignmentSend: LiveData<HomeWorkSendResponse?>? = null
         private set
 
+    var isAssignmentUpdate: LiveData<HomeWorkSendResponse?>? = null
+        private set
+
+
 
     var isVoiceSend: LiveData<TextSendResponse?>? = null
         private set
@@ -408,6 +412,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isSendText = apiSchoolRepositories.isSendTextLiveData
         isSendHomeWork = apiSchoolRepositories.isSendHomeWorkLiveData
         isAssignmentSend = apiSchoolRepositories.isSendAssignmentLiveData
+        isAssignmentUpdate = apiSchoolRepositories.isUpdateAssignmentLiveData
         IsGetEventReport = apiSchoolRepositories.IsGetEventReportLiveData
         IsGetEventSchoolReport = apiSchoolRepositories.IsGetEventSchoolReportLiveData
         IsGetHolidayReport = apiSchoolRepositories.IsGetHolidayReportLiveData
@@ -682,6 +687,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isSendAssignment(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.isSendAssignment(isToken, josnObject, activity)
+    }
+
+    fun assignmentUpdate(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.assignmentUpdate(isToken, josnObject, activity)
     }
 
     fun isVoiceSend(isToken: String, josnObject: JsonObject, activity: Activity) {

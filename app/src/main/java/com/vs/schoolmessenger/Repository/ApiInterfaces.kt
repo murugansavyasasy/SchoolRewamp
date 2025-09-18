@@ -352,6 +352,13 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<HomeWorkSendResponse>?
 
+    @PUT(APIMethods.isAssignmentUpdate)
+    fun isAssignmentUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
+    ): Call<HomeWorkSendResponse>?
+
+
+
     @POST(APIMethods.isSendVoice)
     fun isSendVoice(
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
