@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/AthensGray"
     android:fitsSystemWindows="true">
 
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ScrollView
+        android:id="@+id/scrollContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbarLayout"
         android:fillViewport="true">
 
         <LinearLayout
@@ -16,66 +25,61 @@
             android:orientation="vertical">
 
             <include
-                android:id="@+id/toolbarLayout"
-                layout="@layout/school_side_tool_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include
                 android:id="@+id/calenderlayout"
-                layout="@layout/dialog_calendar"
+                layout="@layout/dialog_calendar_absentees"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/datevalue"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="September 03,2025"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rlaabsenteesreport2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fifteen"
-                android:nestedScrollingEnabled="false" />
-
+                android:visibility="visible" />
 
             <LinearLayout
-                android:id="@+id/linear_layout"
-                android:layout_width="wrap_content"
+                android:id="@+id/linear_layoutcontainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_calendar_card"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/classvalue"
-                    style="@style/CustomTextStylePoppinsBold"
+                    android:id="@+id/selectedDateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Class : II . "
-                    android:textColor="@color/PrimaryColor"
-                    android:textSize="@dimen/twenty_sp" />
-
-                <TextView
-                    android:id="@+id/sectionvalue"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Section : A"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="September 03, 2025"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/twenty_sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rlaabsenteesreport2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <TextView
+                    android:id="@+id/absentListTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="👨‍🎓 Absent students list"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/absentStudentsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:nestedScrollingEnabled="false" />
 
             </LinearLayout>
-
         </LinearLayout>
-
     </ScrollView>
 
 </RelativeLayout>

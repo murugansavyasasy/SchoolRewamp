@@ -30,20 +30,43 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     lateinit var mAdapter: AssignmentAdapter
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
-        binding.imgBack.setOnClickListener {
+        binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
 
-        binding.imgSearch.setOnClickListener(this)
+        binding.toolbarLayout.imgSearch.setOnClickListener(this)
         val isChildDetails = SharedPreference.getChildDetails(this)
 
         isAccessToken = isChildDetails?.access_token
 
-        binding.lblStudentName.text = isChildDetails?.name
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
 
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.txtVideoMenu.setText("")
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtVideoMenu.windowToken, 0)
+            } else {
+                binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                binding.toolbarLayout.txtVideoMenu.setText("")
+                binding.toolbarLayout.txtVideoMenu.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.toolbarLayout.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
+
+
+
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -67,7 +90,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         fetchAssignmentReportData()
 
 
-        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -115,21 +138,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
     override fun onClick(v: View?) {
         when (v?.id) {
-
-            R.id.imgSearch -> {
-                if (binding.rytsearch.visibility == View.VISIBLE) {
-                    binding.rytsearch.visibility = View.GONE
-                    binding.txtVideoMenu.setText("")
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
-                } else {
-                    binding.rytsearch.visibility = View.VISIBLE
-                    binding.txtVideoMenu.setText("")
-                    binding.txtVideoMenu.requestFocus()
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
-                }
-            }
+            
         }
     }
 }
