@@ -1,13 +1,16 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
+import android.support.annotation.DrawableRes
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +24,7 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardDropDownListAdapter
+import com.vs.schoolmessenger.School.AbsenteesMarking.CustomCalendarFragement.CustomCalendarFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -32,9 +36,11 @@ import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendanceMarkBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
-    View.OnClickListener {
+    CustomCalendarFragment.CalendarDateListener,View.OnClickListener {
 
 
     lateinit var mAdapter: AttendanceStudentReportAdapter
@@ -52,6 +58,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     var AttendanceType = ""
     var fromDate = ""
     var toDate = ""
+    private var isSelectedDate: LocalDate? = null
+
     private var isStaffDetails: StaffDetails? = null
     var isAcademicYearId = -1
 
@@ -76,23 +84,38 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        AttendanceType = Constant.fullDay
+        isSelectedDate = LocalDate.now()
+        binding.AttendanceSelectedDate.text=Constant.formatToPretty(isSelectedDate.toString())
+        SelectedDate = Constant.formatToUi(isSelectedDate.toString())
+
+
+
+        styleLabel(binding.lblFullDay, R.drawable.mild_gray_radius, R.color.PrimaryColor, R.color.white)
+        styleLabel(binding.lblHalfDay, R.drawable.mild_gray_radius, R.color.gray, R.color.black)
+
         binding.rlaStandard.setOnClickListener(this)
         binding.rlaSection.setOnClickListener(this)
-        binding.rlaAttendanceType.setOnClickListener(this)
+//        binding.rlaAttendanceType.setOnClickListener(this)
         binding.btnAbsent.setOnClickListener(this)
         binding.imgSearch.setOnClickListener(this)
         binding.btnSelectPresent.setOnClickListener(this)
 //        binding.rlaSectionReport.setOnClickListener(this)
         binding.rlaDayDatePicker.setOnClickListener(this)
+        binding.lblFullDay.setOnClickListener(this)
+        binding.lblHalfDay.setOnClickListener(this)
+        binding.lblFirstHalf.setOnClickListener(this)
+        binding.lblSecondHalf.setOnClickListener(this)
 //        binding.dropdownAcademicYear.setOnClickListener(this)
-        binding.rlaFullDay.setOnClickListener(this)
-        binding.rlaHalfDay.setOnClickListener(this)
-        binding.rlaSecondHalf.setOnClickListener(this)
-        binding.rlaFirstHalf.setOnClickListener(this)
-        binding.radioButtonFullDay.setOnClickListener(this)
-        binding.radioButtonHalfDay.setOnClickListener(this)
-        binding.radioButtonFirstHalf.setOnClickListener(this)
-        binding.radioButtonSecondHalf.setOnClickListener(this)
+//        binding.rlaFullDay.setOnClickListener(this)
+//        binding.rlaHalfDay.setOnClickListener(this)
+//        binding.rlaSecondHalf.setOnClickListener(this)
+//        binding.rlaFirstHalf.setOnClickListener(this)
+//        binding.radioButtonFullDay.setOnClickListener(this)
+//        binding.radioButtonHalfDay.setOnClickListener(this)
+//        binding.radioButtonFirstHalf.setOnClickListener(this)
+//        binding.radioButtonSecondHalf.setOnClickListener
+        loadFromCalendar()
         updateActionButtonsState()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -111,15 +134,16 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             binding.line2.setBackgroundResource(R.color.athens_gray)
             callApi = false
             binding.txtSearchBox.text.clear()
-            binding.radioButtonFullDay.isChecked = false
-            binding.radioButtonHalfDay.isChecked = false
+//            binding.radioButtonFullDay.isChecked = false
+//            binding.radioButtonHalfDay.isChecked = false
             binding.lnrClasses2.visibility = View.GONE
-            binding.sessionHeader.visibility = View.GONE
+//            binding.sessionHeader.visibility = View.GONE
             binding.rlaMarkAttendance.visibility = View.VISIBLE
             binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
             binding.rytSearchbox.visibility = View.GONE
             binding.rcyAttendanceReport.visibility = View.GONE
             binding.lytNoDataFound.visibility = View.GONE
+            loadFromCalendar()
 
         }
 
@@ -131,10 +155,10 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             binding.line2.setBackgroundResource(R.color.iconBlue)
             binding.line1.setBackgroundResource(R.color.athens_gray)
             callApi = true
-            binding.radioButtonFullDay.isChecked = false
-            binding.radioButtonHalfDay.isChecked = false
-            binding.radioButtonFirstHalf.isChecked = false
-            binding.radioButtonSecondHalf.isChecked = false
+//            binding.radioButtonFullDay.isChecked = false
+//            binding.radioButtonHalfDay.isChecked = false
+//            binding.radioButtonFirstHalf.isChecked = false
+//            binding.radioButtonSecondHalf.isChecked = false
             binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
             binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
             binding.rlaMarkAttendance.visibility = View.GONE
@@ -179,11 +203,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
         }
 
-        val (dayOnly, dayOfWeek, fullDate, slashDate) = Constant.getCurrentDateInfo()
-        binding.lblDate1.text = dayOnly
-        binding.lblDay.text = dayOfWeek
-        binding.lblDatePick.text = fullDate
-        SelectedDate = slashDate
+//        val (dayOnly, dayOfWeek, fullDate, slashDate) = Constant.getCurrentDateInfo()
+//        binding.lblDate1.text = dayOnly
+//        binding.lblDay.text = dayOfWeek
+//        binding.lblDatePick.text = fullDate
+//        SelectedDate = slashDate
 
 
         isAcademicYear = isAcademicYearList
@@ -367,6 +391,54 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
 
     @RequiresApi(Build.VERSION_CODES.O)
+    private fun loadFromCalendar() {
+        val today = LocalDate.now()
+        val minFromDate = today.minusYears(1) //LocalDate.of(2025, 9, 10)   // 10 Sep 2025 To handle the only for Specify date
+        val maxFromDate = today
+
+
+        val fromFragment = CustomCalendarFragment.newInstance(
+            minDate = minFromDate.toString(),
+            maxDate = maxFromDate.toString(),
+            selectedDate = isSelectedDate?.toString(),
+            tag = Constant.FROM_DATE
+        )
+
+        supportFragmentManager.beginTransaction()
+            .replace(binding.calendarFromFragmentContainer.id, fromFragment, "FROM_CALENDAR")
+            .commit()
+
+        binding.calendarFromFragmentContainer.visibility = View.VISIBLE
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onDateSelected(date: String, tag: String) {
+        val selected = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE)
+
+        when (tag) {
+            Constant.FROM_DATE -> {
+//                fromDate = selected
+//                binding.tvFromDate.text = formatDate(selected)
+                Log.d("selectedDate", selected.toString())
+                SelectedDate = Constant.formatToUi(selected.toString())
+
+                isSelectedDate = selected//This Date for Fragemnt to change the next date
+                binding.AttendanceSelectedDate.text=Constant.formatToPretty(selected.toString())
+//                10/09/2025
+
+//                val (day, formattedDate) = Constant.getDayAndDateOnly(binding.lblDatePick.text.toString())// 13 Mon
+//                binding.lblDay.text = formattedDate
+//                binding.lblDate1.text = day
+//                if (callApi) {
+//                    loadData()
+//                }
+            }
+
+        }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
@@ -415,50 +487,80 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 //                }
 //            }
 
-            R.id.radioButtonFullDay, R.id.rlaFullDay -> {
+            R.id.lblFullDay, -> {
                 SessionType = ""
                 AttendanceType = Constant.fullDay
-                binding.radioButtonFullDay.isChecked = true
-                binding.radioButtonHalfDay.isChecked = false
-                binding.radioButtonFirstHalf.isChecked = false
-                binding.radioButtonSecondHalf.isChecked = false
 
-                binding.radioButtonFirstHalf.isEnabled = false
-                binding.radioButtonSecondHalf.isEnabled = false
-
+                styleLabel(binding.lblFullDay, R.drawable.mild_gray_radius, R.color.PrimaryColor, R.color.white)
+                styleLabel(binding.lblHalfDay, R.drawable.mild_gray_radius, R.color.gray, R.color.black)
                 binding.lnrClasses2.visibility = View.GONE
-                binding.sessionHeader.visibility = View.GONE
+
+
+
+
+//                binding.radioButtonFullDay.isChecked = true
+//                binding.radioButtonHalfDay.isChecked = false
+//                binding.radioButtonFirstHalf.isChecked = false
+//                binding.radioButtonSecondHalf.isChecked = false
+//
+//                binding.radioButtonFirstHalf.isEnabled = false
+//                binding.radioButtonSecondHalf.isEnabled = false
+//
+//                binding.lnrClasses2.visibility = View.GONE
+//                binding.sessionHeader.visibility = View.GONE
             }
 
-            R.id.radioButtonHalfDay, R.id.rlaHalfDay -> {
+            R.id.lblHalfDay -> {
                 AttendanceType = Constant.halfDay
-                binding.radioButtonFullDay.isChecked = false
-                binding.radioButtonHalfDay.isChecked = true
 
-                binding.radioButtonFirstHalf.isEnabled = true
-                binding.radioButtonSecondHalf.isEnabled = true
-
-                binding.radioButtonFirstHalf.isChecked = false
-                binding.radioButtonSecondHalf.isChecked = false
+                styleLabel(binding.lblFullDay, R.drawable.mild_gray_radius, R.color.gray, R.color.black)
+                styleLabel(binding.lblHalfDay, R.drawable.mild_gray_radius, R.color.PrimaryColor, R.color.white)
+                binding.lnrClasses2.visibility = View.VISIBLE
 
                 binding.lnrClasses2.visibility = View.VISIBLE
-                binding.sessionHeader.visibility = View.VISIBLE
-            }
-
-            R.id.radioButtonFirstHalf, R.id.rlaFirstHalf -> {
                 SessionType = Constant.firstHalf
-                if (binding.radioButtonHalfDay.isChecked) {
-                    binding.radioButtonFirstHalf.isChecked = true
-                    binding.radioButtonSecondHalf.isChecked = false
-                }
+                styleLabel(binding.lblFirstHalf, R.drawable.gray_bg_radius, R.color.green, R.color.white)
+                styleLabel(binding.lblSecondHalf, R.drawable.gray_bg_radius, R.color.gray, R.color.black)
+
+
+
+
+//                binding.radioButtonFullDay.isChecked = false
+//                binding.radioButtonHalfDay.isChecked = true
+//
+//                binding.radioButtonFirstHalf.isEnabled = true
+//                binding.radioButtonSecondHalf.isEnabled = true
+//
+//                binding.radioButtonFirstHalf.isChecked = false
+//                binding.radioButtonSecondHalf.isChecked = false
+//
+//                binding.lnrClasses2.visibility = View.VISIBLE
+//                binding.sessionHeader.visibility = View.VISIBLE
             }
 
-            R.id.radioButtonSecondHalf, R.id.rlaSecondHalf -> {
+            R.id.lblFirstHalf -> {
+                SessionType = Constant.firstHalf
+
+                styleLabel(binding.lblFirstHalf, R.drawable.gray_bg_radius, R.color.green, R.color.white)
+                styleLabel(binding.lblSecondHalf, R.drawable.gray_bg_radius, R.color.gray, R.color.black)
+
+
+//                if (binding.radioButtonHalfDay.isChecked) {
+//                    binding.radioButtonFirstHalf.isChecked = true
+//                    binding.radioButtonSecondHalf.isChecked = false
+//                }
+            }
+
+            R.id.lblSecondHalf -> {
                 SessionType = Constant.secondHalf
-                if (binding.radioButtonHalfDay.isChecked) {
-                    binding.radioButtonFirstHalf.isChecked = false
-                    binding.radioButtonSecondHalf.isChecked = true
-                }
+
+                styleLabel(binding.lblFirstHalf, R.drawable.gray_bg_radius, R.color.gray, R.color.black)
+                styleLabel(binding.lblSecondHalf, R.drawable.gray_bg_radius, R.color.green, R.color.white)
+
+//                if (binding.radioButtonHalfDay.isChecked) {
+//                    binding.radioButtonFirstHalf.isChecked = false
+//                    binding.radioButtonSecondHalf.isChecked = true
+//                }
             }
 
             R.id.btnAbsent -> {
@@ -472,6 +574,22 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         }
         updateActionButtonsState()
     }
+
+    private fun styleLabel(
+        view: TextView,
+        @DrawableRes drawableRes: Int,
+        @ColorRes bgColorRes: Int,
+        @ColorRes textColorRes: Int
+    ) {
+        val drawable = ContextCompat.getDrawable(view.context, drawableRes)?.mutate()
+        if (drawable is GradientDrawable) {
+            drawable.setColor(ContextCompat.getColor(view.context, bgColorRes))
+        }
+        view.background = drawable
+        view.setTextColor(ContextCompat.getColor(view.context, textColorRes))
+    }
+
+
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = AcademicYearAdapter(this, isAcademicYear)
@@ -581,15 +699,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         )
         //We are Saving all the data in Constant as List Here
         Constant.isMarkAttendanceDataSending = saveAttendanceData
+        Log.d("saveAttendanceData",saveAttendanceData.toString())
     }
 
 
     private fun updateActionButtonsState() {
-        if ((isStandardId != null && SectionID != null) && (binding.radioButtonFullDay.isChecked ||
-                    (binding.radioButtonHalfDay.isChecked &&
-                            (binding.radioButtonFirstHalf.isChecked || binding.radioButtonSecondHalf.isChecked))
-                    )
-        ) {
+        if (isStandardId != null && SectionID != null) {
 
 //            binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_green)
             binding.btnAbsent.setBackgroundResource(R.drawable.rect_shadow_red)

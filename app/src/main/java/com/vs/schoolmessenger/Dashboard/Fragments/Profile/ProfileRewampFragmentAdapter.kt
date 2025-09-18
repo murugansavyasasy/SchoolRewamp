@@ -23,6 +23,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileField
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.Listener.DocumentClickListener
@@ -130,12 +131,31 @@ class ProfileRewampFragmentAdapter(
                     imagelabel.text = field.title
                     val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
                     recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
-                    val urls = field.options ?: emptyList()
-                    recyclerView.adapter = DocumentImageAdapter(urls)
+
+                    val files = (field.options ?: emptyList()).map { url ->
+                        val fileName = url.substringAfterLast("/")
+                        val extension = fileName.substringAfterLast(".", "").uppercase()
+                        val type = when (extension) {
+                            "JPG", "JPEG", "PNG", "GIF" -> "IMG"
+                            "PDF" -> "PDF"
+                            "DOC", "DOCX" -> "DOC"
+                            "XLS", "XLSX" -> "XLS"
+                            "MP4", "AVI", "MKV" -> "VID"
+                            "MP3", "WAV" -> "AUD"
+                            else -> extension.ifEmpty { "FILE" }
+                        }
+                        CommonFileData(type = type, path = url)
+                    }
+                    recyclerView.adapter = DocumentImageAdapter(
+                        context = itemView.context,
+                        files = files,
+                        isSubjectName = field.title ?: ""
+                    )
 
                     if (field.isRcyImagesAttached) {
                         attachRcyImagesBelowField()
                     }
+
                     addlabel.isVisible = field.is_editable
                     addlabel.setOnClickListener {
                         listener.onDocumentClicked(field, position)
@@ -148,12 +168,21 @@ class ProfileRewampFragmentAdapter(
                     imagelabel.text = field.title
                     val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
                     recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
+
+
                     val urls = field.options ?: emptyList()
-                    recyclerView.adapter = DocumentImageAdapter(urls)
+                    val files = mapUrlsToCommonFileData(urls)
+
+                    recyclerView.adapter = DocumentImageAdapter(
+                        context = itemView.context,
+                        files = files,
+                        isSubjectName = field.title ?: ""
+                    )
 
                     if (field.isRcyImagesAttached) {
                         attachRcyImagesBelowField()
                     }
+
                     addlabel.isVisible = field.is_editable
                     addlabel.setOnClickListener {
                         listener.onDocumentClicked(field, position)
@@ -161,6 +190,7 @@ class ProfileRewampFragmentAdapter(
                         attachRcyImagesBelowField()
                     }
                 }
+
 
                 Constant.address -> {
                     remarkslayout.visibility = View.VISIBLE
@@ -247,6 +277,24 @@ class ProfileRewampFragmentAdapter(
                 }
             }
         }
+
+        fun mapUrlsToCommonFileData(urls: List<String>): List<CommonFileData> {
+            return urls.map { url ->
+                val fileName = url.substringAfterLast("/")
+                val extension = fileName.substringAfterLast(".", "").uppercase()
+                val type = when (extension) {
+                    "JPG", "JPEG", "PNG", "GIF" -> "IMAGE"
+                    "PDF" -> "PDF"
+                    "DOC", "DOCX" -> "DOC"
+                    "XLS", "XLSX" -> "XLS"
+                    "MP4", "AVI", "MKV" -> "VIDEO"
+                    "MP3", "WAV" -> "AUDIO"
+                    else -> extension.ifEmpty { "FILE" }
+                }
+                CommonFileData(type = type, path = url)
+            }
+        }
+
 
         private fun attachRcyImagesBelowField() {
             rcyImages?.let { rv ->

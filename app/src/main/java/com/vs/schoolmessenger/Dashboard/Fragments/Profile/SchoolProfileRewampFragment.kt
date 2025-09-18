@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Profile.Listener.DocumentClick
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileRewampFragmentAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ProfileFragmentBinding
 import kotlin.collections.iterator
@@ -47,6 +48,7 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
         appViewModel.isSchoolprofilelist?.observe(viewLifecycleOwner) { response ->
+            Constant.hideLoading(requireActivity())
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val items = mutableListOf<ProfileItem>()
 
@@ -99,6 +101,7 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
 
     private fun fetchProfileData() {
+        Constant.showLoading(requireActivity())
         appViewModel!!.isSchoolprofilelist(isAccessToken!!)
     }
 

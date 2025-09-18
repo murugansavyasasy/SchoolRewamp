@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/zero">
+
+    <LinearLayout
+        android:background="@drawable/bg_white_curve_radius"
+        android:id="@+id/lnrCaledar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:background="@drawable/gray_bg_radius"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/PrimaryColor"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/fifteen">
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/prevMonthButton"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_marginStart="@dimen/eight"
+                android:src="@drawable/left_arrow"
+                android:tint="@color/white"
+                android:contentDescription="Previous Month" />
+
+
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/prevMonthButton"
+                android:id="@+id/currentMonthText"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="January 2024"
+                android:layout_toStartOf="@+id/nextMonthButton"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sixteen_sp"
+                />
+
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/nextMonthButton"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/eight"
+                android:tint="@color/white"
+                android:src="@drawable/right_arrow"
+                android:contentDescription="Next Month" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Sun"
+                android:textColor="@color/red"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/mon"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:text="@string/tue"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/wed"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/thu"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/fri"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/sat"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+        </LinearLayout>`
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dateRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_below="@+id/lnrCaledar"
+        android:id="@+id/holidaylabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twele"
+        android:layout_marginStart="@dimen/five"
+        android:visibility="gone"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/fourteen_sp"
+        style="@style/CustomTextStylePoppinsBold"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/ten"
+        android:id="@+id/holidayRecyclerView"
+        android:layout_below="@+id/holidaylabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+</RelativeLayout>
+
+

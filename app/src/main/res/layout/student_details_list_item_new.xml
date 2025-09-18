@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:shadowColor="@color/black"
     android:shadowDx="0"
-    android:layout_marginStart="@dimen/thirty"
+    android:layout_marginStart="@dimen/twenty"
     android:shadowDy="30"
     android:layout_marginTop="@dimen/thirty"
     android:layout_marginBottom="@dimen/twenty"
-    android:layout_marginEnd="@dimen/thirty"
+    android:layout_marginEnd="@dimen/twenty"
     android:shadowRadius="100"
     app:cardCornerRadius="@dimen/ten"
     android:layout_height="wrap_content"
@@ -25,16 +25,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
-            <LinearLayout
-                android:weightSum="1"
+            <RelativeLayout
                 android:id="@+id/rlaSchoolName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/light_primary_colour"
                 >
                 <ImageView
-                    android:layout_gravity="center"
-                    android:layout_weight="0.01"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/white_circle_with_stoke_bg"
                     android:id="@+id/imgSchool"
                     android:layout_width="@dimen/fourty"
@@ -49,16 +48,18 @@
                 </ImageView>
 
                 <RelativeLayout
-                    android:layout_gravity="center"
-
-                    android:layout_weight="0.7"
-                    android:layout_width="0dp"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/sampleicon"
+                    android:layout_toEndOf="@+id/imgSchool"
+                    android:id="@+id/rlaSchoolDetails"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     >
 
                     <TextView
                         android:id="@+id/lblSchoolName"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/five"
                         android:text=""
@@ -72,13 +73,13 @@
 
                     <TextView
                         android:id="@+id/lblSchoolRegionalName"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/five"
                         android:layout_below="@+id/lblSchoolName"
                         android:gravity="end"
                         android:visibility="gone"
-                        android:text=""
+                        android:text="iascisacscanniascnioscnia"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp">
@@ -87,7 +88,7 @@
 
                     <TextView
                         android:id="@+id/lblSchoolPlace"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblSchoolRegionalName"
                         android:layout_marginEnd="@dimen/five"
@@ -99,16 +100,17 @@
 
                 </RelativeLayout>
                 <TextView
-                    android:layout_weight="0.29"
-                    android:layout_width="0dp"
+                    android:id="@+id/sampleicon"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="@dimen/seventy_five"
                     android:paddingBottom="@dimen/ten"
                     android:background="@drawable/curve_bottom_top_radius"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/thirty">
 
                 </TextView>
 
 
-            </LinearLayout>
+            </RelativeLayout>
             <LinearLayout
                 android:layout_below="@+id/rlaSchoolName"
                 android:layout_width="match_parent"
@@ -131,7 +133,7 @@
                         android:layout_height="@dimen/ninety"
                         android:scaleType="centerCrop"
                         android:layout_gravity="center"
-                        android:src="@drawable/default_profile"
+                        android:src="@drawable/default_profile_fill_icon"
                         app:strokeColor="@color/violet"
                         app:strokeWidth="1dp"
                         app:shapeAppearanceOverlay="@style/RoundedRectangle">
@@ -226,7 +228,7 @@
         </RelativeLayout>
         <TextView
             android:layout_alignBottom="@+id/overallCard"
-            android:layout_width="@dimen/hundred"
+            android:layout_width="@dimen/seventy_five"
             android:background="@drawable/right_bottom_corner_curve_radius"
             android:layout_height="@dimen/thirty">
 
