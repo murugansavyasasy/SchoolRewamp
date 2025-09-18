@@ -25,13 +25,10 @@ import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
 class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener,
     AbsenteesClickListener,
     AbsenteesDetailClickListener {
-
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
 
-    private lateinit var dateadapter: AbsenteesReportAdapter
-    private lateinit var classadapter: AbsenteesReportDetailAdapter
 
     override fun getViewBinding(): AbsenteesReportBinding {
         return AbsenteesReportBinding.inflate(layoutInflater)
@@ -50,9 +47,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
-
-        binding.rlaabsenteesreport.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         fetchAbsenteeData()
 
@@ -80,34 +74,13 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     private fun showErrorUI(message: String) {
-        binding.nomessage.visibility = View.VISIBLE
-        binding.txtNoData.text = message
-        binding.txtNoData.visibility = View.VISIBLE
-        binding.rlaabsenteesreport.visibility = View.GONE
+
         binding.rlaabsenteesreport2.visibility = View.GONE
     }
 
+
     private fun isLoadDailyCollectionData(data: List<AbsenteeData>?) {
-        if (data.isNullOrEmpty()) {
-            showErrorUI(getString(R.string.no_absentee_data_available))
-            return
-        }
 
-        binding.nomessage.visibility = View.GONE
-        binding.txtNoData.visibility = View.GONE
-        binding.rlaabsenteesreport.visibility = View.VISIBLE
-        binding.rlaabsenteesreport2.visibility = View.VISIBLE
-
-        dateadapter = AbsenteesReportAdapter(data, this, this, false)
-        binding.rlaabsenteesreport.adapter = dateadapter
-
-
-        dateadapter.setSelectedPosition(0)
-
-
-        onDateSelected(data[0])
-
-        Log.d("AbsenteesReport", "Class-wise size: ${data[0].class_wise.size}")
     }
 
 
@@ -121,9 +94,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
 
     override fun onDateSelected(data: AbsenteeData) {
-        classadapter = AbsenteesReportDetailAdapter(data.class_wise, this, this, false, data.date)
-        binding.rlaabsenteesreport2.layoutManager = LinearLayoutManager(this)
-        binding.rlaabsenteesreport2.adapter = classadapter
+
+
     }
 
     override fun onItemClick(
@@ -134,6 +106,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     override fun onClassSelected(data: ClassWise) {
-        Toast.makeText(this, "${getString(R.string.class_clicked)} ${data.class_name}", Toast.LENGTH_SHORT).show()
+
     }
 }

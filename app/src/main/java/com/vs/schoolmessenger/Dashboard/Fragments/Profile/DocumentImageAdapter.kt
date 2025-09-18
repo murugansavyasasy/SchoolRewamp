@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.Fragments.Profile
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +10,15 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 
 class DocumentImageAdapter(
-    private val urls: List<String>
+    private val context: Context,
+    private val files: List<CommonFileData>,
+    private val isSubjectName: String
 ) : RecyclerView.Adapter<DocumentImageAdapter.FileViewHolder>() {
 
     inner class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -22,22 +29,18 @@ class DocumentImageAdapter(
         val childrelative_layout: RelativeLayout = itemView.findViewById(R.id.childrelative_layout)
     }
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fileview_item, parent, false)
         return FileViewHolder(view)
-
     }
 
     override fun onBindViewHolder(holder: FileViewHolder, position: Int) {
         holder.relativelayout_header.visibility = View.GONE
         holder.childrelative_layout.visibility = View.VISIBLE
-        val url = urls[position]
 
-
-        val fileName = url.substringAfterLast("/")
+        val file = files[position]
+        val fileName = file.path.substringAfterLast("/")
         holder.txtFileName.text = fileName
 
 
@@ -53,7 +56,6 @@ class DocumentImageAdapter(
         }
 
 
-
         val typeText = when (holder.imgFileType.text) {
             "IMG" -> "IMAGE"
             "PDF" -> "PDF Document"
@@ -64,7 +66,19 @@ class DocumentImageAdapter(
             else -> "File"
         }
         holder.txtFileSize.text = "Unknown Size, $typeText"
+
+        val clickListener = View.OnClickListener {
+            Constant.commonFileList = files.toMutableList()
+            Constant.selectedFileIndex = position
+
+            val intent = Intent(context, FilesViewActivity::class.java)
+            intent.putExtra(Constant.subjectName, isSubjectName)
+            context.startActivity(intent)
+        }
+
+        holder.relativelayout_header.setOnClickListener(clickListener)
+        holder.childrelative_layout.setOnClickListener(clickListener)
     }
 
-    override fun getItemCount(): Int = urls.size
+    override fun getItemCount(): Int = files.size
 }

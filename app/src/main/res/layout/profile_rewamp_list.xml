@@ -151,6 +151,7 @@
                     android:paddingHorizontal="@dimen/ten"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:text="Male" />
 
                 <RadioButton
@@ -158,6 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingVertical="@dimen/five"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:paddingHorizontal="@dimen/ten"
                     android:background="@drawable/field_background"
                     android:textSize="@dimen/thirteen_sp"
@@ -168,6 +170,7 @@
                     android:id="@+id/radioOthers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:background="@drawable/field_background"
                     android:paddingVertical="@dimen/five"
                     android:paddingHorizontal="@dimen/ten"
@@ -211,13 +214,13 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:clickable="true"
-                    android:drawableEnd="@drawable/down_arrow"
                     android:focusable="false"
                     android:inputType="none"
-                    android:padding="12dp"
+                    android:padding="0dp"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:popupBackground="@android:color/white"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -265,7 +268,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ten"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -3,6 +3,11 @@ package com.vs.schoolmessenger.Parent.LSRW
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -26,10 +31,30 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
-        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.txtVideoMenu.setText("")
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtVideoMenu.windowToken, 0)
+            } else {
+                binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                binding.toolbarLayout.txtVideoMenu.setText("")
+                binding.toolbarLayout.txtVideoMenu.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.toolbarLayout.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
         binding.toolbarLayout.lblStudentName.text = childDetails?.name ?: ""
@@ -58,13 +83,13 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         appViewModel.islsrwSkilllist?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyrecyclerview.visibility = View.VISIBLE
-                binding.lytNoDataFound.visibility = View.GONE
+                binding.rlNoDataContainer.visibility = View.GONE
                 allItems = response.data
                 adapter.updateList(allItems)
             } else {
                 binding.rcyrecyclerview.visibility = View.GONE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.lytNoDataFound.visibility = View.VISIBLE
+                binding.rlNoDataContainer.visibility = View.VISIBLE
                 binding.noDataFound.text = getString(R.string.no_data_found)
             }
         }
@@ -80,7 +105,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
     private fun filterList(query: String) {
         if (query.isEmpty()) {
             adapter.updateList(allItems)
-            binding.lytNoDataFound.visibility = if (allItems.isEmpty()) View.VISIBLE else View.GONE
+            binding.rlNoDataContainer.visibility = if (allItems.isEmpty()) View.VISIBLE else View.GONE
             return
         }
 
@@ -103,11 +128,11 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         if (filteredList.isNotEmpty()) {
             adapter.updateList(filteredList)
             binding.rcyrecyclerview.visibility = View.VISIBLE
-            binding.lytNoDataFound.visibility = View.GONE
+            binding.rlNoDataContainer.visibility = View.GONE
         } else {
             adapter.updateList(emptyList())
             binding.rcyrecyclerview.visibility = View.GONE
-            binding.lytNoDataFound.visibility = View.VISIBLE
+            binding.rlNoDataContainer.visibility = View.VISIBLE
         }
     }
 
@@ -115,6 +140,10 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
+
+
         }
+
+
     }
 }

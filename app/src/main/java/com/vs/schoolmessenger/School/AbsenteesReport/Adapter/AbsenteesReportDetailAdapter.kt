@@ -25,8 +25,6 @@ class AbsenteesReportDetailAdapter(
     private val selectedDate: String,
     private var class_name: String? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private var selectedPosition = 0
@@ -64,10 +62,9 @@ class AbsenteesReportDetailAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val grade_view: TextView = itemView.findViewById(R.id.grade_view)
-        private val date_view: TextView = itemView.findViewById(R.id.date_view)
-        private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
-        private val badge_count: TextView = itemView.findViewById(R.id.badge_count)
+        private val classvalue: TextView = itemView.findViewById(R.id.classvalue)
+        private val sectionvalue: TextView = itemView.findViewById(R.id.sectionvalue)
+        private val absentvalue: TextView = itemView.findViewById(R.id.absentvalue)
 
         fun bind(
             data: ClassWise,
@@ -76,28 +73,10 @@ class AbsenteesReportDetailAdapter(
             adapter: AbsenteesReportDetailAdapter,
             selectedDate: String
         ) {
-            grade_view.text = data.class_name
-            badge_count.text = data.total_absentees
-            date_view.text = Constant.convertToReadableDate(selectedDate)
+            classvalue.text = "Class : "+data.class_name
+            sectionvalue.text = data.section_wise[0].section_name
+            absentvalue.text = data.total_absentees + " / " + data.student_counts
 
-
-            relative_layout.setOnClickListener {
-                val intent = Intent(context, AbsenteesStudents::class.java).apply {
-                }
-                isSaveAbsenteesReportDetails(data, selectedDate)
-                context.startActivity(intent)
-            }
-        }
-
-        private fun isSaveAbsenteesReportDetails(data: ClassWise, selectedDate: String) {
-            val saveAbsenteesReportData = ClassWise(
-                class_id = data.class_id,
-                class_name = data.class_name,
-                section_wise = data.section_wise,
-                total_absentees = data.total_absentees,
-                date = selectedDate
-            )
-            Constant.isAbsenteesReportDataSending = saveAbsenteesReportData
         }
 
 
