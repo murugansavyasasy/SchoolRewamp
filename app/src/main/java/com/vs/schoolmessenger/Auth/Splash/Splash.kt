@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,6 +40,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.Utils.AppDataCleaner
 import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
@@ -88,8 +91,20 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
 
-        appUpdateManager = AppUpdateManagerFactory.create(this)
+        // Run cleanup
+//        val cleaned = AppDataCleaner.clearOldDataIfNeeded(this)
+//        if (cleaned) {
+//            Log.d("Cleanup","cleaned")
+//            // Optional: show a loading indicator since cleanup might take time
+//            Handler(Looper.getMainLooper()).postDelayed({
+////                goToNextScreen()
+//            }, 1500) // small delay after cleanup
+//        }
+//        else {
+////            goToNextScreen()
+//        }
 
+        appUpdateManager = AppUpdateManagerFactory.create(this)
         val appSignatureHelper = AppSignatureHelper(this)
         val appSignatures = appSignatureHelper.getAppSignatures()
 
