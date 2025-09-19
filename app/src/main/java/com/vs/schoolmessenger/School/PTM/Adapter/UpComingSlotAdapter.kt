@@ -15,8 +15,6 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotDetail
 import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotClickListener
-import java.text.SimpleDateFormat
-import java.util.*
 
 class UpComingSlotAdapter(
     private var list: List<SlotDetail>?,
@@ -35,7 +33,7 @@ class UpComingSlotAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_card, parent, false)
+                .inflate(R.layout.shimmer_view_big_list, parent, false)
             ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
