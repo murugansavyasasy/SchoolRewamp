@@ -80,11 +80,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             val query = editable.toString()
             if (::isMeetingHistoryAdapter.isInitialized) {
                 isMeetingHistoryAdapter.filter.filter(query)
-
             }
         }
-
-
 
         binding.imgSearch.setOnClickListener {
             if (binding.rytsearch.visibility == View.VISIBLE) {
@@ -216,7 +213,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             } else {
                 binding.lblBookSlots.visibility = View.GONE
             }
-
             println("Selected Slot IDs: $selectedSlotIds")
         }
 
@@ -379,11 +375,10 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         }
     }
 
-
     fun generateDates(daysCount: Int): List<Pair<String, Int>> {
         val list = mutableListOf<Pair<String, Int>>()
-        val calendar = Calendar.getInstance() // Start from today
-        val monthFormat = SimpleDateFormat("MMM", Locale.getDefault()) // e.g., Sep
+        val calendar = Calendar.getInstance()
+        val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
 
         repeat(daysCount) {
             val month = monthFormat.format(calendar.time)
@@ -395,15 +390,13 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         return list
     }
 
-    override fun onCancelClick(
-        meeting: MeetingItem,
-        position: Int
-    ) {
+    override fun onCancelClick(meeting: MeetingItem, position: Int, reason: String) {
         lastCancelledPosition = position
-        val jsonObject= JsonObject()
-        jsonObject.addProperty("slot_id",meeting.id)
-        jsonObject.addProperty("cancelled_reason","")
-        Log.d("jsonObject",jsonObject.toString())
-        appViewModel!!.isSlotCancelByStudent(isAccessToken!!,jsonObject)
+        val jsonObject = JsonObject().apply {
+            addProperty("slot_id", meeting.id)
+            addProperty("cancelled_reason", reason)
+        }
+        Log.d("CancelSlotRequest", jsonObject.toString())
+        appViewModel!!.isSlotCancelByStudent(isAccessToken!!, jsonObject)
     }
 }

@@ -62,8 +62,14 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             if (response != null && response.status) {
                 isSlotCategory = response.data
                 isLoadData(isSlotCategory)
+            } else {
+                binding.tvNoData.visibility = View.VISIBLE
+                binding.rcyToday.adapter = null
+                binding.rcyUpcoming.adapter = null
+                binding.rcyComplete.adapter = null
             }
         }
+
 
         appViewModel.isPtmSlotCancelClose?.observe(this) { result ->
             Constant.hideLoading(this)
@@ -124,10 +130,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         isLoadDataAdapter(upcomingList, binding.rcyUpcoming)
         isLoadDataAdapter(completedList, binding.rcyComplete)
 
-        binding.tvNoData.visibility =
-            if (todayList.isEmpty() && upcomingList.isEmpty() && completedList.isEmpty())
-                View.VISIBLE else View.GONE
-
         binding.lblToday.visibility = if (todayList.isNotEmpty()) View.VISIBLE else View.GONE
         binding.rcyToday.visibility = binding.lblToday.visibility
 
@@ -136,7 +138,19 @@ class PTM : BaseActivity<PtmStaffBinding>(),
 
         binding.lblComplete.visibility = if (completedList.isNotEmpty()) View.VISIBLE else View.GONE
         binding.rcyComplete.visibility = binding.lblComplete.visibility
+
+        binding.tvNoData.visibility =
+            if (todayList.isEmpty() && upcomingList.isEmpty() && completedList.isEmpty())
+                View.VISIBLE else View.GONE
+
+        binding.lblSlotCount.visibility = View.VISIBLE
+        binding.lblSlotCount.text = if (todayList.isNotEmpty()) {
+            "You have ${todayList.size} meeting's today"
+        } else {
+            "No meeting's today"
+        }
     }
+
 
     private fun isLoadDataAdapter(list: ArrayList<SlotDetail>, recyclerView: RecyclerView) {
         val adapter = UpComingSlotAdapter(list, this, this, Constant.isShimmerViewDisable)
@@ -192,13 +206,19 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     }
 
     private fun loadData() {
-        val shimmerAdapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.lblToday.visibility = View.GONE
+        binding.lblUpComing.visibility = View.GONE
+        binding.lblComplete.visibility = View.GONE
+        binding.tvNoData.visibility = View.GONE
+
         binding.rcyToday.layoutManager = LinearLayoutManager(this)
-        binding.rcyToday.adapter = shimmerAdapter
+        binding.rcyToday.adapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
+
         binding.rcyUpcoming.layoutManager = LinearLayoutManager(this)
-        binding.rcyUpcoming.adapter = shimmerAdapter
+        binding.rcyUpcoming.adapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
+
         binding.rcyComplete.layoutManager = LinearLayoutManager(this)
-        binding.rcyComplete.adapter = shimmerAdapter
+        binding.rcyComplete.adapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
 
         appViewModel.isSlotForStaff(isAccessToken!!, "ALL")
     }

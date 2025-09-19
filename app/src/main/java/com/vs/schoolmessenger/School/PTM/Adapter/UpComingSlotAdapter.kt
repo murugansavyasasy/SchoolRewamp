@@ -10,104 +10,129 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotDetail
 import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotClickListener
+import java.text.SimpleDateFormat
+import java.util.*
 
 class UpComingSlotAdapter(
-    private val list: List<SlotDetail>?,
+    private var list: List<SlotDetail>?,
     private val context: Context,
     private val listener: StaffSlotClickListener,
     private val isShimmer: Boolean
-) : RecyclerView.Adapter<UpComingSlotAdapter.SlotViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val TYPE_SHIMMER = 0
+    private val TYPE_DATA = 1
+
+    override fun getItemViewType(position: Int): Int {
+        return if (isShimmer) TYPE_SHIMMER else TYPE_DATA
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == TYPE_SHIMMER) {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.shimmer_view_card, parent, false)
+            ShimmerViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.slots_item_staff_side, parent, false)
+            SlotViewHolder(view)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return if (isShimmer) 5 else list?.size ?: 0
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
+        } else if (holder is SlotViewHolder) {
+            val data = list?.get(position) ?: return
+            holder.bind(data)
+        }
+    }
 
     inner class SlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val lblDate: TextView = itemView.findViewById(R.id.lblDate)
-        val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
-        val lblMode: TextView = itemView.findViewById(R.id.lblMode)
-        val lblTime: TextView = itemView.findViewById(R.id.lblTime)
-        val img1: ShapeableImageView = itemView.findViewById(R.id.img1)
-        val img2: ShapeableImageView = itemView.findViewById(R.id.img2)
-        val img3: ShapeableImageView = itemView.findViewById(R.id.img3)
-        val lblCount: TextView = itemView.findViewById(R.id.lblCount)
-        val rltJoinNow: RelativeLayout = itemView.findViewById(R.id.rltJoinNow)
-        val rytSlots: RelativeLayout = itemView.findViewById(R.id.rytSlots)
-        val tvNoProfiles: TextView = itemView.findViewById(R.id.tvNoProfiles)
+        private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
+        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
+        private val lblMode: TextView = itemView.findViewById(R.id.lblMode)
+        private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
+        private val img1: ShapeableImageView = itemView.findViewById(R.id.img1)
+        private val img2: ShapeableImageView = itemView.findViewById(R.id.img2)
+        private val img3: ShapeableImageView = itemView.findViewById(R.id.img3)
+        private val lblCount: TextView = itemView.findViewById(R.id.lblCount)
+        private val rltJoinNow: RelativeLayout = itemView.findViewById(R.id.rltJoinNow)
+        private val tvNoProfiles: TextView = itemView.findViewById(R.id.tvNoProfiles)
+        private val imgDot: View = itemView.findViewById(R.id.imgDot)
 
-        val imgDot: View = itemView.findViewById(R.id.imgDot)
-    }
+        fun bind(data: SlotDetail) {
+            lblDate.text = formatDate(data.date)
+            lblTitle.text = data.event_name
+            lblMode.text = "Mode - ${data.event_mode}"
+            lblTime.text = "${data.start_time} - ${data.end_time}"
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlotViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.slots_item_staff_side, parent, false)
-        return SlotViewHolder(view)
-    }
+            val profiles = data.profiles.map { it.toString() }
+            if (profiles.isEmpty()) {
+                img1.visibility = View.GONE
+                img2.visibility = View.GONE
+                img3.visibility = View.GONE
+                lblCount.visibility = View.GONE
+                tvNoProfiles.visibility = View.VISIBLE
+            } else {
+                tvNoProfiles.visibility = View.GONE
+                img1.visibility = View.GONE
+                img2.visibility = View.GONE
+                img3.visibility = View.GONE
+                lblCount.visibility = View.GONE
 
-    override fun getItemCount(): Int = list?.size ?: 0
-
-    override fun onBindViewHolder(holder: SlotViewHolder, position: Int) {
-        val data = list!![position]
-        holder.lblDate.text = formatDate(data.date)
-
-        holder.lblTitle.text = data.event_name
-        holder.lblMode.text = "Mode - ${data.event_mode}"
-        holder.lblTime.text = "${data.start_time} - ${data.end_time}"
-
-        holder.imgDot.setOnClickListener {
-            listener.onSlotCancelReOpenClick(data, it)
-        }
-
-        val profiles = data.profiles.map { it.toString() }
-        if (profiles.isEmpty()) {
-            holder.img1.visibility = View.GONE
-            holder.img2.visibility = View.GONE
-            holder.img3.visibility = View.GONE
-            holder.lblCount.visibility = View.GONE
-            holder.tvNoProfiles.visibility = View.VISIBLE
-        } else {
-            holder.tvNoProfiles.visibility = View.GONE
-            holder.img1.visibility = View.GONE
-            holder.img2.visibility = View.GONE
-            holder.img3.visibility = View.GONE
-            holder.lblCount.visibility = View.GONE
-
-            for (i in profiles.indices.take(3)) {
-                val imageUrl = profiles[i]
-                val imageView = when(i) {
-                    0 -> holder.img1
-                    1 -> holder.img2
-                    2 -> holder.img3
-                    else -> holder.img1
+                for (i in profiles.indices.take(3)) {
+                    val imageView = when (i) {
+                        0 -> img1
+                        1 -> img2
+                        2 -> img3
+                        else -> img1
+                    }
+                    val imageUrl = profiles[i]
+                    if (!imageUrl.isNullOrBlank() && imageUrl != "null") {
+                        Glide.with(context)
+                            .load(imageUrl)
+                            .placeholder(R.drawable.user_sample)
+                            .error(R.drawable.user_sample)
+                            .into(imageView)
+                    } else {
+                        imageView.setImageResource(R.drawable.user_sample)
+                    }
+                    imageView.visibility = View.VISIBLE
                 }
 
-                if (imageUrl.isNotBlank() && imageUrl != "null") {
-                    Glide.with(context)
-                        .load(imageUrl)
-                        .placeholder(R.drawable.user_sample)
-                        .error(R.drawable.user_sample)
-                        .into(imageView)
-                } else {
-                    imageView.setImageResource(R.drawable.user_sample)
+                if (profiles.size > 3) {
+                    lblCount.visibility = View.VISIBLE
+                    lblCount.text = "+${profiles.size - 3}"
                 }
-
-                imageView.visibility = View.VISIBLE
             }
 
-            if (profiles.size > 3) {
-                holder.lblCount.visibility = View.VISIBLE
-                holder.lblCount.text = "+${profiles.size - 3}"
+            rltJoinNow.setOnClickListener {
+                val url = data.join_url ?: "https://www.google.com"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                context.startActivity(intent)
             }
-        }
 
-        holder.rltJoinNow.setOnClickListener {
-            val url = data.join_url ?: "https://www.google.com"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            context.startActivity(intent)
-        }
+            imgDot.setOnClickListener { listener.onSlotCancelReOpenClick(data, it) }
 
-        holder.itemView.setOnClickListener {
-            listener.onClickListener(data)
+            itemView.setOnClickListener { listener.onClickListener(data) }
+        }
+    }
+
+    inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
+
+        fun startShimmer() {
+            shimmerLayout.startShimmer()
         }
     }
 

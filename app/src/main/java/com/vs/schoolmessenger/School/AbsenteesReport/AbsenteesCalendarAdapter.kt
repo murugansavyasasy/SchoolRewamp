@@ -22,9 +22,18 @@ class AbsenteesCalendarAdapter(
     private var selectedPosition: Int = -1
 
     init {
-        val today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toString()
-        selectedPosition = daysInMonth.indexOfFirst { it.first == today && it.second != -1 }
+        val todayCal = Calendar.getInstance()
+        val todayDay = todayCal.get(Calendar.DAY_OF_MONTH).toString()
+        val todayMonth = todayCal.get(Calendar.MONTH)
+        val todayYear = todayCal.get(Calendar.YEAR)
+
+        if (month == todayMonth && year == todayYear) {
+            selectedPosition = daysInMonth.indexOfFirst { it.first == todayDay && it.second != -1 }
+        } else {
+            selectedPosition = -1
+        }
     }
+
 
     override fun getCount(): Int = daysInMonth.size
     override fun getItem(position: Int): Any = daysInMonth[position]

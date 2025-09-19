@@ -111,7 +111,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.rvReceipts.visibility = View.VISIBLE
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
-                Toast.makeText(this, "No invoice found", Toast.LENGTH_SHORT).show()
+
                 mAdapter.setData(listOf())
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE

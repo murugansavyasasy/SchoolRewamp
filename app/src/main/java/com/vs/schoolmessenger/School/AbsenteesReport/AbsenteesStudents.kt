@@ -10,9 +10,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
-import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentDetailClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.Student
 import com.vs.schoolmessenger.Utils.Constant
@@ -20,13 +18,12 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesStudentlistBinding
 
 class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
-    View.OnClickListener, AbsenteesStudentClickListener, AbsenteesStudentDetailClickListener {
+    View.OnClickListener, AbsenteesStudentDetailClickListener {
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
 
-    private lateinit var absenteesstudentdateadapter: AbsenteesStudentListAdapter
     private lateinit var absenteesstudentdatedetailadapter: AbsenteesStudentListDetailAdapter
 
     override fun getViewBinding(): AbsenteesStudentlistBinding {
@@ -112,15 +109,6 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
         binding.studendreport.visibility = View.VISIBLE
         binding.studentlistreport.visibility = View.VISIBLE
 
-        if (!::absenteesstudentdateadapter.isInitialized) {
-            absenteesstudentdateadapter =
-                AbsenteesStudentListAdapter(singleItemList, this, this, false)
-            binding.studendreport.adapter = absenteesstudentdateadapter
-        } else {
-            absenteesstudentdateadapter.updateData(singleItemList)
-        }
-
-        absenteesstudentdateadapter.setSelectedPosition(0)
 
         // Update footer adapter with full list
         absenteesstudentdatedetailadapter.updateData(data)
@@ -157,9 +145,6 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
         }
     }
 
-    override fun onHeaderItemClicked(position: Int, student: Student) {
-        Log.d("HeaderClick", "Clicked student at position $position: ${student.student_name}")
-    }
 
     override fun onFooterItemClicked(position: Int, student: Student) {
         Log.d("FooterClick", "Clicked student at position $position: ${student.student_name}")
