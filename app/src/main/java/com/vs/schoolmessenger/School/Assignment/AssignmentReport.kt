@@ -297,11 +297,11 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-        if (isEventUpdate) {
-            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_assignment)
-        } else {
+//        if (isEventUpdate) {
+//            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_assignment)
+//        } else {
             alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-        }
+      //  }
 
         lblSelectTarget.visibility = View.GONE
 

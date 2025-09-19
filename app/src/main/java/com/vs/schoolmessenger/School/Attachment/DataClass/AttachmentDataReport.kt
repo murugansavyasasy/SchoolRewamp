@@ -1,6 +1,10 @@
 package com.vs.schoolmessenger.School.Attachment.DataClass
 
-data class AttachmentReportData(
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class AttachmentDataReport(
     val id: String,
     val title: String,
     val description: String,
@@ -14,4 +18,4 @@ data class AttachmentReportData(
     val can_edit: Boolean,
     val can_delete: Boolean,
     val file_path: List<AttachmentFilePath>
-)
+): Parcelable

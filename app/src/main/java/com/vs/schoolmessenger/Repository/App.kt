@@ -563,8 +563,8 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.isGetAds(isToken, isMenuId, activity)
     }
 
-    fun isGetGlobalVariables(isToken: String, activity: Activity) {
-        apiSchoolRepositories.isGetGlobalVariables(isToken, activity)
+    fun isGetGlobalVariables(jsonObject: JsonObject,isToken: String, activity: Activity) {
+        apiSchoolRepositories.isGetGlobalVariables(jsonObject,isToken, activity)
     }
 
     fun isGetStaffList(isToken: String, activity: Activity) {

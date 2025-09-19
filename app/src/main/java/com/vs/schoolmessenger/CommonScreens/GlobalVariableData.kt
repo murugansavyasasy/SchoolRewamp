@@ -1,7 +1,34 @@
 package com.vs.schoolmessenger.CommonScreens
 
 class GlobalVariableData(
-
+    val resend_otp_timer: String,
+    val image_size: String,
+    val pdf_size: String,
+    val file_content: String,
+    val video_size_limit: String,
+    val video_size_limit_alert: String,
+    val aws_access_key: String,
+    val aws_secrete_key: String,
+    val in_app_update: String,
+    val offers_link: String,
+    val alert_content: String,
+    val aws_master_bucket_name: String,
+    val aws_master_bucket_region: String,
+    val aws_trans_bucket_name: String,
+    val aws_trans_bucket_region: String,
+    val aws_trans_cognito_pool_id: String,
+    val aws_master_cognito_pool_id: String,
+    val version_alert_content: String,
+    val helpline_url: String,
+    val reports_link: String,
+    val profile_link: String,
+    val is_alert_available: String,
+    val ad_timer_interval: String,
     val new_version: String,
-    val new_updates: String
+    val new_updates: String,
+    val otp_dial_inbound: String,
+    val video_vimeo_token: String,
+    val ebooks_url: String,
+    val market_place_url: String,
+    val fees_url: String
 )

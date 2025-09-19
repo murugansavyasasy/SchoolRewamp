@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.Attachment
 
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -15,7 +14,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Attachment.AttachmentReportAdapter
-import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportData
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.School.Attachment.OnAttachmentReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -71,7 +70,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             } else false
         }
 
-
         appViewModel?.isAttachmentResponse?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.txtNoData.visibility = View.GONE
@@ -84,7 +82,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         isGetAttachment()
     }
 
-    fun isLoadData(data: List<AttachmentReportData>) {
+    fun isLoadData(data: List<AttachmentDataReport>) {
         mAttachmentReportAdapter = AttachmentReportAdapter(
             data,
             this,
@@ -146,13 +144,13 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
     override fun onItemClick(
-        isData: List<AttachmentReportData>,
+        isData: List<AttachmentDataReport>,
         view: View,
         isPosition: Int
     ) {
     }
 
-    override fun onReadStatusClick(isData: List<AttachmentReportData>, isPosition: Int) {
+    override fun onReadStatusClick(isData: List<AttachmentDataReport>, isPosition: Int) {
         val jsonObject = JsonObject().apply {
             addProperty(APIKeyNames.type, Constant.ATTACHMENT)
             addProperty(APIKeyNames.detail_id, isData[isPosition].id)
