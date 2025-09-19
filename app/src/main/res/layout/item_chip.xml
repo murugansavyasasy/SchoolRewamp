@@ -11,13 +11,13 @@
         android:background="@drawable/bg_chip"
         android:padding="@dimen/five"
         android:layout_margin="@dimen/four"
-        android:gravity="center">
+        >
 
         <ImageView
             android:id="@+id/imgIcon"
             android:paddingStart="@dimen/three"
-            android:layout_width="@dimen/twele"
-            android:layout_height="@dimen/twele"
+            android:layout_width="@dimen/eighteen"
+            android:layout_height="@dimen/eighteen"
             android:layout_marginEnd="@dimen/four"
             android:src="@drawable/search_icon" />
 

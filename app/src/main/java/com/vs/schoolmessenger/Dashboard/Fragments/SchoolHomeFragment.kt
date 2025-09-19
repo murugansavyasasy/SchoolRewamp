@@ -34,13 +34,16 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
-import com.vs.schoolmessenger.School.Assignment.Assignment
+import com.vs.schoolmessenger.School.Assignment.AssignmentReport
 import com.vs.schoolmessenger.School.Attachment.Attachment
+import com.vs.schoolmessenger.School.Attachment.AttachmentReport
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.Event.EventReport
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
-import com.vs.schoolmessenger.School.Homework.HomeWork
+import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
+import com.vs.schoolmessenger.School.Homework.HomeworkReport
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
@@ -49,6 +52,7 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.NoticeBoard.NoticeBoardReport
 
 import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
@@ -63,11 +67,8 @@ import com.vs.schoolmessenger.Utils.Constant.isSchoolContactDetails
 import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
 import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuCountDetails
 import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuDetails
-import com.vs.schoolmessenger.Utils.ScrollItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
-import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
 
 
@@ -351,12 +352,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_COMMUNICATION -> CommunicationSchool::class.java
             Constant.M_ASSIGNMENT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    Assignment::class.java
+                    AssignmentReport::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
-                        Assignment::class.java
+                        AssignmentReport::class.java
                     }
                 }
             }
@@ -364,18 +365,17 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_HOMEWORK -> {
 
                 if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    HomeWork::class.java
+                    HomeworkReport::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
-                        HomeWork::class.java
+                        HomeworkReport::class.java
                     }
                 }
             }
 
             Constant.M_QUIZ_EXAM -> {
-
                 if (userDetails!!.staff_role == Constant.isStaffRole) {
                     ExamQuiz::class.java
                 } else {
@@ -423,16 +423,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.M_NOTICEBOARD -> CreateNoticeBoard::class.java
+            Constant.M_NOTICEBOARD -> NoticeBoardReport::class.java
             Constant.M_SCHOOL_CLASS_EVENTS -> {
 
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    CreateEvent::class.java
+                    EventReport::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
-                        CreateEvent::class.java
+                        EventReport::class.java
                     }
                 }
             }
@@ -554,7 +554,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
             Constant.M_ATTACHMENTS -> {
-                Attachment::class.java
+                AttachmentReport::class.java
             }
 
             Constant.M_LEAVE_REQUEST -> {

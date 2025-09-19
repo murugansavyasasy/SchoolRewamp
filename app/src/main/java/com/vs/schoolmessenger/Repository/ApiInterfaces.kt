@@ -61,11 +61,9 @@ import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.LSRW.MySubmissionModel.ActivityResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotCountResponse
-import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SubjectResponse
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
@@ -188,8 +186,9 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject
     ): Call<DeviceToken?>?
 
-    @GET(APIMethods.isGlobalVariables)
+    @POST(APIMethods.isGlobalVariables)
     fun isGetGlobalVariable(
+        @Body jsonObject: JsonObject,
         @Header(APIKeyNames.Authorization) token: String  // Pass token as a header
     ): Call<GlobalVariableResponse?>
 
@@ -353,6 +352,13 @@ interface ApiInterfaces {
     fun isAssignmentSend(
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<HomeWorkSendResponse>?
+
+    @PUT(APIMethods.isAssignmentUpdate)
+    fun isAssignmentUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
+    ): Call<HomeWorkSendResponse>?
+
+
 
     @POST(APIMethods.isSendVoice)
     fun isSendVoice(

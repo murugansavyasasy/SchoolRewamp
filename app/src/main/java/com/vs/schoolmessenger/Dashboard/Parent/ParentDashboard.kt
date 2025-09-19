@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
@@ -16,6 +17,7 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFra
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ChildDashboardBinding
@@ -27,11 +29,13 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     }
 
     var authViewModel: Auth? = null
+    var appViewModel: App? = null
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
+        appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
@@ -66,6 +70,14 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
             true
         }
 
+        appViewModel!!.isGlobalVariables?.observe(this) { response ->
+            if (response != null) {
+                response.status
+                response.message
+
+            }
+        }
+
 
         accessChildView(
             binding,
@@ -91,13 +103,15 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                     val token = task.result
                     Log.d("FCM", "Token: $token")
                     isUpdateDeviceToken(token)
+                    isGlobalVariables(token)
                 }
             }
 
-        authViewModel!!.isDeviceToken?.observe(this) { response ->
+        appViewModel!!.isGlobalVariables?.observe(this) { response ->
             if (response != null) {
                 response.status
                 response.message
+                Constant.isGlobalVariableData=response.data[0]
             }
         }
     }
@@ -119,6 +133,14 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
+
+    private fun isGlobalVariables(token: String) {
+        val jsonObject = JsonObject()
+        val jsonArray = JsonArray()
+        jsonObject.add("key_names", jsonArray)
+        appViewModel!!.isGetGlobalVariables(jsonObject, token, this)
+    }
+
 
     fun openDrawer() {
         if (::drawerLayout.isInitialized) {

@@ -1,7 +1,10 @@
 package com.vs.schoolmessenger.School.NoticeBoard.Model
 
+import android.os.Parcelable
 import com.vs.schoolmessenger.Parent.Noticeboard.FilePath
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class NoticeStaffData(
     val id: String,
     val title: String,
@@ -16,4 +19,4 @@ data class NoticeStaffData(
     val can_delete: Boolean,
     val iframe: String,
     val file_path: List<FilePath>
-)
+) : Parcelable

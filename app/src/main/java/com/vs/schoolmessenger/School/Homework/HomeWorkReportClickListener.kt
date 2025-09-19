@@ -1,9 +1,9 @@
 package com.vs.schoolmessenger.School.Homework
 
 import android.view.View
-import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportData
 
 interface HomeWorkReportClickListener {
-    fun onClickListener(data: HomeWorkReport, anchorView: View, adapterPosition: Int)
+    fun onClickListener(data: HomeWorkReportData, anchorView: View, adapterPosition: Int)
 
 }

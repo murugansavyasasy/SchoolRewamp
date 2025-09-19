@@ -10,7 +10,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.databinding.HomeworkParentItemBinding
@@ -19,7 +19,7 @@ import java.util.Locale
 
 class HomeWorkReportAdapter(
     private var context: Context,
-    private var isHomeWorkData: List<HomeWorkReport>,
+    private var isHomeWorkData: List<HomeWorkReportData>,
     private val listener: HomeWorkReportClickListener,
     private var isLoading: Boolean,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -27,7 +27,7 @@ class HomeWorkReportAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var originalList: List<HomeWorkReport> = ArrayList(isHomeWorkData)
+    private var originalList: List<HomeWorkReportData> = ArrayList(isHomeWorkData)
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -56,7 +56,7 @@ class HomeWorkReportAdapter(
         return if (isLoading) 5 else isHomeWorkData.size
     }
 
-    fun updateList(newData: List<HomeWorkReport>) {
+    fun updateList(newData: List<HomeWorkReportData>) {
         isHomeWorkData = newData
         originalList = newData
         isLoading = false
@@ -92,7 +92,7 @@ class HomeWorkReportAdapter(
     class DataViewHolder(private val binding: HomeworkParentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: HomeWorkReport, listener: HomeWorkReportClickListener, context: Context) {
+        fun bind(item: HomeWorkReportData, listener: HomeWorkReportClickListener, context: Context) {
             binding.lblSubject.text = item.subject_name
             binding.lblTitle.text = item.title
             binding.redDot.visibility = View.GONE

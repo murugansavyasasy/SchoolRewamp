@@ -289,7 +289,7 @@ dependencies {
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     implementation ("com.google.android.play:review-ktx:2.0.1")
 
-
+    implementation("com.kizitonwose.calendar:view:2.5.0")
 
 
 //    // Smallest version (no audio/video codecs)

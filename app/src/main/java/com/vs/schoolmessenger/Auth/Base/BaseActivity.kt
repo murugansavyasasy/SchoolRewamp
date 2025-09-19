@@ -32,6 +32,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
@@ -78,7 +79,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
 
-        protected open fun setupToolbarBlueWhite() {
+    protected open fun setupToolbarBlueWhite() {
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -125,20 +126,37 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-    fun isToolBarPrimaryTheme1(
-        mainViewId: Int,
-        statusBarBgView: View
-    ) {
+    fun isToolBarPrimaryTheme1(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
+
         val mainView = findViewById<View>(mainViewId)
+        val toolbarLayout = findViewById<View>(R.id.toolbarLayout)
+        val headerView = findViewById<View>(R.id.rytHeader)
+
+
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            v.updatePadding(
+                left = systemBars.left,
+                right = systemBars.right,
+                bottom = systemBars.bottom
+            )
 
             statusBarBgView.updateLayoutParams {
                 height = systemBars.top
             }
             insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { v, insets ->
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(headerView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(top = systemBars.top)
+
+            WindowInsetsCompat.CONSUMED
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -150,9 +168,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
-
-
-
 
 
     // Method to allow child activities to access specific views
@@ -217,12 +232,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             updateNavBar(icon_profile)
 
 
-
-
-
         }
 
     }
+
     fun showAcademicDropdown(
         anchor: View,
         activity: Activity,
@@ -303,7 +316,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             )
         )
 
-            findViewById<ImageView>(R.id.icon_help).setColorFilter(
+        findViewById<ImageView>(R.id.icon_help).setColorFilter(
             ContextCompat.getColor(
                 this,
                 R.color.grey

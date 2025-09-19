@@ -16,12 +16,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
@@ -102,7 +102,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             true
         }
 
-
         accessChildView(
             binding,
             R.id.nav_home,
@@ -127,6 +126,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                     val token = task.result
                     Log.d("FCM", "Token: $token")
                     isUpdateDeviceToken(token)
+                    isGlobalVariables(token)
 
                 }
             }
@@ -135,6 +135,14 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             if (response != null) {
                 response.status
                 response.message
+            }
+        }
+
+        appViewModel!!.isGlobalVariables?.observe(this) { response ->
+            if (response != null) {
+                response.status
+                response.message
+                Constant.isGlobalVariableData=response.data[0]
             }
         }
 
@@ -155,6 +163,14 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
         isGetAcademicYear()
     }
+
+    private fun isGlobalVariables(token: String) {
+        val jsonObject = JsonObject()
+        val jsonArray = JsonArray()
+        jsonObject.add("key_names", jsonArray)
+        appViewModel!!.isGetGlobalVariables(jsonObject, token, this)
+    }
+
 
 
     fun openDrawer() {

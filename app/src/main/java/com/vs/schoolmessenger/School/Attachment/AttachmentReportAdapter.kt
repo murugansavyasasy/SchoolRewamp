@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.Attachment
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,18 +17,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentFilePath
-import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportData
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Locale
 
 class AttachmentReportAdapter(
-    private var attachmentList: List<AttachmentReportData>?,
+    private var attachmentList: List<AttachmentDataReport>?,
     private val childClickListener: OnAttachmentReportClickListener,
     private val context: Context,
     var isLoading: Boolean,
@@ -41,10 +36,10 @@ class AttachmentReportAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var originalList: ArrayList<AttachmentReportData> =
+    private var originalList: ArrayList<AttachmentDataReport> =
         ArrayList(attachmentList ?: emptyList())
 
-    private var filteredList: List<AttachmentReportData> = attachmentList ?: emptyList()
+    private var filteredList: List<AttachmentDataReport> = attachmentList ?: emptyList()
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -108,7 +103,7 @@ class AttachmentReportAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as? List<AttachmentReportData> ?: emptyList()
+                filteredList = results?.values as? List<AttachmentDataReport> ?: emptyList()
                 notifyDataSetChanged()
 
                 if (filteredList.isEmpty()) {
@@ -140,7 +135,7 @@ class AttachmentReportAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            item: List<AttachmentReportData>,
+            item: List<AttachmentDataReport>,
             position: Int,
             listener: OnAttachmentReportClickListener,
             adapter: AttachmentReportAdapter,

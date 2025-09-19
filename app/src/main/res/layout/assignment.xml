@@ -21,6 +21,7 @@
             android:layout_below="@+id/toolbarLayout"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
+            android:visibility="gone"
             android:layout_marginEnd="@dimen/ten"
             android:orientation="horizontal"
             android:weightSum="1">
@@ -374,125 +375,125 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlaAssignmentReport"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarLayout1"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="10dp"
-            android:visibility="gone">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rlaAssignmentReport"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/toolbarLayout1"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_marginTop="@dimen/twenty"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:visibility="gone">-->
 
-            <LinearLayout
-                android:id="@+id/AcademicYear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/gray_bg_radius"
-                android:orientation="horizontal"
-                android:weightSum="1">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/AcademicYear"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/gray_bg_radius"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="1">-->
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_weight="0.5"
-                    android:text="@string/academic_year"
-                    android:textSize="@dimen/thirteen_sp">
+<!--                <TextView-->
+<!--                    style="@style/CustomTextStylePoppinsBold"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/fifteen"-->
+<!--                    android:layout_weight="0.5"-->
+<!--                    android:text="@string/academic_year"-->
+<!--                    android:textSize="@dimen/thirteen_sp">-->
 
-                </TextView>
+<!--                </TextView>-->
 
-                <RelativeLayout
-                    android:id="@+id/rytAcademicYearDropDown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginEnd="@dimen/fifteen"
-                    android:layout_weight="0.5"
-                    android:gravity="center">
+<!--                <RelativeLayout-->
+<!--                    android:id="@+id/rytAcademicYearDropDown"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/fifteen"-->
+<!--                    android:layout_marginEnd="@dimen/fifteen"-->
+<!--                    android:layout_weight="0.5"-->
+<!--                    android:gravity="center">-->
 
-                    <Spinner
-                        android:id="@+id/isSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_spinner_background" />
+<!--                    <Spinner-->
+<!--                        android:id="@+id/isSpinner"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:background="@drawable/custom_spinner_background" />-->
 
-                </RelativeLayout>
-            </LinearLayout>
+<!--                </RelativeLayout>-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/AcademicYear"
-                android:layout_margin="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:background="@drawable/gray_bg_radius"
-                android:gravity="center"
-                android:padding="@dimen/five"
-                android:visibility="gone">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/search"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/AcademicYear"-->
+<!--                android:layout_margin="@dimen/ten"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:background="@drawable/gray_bg_radius"-->
+<!--                android:gravity="center"-->
+<!--                android:padding="@dimen/five"-->
+<!--                android:visibility="gone">-->
 
-                <ImageView
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
-                    android:alpha="0.4"
-                    android:src="@drawable/search_icon">
-                </ImageView>
+<!--                <ImageView-->
+<!--                    android:layout_width="@dimen/twenty_five"-->
+<!--                    android:layout_height="@dimen/twenty_five"-->
+<!--                    android:alpha="0.4"-->
+<!--                    android:src="@drawable/search_icon">-->
+<!--                </ImageView>-->
 
-                <EditText
-                    android:id="@+id/txtSearchMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/five"
-                    android:background="@null"
-                    android:hint="@string/search"
-                    android:text=""
-                    android:textSize="@dimen/fifteen_sp">
-                </EditText>
-
-
-            </LinearLayout>
+<!--                <EditText-->
+<!--                    android:id="@+id/txtSearchMenu"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/five"-->
+<!--                    android:background="@null"-->
+<!--                    android:hint="@string/search"-->
+<!--                    android:text=""-->
+<!--                    android:textSize="@dimen/fifteen_sp">-->
+<!--                </EditText>-->
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcyAssignmentReport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/search"
-                android:layout_marginTop="5dp">
-            </androidx.recyclerview.widget.RecyclerView>
+<!--            </LinearLayout>-->
 
 
-            <LinearLayout
-                android:id="@+id/lytNoDataFound"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/search"
-                android:layout_centerInParent="true"
-                android:orientation="vertical"
-                android:visibility="gone">
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/rcyAssignmentReport"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/search"-->
+<!--                android:layout_marginTop="5dp">-->
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
 
-                <ImageView
-                    android:id="@+id/noDataImage"
-                    android:layout_width="@dimen/two_hundred"
-                    android:layout_height="@dimen/two_hundred"
-                    android:layout_marginTop="@dimen/twenty_five"
-                    android:src="@drawable/no_data_found">
-                </ImageView>
 
-                <TextView
-                    android:id="@+id/noDataFound"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:text="No data found"
-                    android:textSize="@dimen/fifteen_sp">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/lytNoDataFound"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/search"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:orientation="vertical"-->
+<!--                android:visibility="gone">-->
 
-                </TextView>
-            </LinearLayout>
-        </RelativeLayout>
+<!--                <ImageView-->
+<!--                    android:id="@+id/noDataImage"-->
+<!--                    android:layout_width="@dimen/two_hundred"-->
+<!--                    android:layout_height="@dimen/two_hundred"-->
+<!--                    android:layout_marginTop="@dimen/twenty_five"-->
+<!--                    android:src="@drawable/no_data_found">-->
+<!--                </ImageView>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/noDataFound"-->
+<!--                    style="@style/CustomTextStylePoppinsBold"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="@dimen/twenty"-->
+<!--                    android:text="No data found"-->
+<!--                    android:textSize="@dimen/fifteen_sp">-->
+
+<!--                </TextView>-->
+<!--            </LinearLayout>-->
+<!--        </RelativeLayout>-->
     </RelativeLayout>
 </ScrollView>

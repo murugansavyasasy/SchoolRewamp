@@ -10,75 +10,75 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
-    <LinearLayout
-        android:id="@+id/toolbarLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:orientation="horizontal"
-        android:weightSum="1">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/toolbarLayout1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/toolbarLayout"-->
+<!--        android:layout_marginStart="@dimen/ten"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:layout_marginEnd="@dimen/ten"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:weightSum="1">-->
 
-        <LinearLayout
-            android:id="@+id/lnrTabOneName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/lnrTabOneName"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="0.5"-->
+<!--            android:orientation="vertical">-->
 
-            <TextView
-                android:id="@+id/tabOneName"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/Create"
-                android:textColor="@color/iconBlue"></TextView>
+<!--            <TextView-->
+<!--                android:id="@+id/tabOneName"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/Create"-->
+<!--                android:textColor="@color/iconBlue"></TextView>-->
 
-            <View
-                android:id="@+id/line1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/three"
-                android:layout_below="@+id/groupheading"
-                android:layout_marginTop="@dimen/five"
-                android:background="@color/iconBlue"></View>
-        </LinearLayout>
+<!--            <View-->
+<!--                android:id="@+id/line1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/three"-->
+<!--                android:layout_below="@+id/groupheading"-->
+<!--                android:layout_marginTop="@dimen/five"-->
+<!--                android:background="@color/iconBlue"></View>-->
+<!--        </LinearLayout>-->
 
 
-        <LinearLayout
-            android:id="@+id/lnrTabTwoName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/lnrTabTwoName"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="0.5"-->
+<!--            android:orientation="vertical">-->
 
-            <TextView
-                android:id="@+id/tabTwoName"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/Reports"></TextView>
+<!--            <TextView-->
+<!--                android:id="@+id/tabTwoName"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/Reports"></TextView>-->
 
-            <View
-                android:id="@+id/line2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/three"
-                android:layout_below="@+id/groupheading"
-                android:layout_marginTop="@dimen/five"
-                android:background="@color/white"></View>
-        </LinearLayout>
+<!--            <View-->
+<!--                android:id="@+id/line2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/three"-->
+<!--                android:layout_below="@+id/groupheading"-->
+<!--                android:layout_marginTop="@dimen/five"-->
+<!--                android:background="@color/white"></View>-->
+<!--        </LinearLayout>-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 
     <ScrollView
         android:id="@+id/noticeboardCreate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarLayout1"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
@@ -512,92 +512,91 @@
     </ScrollView>
 
 
-    <RelativeLayout
-        android:id="@+id/rytSearch323"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_below="@+id/toolbarLayout1"
-        android:layout_margin="@dimen/ten"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:background="@drawable/rect_grey"
-        android:visibility="gone">
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/rytSearch323"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/thirty_five"-->
+<!--        android:layout_margin="@dimen/ten"-->
+<!--        android:layout_marginStart="@dimen/ten"-->
+<!--        android:layout_marginEnd="@dimen/ten"-->
+<!--        android:background="@drawable/rect_grey"-->
+<!--        android:visibility="gone">-->
 
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:src="@drawable/ic_search" />
+<!--        <ImageView-->
+<!--            android:id="@+id/imgSearch"-->
+<!--            android:layout_width="@dimen/thirty"-->
+<!--            android:layout_height="@dimen/thirty"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginStart="@dimen/ten"-->
+<!--            android:src="@drawable/ic_search" />-->
 
-        <EditText
-            android:id="@+id/edtSearch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/imgSearch"
-            android:background="@android:color/transparent"
-            android:hint="@string/lblSearch"
-            />
-    </RelativeLayout>
+<!--        <EditText-->
+<!--            android:id="@+id/edtSearch"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_toEndOf="@id/imgSearch"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:hint="@string/lblSearch"-->
+<!--            />-->
+<!--    </RelativeLayout>-->
 
-    <Spinner
-        android:id="@+id/schoollistfilter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearch323"
-        android:layout_marginHorizontal="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:background="@drawable/spinner_bg"
-        android:padding="@dimen/twele"
-        android:spinnerMode="dropdown"
-        android:visibility="gone" />
+<!--    <Spinner-->
+<!--        android:id="@+id/schoollistfilter"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/rytSearch323"-->
+<!--        android:layout_marginHorizontal="@dimen/ten"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:background="@drawable/spinner_bg"-->
+<!--        android:padding="@dimen/twele"-->
+<!--        android:spinnerMode="dropdown"-->
+<!--        android:visibility="gone" />-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyNoticeBoard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/schoollistfilter"
-        android:layout_marginTop="@dimen/ten"
-        android:clipToPadding="false"
-        android:fadeScrollbars="false"
-        android:paddingHorizontal="@dimen/ten"
-        android:scrollbars="none"
-        android:visibility="gone" />
-
-
-    <LinearLayout
-        android:id="@+id/lytList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rcyNoticeBoard"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/nomessage"
-            android:layout_width="@dimen/three_hundred"
-            android:layout_height="@dimen/three_hundred"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/ten"
-            android:src="@drawable/nomessages"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/txtNoData"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/five"
-            android:text="@string/no_data_found"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rcyNoticeBoard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/schoollistfilter"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:clipToPadding="false"-->
+<!--        android:fadeScrollbars="false"-->
+<!--        android:paddingHorizontal="@dimen/ten"-->
+<!--        android:scrollbars="none"-->
+<!--        android:visibility="gone" />-->
 
 
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/lytList"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/rcyNoticeBoard"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/nomessage"-->
+<!--            android:layout_width="@dimen/three_hundred"-->
+<!--            android:layout_height="@dimen/three_hundred"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="@dimen/ten"-->
+<!--            android:src="@drawable/nomessages"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="@dimen/fifteen_sp"-->
+<!--            android:visibility="gone" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtNoData"-->
+<!--            style="@style/CustomTextStylePoppinsBold"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="@dimen/five"-->
+<!--            android:text="@string/no_data_found"-->
+<!--            android:textSize="@dimen/fifteen_sp"-->
+<!--            android:visibility="gone" />-->
+
+
+<!--    </LinearLayout>-->
 
 </RelativeLayout>

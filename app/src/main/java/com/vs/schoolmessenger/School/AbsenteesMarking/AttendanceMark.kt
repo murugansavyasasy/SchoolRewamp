@@ -15,6 +15,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -89,33 +91,19 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.AttendanceSelectedDate.text=Constant.formatToPretty(isSelectedDate.toString())
         SelectedDate = Constant.formatToUi(isSelectedDate.toString())
 
-
-
         styleLabel(binding.lblFullDay, R.drawable.mild_gray_radius, R.color.PrimaryColor, R.color.white)
         styleLabel(binding.lblHalfDay, R.drawable.mild_gray_radius, R.color.gray, R.color.black)
 
         binding.rlaStandard.setOnClickListener(this)
         binding.rlaSection.setOnClickListener(this)
-//        binding.rlaAttendanceType.setOnClickListener(this)
         binding.btnAbsent.setOnClickListener(this)
         binding.imgSearch.setOnClickListener(this)
         binding.btnSelectPresent.setOnClickListener(this)
-//        binding.rlaSectionReport.setOnClickListener(this)
-        binding.rlaDayDatePicker.setOnClickListener(this)
+
         binding.lblFullDay.setOnClickListener(this)
         binding.lblHalfDay.setOnClickListener(this)
         binding.lblFirstHalf.setOnClickListener(this)
         binding.lblSecondHalf.setOnClickListener(this)
-//        binding.dropdownAcademicYear.setOnClickListener(this)
-//        binding.rlaFullDay.setOnClickListener(this)
-//        binding.rlaHalfDay.setOnClickListener(this)
-//        binding.rlaSecondHalf.setOnClickListener(this)
-//        binding.rlaFirstHalf.setOnClickListener(this)
-//        binding.radioButtonFullDay.setOnClickListener(this)
-//        binding.radioButtonHalfDay.setOnClickListener(this)
-//        binding.radioButtonFirstHalf.setOnClickListener(this)
-//        binding.radioButtonSecondHalf.setOnClickListener
-        loadFromCalendar()
         updateActionButtonsState()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -123,6 +111,18 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+        loadFromCalendar()
+
+        binding.imgSearchicon.setOnClickListener {
+            if (binding.rytSearchbox.visibility == View.VISIBLE) {
+                binding.rytSearchbox.visibility = View.GONE
+                binding.txtSearchBox.text.clear()
+            } else {
+                binding.rytSearchbox.visibility = View.VISIBLE
+                binding.txtSearchBox.text.clear()
+
+            }
+        }
 
 
         binding.lnrTabOneName.setOnClickListener {
@@ -134,15 +134,13 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             binding.line2.setBackgroundResource(R.color.athens_gray)
             callApi = false
             binding.txtSearchBox.text.clear()
-//            binding.radioButtonFullDay.isChecked = false
-//            binding.radioButtonHalfDay.isChecked = false
             binding.lnrClasses2.visibility = View.GONE
-//            binding.sessionHeader.visibility = View.GONE
-            binding.rlaMarkAttendance.visibility = View.VISIBLE
-            binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
-            binding.rytSearchbox.visibility = View.GONE
-            binding.rcyAttendanceReport.visibility = View.GONE
-            binding.lytNoDataFound.visibility = View.GONE
+            binding.lnrClasses1.visibility = View.VISIBLE
+            binding.btnAbsent.visibility=View.VISIBLE
+            binding.lblAttendanceOptions.visibility = View.VISIBLE
+            binding.calendarFromFragmentContainer.visibility = View.VISIBLE
+            binding.lnrAttendanceReport.visibility = View.GONE
+            binding.lnrClasses2.visibility = View.GONE
             loadFromCalendar()
 
         }
@@ -155,15 +153,13 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             binding.line2.setBackgroundResource(R.color.iconBlue)
             binding.line1.setBackgroundResource(R.color.athens_gray)
             callApi = true
-//            binding.radioButtonFullDay.isChecked = false
-//            binding.radioButtonHalfDay.isChecked = false
-//            binding.radioButtonFirstHalf.isChecked = false
-//            binding.radioButtonSecondHalf.isChecked = false
-            binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
-            binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
-            binding.rlaMarkAttendance.visibility = View.GONE
-            binding.rytSearchbox.visibility = View.VISIBLE
+            binding.btnAbsent.visibility=View.GONE
+            binding.lnrClasses2.visibility = View.GONE
+            binding.lnrClasses1.visibility = View.GONE
+            binding.lblAttendanceOptions.visibility = View.GONE
             binding.rcyAttendanceReport.visibility = View.VISIBLE
+            binding.calendarFromFragmentContainer.visibility = View.VISIBLE
+            binding.lnrAttendanceReport.visibility = View.VISIBLE
             loadData()
         }
 
@@ -203,13 +199,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
         }
 
-//        val (dayOnly, dayOfWeek, fullDate, slashDate) = Constant.getCurrentDateInfo()
-//        binding.lblDate1.text = dayOnly
-//        binding.lblDay.text = dayOfWeek
-//        binding.lblDatePick.text = fullDate
-//        SelectedDate = slashDate
-
-
         isAcademicYear = isAcademicYearList
         isValidAcademicYear =
             isAcademicYear?.any { it.current_academic_year == true } == true
@@ -217,7 +206,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isLoadAcademicYear(isAcademicYear)
         isGetStandardSection()
-        binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
 
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
@@ -235,7 +223,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                                 isSection = isGetStandard!!.get(0).sections
                             }
                             val firstStandard = isGetStandard!![0]
-                            binding.rlaMarkAttendanceCommon.visibility = View.VISIBLE
+                            binding.calendarFromFragmentContainer.visibility = View.VISIBLE
+                            binding.lnrClasses.visibility = View.VISIBLE
+                            binding.lytNoDataFound1.visibility = View.GONE
                             //To Assign Standard and Section in early to use in AbsenteesStudentMark.kt
                             updateStandardAndSection(firstStandard)
                             if (callApi) {
@@ -243,11 +233,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                                 ShowData()
                             }
                         } else {
-                            binding.rlaMarkAttendanceCommon.visibility = View.GONE
 
-//                    binding.selectClassSection.visibility = View.GONE
-//                    binding.lnrClasses.visibility = View.GONE
-                            ErrorMessage(response.message)
+                            binding.lnrClasses.visibility = View.GONE
+                            binding.calendarFromFragmentContainer.visibility = View.GONE
+                            binding.lytNoDataFound1.visibility = View.VISIBLE
+                            binding.noDataFound1.text = response.message
                         }
                     }
                 }
@@ -263,21 +253,29 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         if (it > 0) {
 //                            studentsList = isStudentAttendanceReportResponseData
                             ShowData()
-                            binding.rytSearchbox.visibility = View.VISIBLE
                             loadStudentReport(studentsList)
+                            binding.imgSearchicon.visibility=View.VISIBLE
+                            binding.lnrAttendancePercentageRate.visibility=View.VISIBLE
                         } else {
-                            binding.rytSearchbox.visibility = View.GONE
                             binding.rcyAttendanceReport.visibility = View.GONE
-                            ErrorMessage(resources.getString(R.string.no_data_found))
-
+                            ErrorMessage(response.message,R.drawable.no_attendance_taken)
+                            binding.imgSearchicon.visibility=View.GONE
+                            binding.lnrAttendancePercentageRate.visibility=View.GONE
                         }
                     }
 
                 } else {
-                    binding.rytSearchbox.visibility = View.GONE
                     binding.rcyAttendanceReport.visibility = View.GONE
-                    ErrorMessage(response.message)
+                    ErrorMessage(response.message,R.drawable.no_attendance_taken)
+                    binding.imgSearchicon.visibility=View.GONE
+                    binding.lnrAttendancePercentageRate.visibility=View.GONE
                 }
+            }
+            else{
+                binding.rcyAttendanceReport.visibility = View.GONE
+                ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later),R.drawable.no_data_found)
+                binding.imgSearchicon.visibility=View.GONE
+                binding.lnrAttendancePercentageRate.visibility=View.GONE
             }
         }
     }
@@ -313,7 +311,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
         } else {
             binding.rcyAttendanceReport.visibility = View.GONE
-            ErrorMessage(Constant.NO_DATA_FOUND)
+            ErrorMessage(resources.getString(R.string.no_data_found),R.drawable.no_data_found)
         }
     }
 
@@ -379,9 +377,14 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
     }
 
-    fun ErrorMessage(ErrorMessage: String) {
+    fun ErrorMessage(ErrorMessage: String,drawableRes: Int) {
         binding.lytNoDataFound.visibility = View.VISIBLE
         binding.noDataFound.text = ErrorMessage
+
+        Glide.with(binding.imgStudentReportImage.context)
+            .load(drawableRes)
+            .placeholder(drawableRes)
+            .into(binding.imgStudentReportImage)
     }
 
     fun ShowData() {
@@ -417,23 +420,16 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
         when (tag) {
             Constant.FROM_DATE -> {
-//                fromDate = selected
-//                binding.tvFromDate.text = formatDate(selected)
                 Log.d("selectedDate", selected.toString())
                 SelectedDate = Constant.formatToUi(selected.toString())
-
                 isSelectedDate = selected//This Date for Fragemnt to change the next date
                 binding.AttendanceSelectedDate.text=Constant.formatToPretty(selected.toString())
-//                10/09/2025
-
-//                val (day, formattedDate) = Constant.getDayAndDateOnly(binding.lblDatePick.text.toString())// 13 Mon
-//                binding.lblDay.text = formattedDate
-//                binding.lblDate1.text = day
-//                if (callApi) {
-//                    loadData()
-//                }
+                if (callApi) {
+                    binding.rytSearchbox.visibility=View.GONE
+                    binding.txtSearchBox.text.clear()
+                    loadData()
+                }
             }
-
         }
     }
 
@@ -463,30 +459,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
 
 
-            R.id.rlaDayDatePicker -> {
-                Constant.showDatePicker(this, true) { selectedDate ->
-                    Log.d("selectedDate", selectedDate)
-                    binding.lblDatePick.text = Constant.covertDateFormate(selectedDate)
-                    SelectedDate = selectedDate
-                    val (day, formattedDate) = Constant.getDayAndDateOnly(binding.lblDatePick.text.toString())// 13 Mon
-                    binding.lblDay.text = formattedDate
-                    binding.lblDate1.text = day
-                    if (callApi) {
-                        loadData()
-                    }
-                }
-            }
-
-//            R.id.rlaStandardReport -> {
-//                showDropdownMenuSort(
-//                    binding.lblStandardReport,
-//                    this,
-//                    itemsStandard
-//                ) { selectedOption ->
-//                    binding.lblStandardReport.text = selectedOption
-//                }
-//            }
-
             R.id.lblFullDay, -> {
                 SessionType = ""
                 AttendanceType = Constant.fullDay
@@ -495,19 +467,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 styleLabel(binding.lblHalfDay, R.drawable.mild_gray_radius, R.color.gray, R.color.black)
                 binding.lnrClasses2.visibility = View.GONE
 
-
-
-
-//                binding.radioButtonFullDay.isChecked = true
-//                binding.radioButtonHalfDay.isChecked = false
-//                binding.radioButtonFirstHalf.isChecked = false
-//                binding.radioButtonSecondHalf.isChecked = false
-//
-//                binding.radioButtonFirstHalf.isEnabled = false
-//                binding.radioButtonSecondHalf.isEnabled = false
-//
-//                binding.lnrClasses2.visibility = View.GONE
-//                binding.sessionHeader.visibility = View.GONE
             }
 
             R.id.lblHalfDay -> {
@@ -522,33 +481,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 styleLabel(binding.lblFirstHalf, R.drawable.gray_bg_radius, R.color.green, R.color.white)
                 styleLabel(binding.lblSecondHalf, R.drawable.gray_bg_radius, R.color.gray, R.color.black)
 
-
-
-
-//                binding.radioButtonFullDay.isChecked = false
-//                binding.radioButtonHalfDay.isChecked = true
-//
-//                binding.radioButtonFirstHalf.isEnabled = true
-//                binding.radioButtonSecondHalf.isEnabled = true
-//
-//                binding.radioButtonFirstHalf.isChecked = false
-//                binding.radioButtonSecondHalf.isChecked = false
-//
-//                binding.lnrClasses2.visibility = View.VISIBLE
-//                binding.sessionHeader.visibility = View.VISIBLE
             }
 
             R.id.lblFirstHalf -> {
                 SessionType = Constant.firstHalf
-
                 styleLabel(binding.lblFirstHalf, R.drawable.gray_bg_radius, R.color.green, R.color.white)
                 styleLabel(binding.lblSecondHalf, R.drawable.gray_bg_radius, R.color.gray, R.color.black)
-
-
-//                if (binding.radioButtonHalfDay.isChecked) {
-//                    binding.radioButtonFirstHalf.isChecked = true
-//                    binding.radioButtonSecondHalf.isChecked = false
-//                }
             }
 
             R.id.lblSecondHalf -> {
@@ -557,10 +495,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 styleLabel(binding.lblFirstHalf, R.drawable.gray_bg_radius, R.color.gray, R.color.black)
                 styleLabel(binding.lblSecondHalf, R.drawable.gray_bg_radius, R.color.green, R.color.white)
 
-//                if (binding.radioButtonHalfDay.isChecked) {
-//                    binding.radioButtonFirstHalf.isChecked = false
-//                    binding.radioButtonSecondHalf.isChecked = true
-//                }
             }
 
             R.id.btnAbsent -> {
@@ -759,8 +693,13 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         toDate = SelectedDate.toString()
 
         mAdapter = AttendanceStudentReportAdapter(null, this, Constant.isShimmerViewShow)
-        binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.isAutoMeasureEnabled = true
+        binding.rcyAttendanceReport.layoutManager = layoutManager
         binding.rcyAttendanceReport.adapter = mAdapter
+        binding.rcyAttendanceReport.isNestedScrollingEnabled = false
+        binding.rcyAttendanceReport.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
         appViewModel!!.getStudentAttendanceReport(
             isAccessToken!!, SectionID.toString(), fromDate, toDate, isStandardId.toString(), this
         )
@@ -769,27 +708,23 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
     private fun loadStudentReport(studentReportData: List<StudentAttendanceReportData>) {
         // Once data is loaded, stop shimmer and pass the actual data
+        val total = studentReportData.size
+        val presentCount = studentReportData.count { it.att_status.equals("P", ignoreCase = true) }
+        val absentCount = studentReportData.count { it.att_status.equals("A", ignoreCase = true) }
+
+        val presentPercentage = if (total > 0) (presentCount * 100f) / total else 0f
+        val absentPercentage = if (total > 0) (absentCount * 100f) / total else 0f
+
+        val presentFormatted = String.format("%.2f", presentPercentage)
+        val absentFormatted = String.format("%.2f", absentPercentage)
+
+        binding.lblAbsentRate.text="$absentFormatted%"
+        binding.lblPresentRate.text="$presentFormatted%"
         mAdapter =
             AttendanceStudentReportAdapter(studentReportData, this, Constant.isShimmerViewDisable)
+
         binding.rcyAttendanceReport.adapter = mAdapter
     }
 
 
-//    private fun isBackRoundChange(isClickingId: TextView) {
-//
-//        if (isClickingId == binding.btnCreate) {
-//            binding.btnHistory.background = null
-//            binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-//        }
-//
-//        if (isClickingId == binding.btnHistory) {
-//            binding.btnCreate.background = null
-//            binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-//
-//        }
-//
-//        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
-//        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
-//
-//    }
 }

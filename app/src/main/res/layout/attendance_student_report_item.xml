@@ -1,84 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:ignore="MissingDefaultResource"
-    android:fitsSystemWindows="true">
-
+    android:padding="@dimen/twele">
     <RelativeLayout
+        android:id="@+id/rlaDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:background="@drawable/rect_shadow_white">
+        android:layout_height="wrap_content">
+        <FrameLayout
 
-        <RelativeLayout
-            android:id="@+id/rlaAttendance"
-            android:layout_width="match_parent"
+            android:id="@+id/avatarContainer"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true">
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imgAvatar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:scaleType="centerInside"-->
+<!--                android:src="@drawable/default_profile"-->
+<!--                />-->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_profile"
+                app:shapeAppearanceOverlay="@style/CircularImageView"
+                android:adjustViewBounds="true"/>
+        </FrameLayout>
+
+        <!-- Name and class container -->
+        <LinearLayout
+
+            android:id="@+id/textContainer"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/avatarContainer"
+            android:layout_toStartOf="@+id/tvStatus"
+
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/twele"
+            android:layout_marginEnd="@dimen/twele"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lakshmanan"
+                android:textSize="@dimen/fourteen"
+                />
+
+            <TextView
+                android:id="@+id/lblAdmissionNoValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ADMINSN012872"
+                android:textSize="@dimen/twele_sp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginTop="@dimen/six"
+                />
+
+            <TextView
+                android:id="@+id/tvRollNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23-UBS-2023"
+                android:textSize="@dimen/twele_sp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginTop="@dimen/six"
+                />
+        </LinearLayout>
+
+        <!-- Submitted pill -->
+
+
+        <LinearLayout
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="@dimen/ten"
+            android:paddingVertical="@dimen/five"
+            android:orientation="vertical"
+            android:background="@drawable/green_bg_radius"
             >
-
             <TextView
-                android:id="@+id/lblStudentName"
+                android:id="@+id/tvStatus1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_five"
-                android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/twenty_five"
-                android:gravity="start"
-                android:text="Sathish"
-                android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsBold"
-                >
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblAdmission"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblStudentName"
-                android:layout_marginStart="@dimen/twenty_five"
-                android:layout_marginTop="@dimen/ten"
-                android:text="@string/Admissionno"
-                style="@style/CustomTextStylePoppinsBold"
-                >
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblAdmissionValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblStudentName"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_toEndOf="@+id/lblAdmission"
-                android:text="1234556776"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:textSize="@dimen/thirteen_sp"
-                >
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblAttendanceStatus"
-                android:layout_width="@dimen/eighty"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblAdmission"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/rounded_top_right_bottom_end_green"
-                android:gravity="center"
-                android:padding="@dimen/five"
-                android:text="@string/present"
-                style="@style/CustomTextStylePoppinsBold"
+                android:text="present"
+                android:layout_gravity="center"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textSize="@dimen/fourteen_sp"
                 android:textColor="@color/white"
-                >
-
-            </TextView>
-
-
-        </RelativeLayout>
+                />
+        </LinearLayout>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/athens_gray"
+        android:layout_below="@+id/rlaDetails"
+        android:layout_marginTop="@dimen/five"
+        android:layout_height="@dimen/two">
+
+    </View>
+
 </RelativeLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    tools:ignore="MissingDefaultResource"-->
+<!--    android:fitsSystemWindows="true">-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/ten"-->
+<!--        android:layout_marginEnd="@dimen/ten"-->
+<!--        android:background="@drawable/rect_shadow_white">-->
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rlaAttendance"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            >-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblStudentName"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/twenty_five"-->
+<!--                android:layout_marginTop="@dimen/fifteen"-->
+<!--                android:layout_marginEnd="@dimen/twenty_five"-->
+<!--                android:gravity="start"-->
+<!--                android:text="Sathish"-->
+<!--                android:textSize="@dimen/thirteen_sp"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                >-->
+
+<!--            </TextView>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblAdmission"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/lblStudentName"-->
+<!--                android:layout_marginStart="@dimen/twenty_five"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:text="@string/Admissionno"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                >-->
+
+<!--            </TextView>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblAdmissionValue"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/lblStudentName"-->
+<!--                android:layout_marginStart="@dimen/ten"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:layout_toEndOf="@+id/lblAdmission"-->
+<!--                android:text="1234556776"-->
+<!--                style="@style/CustomTextStylePoppinsRegular"-->
+<!--                android:textSize="@dimen/thirteen_sp"-->
+<!--                >-->
+
+<!--            </TextView>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblAttendanceStatus"-->
+<!--                android:layout_width="@dimen/eighty"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/lblAdmission"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:background="@drawable/rounded_top_right_bottom_end_green"-->
+<!--                android:gravity="center"-->
+<!--                android:padding="@dimen/five"-->
+<!--                android:text="@string/present"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                android:textColor="@color/white"-->
+<!--                >-->
+
+<!--            </TextView>-->
+
+
+<!--        </RelativeLayout>-->
+<!--    </RelativeLayout>-->
+<!--</RelativeLayout>-->

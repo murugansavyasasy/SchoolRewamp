@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray4"
+    android:background="@color/light_white"
     android:fitsSystemWindows="true">
 
     <include
@@ -80,257 +80,21 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_below="@+id/lnrParent"
         android:id="@+id/scroll_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:paddingBottom="@dimen/fifteen"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
-            <RelativeLayout
-                android:id="@+id/rlaAttendanceMarkCommonDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lnrParent"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:id="@+id/lnrAttendance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:background="@drawable/rect_shadow_violet"
-                    android:orientation="vertical"
-                    android:padding="@dimen/fifteen"
-                    android:visibility="gone">
-
-                    <CalendarView
-                        android:id="@+id/calendarView"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/three_hundred" />
-
-                </LinearLayout>
-
-<!--                <RelativeLayout-->
-<!--                    android:id="@+id/lnrAcademicDetails"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@+id/lnrAttendance"-->
-<!--                    android:layout_marginTop="@dimen/ten"-->
-<!--                    android:gravity="center"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:visibility="visible">-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/lblAcademicYearPick"-->
-<!--                        style="@style/CustomTextStylePoppinsBold"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentStart="true"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:layout_marginStart="@dimen/ten"-->
-<!--                        android:text="@string/choose_academic_year"-->
-<!--                        android:textSize="@dimen/fifteen_sp"-->
-<!--                        >-->
-<!--                    </TextView>-->
-
-
-<!--                    <RelativeLayout-->
-<!--                        android:id="@+id/rytAcademicYear"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentEnd="true"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:layout_marginEnd="@dimen/five"-->
-<!--                        android:layout_toEndOf="@+id/lblAcademicYearPick"-->
-<!--                        android:background="@drawable/bg_white_light_radious">-->
-
-<!--                        <Spinner-->
-<!--                            android:id="@+id/isSpinner"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:background="@drawable/custom_spinner_background" />-->
-
-<!--                    </RelativeLayout>-->
-
-
-<!--                </RelativeLayout>-->
-
-
-                <RelativeLayout
-                    android:id="@+id/rlaMarkAttendanceCommon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible">
-
-                    <RelativeLayout
-                        android:visibility="gone"
-                        android:id="@+id/rlaSelectDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/date_header"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignStart="@+id/cardStart"
-                            android:layout_marginTop="@dimen/ten"
-                            android:text="@string/select_date"
-                            />
-
-
-                        <TextView
-                            android:id="@+id/lblStar"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/two"
-                            android:layout_marginTop="@dimen/three"
-                            android:layout_toEndOf="@id/date_header"
-                            android:text="@string/mandatory"
-                            android:textColor="@color/red"
-                            />
-
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cardStart"
-                            android:layout_width="@dimen/fifty"
-                            android:layout_height="@dimen/fifty"
-                            android:layout_below="@+id/date_header"
-                            android:layout_marginStart="@dimen/fifteen"
-                            android:layout_marginTop="@dimen/twenty"
-                            app:cardCornerRadius="@dimen/ten"
-                            app:cardElevation="@dimen/zero">
-
-                            <LinearLayout
-                                android:id="@+id/lnrStartCalendar"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/bg_stroke_rect_black"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/lblDay"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginTop="@dimen/two"
-                                    android:text="Sun"
-                                    style="@style/CustomTextStylePoppinsBold"
-                                    android:textColor="@color/grey"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/lblDate1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/primary_light"
-                                    android:gravity="center"
-                                    android:text="00"
-                                    style="@style/CustomTextStylePoppinsBold"
-                                    android:textSize="@dimen/fifteen_sp"
-                                     />
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-
-                        <RelativeLayout
-                            android:id="@+id/rlaDayDatePicker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/fourty_five"
-                            android:layout_toEndOf="@+id/cardStart">
-
-                            <TextView
-                                android:id="@+id/lblDatePick"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/ten"
-                                android:layout_marginTop="@dimen/ten"
-                                android:drawablePadding="@dimen/ten"
-                                style="@style/CustomTextStylePoppinsMedium"
-                                android:text="Thu 13 Feb 2025"
-                                ></TextView>
-
-                            <ImageView
-                                android:id="@+id/image_downarrow"
-                                android:layout_width="@dimen/twenty"
-                                android:layout_height="@dimen/twenty"
-                                android:layout_alignBottom="@+id/lblDatePick"
-                                android:layout_marginStart="@dimen/eight"
-                                android:layout_toEndOf="@+id/lblDatePick"
-                                android:src="@drawable/ic_down_arrow" />
-                        </RelativeLayout>
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/point_five"
-                            android:layout_below="@+id/cardStart"
-                            android:layout_marginStart="@dimen/ten"
-                            android:layout_marginEnd="@dimen/fourty"
-                            android:layout_toEndOf="@+id/cardStart"
-                            android:background="@color/grey" />
-                    </RelativeLayout>
-
-
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/lnrClasses"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_below="@+id/selectClassSection"-->
-<!--                        android:layout_marginTop="@dimen/ten"-->
-<!--                        android:weightSum="1">-->
-
-<!--                        <RelativeLayout-->
-<!--                            android:id="@+id/rlaStandard"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/fifteen"-->
-<!--                            android:layout_marginEnd="@dimen/fifteen"-->
-<!--                            android:layout_weight="0.5"-->
-<!--                            android:background="@drawable/bg_white_light_radious">-->
-
-<!--                            <Spinner-->
-<!--                                android:id="@+id/isSpinnerStandard"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:background="@drawable/custom_spinner_background" />-->
-
-<!--                        </RelativeLayout>-->
-
-
-<!--                        <RelativeLayout-->
-<!--                            android:id="@+id/rlaSection"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/fifteen"-->
-<!--                            android:layout_marginEnd="@dimen/fifteen"-->
-<!--                            android:layout_weight="0.5"-->
-<!--                            android:background="@drawable/bg_white_light_radious">-->
-
-<!--                            <Spinner-->
-<!--                                android:id="@+id/isSpinnerSection"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:background="@drawable/custom_spinner_background" />-->
-
-<!--                        </RelativeLayout>-->
-
-<!--                    </LinearLayout>-->
-                </RelativeLayout>
-            </RelativeLayout>
 
             <FrameLayout
                 android:layout_marginTop="@dimen/ten"
-                android:paddingStart="@dimen/fifteen"
-                android:paddingEnd="@dimen/fifteen"
+                android:paddingStart="@dimen/ten"
+                android:paddingEnd="@dimen/ten"
                 android:id="@+id/calendarFromFragmentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -348,28 +112,36 @@
 
                 <LinearLayout
                     android:weightSum="1"
+                    android:gravity="center_vertical"
                     android:id="@+id/rlaSelectedDateDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
                         android:layout_marginEnd="@dimen/five"
-                        android:layout_weight="0.4"
+                        android:layout_weight="0.5"
                         android:id="@+id/AttendanceSelectedDate"
-                        android:textSize="@dimen/eighteen_sp"
+                        android:textSize="@dimen/sixteen_sp"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:text="Monday,October 13"
-
                         android:layout_height="wrap_content">
 
                     </TextView>
 
+                    <RelativeLayout
+                        android:layout_weight="0.5"
+                        android:id="@+id/rytAcademicYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_white_light_radious">
                         <Spinner
-                            android:layout_weight="0.6"
                             android:id="@+id/isSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_spinner_background" />
+
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -385,8 +157,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/five"
-                        android:paddingVertical="@dimen/seven"
-
                         android:layout_weight="0.5"
                         android:background="@drawable/rect_blue_stoke_radius">
                         <ImageView
@@ -394,7 +164,8 @@
                             android:layout_marginStart="@dimen/five"
                             android:id="@+id/imgClassIcon"
                             android:layout_width="@dimen/twenty"
-                            android:src="@drawable/camera_pick_icon"
+                            android:src="@drawable/graduation_cap_icon"
+                            android:tint="@color/black"
                             android:layout_height="@dimen/twenty">
 
                         </ImageView>
@@ -406,7 +177,7 @@
                             android:id="@+id/isSpinnerStandard"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/custom_spinner_background" />
+                            android:background="@drawable/custom_spinner_background_two" />
 
                     </RelativeLayout>
 
@@ -417,7 +188,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/five"
                         android:layout_weight="0.5"
-                        android:paddingVertical="@dimen/seven"
                         android:background="@drawable/rect_blue_stoke_radius">
 
                         <ImageView
@@ -425,7 +195,8 @@
                             android:layout_marginStart="@dimen/five"
                             android:id="@+id/imgSessionIcon"
                             android:layout_width="@dimen/twenty"
-                            android:src="@drawable/camera_pick_icon"
+                            android:tint="@color/black"
+                            android:src="@drawable/rectangle_stack"
                             android:layout_height="@dimen/twenty">
 
                         </ImageView>
@@ -435,19 +206,47 @@
                             android:id="@+id/isSpinnerSection"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/custom_spinner_background" />
+                            android:background="@drawable/custom_spinner_background_two" />
 
                     </RelativeLayout>
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="@dimen/ten"
+                    android:id="@+id/lytNoDataFound1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_below="@+id/lnrClasses"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/one_fifty"
+                        android:layout_height="@dimen/one_fifty"
+                        android:layout_marginTop="@dimen/ten"
+                        android:src="@drawable/no_data_found"></ImageView>
+
+                    <TextView
+                        android:id="@+id/noDataFound1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:text="ohcacaicsaiscniscain">
+
+                    </TextView>
+
+                </LinearLayout>
                 <TextView
                     android:layout_marginTop="@dimen/five"
-                    android:layout_below="@+id/lnrClasses"
+                    android:layout_below="@+id/lytNoDataFound1"
                     android:layout_width="match_parent"
                     android:id="@+id/lblAttendanceOptions"
                     android:text="@string/attendance_options"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/eighteen_sp"
+                    android:textSize="@dimen/sixteen_sp"
                     android:layout_height="wrap_content">
 
                 </TextView>
@@ -523,13 +322,13 @@
                     android:weightSum="1">
 
                     <TextView
-                        android:layout_weight="0.35"
-                        android:layout_width="match_parent"
                         style="@style/CustomTextStylePoppinsRegular"
-                        android:textSize="@dimen/fourteen_sp"
-                        android:textColor="@color/mild_grey_dark"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.35"
                         android:text="@string/session"
-                        android:layout_height="wrap_content">
+                        android:textColor="@color/mild_grey_dark"
+                        android:textSize="@dimen/fourteen_sp">
 
                     </TextView>
                     <TextView
@@ -548,7 +347,7 @@
                         android:layout_width="match_parent"
                         android:layout_weight="0.16"
                         android:weightSum="0.16"
-                        android:padding="@dimen/three"
+                        android:padding="@dimen/one"
                         android:layout_height="wrap_content">
                         <TextView
                             style="@style/CustomTextStylePoppinsMedium"
@@ -558,7 +357,7 @@
                             android:text="F/N"
                             android:gravity="center"
                             android:background="@drawable/gray_bg_radius"
-                            android:paddingVertical="@dimen/five"
+                            android:paddingVertical="@dimen/three"
                             android:layout_height="wrap_content">
 
                         </TextView>
@@ -569,7 +368,7 @@
                             android:gravity="center"
                             android:layout_width="match_parent"
                             android:text="A/F"
-                            android:paddingVertical="@dimen/five"
+                            android:paddingVertical="@dimen/three"
                             android:layout_height="wrap_content">
 
                         </TextView>
@@ -613,102 +412,258 @@
 
                 </TextView>
 
-                <TextView
-                    android:id="@+id/btnAbsent"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/fourty_five"
-                    android:layout_below="@+id/btnOr"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginTop="@dimen/fifteen"
-                    android:layout_marginEnd="@dimen/twenty"
-                    android:background="@drawable/rect_shadow_gray"
-                    android:enabled="false"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:gravity="center"
-                    android:padding="@dimen/ten"
-                    android:text="@string/mark_attendance"
-                    android:textColor="@color/white"
-                    android:visibility="visible">
-
-                </TextView>
             </RelativeLayout>
+            <TextView
+                android:id="@+id/btnAbsent"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/thirty_five"
+                android:gravity="center"
+                android:paddingStart="@dimen/ten"
+                android:paddingEnd="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:background="@drawable/rect_shadow_gray"
+                android:enabled="false"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:text="@string/mark_attendance"
+                android:textColor="@color/white"
+                android:visibility="visible">
+            </TextView>
+
+<!--            Report Side Design-->
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/lnrAttendanceReport"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/white_bg_card"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/eighteen_sp"
+                        android:id="@+id/lblReport"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/imgSearchicon"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="wrap_content"
+                        android:text="@string/report_s"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgSearchicon"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_width="@dimen/twenty_five"
+                        android:src="@drawable/search_icon"
+                        android:layout_alignParentEnd="true"
+                        android:layout_height="@dimen/twenty_five">
+
+                    </ImageView>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrAttendancePercentageRate"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_width="match_parent"
+                    android:weightSum="2"
+                    android:layout_height="wrap_content">
+                    <androidx.cardview.widget.CardView
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_width="match_parent"
+                        app:cardCornerRadius="@dimen/ten"
+                        android:layout_height="wrap_content"
+                        app:cardUseCompatPadding="true"
+                        app:cardPreventCornerOverlap="false"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:layout_margin="@dimen/five"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:gravity="center"
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:text="@string/present_rate"
+                                android:layout_height="wrap_content">
+                            </TextView>
+                            <TextView
+                                android:id="@+id/lblPresentRate"
+                                android:layout_width="match_parent"
+                                android:text="0%"
+                                android:layout_marginTop="@dimen/three"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:gravity="center"
+                                android:textSize="@dimen/sixteen_sp"
+                                android:layout_height="wrap_content">
+                            </TextView>
+                            <View
+                                android:layout_width="match_parent"
+                                android:background="@color/athens_gray"
+                                android:layout_height="2dp">
+
+                            </View>
+                            <ImageView
+                                android:layout_width="@dimen/fifty"
+                                android:src="@drawable/graph_gain"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/five"
+                                android:layout_height="@dimen/fifty">
+
+                            </ImageView>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/five"
+                        app:cardCornerRadius="@dimen/ten"
+                        app:cardUseCompatPadding="true"
+                        app:cardPreventCornerOverlap="false"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:layout_margin="@dimen/five"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:gravity="center"
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:text="@string/absent_rate"
+                                android:layout_height="wrap_content">
+                            </TextView>
+                            <TextView
+                                android:id="@+id/lblAbsentRate"
+                                android:layout_width="match_parent"
+                                android:text="0%"
+                                android:layout_marginTop="@dimen/three"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:gravity="center"
+                                android:textSize="@dimen/sixteen_sp"
+                                android:layout_height="wrap_content">
+                            </TextView>
+                            <View
+                                android:layout_width="match_parent"
+                                android:background="@color/athens_gray"
+                                android:layout_height="2dp">
+
+                            </View>
+                            <ImageView
+                                android:layout_marginTop="@dimen/five"
+                                android:layout_width="@dimen/fifty"
+                                android:layout_gravity="center"
+                                android:src="@drawable/graph_loss"
+                                android:layout_height="@dimen/fifty">
+
+                            </ImageView>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rytSearchbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/thirty_five"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginBottom="@dimen/five"
+                    android:background="@drawable/rect_grey"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imgSearch"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:alpha="0.4"
+                        android:src="@drawable/ic_search" />
+
+                    <EditText
+                        android:id="@+id/txtSearchBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_toEndOf="@id/imgSearch"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/lblSearch"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp" />
+                </RelativeLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyAttendanceReport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    android:layout_marginTop="@dimen/five"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <LinearLayout
+                    android:id="@+id/lytNoDataFound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imgStudentReportImage"
+                        android:layout_width="@dimen/two_hundred"
+                        android:layout_height="@dimen/two_hundred"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:src="@drawable/no_attendance_taken"></ImageView>
+
+                    <TextView
+                        android:id="@+id/noDataFound"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
         </LinearLayout>
-    </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/rytSearchbox"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_below="@+id/scroll_container"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/five"
-        android:layout_marginEnd="@dimen/twenty"
-        android:layout_marginBottom="@dimen/five"
-        android:background="@drawable/rect_grey"
-        android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:alpha="0.4"
-            android:src="@drawable/ic_search" />
 
-        <EditText
-            android:id="@+id/txtSearchBox"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_toEndOf="@id/imgSearch"
-            android:background="@android:color/transparent"
-            android:hint="@string/lblSearch"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyAttendanceReport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearchbox"
-        android:layout_marginTop="@dimen/five"
-        android:visibility="gone">
 
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <LinearLayout
-        android:id="@+id/lytNoDataFound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rcyAttendanceReport"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="@dimen/two_hundred"
-            android:layout_height="@dimen/two_hundred"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/no_data_found"></ImageView>
-
-        <TextView
-            android:id="@+id/noDataFound"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:text="">
-
-        </TextView>
-
-    </LinearLayout>
 
 
 </RelativeLayout>

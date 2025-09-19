@@ -933,6 +933,9 @@
     <string name="student_submissions">Student Submissions</string>
     <string name="attendance_options">Attendance Options</string>
     <string name="attendance_type">Attendance Type</string>
+    <string name="report_s">Report\'s</string>
+    <string name="present_rate">Present Rate</string>
+    <string name="absent_rate">Absent Rate</string>
 
 
 </resources>
