@@ -6,6 +6,6 @@ data class ClassWise(
     val class_name: String,
     val total_absentees: String,
     val student_counts: String,
-    val date: String? = null,
+    val date: String,
     val section_wise: List<SectionWise>
 )

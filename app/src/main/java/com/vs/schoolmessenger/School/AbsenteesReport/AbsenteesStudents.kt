@@ -88,7 +88,6 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
 
     private fun fetchAbsenteeStudentData() {
 
-
         val absent_on = Constant.isAbsenteesReportDataSending?.date ?: ""
         val section_id =
             Constant.isAbsenteesReportDataSending?.section_wise?.firstOrNull()?.section_id ?: ""

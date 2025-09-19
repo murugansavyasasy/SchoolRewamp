@@ -17,12 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbarLayout"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/sixteen">
+
 
             <include
                 android:id="@+id/calenderlayout"
@@ -31,52 +34,61 @@
                 android:layout_height="wrap_content"
                 android:visibility="visible" />
 
+
             <LinearLayout
                 android:id="@+id/linear_layoutcontainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/twele"
+                android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/bg_calendar_card"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/twele">
+
 
                 <TextView
                     android:id="@+id/selectedDateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="@dimen/eight"
+                    android:layout_marginTop="@dimen/twele"
                     android:text="September 03, 2025"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/twenty_sp"
                     android:textStyle="bold" />
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rlaabsenteesreport2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/eight"
+                    android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
-                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
 
                 <TextView
                     android:id="@+id/absentListTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="@dimen/eight"
+                    android:layout_marginTop="@dimen/sixteen"
                     android:text="👨‍🎓 Absent students list"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/absentStudentsRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:nestedScrollingEnabled="false" />
+                    android:layout_marginTop="@dimen/eight"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </LinearLayout>
         </LinearLayout>
