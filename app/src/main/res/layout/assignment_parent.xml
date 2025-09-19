@@ -46,7 +46,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/assignment"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp" />
     </LinearLayout>

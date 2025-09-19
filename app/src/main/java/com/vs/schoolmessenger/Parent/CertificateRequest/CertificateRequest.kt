@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -44,18 +45,20 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.ivradio1.setOnClickListener(this)
         urgency_level=getString(R.string.not_urgent)
 
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
 //        binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
 //        binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
         binding.btnSendCertificateRequest.setOnClickListener(this)
+
+        binding.headerText3.text=Constant.isParentMenuName
 //        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
 //        binding.toolbarLayout.rytSearch.visibility = View.GONE
 //        binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
 //        binding.toolbarLayout.lblLeftSideBar.text = "Certificates"
 //        binding.toolbarLayout.lblRightSideBar.text = "Request"
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.lblName.text = isChildDetails?.name ?: ""
-        binding.lblSection.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text  =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
@@ -65,14 +68,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.ivradio.setImageResource(R.drawable.selected_radio_button)
         binding.ivradio1.setImageResource(R.drawable.unselected_radio_button)
 
-        binding.imgSearch.setOnClickListener {
-            if (binding.rlaSortSearch.visibility == View.VISIBLE) {
-                binding.rlaSortSearch.visibility = View.GONE
-            } else {
-                binding.rlaSortSearch.visibility = View.VISIBLE
-                binding.txtSearchMenu.text.clear()
-            }
-        }
+
 
         appViewModel!!.isCertificateRequestList?.observe(this) { response ->
             if (response != null && response.status) {
@@ -81,11 +77,13 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                     binding.recyclerView.visibility = View.VISIBLE
                     binding.lnrNoRecords.visibility = View.GONE
                     setupRecyclerView()
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 }
             } else {
                 binding.recyclerView.visibility = View.GONE
                 binding.lnrNoRecords.visibility = View.VISIBLE
                 binding.txtNoData.text = getString(R.string.no_data_found)
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             }
         }
 
@@ -104,9 +102,19 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         }
         loadCertificateRequestData()
 
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rlaSortSearch1.visibility == View.VISIBLE) {
+                binding.rlaSortSearch1.visibility = View.GONE
+                binding.txtSearchMenutext.text.clear()
 
 
-        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+            } else {
+                binding.rlaSortSearch1.visibility = View.VISIBLE
+                binding.txtSearchMenutext.text.clear()
+            }
+        }
+
+        binding.txtSearchMenutext.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -116,6 +124,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
+                Log.d("Filter",s.toString())
             }
         })
 
@@ -256,7 +265,6 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 binding.ivradio1.setImageResource(R.drawable.selected_radio_button)
             }
 
-            R.id.imgBack -> onBackPressed()
 
             R.id.btnSendCertificateRequest -> {
                 if (binding.txtReason.text.isNotEmpty()) {

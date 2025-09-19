@@ -122,7 +122,8 @@ class SchoolMenuAdapter(
                 Constant.SELECTED_SCHOOL_MENU = data.id
                 listener.onClick(data)
                 Constant.isSchoolMenuCount = itemCountList?.getOrNull(position)?.unread_count ?: 0
-                Log.d("Menu Count", "${Constant.isSchoolMenuCount}, ${data.name}")
+                val CountMenuname = itemCountList?.getOrNull(position)?.name ?: 0
+                Log.d("Menu Count", "${Constant.isSchoolMenuCount},Selected Menu Dashboard: ${data.name},CountMenuName: ${CountMenuname}",)
             }
         }
     }

@@ -3,6 +3,8 @@ package com.vs.schoolmessenger.Parent.RequestLeave
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
@@ -17,6 +19,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionListData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LeaveRequestBinding
@@ -41,6 +44,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var totalLeaveDays: Int = 0
     private val dateFormat = SimpleDateFormat(Constant.dd_MM_yyyy, Locale.getDefault())
     private var currentTab = TabType.LeaveRequest
+    private var isLeaveList: List<MonthWiseLeaveData>? = emptyList()
+
 
 
     private enum class TabType {
@@ -103,7 +108,31 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
         binding.rlaCreateLeaveRequest.visibility = View.GONE
         binding.rlaHistory.visibility = View.VISIBLE
+
+        binding.imgSearchBtn.setOnClickListener {
+            if (binding.rytSearch.visibility == View.VISIBLE) {
+                binding.rytSearch.visibility = View.GONE
+            } else {
+                binding.rytSearch.visibility = View.VISIBLE
+                binding.txtVideoMenu.text.clear()
+            }
+        }
+
         isGetLeaveRequestList()
+
+        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+                Log.d("Search",s.toString())
+            }
+        })
 
 
 
@@ -113,11 +142,15 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 isloadleaverequestData(response.data)
+                isLeaveList=response.data
+                binding.imgSearchBtn.visibility=View.VISIBLE
             } else {
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
+                binding.imgSearchBtn.visibility=View.GONE
+                binding.rytSearch.visibility=View.GONE
             }
         }
 
@@ -186,17 +219,22 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.tabLayoutStatus.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+                binding.txtVideoMenu.text.clear()
                 val selectedTitle = tab.text.toString()
                 val filterStatus = tabStatusMap[selectedTitle] ?: Constant.All_
                 mAdapter.filterByStatus(filterStatus)
 
                 if (mAdapter.itemCount == 0) {
+                    binding.imgSearchBtn.visibility=View.GONE
+                    binding.rytSearch.visibility=View.GONE
                     binding.txtNoData.visibility = View.VISIBLE
                     binding.nomessage.visibility = View.VISIBLE
                     binding.rcyLeaveRequestHistory.visibility = View.GONE
                 } else {
                     binding.txtNoData.visibility = View.GONE
                     binding.nomessage.visibility = View.GONE
+                    binding.imgSearchBtn.visibility=View.VISIBLE
+                    binding.rytSearch.visibility=View.VISIBLE
                     binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
                 }
             }
@@ -211,6 +249,61 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
         Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
 
+    }
+
+    private fun filter(text: String) {
+        val searchWords = text.trim().lowercase().split("\\s+".toRegex())
+
+        val filteredMonthList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
+            isLeaveList.orEmpty()
+        } else {
+            isLeaveList.orEmpty().mapNotNull { monthWiseLeave ->
+                val filteredDetails = monthWiseLeave.details.filter { leave ->
+                    val fieldsToSearch = listOf(
+                        leave.student_name.lowercase(),
+                        leave.class_name.lowercase(),
+                        leave.section_name.lowercase(),
+                        leave.applied_on.lowercase(),
+                        leave.no_of_days.lowercase(),
+                        leave.leave_from.lowercase(),
+                        leave.leave_to.lowercase(),
+                        leave.leave_type.lowercase(),
+                        leave.reason.lowercase(),
+                        leave.from_session.lowercase(),
+                        leave.to_session.lowercase(),
+                    )
+                    searchWords.all { word ->
+                        fieldsToSearch.any { field -> field.contains(word) }
+                    }
+                }
+
+                if (filteredDetails.isNotEmpty()) {
+                    monthWiseLeave.copy(details = filteredDetails) // keep month, but only matching details
+                } else {
+                    null
+                }
+            }
+        }
+
+        // 🔹 Update UI
+        if (filteredMonthList.isNotEmpty()) {
+            ShowData()
+            mAdapter.updateData(filteredMonthList)
+        } else {
+            binding.rcyLeaveRequestHistory.visibility = View.GONE
+            ErrorMessage(getString(R.string.no_data_found))
+        }
+    }
+
+    fun ShowData() {
+        binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
+        binding.lytList.visibility = View.GONE
+    }
+
+
+    fun ErrorMessage(errorMessage: String) {
+        binding.lytList.visibility = View.VISIBLE
+        binding.txtNoData.text = errorMessage
     }
 
 

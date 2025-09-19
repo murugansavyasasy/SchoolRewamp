@@ -72,7 +72,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Attendance"
+                android:text=""
                 android:layout_marginStart="@dimen/thirty_five"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_below="@+id/rytHeaderDetail"

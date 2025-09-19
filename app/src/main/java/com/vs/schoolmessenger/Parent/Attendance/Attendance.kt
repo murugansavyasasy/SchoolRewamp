@@ -59,6 +59,8 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         binding.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
+        binding.lblParentToolBar.text=Constant.isParentMenuName
+
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
