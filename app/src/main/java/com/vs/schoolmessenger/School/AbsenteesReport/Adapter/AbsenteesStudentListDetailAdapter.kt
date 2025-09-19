@@ -111,7 +111,6 @@ class AbsenteesStudentListDetailAdapter(
             registerNumber.text = data.admission_no
 
 
-
             val name = data.student_name
             imageView.text = if (!name.isNullOrEmpty()) {
                 name.first().toString().uppercase()
