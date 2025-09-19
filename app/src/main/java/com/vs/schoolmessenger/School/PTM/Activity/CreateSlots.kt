@@ -153,7 +153,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 binding.rytNeedBreak.visibility = View.GONE
             }
         }
-
         isLoadSlotDuration()
     }
 
@@ -470,13 +469,28 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 slot.slot_availablity.equals("Available", true)
             }
 
-            isSlotCreateValues = availableSlots
-                .groupBy { it.first }
-                .map { (date, slots) -> date to slots.map { it.second } }
-                .toMutableList()
-            Constant.showLoading(this)
-            isCreateSlots()
+            if (availableSlots.isEmpty()) {
+                Toast.makeText(this, "Please select at least one available slot", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val dialogBuilder = android.app.AlertDialog.Builder(this)
+            dialogBuilder.setTitle("Confirm Slot Creation")
+            dialogBuilder.setMessage("Are you sure you want to create slots for the selected dates?")
+            dialogBuilder.setPositiveButton("Yes") { dialog, _ ->
+                isSlotCreateValues = availableSlots
+                    .groupBy { it.first }
+                    .map { (date, slots) -> date to slots.map { it.second } }
+                    .toMutableList()
+                Constant.showLoading(this)
+                isCreateSlots()
+                dialog.dismiss()
+            }
+            dialogBuilder.setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            dialogBuilder.create().show()
         }
+
 
         bottomSheetDialog!!.show()
 
@@ -616,6 +630,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         )
         val calendarView = dialog.findViewById<CustomCalendar>(R.id.customCalendar)
         val btnSave = dialog.findViewById<TextView>(R.id.btnSaveCalendar)
+        calendarView.setOnCancelListener {
+            dialog.dismiss()
+        }
         calendarView.setSelectedDates(selectedDates)
         btnSave.setOnClickListener {
             selectedDates.clear()

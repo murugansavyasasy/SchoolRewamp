@@ -1214,8 +1214,7 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiParentRepositories.isSubjectListWithClassTeacher(isToken)
     }
-
-
+    
     fun isQuizExamList(
         isToken: String,
         type: String,

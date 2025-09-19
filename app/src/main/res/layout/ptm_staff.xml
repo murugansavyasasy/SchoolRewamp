@@ -107,7 +107,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="You have a 10 meeting's today"
+            android:text="You have a 0 meeting's today"
             android:textColor="@color/white"
             android:textSize="@dimen/sixteen">
 

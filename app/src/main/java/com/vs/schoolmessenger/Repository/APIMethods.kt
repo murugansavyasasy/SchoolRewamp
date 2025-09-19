@@ -182,7 +182,6 @@ object APIMethods {
     const val islsrwmysubmission = "lms/api/lsrw/my-submissions"
     const val ispresubmission = "admin/api/student-profile/pre-submission"
 
-    const val getStudentInvoices = "fee/api/fee-details/student-invoice"
 
 }
 

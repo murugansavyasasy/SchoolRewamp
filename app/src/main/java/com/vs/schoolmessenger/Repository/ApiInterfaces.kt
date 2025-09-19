@@ -1069,8 +1069,7 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String
     ): Call<ProfileListResponse?>?
 
-
-
+    
     @GET(APIMethods.islsrwmysubmission)
     fun islsrwmysubmission(
         @Header(APIKeyNames.Authorization) token: String,
@@ -1083,7 +1082,6 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
     ): Call<ProfileUpdateResponse?>?
-
 
     @GET("fee/api/fee-details/student-invoice")
     fun getStudentInvoices(

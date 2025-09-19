@@ -14,6 +14,7 @@ import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
@@ -112,7 +113,6 @@ class MeetingHistoryAdapter(
 
             tvStatus.background = bgDrawable
 
-
             when {
                 meeting.status.equals("Completed", true) -> {
                     cancelButton.visibility = View.GONE
@@ -132,6 +132,7 @@ class MeetingHistoryAdapter(
                 val context = itemView.context
                 val dialogView = LayoutInflater.from(context)
                     .inflate(R.layout.dialog_cancel_meeting, null)
+
                 val etReason = dialogView.findViewById<EditText>(R.id.etReason)
                 val btnCancelMeeting = dialogView.findViewById<Button>(R.id.btnCancelMeeting)
                 val ivClose = dialogView.findViewById<ImageView>(R.id.ivClose)
@@ -140,15 +141,21 @@ class MeetingHistoryAdapter(
                     .setView(dialogView)
                     .create()
 
+                ivClose.setOnClickListener { alertDialog.dismiss() }
+
                 btnCancelMeeting.setOnClickListener {
-                    alertDialog.dismiss()
-                }
-                ivClose.setOnClickListener {
-                    alertDialog.dismiss()
+                    val reason = etReason.text.toString().trim()
+                    if (reason.isEmpty()) {
+                        Toast.makeText(context, "Please enter a reason", Toast.LENGTH_SHORT).show()
+                    } else {
+                        alertDialog.dismiss()
+                        listener.onCancelClick(meeting, adapterPosition, reason)
+                    }
                 }
 
                 alertDialog.show()
             }
+
 
             callButton.setOnClickListener {
                 val context = itemView.context

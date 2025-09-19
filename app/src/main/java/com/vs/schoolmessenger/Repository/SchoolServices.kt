@@ -3189,14 +3189,23 @@ class SchoolServices {
                     call: Call<StatusMessageModel?>,
                     response: Response<StatusMessageModel?>
                 ) {
-                    Log.d("GetChildAttendanceReportData Response", "${response.code()} - $response"
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        "${response.code()} - $response"
                     )
+
                     if (response.isSuccessful && response.body() != null) {
                         isPtmSlotCancelClose.postValue(response.body())
                     } else {
-                        val errorMsg = try { response.errorBody()?.string() } catch (e: Exception) { null }
+                        val errorMsg = try {
+                            response.errorBody()?.string()
+                        } catch (e: Exception) {
+                            null
+                        }
+
                         val parsedMessage = if (!errorMsg.isNullOrEmpty()) {
-                            try { val json = JSONObject(errorMsg)
+                            try {
+                                val json = JSONObject(errorMsg)
                                 json.optString("message", "Unknown server error")
                             } catch (_: Exception) {
                                 errorMsg
@@ -3209,6 +3218,7 @@ class SchoolServices {
                         )
                     }
                 }
+
                 override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
                     isPtmSlotCancelClose.postValue(
                         StatusMessageModel(false, t.message ?: "Network failure", emptyList())
@@ -3220,6 +3230,7 @@ class SchoolServices {
 
     val isPtmSlotCancelCloseLiveData: LiveData<StatusMessageModel?>
         get() = isPtmSlotCancelClose
+
 
 
     fun isDatewiseBookedSlots(
