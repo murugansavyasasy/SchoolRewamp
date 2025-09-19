@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -42,11 +43,12 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.rlaTextMessage.setOnClickListener(this)
         binding.rlaVoiceMessage.setOnClickListener(this)
         binding.seeMoreLabel.setOnClickListener(this)
         binding.imgFilter.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 
         isFromArchive = intent.getBooleanExtra(Constant.fromArchive, false)
         appViewModel = ViewModelProvider(this).get(App::class.java)
@@ -56,14 +58,23 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         isAccessToken = isChildDetails?.access_token
         showShimmer()
 
-        binding.imgBack.setOnClickListener {
-            onBackPressed()
-        }
-
-        binding.lblStudentName.text = isChildDetails!!.name
-        binding.lblParentToolBar.text = Constant.isParentMenuName
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentName.text= isChildDetails!!.name
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
+
+        binding.lblHeaderTitle.text=Constant.isParentMenuName
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.linearlayout1.visibility == View.VISIBLE) {
+                binding.linearlayout1.visibility = View.GONE
+                binding.txtSearchMenu.text.clear()
+
+            } else {
+                binding.linearlayout1.visibility = View.VISIBLE
+                binding.txtSearchMenu.text.clear()
+
+            }
+        }
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -219,7 +230,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgBack -> onBackPressed()
 
             R.id.imgFilter -> {
                 isFilterClick = true

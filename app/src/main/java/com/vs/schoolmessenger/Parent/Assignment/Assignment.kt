@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.Assignment
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
@@ -65,6 +66,8 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+        binding.lblHeaderTitle.text = Constant.isParentMenuName
+        Log.d("isParentMenuName",Constant.isParentMenuName)
 
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name

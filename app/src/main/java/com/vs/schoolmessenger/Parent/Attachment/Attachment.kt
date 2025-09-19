@@ -40,17 +40,32 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         isAccessToken = childDetails?.access_token
 
 
-        binding.imgBack.setOnClickListener { onBackPressed() }
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
-        binding.imgSearchHeader.setOnClickListener(this)
-        binding.lblStudentName.text = childDetails?.name
-        binding.lblParentToolBar.text = Constant.isParentMenuName
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        binding.lblHeaderTitle.text=Constant.isParentMenuName
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+            if (binding.rytSearch1.visibility == View.VISIBLE) {
+                binding.rytSearch1.visibility = View.GONE
+                binding.txtSearchMenu1.setText("")
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu1.windowToken, 0)
+            } else {
+                binding.rytSearch1.visibility = View.VISIBLE
+                binding.txtSearchMenu1.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.txtSearchMenu1, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
+        binding.toolbarLayout.lblStudentName.text = childDetails?.name
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
         binding.linearlayout1.visibility = View.VISIBLE
+
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
 
-        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtSearchMenu1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mAttachmentReportAdapter?.filter?.filter(s)
@@ -58,14 +73,14 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        binding.txtSearchMenu.setOnEditorActionListener { _, actionId, _ ->
+        binding.txtSearchMenu1.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val query = binding.txtSearchMenu.text.toString()
+                val query = binding.txtSearchMenu1.text.toString()
                 mAttachmentReportAdapter?.filter?.filter(query)
 
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
-                binding.txtSearchMenu.clearFocus()
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu1.windowToken, 0)
+                binding.txtSearchMenu1.clearFocus()
                 true
             } else false
         }
@@ -122,19 +137,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgSearchHeader -> {
-                if (binding.rytSearch.visibility == View.VISIBLE) {
-                    binding.rytSearch.visibility = View.GONE
-                    binding.txtSearchMenu.setText("")
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
-                } else {
-                    binding.rytSearch.visibility = View.VISIBLE
-                    binding.txtSearchMenu.requestFocus()
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.showSoftInput(binding.txtSearchMenu, InputMethodManager.SHOW_IMPLICIT)
-                }
-            }
         }
     }
 

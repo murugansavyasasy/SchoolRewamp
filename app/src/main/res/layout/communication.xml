@@ -5,65 +5,16 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/PrimaryColor"
-        android:paddingVertical="@dimen/fifteen">
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar" />
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_left_white" />
-
-        <TextView
-            android:id="@+id/lblParentToolBar"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/rlaStudentName"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp" />
-
-        <LinearLayout
-            android:id="@+id/rlaStudentName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/lblStudentName"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp" />
-
-            <TextView
-                android:id="@+id/lblStudentSection"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp" />
-        </LinearLayout>
-    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/lnrCommunicationIcon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
@@ -145,7 +96,7 @@
         android:id="@+id/headerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
@@ -158,12 +109,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-             android:text="@string/communication"
+             android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/linearlayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -85,10 +85,15 @@ class AbsenteesCustomCalender(
             daysInMonth.add(Pair(i.toString(), dayOfWeek))
         }
 
-        // Simple adapter - just click and return date
-        val adapter = AbsenteesCalendarAdapter(daysInMonth) { selectedDate ->
+        val adapter = AbsenteesCalendarAdapter(
+            daysInMonth,
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.YEAR)
+        ) { selectedDate ->
             onDateSelectedListener?.invoke(selectedDate)
         }
+
         gridCalendar.adapter = adapter
     }
+
 }

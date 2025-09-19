@@ -380,19 +380,16 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     override fun onStaffClick(data: GetMessagesStaffData) {
         Log.d("SelectedData",data.toString())
         showResumeListDialog(this,data)
-
         if (data.is_unread){
             isMenuCount-=1
             setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
 
+            val jsonObject = JsonObject().apply {
+                addProperty(APIKeyNames.type, data.type)
+                addProperty(APIKeyNames.detail_id, data.id)
+            }
+            appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
         }
-
-        val jsonObject = JsonObject().apply {
-            addProperty(APIKeyNames.type, data.type)
-            addProperty(APIKeyNames.detail_id, data.id)
-        }
-        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
-
     }
 
 

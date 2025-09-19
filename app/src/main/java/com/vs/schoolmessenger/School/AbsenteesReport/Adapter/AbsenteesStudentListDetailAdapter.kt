@@ -79,11 +79,10 @@ class AbsenteesStudentListDetailAdapter(
                     fullList
                 } else {
                     fullList.filter {
-                        it.student_name.lowercase().contains(query) ||
-                                it.admission_no.lowercase().contains(query) ||
-                                it.primary_mobile.lowercase().contains(query) ||
-                                it.student_id.lowercase().contains(query) ||
-                                it.roll_no.lowercase().contains(query)
+                        it.student_name.lowercase().contains(query) || it.admission_no.lowercase()
+                            .contains(query) || it.primary_mobile.lowercase()
+                            .contains(query) || it.student_id.lowercase()
+                            .contains(query) || it.roll_no.lowercase().contains(query)
                     }
                 }
                 return FilterResults().apply { values = result }
@@ -103,19 +102,22 @@ class AbsenteesStudentListDetailAdapter(
         private val studentName: TextView = itemView.findViewById(R.id.student_name)
         private val sectionValue: TextView = itemView.findViewById(R.id.section_value)
         private val registerNumber: TextView = itemView.findViewById(R.id.register_number)
-        private val imageView: ImageView = itemView.findViewById(R.id.Image_value)
-        private val mobile_number: TextView = itemView.findViewById(R.id.mobile_number)
-        private val linearlayout: LinearLayout = itemView.findViewById(R.id.linearlayout)
+        private val imageView: TextView = itemView.findViewById(R.id.Image_value)
+        private val buttoncall: TextView = itemView.findViewById(R.id.buttoncall)
+        private val linearlayout: LinearLayout = itemView.findViewById(R.id.relative_layout)
 
         fun bind(data: Student, position: Int, listener: AbsenteesStudentDetailClickListener) {
             studentName.text = data.student_name
             registerNumber.text = data.admission_no
-            mobile_number.text = data.primary_mobile
 
-            Glide.with(context)
-                .load(data.photo_path)
-                .error(R.drawable.default_profile)
-                .into(imageView)
+
+
+            val name = data.student_name
+            imageView.text = if (!name.isNullOrEmpty()) {
+                name.first().toString().uppercase()
+            } else {
+                "-"
+            }
 
             Constant.isAbsenteesReportDataSending?.let { report ->
                 val sectionNamesCombined =
@@ -128,7 +130,7 @@ class AbsenteesStudentListDetailAdapter(
             }
 
             linearlayout.setOnClickListener {
-                Constant.redirectToDialPad(context, mobile_number.text.toString())
+                Constant.redirectToDialPad(context, data.primary_mobile)
             }
 
         }

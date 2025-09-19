@@ -9,7 +9,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,7 +52,7 @@ class LessonPlanAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
             filteredList.getOrNull(position)?.let { data ->
-                holder.bind(data)
+                holder.bind(data,context)
             }
         }
     }
@@ -64,7 +63,7 @@ class LessonPlanAdapter(
 
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: LessonPlanViewSummaryItem) {
+        fun bind(item: LessonPlanViewSummaryItem, context: Context) {
             val recyclerView = itemView.findViewById<RecyclerView>(R.id.detailsRecyclerView)
             val lblSubjectId = itemView.findViewById<TextView>(R.id.lblSubjectId)
             val lblTeaching = itemView.findViewById<TextView>(R.id.lblTeaching)
@@ -82,8 +81,8 @@ class LessonPlanAdapter(
             val btnedit = itemView.findViewById<LinearLayout>(R.id.btnEditContainer)
             val btndelete = itemView.findViewById<LinearLayout>(R.id.btnDeleteContainer)
 
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.adapter = LessonPlanDetailAdapter(item.details)
+            recyclerView.layoutManager = LinearLayoutManager(this@LessonPlanAdapter.context)
+            recyclerView.adapter = LessonPlanDetailAdapter(item.details,context)
 
 
 
@@ -107,7 +106,7 @@ class LessonPlanAdapter(
                 1 -> {
                     status_text1label.setImageResource(R.drawable.sandclockicon)
                     status_text1label.setColorFilter(
-                        ContextCompat.getColor(context, R.color.dark_orange),   // your color
+                        ContextCompat.getColor(this@LessonPlanAdapter.context, R.color.dark_orange),   // your color
                         PorterDuff.Mode.SRC_IN
                     )
 

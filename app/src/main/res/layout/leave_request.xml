@@ -32,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/imgSearchBtn"
                 android:layout_toEndOf="@+id/imgBack"
                 android:orientation="vertical">
 
@@ -59,6 +60,17 @@
                 </TextView>
 
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgSearchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:padding="@dimen/five"
+                android:src="@drawable/search_icon_white"
+                />
 
         </RelativeLayout>
 
@@ -94,12 +106,44 @@
         app:tabSelectedTextColor="@color/skydark_blue"
         app:tabTextColor="@color/black" />
 
+    <RelativeLayout
+        android:id="@+id/rytSearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@id/tabLayoutStatus"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
+
+
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/txtVideoMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/rlaHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tabLayoutStatus"
+        android:layout_below="@+id/rytSearch"
         android:layout_marginTop="@dimen/ten"
         >
 
