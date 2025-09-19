@@ -67,10 +67,12 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.linearlayout1.visibility == View.VISIBLE) {
                 binding.linearlayout1.visibility = View.GONE
+                binding.rytFilter.visibility = View.GONE
                 binding.txtSearchMenu.text.clear()
 
             } else {
                 binding.linearlayout1.visibility = View.VISIBLE
+                binding.rytFilter.visibility = View.GONE
                 binding.txtSearchMenu.text.clear()
 
             }

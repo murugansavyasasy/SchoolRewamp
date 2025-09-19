@@ -6,76 +6,15 @@
     android:fitsSystemWindows="true">
 
 
-    <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/PrimaryColor"
-        android:paddingVertical="@dimen/fifteen">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_left_white">
-
-        </ImageView>
-
-
-        <LinearLayout
-            android:id="@+id/rlaStudentName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_toStartOf="@+id/imgSearch"
-            android:layout_toEndOf="@+id/imgBack"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/lblStudentName"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SATISH KUMAR"
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblStudentSection"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblStudentName"
-                android:layout_marginTop="@dimen/ten"
-                android:text="I-B"
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
-        </LinearLayout>
-
-        <ImageView
-            android:id="@id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/twenty"
-            android:src="@drawable/search_icon_white">
-
-        </ImageView>
-    </RelativeLayout>
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar" />
 
     <LinearLayout
         android:id="@+id/headerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
@@ -88,14 +27,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/exam"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/toolbarLayout"
+        android:id="@+id/toolbarLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/headerview"
@@ -165,7 +104,7 @@
         android:id="@+id/rytSearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/toolbarLayout1"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/ten"

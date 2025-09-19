@@ -36,7 +36,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     private var isCalendarExpanded: Boolean = true // Track calendar state
 
     override fun getViewBinding(): AbsenteesReportBinding {
-        return AbsenteesReportBinding.inflat e(layoutInflater)
+        return AbsenteesReportBinding.inflate(layoutInflater)
     }
 
     override fun setupViews() {

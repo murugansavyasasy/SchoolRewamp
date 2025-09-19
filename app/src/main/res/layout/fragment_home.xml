@@ -49,9 +49,10 @@
                 android:layout_marginTop="@dimen/one"
                 android:layout_toEndOf="@id/back"
                 android:gravity="center"
-                android:text="@string/pauket"
+                android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold" />
+
         </RelativeLayout>
 
 
@@ -235,9 +236,9 @@
         <ImageView
             android:id="@+id/nomessage"
             android:layout_width="@dimen/two_fifty"
+            android:layout_centerHorizontal="true"
             android:layout_height="@dimen/two_fifty"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
+            android:layout_below="@+id/text_view"
             android:layout_marginTop="@dimen/twenty"
             android:src="@drawable/nomessages"
             android:textColor="@color/black"
