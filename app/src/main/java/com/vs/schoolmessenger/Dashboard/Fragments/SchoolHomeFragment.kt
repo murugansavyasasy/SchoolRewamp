@@ -36,6 +36,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
 import com.vs.schoolmessenger.School.Assignment.AssignmentReport
 import com.vs.schoolmessenger.School.Attachment.Attachment
+import com.vs.schoolmessenger.School.Attachment.AttachmentReport
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -553,7 +554,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
             Constant.M_ATTACHMENTS -> {
-                Attachment::class.java
+                AttachmentReport::class.java
             }
 
             Constant.M_LEAVE_REQUEST -> {
