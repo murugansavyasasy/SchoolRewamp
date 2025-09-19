@@ -433,6 +433,8 @@ object Constant {
     var exam_id = "exam_id"
     var google_g_view_embedded = "https://docs.google.com/gview?embedded=true&url="
     var online_fee_payment_link = "https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063/app"
+    var isStudentID =":student_id"
+    var isSchoolID =":school_id"
     var TOTAL = "TOTAL"
     var Listening = "Listening"
     var Speaking = "Speaking"

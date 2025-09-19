@@ -470,6 +470,12 @@
             android:name=".Parent.EventsHolidays.HolidayActivity.Holidays"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".Parent.EBooks.Ebooks"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
         <activity
             android:name=".Parent.Attendance.AttendanceReport.AttendanceReport"
             android:theme="@style/AppTheme"

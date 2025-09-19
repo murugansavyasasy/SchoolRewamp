@@ -48,6 +48,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     lateinit var mAdapter: FeeReceiptAdapter
 //    private lateinit var invoiceList: List<InvoiceDetails>
     private var appViewModel: App? = null
+    var isChildId=""
+    var isSchoolID=""
 
     private val popupWebViewStack = Stack<WebView>()
     var alertDialogView: AlertDialog? = null
@@ -62,6 +64,16 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
+        isChildId=isChildDetails!!.child_id
+        isSchoolID=isChildDetails!!.school_id
+
+        val feeUrl =Constant.isGlobalVariableData!!.fees_url
+
+        val isFinalFeeUrl = feeUrl
+            .replace(Constant.isStudentID, isChildId)
+            .replace(Constant.isSchoolID, isSchoolID)
+
+        Log.d("isFinalFeeUrl","isChildId: ${isChildId} |isSchoolID: ${isSchoolID} | StudentFinalFeeUrl: ${isFinalFeeUrl}" )
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
         binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
@@ -85,7 +97,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             }
         }
         loadPaymentPage(binding.payWebview)
-        binding.payWebview.loadUrl(Constant.online_fee_payment_link)
+        binding.payWebview.loadUrl(isFinalFeeUrl)
 
         binding.txtSearchMenuBox.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
