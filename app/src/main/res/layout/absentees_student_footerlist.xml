@@ -6,104 +6,89 @@
     android:fitsSystemWindows="true">
 
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:layout_marginBottom="@dimen/ten"
-        android:padding="@dimen/twele"
-        app:cardCornerRadius="@dimen/seven"
-        app:cardElevation="@dimen/four">
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/Image_value"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/bg_circle_avatar"
+            android:gravity="center"
+            android:text="J"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
 
         <LinearLayout
-            android:id="@+id/linear_layout"
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fifteen"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/Image_value"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="J"
-                android:layout_marginStart="20dp"
-                android:textSize="16sp"
+                android:id="@+id/student_name"
                 style="@style/CustomTextStylePoppinsBold"
-                android:textColor="@android:color/white"
-                android:background="@drawable/bg_circle_avatar" />
-
-
-
-            <LinearLayout
-                android:id="@+id/relative_layout"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/twenty"
+                android:text="Saran"
+                android:textSize="@dimen/seventeen_sp">
+            </TextView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/student_name"
+                    android:id="@+id/register_number"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:text="Saran"
-                    android:textSize="@dimen/seventeen_sp"
-                    style="@style/CustomTextStylePoppinsBold"
-                    >
-                </TextView>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/register_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/five"
-                        android:text="Admission No :"
-                        android:textSize="@dimen/sixteen_sp"
-                        android:textColor="@color/light_gray_"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true" />
-
-                    <TextView
-                        android:id="@+id/buttoncall"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/five"
-                        android:text="Call"
-                        android:gravity="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        android:layout_marginEnd="20dp"
-                        android:padding="10dp"
-                        android:background="@drawable/background_radius_button"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_alignParentEnd="true"
-                        />
-
-                </RelativeLayout>
-
-
-                <TextView
-                    android:id="@+id/section_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="@dimen/five"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:text="SS - 1"
+                    android:text="Admission No :"
                     android:textColor="@color/light_gray_"
-                    android:textSize="@dimen/sixteen_sp"
-                    style="@style/CustomTextStylePoppinsMedium">
-                </TextView>
+                    android:textSize="@dimen/sixteen_sp" />
+
+                <TextView
+                    android:id="@+id/buttoncall"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/background_radius_button"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Call"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
 
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/section_value"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginBottom="@dimen/ten"
+                android:text="SS - 1"
+                android:textColor="@color/light_gray_"
+                android:textSize="@dimen/sixteen_sp">
+            </TextView>
+
+
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 </RelativeLayout>

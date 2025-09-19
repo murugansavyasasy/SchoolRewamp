@@ -1,76 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="@dimen/two_hundred"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/eight"
-    app:cardCornerRadius="@dimen/twele"
-    app:cardBackgroundColor="@color/PrimaryColor"
-    app:cardElevation="@dimen/four">
+    android:background="@drawable/bg_card_container"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/classvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Class : II"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        style="@style/CustomTextStylePoppinsBold" />
+
+    <TextView
+        android:id="@+id/sectionvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Section : A"
+        style="@style/CustomTextStylePoppinsBold"
+        android:textColor="@android:color/white"
+        android:textSize="13sp"
+        android:layout_marginTop="@dimen/four" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_inner_box"
         android:orientation="vertical"
-        android:padding="@dimen/twele"
-        android:gravity="center_horizontal">
-
+        android:padding="@dimen/ten"
+        android:layout_marginTop="@dimen/twele">
 
         <TextView
-            android:id="@+id/classvalue"
+            android:id="@+id/absentvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Class : II"
-            android:textColor="@android:color/white"
+            android:text="Absent : 5 / 6"
+            android:textColor="@color/PrimaryColor"
             android:textSize="15sp"
-            style="@style/CustomTextStylePoppinsBold" />
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_gravity="center_horizontal" />
 
-
-        <TextView
-            android:id="@+id/sectionvalue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Section : A"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textColor="@android:color/white"
-            android:textSize="13sp"
-            android:layout_marginTop="@dimen/four" />
-
-
-        <LinearLayout
+        <ProgressBar
+            android:id="@+id/progressAbsent"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_inner_box"
-            android:orientation="vertical"
-            android:padding="@dimen/ten"
-            android:layout_marginTop="@dimen/twele">
-
-
-            <TextView
-                android:id="@+id/absentvalue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Absent : 5 / 6"
-                android:textColor="@color/PrimaryColor"
-                android:textSize="15sp"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_gravity="center_horizontal" />
-
-
-            <ProgressBar
-                android:id="@+id/progressAbsent"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/eight"
-                android:progress="80"
-                android:max="100"
-                android:layout_marginTop="@dimen/eight"
-                android:progressDrawable="@drawable/progress_custom" />
-
-        </LinearLayout>
+            android:layout_height="@dimen/eight"
+            android:progress="80"
+            android:max="100"
+            android:layout_marginTop="@dimen/eight"
+            android:progressDrawable="@drawable/progress_custom" />
     </LinearLayout>
-
-
-
-
-</androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -31,12 +31,12 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
-
     private var absenteeList: List<AbsenteeData> = emptyList()
     private var studentAdapter: AbsenteesStudentListDetailAdapter? = null
+    private var isCalendarExpanded: Boolean = true // Track calendar state
 
     override fun getViewBinding(): AbsenteesReportBinding {
-        return AbsenteesReportBinding.inflate(layoutInflater)
+        return AbsenteesReportBinding.inflat e(layoutInflater)
     }
 
     override fun setupViews() {
@@ -58,6 +58,18 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
         binding.calenderlayout.customCalendar.setOnDateSelectedListener { date ->
             filterByDate(date)
+        }
+
+        binding.calenderlayout.customCalendar.setOnClickListener {
+            toggleCalendarVisibility()
+        }
+
+        // Detect scroll direction
+        binding.scrollContainer.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY > oldScrollY && scrollY > 0 && isCalendarExpanded) {
+                // Scrolling up and calendar is expanded -> collapse it
+                collapseCalendar()
+            }
         }
 
         appViewModel?.getabsenteescountbydate?.observe(this) { response ->
@@ -108,15 +120,16 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         } else {
             binding.rlaabsenteesreport2.visibility = View.GONE
             binding.selectedDateText.visibility = View.GONE
+            binding.linearLayoutcontainer.visibility = View.GONE
             binding.absentListTitle.visibility = View.GONE
             binding.absentStudentsRecyclerView.visibility = View.GONE
         }
     }
 
-
     private fun loadClassWiseRecycler(classWiseList: List<ClassWise>, selectedDate: String) {
         binding.rlaabsenteesreport2.visibility = View.VISIBLE
         binding.selectedDateText.visibility = View.VISIBLE
+        binding.linearLayoutcontainer.visibility = View.VISIBLE
         binding.absentListTitle.visibility = View.VISIBLE
         binding.absentStudentsRecyclerView.visibility = View.VISIBLE
         binding.rlaabsenteesreport2.layoutManager =
@@ -148,7 +161,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             )
         }
     }
-
 
     private fun bindStudentList(studentList: List<Student>) {
         if (studentAdapter == null) {
@@ -185,8 +197,46 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     private fun showErrorUI(message: String) {
         binding.rlaabsenteesreport2.visibility = View.GONE
         binding.selectedDateText.visibility = View.GONE
+        binding.linearLayoutcontainer.visibility = View.GONE
         binding.absentListTitle.visibility = View.GONE
         binding.absentStudentsRecyclerView.visibility = View.GONE
+    }
+
+
+    private fun collapseCalendar() {
+        if (isCalendarExpanded) {
+            isCalendarExpanded = false
+         binding.calenderlayout.customCalendar.animate()
+                .alpha(0f)
+                .translationY(-binding.calenderlayout.customCalendar.height.toFloat())
+                .setDuration(300)
+                .withEndAction {
+                    binding.calenderlayout.customCalendar.visibility = View.GONE
+                }
+                .start()
+        }
+    }
+
+    private fun expandCalendar() {
+        if (!isCalendarExpanded) {
+            isCalendarExpanded = true
+            binding.calenderlayout.customCalendar.visibility = View.VISIBLE
+            binding.calenderlayout.customCalendar.alpha = 0f
+            binding.calenderlayout.customCalendar.translationY = -binding.calenderlayout.customCalendar.height.toFloat()
+            binding.calenderlayout.customCalendar.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(300)
+                .start()
+        }
+    }
+
+    private fun toggleCalendarVisibility() {
+        if (isCalendarExpanded) {
+            collapseCalendar()
+        } else {
+            expandCalendar()
+        }
     }
 
     override fun onClick(v: View?) {
