@@ -43,22 +43,38 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+            if (binding.rytsearch.isVisible) {
+                binding.rytsearch.visibility = View.GONE
+                binding.txtVideoMenuBox.setText("")
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtVideoMenuBox.windowToken, 0)
+            } else {
+                binding.rytsearch.visibility = View.VISIBLE
+                binding.txtVideoMenuBox.setText("")
+                binding.txtVideoMenuBox.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.txtVideoMenuBox, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
 
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.lblStudentName.text = isChildDetails?.name
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
-        binding.rytSearch.setOnClickListener(this)
+        binding.lblHeaderTitle.text=Constant.isParentMenuName
 
         fetchstaffdata()
 
-        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtVideoMenuBox.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::interactionWithStaffAdapter.isInitialized) {
@@ -74,12 +90,16 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
             Log.d("response++", response.toString())
             if (response == null) {
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 return@observe
             }
             if (response.status) {
                 isLoadStaffData(response.data)
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
                 showErrorUI(response.message ?: "No data available")
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+
             }
         }
     }
@@ -117,22 +137,6 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgBack -> onBackPressed()
-
-            R.id.rytSearch -> {
-                if (binding.rytsearch.isVisible) {
-                    binding.rytsearch.visibility = View.GONE
-                    binding.txtVideoMenu.setText("")
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
-                } else {
-                    binding.rytsearch.visibility = View.VISIBLE
-                    binding.txtVideoMenu.setText("")
-                    binding.txtVideoMenu.requestFocus()
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
-                }
-            }
         }
     }
 

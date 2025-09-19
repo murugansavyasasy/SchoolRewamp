@@ -56,22 +56,34 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
 
-        binding.imgBack.setOnClickListener(this)
-        binding.rytSearch.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+            if (binding.rytSearch1.isVisible) {
+                binding.rytSearch1.visibility = View.GONE
+                binding.txtVideoMenuBox.setText("")
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtVideoMenuBox.windowToken, 0)
+            } else {
+                binding.rytSearch1.visibility = View.VISIBLE
+                binding.txtVideoMenuBox.setText("")
+                binding.txtVideoMenuBox.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.txtVideoMenuBox, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
         binding.headerview.visibility = View.GONE
         binding.categoryHeaderview.visibility = View.GONE
         binding.upcomingeventHeaderview.visibility = View.GONE
         binding.completedeventHeaderview.visibility = View.GONE
         binding.dotindicator.visibility = View.GONE
         binding.rcycategoryEvent.visibility = View.GONE
-        binding.lblStudentName.text = isChildDetails?.name
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+        binding.toolbarLayout.lblStudentSection.text =
             "${isChildDetails?.standard_name} - ${isChildDetails?.section_name}"
 
         loadeventdata()
 
-
-        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtVideoMenuBox.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::mAdapter.isInitialized) mAdapter.filter.filter(s)
                 if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(s)
@@ -123,6 +135,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 
                 allOngoingEvents = data.on_going
                 allUpcomingEvents = data.up_coming
@@ -153,6 +166,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 isloadCompletedData(allCompletedEvents)
 
             } else {
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 hideAllSections()
             }
         }
@@ -295,9 +309,11 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 eventupcomingadapter.updateList(upcomingFiltered)
                 binding.rcyupcomingevent.visibility = View.VISIBLE
                 binding.upcomingeventHeaderview.visibility = View.VISIBLE
+
             } else {
                 binding.rcyupcomingevent.visibility = View.GONE
                 binding.upcomingeventHeaderview.visibility = View.GONE
+
             }
 
             if (completedFiltered.size > 0) {
@@ -315,22 +331,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.imgBack -> onBackPressed()
 
-            R.id.rytSearch -> {
-                if (binding.rytSearch1.isVisible) {
-                    binding.rytSearch1.visibility = View.GONE
-                    binding.txtVideoMenu.setText("")
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
-                } else {
-                    binding.rytSearch1.visibility = View.VISIBLE
-                    binding.txtVideoMenu.setText("")
-                    binding.txtVideoMenu.requestFocus()
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
-                }
-            }
         }
     }
 
