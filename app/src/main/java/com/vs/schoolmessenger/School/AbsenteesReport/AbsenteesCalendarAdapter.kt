@@ -13,8 +13,11 @@ import java.util.Locale
 
 class AbsenteesCalendarAdapter(
     private val daysInMonth: List<Pair<String, Int>>,
+    private val month: Int,
+    private val year: Int,
     private val onDateClick: (String) -> Unit
 ) : BaseAdapter() {
+
 
     private var selectedPosition: Int = -1
 
@@ -60,12 +63,15 @@ class AbsenteesCalendarAdapter(
                 notifyDataSetChanged()
 
                 val cal = Calendar.getInstance()
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, month)
                 cal.set(Calendar.DAY_OF_MONTH, day.toInt())
-                val fullDate =
-                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(cal.time)
+
+                val fullDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(cal.time)
                 onDateClick(fullDate)
             }
         }
+
 
         return view
     }
