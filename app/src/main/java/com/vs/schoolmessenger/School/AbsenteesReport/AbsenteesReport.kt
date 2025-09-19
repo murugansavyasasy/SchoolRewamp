@@ -64,10 +64,10 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             toggleCalendarVisibility()
         }
 
-        // Detect scroll direction
+
         binding.scrollContainer.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY && scrollY > 0 && isCalendarExpanded) {
-                // Scrolling up and calendar is expanded -> collapse it
+
                 collapseCalendar()
             }
         }

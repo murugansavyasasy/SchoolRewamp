@@ -56,37 +56,38 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryTheme()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
         binding.btnReceipt.setOnClickListener(this)
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
 
-        binding.lblStudentName.text = isChildDetails!!.name
-        binding.lblParentToolBar.text = Constant.isParentMenuName
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         alertDialogView = AlertDialog.Builder(this@FeeDetails).create()
+         binding.lblHeaderTitle.text=Constant.isParentMenuName
 
-        binding.imgSearchHeader.setOnClickListener {
-            if (binding.rytSearch.visibility == View.VISIBLE) {
-                binding.rytSearch.visibility = View.GONE
-                binding.txtSearchMenu.setText("")
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rytSearch1.visibility == View.VISIBLE) {
+                binding.rytSearch1.visibility = View.GONE
+                binding.txtSearchMenuBox.setText("")
             } else {
-                binding.rytSearch.visibility = View.VISIBLE
-                binding.txtSearchMenu.requestFocus()
+                binding.rytSearch1.visibility = View.VISIBLE
+                binding.txtSearchMenuBox.requestFocus()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(binding.txtSearchMenu, InputMethodManager.SHOW_IMPLICIT)
+                imm.showSoftInput(binding.txtSearchMenuBox, InputMethodManager.SHOW_IMPLICIT)
             }
         }
         loadPaymentPage(binding.payWebview)
         binding.payWebview.loadUrl(Constant.online_fee_payment_link)
 
-        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtSearchMenuBox.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mAdapter.filter.filter(s)
@@ -108,6 +109,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 binding.rvReceipts.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
 
                 mAdapter.setData(listOf())
@@ -115,6 +117,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
                 Log.d("FeeDetails_Response", "No invoices found or response null")
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+
             }
         }
 
@@ -171,8 +175,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             R.id.btnPayment -> {
                 binding.payWebview.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
-                binding.imgSearchHeader.visibility = View.GONE
-                binding.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                binding.rytSearch1.visibility = View.GONE
                 binding.linePayment.setBackgroundResource(R.color.PrimaryColor)
                 binding.lineReceipt.setBackgroundResource(R.color.athens_gray)
                 binding.btnPayment.setTextColor(Color.parseColor("#0D47A1"))
@@ -184,7 +188,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             R.id.btnReceipt -> {
                 binding.payWebview.visibility = View.GONE
                 binding.rvReceipts.visibility = View.VISIBLE
-                binding.imgSearchHeader.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
                 binding.linePayment.setBackgroundResource(R.color.athens_gray)
                 binding.lineReceipt.setBackgroundResource(R.color.PrimaryColor)

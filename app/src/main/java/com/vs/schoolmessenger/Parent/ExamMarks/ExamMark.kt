@@ -51,8 +51,10 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 
-        binding.imgSearch.setOnClickListener {
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch.visibility == View.VISIBLE) {
                 binding.rytSearch.visibility = View.GONE
             } else {
@@ -62,15 +64,15 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         }
 
 
-
-        binding.apply {
+        binding.lblHeaderTitle.text=Constant.isParentMenuName
+        binding.toolbarLayout.apply {
             imgBack.setOnClickListener(this@ExamMark)
             lblStudentName.text = isChildDetails!!.name
             lblStudentSection.text =
                 "${isChildDetails.standard_name} - ${isChildDetails.section_name}"
-            tabOneName.text = getString(R.string.exam_timetable)
-            tabTwoName.text = getString(R.string.exam_marks)
         }
+        binding.tabOneName.text = getString(R.string.exam_timetable)
+        binding.tabTwoName.text = getString(R.string.exam_marks)
 
         binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -100,15 +102,19 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             if (response == null || !response.status || response.data.isNullOrEmpty()) {
                 Constant.hideLoading(this)
                 showErrorUI(response?.message ?: getString(R.string.no_data_available))
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 return@observe
             }
 
             if (response.status) {
                 Constant.hideLoading(this)
                 isLoadexams(response.data)
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
                 Constant.hideLoading(this)
                 showErrorUI(response.message ?: "No data available")
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+
             }
         }
 
@@ -116,12 +122,15 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             Log.d("response++", response.toString())
             if (response == null) {
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 return@observe
             }
             if (response.status) {
                 isLoadExamList(response.data)
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
                 showErrorUI(response.message ?: "No data available")
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             }
         }
 
@@ -129,6 +138,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             if (response == null || !response.status || response.data.isNullOrEmpty()) {
                 Toast.makeText(this, response!!.message, Toast.LENGTH_SHORT).show()
                 return@observe
+
             }
 
             if (response.status) {
@@ -157,6 +167,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             binding.exammarkrecyclerview.visibility = View.GONE
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
+            binding.rytSearch.visibility = View.GONE
             binding.rcExamTimeTable.visibility = View.VISIBLE
             fetchexamtimetable()
         }
@@ -172,6 +183,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             binding.line1.setBackgroundResource(R.color.white)
             binding.rcExamTimeTable.visibility = View.GONE
             binding.nomessage.visibility = View.GONE
+            binding.rytSearch.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
             binding.exammarkrecyclerview.visibility = View.VISIBLE
             fetchexammark()

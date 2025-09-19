@@ -117,7 +117,7 @@ class CouponSummaryAdapter(
         fun bind(data: CampaignItem, position: Int) {
 
             lblProductName.text = data.category_name
-            lblProductOffer.text = "${data.discount ?: "0"}${context.getString(R.string.Off)}"
+            lblProductOffer.text = "${data.offer_to_show ?: "0"}"
             lblCompanyName.text = data.merchant_name
 
 
