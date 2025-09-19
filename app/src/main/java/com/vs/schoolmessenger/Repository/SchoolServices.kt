@@ -452,8 +452,8 @@ class SchoolServices {
     val isGetAdsLiveData: LiveData<AdsResponse?>
         get() = isGetAds
 
-    fun isGetGlobalVariables(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetGlobalVariable(isToken)
+    fun isGetGlobalVariables(jsonObject: JsonObject,isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.isGetGlobalVariable(jsonObject,isToken)
             ?.enqueue(object : Callback<GlobalVariableResponse?> {
                 override fun onResponse(
                     call: Call<GlobalVariableResponse?>, response: Response<GlobalVariableResponse?>

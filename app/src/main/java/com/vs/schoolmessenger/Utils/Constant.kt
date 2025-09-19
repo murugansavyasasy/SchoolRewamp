@@ -47,6 +47,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.GlobalVariableData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
@@ -193,7 +194,6 @@ object Constant {
 
     var isAcademicYearList: List<AcademicYear>? = null
     var isParentMenuName = ""
-
     var isSchoolMenuName = ""
     var isSchoolMenuCount =-1
 
@@ -274,6 +274,7 @@ object Constant {
     var event_data = "event_data"
     var assignment_data = "assignment_data"
     var homework_data = "homework_data"
+    var attachment_data = "attachment_data"
     var lsrwskill_data = "lsrwskill_data"
     var lsrwsubmitskill_data = "lsrwsubmitskill_data"
     var isFileUrl = "isFileUrl"
@@ -610,6 +611,9 @@ object Constant {
     var HETus_ResumableAD_Version = "1.0.0"
     var Upload_Offset = "Upload-Offset"
     var PATCH = "PATCH"
+
+    var isGlobalVariableData: GlobalVariableData? = null
+
     var application_offset_octet_stream = "application/offset+octet-stream"
     var mimeTypes = arrayOf(
         "application/pdf",
