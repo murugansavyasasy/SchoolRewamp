@@ -52,7 +52,10 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
                 binding.toolbarLayout.txtVideoMenu.setText("")
                 binding.toolbarLayout.txtVideoMenu.requestFocus()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(binding.toolbarLayout.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                imm.showSoftInput(
+                    binding.toolbarLayout.txtVideoMenu,
+                    InputMethodManager.SHOW_IMPLICIT
+                )
             }
         }
         val childDetails = SharedPreference.getChildDetails(this)
@@ -103,40 +106,33 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
     }
 
     private fun filterList(query: String) {
-        if (query.isEmpty()) {
-            adapter.updateList(allItems)
-            binding.rlNoDataContainer.visibility = if (allItems.isEmpty()) View.VISIBLE else View.GONE
-            return
+        val filteredList = if (query.isEmpty()) {
+            allItems
+        } else {
+            allItems.filter { item ->
+                item.subject?.contains(query, ignoreCase = true) == true ||
+                        item.activity_type?.contains(query, ignoreCase = true) == true ||
+                        item.title?.contains(query, ignoreCase = true) == true ||
+                        item.description?.contains(query, ignoreCase = true) == true ||
+                        item.sent_by?.contains(query, ignoreCase = true) == true
+            }
         }
 
-        val filteredList = allItems.filter { item ->
-            item.subject?.contains(
-                query,
-                ignoreCase = true
-            ) == true || item.activity_type?.contains(
-                query,
-                ignoreCase = true
-            ) == true || item.title?.contains(
-                query,
-                ignoreCase = true
-            ) == true || item.description?.contains(
-                query,
-                ignoreCase = true
-            ) == true || item.sent_by?.contains(query, ignoreCase = true) == true
-        }
+        adapter.updateList(filteredList)
 
         if (filteredList.isNotEmpty()) {
-            adapter.updateList(filteredList)
             binding.rcyrecyclerview.visibility = View.VISIBLE
             binding.rlRecyclerContainer.visibility = View.VISIBLE
             binding.rlNoDataContainer.visibility = View.GONE
         } else {
-            adapter.updateList(emptyList())
             binding.rcyrecyclerview.visibility = View.GONE
             binding.rlRecyclerContainer.visibility = View.GONE
             binding.rlNoDataContainer.visibility = View.VISIBLE
         }
+
+        binding.rcyrecyclerview.scrollToPosition(0)
     }
+
 
 
     override fun onClick(view: View?) {
