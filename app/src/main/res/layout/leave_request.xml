@@ -157,6 +157,7 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/lytList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -173,7 +174,7 @@
                 android:src="@drawable/nomessages"
                 android:textColor="@color/black"
                 android:textSize="@dimen/eighteen"
-                android:visibility="gone" />
+                />
 
             <TextView
                 android:id="@+id/txtNoData"
@@ -185,7 +186,7 @@
                 android:layout_marginTop="@dimen/twenty"
                 android:text="@string/no_list_found"
                 android:textSize="18sp"
-                android:visibility="gone" />
+                />
 
 
         </LinearLayout>

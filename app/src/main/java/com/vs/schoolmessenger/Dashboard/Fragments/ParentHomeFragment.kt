@@ -34,6 +34,7 @@ import com.vs.schoolmessenger.Parent.Attendance.Attendance
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
+import com.vs.schoolmessenger.Parent.EBooks.Ebooks
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
@@ -312,6 +313,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_PTM -> Intent(
                 requireActivity(),
                 PTM::class.java
+            )
+            Constant.M_ONLINE_TEXT_BOOK -> Intent(
+                requireActivity(),
+                Ebooks::class.java
             )
 
             else -> null

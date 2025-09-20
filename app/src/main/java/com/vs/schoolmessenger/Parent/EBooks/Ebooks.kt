@@ -18,7 +18,7 @@ class Ebooks : BaseActivity<EbooksBinding>(),
         setupToolbarBlueWhite()
 
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
-        binding.toolbarLayout.lblParentToolBar.text=Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text=Constant.isParentMenuName
 
         Constant.loadWebView(
             this,
