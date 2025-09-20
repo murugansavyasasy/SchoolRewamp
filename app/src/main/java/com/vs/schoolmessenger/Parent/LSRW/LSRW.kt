@@ -128,10 +128,12 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         if (filteredList.isNotEmpty()) {
             adapter.updateList(filteredList)
             binding.rcyrecyclerview.visibility = View.VISIBLE
+            binding.rlRecyclerContainer.visibility = View.VISIBLE
             binding.rlNoDataContainer.visibility = View.GONE
         } else {
             adapter.updateList(emptyList())
             binding.rcyrecyclerview.visibility = View.GONE
+            binding.rlRecyclerContainer.visibility = View.GONE
             binding.rlNoDataContainer.visibility = View.VISIBLE
         }
     }

@@ -19,9 +19,8 @@ class HelpFragment : Fragment(), View.OnClickListener {
         Constant.loadWebView(
             this.requireContext(),
             binding.webView,
-            "https://www.schoolchimes.com/vs_web/help_line/"
+            Constant.isGlobalVariableData!!.helpline_url
         )
-
         return binding.root
     }
 
