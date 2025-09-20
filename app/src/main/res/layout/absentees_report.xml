@@ -25,14 +25,16 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/sixteen">
 
-            <include
+            <FrameLayout
                 android:id="@+id/calenderlayout"
-                layout="@layout/dialog_calendar_absentees"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?android:attr/selectableItemBackground" />
+                android:layout_marginTop="@dimen/ten"
+                android:paddingStart="@dimen/ten"
+                android:paddingEnd="@dimen/ten" />
+
+
+
 
 
             <LinearLayout
@@ -86,7 +88,41 @@
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+
+
+
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lytNoDataFound"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/noDataImage"
+                    android:layout_width="@dimen/two_hundred"
+                    android:layout_height="@dimen/two_hundred"
+                    android:layout_marginTop="@dimen/twenty_five"
+                    android:src="@drawable/no_data_found">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/noDataFound"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:text="No data found"
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

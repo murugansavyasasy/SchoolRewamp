@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
 
-
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
@@ -24,7 +23,6 @@
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
-
         <LinearLayout
             android:id="@+id/relative_layout"
             android:layout_width="match_parent"
@@ -32,6 +30,7 @@
             android:layout_marginStart="@dimen/fifteen"
             android:orientation="vertical">
 
+            <!-- Student name -->
             <TextView
                 android:id="@+id/student_name"
                 style="@style/CustomTextStylePoppinsBold"
@@ -39,21 +38,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/twenty"
                 android:text="Saran"
-                android:textSize="@dimen/seventeen_sp">
-            </TextView>
+                android:textSize="@dimen/seventeen_sp" />
 
-            <RelativeLayout
+            <!-- Row with Admission No & Call button -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/five">
 
                 <TextView
                     android:id="@+id/register_number"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="@dimen/five"
+                    android:layout_weight="1"
                     android:text="Admission No :"
                     android:textColor="@color/light_gray_"
                     android:textSize="@dimen/sixteen_sp" />
@@ -63,19 +62,15 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_marginEnd="20dp"
                     android:background="@drawable/background_radius_button"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Call"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
+            </LinearLayout>
 
-            </RelativeLayout>
-
-
+            <!-- Section -->
             <TextView
                 android:id="@+id/section_value"
                 style="@style/CustomTextStylePoppinsMedium"
@@ -85,10 +80,7 @@
                 android:layout_marginBottom="@dimen/ten"
                 android:text="SS - 1"
                 android:textColor="@color/light_gray_"
-                android:textSize="@dimen/sixteen_sp">
-            </TextView>
-
-
+                android:textSize="@dimen/sixteen_sp" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
