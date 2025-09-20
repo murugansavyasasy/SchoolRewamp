@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.School.AbsenteesReport
 
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -8,6 +10,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesMarking.CustomCalendarFragement.CustomCalendarFragment
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportDetailAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesClickListener
@@ -26,19 +29,19 @@ import java.util.Locale
 
 
 class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener,
-    AbsenteesClickListener, AbsenteesStudentDetailClickListener {
+    AbsenteesClickListener, AbsenteesStudentDetailClickListener, CustomCalendarFragment.CalendarDateListener {
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
     private var absenteeList: List<AbsenteeData> = emptyList()
     private var studentAdapter: AbsenteesStudentListDetailAdapter? = null
-    private var isCalendarExpanded: Boolean = true // Track calendar state
 
     override fun getViewBinding(): AbsenteesReportBinding {
         return AbsenteesReportBinding.inflate(layoutInflater)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
@@ -54,23 +57,19 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 
+
+        val calendarFragment = CustomCalendarFragment.newInstance(
+            minDate = "2020-01-01", // Set appropriate min date
+            maxDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()),
+            selectedDate = null,
+            tag = "absentees_calendar"
+        )
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.calenderlayout, calendarFragment, "CustomCalendarFragment")
+            .commit()
+
         fetchAbsenteeData()
-
-        binding.calenderlayout.customCalendar.setOnDateSelectedListener { date ->
-            filterByDate(date)
-        }
-
-        binding.calenderlayout.customCalendar.setOnClickListener {
-            toggleCalendarVisibility()
-        }
-
-        // Detect scroll direction
-        binding.scrollContainer.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-            if (scrollY > oldScrollY && scrollY > 0 && isCalendarExpanded) {
-                // Scrolling up and calendar is expanded -> collapse it
-                collapseCalendar()
-            }
-        }
 
         appViewModel?.getabsenteescountbydate?.observe(this) { response ->
             if (response == null) {
@@ -119,6 +118,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             loadClassWiseRecycler(filtered.class_wise, date)
         } else {
             binding.rlaabsenteesreport2.visibility = View.GONE
+            binding.lytNoDataFound.visibility = View.VISIBLE
             binding.selectedDateText.visibility = View.GONE
             binding.linearLayoutcontainer.visibility = View.GONE
             binding.absentListTitle.visibility = View.GONE
@@ -128,6 +128,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
     private fun loadClassWiseRecycler(classWiseList: List<ClassWise>, selectedDate: String) {
         binding.rlaabsenteesreport2.visibility = View.VISIBLE
+        binding.lytNoDataFound.visibility = View.GONE
         binding.selectedDateText.visibility = View.VISIBLE
         binding.linearLayoutcontainer.visibility = View.VISIBLE
         binding.absentListTitle.visibility = View.VISIBLE
@@ -196,47 +197,11 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
     private fun showErrorUI(message: String) {
         binding.rlaabsenteesreport2.visibility = View.GONE
+        binding.lytNoDataFound.visibility = View.VISIBLE
         binding.selectedDateText.visibility = View.GONE
         binding.linearLayoutcontainer.visibility = View.GONE
         binding.absentListTitle.visibility = View.GONE
         binding.absentStudentsRecyclerView.visibility = View.GONE
-    }
-
-
-    private fun collapseCalendar() {
-        if (isCalendarExpanded) {
-            isCalendarExpanded = false
-         binding.calenderlayout.customCalendar.animate()
-                .alpha(0f)
-                .translationY(-binding.calenderlayout.customCalendar.height.toFloat())
-                .setDuration(300)
-                .withEndAction {
-                    binding.calenderlayout.customCalendar.visibility = View.GONE
-                }
-                .start()
-        }
-    }
-
-    private fun expandCalendar() {
-        if (!isCalendarExpanded) {
-            isCalendarExpanded = true
-            binding.calenderlayout.customCalendar.visibility = View.VISIBLE
-            binding.calenderlayout.customCalendar.alpha = 0f
-            binding.calenderlayout.customCalendar.translationY = -binding.calenderlayout.customCalendar.height.toFloat()
-            binding.calenderlayout.customCalendar.animate()
-                .alpha(1f)
-                .translationY(0f)
-                .setDuration(300)
-                .start()
-        }
-    }
-
-    private fun toggleCalendarVisibility() {
-        if (isCalendarExpanded) {
-            collapseCalendar()
-        } else {
-            expandCalendar()
-        }
     }
 
     override fun onClick(v: View?) {
@@ -256,6 +221,18 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
             Toast.makeText(this, "No students found", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onDateSelected(date: String, tag: String) {
+        try {
+            val input = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val output = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val formattedDate = output.format(input.parse(date)!!)
+            filterByDate(formattedDate)
+        } catch (e: Exception) {
+            filterByDate(date)
         }
     }
 }

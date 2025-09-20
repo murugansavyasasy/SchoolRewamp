@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
-    android:fillViewport="true">
-
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
 
     <RelativeLayout
@@ -18,18 +17,18 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/left_arrow"
             android:layout_marginStart="@dimen/five"
-            android:layout_marginTop="@dimen/two"/>
+            android:layout_marginTop="@dimen/two"
+            android:src="@drawable/left_arrow" />
 
         <ImageView
             android:id="@+id/outer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/subtract1"
-            android:layout_marginTop="@dimen/twele"
             android:layout_below="@+id/back"
-            android:scaleType="fitXY"/>
+            android:layout_marginTop="@dimen/twele"
+            android:scaleType="fitXY"
+            android:src="@drawable/subtract1" />
 
         <RelativeLayout
             android:id="@+id/relative"
@@ -41,18 +40,18 @@
                 android:id="@+id/logo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/hundred"
-                android:src="@drawable/dizzeworldlogo"/>
+                android:src="@drawable/dizzeworldlogo" />
 
 
             <ImageView
                 android:id="@+id/vector"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thirty"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginEnd="@dimen/twenty"
-                android:src="@drawable/vectorimage"
                 android:layout_below="@id/logo"
-                android:layout_marginTop="@dimen/sixty"/>
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/sixty"
+                android:layout_marginEnd="@dimen/twenty"
+                android:src="@drawable/vectorimage" />
         </RelativeLayout>
 
         <LinearLayout
@@ -66,35 +65,30 @@
 
             <TextView
                 android:id="@+id/header"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CustomTextStylePoppinsMedium"
                 android:text="McDonald's"
-                android:textSize="@dimen/twenty_four_sp"
-                />
+                android:textSize="@dimen/twenty_four_sp" />
 
             <TextView
                 android:id="@+id/offer"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CustomTextStylePoppinsMedium"
                 android:text="40% Off"
                 android:textColor="@color/clr_red"
-                android:textSize="@dimen/twenty_four_sp"
-                />
+                android:textSize="@dimen/twenty_four_sp" />
 
             <TextView
                 android:id="@+id/description"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/four"
-                android:layout_marginTop="@dimen/eight"
-                android:layout_marginEnd="@dimen/fourty"
-                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="Just show the Coupon Codeat the point of payment after you feast at Carl's Kitchen Store"
-                android:textSize="@dimen/fourteen_sp"
-                />
+                android:textSize="@dimen/fourteen_sp" />
 
 
             <RelativeLayout
@@ -113,11 +107,11 @@
 
                     <TextView
                         android:id="@+id/couponCode"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="@dimen/zero"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                       style="@style/CustomTextStylePoppinsMedium"
                         android:text="jhav-bvbu-vffno"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sixteen_sp" />
@@ -152,10 +146,10 @@
 
             <!-- Title -->
             <TextView
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/twele"
-                style="@style/CustomTextStylePoppinsMedium"
                 android:text="Appointment Booking Details"
                 android:textColor="@color/black"
                 android:textSize="@dimen/eighteen_sp"
@@ -178,9 +172,9 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/CustomTextStylePoppinsMedium"
                         android:text="Date"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fourteen_sp"
@@ -204,9 +198,9 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/CustomTextStylePoppinsMedium"
                         android:text="Time"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fourteen_sp"
@@ -230,9 +224,9 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                       style="@style/CustomTextStylePoppinsMedium"
                         android:text="Venue"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fourteen_sp"
@@ -250,15 +244,14 @@
         </LinearLayout>
 
 
-
         <LinearLayout
             android:id="@+id/linear2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/eight"
-            android:orientation="vertical"
+            android:layout_below="@+id/linearlayout"
             android:layout_alignStart="@+id/linearlayout"
-            android:layout_below="@+id/linearlayout">
+            android:layout_marginTop="@dimen/eight"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/lblLocationName"
@@ -267,7 +260,7 @@
                 android:text="Carl's Kitchen"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
 
             <TextView
@@ -277,18 +270,18 @@
                 android:text="Valid Until 01/05/2025"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp"
-                android:textStyle="normal"/>
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/lblAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Marina Mall"
                 android:drawableStart="@drawable/location_icon"
-                android:textColor="@color/black"
                 android:drawablePadding="@dimen/two"
+                android:text="Marina Mall"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp"
-                android:textStyle="normal"/>
+                android:textStyle="normal" />
 
 
         </LinearLayout>

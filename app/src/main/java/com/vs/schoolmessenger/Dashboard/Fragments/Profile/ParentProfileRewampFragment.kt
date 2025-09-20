@@ -145,8 +145,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                             items.add(ProfileItem.Field(field))
 
                             if (sectionName.equals(
-                                    "PhotoPath",
-                                    ignoreCase = true
+                                    "PhotoPath", ignoreCase = true
                                 ) && field.node.equals("photoPath", ignoreCase = true)
                             ) {
                                 photoUrl = field.value
@@ -155,7 +154,8 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     }
                 }
 
-                adapter = ProfileRewampFragmentAdapter(items, requireContext(), this,binding.rcyImages)
+                adapter =
+                    ProfileRewampFragmentAdapter(items, requireContext(), this, binding.rcyImages)
                 binding.recyclerview.adapter = adapter
                 binding.recyclerview.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
@@ -194,7 +194,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             }
         }
 
-        binding.rcyImages.layoutManager =GridLayoutManager(requireContext(), 2)
+        binding.rcyImages.layoutManager = GridLayoutManager(requireContext(), 2)
         mAdapter = ProfileImagePickingAdapter(requireContext(), Constant.selectedFiles!!, this)
         binding.rcyImages.adapter = mAdapter
         binding.rcyImages.visibility = View.GONE
@@ -289,6 +289,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     }
 
     private fun isUpdateProfile() {
+        // Prepare changed profile fields
         val changedData = JsonObject()
         for (section in originalData) {
             for ((_, originalFields) in section) {
@@ -316,7 +317,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             }
             if (profilePhotoFileItem == null) {
                 Log.d("UpdatePayload", textPayload.toString())
-                appViewModel.ispresubmission(isAccessToken!!, textPayload,requireActivity())
+                appViewModel.ispresubmission(isAccessToken!!, textPayload, requireActivity())
             } else {
                 uploadProfilePhoto { url ->
                     ProgressDialogHelper.dismiss()
@@ -324,12 +325,14 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                         textPayload.addProperty("photoPath", url)
                     } else {
                         Constant.showDataValidation(
-                            getString(R.string.fail), "Profile photo upload failed", requireActivity()
+                            getString(R.string.fail),
+                            "Profile photo upload failed",
+                            requireActivity()
                         )
                         if (textPayload.entrySet().isEmpty()) return@uploadProfilePhoto
                     }
                     Log.d("UpdatePayload", textPayload.toString())
-                    appViewModel.ispresubmission(isAccessToken!!, textPayload,requireActivity())
+                    appViewModel.ispresubmission(isAccessToken!!, textPayload, requireActivity())
                     profilePhotoFileItem = null
                 }
                 ProgressDialogHelper.show(requireContext())
@@ -340,11 +343,20 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         }
     }
 
+
     private fun onAllUploadsComplete() {
         val documentsArray = JsonArray()
+        // Map Constant.isAwsUploadedFiles to the required document format
         Constant.isAwsUploadedFiles.forEach { file ->
-            documentsArray.add(file.isFileUrl)
+            val fileName = file.originalFileName?.takeIf { it.isNotBlank() } ?: file.isFileUrl.substringAfterLast("/")
+            val documentObject = JsonObject().apply {
+                addProperty("documentName", fileName)
+                addProperty("documentPath", file.isFileUrl)
+                addProperty("documentDisplayName", fileName)
+            }
+            documentsArray.add(documentObject)
         }
+
         val payload = JsonObject()
         pendingChangedData?.entrySet()?.forEach { entry ->
             payload.addProperty(entry.key, entry.value.asString)
@@ -364,9 +376,10 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 }
                 if (payload.entrySet().isEmpty()) return@uploadProfilePhoto
                 Log.d("UpdatePayload", payload.toString())
-                appViewModel.ispresubmission(isAccessToken!!, payload,requireActivity())
+                appViewModel.ispresubmission(isAccessToken!!, payload, requireActivity())
                 profilePhotoFileItem = null
             }
+            ProgressDialogHelper.show(requireContext())
             return
         }
         ProgressDialogHelper.dismiss()
@@ -374,7 +387,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             return
         }
         Log.d("UpdatePayload", payload.toString())
-        appViewModel.ispresubmission(isAccessToken!!, payload,requireActivity())
+        appViewModel.ispresubmission(isAccessToken!!, payload, requireActivity())
     }
 
     private fun uploadProfilePhoto(onComplete: (String?) -> Unit) {
@@ -383,8 +396,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             return
         }
         val outputDir = File(
-            requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-            "CompressedOutput"
+            requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput"
         )
         outputDir.mkdirs()
         Constant.compressImageFilesOnly(
@@ -418,16 +430,14 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                                 File(outputPath).delete()
                                 onComplete(null)
                             }
-                        }
-                    )
+                        })
                 } else {
                     onComplete(null)
                 }
             },
             onComplete = {
                 // Optional for single file
-            }
-        )
+            })
     }
 
     override fun onDocumentClicked(field: ProfileField, position: Int) {
@@ -458,7 +468,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         rlaGallery.visibility = View.GONE
         rlaCamera.visibility = View.GONE
 
-        if(currentEditMode == "profile_photo") {
+        if (currentEditMode == "profile_photo") {
             rlaDocument.visibility = View.GONE
         }
 
@@ -780,8 +790,10 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         )
     }
 
-    fun isUploadFilesInServer(isFileType: String?) {
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_LSRW) {
+    private fun isUploadFilesInServer(isFileType: String?) {
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK ||
+            SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT ||
+            SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_LSRW) {
             Constant.selectedFiles.removeAt(0)
         }
         ProgressDialogHelper.updateProgress(50)
@@ -800,13 +812,13 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         when {
             Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+            else -> onAllUploadsComplete()
         }
         ProgressDialogHelper.updateProgress(80)
     }
 
-    private fun isFileUploadInAws(
-        isFileType: String?
-    ) {
+
+    private fun isFileUploadInAws(isFileType: String?) {
         Constant.isAwsUploadedFiles.clear()
         val iterator = Constant.selectedFiles.iterator()
         while (iterator.hasNext()) {
@@ -814,7 +826,9 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             if (fileItem.path.contains("amazonaws.")) {
                 Constant.isAwsUploadedFiles.add(
                     AwsUploadedFiles(
-                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                        isFileUrl = fileItem.path,
+                        isFileType = fileItem.type.name,
+                        originalFileName = getFileName(Uri.parse(fileItem.path)) // Store original file name
                     )
                 )
                 iterator.remove()
@@ -875,6 +889,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
                     val isSelectedFileCount = Constant.selectedFiles.size
                     for (i in Constant.selectedFiles.indices) {
+                        val originalFileName = getFileName(Uri.parse(Constant.selectedFiles[i].path))
                         isAwsUploadingPreSigned?.getPreSignedUrl(
                             Constant.selectedFiles[i].path,
                             isChildDetails!!.school_id,
@@ -884,7 +899,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                             true,
                             false,
                             object : UploadCallback {
-
                                 override fun onUploadSuccess(
                                     response: String?, isFileUploaded: String?
                                 ) {
@@ -892,7 +906,8 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                                     Constant.isAwsUploadedFiles.add(
                                         AwsUploadedFiles(
                                             isFileUrl = isFileUploaded,
-                                            isFileType = Constant.selectedFiles[i].type.name
+                                            isFileType = Constant.selectedFiles[i].type.name,
+                                            originalFileName = originalFileName // Store original file name
                                         )
                                     )
 
@@ -915,7 +930,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 })
         }
     }
-
     private fun videoUploading() {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
