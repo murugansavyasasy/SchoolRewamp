@@ -139,15 +139,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         appViewModel?.getleaverequest?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
-                binding.nomessage.visibility = View.GONE
-                binding.txtNoData.visibility = View.GONE
+                binding.lytList.visibility=View.GONE
                 isloadleaverequestData(response.data)
                 isLeaveList=response.data
                 binding.imgSearchBtn.visibility=View.VISIBLE
             } else {
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
-                binding.nomessage.visibility = View.VISIBLE
-                binding.txtNoData.visibility = View.VISIBLE
+                binding.lytList.visibility=View.VISIBLE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
                 binding.imgSearchBtn.visibility=View.GONE
                 binding.rytSearch.visibility=View.GONE
@@ -227,12 +225,10 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 if (mAdapter.itemCount == 0) {
                     binding.imgSearchBtn.visibility=View.GONE
                     binding.rytSearch.visibility=View.GONE
-                    binding.txtNoData.visibility = View.VISIBLE
-                    binding.nomessage.visibility = View.VISIBLE
+                    binding.lytList.visibility=View.VISIBLE
                     binding.rcyLeaveRequestHistory.visibility = View.GONE
                 } else {
-                    binding.txtNoData.visibility = View.GONE
-                    binding.nomessage.visibility = View.GONE
+                    binding.lytList.visibility=View.VISIBLE
                     binding.imgSearchBtn.visibility=View.VISIBLE
                     binding.rytSearch.visibility=View.VISIBLE
                     binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
@@ -278,8 +274,12 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 }
 
                 if (filteredDetails.isNotEmpty()) {
+                    Log.d("filteredMonthList",filteredDetails.size.toString())
+                    Log.d("DataComing","DataComing")
                     monthWiseLeave.copy(details = filteredDetails) // keep month, but only matching details
                 } else {
+                    Log.d("filteredMonthList",filteredDetails.size.toString())
+                    Log.d("DataNotComing","DataNotComing")
                     null
                 }
             }
@@ -288,8 +288,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         // 🔹 Update UI
         if (filteredMonthList.isNotEmpty()) {
             ShowData()
+            Log.d("filteredMonthList",filteredMonthList.size.toString())
+            Log.d("DataComing","DataComingCCCCCCCCCCCCCCCCCCCCCC")
             mAdapter.updateData(filteredMonthList)
         } else {
+            Log.d("filteredMonthList",filteredMonthList.size.toString())
+            Log.d("DataNotComing","DataNotComingAAAAAAAAAAAAAAA")
+
             binding.rcyLeaveRequestHistory.visibility = View.GONE
             ErrorMessage(getString(R.string.no_data_found))
         }

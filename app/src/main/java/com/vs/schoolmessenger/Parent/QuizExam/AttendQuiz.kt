@@ -49,7 +49,12 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 

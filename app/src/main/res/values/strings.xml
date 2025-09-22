@@ -936,6 +936,7 @@
     <string name="report_s">Report\'s</string>
     <string name="present_rate">Present Rate</string>
     <string name="absent_rate">Absent Rate</string>
+    <string name="send_quiz">Send Quiz</string>
 
 
 </resources>

@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/athens_gray"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:id="@+id/main"
+    >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    
+        <View
+            android:id="@+id/statusBarBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/PrimaryColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
         <include
             android:id="@+id/toolbarLayout"
-            layout="@layout/school_side_tool_bar" />
+            layout="@layout/school_side_tool_bar"
+            app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarLayout"
-            android:layout_marginTop="@dimen/ten"
-            android:orientation="vertical">
 
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarLayout"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten">
 
             <RelativeLayout
+                app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:id="@+id/lnrQuesheader"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
@@ -81,11 +83,15 @@
 
 
             <LinearLayout
+                app:layout_constraintTop_toBottomOf="@+id/lnrQuesheader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/lblSendQuiz"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:id="@+id/lnrCompleteQuestion"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/lblSendQuiz"
-                android:layout_below="@+id/lnrQuesheader"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -109,12 +115,13 @@
             </LinearLayout>
 
             <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/lblSendQuiz"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/bg_light_orange"
                 android:drawableStart="@drawable/send_icon"
@@ -123,11 +130,9 @@
                 android:paddingStart="@dimen/twenty_five"
                 android:paddingTop="@dimen/five"
                 android:paddingEnd="@dimen/twenty_five"
+                android:layout_marginBottom="@dimen/ten"
                 android:paddingBottom="@dimen/five"
-                android:text="Send Quiz"
+                android:text="@string/send_quiz"
                 android:textColor="@color/white"></TextView>
 
-        </RelativeLayout>
-
-    </RelativeLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

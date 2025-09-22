@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true">
+   >
 
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_theme_school"
-        android:paddingVertical="@dimen/fifteen">
+        android:paddingVertical="20dp">
 
         <ImageView
             android:id="@+id/imgBack"

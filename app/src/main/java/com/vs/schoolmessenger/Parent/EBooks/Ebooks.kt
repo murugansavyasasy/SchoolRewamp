@@ -1,16 +1,16 @@
-package com.vs.schoolmessenger.School.SchoolNeeds
-
+package com.vs.schoolmessenger.Parent.EBooks
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.databinding.EbooksBinding
 import com.vs.schoolmessenger.databinding.SchoolNeedsBinding
 
-class SchoolNeeds : BaseActivity<SchoolNeedsBinding>(),
+class Ebooks : BaseActivity<EbooksBinding>(),
     View.OnClickListener {
 
-    override fun getViewBinding(): SchoolNeedsBinding {
-        return SchoolNeedsBinding.inflate(layoutInflater)
+    override fun getViewBinding(): EbooksBinding {
+        return EbooksBinding.inflate(layoutInflater)
     }
 
     override fun setupViews() {
@@ -18,12 +18,12 @@ class SchoolNeeds : BaseActivity<SchoolNeedsBinding>(),
         setupToolbarBlueWhite()
 
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
-        binding.toolbarLayout.lblParentToolBar.text=Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text=Constant.isParentMenuName
 
         Constant.loadWebView(
             this,
             binding.webView,
-            Constant.isGlobalVariableData!!.market_place_url
+            Constant.isGlobalVariableData!!.ebooks_url
 
         )
     }

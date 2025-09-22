@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:id="@+id/main"
+    >
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/lnrParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -125,6 +142,9 @@
 <!--    </LinearLayout>-->
 
     <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@+id/lnrParent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/rlaFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -170,6 +190,9 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/rlaFilter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/rcyLessonPlan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -177,6 +200,9 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
+        app:layout_constraintTop_toBottomOf="@+id/rcyLessonPlan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/nomessage"
         android:layout_width="@dimen/two_fifty"
         android:layout_height="@dimen/two_fifty"
@@ -189,6 +215,9 @@
         android:visibility="gone" />
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@+id/nomessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/txtNoData"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
@@ -201,4 +230,4 @@
         android:textSize="@dimen/eighteen_sp"
         android:layout_below="@+id/nomessage"
         android:visibility="gone" />
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

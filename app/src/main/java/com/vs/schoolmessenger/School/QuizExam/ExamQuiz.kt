@@ -41,7 +41,10 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]

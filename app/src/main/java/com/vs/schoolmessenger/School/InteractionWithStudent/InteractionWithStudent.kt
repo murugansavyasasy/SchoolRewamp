@@ -34,33 +34,46 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
-        binding.imgBack.setOnClickListener { onBackPressed() }
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         isStaffDetails = SharedPreference.getStaffDetails(this)
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
         val staffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = staffDetails?.access_token
 
-        binding.lblStudentName.text = staffDetails!!.name
-        binding.lblStudentSection.text = staffDetails!!.school_name
+        binding.toolbarLayout.lblParentToolBar.text = staffDetails!!.name
+        binding.toolbarLayout.lblSchoolName.text = staffDetails!!.school_name
 
         fetchStudentData()
-        binding.rytSearch.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+            if (binding.rytsearch1.isVisible) {
+                binding.rytsearch1.visibility = View.GONE
+            } else {
+                binding.rytsearch1.visibility = View.VISIBLE
+            }
+        }
         appViewModel?.getstudentdetailsforchat?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null) {
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 return@observe
             }
             if (response.status) {
                 isLoadStaffData(response.data)
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
                 showErrorUI(response.message ?: "No data available")
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             }
         }
 
-        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtVideoMenu1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::mAdapter.isInitialized) {
@@ -107,12 +120,6 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.rytSearch -> if (binding.rytsearch.isVisible) {
-                binding.rytsearch.visibility = View.GONE
-            } else {
-                binding.rytsearch.visibility = View.VISIBLE
-            }
-
         }
     }
 

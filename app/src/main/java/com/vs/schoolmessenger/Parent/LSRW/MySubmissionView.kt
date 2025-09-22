@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
+import com.vs.schoolmessenger.R
 
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -26,8 +27,11 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
 
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 

@@ -9,6 +9,14 @@ data class ProfileField(
     val options: List<String>?,
     val node: String,
     val originalValue: String? = value,
-    var isRcyImagesAttached: Boolean = false
-
+    var isRcyImagesAttached: Boolean = false,
+    val file_path: List<DocumentFile>? = null
 )
+
+data class DocumentFile(
+    val documentPath: String,
+    val documentName: String?,
+    val documentDisplayName: String?,
+    val isViewChange: Int
+)
+

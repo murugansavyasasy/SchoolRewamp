@@ -16,20 +16,18 @@ class ImportantInfo : BaseActivity<ImportantInfoBinding>(),
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
+        binding.toolbarLayout.lblParentToolBar.text=Constant.isSchoolMenuName
 
         Constant.loadWebView(
             this,
             binding.webView,
-            Constant.terms_condition
+            Constant.isGlobalVariableData!!.offers_link
         )
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgBack -> {
-                finish()
-            }
         }
     }
 }

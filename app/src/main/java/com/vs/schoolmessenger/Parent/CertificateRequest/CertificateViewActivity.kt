@@ -50,8 +50,12 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
-        binding.imgBack.setOnClickListener(this)
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.imgMoreOptions.setOnClickListener(this)
 
         binding.imgTimimg.setColorFilter(
@@ -77,7 +81,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
             PorterDuff.Mode.SRC_IN
         )
 
-        binding.lblSubject.text=Constant.isCertificateData?.type.toString()
+        binding.toolbarLayout.lblParentToolBar.text=Constant.isCertificateData?.type.toString()
 
 
         val requestedOn=Constant.formatDate(Constant.isCertificateData?.requested_on.toString())
