@@ -1001,7 +1001,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     fun isUploadFilesInServer(isFileType: String?) {
-
+        ProgressDialogHelper.show(this)
+        ProgressDialogHelper.updateProgress(10)
         if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK ||
             SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW
         ) {
@@ -1044,8 +1045,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            ProgressDialogHelper.show(this)
-            ProgressDialogHelper.updateProgress(10)
 
             when (SELECTED_SCHOOL_MENU) {
                 M_HOMEWORK, M_ATTACHMENTS, M_SCHOOL_CLASS_EVENTS, M_ASSIGNMENT, M_LSRW -> {

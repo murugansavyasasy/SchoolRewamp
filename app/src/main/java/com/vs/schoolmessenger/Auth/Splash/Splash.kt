@@ -13,6 +13,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -40,6 +43,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.Utils.AnimationHelper
 import com.vs.schoolmessenger.Utils.AppDataCleaner
 import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
@@ -62,6 +66,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         super.attachBaseContext(context)
     }
     private lateinit var appUpdateManager: AppUpdateManager
+
+//    private lateinit var animationHelper: AnimationHelper
+//    private lateinit var bellImageView: ImageView
+//    private lateinit var galaxyContainer: FrameLayout
+//    private lateinit var dot1: View
+//    private lateinit var dot2: View
+//    private lateinit var dot3: View
 
     private lateinit var notificationPermissionLauncher: ActivityResultLauncher<String>
 
@@ -103,6 +114,19 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 //        else {
 ////            goToNextScreen()
 //        }
+
+//        bellImageView = findViewById(R.id.bellImageView)
+//        galaxyContainer = findViewById(R.id.galaxyContainer)
+//        dot1 = findViewById(R.id.dot1)
+//        dot2 = findViewById(R.id.dot2)
+//        dot3 = findViewById(R.id.dot3)
+//
+//        animationHelper = AnimationHelper(this)
+//
+//        // Start animations
+//        animationHelper.startLogoRingAnimation(bellImageView)
+//        animationHelper.addGalaxyAnimation(galaxyContainer)
+//        animationHelper.startLoadingDotsAnimation(listOf(dot1, dot2, dot3))
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
         val appSignatureHelper = AppSignatureHelper(this)
