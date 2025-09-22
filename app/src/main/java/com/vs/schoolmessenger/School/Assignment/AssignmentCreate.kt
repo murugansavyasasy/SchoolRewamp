@@ -132,7 +132,11 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)

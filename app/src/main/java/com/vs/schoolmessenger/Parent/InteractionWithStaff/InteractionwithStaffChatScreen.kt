@@ -41,9 +41,13 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
 
-        binding.imgBack.setOnClickListener(this)
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
 
         binding.btnSend.setOnClickListener(this)
         isChildDetails = SharedPreference.getChildDetails(this)
@@ -82,8 +86,8 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
             }
         }
 
-        binding.lblStudentName.text = staffData?.name ?: ""
-        binding.lblStudentSection.text = staffData?.subject_name ?: ""
+        binding.toolbarLayout.lblStudentName.text = staffData?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text = staffData?.subject_name ?: ""
     }
 
 

@@ -1,90 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/AthensGray"
-    android:fitsSystemWindows="true">
+>
 
-    <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/PrimaryColor"
-        android:paddingVertical="@dimen/fifteen">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_left_white" />
 
-        <TextView
-            android:id="@+id/lblParentToolBar"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/rlaStudentName"
-            android:layout_toEndOf="@+id/imgBack"
-            android:textColor="@color/white"
-            android:text=""
-            android:textSize="@dimen/fifteen_sp" />
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
-        <LinearLayout
-            android:id="@+id/rlaStudentName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/lblStudentName"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                />
-
-            <TextView
-                android:id="@+id/lblStudentSection"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                 />
-        </LinearLayout>
-    </RelativeLayout>
 
 
     <RelativeLayout
-        android:id="@+id/rytSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_alignTop="@id/rytHeader"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/twenty"
-        android:visibility="visible">
-
-
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_centerVertical="true"
-            android:src="@drawable/search_icon_white" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/rytsearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        android:id="@+id/rytsearch1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
-        android:layout_below="@id/rytHeader"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/ten"
@@ -101,7 +52,7 @@
             android:src="@drawable/ic_search_grey" />
 
         <EditText
-            android:id="@+id/txtVideoMenu"
+            android:id="@+id/txtVideoMenu1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toEndOf="@id/imgSearch1"
@@ -112,16 +63,23 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/rytsearch1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/rcystudentdata"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rytsearch"
+        android:layout_height="0dp"
         android:background="@color/gray_white"
         tools:listitem="@layout/interaction_student_item"
         android:nestedScrollingEnabled="false" />
 
 
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/rytsearch1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -156,4 +114,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

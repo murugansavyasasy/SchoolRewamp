@@ -64,7 +64,10 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         filterCaterotyType = listOf(
             resources.getString(R.string.get_all_student),
             resources.getString(R.string.standard_and_section)

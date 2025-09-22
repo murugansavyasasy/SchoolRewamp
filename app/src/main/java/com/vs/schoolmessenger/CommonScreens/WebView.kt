@@ -19,7 +19,10 @@ class WebView : BaseActivity<WebViewBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
         val title = intent.getStringExtra(Constant.isTitle) ?: "No Title"
