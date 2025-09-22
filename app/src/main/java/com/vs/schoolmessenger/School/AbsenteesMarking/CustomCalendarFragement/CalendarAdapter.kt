@@ -15,11 +15,13 @@ import java.time.LocalDate
 class CalendarAdapter(
     private val onDateClicked: (LocalDate) -> Unit,
     private val minDate: LocalDate?,
-    private val maxDate: LocalDate?
+    private val maxDate: LocalDate?,
+    private val isAbsenteesReport: Boolean = false
 ) : RecyclerView.Adapter<CalendarAdapter.DateViewHolder>() {
 
     private var days: List<LocalDate?> = emptyList()
     private var selectedDate: LocalDate? = null
+    private var absentDates: Set<LocalDate> = emptySet()
 
     @RequiresApi(Build.VERSION_CODES.O)
     private var today: LocalDate = LocalDate.now()
@@ -37,9 +39,18 @@ class CalendarAdapter(
         notifyDataSetChanged()
     }
 
+    fun setAbsentDates(dates: Set<LocalDate>) {
+        absentDates = dates
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.calendar_day_item, parent, false)
+        val layoutId = if (isAbsenteesReport) {
+            R.layout.calendar_day_item_absentees
+        } else {
+            R.layout.calendar_day_item
+        }
+        val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
         return DateViewHolder(view)
     }
 
@@ -53,9 +64,12 @@ class CalendarAdapter(
 
     inner class DateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dateBox: TextView = itemView.findViewById(R.id.dateBox)
+        private val dotIndicator: View? = itemView.findViewById(R.id.dot_indicator)
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(date: LocalDate?) {
+            dotIndicator?.visibility = View.GONE
+
             if (date == null) {
                 dateBox.text = ""
                 dateBox.setBackgroundResource(0)
@@ -68,22 +82,20 @@ class CalendarAdapter(
             dateBox.setTextColor(Color.BLACK)
             dateBox.isClickable = true
 
-            // Handle disabled state
+
             val isBeforeMin = minDate != null && date.isBefore(minDate)
             val isAfterMax = maxDate != null && date.isAfter(maxDate)
-            val isSunday = date.dayOfWeek == java.time.DayOfWeek.SUNDAY //Disabling the sunday
-            val isDisabled = isBeforeMin || isAfterMax||isSunday
+            val isSunday = date.dayOfWeek == java.time.DayOfWeek.SUNDAY
+            val isDisabled = isBeforeMin || isAfterMax || isSunday
 
             if (isDisabled) {
                 when {
                     isSunday -> {
-                        // Sunday → red text, no click
                         dateBox.setTextColor(Color.RED)
                         dateBox.setBackgroundResource(0)
                         dateBox.isClickable = false
                     }
                     else -> {
-                        // Other disabled dates → light gray
                         dateBox.setTextColor(Color.LTGRAY)
                         dateBox.setBackgroundResource(0)
                         dateBox.isClickable = false
@@ -108,6 +120,11 @@ class CalendarAdapter(
                 dateBox.setOnClickListener {
                     onDateClicked(date)
                 }
+            }
+
+
+            if (isAbsenteesReport && !isDisabled && absentDates.contains(date)) {
+                dotIndicator?.visibility = View.VISIBLE
             }
         }
     }

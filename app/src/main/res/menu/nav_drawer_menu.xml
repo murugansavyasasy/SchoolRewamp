@@ -1,4 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/dashboard_view"
+        android:title="Dashboard"
+        android:icon="@drawable/homeimage"/>
     <item android:id="@+id/view_profile"
         android:title="View Profile"
         android:icon="@drawable/person_circle"/>
@@ -11,4 +14,8 @@
     <item android:id="@+id/role_click"
         android:title="Switch Role"
         android:icon="@drawable/arrow_squarepath"/>
+
+    <item android:id="@+id/log_out"
+        android:title="Logout"
+        android:icon="@drawable/logout"/>
 </menu>

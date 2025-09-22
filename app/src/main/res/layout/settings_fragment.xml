@@ -686,7 +686,8 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/logout"></ImageView>
+                        android:src="@drawable/logout">
+                    </ImageView>
 
                     <TextView
                         android:layout_width="match_parent"

@@ -1,17 +1,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/one_sixty"
+    android:background="@color/PrimaryColor"
     android:orientation="vertical"
-    android:gravity="bottom"
-    android:padding="@dimen/sixteen"
-    android:background="@color/PrimaryColor">
+    android:padding="@dimen/sixteen">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgProfile"
+        android:layout_width="@dimen/seventy"
+        android:layout_height="@dimen/seventy"
+        android:src="@drawable/default_profile"
+        android:layout_marginTop="10dp"
+        app:shapeAppearanceOverlay="@style/CircleImageShape" />
 
     <TextView
-        android:text="@string/dashboard"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/twenty_sp"
-        android:paddingTop="@dimen/eight"
+        android:id="@+id/username"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/balu_saran"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/twenty_sp" />
+
 </LinearLayout>
