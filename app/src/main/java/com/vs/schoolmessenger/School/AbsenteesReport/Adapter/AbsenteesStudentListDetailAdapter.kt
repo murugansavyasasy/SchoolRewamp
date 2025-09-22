@@ -108,15 +108,21 @@ class AbsenteesStudentListDetailAdapter(
 
         fun bind(data: Student, position: Int, listener: AbsenteesStudentDetailClickListener) {
             studentName.text = data.student_name
-            registerNumber.text = data.admission_no
+            registerNumber.text = "Admission No : " + data.admission_no
 
 
-            val name = data.student_name
-            imageView.text = if (!name.isNullOrEmpty()) {
-                name.first().toString().uppercase()
-            } else {
-                "-"
+            when (data.gender) {
+                "male" -> {
+                    imageView.setBackgroundResource(R.drawable.malesvgformatstyle)
+                }
+                "female" -> {
+                    imageView.setBackgroundResource(R.drawable.femalesvgformatstyle)
+                }
+                else -> {
+                    imageView.setBackgroundResource(R.drawable.default_profile)
+                }
             }
+
 
             Constant.isAbsenteesReportDataSending?.let { report ->
                 val sectionNamesCombined =

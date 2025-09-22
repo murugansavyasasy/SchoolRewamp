@@ -2,17 +2,29 @@ package com.vs.schoolmessenger.Dashboard.Parent
 
 import android.content.Intent
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
@@ -20,7 +32,9 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ChildDashboardBinding
+import com.vs.schoolmessenger.databinding.NavHeaderBinding
 
 class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListener {
 
@@ -32,6 +46,9 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     var appViewModel: App? = null
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+    var childDetails: ChildDetails? = null
+    var userDetails: UserDetails? = null
+    var access_token = ""
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
@@ -39,13 +56,30 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
+        childDetails = SharedPreference.getChildDetails(this)
+        userDetails = SharedPreference.getUserDetails(this)
+        access_token = childDetails!!.access_token
+        val headerBinding = NavHeaderBinding.bind(binding.navigationView.getHeaderView(0))
+        headerBinding.username.text = childDetails!!.name
 
+        Glide.with(headerBinding.imgProfile.context)
+            .load(childDetails!!.profile)
+            .placeholder(R.drawable.default_profile)
+            .error(R.drawable.default_profile)
+            .circleCrop()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(headerBinding.imgProfile)
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navigationView
 
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
+                R.id.dashboard_view -> {
+                    loadFragment(this, ParentHomeFragment())
+                    updateNavBar(R.id.icon_home)
+                }
+
                 R.id.view_profile -> {
                     loadFragment(this, ParentProfileRewampFragment())
                     updateNavBar(R.id.icon_profile)
@@ -64,6 +98,10 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                 R.id.role_click -> {
                     val intent = Intent(this, PrioritySelection::class.java)
                     startActivity(intent)
+                }
+
+                R.id.log_out -> {
+                    isShowLogoutPopup()
                 }
             }
             binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -119,6 +157,41 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
     override fun onClick(v: View?) {
 
+    }
+
+    private fun isShowLogoutPopup() {
+        val inflater = LayoutInflater.from(this)
+        val popupView = inflater.inflate(R.layout.logout_popup, null)
+
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            true
+        )
+
+        dimBehind(popupWindow)
+        val btnCancel: TextView = popupView.findViewById(R.id.btnCancel)
+        val rlaLogout: RelativeLayout = popupView.findViewById(R.id.rlaLogout)
+        btnCancel.setOnClickListener {
+            clearDim()
+            popupWindow.dismiss()
+        }
+
+        rlaLogout.setOnClickListener {
+//            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
+            SharedPreference.putLogout(this, true)
+            SharedPreference.setLoggedIn(this, false)
+//            SharedPreference.setFingerprintEnabled(requireActivity(), false)
+            startActivity(Intent(this, Login::class.java))
+        }
+
+        val rootView = this.window.decorView.rootView
+        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0)
+
+        popupWindow.setOnDismissListener {
+            clearDim()
+        }
     }
 
     private fun isUpdateDeviceToken(token: String) {

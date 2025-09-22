@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Dashboard.Fragments.Profile
 import android.app.DatePickerDialog
 import android.content.Context
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -101,7 +102,8 @@ class ProfileRewampFragmentAdapter(
         private val imagelayout: LinearLayout = itemView.findViewById(R.id.imagelayout)
         private val imagelabel: TextView = itemView.findViewById(R.id.imagelabel)
         private val addlabel: TextView = itemView.findViewById(R.id.addlabel)
-        private val selectedFilesContainer: FrameLayout = itemView.findViewById(R.id.selectedFilesContainer)  // New container
+        private val selectedFilesContainer: FrameLayout =
+            itemView.findViewById(R.id.selectedFilesContainer)  // New container
 
         var isRcyImagesAttached = false
 
@@ -121,19 +123,78 @@ class ProfileRewampFragmentAdapter(
             when (field.type) {
                 Constant.text_, Constant.mobile, Constant.number -> {
                     titlelayout.visibility = View.VISIBLE
-                    titlelabel.text = field.title
+                    if (field.optional == false) {
+                        titlelabel.text = Html.fromHtml(
+                            "${field.title} <font color='#FF0000'>*</font>",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    } else {
+                        titlelabel.text = field.title
+                    }
+
                     titlevalue.setSafeTextWatcher(field) { field.value = it }
                     titlevalue.isEnabled = field.is_editable
                 }
 
                 Constant.image_ -> {
                     imagelayout.visibility = View.VISIBLE
-                    imagelabel.text = field.title
+                    if (field.optional == false) {
+                        imagelabel.text = Html.fromHtml(
+                            "${field.title} <font color='#FF0000'>*</font>",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    } else {
+                        imagelabel.text = field.title
+                    }
                     val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
                     recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
 
-                    val files = (field.options ?: emptyList()).map { url ->
-                        val fileName = url.substringAfterLast("/")
+                    val files = field.value?.let { valueStr ->
+                        if (valueStr.isNotEmpty()) {
+                            val fileName = valueStr.substringAfterLast("/")
+                            val extension = fileName.substringAfterLast(".", "").uppercase()
+                            val type = when (extension) {
+                                "JPG", "JPEG", "PNG", "GIF" -> "IMG"
+                                else -> extension.ifEmpty { "IMG" }
+                            }
+                            listOf(CommonFileData(type = type, path = valueStr))
+                        } else {
+                            emptyList()
+                        }
+                    } ?: emptyList()
+
+                    recyclerView.adapter = DocumentImageAdapter(
+                        context = itemView.context, files = files, isSubjectName = field.title ?: ""
+                    )
+
+                    if (field.isRcyImagesAttached) {
+                        attachRcyImagesBelowField()
+                    }
+
+                    addlabel.isVisible = field.is_editable
+                    addlabel.setOnClickListener {
+                        listener.onDocumentClicked(field, position)
+                        field.isRcyImagesAttached = true
+                        attachRcyImagesBelowField()
+                    }
+                }
+
+                Constant.document_ -> {
+                    imagelayout.visibility = View.VISIBLE
+                    if (field.optional == false) {
+                        imagelabel.text = Html.fromHtml(
+                            "${field.title} <font color='#FF0000'>*</font>",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    } else {
+                        imagelabel.text = field.title
+                    }
+
+                    val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
+                    recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
+
+                    val files = field.file_path?.map { doc ->
+                        val fileName = doc.documentName ?: doc.documentPath.substringAfterLast("/")
                         val extension = fileName.substringAfterLast(".", "").uppercase()
                         val type = when (extension) {
                             "JPG", "JPEG", "PNG", "GIF" -> "IMG"
@@ -144,12 +205,11 @@ class ProfileRewampFragmentAdapter(
                             "MP3", "WAV" -> "AUD"
                             else -> extension.ifEmpty { "FILE" }
                         }
-                        CommonFileData(type = type, path = url)
-                    }
+                        CommonFileData(type = type, path = doc.documentPath)
+                    } ?: emptyList()
+
                     recyclerView.adapter = DocumentImageAdapter(
-                        context = itemView.context,
-                        files = files,
-                        isSubjectName = field.title ?: ""
+                        context = itemView.context, files = files, isSubjectName = field.title ?: ""
                     )
 
                     if (field.isRcyImagesAttached) {
@@ -163,45 +223,31 @@ class ProfileRewampFragmentAdapter(
                         attachRcyImagesBelowField()
                     }
                 }
-                Constant.document_ -> {
-                    imagelayout.visibility = View.VISIBLE
-                    imagelabel.text = field.title
-                    val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
-                    recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
-
-
-                    val urls = field.options ?: emptyList()
-                    val files = mapUrlsToCommonFileData(urls)
-
-                    recyclerView.adapter = DocumentImageAdapter(
-                        context = itemView.context,
-                        files = files,
-                        isSubjectName = field.title ?: ""
-                    )
-
-                    if (field.isRcyImagesAttached) {
-                        attachRcyImagesBelowField()
-                    }
-
-                    addlabel.isVisible = field.is_editable
-                    addlabel.setOnClickListener {
-                        listener.onDocumentClicked(field, position)
-                        field.isRcyImagesAttached = true
-                        attachRcyImagesBelowField()
-                    }
-                }
-
 
                 Constant.address -> {
                     remarkslayout.visibility = View.VISIBLE
-                    remarkslabel.text = field.title
+                    if (field.optional == false) {
+                        remarkslabel.text = Html.fromHtml(
+                            "${field.title} <font color='#FF0000'>*</font>",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    } else {
+                        remarkslabel.text = field.title
+                    }
                     remarksvalue.setSafeTextWatcher(field) { field.value = it }
                     remarksvalue.isEnabled = field.is_editable
                 }
 
                 Constant.calendar -> {
                     datelayout.visibility = View.VISIBLE
-                    datelabel.text = field.title
+                    if (field.optional == false) {
+                        datelabel.text = Html.fromHtml(
+                            "${field.title} <font color='#FF0000'>*</font>",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    } else {
+                        datelabel.text = field.title
+                    }
                     datevalue.text = field.value ?: ""
 
                     datelayout.setOnClickListener {
@@ -235,7 +281,15 @@ class ProfileRewampFragmentAdapter(
                     val radioFemale: RadioButton = itemView.findViewById(R.id.radioFemale)
                     val radioOthers: RadioButton = itemView.findViewById(R.id.radioOthers)
 
-                    genderLabel.text = field.title
+
+                    if (field.optional == false) {
+                        genderLabel.text = Html.fromHtml(
+                            "${field.title} <font color='#FF0000'>*</font>",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    } else {
+                        genderLabel.text = field.title
+                    }
 
                     when (field.value?.lowercase()) {
                         Constant.male -> radioMale.isChecked = true
@@ -260,13 +314,21 @@ class ProfileRewampFragmentAdapter(
 
                 Constant.dropdown -> {
                     dropdownlayout.visibility = View.VISIBLE
-                    dropdownlabel.text = field.title
+
+                    if (field.optional == false) {
+                        dropdownlabel.text = Html.fromHtml(
+                            "${field.title} <font color='#FF0000'>*</font>",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    } else {
+                        dropdownlabel.text = field.title
+                    }
+
+
                     val options = field.options ?: emptyList()
 
                     val adapterDropdown = ArrayAdapter(
-                        itemView.context,
-                        android.R.layout.simple_dropdown_item_1line,
-                        options
+                        itemView.context, android.R.layout.simple_dropdown_item_1line, options
                     )
                     dropdownvalue.setAdapter(adapterDropdown)
 
@@ -300,10 +362,12 @@ class ProfileRewampFragmentAdapter(
             rcyImages?.let { rv ->
                 if (!isRcyImagesAttached) {
                     (rv.parent as? ViewGroup)?.removeView(rv)
-                    selectedFilesContainer.addView(rv, FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.WRAP_CONTENT
-                    ))
+                    selectedFilesContainer.addView(
+                        rv, FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT,
+                            FrameLayout.LayoutParams.WRAP_CONTENT
+                        )
+                    )
                     selectedFilesContainer.visibility = View.VISIBLE
                     rv.visibility = View.VISIBLE
                     isRcyImagesAttached = true

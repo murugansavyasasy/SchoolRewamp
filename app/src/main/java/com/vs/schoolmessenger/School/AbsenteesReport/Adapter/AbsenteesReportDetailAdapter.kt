@@ -69,13 +69,15 @@ class AbsenteesReportDetailAdapter(
             itemView.setOnClickListener {
                 val previousPosition = selectedPosition
                 selectedPosition = bindingAdapterPosition
-
                 notifyItemChanged(previousPosition)
                 notifyItemChanged(selectedPosition)
-
                 listener.onAbsenteeClicked(
                     selectedDate,
-                    sectionWise.section_id
+                    sectionWise.section_id,
+                    classWise.class_name,
+                    sectionWise.section_name,
+                    absent.toString(),
+                    total.toString()
                 )
             }
         }

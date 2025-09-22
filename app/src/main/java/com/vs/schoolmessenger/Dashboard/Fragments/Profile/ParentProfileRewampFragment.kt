@@ -465,8 +465,8 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         rlaVoice.visibility = View.GONE
         rlaVideoPick.visibility = View.GONE
-        rlaGallery.visibility = View.GONE
-        rlaCamera.visibility = View.GONE
+        rlaGallery.visibility = View.VISIBLE
+        rlaCamera.visibility = View.VISIBLE
 
         if (currentEditMode == "profile_photo") {
             rlaDocument.visibility = View.GONE

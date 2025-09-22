@@ -63,13 +63,10 @@ class CustomCalendarFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            val formatter = DateTimeFormatter.ofPattern(Constant.yyyy_MM_dd)
-            minDate =
-                it.getString(ARG_MIN_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
-            maxDate =
-                it.getString(ARG_MAX_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
-            selectedDate = it.getString(ARG_SELECTED_DATE)
-                ?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") // Match expected format
+            minDate = it.getString(ARG_MIN_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
+            maxDate = it.getString(ARG_MAX_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
+            selectedDate = it.getString(ARG_SELECTED_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
             calendarTag = it.getString(ARG_TAG)
         }
 
@@ -101,7 +98,8 @@ class CustomCalendarFragment : Fragment() {
                 calendarDateListener?.onDateSelected(date.toString(), calendarTag ?: "")
             },
             minDate = minDate,
-            maxDate = maxDate
+            maxDate = maxDate,
+            isAbsenteesReport = calendarTag == "absentees_calendar"
         )
         recyclerView.adapter = calendarAdapter
 
@@ -116,6 +114,10 @@ class CustomCalendarFragment : Fragment() {
         }
 
         updateCalendar()
+    }
+
+    fun setAbsentDates(dates: List<LocalDate>) {
+        calendarAdapter.setAbsentDates(dates.toSet())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
