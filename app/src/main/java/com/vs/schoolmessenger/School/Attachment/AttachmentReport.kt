@@ -280,6 +280,6 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         isData: List<AttachmentDataReport>,
         isPosition: Int
     ) {
-        TODO("Not yet implemented")
+
     }
 }

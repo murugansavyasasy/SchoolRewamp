@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -97,7 +98,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                         this,
                         Constant.isShimmerViewDisable
                     )
-                    binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
+                    binding.rcyAttendanceReport.layoutManager = GridLayoutManager(this, 2)
                     binding.rcyAttendanceReport.adapter = mAdapter
                 } else {
 
@@ -136,9 +137,10 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
             this,
             Constant.isShimmerViewShow
         )
-        binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
+        binding.rcyAttendanceReport.layoutManager = GridLayoutManager(this, 2)
         binding.rcyAttendanceReport.isNestedScrollingEnabled = false
         binding.rcyAttendanceReport.adapter = shimmerAdapter
+
     }
 
     private fun loadData() {

@@ -3,83 +3,165 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/twele"
-    card_view:cardCornerRadius="@dimen/sixteen"
-    card_view:cardElevation="@dimen/four"
-    android:layout_marginHorizontal="@dimen/four">
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="16dp"
+    card_view:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/sixteen"
-        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:gravity="center"
         android:background="@android:color/white">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/lnrDateCircle"
-            android:layout_width="@dimen/sixty_four"
-            android:layout_height="@dimen/sixty_four"
-            android:background="@drawable/bg_date_circle"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginEnd="@dimen/twele">
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_calendar_header"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/tvMonth"
-                android:text="Jun"
-                android:textSize="@dimen/twele_sp"
-                android:textColor="@color/black_2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Sep"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvDay"
-                android:text="17"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textSize="@dimen/fifteen_sp"
-                android:textColor="@color/black_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <!-- Center Info -->
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="@dimen/zero"
+        <TextView
+            android:id="@+id/tvDay"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="13"
+            android:textColor="@android:color/black"
+            android:textSize="28sp"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_marginTop="6dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvFullDate"
-                android:text="17 Jun"
-                android:textSize="@dimen/fifteen_sp"
-                android:textColor="@color/black_2" />
+        <TextView
+            android:id="@+id/tvFullDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13 Sep 2025"
+            android:textColor="@color/black_2"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/poppins_regular"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvDayName"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:text="Wednesday"
-                android:textSize="@dimen/twele_sp"
-                android:textColor="@color/light_gray_5" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvDayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saturday"
+            android:textColor="@color/teal_700"
+            android:textSize="14sp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/poppins_regular"/>
 
-        <!-- Status Badge -->
         <TextView
             android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Absent"
             android:textColor="@android:color/white"
             android:gravity="center"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textSize="@dimen/twele_sp"
-            android:paddingHorizontal="@dimen/twele"
-            android:paddingVertical="@dimen/six"
-            android:background="@drawable/bg_status_badge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_bold"
+            android:background="@drawable/bg_status_badge"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginBottom="@dimen/twele"-->
+<!--    card_view:cardCornerRadius="@dimen/sixteen"-->
+<!--    card_view:cardElevation="@dimen/four"-->
+<!--    android:layout_marginHorizontal="@dimen/four">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:padding="@dimen/sixteen"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:background="@android:color/white">-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/lnrDateCircle"-->
+<!--            android:layout_width="@dimen/sixty_four"-->
+<!--            android:layout_height="@dimen/sixty_four"-->
+<!--            android:background="@drawable/bg_date_circle"-->
+<!--            android:orientation="vertical"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_marginEnd="@dimen/twele">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvMonth"-->
+<!--                android:text="Jun"-->
+<!--                android:textSize="@dimen/twele_sp"-->
+<!--                android:textColor="@color/black_2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvDay"-->
+<!--                android:text="17"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                android:textSize="@dimen/fifteen_sp"-->
+<!--                android:textColor="@color/black_2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content" />-->
+<!--        </LinearLayout>-->
+
+<!--        &lt;!&ndash; Center Info &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="@dimen/zero"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/tvFullDate"-->
+<!--                android:text="17 Jun"-->
+<!--                android:textSize="@dimen/fifteen_sp"-->
+<!--                android:textColor="@color/black_2" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/tvDayName"-->
+<!--                style="@style/CustomTextStylePoppinsRegular"-->
+<!--                android:text="Wednesday"-->
+<!--                android:textSize="@dimen/twele_sp"-->
+<!--                android:textColor="@color/light_gray_5" />-->
+<!--        </LinearLayout>-->
+
+<!--        &lt;!&ndash; Status Badge &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/tvStatus"-->
+<!--            android:text="Absent"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:gravity="center"-->
+<!--            style="@style/CustomTextStylePoppinsBold"-->
+<!--            android:textSize="@dimen/twele_sp"-->
+<!--            android:paddingHorizontal="@dimen/twele"-->
+<!--            android:paddingVertical="@dimen/six"-->
+<!--            android:background="@drawable/bg_status_badge"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content" />-->
+<!--    </LinearLayout>-->
+<!--</androidx.cardview.widget.CardView>-->
