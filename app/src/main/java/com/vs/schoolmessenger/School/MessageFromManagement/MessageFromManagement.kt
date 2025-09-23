@@ -58,6 +58,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var updateRunnable: Runnable? = null
     var isMenuCount=-1
 
+    public var TYPE: String? = ""
+
+
     override fun getViewBinding(): MessageFromManagementBinding {
         return MessageFromManagementBinding.inflate(layoutInflater)
     }
@@ -384,8 +387,17 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             isMenuCount-=1
             setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
 
+            if(data.type.equals(Constant.TXT)){
+                TYPE = Constant.MGMT_MSG_TEXT
+            }
+            else if(data.type.equals(Constant.VOICE)){
+                TYPE = Constant.MGMT_MSG_VOICE
+            }
+            else{
+                TYPE = Constant.MGMT_MSG_ATTACHMENT
+            }
             val jsonObject = JsonObject().apply {
-                addProperty(APIKeyNames.type, data.type)
+                addProperty(APIKeyNames.type, TYPE)
                 addProperty(APIKeyNames.detail_id, data.id)
             }
             appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
