@@ -104,6 +104,10 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
             startActivity(intent)
         }
 
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         noticeboardadapter = SchoolNoticeBoardAdapter(
             emptyList(), this, this, false,
             binding.nomessage,
@@ -160,7 +164,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         )
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
-
 
     }
 

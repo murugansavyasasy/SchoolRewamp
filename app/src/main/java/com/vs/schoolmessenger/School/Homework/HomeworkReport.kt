@@ -77,7 +77,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-//        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
 //        binding.lnrTabOneName.setOnClickListener(this)
 //        binding.lnrTabTwoName.setOnClickListener(this)
 //        binding.AcademicYear.setOnClickListener(this)
@@ -95,7 +95,9 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
             startActivity(intent)
         }
 
-
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         isSelectedDate = Constant.getCurrentDate()
         binding.selectdate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
