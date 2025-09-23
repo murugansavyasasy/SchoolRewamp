@@ -59,7 +59,6 @@
         <CheckBox
             android:id="@+id/chMultipleSchool"
             android:layout_width="wrap_content"
-            style="@style/CustomCheckBox"
             android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
 

@@ -172,7 +172,6 @@
 
                 <CheckBox
                     android:id="@+id/terms_checkbox"
-                    style="@style/CustomCheckbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

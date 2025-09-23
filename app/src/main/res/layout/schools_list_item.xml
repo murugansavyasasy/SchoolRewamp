@@ -17,7 +17,6 @@
 
         <CheckBox
             android:id="@+id/chMultipleSchool"
-            style="@style/CustomCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -27,12 +26,12 @@
 
 
         <RelativeLayout
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toEndOf="@+id/chMultipleSchool"
             android:id="@+id/rytSchoolImage"
             android:layout_width="@dimen/sixty"
             android:layout_height="@dimen/sixty"
             android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/chMultipleSchool"
             android:background="@drawable/rect_grey">
 
             <ImageView

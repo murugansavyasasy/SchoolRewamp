@@ -402,6 +402,9 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     fun isUploadFilesInServer(isFileType: String?) {
 
+        ProgressDialogHelper.show(this)
+        ProgressDialogHelper.updateProgress(10)
+
         if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK ||
             SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT
         ) {
@@ -451,8 +454,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            ProgressDialogHelper.show(this)
-            ProgressDialogHelper.updateProgress(10)
+
             when (SELECTED_SCHOOL_MENU) {
                 M_ATTACHMENTS -> {
                     if (Constant.selectedFiles.size != 1) {
