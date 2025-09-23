@@ -192,8 +192,13 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
     }
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+        when (v?.id) {
+            R.id.imgBack -> {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
     }
+
 
     override fun onItemClick(
         isAttachmentData: List<AttachmentDataReport>,
