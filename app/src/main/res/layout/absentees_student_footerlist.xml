@@ -10,17 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/Image_value"
-            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
-            android:background="@drawable/bg_circle_avatar"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/CircleImageViewShape"
+            android:backgroundTint="@color/PrimaryColor" />
+
 
         <LinearLayout
             android:id="@+id/relative_layout"

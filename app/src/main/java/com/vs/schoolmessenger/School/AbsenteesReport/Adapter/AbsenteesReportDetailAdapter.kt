@@ -59,11 +59,13 @@ class AbsenteesReportDetailAdapter(
                 tvClassName.setTextColor(ContextCompat.getColor(tvClassName.context, R.color.white))
                 tvSectionName.setTextColor(ContextCompat.getColor(tvSectionName.context, R.color.white))
                 tvAbsentCount.setTextColor(ContextCompat.getColor(tvAbsentCount.context, R.color.PrimaryColor))
+                progressBar.visibility = View.VISIBLE
             } else {
                 root.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_card_containe_unselectedr)
                 tvClassName.setTextColor(ContextCompat.getColor(tvClassName.context, R.color.black))
                 tvSectionName.setTextColor(ContextCompat.getColor(tvSectionName.context, R.color.black))
                 tvAbsentCount.setTextColor(ContextCompat.getColor(tvAbsentCount.context, R.color.black))
+                progressBar.visibility = View.INVISIBLE
             }
 
             itemView.setOnClickListener {

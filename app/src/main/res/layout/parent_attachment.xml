@@ -109,7 +109,6 @@
         app:layout_constraintTop_toBottomOf="@+id/linearlayout1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         android:id="@+id/rytFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -179,16 +178,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@+id/rytFilter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/recycleracademic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="0dp"
+    android:layout_marginStart="@dimen/ten"
+    android:layout_marginTop="@dimen/ten"
+    android:layout_marginEnd="@dimen/ten" />
 
 
     <LinearLayout
@@ -199,6 +197,7 @@
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_centerInParent="true"
         android:orientation="vertical">
 

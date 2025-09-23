@@ -7,12 +7,9 @@
         android:required="true"
         tools:node="replace" />
 
-
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -33,8 +30,7 @@
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
-
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:name=".Auth.Base.MyApp"
@@ -51,6 +47,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
+
         <profileable android:shell="true" />
 
         <provider
@@ -65,7 +62,6 @@
 
         <activity
             android:name=".Auth.Splash.Splash"
-
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -83,7 +79,6 @@
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".Parent.Noticeboard.Adapter.ReminderBroadcastReceiver" />
 
         <service
@@ -115,7 +110,6 @@
             android:name=".Parent.QuizExam.AttendQuiz"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".Parent.QuizExam.SubmittedQuizPreview"
             android:theme="@style/AppTheme"
@@ -125,21 +119,22 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".School.QuizExam.QuizExamReport.SubmitReport"
+            android:name=".CommonScreens.WhatsNewActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
+        <activity
+            android:name=".School.QuizExam.QuizExamReport.SubmitReport"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Assignment.MyAssignmentSubmission.Mysubmission"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
-
         <activity
             android:name=".Parent.Attachment.Attachment"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".Parent.Assignment.MyAssignmentSubmission.MyAssignmentSubmit"
             android:theme="@style/AppTheme"
@@ -156,7 +151,6 @@
             android:name=".School.StudentReport.StudentReport"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".Parent.LSRW.MySubmissionView"
             android:theme="@style/AppTheme"
@@ -173,15 +167,18 @@
             android:name=".School.LeaveRequests.LeaveRequests"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity android:name=".Parent.RequestLeave.NewLeaveRequest"
+        <activity
+            android:name=".Parent.RequestLeave.NewLeaveRequest"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".Parent.RequestLeave.OutPass"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".Parent.RequestLeave.OutPass"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".Parent.CertificateRequest.CertificateViewActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".Parent.CertificateRequest.CertificateViewActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Assignment.AssignmentFilePicking"
             android:theme="@style/AppTheme"
@@ -194,17 +191,14 @@
             android:name=".School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".School.LSRW.LsrwMain"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".School.LSRW.CreateNewTask"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".CommonScreens.WebView"
             android:theme="@style/AppTheme"
@@ -249,7 +243,6 @@
             android:name=".Auth.Introduction.Introduction"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".School.InteractionWithStudent.InteractionWithStudent"
             android:theme="@style/AppTheme"
@@ -258,7 +251,6 @@
             android:name=".Parent.InteractionWithStaff.InteractionwithStaffChatScreen"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".School.InteractionWithStudent.InteractionWithStudentChatScreen"
             android:theme="@style/AppTheme"
@@ -283,7 +275,6 @@
             android:name=".Dashboard.Settings.ReportTheBug.ReportTheBug"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".School.Assignment.AssignmentStudentList"
             android:theme="@style/AppTheme"
@@ -292,7 +283,6 @@
             android:name=".School.Assignment.AssignmentStudentListDetail"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".Dashboard.Settings.RateUs.RateUs"
             android:theme="@style/AppTheme"
@@ -348,7 +338,6 @@
             android:name=".School.LSRW.LsrwReportAndStatics"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".School.LSRW.CompletedTaskList"
             android:theme="@style/AppTheme"
@@ -357,7 +346,6 @@
             android:name=".School.NoticeBoard.CreateNoticeBoard"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".School.LSRW.ActiveTaskList"
             android:theme="@style/AppTheme"
@@ -378,7 +366,6 @@
             android:name=".Parent.CertificateRequest.CertificateRequest"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".School.LSRW.SubmittedStudentListRemarkSubmit"
             android:theme="@style/AppTheme"
@@ -434,11 +421,10 @@
         <activity
             android:name=".Parent.EventsHolidays.EventActivty.Event"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
-<!--        <activity-->
-<!--            android:name=".Parent.OnlineMeeting.OnlineMeeting"-->
-<!--            android:theme="@style/AppTheme"-->
-<!--            android:windowSoftInputMode="adjustPan|adjustResize" />-->
+            android:windowSoftInputMode="adjustPan|adjustResize" /> <!-- <activity -->
+        <!-- android:name=".Parent.OnlineMeeting.OnlineMeeting" -->
+        <!-- android:theme="@style/AppTheme" -->
+        <!-- android:windowSoftInputMode="adjustPan|adjustResize" /> -->
         <activity
             android:name=".Parent.PTM.PTM"
             android:theme="@style/AppTheme"
@@ -468,12 +454,10 @@
             android:name=".Parent.EventsHolidays.HolidayActivity.Holidays"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".Parent.EBooks.Ebooks"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".Parent.Attendance.AttendanceReport.AttendanceReport"
             android:theme="@style/AppTheme"
@@ -498,7 +482,6 @@
             android:name=".School.SchoolNeeds.SchoolNeeds"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".School.ImportantInfo.ImportantInfo"
             android:theme="@style/AppTheme"
@@ -544,55 +527,46 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
         <activity
             android:name=".Testing.Testing"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
         <activity
             android:name=".Parent.Homework.HomeWorkAdapter.ChildHomeWork"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
         <activity
             android:name=".School.PTM.Activity.StaffSlotDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
         <activity
             android:name=".School.PTM.Activity.CreateSlots"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
         <activity
             android:name=".School.Assignment.AssignmentReport"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
         <activity
             android:name=".School.Homework.HomeworkReport"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
         <activity
             android:name=".School.NoticeBoard.NoticeBoardReport"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
         <activity
             android:name=".School.Event.EventReport"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
         <activity
             android:name=".School.Attachment.AttachmentReport"
             android:screenOrientation="portrait"

@@ -54,6 +54,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.replytext.setOnClickListener(this)
         binding.replyalltext.setOnClickListener(this)
         binding.imgCloseReply.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
 
         appViewModel?.getstaffquestions?.observe(this) { response ->
             Log.d("response++", response.toString())

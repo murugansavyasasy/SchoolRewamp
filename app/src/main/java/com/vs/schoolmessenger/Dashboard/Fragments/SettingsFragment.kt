@@ -23,6 +23,7 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
+import com.vs.schoolmessenger.CommonScreens.WhatsNewActivity
 import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Faq
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
@@ -72,6 +73,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrLanguage.setOnClickListener(this)
         binding.lnrChangePassword.setOnClickListener(this)
         binding.lnrSignalCheck.setOnClickListener(this)
+        binding.lnrwhatsnew.setOnClickListener(this)
 
         if (Constant.checkBiometricSupport(requireActivity())) {
             binding.lnrEnableFingerPrint.visibility = View.VISIBLE
@@ -141,12 +143,25 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isShowLogoutPopup()
             }
 
+            R.id.lnrwhatsnew -> {
+                RedirectToWhatsnew()
+            }
+
             R.id.lnrSignalCheck -> {
                 val networkSpeedMonitor = NetworkSpeedMonitor(requireContext())
                 networkSpeedMonitor.showNetworkSpeedPopup()
             }
         }
     }
+
+
+    private fun RedirectToWhatsnew() {
+        val intent = Intent(requireContext(), WhatsNewActivity::class.java)
+        startActivity(intent)
+        activity?.finish()
+    }
+
+
 
    private fun showInAppReview(requireActivity: FragmentActivity) {
         val manager = ReviewManagerFactory.create(requireActivity())
