@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_white"
-    android:fitsSystemWindows="true">
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/light_white">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
         <include
             android:id="@+id/toolbarLayout"
-            layout="@layout/school_side_tool_bar" />
+            layout="@layout/school_side_tool_bar"
+            app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
 
         <LinearLayout
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/toolbarLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,6 +96,13 @@
 
         </LinearLayout>
 
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
         <RelativeLayout
             android:id="@+id/rytCreateAssignment"
             android:layout_width="match_parent"
@@ -148,17 +169,17 @@
 
 
 
-            <EditText
-                android:paddingHorizontal="@dimen/ten"
-                android:id="@+id/edtTitle"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="match_parent"
-                android:background="@android:color/transparent"
-                android:layout_height="match_parent">
+                <EditText
+                    android:paddingHorizontal="@dimen/ten"
+                    android:id="@+id/edtTitle"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:background="@android:color/transparent"
+                    android:layout_height="match_parent">
 
 
 
-            </EditText>
+                </EditText>
 
             </LinearLayout>
 
@@ -204,21 +225,21 @@
 
 
 
-            <EditText
-                android:id="@+id/edtDescription"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:editable="true"
-                android:focusable="true"
-                android:background="@android:color/transparent"
-                android:focusableInTouchMode="true"
-                android:gravity="start"
-                android:hint="@string/Description"
-                android:padding="@dimen/ten"
-                android:textSize="@dimen/thirteen_sp">
+                <EditText
+                    android:id="@+id/edtDescription"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:editable="true"
+                    android:focusable="true"
+                    android:background="@android:color/transparent"
+                    android:focusableInTouchMode="true"
+                    android:gravity="start"
+                    android:hint="@string/Description"
+                    android:padding="@dimen/ten"
+                    android:textSize="@dimen/thirteen_sp">
 
-            </EditText>
+                </EditText>
 
             </LinearLayout>
 
@@ -374,6 +395,9 @@
             </RelativeLayout>
 
         </RelativeLayout>
+    </ScrollView>
+
+
 
 <!--        <RelativeLayout-->
 <!--            android:id="@+id/rlaAssignmentReport"-->
@@ -495,5 +519,5 @@
 <!--                </TextView>-->
 <!--            </LinearLayout>-->
 <!--        </RelativeLayout>-->
-    </RelativeLayout>
-</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

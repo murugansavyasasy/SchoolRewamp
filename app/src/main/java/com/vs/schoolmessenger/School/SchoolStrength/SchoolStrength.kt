@@ -49,7 +49,11 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()

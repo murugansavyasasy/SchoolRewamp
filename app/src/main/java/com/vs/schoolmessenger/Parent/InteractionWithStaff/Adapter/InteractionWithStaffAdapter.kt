@@ -10,6 +10,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
@@ -90,6 +91,11 @@ class InteractionWithStaffAdapter(
     inner class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
+//        private val txtName: TextView = itemView.findViewById(R.id.txtName)
+//        private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
+//        private val header: CardView = itemView.findViewById(R.id.header)
+
+
         private val nameheader: TextView = itemView.findViewById(R.id.nameheader)
         private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
@@ -99,6 +105,10 @@ class InteractionWithStaffAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(staff: Staff, position: Int, adapter: InteractionWithStaffAdapter) {
+
+
+//            txtName.text = staff.name
+//            lblSubject.text = staff.subject_name
             nameheader.text = staff.name
             subjectheader.text = staff.subject_name
             unreadcount.text = staff.unread_count

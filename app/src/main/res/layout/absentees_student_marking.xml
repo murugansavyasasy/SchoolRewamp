@@ -100,7 +100,6 @@
             <CheckBox
                 android:layout_alignParentEnd="true"
                 android:id="@+id/cbSelect"
-                style="@style/CustomCheckBox"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_marginEnd="@dimen/fifteen"

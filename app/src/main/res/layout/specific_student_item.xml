@@ -69,12 +69,9 @@
             android:padding="@dimen/five"
             android:src="@drawable/ic_down_round" />
 
-
-
         <CheckBox
             android:id="@+id/cbSelect"
             android:layout_width="wrap_content"
-            style="@style/CustomCheckBox"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

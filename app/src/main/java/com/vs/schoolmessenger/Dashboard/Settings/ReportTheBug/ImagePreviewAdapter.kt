@@ -8,67 +8,41 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import java.io.File
 
 class ImagePreviewAdapter(
-    private val imagePathList: ArrayList<String>?,
+    private val imagePathList: ArrayList<String>,
     private val context: Context,
-    var param: ImagePreviewRemoveListener
+    private val listener: ImagePreviewRemoveListener
 ) : BaseAdapter() {
-    private var layoutInflater: LayoutInflater? = null
-    private lateinit var cardImage: CardView
-    private lateinit var imgGallery: ImageView
-    private lateinit var imgCancle: ImageView
 
-    companion object {
-        var checkClick: ImagePreviewRemoveListener? = null
-    }
+    private val layoutInflater: LayoutInflater =
+        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-    override fun getCount(): Int {
-        return imagePathList!!.size
-    }
+    override fun getCount(): Int = imagePathList.size
 
-    override fun getItem(position: Int): Any? {
-        return null
-    }
+    override fun getItem(position: Int): Any = imagePathList[position]
 
-    override fun getItemId(position: Int): Long {
-        return 0
-    }
+    override fun getItemId(position: Int): Long = position.toLong()
 
-    // in below function we are getting individual item of grid view.
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
-        var convertView = convertView
-        checkClick = param
-        if (layoutInflater == null) {
-            layoutInflater =
-                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        }
-        if (convertView == null) {
-            convertView = layoutInflater!!.inflate(R.layout.image_preview, null)
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val view = convertView ?: layoutInflater.inflate(R.layout.image_preview, parent, false)
+
+        val imgGallery = view.findViewById<ImageView>(R.id.imgGallery)
+        val imgCancel = view.findViewById<ImageView>(R.id.imgCancle)
+
+        val path = imagePathList[position]
+
+        Glide.with(context)
+            .load(Uri.parse(path))
+            .into(imgGallery)
+
+        imgCancel.setOnClickListener {
+            listener.remove(position)
         }
 
-        imgGallery = convertView!!.findViewById(R.id.imgGallery)
-        imgCancle = convertView.findViewById(R.id.imgCancle)
-        imgCancle!!.visibility = View.VISIBLE
-        val isImagePreview = imagePathList?.get(position)
-        if (imagePathList!![position].contains("amazonaws")) {
-            Picasso.get().load(isImagePreview!!).into(imgGallery)
-        } else {
-            val isImage = File(isImagePreview!!)
-            val imageUri = Uri.fromFile(isImage)
-            imgGallery.setImageURI(imageUri)
-        }
-
-
-        imgCancle.setOnClickListener {
-            imagePathList.removeAt(position)
-            checkClick?.remove(position)
-            notifyDataSetChanged()
-        }
-
-        return convertView
+        return view
     }
 }

@@ -52,7 +52,6 @@
 
             <CheckBox
                 android:id="@+id/chEnglish"
-                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -121,7 +120,6 @@
 
             <CheckBox
                 android:id="@+id/chTamil"
-                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -189,7 +187,6 @@
 
             <CheckBox
                 android:id="@+id/chThai"
-                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -254,7 +251,6 @@
 
             <CheckBox
                 android:id="@+id/chHindi"
-                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -320,7 +316,6 @@
 
             <CheckBox
                 android:id="@+id/chArabic"
-                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

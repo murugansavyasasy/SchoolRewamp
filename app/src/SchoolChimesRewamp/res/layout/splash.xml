@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -198,3 +197,130 @@
 
 
 </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="@color/PrimaryColor"-->
+<!--    android:fitsSystemWindows="true">-->
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/fytLogo"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/two_hundred"-->
+<!--        android:layout_marginTop="@dimen/hundred"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        &lt;!&ndash; Background glow &ndash;&gt;-->
+<!--        <View-->
+<!--            android:id="@+id/bgGlow"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@drawable/glow_background"/>-->
+
+<!--        &lt;!&ndash; Logo &ndash;&gt;-->
+<!--        <ImageView-->
+<!--            android:id="@+id/imgLogo"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/school_chimes_logo"-->
+<!--            android:scaleType="fitCenter"/>-->
+<!--    </FrameLayout>-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/lblVersion"-->
+<!--        style="@style/CustomTextStylePoppinsBold1"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/thirty"-->
+<!--        android:layout_marginEnd="@dimen/twenty"-->
+<!--        android:text="Version 1.1"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="@dimen/fifteen_sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/fytLogo">-->
+
+<!--    </TextView>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/lblAppName"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/thirty"-->
+<!--        android:fontFamily="@font/schoolchimes1"-->
+<!--        android:gravity="center"-->
+<!--        android:text="School Chimes"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="@dimen/fifty"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/lblVersion">-->
+
+<!--    </TextView>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/lblContent"-->
+<!--        style="@style/CustomTextStylePoppinsBold1"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/thirty"-->
+<!--        android:layout_marginEnd="@dimen/twenty"-->
+<!--        android:text="Ring in the knowledge"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="@dimen/fifteen_sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/lblAppName">-->
+
+<!--    </TextView>-->
+
+<!--    <com.vs.schoolmessenger.Utils.ThreeDotsLoadingView-->
+<!--        android:id="@+id/loader"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/thirty"-->
+<!--        android:text=""-->
+<!--        android:textColor="#000"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/lblContent" />-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/lblLoading"-->
+<!--        style="@style/CustomTextStylePoppinsMedium"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/thirty"-->
+<!--        android:layout_marginEnd="@dimen/twenty"-->
+<!--        android:text="Loading your educational journey..."-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="@dimen/thirteen_sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/loader">-->
+
+<!--    </TextView>-->
+
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

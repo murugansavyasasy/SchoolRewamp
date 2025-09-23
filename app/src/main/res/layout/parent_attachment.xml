@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:fitsSystemWindows="true">
+   >
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
+        layout="@layout/parent_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/headerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
@@ -33,6 +49,9 @@
     </LinearLayout>
 
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/headerview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/linearlayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,6 +106,10 @@
     </LinearLayout>
 
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
         android:id="@+id/rytFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -155,10 +178,12 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/rytFilter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/recycleracademic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytFilter"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten">
@@ -167,6 +192,10 @@
 
 
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/recycleracademic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -199,4 +228,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

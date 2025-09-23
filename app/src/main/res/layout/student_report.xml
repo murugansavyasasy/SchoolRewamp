@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:id="@+id/main"
+    >
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 
     <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
         android:id="@+id/rytSearchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,6 +88,9 @@
 
 
     <LinearLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rytSearchBar"
         android:id="@+id/lnrSort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -128,6 +150,9 @@
     </LinearLayout>
 
     <LinearLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lnrSort"
         android:layout_below="@+id/lnrSort"
         android:orientation="horizontal"
         android:id="@+id/tabLayout"
@@ -237,6 +262,9 @@
         </HorizontalScrollView>
     </LinearLayout>
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/rlaStandardPicking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -326,6 +354,9 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlaStandardPicking"
         android:id="@+id/rcyStudentReport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -335,6 +366,10 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcyStudentReport"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/lytNoDataFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -361,4 +396,4 @@
 
         </TextView>
     </LinearLayout>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

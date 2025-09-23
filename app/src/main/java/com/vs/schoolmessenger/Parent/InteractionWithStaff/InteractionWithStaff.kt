@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -129,7 +130,7 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
         binding.txtNoData.visibility = View.GONE
         binding.rcystaffdata.visibility = View.VISIBLE
         binding.rcystaffdata.layoutManager = LinearLayoutManager(this)
-
+        binding.rcystaffdata.layoutManager = GridLayoutManager(this, 1)
         interactionWithStaffAdapter = InteractionWithStaffAdapter(data, this, this, false)
         binding.rcystaffdata.adapter = interactionWithStaffAdapter
     }

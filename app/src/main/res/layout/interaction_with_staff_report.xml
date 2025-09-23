@@ -10,7 +10,6 @@
     android:padding="@dimen/ten">
 
 
-
     <TextView
         android:id="@+id/lblLogo"
         android:layout_width="@dimen/fifty"
@@ -69,7 +68,6 @@
     </RelativeLayout>
 
 
-
     <RelativeLayout
         android:layout_alignParentEnd="true"
         android:id="@+id/rytUnread"
@@ -113,3 +111,80 @@
         android:background="@color/light_white_4"
         android:visibility="gone" />
 </RelativeLayout>
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/header"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="150dp"-->
+<!--    android:layout_marginStart="@dimen/ten"-->
+<!--    android:layout_marginTop="@dimen/fifteen"-->
+<!--    android:layout_marginEnd="@dimen/ten"-->
+<!--    android:background="@android:color/white"-->
+<!--    app:cardCornerRadius="16dp"-->
+<!--    app:cardElevation="4dp">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
+
+<!--        &lt;!&ndash; Profile Image &ndash;&gt;-->
+<!--        <ImageView-->
+<!--            android:id="@+id/imgProfile"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/rounded_top_corners"-->
+<!--            android:contentDescription="Profile Image"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/ic_user_icon" />-->
+
+<!--        &lt;!&ndash; Name & Designation container &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/rounded_bg_green"-->
+
+<!--            android:orientation="vertical"-->
+<!--            android:paddingTop="8dp"-->
+<!--            android:paddingBottom="4dp">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/txtName"-->
+<!--                style="@style/CustomTextStylePoppinsBold1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/five"-->
+<!--                android:ellipsize="end"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Bailey Dupont"-->
+<!--                android:textColor="@android:color/white"-->
+<!--                android:textSize="@dimen/thirteen_sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblSubject"-->
+<!--                style="@style/CustomTextStylePoppinsMedium"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/five"-->
+<!--                android:ellipsize="end"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Neurologist"-->
+<!--                android:textColor="@android:color/darker_gray"-->
+<!--                android:textSize="@dimen/ten_sp" />-->
+
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+
+<!--</androidx.cardview.widget.CardView>-->
+

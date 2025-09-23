@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
+    android:id="@+id/main"
     android:background="@color/very_light_grey"
     android:layout_height="match_parent">
 
 
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
+        layout="@layout/parent_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintStart_toStartOf="parent"
         android:paddingStart="@dimen/sixteen"
         android:id="@+id/lblParentToolBar"
         style="@style/CustomTextStylePoppinsBold"
@@ -20,7 +36,6 @@
         android:text="@string/quiz_submission"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginStart="@dimen/five"
-        android:layout_below="@+id/toolbarLayout"
         android:textColor="@color/black"
         android:textSize="@dimen/twenty">
 
@@ -28,12 +43,16 @@
 
 
     <androidx.core.widget.NestedScrollView
+        app:layout_constraintTop_toBottomOf="@+id/lblParentToolBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:scrollbars="none"
         android:layout_below="@+id/lblParentToolBar"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/zero"
         android:fillViewport="true"
         android:overScrollMode="never"
-        android:layout_height="match_parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/zero">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -242,4 +261,4 @@
 
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -124,11 +124,17 @@
     </style>
 
 
-    <!-- res/values/styles.xml -->
+<!--    &lt;!&ndash; res/values/styles.xml &ndash;&gt;-->
+<!--    <style name="CustomCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">-->
+<!--        <item name="android:buttonTint">@color/primary</item>-->
+<!--        <item name="android:textColor">@color/PrimaryColor</item>-->
+<!--    </style>-->
+
     <style name="CustomCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:buttonTint">@color/black</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:buttonTint">@color/checkbox_tint</item>
+        <item name="android:textColor">@color/PrimaryColor</item>
     </style>
+
 
     <style name="RoundedSquare" parent="">
         <item name="cornerSize">18dp</item>

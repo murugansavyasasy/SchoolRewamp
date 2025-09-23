@@ -31,19 +31,16 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
 import com.vs.schoolmessenger.School.Assignment.AssignmentReport
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
-import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.Event.EventReport
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
-import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
 import com.vs.schoolmessenger.School.Homework.HomeworkReport
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
-
-import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
+import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
@@ -395,6 +392,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     fun isUploadFilesInServer(isFileType: String?) {
+        ProgressDialogHelper.show(this)
+        ProgressDialogHelper.updateProgress(10)
 
         if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
@@ -654,8 +653,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            ProgressDialogHelper.show(this)
-            ProgressDialogHelper.updateProgress(10)
             when (SELECTED_SCHOOL_MENU) {
                 M_COMMUNICATION -> {
                     Log.d("Constant.isCommunicationType", Constant.isCommunicationType.toString())

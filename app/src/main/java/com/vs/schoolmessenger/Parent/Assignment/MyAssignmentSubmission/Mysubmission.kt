@@ -31,7 +31,10 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
     lateinit var mAdapter: MySubmissionAdapter
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
