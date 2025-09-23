@@ -8,7 +8,7 @@
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_theme_school"
+        android:background="@drawable/bg_header_rounded"
         android:paddingVertical="20dp">
 
         <ImageView
@@ -62,7 +62,7 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:visibility="gone"
                 android:layout_toEndOf="@+id/imgBack"
-                android:background="@drawable/black_background"
+                android:background="@drawable/bg_curve"
                 android:padding="@dimen/ten">
 
                 <ImageView
