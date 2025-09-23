@@ -9,238 +9,230 @@
     android:fitsSystemWindows="true"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/dotindicator"
-        android:id="@+id/dotindicator"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"/>
-
-
-
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/relative_layout"
-        android:layout_below="@+id/dotindicator"
-        android:layout_marginStart="@dimen/eighteen"
-        android:layout_marginEnd="@dimen/eighteen"
-        android:layout_marginTop="@dimen/thirty"
-        android:background="@drawable/rounded_bg"
-        android:padding="@dimen/fifteen"
-        android:layout_gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/header_textview"
-            android:layout_marginStart="10dp"
-            android:text="Saloon &amp; Spa"
-            android:textStyle="normal"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="@dimen/fourteen_sp"/>
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/eight">
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/thumbnail"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:src="@drawable/small_postercoupon"
-                app:shapeAppearanceOverlay="@style/ImageMediumRoundedCorners" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dotindicator"
+                android:id="@+id/dotindicator"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:id="@+id/relative_layout"
+                android:layout_marginStart="@dimen/eighteen"
+                android:layout_marginEnd="@dimen/eighteen"
+                android:layout_marginTop="@dimen/thirty"
+                android:background="@drawable/rounded_bg"
+                android:padding="@dimen/fifteen"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/offer_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                   style="@style/CustomTextStylePoppinsMedium"
-                    android:text="Rs.300 Off"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/seventeen_sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/offer_text1"
-                    android:text="TONI&amp;GUY"
+                    android:id="@+id/header_textview"
+                    android:layout_marginStart="10dp"
+                    android:text="Saloon &amp; Spa"
                     android:textStyle="normal"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:layout_marginStart="@dimen/five"
-                    style="@style/CustomTextStylePoppinsMedium"/>
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="@dimen/fourteen_sp"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/eight">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/thumbnail"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:src="@drawable/small_postercoupon"
+                        app:shapeAppearanceOverlay="@style/ImageMediumRoundedCorners" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/offer_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:text="Rs.300 Off"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/seventeen_sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/offer_text1"
+                            android:text="TONI&amp;GUY"
+                            android:textStyle="normal"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:layout_marginStart="@dimen/five"
+                            style="@style/CustomTextStylePoppinsMedium"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/seven">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirteen"
+                        android:layout_height="@dimen/thirteen"
+                        android:id="@+id/location_imag2"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/nine"
+                        android:src="@drawable/clockloadericon"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/offer_text4"
+                        android:text="Valid till 01.01.2024"
+                        android:textStyle="normal"
+                        android:textSize="@dimen/thirteen_sp"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_marginStart="@dimen/five"/>
+                </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_layout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/ten"
+                android:layout_marginTop="@dimen/twenty">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/remember"
+                        android:text="How to Use"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/ten"
+                        android:textStyle="normal"
+                        style="@style/CustomTextStylePoppinsMedium"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/remember_symbol"
+                        android:src="@drawable/ic_down_black"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginStart="@dimen/five"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/expandable_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Here are some important thakdjnkasjdn jkansjdknkjnadksad nkajndkjnkjasnkjasndkings to remember..."
+                    android:textSize="@dimen/fourteen_sp"
+                    android:textStyle="normal"
+                    android:padding="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fourty"
+                    android:visibility="gone"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textColor="@color/grey"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/one"
+                android:id="@+id/view"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
+                android:background="@color/grey" />
+
+            <LinearLayout
+                android:id="@+id/linear_layout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/ten"
+                android:layout_marginTop="@dimen/ten">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/remember1"
+                        android:text="Terms &amp; Conditions"
+                        android:textColor="@color/black"
+                        android:textStyle="normal"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/ten"
+                        style="@style/CustomTextStylePoppinsMedium"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/remember_symbol1"
+                        android:src="@drawable/ic_down_black"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginStart="@dimen/five"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/expandable_text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Here are some important thakdjnkasjdn jkansjdknkjnadksad nkajndkjnkjasnkjasndkings to remember..."
+                    android:textSize="@dimen/fourteen_sp"
+                    android:textStyle="normal"
+                    android:padding="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fourty"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:visibility="gone"
+                    android:textColor="@color/grey"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/one"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
+                android:background="@color/grey" />
+
         </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/seven">
-
-            <ImageView
-                android:layout_width="@dimen/thirteen"
-                android:layout_height="@dimen/thirteen"
-                android:id="@+id/location_imag2"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/nine"
-                android:src="@drawable/clockloadericon"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/offer_text4"
-                android:text="Valid till 01.01.2024"
-                android:textStyle="normal"
-                android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_marginStart="@dimen/five"/>
-        </LinearLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/linear_layout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/ten"
-        android:layout_below="@+id/relative_layout"
-        android:layout_marginTop="@dimen/twenty">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:id="@+id/remember"
-                android:text="How to Use"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/ten"
-                android:textStyle="normal"
-                style="@style/CustomTextStylePoppinsMedium"/>
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/remember_symbol"
-                android:src="@drawable/ic_down_black"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginStart="@dimen/five"/>
-
-        </LinearLayout>
-
-        <!-- Hidden TextView to be expanded -->
-        <TextView
-            android:id="@+id/expandable_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Here are some important thakdjnkasjdn jkansjdknkjnadksad nkajndkjnkjasnkjasndkings to remember..."
-            android:textSize="@dimen/fourteen_sp"
-            android:textStyle="normal"
-            android:padding="@dimen/ten"
-            android:layout_marginEnd="@dimen/fourty"
-            android:visibility="gone"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:textColor="@color/grey"/>
-    </LinearLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/one"
-        android:id="@+id/view"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_below="@+id/linear_layout3"
-        android:layout_marginEnd="@dimen/twenty"
-        android:background="@color/grey"
-        />
-
-
-    <LinearLayout
-        android:id="@+id/linear_layout4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/view"
-        android:padding="@dimen/ten"
-        android:layout_marginTop="@dimen/ten">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:id="@+id/remember1"
-                android:text="Terms &amp; Conditions"
-                android:textColor="@color/black"
-                android:textStyle="normal"
-                android:textSize="@dimen/fifteen_sp"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/ten"
-               style="@style/CustomTextStylePoppinsMedium"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/remember_symbol1"
-                android:src="@drawable/ic_down_black"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginStart="@dimen/five"/>
-        </LinearLayout>
-
-        <!-- Hidden TextView to be expanded -->
-        <TextView
-            android:id="@+id/expandable_text1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Here are some important thakdjnkasjdn jkansjdknkjnadksad nkajndkjnkjasnkjasndkings to remember..."
-            android:textSize="@dimen/fourteen_sp"
-            android:textStyle="normal"
-            android:padding="@dimen/ten"
-            android:layout_marginEnd="@dimen/fourty"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:visibility="gone"
-            android:textColor="@color/grey"/>
-    </LinearLayout>
-
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/one"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginEnd="@dimen/twenty"
-        android:layout_below="@+id/linear_layout4"
-        android:background="@color/grey"
-        />
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/isProgressBar"
@@ -248,9 +240,6 @@
         android:visibility="gone"
         android:layout_marginTop="@dimen/fifty"
         android:layout_centerInParent="true"
-        android:layout_height="@dimen/fifty">
-
-    </ProgressBar>
-
+        android:layout_height="@dimen/fifty" />
 
 </RelativeLayout>

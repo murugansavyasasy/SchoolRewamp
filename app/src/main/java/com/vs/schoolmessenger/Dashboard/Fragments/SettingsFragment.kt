@@ -158,7 +158,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     private fun RedirectToWhatsnew() {
         val intent = Intent(requireContext(), WhatsNewActivity::class.java)
         startActivity(intent)
-        activity?.finish()
     }
 
 

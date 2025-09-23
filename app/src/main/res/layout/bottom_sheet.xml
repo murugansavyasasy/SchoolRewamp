@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/activate_coupon"
-        android:textColor="@android:color/black"
+        android:textColor="@color/white"
         android:textAllCaps="true"
         android:textStyle="bold"
         android:textSize="17sp"
