@@ -1,6 +1,4 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
-
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -19,7 +17,6 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventUp
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
