@@ -164,8 +164,8 @@ object Constant {
     var isNonEmergency = 100
     var isEmergency = 101
     var isFileLimit = 0
-    var isSchool = 1
 
+    var isSchool = 1
     var isStandard = 2
     var isSection = 3
     var isGroup = 4

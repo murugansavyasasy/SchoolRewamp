@@ -496,7 +496,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.GONE
                     changeTapBg(Constant.isSchool)
-                    isSelectedType = 0
+                 //   isSelectedType = 0
                     isGetAcademicYear()
                 }
                 else -> {
@@ -509,7 +509,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.VISIBLE
                     changeTapBg(Constant.isSchool)
-                    isSelectedType = 0
+                 //   isSelectedType = 0
                     isGetAcademicYear()
 
                 }
@@ -697,6 +697,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             R.id.rytSend -> {
                 var isTypeOfName = ""
+
+                Log.d("isSelectedType++",isSelectedType.toString())
                 when (isSelectedType) {
                     0 -> {
                         isTargetType = Constant.isSchool
@@ -800,6 +802,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         when (type) {
             Constant.isSchool -> {
+                isSelectedType = 0
                 binding.tapEntireSchool.background =
                     ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
                 binding.tapStandards.background = null
@@ -813,7 +816,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.lblCreatedOn.visibility = View.GONE
                 binding.chAllSelect.isChecked = false
                 binding.chAllSelect.visibility = View.GONE
-                isSelectedType = 0
+
                 isGroupSelectedIds.clear()
                 isStandardSelectedIds.clear()
                 isSectionSelectedIds.clear()
@@ -830,6 +833,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
 
             Constant.isStandard -> {
+                isSelectedType = 1
                 binding.tapEntireSchool.background = null
                 binding.tapStandards.background =
                     ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
@@ -841,7 +845,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.nomessageEntire.visibility = View.GONE
                 binding.lblCreatedOn.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
-                isSelectedType = 1
+
                 binding.chAllSelect.visibility = View.GONE
                 binding.chAllSelect.isChecked = false
                 isGroupSelectedIds.clear()
@@ -862,6 +866,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
 
             Constant.isSection -> {
+                isSelectedType = 2
                 binding.tapEntireSchool.background = null
                 binding.tapStandards.background = null
                 binding.tabSectionsStudent.background =
@@ -874,7 +879,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.txtNoData.visibility = View.GONE
                 binding.lblCreatedOn.visibility = View.GONE
                 binding.chAllSelect.isChecked = false
-                isSelectedType = 2
+
                 isGroupSelectedIds.clear()
                 isStandardSelectedIds.clear()
                 isSectionSelectedIds.clear()
@@ -902,6 +907,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
 
             Constant.isGroup -> {
+                isSelectedType = 3
                 binding.tapEntireSchool.background = null
                 binding.tapStandards.background = null
                 binding.tabSectionsStudent.background = null
@@ -914,7 +920,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.txtNoData.visibility = View.GONE
                 binding.chAllSelect.visibility = View.GONE
                 binding.chAllSelect.isChecked = false
-                isSelectedType = 3
                 isGroupSelectedIds.clear()
                 isStandardSelectedIds.clear()
                 isSectionSelectedIds.clear()
@@ -935,6 +940,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
 
             Constant.isStaff -> {
+                isSelectedType = 4
                 binding.tapEntireSchool.background = null
                 binding.tapStandards.background = null
                 binding.tabSectionsStudent.background = null
@@ -948,7 +954,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.recyclerView.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 binding.chAllSelect.isChecked = false
-                isSelectedType = 4
+
                 isGroupSelectedIds.clear()
                 isStandardSelectedIds.clear()
                 isSectionSelectedIds.clear()
@@ -1068,7 +1074,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                 selectedIds,
                                 textData.isTitle,
                                 textData.isContent,
-                                Constant.isSchool
+                                isTargetType!!
                             )
                             appViewModel?.isSendText(isAccessToken!!, json, this)
                         }
