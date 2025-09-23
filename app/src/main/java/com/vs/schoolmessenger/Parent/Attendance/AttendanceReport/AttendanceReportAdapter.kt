@@ -7,7 +7,9 @@
     import android.view.ViewGroup
     import android.widget.Filter
     import android.widget.Filterable
+    import android.widget.FrameLayout
     import android.widget.LinearLayout
+    import android.widget.RelativeLayout
     import android.widget.TextView
     import androidx.recyclerview.widget.RecyclerView
     import com.vs.schoolmessenger.R
@@ -97,7 +99,7 @@
         class DataViewHolder(itemView: View, private val context: Context) :
             RecyclerView.ViewHolder(itemView) {
 
-            private val lnrDateCircle: LinearLayout = itemView.findViewById(R.id.lnrDateCircle)
+            private val lnrDateCircle: RelativeLayout = itemView.findViewById(R.id.lnrDateCircle)
             private val tvMonth: TextView = itemView.findViewById(R.id.tvMonth)
             private val tvDay: TextView = itemView.findViewById(R.id.tvDay)
             private val tvFullDate: TextView = itemView.findViewById(R.id.tvFullDate)
@@ -113,7 +115,7 @@
             ) {
 
                 if (data.type == Constant.Absent) {
-                    lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle))
+//                    lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle))
                     tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge))
                     tvFullDate.text = Constant.convertDateTimeFormat(data.date)
                     tvStatus.text = data.type

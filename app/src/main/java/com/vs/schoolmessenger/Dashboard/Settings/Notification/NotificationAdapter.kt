@@ -103,16 +103,32 @@ class NotificationAdapter(
         fun bind(data: NotificationDataClass) {
             txtHeader.text = data.category
 
-            when (data.category) {
-                "Homework" -> imgHeader.setBackgroundResource(R.drawable.home_work_icon_school)
-                "Assignment" -> imgHeader.setBackgroundResource(R.drawable.assignment_icon_school)
-                "Events" -> imgHeader.setBackgroundResource(R.drawable.graduationevent)
-                "Communication" -> imgHeader.setBackgroundResource(R.drawable.communication_icon_dashboard)
-                "Attachments" -> imgHeader.setBackgroundResource(R.drawable.attachement_icon)
+            when (data.menu_id) {
+                1  -> imgHeader.setBackgroundResource(R.drawable.attendance_report_icon)
+                2  -> imgHeader.setBackgroundResource(R.drawable.assignment_icon_school)
+                3  -> imgHeader.setBackgroundResource(R.drawable.attendance_marking)
+                7  -> imgHeader.setBackgroundResource(R.drawable.communication_icon_dashboard)
+                8  -> imgHeader.setBackgroundResource(R.drawable.collect)
+                9  -> imgHeader.setBackgroundResource(R.drawable.graduationevent)
+                14 -> imgHeader.setBackgroundResource(R.drawable.fee_pending_reports)
+                15 -> imgHeader.setBackgroundResource(R.drawable.home_work_icon_school)
+                18 -> imgHeader.setBackgroundResource(R.drawable.leave_request_icon_school)
+                19 -> imgHeader.setBackgroundResource(R.drawable.lessonplanimage)
+                20 -> imgHeader.setBackgroundResource(R.drawable.lsrw_icon)
+                21 -> imgHeader.setBackgroundResource(R.drawable.attendanceimage)
+                22 -> imgHeader.setBackgroundResource(R.drawable.message_f_management)
+                23 -> imgHeader.setBackgroundResource(R.drawable.noticeboard_icon)
+                26 -> imgHeader.setBackgroundResource(R.drawable.ptm_icon)
+                27 -> imgHeader.setBackgroundResource(R.drawable.quiz_icon)
+                29 -> imgHeader.setBackgroundResource(R.drawable.graduationevent)
+                30 -> imgHeader.setBackgroundResource(R.drawable.schedule_exam_icon)
+                31 -> imgHeader.setBackgroundResource(R.drawable.school_strength)
+                33 -> imgHeader.setBackgroundResource(R.drawable.staff_attendance_report)
+                35 -> imgHeader.setBackgroundResource(R.drawable.student_report)
+                39 -> imgHeader.setBackgroundResource(R.drawable.attachement_icon)
             }
         }
     }
-
 
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -6,5 +6,6 @@ data class NotificationDataClass(
     val content: String,
     val sendBy: String,
     val isHeader: Boolean = false,
-    val category: String? = null
+    val category: String? = null,
+    val menu_id: Int?,
 )

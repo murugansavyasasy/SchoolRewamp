@@ -57,6 +57,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
                                 content = "",
                                 sendBy = "",
                                 category = menu.menu_name,
+                                menu_id = menu.menu_id,
                                 isHeader = true
                             )
                         )
@@ -69,6 +70,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
                                     content = item.message ?: "",
                                     sendBy = item.name ?: "",
                                     category = menu.menu_name,
+                                    menu_id = menu.menu_id,
                                     isHeader = false
                                 )
                             )
