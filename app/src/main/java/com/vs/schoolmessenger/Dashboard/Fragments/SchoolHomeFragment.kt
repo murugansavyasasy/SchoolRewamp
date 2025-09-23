@@ -11,6 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -110,7 +115,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
+        binding = SchoolHomeFragmentBinding.inflate(inflater)
+
+
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         Constant.checkBiometricSupport(requireActivity())

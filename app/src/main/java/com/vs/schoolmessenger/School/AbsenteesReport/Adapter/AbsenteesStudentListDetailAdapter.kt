@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentDetailClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.Student
@@ -102,7 +103,7 @@ class AbsenteesStudentListDetailAdapter(
         private val studentName: TextView = itemView.findViewById(R.id.student_name)
         private val sectionValue: TextView = itemView.findViewById(R.id.section_value)
         private val registerNumber: TextView = itemView.findViewById(R.id.register_number)
-        private val imageView: TextView = itemView.findViewById(R.id.Image_value)
+        private val imageView: ShapeableImageView = itemView.findViewById(R.id.Image_value)
         private val buttoncall: TextView = itemView.findViewById(R.id.buttoncall)
         private val linearlayout: LinearLayout = itemView.findViewById(R.id.relative_layout)
 
@@ -111,17 +112,30 @@ class AbsenteesStudentListDetailAdapter(
             registerNumber.text = "Admission No : " + data.admission_no
 
 
-            when (data.gender) {
-                "male" -> {
-                    imageView.setBackgroundResource(R.drawable.malesvgformatstyle)
+
+            if (data.photo_path.isNullOrEmpty()) {
+                when (data.gender.lowercase()) {
+                    "male" -> {
+                        imageView.setImageResource(R.drawable.malesvgformatstyle)
+                    }
+
+                    "female" -> {
+                        imageView.setImageResource(R.drawable.femalesvgformatstyle)
+                    }
+
+                    else -> {
+                        imageView.setImageResource(R.drawable.default_profile)
+                    }
                 }
-                "female" -> {
-                    imageView.setBackgroundResource(R.drawable.femalesvgformatstyle)
-                }
-                else -> {
-                    imageView.setBackgroundResource(R.drawable.default_profile)
-                }
+            } else {
+                Glide.with(imageView.context).load(data.photo_path)
+                    .placeholder(R.drawable.default_profile).error(R.drawable.default_profile)
+                    .into(imageView)
             }
+
+
+
+
 
 
             Constant.isAbsenteesReportDataSending?.let { report ->
@@ -135,6 +149,10 @@ class AbsenteesStudentListDetailAdapter(
             }
 
             linearlayout.setOnClickListener {
+                Constant.redirectToDialPad(context, data.primary_mobile)
+            }
+
+            buttoncall.setOnClickListener {
                 Constant.redirectToDialPad(context, data.primary_mobile)
             }
 

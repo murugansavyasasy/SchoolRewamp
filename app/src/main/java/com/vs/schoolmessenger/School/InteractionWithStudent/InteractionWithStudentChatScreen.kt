@@ -54,6 +54,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.replytext.setOnClickListener(this)
         binding.replyalltext.setOnClickListener(this)
         binding.imgCloseReply.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
 
         appViewModel?.getstaffquestions?.observe(this) { response ->
             Log.d("response++", response.toString())
@@ -189,7 +190,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     override fun onAnswerClick(chat: QuestionData, position: Int) {
         binding.replyLinearlayout.visibility = View.VISIBLE
         binding.txtReplyingTo.text = "${getString(R.string.Replying_To)} ${chat.student_name}"
-        binding.btnAdd.visibility = View.VISIBLE
+        binding.btnAdd.visibility = View.GONE
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
         selectedQuestionId = chat.id
@@ -201,7 +202,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         chat: QuestionData, position: Int, type: Boolean
     ) {
         binding.replyLinearlayout.visibility = View.VISIBLE
-        binding.btnAdd.visibility = View.VISIBLE
+        binding.btnAdd.visibility = View.GONE
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
         this.type = type

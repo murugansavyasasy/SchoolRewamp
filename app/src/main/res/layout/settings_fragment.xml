@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:background="@color/mild4">
 
@@ -383,7 +382,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/lnrSaveContact"
+                    android:id="@+id/lnrwhatsnew"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/isViewSaveContact"
@@ -428,7 +427,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/point_one"
                     android:visibility="visible"
-                    android:layout_below="@+id/lnrSaveContact"
+                    android:layout_below="@+id/lnrwhatsnew"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"
@@ -494,7 +493,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/point_one"
                     android:visibility="gone"
-                    android:layout_below="@+id/lnrSaveContact"
+                    android:layout_below="@+id/lnrwhatsnew"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"

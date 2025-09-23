@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Dashboard.Fragments.Profile
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.Dialog
@@ -18,15 +19,19 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -176,7 +181,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         appViewModel.ispresubmission?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 if (response.status) {
-                    Constant.showDataValidation(
+                    showDataValidation(
                         resources.getString(R.string.success), response.message, requireActivity()
                     )
                     Constant.selectedFiles.clear()
@@ -186,7 +191,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     binding.rcyImages.visibility = View.GONE
                     mAdapter?.notifyDataSetChanged()
                 } else {
-                    Constant.showDataValidation(
+                    showDataValidation(
                         resources.getString(R.string.fail), response.message, requireActivity()
                     )
                 }
@@ -269,10 +274,12 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         return binding.root
     }
 
+
     private fun fetchProfileData() {
         appViewModel.isParentprofilelist(isAccessToken!!)
         Constant.showLoading(requireActivity())
     }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -287,6 +294,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 //            }
         }
     }
+
 
     private fun isUpdateProfile() {
         // Prepare changed profile fields
@@ -304,7 +312,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         pendingChangedData = if (changedData.entrySet().isEmpty()) null else changedData
         if (pendingChangedData == null && profilePhotoFileItem == null && Constant.selectedFiles.isEmpty()) {
-            Constant.showDataValidation(
+            showDataValidation(
                 getString(R.string.fail), "No changes detected", requireActivity()
             )
             return
@@ -324,7 +332,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     if (url != null) {
                         textPayload.addProperty("photoPath", url)
                     } else {
-                        Constant.showDataValidation(
+                        showDataValidation(
                             getString(R.string.fail),
                             "Profile photo upload failed",
                             requireActivity()
@@ -348,7 +356,8 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         val documentsArray = JsonArray()
         // Map Constant.isAwsUploadedFiles to the required document format
         Constant.isAwsUploadedFiles.forEach { file ->
-            val fileName = file.originalFileName?.takeIf { it.isNotBlank() } ?: file.isFileUrl.substringAfterLast("/")
+            val fileName = file.originalFileName?.takeIf { it.isNotBlank() }
+                ?: file.isFileUrl.substringAfterLast("/")
             val documentObject = JsonObject().apply {
                 addProperty("documentName", fileName)
                 addProperty("documentPath", file.isFileUrl)
@@ -370,7 +379,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 if (url != null) {
                     payload.addProperty("photoPath", url)
                 } else {
-                    Constant.showDataValidation(
+                    showDataValidation(
                         getString(R.string.fail), "Profile photo upload failed", requireActivity()
                     )
                 }
@@ -791,9 +800,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     }
 
     private fun isUploadFilesInServer(isFileType: String?) {
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK ||
-            SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT ||
-            SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_LSRW) {
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_LSRW) {
             Constant.selectedFiles.removeAt(0)
         }
         ProgressDialogHelper.updateProgress(50)
@@ -889,7 +896,8 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
                     val isSelectedFileCount = Constant.selectedFiles.size
                     for (i in Constant.selectedFiles.indices) {
-                        val originalFileName = getFileName(Uri.parse(Constant.selectedFiles[i].path))
+                        val originalFileName =
+                            getFileName(Uri.parse(Constant.selectedFiles[i].path))
                         isAwsUploadingPreSigned?.getPreSignedUrl(
                             Constant.selectedFiles[i].path,
                             isChildDetails!!.school_id,
@@ -930,6 +938,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 })
         }
     }
+
     private fun videoUploading() {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
@@ -955,6 +964,56 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         }
     }
 
+
+    private fun showDataValidation(title: String, message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        titleText.text = title
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            val fragment = ParentProfileRewampFragment()
+            (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment).addToBackStack(null).commit()
+
+            closePopup()
+        }
+
+    }
+
     override fun onUploadComplete(
         success: Boolean, iframe: String?, link: String?
     ) {
@@ -977,4 +1036,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
         }
     }
+
+
 }

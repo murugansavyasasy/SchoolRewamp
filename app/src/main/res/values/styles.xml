@@ -183,6 +183,10 @@
         <item name="android:background">@drawable/bottom_sheet_bg</item>
     </style>
 
+    <style name="CircleImageViewShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 
 
 

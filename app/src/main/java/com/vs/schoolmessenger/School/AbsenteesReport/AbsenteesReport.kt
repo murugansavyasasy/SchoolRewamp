@@ -135,6 +135,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             binding.selectedDateText.text = formatDateDisplay(date)
             loadClassWiseRecycler(filtered.class_wise, date)
         } else {
+            binding.linearLayoutcontainer.visibility = View.GONE
             binding.rlaabsenteesreport2.visibility = View.GONE
             binding.lytNoDataFound.visibility = View.VISIBLE
             binding.selectedDateText.visibility = View.GONE
@@ -145,6 +146,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     private fun loadClassWiseRecycler(classWiseList: List<ClassWise>, selectedDate: String) {
+        binding.linearLayoutcontainer.visibility = View.VISIBLE
         binding.rlaabsenteesreport2.visibility = View.VISIBLE
         binding.lytNoDataFound.visibility = View.GONE
         binding.selectedDateText.visibility = View.VISIBLE
@@ -230,6 +232,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     private fun showErrorUI(message: String) {
+        binding.linearLayoutcontainer.visibility = View.GONE
         binding.rlaabsenteesreport2.visibility = View.GONE
         binding.lytNoDataFound.visibility = View.VISIBLE
         binding.selectedDateText.visibility = View.GONE

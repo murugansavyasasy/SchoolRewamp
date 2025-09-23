@@ -58,6 +58,7 @@
             android:layout_height="@dimen/eight"
             android:progress="80"
             android:max="100"
+            android:visibility="invisible"
             android:layout_marginTop="@dimen/eight"
             android:progressDrawable="@drawable/progress_custom" />
     </LinearLayout>

@@ -44,6 +44,7 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/twele"
                 android:layout_marginEnd="@dimen/ten"
+                android:visibility="gone"
                 android:background="@drawable/bg_calendar_card"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/twele">
@@ -70,14 +71,14 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/class_detailname"
-                    android:text="Class : II . Section A"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dp"
                     android:layout_marginStart="@dimen/eight"
-                    android:textSize="16sp"/>
+                    android:text="Class : II . Section A"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
 
 
