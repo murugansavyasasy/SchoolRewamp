@@ -47,7 +47,10 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
 

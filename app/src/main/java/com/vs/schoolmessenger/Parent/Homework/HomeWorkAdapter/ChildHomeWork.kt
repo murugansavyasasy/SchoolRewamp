@@ -113,12 +113,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-        binding.imgBack.setOnClickListener(this)
-        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+//        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
-        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener {
-            onBackPressed()
-        }
+//        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener {
+//            onBackPressed()
+//        }
         binding.lblClickComplete.setOnClickListener(this)
         data = intent.getParcelableExtra("isPreViewData")
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
@@ -131,7 +132,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lblDescription.text = data!!.description
 
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
-            binding.lblPostedDate.visibility = View.GONE
+//            binding.lblPostedDate.visibility = View.GONE
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
             binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
@@ -149,7 +150,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 )
             )
         } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == true) {
-            binding.lblPostedDate.visibility = View.GONE
+//            binding.lblPostedDate.visibility = View.GONE
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
             binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
@@ -173,7 +174,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
                 "Listening,Speaking,Reading,Writing"
-            binding.imgBack.visibility = View.GONE
+            binding.toolbarLayout.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.txtTitle.text = data!!.subjectName
@@ -209,7 +210,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
                 "Listening,Speaking,Reading,Writing"
-            binding.imgBack.visibility = View.GONE
+            binding.toolbarLayout.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.footerLabel.visibility = View.GONE
             binding.childlsrwlayoutxml.headerLabel.visibility = View.GONE
@@ -342,8 +343,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 //            Log.d("isHomeWorkDate2", isHomeWorkDate.toString())
 
             if (data!!.subjectName != "") {
-                binding.lblSubjectName.visibility = View.VISIBLE
-                binding.lblSubjectName.text = data!!.subjectName
+//                binding.lblSubjectName.visibility = View.VISIBLE
+//                binding.lblSubjectName.text = data!!.subjectName
             }
             if (!data!!.isCompleted) {
                 binding.lblClickComplete.visibility = View.VISIBLE
@@ -354,9 +355,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.thumbContainer.visibility = View.GONE
             }
             if (isHomeWorkDate != "") {
-                binding.lblPostedDate.visibility = View.VISIBLE
-                binding.lblPostedDate.text =
-                    "Posted on : " + Constant.formatDateSmart(isHomeWorkDate.toString())
+//                binding.lblPostedDate.visibility = View.VISIBLE
+//                binding.lblPostedDate.text =
+//                    "Posted on : " + Constant.formatDateSmart(isHomeWorkDate.toString())
             }
 
             if (data!!.sentBy != "") {
@@ -364,9 +365,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
             }
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS) {
-            binding.lblSubjectName.visibility = View.GONE
+//            binding.lblSubjectName.visibility = View.GONE
             binding.lblClickComplete.visibility = View.GONE
-            binding.lblPostedDate.visibility = View.GONE
+//            binding.lblPostedDate.visibility = View.GONE
             binding.lblPostedBy.visibility = View.GONE
         }
 

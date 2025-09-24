@@ -1,78 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_white"
-    android:fitsSystemWindows="true">
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/light_white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/toolbarLayout1"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/toolbarLayout"-->
-<!--        android:layout_marginStart="@dimen/ten"-->
-<!--        android:layout_marginTop="@dimen/ten"-->
-<!--        android:layout_marginEnd="@dimen/ten"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:weightSum="1">-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lnrTabOneName"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="0.5"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tabOneName"-->
-<!--                style="@style/CustomTextStylePoppinsBold"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center"-->
-<!--                android:text="@string/Create"-->
-<!--                android:textColor="@color/iconBlue"></TextView>-->
-
-<!--            <View-->
-<!--                android:id="@+id/line1"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="@dimen/three"-->
-<!--                android:layout_below="@+id/groupheading"-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:background="@color/iconBlue"></View>-->
-<!--        </LinearLayout>-->
 
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lnrTabTwoName"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="0.5"-->
-<!--            android:orientation="vertical">-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tabTwoName"-->
-<!--                style="@style/CustomTextStylePoppinsBold"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center"-->
-<!--                android:text="@string/Reports"></TextView>-->
-
-<!--            <View-->
-<!--                android:id="@+id/line2"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="@dimen/three"-->
-<!--                android:layout_below="@+id/groupheading"-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:background="@color/white"></View>-->
-<!--        </LinearLayout>-->
-
-<!--    </LinearLayout>-->
 
 
     <ScrollView
@@ -601,3 +558,4 @@
 <!--    </LinearLayout>-->
 
 </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

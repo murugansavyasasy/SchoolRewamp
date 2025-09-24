@@ -4,7 +4,6 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.EbooksBinding
-import com.vs.schoolmessenger.databinding.SchoolNeedsBinding
 
 class Ebooks : BaseActivity<EbooksBinding>(),
     View.OnClickListener {
@@ -15,7 +14,10 @@ class Ebooks : BaseActivity<EbooksBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.toolbarLayout.lblParentToolBar.text=Constant.isParentMenuName

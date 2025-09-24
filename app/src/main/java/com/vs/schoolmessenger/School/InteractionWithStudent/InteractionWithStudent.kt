@@ -34,7 +34,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme1(
+        isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )

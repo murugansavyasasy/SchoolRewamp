@@ -57,7 +57,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
         binding.btnReceipt.setOnClickListener(this)

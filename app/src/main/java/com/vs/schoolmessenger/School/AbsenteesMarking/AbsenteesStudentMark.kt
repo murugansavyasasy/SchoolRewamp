@@ -54,7 +54,10 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]

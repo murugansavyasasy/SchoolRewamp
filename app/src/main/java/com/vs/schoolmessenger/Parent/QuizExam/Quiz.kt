@@ -14,7 +14,6 @@ import com.vs.schoolmessenger.Parent.QuizExam.Adapter.QuizUpcomingAdapter
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamListData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
@@ -39,7 +38,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarPrimaryTheme1(
+        isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )

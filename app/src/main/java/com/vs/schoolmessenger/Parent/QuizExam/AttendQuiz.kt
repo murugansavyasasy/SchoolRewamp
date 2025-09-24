@@ -6,7 +6,6 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,7 +49,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarPrimaryTheme1(
+        isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )

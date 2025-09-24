@@ -45,16 +45,21 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-        binding.lblName.text = childDetails!!.name
-        binding.lblSection.text = childDetails!!.standard_name + " - " + childDetails.section_name
-        binding.imgBack.setOnClickListener(this)
-        binding.imgSearch.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+
+        binding.toolbarLayout.lblStudentName.text = childDetails!!.name
+        binding.toolbarLayout.lblStudentSection.text = childDetails!!.standard_name + " - " + childDetails.section_name
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.recyclerViewCalendar.layoutManager =
             LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
 
@@ -173,7 +178,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
 
-            R.id.imgSearch -> {
+            R.id.imgSearchToolBar -> {
                 if (binding.lytSearch.visibility == View.VISIBLE) {
                     binding.lytSearch.visibility = View.GONE
                     binding.edtSearch.setText("")

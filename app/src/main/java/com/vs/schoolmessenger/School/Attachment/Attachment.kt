@@ -109,15 +109,15 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
-//        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-//        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-//        binding.lnrTabOneName.setOnClickListener(this)
-//        binding.lnrTabTwoName.setOnClickListener(this)
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
@@ -136,18 +136,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         isMultipleSchool = isUserDetails!!.staff_details.size > 1
 
-//        appViewModel!!.isDeleteAttachment?.observe(this) { response ->
-//            if (response != null) {
-//                if (response.status) {
-//                    Constant.hideLoading(this@Attachment)
-//                    mAttachmentReportAdapter!!.removeItemAt(isAttachmentPosition)
-//                } else {
-//                    Constant.showDataValidation(
-//                        resources.getString(R.string.fail), response.message, this
-//                    )
-//                }
-//            }
-//        }
 
 
         appViewModel!!.isEditAttachment?.observe(this) { response ->
@@ -158,15 +146,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             }
         }
 
-//
-//        appViewModel!!.isAttachmentReportResponse?.observe(this) { response ->
-//            if (response != null) {
-//                if (response.status) {
-//                    val isHomeAttachmentReport = response.data
-//                    isLoadAttachmentReportList(isHomeAttachmentReport)
-//                }
-//            }
-//        }
 
         binding.rcyImages.visibility = View.VISIBLE
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)

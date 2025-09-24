@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.QuizExam
 
 import android.content.Intent
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -17,7 +16,6 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport.ExamQuizReportAdapter
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
-import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionListData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamQuizBinding
@@ -41,7 +39,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme1(
+        isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )

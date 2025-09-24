@@ -52,6 +52,7 @@
             android:layout_marginEnd="@dimen/five"
             android:background="@drawable/rounded_grey_background"
             android:padding="@dimen/ten"
+            android:visibility="gone"
             android:src="@drawable/threedot">
         </ImageView>
 

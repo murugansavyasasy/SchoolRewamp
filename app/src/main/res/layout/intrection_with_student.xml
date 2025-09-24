@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/AthensGray"
->
+    android:background="@color/AthensGray">
 
 
     <View

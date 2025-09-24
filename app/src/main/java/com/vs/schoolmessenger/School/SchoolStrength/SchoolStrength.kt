@@ -50,7 +50,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarPrimaryTheme1(
+        isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
