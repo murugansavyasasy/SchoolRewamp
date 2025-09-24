@@ -66,12 +66,15 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
         binding.rlaPickImage.setOnClickListener(this)
-        binding.lblSendBug.setOnClickListener(this)
-        binding.imgBack.setOnClickListener(this)
         binding.btnReportBug.setOnClickListener(this)
 
-        setupToolbar()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = "Report a bug"
 
 
         albumResultLauncher =
