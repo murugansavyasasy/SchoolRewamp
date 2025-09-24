@@ -2,14 +2,12 @@ package com.vs.schoolmessenger.Parent.Noticeboard
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -34,19 +32,24 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         isGetNoticeBoardList()
-        binding.lblStudentName.text = isChildDetails?.name
-        binding.lblStudentSection.text =
-            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        binding.imgBack.setOnClickListener(this)
 
-        binding.rytSearch.setOnClickListener(this)
-        binding.imgSearch.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
+
 
         binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -63,13 +66,11 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         appViewModel?.isNoticeBoardReport?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
-                binding.rytSearch.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
             } else {
                 binding.rcyNoticeBoard.visibility = View.GONE
-                binding.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
@@ -97,7 +98,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         when (p0?.id) {
             R.id.imgBack -> onBackPressed()
 
-            R.id.rytSearch -> {
+            R.id.imgSearchToolBar -> {
                 if (binding.rytsearch.visibility == View.VISIBLE) {
                     binding.rytsearch.visibility = View.GONE
                     binding.txtVideoMenu.setText("")
@@ -111,13 +112,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                     imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
                 }
             }
-            R.id.imgSearch -> {
-                if (binding.rytsearch.isVisible) {
-                    binding.rytsearch.visibility = View.GONE
-                } else {
-                    binding.rytsearch.visibility = View.VISIBLE
-                }
-            }
+
         }
     }
 

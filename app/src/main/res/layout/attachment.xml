@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_white"
-    android:fitsSystemWindows="true">
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/light_white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+<ScrollView
+    app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,74 +31,6 @@
         <include
             android:id="@+id/toolbarLayout"
             layout="@layout/school_side_tool_bar" />
-
-<!--        <LinearLayout-->
-<!--            android:layout_marginTop="@dimen/ten"-->
-<!--            android:layout_marginStart="@dimen/ten"-->
-<!--            android:layout_marginEnd="@dimen/ten"-->
-<!--            android:layout_below="@+id/toolbarLayout"-->
-<!--            android:id="@+id/toolbarLayout1"-->
-<!--            android:weightSum="1"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-<!--            <LinearLayout-->
-<!--                android:id="@+id/lnrTabOneName"-->
-<!--                android:layout_weight="0.5"-->
-<!--                android:orientation="vertical"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--                <TextView-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="Create"-->
-<!--                    android:id="@+id/tabOneName"-->
-<!--                    android:textColor="@color/iconBlue"-->
-<!--                    style="@style/CustomTextStylePoppinsBold"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-<!--                </TextView>-->
-<!--                <View-->
-<!--                    android:id="@+id/line3"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="@dimen/three"-->
-<!--                    android:layout_below="@+id/groupheading"-->
-<!--                    android:layout_marginTop="@dimen/five"-->
-<!--                    android:background="@color/iconBlue">-->
-<!--                </View>-->
-<!--            </LinearLayout>-->
-
-
-
-
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/lnrTabTwoName"-->
-<!--                android:layout_weight="0.5"-->
-<!--                android:orientation="vertical"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--                <TextView-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="Reports"-->
-<!--                    style="@style/CustomTextStylePoppinsBold"-->
-<!--                    android:id="@+id/tabTwoName"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-<!--                </TextView>-->
-<!--                <View-->
-<!--                    android:id="@+id/line4"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="@dimen/three"-->
-<!--                    android:layout_below="@+id/groupheading"-->
-<!--                    android:layout_marginTop="@dimen/five"-->
-<!--                    android:background="@color/white">-->
-<!--                </View>-->
-<!--            </LinearLayout>-->
-
-<!--        </LinearLayout>-->
-
 
         <RelativeLayout
             android:id="@+id/rytAttachment"
@@ -434,5 +384,6 @@
     </RelativeLayout>
 
 </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

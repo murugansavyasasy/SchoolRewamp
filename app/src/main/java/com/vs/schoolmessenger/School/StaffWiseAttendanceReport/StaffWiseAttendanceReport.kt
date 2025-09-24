@@ -64,7 +64,11 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
         binding.btnCreate.setOnClickListener(this)

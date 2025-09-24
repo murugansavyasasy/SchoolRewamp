@@ -55,9 +55,12 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
-        binding.imgSearch.visibility = View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.rytsearch.visibility = View.GONE
         binding.txtSearchMeeting.setText("")
         binding.lblScheduleMeeting.setOnClickListener(this)
@@ -67,11 +70,11 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-        binding.lblStudentName.text = childDetails?.name
-        binding.lblSectionName.text =
+        binding.toolbarLayout.lblStudentName.text = childDetails?.name
+        binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
         isSelectedDate = Constant.getCurrentDate()
-        binding.imgBack.setOnClickListener {
+        binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
         isDateWiseSlotCount()
@@ -83,7 +86,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             }
         }
 
-        binding.imgSearch.setOnClickListener {
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytsearch.visibility == View.VISIBLE) {
                 binding.rytsearch.visibility = View.GONE
                 binding.txtSearchMeeting.setText("")
@@ -361,7 +364,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         if (isSelectedTab == binding.lblYourMeeting) {
             binding.rytScheduleMeeting.visibility = View.GONE
             binding.rytYourMeeting.visibility = View.VISIBLE
-            binding.imgSearch.visibility = View.VISIBLE
+            binding.toolbarLayout.imgBack.visibility = View.VISIBLE
             binding.rytsearch.visibility = View.GONE
             binding.txtSearchMeeting.setText("")
 
@@ -369,7 +372,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         } else {
             binding.rytYourMeeting.visibility = View.GONE
             binding.rytScheduleMeeting.visibility = View.VISIBLE
-            binding.imgSearch.visibility = View.GONE
+            binding.toolbarLayout.imgBack.visibility = View.GONE
             binding.rytsearch.visibility = View.GONE
             binding.txtSearchMeeting.setText("")
         }

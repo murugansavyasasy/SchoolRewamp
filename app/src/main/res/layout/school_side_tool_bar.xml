@@ -4,22 +4,25 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@drawable/bg_header_rounded"
-        android:paddingVertical="20dp">
+        android:id="@+id/rytHeader"
+        android:paddingTop="@dimen/twenty"
+        android:paddingBottom="@dimen/twenty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
+            android:layout_marginTop="@dimen/fifteen"
             android:layout_centerVertical="true"
             android:src="@drawable/arrow_left_white">
 
         </ImageView>
 
         <LinearLayout
+            android:layout_marginTop="@dimen/fifteen"
             android:id="@+id/lytTitleAndName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +36,6 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp">
@@ -45,7 +47,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="sdsd"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp"
                 android:visibility="gone">
@@ -56,8 +58,7 @@
                 android:layout_width="@dimen/hundred_thirty"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSlotCount"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:visibility="gone"
                 android:layout_toEndOf="@+id/imgBack"
