@@ -66,10 +66,7 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         params.height = screenHeight / 2
         binding.imageBanner.setLayoutParams(params)
 
-        val bottomSheetParams: ViewGroup.LayoutParams =
-            binding.bottomLayout.bottomSheet.layoutParams
-        bottomSheetParams.height = screenHeight - topGap
-        binding.bottomLayout.bottomSheet.setLayoutParams(bottomSheetParams)
+
 
 
         bottomSheetBehavior?.setFitToContents(true)

@@ -81,7 +81,6 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
 
 
 
-
         appViewModel!!.isChildAttendanceReport?.observe(this) { response ->
             if (response != null && response.status) {
                 val dataList = response.data

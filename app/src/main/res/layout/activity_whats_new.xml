@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/linearlayout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_primary_rounded_bottom"
@@ -23,8 +23,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/eight"
                 android:src="@drawable/newsvgformatstyle"
-                android:visibility="visible" >
-            </ImageView>
+                android:visibility="visible"/>
+
 
             <TextView
                 android:id="@+id/title_value"
@@ -64,184 +64,197 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/menu_name"
-        style="@style/CustomTextStylePoppinsBold"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:layout_marginTop="@dimen/twenty"
-        android:text="Lesson Plan Tracker"
-        android:textColor="@color/black"
-        android:textSize="@dimen/eighteen_sp" />
-
-    <TextView
-        android:id="@+id/description_value"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:ellipsize="end"
-        android:maxLines="4"
-        android:text="Precision in Pedahdgogy : Craft , Monitor , and Enchance Lesson Plans with Ease , Elevating the quality of class room instructions"
-        android:textColor="@color/black"
-        android:textSize="@dimen/fourteen_sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/twenty">
 
-            <LinearLayout
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:padding="@dimen/eight">
-
-                <ImageView
-                    android:layout_width="@dimen/twenty_four"
-                    android:layout_height="@dimen/twenty_four"
-                    android:src="@drawable/lsrw_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/six"
-                    android:text="Streamlined Planning"
-                    android:textSize="@dimen/fourteen_sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:padding="@dimen/eight">
-
-                <ImageView
-                    android:layout_width="@dimen/twenty_four"
-                    android:layout_height="@dimen/twenty_four"
-                    android:src="@drawable/lsrw_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/six"
-                    android:text="Progress Tracking"
-                    android:textSize="@dimen/fourteen_sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="@dimen/zero"
+            <TextView
+                android:id="@+id/menu_name"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:padding="@dimen/eight">
+                android:layout_marginTop="@dimen/twenty"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Lesson Plan Tracker"
+                android:textColor="@color/black"
+                android:textSize="@dimen/eighteen_sp" />
 
-                <ImageView
-                    android:layout_width="@dimen/twenty_four"
-                    android:layout_height="@dimen/twenty_four"
-                    android:src="@drawable/lsrw_icon" />
+            <TextView
+                android:id="@+id/description_value"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:text="Precision in Pedahdgogy : Craft , Monitor , and Enchance Lesson Plans with Ease , Elevating the quality of class room instructions"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/six"
-                    android:text="Progress Tracking"
-                    android:textSize="@dimen/fourteen_sp" />
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/eight">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_four"
+                            android:layout_height="@dimen/twenty_four"
+                            android:src="@drawable/lsrw_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/six"
+                            android:text="Streamlined Planning"
+                            android:textSize="@dimen/fourteen_sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/eight">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_four"
+                            android:layout_height="@dimen/twenty_four"
+                            android:src="@drawable/lsrw_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/six"
+                            android:text="Progress Tracking"
+                            android:textSize="@dimen/fourteen_sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/eight">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_four"
+                            android:layout_height="@dimen/twenty_four"
+                            android:src="@drawable/lsrw_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/six"
+                            android:text="Progress Tracking"
+                            android:textSize="@dimen/fourteen_sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/eight">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_four"
+                            android:layout_height="@dimen/twenty_four"
+                            android:src="@drawable/lsrw_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/six"
+                            android:text="Curriculu Tracking"
+                            android:textSize="@dimen/fourteen_sp" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="@dimen/zero"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:padding="@dimen/eight">
+                android:layout_marginTop="@dimen/sixteen_sp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="@dimen/twenty_four"
-                    android:layout_height="@dimen/twenty_four"
-                    android:src="@drawable/lsrw_icon" />
+                <Button
+                    android:id="@+id/btnTryItNow"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/hundred"
+                    android:layout_height="@dimen/fourty"
+                    android:background="@drawable/background_radius_button"
+                    android:paddingStart="@dimen/twele"
+                    android:paddingEnd="@dimen/twele"
+                    android:text="Try It Now"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/six"
-                    android:text="Curriculu Tracking"
-                    android:textSize="@dimen/fourteen_sp" />
+                <Button
+                    android:id="@+id/btnLearnMore"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/hundred"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:background="@drawable/background_radius_button"
+                    android:paddingStart="@dimen/twenty_four"
+                    android:paddingEnd="@dimen/twenty_four"
+                    android:text="Skip"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/dotindicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:src="@drawable/dotindicator" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:gravity="start"
+                android:text="Version 2.3.1"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/twele_sp" />
+
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/sixteen_sp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btnTryItNow"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_radius_button"
-            android:paddingStart="@dimen/twenty_four"
-            android:paddingEnd="@dimen/twenty_four_sp"
-            android:text="Try It Now"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fourteen_sp" />
-
-
-        <Button
-            android:id="@+id/btnLearnMore"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty"
-            android:background="@drawable/background_radius_button"
-            android:paddingStart="@dimen/twenty_four"
-            android:paddingEnd="@dimen/twenty_four"
-            android:text="Skip"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fourteen_sp" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/dotindicator"
-        android:id="@+id/dotindicator"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"/>
-
-    <TextView
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/thirty"
-        android:layout_marginTop="@dimen/twenty"
-        android:gravity="start"
-        android:text="Version 2.3.1"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="@dimen/twele_sp" />
+    </ScrollView>
 
 </LinearLayout>

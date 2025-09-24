@@ -121,6 +121,7 @@ class ChildMenuAdapter(
                 Constant.M_LSRW -> imgMenu.setImageResource(R.drawable.lsrw_icon)
                 Constant.M_ONLINE_TEXT_BOOK -> imgMenu.setImageResource(R.drawable.book)
                 Constant.M_QUIZ_EXAM -> imgMenu.setImageResource(R.drawable.quiz_icon)
+                Constant.M_COUPON_PACKET -> imgMenu.setImageResource(R.drawable.ic_rewards)
             }
 
             rlaMenu.setOnClickListener {
