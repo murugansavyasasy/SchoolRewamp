@@ -31,7 +31,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     lateinit var mAdapter: AssignmentAdapter
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme1(
+        isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
@@ -40,7 +40,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             onBackPressed()
         }
 
-        binding.toolbarLayout.imgSearch.setOnClickListener(this)
         val isChildDetails = SharedPreference.getChildDetails(this)
 
         isAccessToken = isChildDetails?.access_token

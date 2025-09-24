@@ -3,65 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:id="@+id/main"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cltDateSelection"
         android:layout_width="match_parent"
         android:layout_height="@dimen/two_hundred_thirty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
         android:background="@drawable/bottom_right_left_radious"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/arrow_left_white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <include
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/toolbarLayout"
+            layout="@layout/parent_side_tool_bar" />
 
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="@dimen/twenty"
-            android:src="@drawable/ic_search_white_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/lblName"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="Sathish"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fifteen"
-            app:layout_constraintStart_toEndOf="@id/imgBack"
-            app:layout_constraintEnd_toStartOf="@id/imgSearch"
-            app:layout_constraintTop_toTopOf="@id/imgBack"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten" />
-
-        <TextView
-            android:id="@+id/lblSection"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="XII - A"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"
-            app:layout_constraintStart_toStartOf="@id/lblName"
-            app:layout_constraintEnd_toEndOf="@id/lblName"
-            app:layout_constraintTop_toBottomOf="@id/lblName" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCalendar"
@@ -73,7 +41,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgBack" />
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

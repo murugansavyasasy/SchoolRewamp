@@ -15,7 +15,11 @@ class ImportantInfo : BaseActivity<ImportantInfoBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.toolbarLayout.lblParentToolBar.text=Constant.isSchoolMenuName
 

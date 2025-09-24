@@ -127,7 +127,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-    fun isToolBarPrimaryTheme2(mainViewId: Int, statusBarBgView: View) {
+    fun isToolBarPrimarySchool(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
 
         val mainView = findViewById<View>(mainViewId)
@@ -165,13 +165,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
-            window.navigationBarColor = this.resources.getColor(R.color.white)
-            window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
+            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
 
 
-    fun isToolBarPrimaryTheme1(mainViewId: Int, statusBarBgView: View) {
+    fun isToolBarPrimaryParent(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
 
         val mainView = findViewById<View>(mainViewId)

@@ -34,7 +34,7 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme1(
+        isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )

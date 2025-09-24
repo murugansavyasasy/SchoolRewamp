@@ -130,7 +130,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarPrimaryTheme1(
+        isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )

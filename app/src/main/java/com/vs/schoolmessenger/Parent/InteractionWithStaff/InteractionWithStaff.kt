@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.InteractionWithStaff
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.text.Editable
@@ -43,7 +42,10 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 

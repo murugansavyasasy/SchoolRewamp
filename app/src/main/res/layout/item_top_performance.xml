@@ -3,16 +3,16 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:padding="12dp">
+    android:padding="@dimen/twele">
 
 
     <TextView
         android:id="@+id/avatarText"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/fourty"
+        android:layout_height="@dimen/fourty"
         android:gravity="center"
         android:text="J"
-        android:textSize="16sp"
+        android:textSize="@dimen/sixteen_sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:background="@drawable/bg_circle_avatar" />
@@ -22,14 +22,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_marginStart="12dp">
+        android:layout_marginStart="@dimen/twele">
 
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Jeeva"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             style="@style/CustomTextStylePoppinsBold"
             android:textColor="@android:color/black" />
 
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Class I - B -"
-            android:textSize="12sp"
+            android:textSize="@dimen/twele_sp"
             style="@style/CustomTextStylePoppinsMedium"
             android:textColor="@android:color/darker_gray" />
     </LinearLayout>
@@ -49,8 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0.0%"
-        android:textSize="14sp"
-
+        android:textSize="@dimen/fourteen_sp"
         style="@style/CustomTextStylePoppinsBold"
         android:textColor="@android:color/holo_green_dark" />
 
