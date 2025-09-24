@@ -67,7 +67,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()

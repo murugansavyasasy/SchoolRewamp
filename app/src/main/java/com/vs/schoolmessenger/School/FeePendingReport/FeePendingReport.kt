@@ -38,7 +38,10 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()

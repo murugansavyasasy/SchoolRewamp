@@ -4,7 +4,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -42,7 +41,10 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.rlaTextMessage.setOnClickListener(this)
         binding.rlaVoiceMessage.setOnClickListener(this)

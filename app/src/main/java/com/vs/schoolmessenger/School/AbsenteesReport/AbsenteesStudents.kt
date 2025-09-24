@@ -32,7 +32,10 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         isStaffDetails = SharedPreference.getStaffDetails(this)

@@ -1,88 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:background="@color/AthensGray"
+    android:id="@+id/main">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <RelativeLayout
+        android:id="@+id/relative_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/parent_side_tool_bar" />
+
+    <RelativeLayout
+        android:layout_below="@+id/toolbarLayout"
         android:id="@+id/cltDateSelection"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/one_sixty"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/thirty"
         android:background="@drawable/bottom_right_left_radious">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/arrow_left_white">
-
-        </ImageView>
-
-        <TextView
-            android:id="@+id/lblMenuName"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text="PTM"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twenty">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/lblStudentName"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblMenuName"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text="sathish"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"></TextView>
-
-        <TextView
-            android:id="@+id/lblSectionName"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblStudentName"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text="XII - A"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"></TextView>
-
-
-        <RelativeLayout
-            android:id="@+id/rytSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/twenty"
-            android:visibility="visible">
-
-
-            <ImageView
-                android:id="@+id/imgSearch"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_centerVertical="true"
-                android:src="@drawable/search_icon_white" />
-
-        </RelativeLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblSectionName"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
@@ -291,3 +249,4 @@
 
 
 </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

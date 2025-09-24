@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.Attendance
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.PorterDuff
+import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.PopupMenu
@@ -38,28 +39,27 @@ class Attendance : BaseActivity<AttendanceBinding>() {
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
-        Constant
-
-        binding.imgBack.setOnClickListener {
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+        binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
-        binding.imgBack.setColorFilter(
-            ContextCompat.getColor(this, R.color.white),
-            PorterDuff.Mode.SRC_IN
-        )
-
         binding.imgInfo.setColorFilter(
             ContextCompat.getColor(this, R.color.PrimaryColor),
             PorterDuff.Mode.SRC_IN
         )
 
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
-        binding.lblParentToolBar.text=Constant.isParentMenuName
+
+        Log.d("Menu_name",Constant.isParentMenuName)
+
+        binding.lblHeaderTitle.setText(Constant.isParentMenuName)
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]

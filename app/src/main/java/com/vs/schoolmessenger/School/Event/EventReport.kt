@@ -87,10 +87,14 @@ class EventReport  : BaseActivity<EventReportBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.rytSearch323.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
