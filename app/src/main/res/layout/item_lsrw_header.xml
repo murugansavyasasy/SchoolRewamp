@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="180dp"
-    android:layout_height="120dp"
+    android:layout_width="@dimen/one_eighty"
+    android:layout_height="@dimen/one_twenty"
     android:id="@+id/cardview"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/eight"
     android:background="@drawable/rect_shadow_white"
-    card_view:cardCornerRadius="16dp"
-    card_view:cardElevation="4dp">
+    card_view:cardCornerRadius="@dimen/sixteen"
+    card_view:cardElevation="@dimen/four">
 
     <LinearLayout
         android:id="@+id/root_linearlayout"
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="@dimen/twele">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,10 +25,10 @@
 
             <ImageView
                 android:id="@+id/imgIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
                 android:background="@drawable/bg_icon_round"
-                android:padding="6dp"
+                android:padding="@dimen/six"
                 android:src="@drawable/booksvgformatstyle" />
 
             <TextView
@@ -39,7 +39,7 @@
                 android:gravity="end"
                 android:visibility="visible"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/twenty_sp"
                 style="@style/CustomTextStylePoppinsBold" />
         </LinearLayout>
 
@@ -47,12 +47,12 @@
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten"
             android:text="Today Submitted"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/sixteen_sp"
             style="@style/CustomTextStylePoppinsBold" />
 
         <TextView
@@ -63,7 +63,7 @@
             android:textColor="#808080"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             style="@style/CustomTextStylePoppinsMedium"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

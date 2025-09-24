@@ -36,7 +36,7 @@
                 android:text="3"
                 android:gravity="end"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/twenty_sp"
                 style="@style/CustomTextStylePoppinsBold" />
         </LinearLayout>
 
@@ -44,12 +44,12 @@
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten"
             android:text="Active Tasks"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/sixteen_sp"
            style="@style/CustomTextStylePoppinsBold" />
 
         <TextView
@@ -60,7 +60,7 @@
             android:textColor="#808080"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             style="@style/CustomTextStylePoppinsMedium"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

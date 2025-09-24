@@ -48,7 +48,7 @@
                 android:textSize="@dimen/eighteen_sp" />
 
             <View
-                android:layout_width="@dimen/zero"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/zero"
                 android:layout_weight="1" />
 

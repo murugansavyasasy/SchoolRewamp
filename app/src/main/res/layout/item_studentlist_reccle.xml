@@ -2,9 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-    android:elevation="4dp"
-    app:cardCornerRadius="3dp"
+    android:elevation="@dimen/four"
+    app:cardCornerRadius="@dimen/three"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -12,16 +11,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="12dp">
+        android:padding="@dimen/twele">
 
 
         <TextView
             android:id="@+id/avatarText"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
             android:gravity="center"
             android:text="J"
-            android:textSize="16sp"
+            android:textSize="@dimen/sixteen_sp"
            style="@style/CustomTextStylePoppinsBold"
             android:textColor="@android:color/white"
             android:background="@drawable/bg_circle_avatar" />
@@ -31,23 +30,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginStart="12dp">
+            android:layout_marginStart="@dimen/twele">
 
             <TextView
                 android:id="@+id/txtTitle"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Jeeva"
-                android:textSize="14sp"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/fourteen_sp" />
 
             <TextView
                 android:id="@+id/txtclassname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Class I - B -"
-                android:textSize="12sp"
+                android:textSize="@dimen/twele_sp"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
@@ -57,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.0%"
-            android:textSize="14sp"
+            android:textSize="@dimen/fourteen_sp"
             style="@style/CustomTextStylePoppinsBold"
             android:textColor="@android:color/holo_green_dark" />
 

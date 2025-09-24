@@ -49,10 +49,10 @@
                 android:layout_height="wrap_content"
                 android:text="🖼️ Images &amp; Docs"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="@dimen/fifteen_sp"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcSeekBarAndTitle"
@@ -117,9 +117,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="@dimen/sixteen"
         android:background="@color/white"
-        android:elevation="4dp">
+        android:elevation="@dimen/four">
 
 
         <TextView
@@ -127,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="50%"
-            android:textSize="16sp"
+            android:textSize="@dimen/sixteen_sp"
             android:layout_gravity="center"
             android:textStyle="bold"/>
 
@@ -149,8 +149,8 @@
 
             <ImageView
                 android:id="@+id/imgEmoji"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
                 android:src="@drawable/happyemoji"/>
         </LinearLayout>
 
@@ -164,7 +164,7 @@
             android:text="Submit Remark"
             android:backgroundTint="@color/PrimaryColor"
             android:textColor="@android:color/white"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="@dimen/twele"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

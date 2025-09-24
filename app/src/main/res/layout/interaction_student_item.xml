@@ -105,7 +105,6 @@
         android:id="@+id/viewline"
         android:layout_width="match_parent"
         android:layout_height="@dimen/one"
-        android:layout_below="@id/subjectheader"
         android:layout_marginTop="@dimen/fifteen"
         android:background="@color/light_white_4"
         android:visibility="gone" />
