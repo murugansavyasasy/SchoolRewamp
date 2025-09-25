@@ -107,6 +107,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         fetchLsrwSkillReportData()
 
         appViewModel?.islsrwskillsreport?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
 
@@ -148,6 +149,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
     }
 
     private fun fetchLsrwSkillReportData() {
+        Constant.showLoading(this)
         binding.rcylsrwreport.visibility = View.VISIBLE
         binding.rcylsrwreport.isNestedScrollingEnabled = false
         appViewModel?.islsrwskillsreport(isAccessToken ?: "")
