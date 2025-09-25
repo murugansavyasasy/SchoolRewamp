@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/dashboard_view"
         android:title="Dashboard"
-        android:icon="@drawable/homeimage"/>
+        android:icon="@drawable/ic_home"/>
     <item android:id="@+id/view_profile"
         android:title="View Profile"
         android:icon="@drawable/person_circle"/>

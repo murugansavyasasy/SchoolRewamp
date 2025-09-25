@@ -52,6 +52,16 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.imgFilter.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 
+
+        val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+        if(fromNotification){
+            val menu_name = intent.getStringExtra(Constant.menu_name)
+            val menu_id = intent.getIntExtra(Constant.menu_id,0)
+            val msg_id = intent.getIntExtra(Constant.msg_id,0)
+            //process when user comes from notification
+        }
+
+
         isFromArchive = intent.getBooleanExtra(Constant.fromArchive, false)
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
