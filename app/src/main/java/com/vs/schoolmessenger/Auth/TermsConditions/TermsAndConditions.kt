@@ -15,9 +15,13 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
     override fun setupViews() {
         super.setupViews()
         // Access a specific view using its ID
-        setupToolbar()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         // Enable JavaScript
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = "Terms and Conditions"
         if (Constant.isParentChoose) {
             isToolBarPrimaryTheme()
         } else {

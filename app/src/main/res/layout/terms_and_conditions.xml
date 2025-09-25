@@ -1,46 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:background="@color/white">
 
-    <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/PrimaryColor"
-        android:padding="@dimen/ten">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
-            android:src="@drawable/arrow_left_white"></ImageView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text="@string/terms_amp_conditions"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold">
-
-        </TextView>
-
-    </RelativeLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <RelativeLayout
-        android:layout_below="@+id/rytHeader"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
+
+
+    <RelativeLayout
+        android:layout_below="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -52,3 +41,4 @@
     </RelativeLayout>
 
 </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,8 +27,13 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
 
-        setupToolbarBlueWhite()
-        binding.imgBack.setOnClickListener(this)
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = "Notifications"
 
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token

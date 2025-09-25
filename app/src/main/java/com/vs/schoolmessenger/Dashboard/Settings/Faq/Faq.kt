@@ -15,8 +15,14 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        binding.imgBack.setOnClickListener(this)
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = "FAQ"
+
         binding.arrowIcon1.setOnClickListener(this)
         binding.arrowIcon2.setOnClickListener(this)
         binding.arrowIcon3.setOnClickListener(this)

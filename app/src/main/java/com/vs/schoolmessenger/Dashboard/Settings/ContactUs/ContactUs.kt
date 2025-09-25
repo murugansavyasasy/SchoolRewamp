@@ -14,8 +14,14 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        binding.imgBack.setOnClickListener(this)
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = "Contact Support"
+
         binding.rytPhone.setOnClickListener(this)
         binding.rytMail.setOnClickListener(this)
 

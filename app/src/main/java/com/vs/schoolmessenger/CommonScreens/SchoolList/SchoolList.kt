@@ -103,13 +103,21 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
-        binding.imgBack.setOnClickListener(this)
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblSendToMultipleSchool.setOnClickListener(this)
         binding.lblSelectReceipients.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+
+        binding.toolbarLayout.lblParentToolBar.text = "School Selection"
+        binding.toolbarLayout.lblSchoolName.text = "choose your preferred school"
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+
 
         isStaffData = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffData!!.access_token
