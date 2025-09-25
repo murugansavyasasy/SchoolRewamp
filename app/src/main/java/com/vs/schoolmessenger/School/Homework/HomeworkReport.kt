@@ -85,6 +85,18 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
 //        binding.lnrTabTwoName.setOnClickListener(this)
 //        binding.AcademicYear.setOnClickListener(this)
 //        binding.btnChooseRecipient.setOnClickListener(this)
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.search.visibility == View.VISIBLE) {
+                binding.search.visibility = View.GONE
+                binding.edtSearch.text.clear()
+
+            } else {
+                binding.search.visibility = View.VISIBLE
+                binding.edtSearch.text.clear()
+            }
+        }
+
         binding.Calendar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -153,14 +165,17 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
             if (response != null) {
                 isFirstLoad = true
                 if (response.status) {
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                     binding.rcyHomeWorkReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
                     binding.line1.visibility = View.VISIBLE
                     binding.line2.visibility = View.VISIBLE
                     val isHomeWorkReport = response.data
                     isHomeWorkReportDataData = isHomeWorkReport
+                    fullHomeworkList=isHomeWorkReport
                     loadHomeWorkReportData(isHomeWorkReportDataData!!)
                 } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.line1.visibility = View.GONE
                     binding.line2.visibility = View.GONE
                     binding.rcyHomeWorkReport.visibility = View.GONE
@@ -403,6 +418,10 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
 
 
     override fun onClick(v: View?) {
-
+        when (v?.id) {
+            R.id.Calendar -> {
+                showDatePickerDialogSelectedDate(this, isSelectedDate, this)
+            }
+        }
     }
 }
