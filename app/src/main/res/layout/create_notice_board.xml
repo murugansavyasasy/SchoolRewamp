@@ -290,7 +290,7 @@
                                             android:layout_marginTop="@dimen/three"
                                             android:text="Fri, Jun 2025"
                                             android:textColor="@color/grey"
-                                            android:textSize="@dimen/twele" />
+                                            android:textSize="12sp" />
 
 
                                     </LinearLayout>
@@ -375,7 +375,7 @@
                                             android:layout_marginTop="@dimen/three"
                                             android:text="Fri, Jun 2025"
                                             android:textColor="@color/grey"
-                                            android:textSize="@dimen/twele" />
+                                            android:textSize="@dimen/twele_sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
