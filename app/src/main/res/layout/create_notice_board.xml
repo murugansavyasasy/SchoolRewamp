@@ -290,7 +290,7 @@
                                             android:layout_marginTop="@dimen/three"
                                             android:text="Fri, Jun 2025"
                                             android:textColor="@color/grey"
-                                            android:textSize="@dimen/twele" />
+                                            android:textSize="12sp" />
 
 
                                     </LinearLayout>
@@ -305,7 +305,8 @@
                             android:layout_width="@dimen/sixteen"
                             android:layout_height="@dimen/sixteen"
                             android:layout_weight="1"
-                            android:src="@drawable/exchangearrow"></ImageView>
+                            android:src="@drawable/exchangearrow">
+                        </ImageView>
 
 
                         <RelativeLayout
@@ -375,7 +376,7 @@
                                             android:layout_marginTop="@dimen/three"
                                             android:text="Fri, Jun 2025"
                                             android:textColor="@color/grey"
-                                            android:textSize="@dimen/twele" />
+                                            android:textSize="@dimen/twele_sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -460,7 +461,8 @@
                             android:padding="@dimen/ten"
                             android:text="@string/NEXT"
                             android:textColor="@color/white"
-                            ></TextView>
+                            >
+                        </TextView>
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>

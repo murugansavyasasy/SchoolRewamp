@@ -78,6 +78,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         isGetSchoolStrength()
 
         appViewModel?.isGetSchoolStrengthReport?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response != null) {
                 if (response.status) {
                     isFirstLoad = true
@@ -136,6 +137,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
 
     private fun isGetSchoolStrength() {
+        Constant.showLoading(this)
         appViewModel?.isGetSchoolStrengthReport(isAccessToken ?: "", isAcademicYearId, this)
     }
 

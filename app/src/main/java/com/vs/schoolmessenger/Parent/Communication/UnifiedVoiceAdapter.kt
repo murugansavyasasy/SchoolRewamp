@@ -253,6 +253,14 @@ class UnifiedVoiceAdapter(
 
                 lblSeeMore.setOnClickListener {
                     isExpanded = !isExpanded
+                    lblSeeMore.visibility = View.GONE
+                    if (isExpanded) {
+                        lblContentText.maxLines = Int.MAX_VALUE
+//                        lblSeeMore.text = context.getString(R.string.see_less)
+                    } else {
+                        lblContentText.maxLines = 3
+//                        lblSeeMore.text = context.getString(R.string.see_more)
+                    }
 
                     if (data.is_unread == true) {
                         if (data.is_archive == true) {

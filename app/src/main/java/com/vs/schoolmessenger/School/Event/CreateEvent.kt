@@ -84,22 +84,15 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         return CreateEventBinding.inflate(layoutInflater)
     }
     private var isSchoolEventItem: SchoolEventItem? = null
-
     var isTotalSelectedItem = 0
     private var cameraPermissionDeniedCount = 0
-
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
-
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val MAX_FILES = 10
         internal const val CAMERA_IMAGE_REQUEST = 1004
     }
-
-    var isEventId = ""
-    var isEventPosition = 0
     var isSelectedCategory = ""
-
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
@@ -110,13 +103,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     private var selectedDateField: Int = 0
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-    lateinit var schooleventAdapter: SchoolEventAdapter
-    lateinit var eventupcomingadapter: SchoolEventUpcomingAdapter
-    lateinit var eventcompletedadapter: SchoolEventCompletedAdapter
-    private var allOngoingEvents: List<SchoolEventItem>? = null
-    private var allUpcomingEvents: List<SchoolEventItem>? = null
-    private var allCompletedEvents: List<SchoolEventItem>? = null
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -1172,7 +1158,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         }
         ProgressDialogHelper.updateProgress(80)
     }
-
 
     private fun isFileUploadInAws(
         isFileType: String?

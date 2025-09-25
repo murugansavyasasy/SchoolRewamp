@@ -149,6 +149,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
 
 
         appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
@@ -243,6 +244,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
 
 
     private fun isGetNoticeBoardList() {
+        Constant.showLoading(this)
         binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
         noticeboardadapter.isLoading = true

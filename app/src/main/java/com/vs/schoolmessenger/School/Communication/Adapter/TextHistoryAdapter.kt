@@ -104,7 +104,6 @@ class TextHistoryAdapter(
             }
         }
 
-
         private fun updateTextView() {
             if (isExpanded) {
                 lblContent.maxLines = Int.MAX_VALUE

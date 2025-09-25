@@ -51,7 +51,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
 
 
-        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::mAdapter.isInitialized) {
@@ -64,6 +64,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
 
         appViewModel?.isNoticeBoardReport?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
@@ -132,7 +133,8 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
 
     private fun isGetNoticeBoardList() {
-        mAdapter = NoticeBoardAdapter(null, this, this, Constant.isShimmerViewShow)
+        Constant.showLoading(this)
+        mAdapter = NoticeBoardAdapter(null, this, this, Constant.isShimmerViewDisable)
         binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
         binding.rcyNoticeBoard.adapter = mAdapter

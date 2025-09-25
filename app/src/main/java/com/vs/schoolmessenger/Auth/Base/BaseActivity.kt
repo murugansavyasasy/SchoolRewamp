@@ -45,7 +45,9 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFra
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.LocalHelperForLanguage
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import java.io.File
 import java.io.FileOutputStream
@@ -63,6 +65,17 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         binding = getViewBinding()
         setContentView(binding.root)
         setupViews()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        var isAppLanguage = SharedPreference.getLanguage(newBase)?: "en"
+        val context = LocalHelperForLanguage.wrapContext(newBase, isAppLanguage.toString())
+        super.attachBaseContext(context)
+    }
+
+    fun changeLanguage(lang: String) {
+        SharedPreference.putLanguage(this, lang)
+        recreate()
     }
 
     open fun setupViews() {

@@ -10,6 +10,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.LSRW.Model.SkillData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwBinding
 
@@ -80,6 +81,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
 
 
         appViewModel.islsrwSkilllist?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyrecyclerview.visibility = View.VISIBLE
                 binding.rlNoDataContainer.visibility = View.GONE
@@ -96,6 +98,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
     }
 
     private fun fetchLsrwSkillReportData() {
+        Constant.showLoading(this)
         binding.rcyrecyclerview.visibility = View.VISIBLE
         binding.rcyrecyclerview.isNestedScrollingEnabled = false
         appViewModel.islsrwSkilllist(isAccessToken ?: "")
