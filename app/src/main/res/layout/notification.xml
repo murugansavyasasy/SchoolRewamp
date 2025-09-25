@@ -1,49 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_white"
-    android:fitsSystemWindows="true">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray_white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <RelativeLayout
-        android:id="@+id/rlaLblNotification"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/PrimaryColor"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/thirty">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/fourty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/five"
-            android:layout_marginTop="@dimen/twenty_two"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_left_white" />
-
-        <TextView
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imgBack"
-            android:id="@+id/lblNotification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/lblNotifications"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
 
     <RelativeLayout
         android:id="@+id/rytSearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
-        android:layout_below="@+id/rlaLblNotification"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_margin="@dimen/ten"
         android:background="@drawable/rect_grey"
         android:visibility="gone">
@@ -68,23 +57,13 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlaLblNotification"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:padding="@dimen/sixteen">
 
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyNotification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlaLblNotification"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginBottom="@dimen/twenty"
@@ -97,3 +76,4 @@
         tools:listitem="@layout/resent_notifications" />
 
 </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

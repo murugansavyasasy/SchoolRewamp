@@ -27,7 +27,7 @@
 
         <include
             android:id="@+id/toolbarLayout"
-            layout="@layout/parent_side_tool_bar" />
+            layout="@layout/parent_side_tool_bar_without_curve" />
 
     <RelativeLayout
         android:layout_below="@+id/toolbarLayout"

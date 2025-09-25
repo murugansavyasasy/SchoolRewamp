@@ -141,18 +141,15 @@ class AttachmentReportAdapter(
             adapter: AttachmentReportAdapter,
         ) {
             val data = item[position]
-
             lblDate.text = Constant.convertDateAndTimeFormat(data.date)
             lblTitle.text = data.title
             lblPostedBy.text = "${context.getString(R.string.posted_by)} : ${data.sent_by}"
-
             lblDescription.text = data.description
             lblDescription.maxLines = 3
             lblDescription.ellipsize = TextUtils.TruncateAt.END
             lblSeeMore.visibility = View.GONE
 
             var isExpanded = false
-
 
             lblDescription.maxLines = Integer.MAX_VALUE
             lblDescription.ellipsize = null
@@ -197,7 +194,6 @@ class AttachmentReportAdapter(
 
             imgEditAndDelete.visibility =
                 if (data.can_delete && data.can_edit) View.VISIBLE else View.GONE
-
             imgReadUnRead.visibility = if (data.is_unread) View.VISIBLE else View.GONE
 
             imgEditAndDelete.setOnClickListener {

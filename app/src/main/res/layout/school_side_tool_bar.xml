@@ -63,7 +63,8 @@
                 android:visibility="gone"
                 android:layout_toEndOf="@+id/imgBack"
                 android:background="@drawable/bg_curve"
-                android:padding="@dimen/ten">
+                android:paddingVertical="@dimen/six"
+                android:paddingHorizontal="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgAdd"

@@ -81,15 +81,9 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
         private const val MAX_FILES = 10
-
         private const val CAMERA_IMAGE_REQUEST = 1004
     }
-
-    var mAttachmentReportAdapter: AttachmentReportAdapter? = null
-
     private var attachmentDataList: List<AttachmentDataReport>? = null
-
-
     private var isUserDetails: UserDetails? = null
     var isMultipleSchool = false
     private var appViewModel: App? = null
