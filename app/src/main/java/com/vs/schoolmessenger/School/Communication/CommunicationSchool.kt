@@ -14,9 +14,6 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import android.text.Editable
-import android.text.InputFilter
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +50,7 @@ import com.vs.schoolmessenger.Utils.CustomDatePicker
 import com.vs.schoolmessenger.Utils.FileExtensionFromContentUri
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.KeyboardUtils
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
@@ -213,6 +211,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         changeLabel()
         binding.SwitchEmergencyVoice.setOnClickListener {
+            if (mediaPlayer!!.isPlaying) {
+                mediaPlayer!!.stop()
+            }
             if (isRecording) {
                 stopRecording()
             }
@@ -263,17 +264,17 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val isCurrentTime = Constant.getCurrentTime()
         binding.lblTime.text = isCurrentTime
 
-        binding.edtContentTextMessage.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val length = s?.length ?: 0
-                binding.lblCountOfDescription.text = "$length/500"
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
+//        binding.edtContentTextMessage.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                val length = s?.length ?: 0
+//                binding.lblCountOfDescription.text = "$length/500"
+//            }
+//
+//            override fun afterTextChanged(p0: Editable?) {
+//            }
+//        })
 
 //        binding.edtTitleTextMessage.filters =
 //            arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
@@ -476,6 +477,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
+                    binding.edtTitle.setText("")
                     binding.rlaTitle.visibility = View.VISIBLE
                 } else {
                     Toast.makeText(
@@ -702,6 +704,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.rlaVoiceMessage -> {
+                KeyboardUtils.hideKeyboard(this)
                 Constant.isEmergencyVoiceNoticeBoard = false
                 Constant.isAccessType = Constant.isNonEmergency
                 isEmergency = false
@@ -740,6 +743,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaScheduleCall -> {
+                KeyboardUtils.hideKeyboard(this)
                 binding.lblDurationOfVoice.text = Constant._00_00_03_00
                 if (binding.SwitchEmergencyVoice.isChecked() == true) {
                     binding.SwitchEmergencyVoice.setChecked(true)
@@ -777,6 +781,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaTextMessage -> {
+                KeyboardUtils.hideKeyboard(this)
                 Constant.isAccessType = Constant.isNonEmergency
                 isEmergency = false
                 if (binding.SwitchEmergencyVoice.isChecked() == true) {
@@ -812,26 +817,30 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaFromTime -> {
+                KeyboardUtils.hideKeyboard(this)
                 isFromTime = true
                 showTimePickerDialog(this, this)
             }
 
             R.id.rlaToTime -> {
+                KeyboardUtils.hideKeyboard(this)
                 isFromTime = false
                 showTimePickerDialog(this, this)
             }
 
             R.id.rlaAddLocalFile -> {
+                KeyboardUtils.hideKeyboard(this)
                 stopAudioProgressUpdate()
                 openAudioFilePicker()
             }
 
             R.id.imgClose -> {
+                KeyboardUtils.hideKeyboard(this)
                 isClearData()
             }
 
             R.id.rlaSendText -> {
-
+                KeyboardUtils.hideKeyboard(this)
                 val title = binding.edtTitleTextMessage.text.toString().trim()
                 val description = binding.edtContentTextMessage.text.toString().trim()
                 if (title.isEmpty()) {
@@ -848,6 +857,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaAcademicYear -> {
+                KeyboardUtils.hideKeyboard(this)
                 showAcademicDropdown(
                     binding.rlaAcademicYear, this, isAcademicYear
                 ) { selectedYear ->
@@ -861,7 +871,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaSendVoice -> {
-
+                KeyboardUtils.hideKeyboard(this)
                 if (Constant.isVoiceType == 3) {
 //                    if (Constant.isAwsUploadedFiles.isNotEmpty()) {
                     if (Constant.selectedFiles.isNotEmpty()) {
@@ -919,6 +929,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgVoicePlay -> {
+                KeyboardUtils.hideKeyboard(this)
                 if (isPlayingVoice && mediaPlayer != null && mediaPlayer!!.isPlaying) {
                     mediaPlayer?.pause()
                     stopAudioProgressUpdate()
@@ -951,6 +962,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgVoiceRecord -> {
+                KeyboardUtils.hideKeyboard(this)
                 mediaPlayer?.let { player ->
                     if (player.isPlaying) {
                         player.stop()
@@ -966,11 +978,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
             R.id.lottieAnimationView -> {
+                KeyboardUtils.hideKeyboard(this)
                 stopAudioProgressUpdate()
                 stopRecording()
             }
 
             R.id.infosymbol -> {
+                KeyboardUtils.hideKeyboard(this)
                 binding.infosymbol.setOnClickListener {
                     val popupView = layoutInflater.inflate(R.layout.custom_tooltip, null)
 
@@ -988,11 +1002,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
             R.id.imgBack -> {
+                KeyboardUtils.hideKeyboard(this)
                 onBackPressed()
                 Constant.selectedFiles.clear()
             }
 
             R.id.lnrScheduleCall -> {
+                KeyboardUtils.hideKeyboard(this)
                 val dateAdapter = DateAdapter(this) { updatedList -> }
                 selectedDatesAdapter = SelectedDatesAdapter(
                     context = this,
@@ -1018,6 +1034,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
             R.id.rlaBackRecord -> {
+                KeyboardUtils.hideKeyboard(this)
                 binding.rytNORecordFound.visibility = View.GONE
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
@@ -1053,6 +1070,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.lnrHistoryList -> {
+                KeyboardUtils.hideKeyboard(this)
                 stopAudioProgressUpdate()
                 when (Constant.isCommunicationType) {
                     1 -> {
@@ -1187,6 +1205,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         imgTypeCommunication: ImageView,
         lblTypeCommunication: TextView
     ) {
+        KeyboardUtils.hideKeyboard(this)
 
         if (isRecording) {
             stopRecording()
@@ -1321,7 +1340,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             mediaPlayer.prepare()
             val durationInMillis = mediaPlayer.duration
             if (Constant.isCommunicationType != 2) {
-                if (binding.SwitchEmergencyVoice.isChecked() == true) {
+                if (binding.SwitchEmergencyVoice.isChecked()) {
                     if (durationInMillis > 30000) {
                         mediaPlayer.release()
                         showDurationLimitDialog(getString(R.string.Audio_least_30_seconds))
@@ -1391,6 +1410,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
         binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
+        binding.edtTitle.setText("")
         binding.rlaTitle.visibility = View.VISIBLE
         binding.edtTitle.setText(data.title.toString())
         binding.lblEndDuration.text = "/ " + Constant.getAudioDurationInMinutes(data.url)
@@ -1480,6 +1500,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                     // Update UI
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
+                    binding.edtTitle.setText("")
                     binding.rlaTitle.visibility = View.VISIBLE
                     binding.rytVoiceRecord.visibility = View.GONE
                     binding.lblDurationOfVoice.visibility = View.GONE

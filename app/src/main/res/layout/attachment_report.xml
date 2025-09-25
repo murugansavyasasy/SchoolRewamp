@@ -29,7 +29,7 @@
     <RelativeLayout
         android:id="@+id/rytAttachmentReport"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
         android:visibility="visible">
 
@@ -97,6 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytAttachmentReport"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <ImageView
@@ -109,20 +110,19 @@
             android:src="@drawable/nomessages"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
+             />
 
         <TextView
             android:id="@+id/txtNoData"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/no_list_found"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
+            />
 
 
     </LinearLayout>

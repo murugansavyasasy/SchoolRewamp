@@ -3029,7 +3029,7 @@ class SchoolServices {
                         response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
-                        if (response.body() != null) {
+//                        if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
                                 Log.d("GetChildAttendanceReportData", response.body().toString())
@@ -3038,7 +3038,7 @@ class SchoolServices {
                                 Log.d("GetChildAttendanceReportData", response.body().toString())
                                 isAttachmentResponse.postValue(response.body())
                             }
-                        }
+                       // }
                     }
                 }
 

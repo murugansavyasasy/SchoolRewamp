@@ -436,7 +436,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.nomessageEntire.visibility = View.GONE
                 binding.tabLayout.visibility = View.GONE
                 changeTapBg(Constant.isSection)
-            }else {
+            } else {
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -464,6 +464,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     //show send button only
 
                 }
+
                 M_ASSIGNMENT -> {
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
@@ -475,6 +476,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     changeTapBg(Constant.isSection)
 
                 }
+
                 M_LSRW -> {
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
@@ -486,6 +488,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     changeTapBg(Constant.isSection)
 
                 }
+
                 M_SCHOOL_CLASS_EVENTS -> {
                     binding.textdesc.visibility = View.VISIBLE
                     binding.bottomLayout.visibility = View.VISIBLE
@@ -496,9 +499,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.GONE
                     changeTapBg(Constant.isSchool)
-                 //   isSelectedType = 0
+                    //   isSelectedType = 0
                     isGetAcademicYear()
                 }
+
                 else -> {
                     binding.textdesc.visibility = View.VISIBLE
                     binding.bottomLayout.visibility = View.VISIBLE
@@ -509,7 +513,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.VISIBLE
                     changeTapBg(Constant.isSchool)
-                 //   isSelectedType = 0
+                    //   isSelectedType = 0
                     isGetAcademicYear()
 
                 }
@@ -570,7 +574,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 lastSelectedPosition = position
                 adapter.selectedPosition = position
-
+                binding.nomessage.visibility = View.GONE
                 val selectedOption = isAcademicYear!![position]
                 isSelectedAcademicYear = selectedOption.year
                 isAcademicYearId = selectedOption.id
@@ -625,7 +629,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isSubject!![position]
                     Log.d(
                         "DropdownMenu",
-                        "Clicked Standard Year: ID = ${isSubject!![position].id}, Year = ${isSubject[position].name}"
+                        "Clicked Standard Year: ID = ${isSubject[position].id}, Year = ${isSubject[position].name}"
                     )
                     isSubjectId = isSubject.get(position).id
                 }
@@ -698,7 +702,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             R.id.rytSend -> {
                 var isTypeOfName = ""
 
-                Log.d("isSelectedType++",isSelectedType.toString())
+                Log.d("isSelectedType++", isSelectedType.toString())
                 when (isSelectedType) {
                     0 -> {
                         isTargetType = Constant.isSchool
@@ -1082,6 +1086,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isUploadFilesInServer("audio")
                     }
                 }
+
                 Constant.M_QUIZ_EXAM -> {
 //                    val isQuizData = intent.getSerializableExtra(Constant.create_quiz_exam_data) as? SaveCreateExamQuizDetails
 //                    Log.d("isQuizData",isQuizData!!.title)
@@ -1466,7 +1471,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
 
-
     fun isLsrwSkillSend() {
         val isLsrwnewTaskSendingData =
             intent.getParcelableExtra<LsrwnewTaskSendingData>(Constant.lsrwskill_data)
@@ -1494,7 +1498,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             )
         }
     }
-
 
 
     fun isHomeWorkSend() {

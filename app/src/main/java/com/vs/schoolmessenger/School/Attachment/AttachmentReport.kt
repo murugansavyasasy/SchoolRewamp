@@ -101,10 +101,17 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         appViewModel!!.isDeleteAttachment?.observe(this) { response ->
             if (response != null) {
                 Constant.hideLoading(this@AttachmentReport)
-                mAttachmentReportAdapter!!.removeItemAt(isAttachmentPosition)
-                Constant.showDataValidation(
-                    resources.getString(R.string.fail), response.message, this
-                )
+                if (response.status){
+                    mAttachmentReportAdapter!!.removeItemAt(isAttachmentPosition)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success), response.message, this
+                    )
+                }else{
+                    mAttachmentReportAdapter!!.removeItemAt(isAttachmentPosition)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
             }
         }
 
@@ -112,9 +119,17 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         appViewModel!!.isAttachmentReportResponse?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
+                    binding.rcyAttachment.visibility= View.VISIBLE
+                    binding.lytList.visibility= View.GONE
                     val isHomeAttachmentReport = response.data
                     isLoadAttachmentReportList(isHomeAttachmentReport)
+                }else{
+                    binding.rcyAttachment.visibility= View.GONE
+                    binding.lytList.visibility= View.VISIBLE
                 }
+            }else{
+                binding.rcyAttachment.visibility= View.GONE
+                binding.lytList.visibility= View.VISIBLE
             }
         }
 
@@ -179,6 +194,7 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
                     val selectedStaff = staffList[position]
                     isAccessToken = selectedStaff.access_token
                     isStaffDetails = selectedStaff
+                    SharedPreference.putStaffDetails(this@AttachmentReport,isStaffDetails!!)
                     Log.d(
                         "SpinnerSelection",
                         "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
@@ -241,14 +257,14 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         }
 
         layoutDelete.setOnClickListener {
-            showSendConfirmationDialog(false)
+            showSendConfirmationDialog()
             popupWindow.dismiss()
         }
         popupWindow.showAsDropDown(anchor, 0, 10)
     }
 
 
-    fun showSendConfirmationDialog(isHomeWorkUpdate: Boolean) {
+    fun showSendConfirmationDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

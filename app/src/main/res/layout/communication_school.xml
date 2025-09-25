@@ -647,19 +647,19 @@
                             android:padding="@dimen/ten"
                             android:textSize="@dimen/thirteen_sp" />
 
-                        <TextView
-                            android:id="@+id/lblCountOfDescription"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/edtContentTextMessage"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="@dimen/ten"
-                            android:padding="@dimen/ten"
-                            android:visibility="gone"
-                            android:text="0/500"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/lblCountOfDescription"-->
+<!--                            style="@style/CustomTextStylePoppinsBold"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_below="@id/edtContentTextMessage"-->
+<!--                            android:layout_alignParentEnd="true"-->
+<!--                            android:layout_marginTop="@dimen/ten"-->
+<!--                            android:padding="@dimen/ten"-->
+<!--                            android:visibility="gone"-->
+<!--                            android:text="0/500"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textSize="@dimen/thirteen_sp" />-->
                     </RelativeLayout>
 
 
@@ -938,18 +938,18 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lblTitle">
 
-                            <TextView
-                                android:id="@+id/lblCountOfTitleVoice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/edtTitle"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="@dimen/ten"
-                                android:text="0/50"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp">
+<!--                            <TextView-->
+<!--                                android:id="@+id/lblCountOfTitleVoice"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_below="@+id/edtTitle"-->
+<!--                                android:layout_alignParentEnd="true"-->
+<!--                                android:layout_marginEnd="@dimen/ten"-->
+<!--                                android:text="0/50"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="@dimen/thirteen_sp">-->
 
-                            </TextView>
+<!--                            </TextView>-->
 
                             <EditText
                                 android:id="@+id/edtTitle"

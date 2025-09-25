@@ -1049,7 +1049,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         jsonObject.addProperty(APIKeyNames.description, binding.edtDescription.text.toString())
         jsonObject.addProperty(APIKeyNames.iframe, "")
         jsonObject.addProperty(APIKeyNames.file_size, "")
-        jsonObject.addProperty(APIKeyNames.thumbnail, "")
+//        jsonObject.addProperty(APIKeyNames.thumbnail, "")
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
             isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
