@@ -251,5 +251,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         Log.d("StandardList", "Size: ${standardList.size} | Data: $standardList")
         schoolstrengthadapter = SchoolStrengthAdapter(standardList, this, false)
         binding.rlaabsenteesreport2.adapter = schoolstrengthadapter
+        binding.rlaabsenteesreport2.isNestedScrollingEnabled=false
     }
 }
