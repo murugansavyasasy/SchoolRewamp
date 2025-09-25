@@ -6,8 +6,11 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -36,6 +39,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
@@ -43,6 +47,13 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFra
 import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
+import com.vs.schoolmessenger.Parent.Assignment.Assignment
+import com.vs.schoolmessenger.Parent.Attachment.Attachment
+import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
+import com.vs.schoolmessenger.Parent.Homework.HomeWork
+import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
+import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.LocalHelperForLanguage
@@ -65,6 +76,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         binding = getViewBinding()
         setContentView(binding.root)
         setupViews()
+
     }
 
     override fun attachBaseContext(newBase: Context) {

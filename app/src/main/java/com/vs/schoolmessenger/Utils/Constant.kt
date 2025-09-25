@@ -172,6 +172,13 @@ object Constant {
     var isStudent = 5
     var isStaff = 6
 
+    //from notification intent values
+
+    var menu_name = "menu_name"
+    var menu_id = "menu_id"
+    var msg_id = "msg_id"
+    var fromNotification = "fromNotification"
+
     var school = "A"
     var P = "P"
     var standard = "C"

@@ -16,6 +16,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
@@ -42,6 +43,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun sendNotification(title: String?, messageBody: String?, imageUrl: String?) {
         val intent = Intent(this, Splash::class.java)
+        intent.putExtra(Constant.menu_name, "Messages")
+        intent.putExtra(Constant.menu_id, 1)
+        intent.putExtra(Constant.msg_id, 1)
+        intent.putExtra(Constant.fromNotification, true)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent,

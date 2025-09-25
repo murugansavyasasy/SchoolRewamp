@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Auth.Splash
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -39,6 +41,13 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Parent.Assignment.Assignment
+import com.vs.schoolmessenger.Parent.Attachment.Attachment
+import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
+import com.vs.schoolmessenger.Parent.Homework.HomeWork
+import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
+import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
@@ -127,6 +136,16 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 //        animationHelper.startLogoRingAnimation(bellImageView)
 //        animationHelper.addGalaxyAnimation(galaxyContainer)
 //        animationHelper.startLoadingDotsAnimation(listOf(dot1, dot2, dot3))
+
+        val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+        Log.d("fromNotification",fromNotification.toString())
+
+        if (fromNotification) {
+            handleNotificationIntent(intent)
+        }
+        else{
+         //  normal process
+        }
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
         val appSignatureHelper = AppSignatureHelper(this)
@@ -255,6 +274,154 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     }
                 }
             }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        val fromNotification = intent?.getBooleanExtra(Constant.fromNotification, false) ?: false
+        if (fromNotification) {
+            handleNotificationIntent(intent)
+        }
+    }
+    private fun handleNotificationIntent(intent: Intent?) {
+        intent ?: return
+        val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+        var menu_name : String? = null
+        var menu_id : Int? = 0
+        var msg_id : Int? = 0
+        if(fromNotification){
+             menu_name = intent.getStringExtra(Constant.menu_name)
+             menu_id = intent.getIntExtra(Constant.menu_id,0)
+             msg_id = intent.getIntExtra(Constant.msg_id,0)
+        }
+
+        if (!SharedPreference.isLoggedIn(this)) {
+            // Redirect to login
+            val loginIntent = Intent(this, Login::class.java)
+            loginIntent.putExtra(Constant.menu_name, menu_name)
+            loginIntent.putExtra(Constant.menu_id, menu_id)
+            loginIntent.putExtra(Constant.msg_id, msg_id)
+            loginIntent.putExtra(Constant.fromNotification, msg_id)
+            startActivity(loginIntent)
+            return
+        }
+
+        // Open the target screen only if launched from notification
+        if (fromNotification) {
+            when (menu_id) {
+                Constant.M_COMMUNICATION -> {
+                    val detailIntent = Intent(this, CommunicationParent::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(CommunicationParent::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
+                Constant.M_HOMEWORK  -> {
+                    val detailIntent = Intent(this, HomeWork::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(CommunicationParent::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
+                Constant.M_NOTICEBOARD  -> {
+                    val detailIntent = Intent(this, NoticeBoard::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(CommunicationParent::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
+                Constant.M_ASSIGNMENT  -> {
+                    val detailIntent = Intent(this, Assignment::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(CommunicationParent::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
+                Constant.M_ATTACHMENTS  -> {
+                    val detailIntent = Intent(this, Attachment::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(CommunicationParent::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
+                Constant.M_SCHOOL_CLASS_EVENTS  -> {
+                    val detailIntent = Intent(this, Event::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(CommunicationParent::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
+                Constant.M_PTM  -> {
+                    val detailIntent = Intent(this, PTM::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(CommunicationParent::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
+                else -> {
+                    // default behavior
+                }
+            }
+        }
+        else {
+            //usual process
         }
     }
 
