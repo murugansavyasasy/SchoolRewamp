@@ -9,6 +9,8 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.vs.schoolmessenger.Utils.LocalHelperForLanguage
+import com.vs.schoolmessenger.Utils.SharedPreference
 import kotlin.system.exitProcess
 
 class MyApp : Application(), LifecycleObserver {
@@ -27,24 +29,9 @@ class MyApp : Application(), LifecycleObserver {
             exitProcess(1)
         }
     }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onAppBackgrounded() {
-        // App goes to background
-        Log.d("AppStatus", "onAppBackgrounded")
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        prefs.edit().putLong("last_close_time", System.currentTimeMillis()).apply()
+    override fun attachBaseContext(base: Context) {
+        var isAppLanguage = SharedPreference.getLanguage(base) ?: "en"
+        super.attachBaseContext(LocalHelperForLanguage.wrapContext(base, isAppLanguage.toString()))
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onAppForegrounded() {
-        // Optional: app comes to foreground, calculate difference
-        Log.d("AppStatus", "onAppForegrounded")
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        val lastCloseTime = prefs.getLong("last_close_time", -1)
-        if (lastCloseTime != -1L) {
-            val diff = System.currentTimeMillis() - lastCloseTime
-            Log.d("AppResume", "Time since last close: ${diff / 1000} seconds")
-        }
-    }
 }
