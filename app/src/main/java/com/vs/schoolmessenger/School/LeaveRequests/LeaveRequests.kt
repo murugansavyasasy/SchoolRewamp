@@ -122,6 +122,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         })
 
         appViewModel?.getleaverequest?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyleaverequest.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
@@ -232,6 +233,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     }
 
     private fun isGetLeaveRequestList() {
+        Constant.showLoading(this)
         mAdapter = MonthwiseLeaveAdapter(
             null, this, this, Constant.isShimmerViewDisable
         )

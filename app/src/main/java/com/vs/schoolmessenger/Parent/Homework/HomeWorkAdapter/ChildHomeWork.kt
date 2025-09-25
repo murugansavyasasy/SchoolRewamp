@@ -131,6 +131,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lbltitle.text = data!!.title
         binding.lblDescription.text = data!!.description
 
+
+
+
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
 //            binding.lblPostedDate.visibility = View.GONE
             binding.lblviewSubmissions.visibility = View.GONE

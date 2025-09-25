@@ -153,7 +153,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
@@ -1125,6 +1125,33 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.txtTitle.setText(data!!.title)
         binding.txtDesc.setText(data.description)
+
+
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val dayFormat = SimpleDateFormat("d", Locale.getDefault())
+        val displayFormat = SimpleDateFormat("EEE, MMM yyyy", Locale.getDefault())
+
+        try {
+            val startDate = data.visible_from?.let { inputFormat.parse(it) }
+            val endDate = data.visible_to?.let { inputFormat.parse(it) }
+
+
+            binding.lblDay.text = startDate?.let { dayFormat.format(it) } ?: ""
+            binding.lblEndDay.text = endDate?.let { dayFormat.format(it) } ?: ""
+
+
+            binding.txtStartDate.setText(startDate?.let { displayFormat.format(it) } ?: "")
+            binding.txtEndDate.setText(endDate?.let { displayFormat.format(it) } ?: "")
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            binding.lblDay.text = ""
+            binding.lblEndDay.text = ""
+            binding.txtStartDate.setText("")
+            binding.txtEndDate.setText("")
+        }
+
+
 
         if (data.file_path.isNotEmpty()) {
             val mappedList = data.file_path.map { filePath ->

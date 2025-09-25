@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
@@ -223,10 +224,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         }
 
         rlaLogout.setOnClickListener {
-//            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
             SharedPreference.putLogout(requireActivity(), true)
             SharedPreference.setLoggedIn(requireActivity(), false)
-//            SharedPreference.setFingerprintEnabled(requireActivity(), false)
             startActivity(Intent(requireActivity(), Login::class.java))
         }
 
@@ -340,7 +339,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        var isAppLanguage = SharedPreference.getLanguage(requireActivity())
+        var isAppLanguage = SharedPreference.getLanguage(requireActivity())?: "en"
         Log.d("isAppLanguage", isAppLanguage.toString())
         if (isAppLanguage.equals("")) {
             isAppLanguage = Constant.en
@@ -360,8 +359,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         btnConfirm.setOnClickListener {
             if (isChecking) {
                 isChecking = false
-                SharedPreference.putLanguage(requireActivity(), isSelectedLanguage)
-                refreshFragment()
+                (requireActivity() as? BaseActivity<*>)?.changeLanguage(isSelectedLanguage)
                 alertDialog.dismiss()
             } else {
                 Toast.makeText(requireActivity(), R.string.lblSelectlanguage, Toast.LENGTH_SHORT)

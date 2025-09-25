@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/ten"
-    android:layout_marginVertical="@dimen/five"
     android:background="@drawable/rect_white"
     android:padding="@dimen/ten">
 
@@ -18,34 +17,27 @@
         android:text="SA"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:textColor="@color/PrimaryColor"
+        android:textColor="@color/white"
         android:textSize="@dimen/sixteen_sp"
         style="@style/CustomTextStylePoppinsBold"
-        android:background="@drawable/rect_bg_stroke_blue"
-        />
-
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/profileImage"
-        android:layout_width="@dimen/fourty"
-        android:layout_height="@dimen/fourty"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/three"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        android:layout_centerVertical="true"
-        android:src="@drawable/default_profile"
-        app:shapeAppearanceOverlay="@style/CircleImageShape" />
+        android:background="@drawable/circle_bg_violet" />
 
 
     <RelativeLayout
+        android:layout_centerVertical="true"
+        android:id="@+id/rytHeader"
+        android:layout_toEndOf="@id/lblLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_alignParentStart="true"
         android:id="@+id/rytDetails"
-        android:layout_toStartOf="@+id/rytUnread"
         android:layout_marginStart="@dimen/ten"
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/lblLogo">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/nameheader"
@@ -63,128 +55,75 @@
             android:layout_below="@id/nameheader"
             android:layout_marginTop="@dimen/eight"
             android:text="TAMIL"
-            android:textColor="@color/black" />
+            android:textColor="@color/PrimaryColor" />
+
+        <TextView
+            android:layout_marginTop="@dimen/eight"
+            android:id="@+id/lblDesc"
+            android:layout_below="@id/subjectheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/twele_sp"
+            android:text="A common messages"
+            android:textColor="@color/grey" />
 
     </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_alignParentEnd="true"
-        android:id="@+id/rytUnread"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_alignParentEnd="true"
+            android:id="@+id/rytUnread"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
 
-    <TextView
-        android:id="@+id/yesterdayheader"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="@dimen/ten"
-        android:text="Yesterday"
-        android:textColor="@color/Emerald1" />
+            <TextView
+                android:id="@+id/yesterdayheader"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/ten"
+                android:text="Yesterday"
+                android:textColor="@color/Emerald1" />
 
 
-    <TextView
-        android:id="@+id/unreadcount"
-        android:layout_width="@dimen/twenty"
-        android:layout_height="@dimen/twenty"
-        android:layout_below="@+id/yesterdayheader"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:background="@drawable/circle_background_green"
-        android:gravity="center"
-        android:scaleType="centerCrop"
-        android:text="1"
-        android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/unreadcount"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_below="@+id/yesterdayheader"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/circle_bg_red"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:text="1"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
+
+
+
+
+
 
     <View
         android:id="@+id/viewline"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/subjectheader"
-        android:layout_marginTop="@dimen/fifteen"
+        android:layout_below="@id/rytHeader"
+        android:layout_marginTop="@dimen/twenty"
         android:background="@color/light_white_4"
-        android:visibility="gone" />
+        android:visibility="visible" />
+
+
 </RelativeLayout>
 
 
 
-
-
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:id="@+id/header"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="150dp"-->
-<!--    android:layout_marginStart="@dimen/ten"-->
-<!--    android:layout_marginTop="@dimen/fifteen"-->
-<!--    android:layout_marginEnd="@dimen/ten"-->
-<!--    android:background="@android:color/white"-->
-<!--    app:cardCornerRadius="16dp"-->
-<!--    app:cardElevation="4dp">-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical">-->
-
-<!--        &lt;!&ndash; Profile Image &ndash;&gt;-->
-<!--        <ImageView-->
-<!--            android:id="@+id/imgProfile"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@drawable/rounded_top_corners"-->
-<!--            android:contentDescription="Profile Image"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            android:src="@drawable/ic_user_icon" />-->
-
-<!--        &lt;!&ndash; Name & Designation container &ndash;&gt;-->
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_gravity="bottom"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/rounded_bg_green"-->
-
-<!--            android:orientation="vertical"-->
-<!--            android:paddingTop="8dp"-->
-<!--            android:paddingBottom="4dp">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/txtName"-->
-<!--                style="@style/CustomTextStylePoppinsBold1"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="@dimen/five"-->
-<!--                android:ellipsize="end"-->
-<!--                android:singleLine="true"-->
-<!--                android:text="Bailey Dupont"-->
-<!--                android:textColor="@android:color/white"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:textStyle="bold" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblSubject"-->
-<!--                style="@style/CustomTextStylePoppinsMedium"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="@dimen/five"-->
-<!--                android:ellipsize="end"-->
-<!--                android:singleLine="true"-->
-<!--                android:text="Neurologist"-->
-<!--                android:textColor="@android:color/darker_gray"-->
-<!--                android:textSize="@dimen/ten_sp" />-->
-
-<!--        </LinearLayout>-->
-<!--    </LinearLayout>-->
-
-
-<!--</androidx.cardview.widget.CardView>-->
 

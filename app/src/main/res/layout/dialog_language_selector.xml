@@ -12,26 +12,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imgClose"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:src="@drawable/close_red_color">
-
-        </ImageView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/fifteen"
-            android:layout_toEndOf="@+id/imgClose"
             android:text="@string/lblSelectlanguage"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold">
 
+
         </TextView>
+
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/close_red_color">
+
+        </ImageView>
 
     </RelativeLayout>
 

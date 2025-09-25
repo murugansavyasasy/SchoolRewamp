@@ -55,6 +55,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
 
         appViewModel?.islsrwmysubmission?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val submission = response.data[0]
                 val fileList = submission.file_path?.map {
@@ -86,7 +87,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
     }
 
     private fun fetchMySubmissionList() {
+        Constant.showLoading(this)
         appViewModel?.islsrwmysubmission(isAccessToken!!, id)
-
     }
 }

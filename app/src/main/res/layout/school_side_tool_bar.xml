@@ -47,7 +47,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="sdsd"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp"
                 android:visibility="gone">
@@ -63,7 +63,8 @@
                 android:visibility="gone"
                 android:layout_toEndOf="@+id/imgBack"
                 android:background="@drawable/bg_curve"
-                android:padding="@dimen/ten">
+                android:paddingVertical="@dimen/six"
+                android:paddingHorizontal="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgAdd"

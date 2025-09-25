@@ -3,19 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:paddingBottom="@dimen/fifty"
-    >
+    android:paddingBottom="@dimen/fifty">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_header_rounded"
-        android:paddingBottom="@dimen/eighty"
-        >
+        android:paddingBottom="@dimen/eighty">
         <RelativeLayout
             android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
@@ -74,6 +71,7 @@
             </ImageView>
         </RelativeLayout>
     </RelativeLayout>
+
     <LinearLayout
         android:weightSum="1"
         android:id="@+id/statsLayout"
