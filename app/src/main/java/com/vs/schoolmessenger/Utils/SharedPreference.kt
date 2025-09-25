@@ -210,26 +210,13 @@ object SharedPreference {
 
 
     fun putLanguage(activity: Context, isAppLanguage: String?) {
-        val sharedPreferences = EncryptedSharedPreferences.create(
-            SH_PREF,
-            masterKeyAlias,
-            activity,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        sharedPreferences.edit { putString(SH_AGREE, isAppLanguage) }
+        val prefs = activity.getSharedPreferences(SH_PREF, Context.MODE_PRIVATE)
+        prefs.edit().putString(SH_LANGUAGE, isAppLanguage).apply()
     }
 
     fun getLanguage(activity: Context): String? {
-
-        val sharedPreferences = EncryptedSharedPreferences.create(
-            SH_PREF,
-            masterKeyAlias,
-            activity,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        return sharedPreferences.getString(SH_AGREE, "")
+        val prefs = activity.getSharedPreferences(SH_PREF, Context.MODE_PRIVATE)
+        return prefs.getString(SH_LANGUAGE, "en") // default is English
     }
 
     fun putUserDetails(activity: Context, userDetails: UserDetails) {
