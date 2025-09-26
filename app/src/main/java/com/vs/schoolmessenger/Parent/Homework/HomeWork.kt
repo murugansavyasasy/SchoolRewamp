@@ -57,6 +57,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 
         binding.toolbarLayout.lblStudentName.text = childDetails!!.name
+        binding.lblHomeWork.text=Constant.isParentMenuName
         binding.toolbarLayout.lblStudentSection.text = childDetails!!.standard_name + " - " + childDetails.section_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)

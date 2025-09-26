@@ -52,7 +52,6 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         binding.toolbarLayout.lnrParent.visibility = View.GONE
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken=isChildDetails!!.access_token
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
@@ -230,6 +229,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
     private fun isLoadUpcomingEQ(data: List<GetQuizExamListData>) {
         if (data.size>0){
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             binding.lytList.visibility = View.GONE
             binding.rcUpcoming.visibility = View.VISIBLE
             adapter = QuizUpcomingAdapter(data,this, false)
@@ -237,6 +237,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             binding.rcUpcoming.adapter = adapter
         }
         else{
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             binding.rcUpcoming.visibility = View.GONE
             ErrorMessage(getString(R.string.no_data_found))
         }
@@ -244,6 +245,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
     private fun isLoadCompletedEQ(data: List<GetQuizExamListData>) {
         if (data.size>0){
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             binding.lytList.visibility = View.GONE
             binding.rcCompleted.visibility = View.VISIBLE
             adapter1 = CompletedQuizAdapter(data,this, false)
@@ -251,6 +253,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             binding.rcCompleted.adapter = adapter1
         }
         else{
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             binding.rcCompleted.visibility = View.GONE
             ErrorMessage(getString(R.string.no_data_found))
         }

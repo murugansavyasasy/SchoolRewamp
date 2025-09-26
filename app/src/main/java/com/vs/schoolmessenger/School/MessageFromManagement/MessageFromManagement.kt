@@ -83,7 +83,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         isMenuCount=Constant.isSchoolMenuCount
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
-        setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
+//        setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
 
 
         isGetMessageFromStaff()
@@ -95,14 +95,15 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.lytList.visibility = View.GONE
                     isLoadMsgStaff(response.data)
                     isMsgStaff=response.data
-
                 }
                 else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                     binding.rcMessageStaff.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             } else {
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                 binding.rcMessageStaff.visibility = View.GONE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
@@ -184,34 +185,34 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         binding.lytList.visibility = View.GONE
     }
 
-    fun setMessageWithCount(textView: TextView, message: String, count: Int) {
-        val fullText = "$message $count"
-        val spannable = SpannableString(fullText)
-
-        val start = fullText.indexOf(count.toString())
-        val end = start + count.toString().length
-
-        spannable.setSpan(
-            RoundedBackgroundSpan(
-                backgroundColor = ContextCompat.getColor(textView.context, R.color.red),
-                textColor = ContextCompat.getColor(textView.context, R.color.white),
-                cornerRadius = 20f,
-                padding = 15f
-            ),
-            start,
-            end,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        textView.text = spannable
-    }
+//    fun setMessageWithCount(textView: TextView, message: String, count: Int) {
+//        val fullText = "$message $count"
+//        val spannable = SpannableString(fullText)
+//
+//        val start = fullText.indexOf(count.toString())
+//        val end = start + count.toString().length
+//
+//        spannable.setSpan(
+//            RoundedBackgroundSpan(
+//                backgroundColor = ContextCompat.getColor(textView.context, R.color.red),
+//                textColor = ContextCompat.getColor(textView.context, R.color.white),
+//                cornerRadius = 20f,
+//                padding = 15f
+//            ),
+//            start,
+//            end,
+//            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//        )
+//
+//        textView.text = spannable
+//    }
 
 
 
 
     private fun isLoadMsgStaff(data: List<GetMessagesStaffData>) {
-
         if (data.isNotEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             adapter = MessageFromStaffAdapter(data,this, this, Constant.isShimmerViewDisable)
             binding.rcMessageStaff.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
             binding.rcMessageStaff.adapter = adapter
@@ -219,6 +220,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             binding.rcMessageStaff.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
         } else {
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             binding.rcMessageStaff.visibility = View.GONE
             binding.lytList.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_data_found)
@@ -326,27 +328,26 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             Constant.ATTACHMENT_ -> {
                 rytDescription.visibility=View.VISIBLE
                 tvDescription.visibility=View.VISIBLE
-
                 rlaAudioDetails.visibility=View.GONE
                 recyclerView.visibility = View.VISIBLE
                 indicator.visibility = View.VISIBLE
                 tvDescription.text = data.description
-            }
-        }
 
-        if (data.file_size.isNullOrEmpty()) {
-            indicator.visibility = View.GONE
-            recyclerView.visibility = View.GONE
-        } else {
-            indicator.visibility = View.VISIBLE
-            recyclerView.visibility = View.VISIBLE
-            recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            recyclerView.adapter = AttachmentMediaAdapter(
-                data.file_path,
-                activity,
-                Constant.isShimmerViewDisable
-            )
-            indicator.attachToRecyclerView(recyclerView)
+                if (data.file_path.isNullOrEmpty()) {
+                    indicator.visibility = View.GONE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    indicator.visibility = View.VISIBLE
+                    recyclerView.visibility = View.VISIBLE
+                    recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                    recyclerView.adapter = AttachmentMediaAdapter(
+                        data.file_path,
+                        activity,
+                        Constant.isShimmerViewDisable
+                    )
+                    indicator.attachToRecyclerView(recyclerView)
+                }
+            }
         }
 
         imgBack.setOnClickListener {
@@ -389,8 +390,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         Log.d("SelectedData",data.toString())
         showResumeListDialog(this,data)
         if (data.is_unread){
-            isMenuCount-=1
-            setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
+//            isMenuCount-=1
+//            setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
 
             if(data.type.equals(Constant.TXT)){
                 TYPE = Constant.MGMT_MSG_TEXT
@@ -401,6 +402,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             else{
                 TYPE = Constant.MGMT_MSG_ATTACHMENT
             }
+
             val jsonObject = JsonObject().apply {
                 addProperty(APIKeyNames.type, TYPE)
                 addProperty(APIKeyNames.detail_id, data.id)

@@ -92,6 +92,8 @@ class AutoScrollAdapterWithDots(
                 it.bounceAnimation()
                 Constant.isSchoolMenuName = item.name
                 Constant.SELECTED_SCHOOL_MENU = item.id
+                Constant.isParentMenuName = item.name
+
                 listener.onClick(item)
             }
         }
