@@ -33,6 +33,7 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>,
         private val layoutAlarm: LinearLayout = itemView.findViewById(R.id.layoutAlarm)
 
         fun bind(subject: ExamSubjectDetail, context: Context) {
+
             subjectname.text = subject.subject_name
             datevalue.text = Constant.convertToReadableDate(subject.exam_date)
             syllabusvalue.text = subject.syllabus

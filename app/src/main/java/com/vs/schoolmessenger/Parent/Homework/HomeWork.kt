@@ -54,7 +54,6 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 
         binding.toolbarLayout.lblStudentName.text = childDetails!!.name
         binding.lblHomeWork.text=Constant.isParentMenuName
@@ -73,10 +72,12 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             isHomeWorkDate = it.fullDate
             val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
             if (isHomeWorkData != null) {
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 binding.cytNoDataFound.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
                 mAdapter!!.updateList(isHomeWorkData.homework, isHomeWorkData.date)
             } else {
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.cytNoDataFound.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
                 mAdapter!!.updateList(emptyList(), "")
@@ -125,10 +126,12 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                 isHomeWorkData = response.data
                 val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
                 if (isHomeWorkData != null) {
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                     binding.cytNoDataFound.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
                     isLoadHomeWorkData(isHomeWorkData.homework, isHomeWorkData.date)
                 } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.cytNoDataFound.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE
                     isLoadHomeWorkData(emptyList(), "")

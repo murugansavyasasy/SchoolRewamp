@@ -5,6 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:shimmer_auto_start="true"
-    android:fitsSystemWindows="true"
     app:shimmer_duration="500">
 </com.facebook.shimmer.ShimmerFrameLayout>

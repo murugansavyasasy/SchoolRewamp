@@ -4,7 +4,6 @@
     android:id="@+id/loader_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/light_gray_8">
 
     <androidx.cardview.widget.CardView

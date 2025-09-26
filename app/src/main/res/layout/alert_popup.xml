@@ -7,7 +7,7 @@
     android:background="@drawable/rect_white_light_radious"
     android:orientation="vertical"
     android:paddingBottom="@dimen/ten"
-    android:fitsSystemWindows="true">
+ >
 
     <TextView
         android:id="@+id/alertTitle"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_margin="@dimen/five"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+>
 
     <TextView
         android:id="@+id/text_view_error"

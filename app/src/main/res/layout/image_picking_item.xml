@@ -5,7 +5,7 @@
     android:layout_marginStart="@dimen/twenty"
     android:layout_marginTop="@dimen/ten"
     android:layout_marginEnd="@dimen/twenty"
-    android:fitsSystemWindows="true">
+    >
 
     <ImageView
         android:id="@+id/imgPicking"

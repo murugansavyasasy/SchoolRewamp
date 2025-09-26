@@ -4,7 +4,6 @@
     android:text="07:00 AM - 07:30 PM"
     android:id="@+id/time_slot"
     android:layout_width="@dimen/one_fourty"
-    android:fitsSystemWindows="true"
     android:textStyle="bold"
     android:gravity="center"
     android:layout_marginStart="@dimen/five"

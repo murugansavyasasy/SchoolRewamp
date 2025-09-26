@@ -84,12 +84,14 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                     TabType.EXAM_MARKS -> {
                         if (::exammarkadapter.isInitialized) {
                             exammarkadapter.filter.filter(query)
+                            Log.d("query",query)
                         }
                     }
 
                     TabType.EXAM_TIMETABLE -> {
                         if (::examAdapter.isInitialized) {
                             examAdapter.filter.filter(query)
+                            Log.d("query",query)
                         }
                     }
                 }

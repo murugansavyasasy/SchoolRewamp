@@ -44,7 +44,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
         isAccessToken = isChildDetails?.access_token
 
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -80,12 +79,19 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 isAssignmentReportData = response.data
                 loadAssignmentReportData()
+                if (response.data.isNotEmpty()){
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                }
+                else{
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                }
                 binding.rcyAssignment.visibility = View.VISIBLE
                 binding.lytList.visibility = View.GONE
             } else {
                 binding.rcyAssignment.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.txtNoData.text = response?.message
             }
         }
