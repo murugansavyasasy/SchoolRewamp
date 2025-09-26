@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.Assignment
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionDetail
+import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -70,6 +72,7 @@ class AssignmentStudentListDetailAdapter(
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
 
+
         fun bind(
             data: SubmissionDetail, position: Int, adapter: AssignmentStudentListDetailAdapter
         ) {
@@ -104,7 +107,6 @@ class AssignmentStudentListDetailAdapter(
                         Constant.isShimmerViewDisable
                     )
             }
-
         }
     }
 

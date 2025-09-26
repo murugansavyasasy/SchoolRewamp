@@ -103,13 +103,13 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.search.visibility == View.VISIBLE) {
-                binding.search.visibility = View.GONE
-                binding.txtSearchMenu.text.clear()
+            if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.txtSearch.text.clear()
 
             } else {
-                binding.search.visibility = View.VISIBLE
-                binding.txtSearchMenu.text.clear()
+                binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                binding.toolbarLayout.txtSearch.text.clear()
             }
         }
 
@@ -125,7 +125,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
         binding.rcyAssignmentReport.adapter = isAssignmentAdapter
 
-        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+        binding.toolbarLayout.txtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 isAssignmentAdapter?.filter?.filter(s)
                 binding.rcyAssignmentReport.post {
@@ -150,11 +150,11 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         }
 
 
-        binding.txtSearchMenu.setOnEditorActionListener { _, actionId, _ ->
+        binding.toolbarLayout.txtSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
-                binding.txtSearchMenu.clearFocus()
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
+                binding.toolbarLayout.txtSearch.clearFocus()
                 true
             } else false
         }

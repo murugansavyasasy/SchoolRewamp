@@ -113,10 +113,15 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.btnSubmit.setOnClickListener(this)
+
         binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
             Log.d("ChildHomeWork", "Button clicked!")
             LsrwSubmitSkill()
@@ -137,7 +142,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
-//            binding.lblPostedDate.visibility = View.GONE
+            binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
+            binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
             binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
@@ -453,12 +459,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lblPostedBy.layoutParams = params
 
         when {
-            isAssignment -> {
+            isAssignment && data!!.isParentAssignment == true -> {
                 binding.childlsrwlayoutxml.rcChildHW.visibility =
                     if (isEmpty) View.GONE else View.VISIBLE
                 binding.childlsrwlayoutxml.lblAttachments.visibility =
                     if (isEmpty) View.GONE else View.VISIBLE
                 binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+            }
+            isAssignment && data!!.isParentAssignment == false ->{
+                binding.rcChildHW.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.lblAttachments.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.imgAttachmentIcon.visibility =
                     if (isEmpty) View.GONE else View.VISIBLE
             }
 
@@ -483,6 +497,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             else -> {
                 recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
                 binding.lblAttachments.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.attachmentsContainer.visibility = if (isEmpty) View.GONE else View.VISIBLE
                 binding.imgAttachmentIcon.visibility = if (isEmpty) View.GONE else View.VISIBLE
             }
         }

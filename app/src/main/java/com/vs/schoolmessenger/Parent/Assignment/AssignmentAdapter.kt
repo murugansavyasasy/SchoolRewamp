@@ -201,7 +201,8 @@ class AssignmentAdapter(
                     assignmentid = data.id,
                     created_date = data.created_date,
                     category = data.category,
-                    assignmentsubject = data.subject
+                    assignmentsubject = data.subject,
+                    isParentAssignment = false
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)

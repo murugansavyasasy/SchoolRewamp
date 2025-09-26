@@ -81,6 +81,9 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+                binding.nomessage.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.txtSearch.setText("")
                 when (tab.position) {
                     0 -> showAllStudents()
                     1 -> showSubmitted()
