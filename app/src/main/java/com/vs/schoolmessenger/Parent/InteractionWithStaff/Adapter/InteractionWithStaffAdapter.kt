@@ -90,12 +90,6 @@ class InteractionWithStaffAdapter(
 
     inner class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-
-//        private val txtName: TextView = itemView.findViewById(R.id.txtName)
-//        private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
-//        private val header: CardView = itemView.findViewById(R.id.header)
-
-
         private val nameheader: TextView = itemView.findViewById(R.id.nameheader)
         private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
@@ -107,8 +101,6 @@ class InteractionWithStaffAdapter(
         fun bind(staff: Staff, position: Int, adapter: InteractionWithStaffAdapter) {
 
 
-//            txtName.text = staff.name
-//            lblSubject.text = staff.subject_name
             nameheader.text = staff.name
             subjectheader.text = staff.subject_name
             unreadcount.text = staff.unread_count
