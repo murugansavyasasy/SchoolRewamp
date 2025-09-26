@@ -14,6 +14,10 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import kotlin.system.exitProcess
 
 class MyApp : Application(), LifecycleObserver {
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+    }
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
@@ -28,10 +32,9 @@ class MyApp : Application(), LifecycleObserver {
             android.os.Process.killProcess(android.os.Process.myPid())
             exitProcess(1)
         }
-    }
-    override fun attachBaseContext(base: Context) {
-        var isAppLanguage = SharedPreference.getLanguage(base) ?: "en"
-        super.attachBaseContext(LocalHelperForLanguage.wrapContext(base, isAppLanguage.toString()))
-    }
 
+        // ✅ Apply language *here*, not in attachBaseContext
+        val isAppLanguage = SharedPreference.getLanguage(this) ?: "en"
+        LocalHelperForLanguage.wrapContext(this, isAppLanguage)
+    }
 }
