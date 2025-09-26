@@ -77,7 +77,7 @@ import kotlin.text.endsWith
 import kotlin.text.ifEmpty
 
 class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClickListener,
-    OnImageClickListener, VimeoVideoUpload.UploadCompletionListener  {
+    OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
     override fun getViewBinding(): ChildHomeworkActivityBinding {
         return ChildHomeworkActivityBinding.inflate(layoutInflater)
     }
@@ -113,13 +113,15 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
+        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
-//        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener {
-//            onBackPressed()
-//        }
+        binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
+            Log.d("ChildHomeWork", "Button clicked!")
+            LsrwSubmitSkill()
+        }
+
         binding.lblClickComplete.setOnClickListener(this)
         data = intent.getParcelableExtra("isPreViewData")
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
@@ -331,6 +333,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
+        if (data?.created_date.isNullOrBlank()) {
+            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
+        } else {
+            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+        }
+
+
         binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener(this)
 
         binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener {
@@ -487,10 +496,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 isCompleteHomeWork()
             }
 
-            R.id.btnSubmit -> {
-                LsrwSubmitSkill()
-            }
-
         }
     }
 
@@ -518,18 +523,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun LsrwSubmitSkill() {
-        val description = binding.editDescription.text.toString().trim()
-        if (description.isEmpty()) {
-            binding.editDescription.error = getString(R.string.This_field_required)
-            binding.editDescription.requestFocus()
-            return
-        }
+        val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
         Constant.showLoading(this@ChildHomeWork)
         isUploadFilesInServer("Documents")
     }
 
     fun isUploadFilesInServer(isFileType: String?) {
+        Log.d("ChildHomeWork", "Starting file upload, total: ${Constant.selectedFiles.size}")
         if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
             Constant.selectedFiles.removeAt(0)
         }
@@ -655,7 +656,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
 
-
     private fun videoUploading() {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
@@ -684,20 +684,18 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
 
-
     private fun onAllUploadsComplete() {
-        val description = binding.editDescription.text.toString().trim()
+        val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
         val jsonObject = islsrwSkillSubmit(
             file_size = file_size,
             iframe = isIframe,
             id = data!!.id,
             thumbnail = "",
-            description = description,
+            description = description
         )
         appViewModel!!.islsrwSkillSubmit(isAccessToken!!, jsonObject, this)
     }
-
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
@@ -792,9 +790,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     private fun calculateFileSize(): String {
         var totalSize = 0L
         Constant.selectedFiles.filter { it.path != dummyPath }.forEach { fileItem ->
-            totalSize += getFileSize(Uri.parse(fileItem.path))
+            val size = getFileSize(Uri.parse(fileItem.path))
+            Log.d("FileSizeDebug", "File: ${fileItem.path}, Size: $size bytes")
+            totalSize += size
         }
-        return "${totalSize / 1024} KB"
+        val sizeInKB = totalSize / 1024
+        Log.d("FileSizeDebug", "Total Size: $sizeInKB KB")
+        return "$sizeInKB KB"
     }
 
     private fun getFileSize(uri: Uri): Long {
@@ -808,8 +810,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
         return size
     }
-
-
 
 
     override fun onBackPressed() {
@@ -845,7 +845,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     isIframe = iframe
                 }
             }
-            videoCompleted ++
+            videoCompleted++
             val videoCount = isVideoSelectedArrayList.size
             if (videoCompleted == videoCount) {
                 onAllUploadsComplete()
@@ -857,7 +857,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         runOnUiThread {
             var videoCompleted = 0
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
-            videoCompleted ++
+            videoCompleted++
             val videoCount = isVideoSelectedArrayList.size
             if (videoCompleted == videoCount) {
                 onAllUploadsComplete()

@@ -1711,9 +1711,12 @@ class ParentServices {
 
 
 
-    fun islsrwSkillSubmit(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.islsrwSkillSubmit(isToken, jsonObject)
-            ?.enqueue(object : Callback<LSRWSkillSubmitResponse?> {
+
+        fun islsrwSkillSubmit(isToken: String, jsonObject: JsonObject, activity: Activity ) {
+            RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+            RestClient.apiInterfaces.islsrwSkillSubmit(isToken, jsonObject)
+                ?.enqueue(object : Callback<LSRWSkillSubmitResponse?> {
+
                 override fun onResponse(
                     call: Call<LSRWSkillSubmitResponse?>, response: Response<LSRWSkillSubmitResponse?>
                 ) {
@@ -1915,8 +1918,4 @@ class ParentServices {
                 }
             })
     }
-
-
-
-
 }

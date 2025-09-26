@@ -34,6 +34,7 @@ import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.EventReport
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeworkReport
+import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
@@ -54,6 +55,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_DAILY_COLLECTION
 import com.vs.schoolmessenger.Utils.Constant.M_FEE_PENDING_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_INTERACTION_WITH_STUDENT
 import com.vs.schoolmessenger.Utils.Constant.M_LESSON_PLAN
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_MARK_YOUR_ATTENDANCE
@@ -104,8 +106,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblSendToMultipleSchool.setOnClickListener(this)
@@ -133,7 +134,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_LESSON_PLAN || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION|| SELECTED_SCHOOL_MENU == M_LSRW || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == Constant.M_PTM || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM|| SELECTED_SCHOOL_MENU == Constant.M_MESSAGES_FROM_MANAGEMENT) {
+        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_LESSON_PLAN || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_INTERACTION_WITH_STUDENT || SELECTED_SCHOOL_MENU == M_LSRW || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == Constant.M_PTM || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM || SELECTED_SCHOOL_MENU == Constant.M_MESSAGES_FROM_MANAGEMENT) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
 
@@ -220,26 +221,22 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         val adapter = AcademicYearAdapter(this, isAcademicYear)
         binding.isSpinner.adapter = adapter
 
-        binding.isSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    adapter.selectedPosition = position
-                    adapter.notifyDataSetChanged()
-                    isAcademicYear!![position]
-                    Log.d(
-                        "DropdownMenu",
-                        "Clicked Academic Year: ID = ${isAcademicYear[position].id}, Year = ${isAcademicYear[position].year}, Current = ${isAcademicYear[position].current_academic_year}"
-                    )
-                    isAcademicYearId = isAcademicYear[position].id
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
+        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                adapter.selectedPosition = position
+                adapter.notifyDataSetChanged()
+                isAcademicYear!![position]
+                Log.d(
+                    "DropdownMenu",
+                    "Clicked Academic Year: ID = ${isAcademicYear[position].id}, Year = ${isAcademicYear[position].year}, Current = ${isAcademicYear[position].current_academic_year}"
+                )
+                isAcademicYearId = isAcademicYear[position].id
             }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
 
@@ -299,8 +296,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     Constant.showValidationAlertPopup(
                         getString(
                             R.string.alert
-                        ),
-                        resources.getString(R.string.Please_select_least), this
+                        ), resources.getString(R.string.Please_select_least), this
                     )
                 }
             }
@@ -359,7 +355,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 val intent = Intent(this, DailyCollection::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            }else if (SELECTED_SCHOOL_MENU == M_LSRW) {
+            } else if (SELECTED_SCHOOL_MENU == M_INTERACTION_WITH_STUDENT) {
+                val intent = Intent(this, InteractionWithStudent::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
                 val intent = Intent(this, LsrwMain::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
@@ -472,8 +472,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         val originalSizeKB = try {
                             if (original.path.startsWith("content://")) {
                                 contentResolver.openFileDescriptor(
-                                    Uri.parse(original.path),
-                                    "r"
+                                    Uri.parse(original.path), "r"
                                 )?.statSize ?: 0
                             } else {
                                 File(original.path).length()
@@ -500,7 +499,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     val isSelectedFileCount = Constant.selectedFiles.size
                     for (i in Constant.selectedFiles.indices) {
                         isAwsUploadingPreSigned?.getPreSignedUrl(
-                            Constant.selectedFiles[i].path, isStaffData!!.school_id,
+                            Constant.selectedFiles[i].path,
+                            isStaffData!!.school_id,
                             isFileType!!,
                             this,
                             isCountryId!!,
@@ -509,8 +509,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                             object : UploadCallback {
 
                                 override fun onUploadSuccess(
-                                    response: String?,
-                                    isFileUploaded: String?
+                                    response: String?, isFileUploaded: String?
                                 ) {
                                     isAwsUploadingFile.add(isFileUploaded!!)
                                     Constant.isAwsUploadedFiles.add(
@@ -541,8 +540,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     }
 
                     Log.d("Compressor", "All files compressed and uploaded.")
-                }
-            )
+                })
         }
     }
 
@@ -697,8 +695,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     override fun onUploadComplete(
-        success: Boolean,
-        iframe: String?, link: String?
+        success: Boolean, iframe: String?, link: String?
     ) {
         runOnUiThread {
             Log.d("link", link.toString())

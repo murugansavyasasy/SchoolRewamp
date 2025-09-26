@@ -1,8 +1,10 @@
 package com.vs.schoolmessenger.Parent.InteractionWithStaff
 
+import android.graphics.Rect
 import android.os.Build
 import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,6 +61,22 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
 
         fetchChatData()
 
+            binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    val rect = Rect()
+                    binding.root.getWindowVisibleDisplayFrame(rect)
+                    val screenHeight = binding.root.height
+                    val keypadHeight = screenHeight - rect.bottom
+
+                    if (keypadHeight > screenHeight * 0.15) {
+                        if (::interactionWithStaffChatAdapter.isInitialized) {
+                            binding.rcystaffchatdata.post {
+                                binding.rcystaffchatdata.scrollToPosition(interactionWithStaffChatAdapter.itemCount - 1)
+                            }
+                        }
+                    }
+                }
+            })
 
         appViewModel?.getstaffanswers?.observe(this) { response ->
             Log.d("response++", response.toString())
@@ -124,11 +142,13 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         binding.rcystaffchatdata.visibility = View.VISIBLE
         binding.rcystaffchatdata.layoutManager = LinearLayoutManager(this)
 
-        interactionWithStaffChatAdapter =
-            InteractionWithStaffChatAdapter(sortedData, this, false)
+        interactionWithStaffChatAdapter = InteractionWithStaffChatAdapter(sortedData, this, false)
         binding.rcystaffchatdata.adapter = interactionWithStaffChatAdapter
 
-        binding.rcystaffchatdata.scrollToPosition(sortedData.size - 1)
+        // Scroll to the bottom with a slight delay to account for keyboard
+        binding.rcystaffchatdata.post {
+            binding.rcystaffchatdata.scrollToPosition(sortedData.size - 1)
+        }
     }
 
 
