@@ -87,7 +87,11 @@ class AssignmentAdapter(
                     fullList.filter {
                         (it.title?.lowercase()?.contains(query) == true) ||
                                 (it.description?.lowercase()?.contains(query) == true) ||
-                                (it.subject?.lowercase()?.contains(query) == true)
+                                (it.subject?.lowercase()?.contains(query) == true)||
+                                (it.category?.lowercase()?.contains(query) == true)||
+                                (it.submitted_count.toString()?.lowercase()?.contains(query) == true)||
+                                (it.end_date?.lowercase()?.contains(query) == true)||
+                                (it.created_date?.lowercase()?.contains(query) == true)
                     }.toMutableList()
                 }
                 return FilterResults().apply { values = resultList }

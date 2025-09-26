@@ -170,6 +170,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/ten"
             android:padding="@dimen/five"
+            android:layout_centerVertical="true"
             android:src="@drawable/search_icon_white"
             android:visibility="gone" />
 

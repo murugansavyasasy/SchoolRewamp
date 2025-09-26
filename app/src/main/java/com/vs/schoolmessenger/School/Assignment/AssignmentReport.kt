@@ -89,6 +89,8 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         binding.toolbarLayout.layoutCreateSlot.visibility = View.VISIBLE
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+
+        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -99,6 +101,17 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             isAcademicYear?.any { it.current_academic_year == true } == true
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.search.visibility == View.VISIBLE) {
+                binding.search.visibility = View.GONE
+                binding.txtSearchMenu.text.clear()
+
+            } else {
+                binding.search.visibility = View.VISIBLE
+                binding.txtSearchMenu.text.clear()
+            }
+        }
 
         binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
         adapter = AssignmentStudentListAdapter(
@@ -148,10 +161,12 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
         appViewModel?.getassignmentlist?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 adapter.updateList(response.data)
                 binding.rcyAssignmentReport.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
             } else {
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.rcyAssignmentReport.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
                 binding.noDataFound.text = getString(R.string.no_data_found)
@@ -175,12 +190,14 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             Constant.hideLoading(this@AssignmentReport)
             if (response != null) {
                 if (response.status) {
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
                     val isAssignmentReport = response.data
                     isAssignmentReportData = isAssignmentReport
                     loadAssignmentReportData()
                 } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
                     binding.noDataFound.text = getString(R.string.no_data_found)

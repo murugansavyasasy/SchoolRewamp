@@ -65,178 +65,185 @@
             </RelativeLayout>
         </RelativeLayout>
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
             app:layout_constraintTop_toBottomOf="@+id/AcademicYear"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/rlaPieChartCount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/AcademicYear"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:padding="@dimen/ten"
-            android:background="@drawable/rect_shadow_white">
-
-
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/customPieChart"
-                android:layout_alignParentStart="true"
-                android:layout_width="@dimen/one_seventy"
-                android:layout_height="@dimen/one_seventy"
-                android:layout_gravity="center_vertical"
-               />
-
+            android:layout_height="0dp">
             <LinearLayout
-                android:layout_toEndOf="@+id/customPieChart"
-                android:layout_centerVertical="true"
-                android:id="@+id/data_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/five"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/rlaPieChartCount"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:padding="@dimen/ten"
+                    android:background="@drawable/rect_shadow_white">
 
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/ten"
-                        android:layout_height="@dimen/ten"
-                        app:cardCornerRadius="@dimen/five"
-                        app:cardBackgroundColor="@color/yellow"
-                        android:layout_marginEnd="@dimen/eight"/>
 
-                    <TextView
-                        android:id="@+id/staffCount"
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/customPieChart"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="@dimen/one_seventy"
+                        android:layout_height="@dimen/one_seventy"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                    <LinearLayout
+                        android:layout_toEndOf="@+id/customPieChart"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/data_card"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/staff"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/twele_sp"/>
-                </LinearLayout>
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/ten"
+                                android:layout_height="@dimen/ten"
+                                app:cardCornerRadius="@dimen/five"
+                                app:cardBackgroundColor="@color/yellow"
+                                android:layout_marginEnd="@dimen/eight"/>
+
+                            <TextView
+                                android:id="@+id/staffCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/staff"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:textSize="@dimen/twele_sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/ten"
+                                android:layout_height="@dimen/ten"
+                                app:cardCornerRadius="@dimen/five"
+                                android:visibility="gone"
+                                app:cardBackgroundColor="@color/navi_blue2"
+                                android:layout_marginEnd="@dimen/eight"/>
+
+                            <TextView
+                                android:id="@+id/totalStudentCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/total_students"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:textSize="@dimen/twele_sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/ten"
+                                android:layout_height="@dimen/ten"
+                                app:cardCornerRadius="@dimen/five"
+                                app:cardBackgroundColor="@color/pink"
+                                android:layout_marginEnd="@dimen/eight"/>
+
+                            <TextView
+                                android:id="@+id/girlsCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/girls"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:textSize="@dimen/twele_sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/ten"
+                                android:layout_height="@dimen/ten"
+                                app:cardCornerRadius="@dimen/five"
+                                app:cardBackgroundColor="@color/teal"
+                                android:layout_marginEnd="@dimen/eight"/>
+
+                            <TextView
+                                android:id="@+id/boysCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/boys"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:textSize="@dimen/twele_sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/ten"
+                                android:layout_height="@dimen/ten"
+                                app:cardCornerRadius="@dimen/five"
+                                app:cardBackgroundColor="@color/grey"
+                                android:layout_marginEnd="@dimen/eight"/>
+
+                            <TextView
+                                android:id="@+id/othersCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/others"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:textSize="@dimen/twele_sp"/>
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rlaabsenteesreport2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/ten"
-                        android:layout_height="@dimen/ten"
-                        app:cardCornerRadius="@dimen/five"
-                        android:visibility="gone"
-                        app:cardBackgroundColor="@color/navi_blue2"
-                        android:layout_marginEnd="@dimen/eight"/>
-
-                    <TextView
-                        android:id="@+id/totalStudentCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/total_students"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/twele_sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/ten"
-                        android:layout_height="@dimen/ten"
-                        app:cardCornerRadius="@dimen/five"
-                        app:cardBackgroundColor="@color/pink"
-                        android:layout_marginEnd="@dimen/eight"/>
-
-                    <TextView
-                        android:id="@+id/girlsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/girls"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/twele_sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/ten"
-                        android:layout_height="@dimen/ten"
-                        app:cardCornerRadius="@dimen/five"
-                        app:cardBackgroundColor="@color/teal"
-                        android:layout_marginEnd="@dimen/eight"/>
-
-                    <TextView
-                        android:id="@+id/boysCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/boys"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/twele_sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/ten"
-                        android:layout_height="@dimen/ten"
-                        app:cardCornerRadius="@dimen/five"
-                        app:cardBackgroundColor="@color/grey"
-                        android:layout_marginEnd="@dimen/eight"/>
-
-                    <TextView
-                        android:id="@+id/othersCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/others"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/twele_sp"/>
-                </LinearLayout>
-
-
-
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginBottom="@dimen/ten">
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
-
-
-        </RelativeLayout>
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            app:layout_constraintTop_toBottomOf="@+id/rlaPieChartCount"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/rlaabsenteesreport2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaPieChartCount"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginStart="@dimen/five"
-            android:layout_marginEnd="@dimen/five"
-            android:layout_marginBottom="@dimen/ten">
-        </androidx.recyclerview.widget.RecyclerView>
+        </androidx.core.widget.NestedScrollView>
 
     <ImageView
         app:layout_constraintTop_toBottomOf="@+id/AcademicYear"

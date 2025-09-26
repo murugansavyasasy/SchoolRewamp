@@ -113,7 +113,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
 //        binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
@@ -177,7 +177,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
                 "Listening,Speaking,Reading,Writing"
-            binding.toolbarLayout.imgBack.visibility = View.GONE
+            binding.toolbarLayout.imgBack.visibility = View.VISIBLE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.txtTitle.text = data!!.subjectName
@@ -482,9 +482,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgBack -> {
-                onBackPressed()
-            }
 
             R.id.lblClickComplete -> {
                 isCompleteHomeWork()

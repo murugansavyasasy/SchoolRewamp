@@ -116,6 +116,35 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         drawerLayout = binding.drawerLayout
         navigationView = binding.navigationView
 
+
+
+        val menu = navigationView.menu
+        val menuItem = menu.findItem(R.id.role_click)
+        if(userDetails!!.is_parent && userDetails!!.is_staff){
+            menuItem.isVisible = true  // show
+        }
+        else if(userDetails!!.is_parent){
+            if(userDetails!!.child_details.size > 1){
+                menuItem.isVisible = true  // show
+            }
+            else{
+                menuItem.isVisible = false  // hide
+            }
+        }
+        else if(userDetails!!.is_staff){
+            if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if(userDetails!!.staff_details.size > 1){
+                    menuItem.isVisible = true  // show
+                }
+                else{
+                    menuItem.isVisible = false  // hide
+                }
+            }
+            else{
+                menuItem.isVisible = false
+            }
+        }
+
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.dashboard_view -> {
