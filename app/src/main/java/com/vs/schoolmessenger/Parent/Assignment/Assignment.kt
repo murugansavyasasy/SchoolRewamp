@@ -85,6 +85,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             } else {
                 binding.rcyAssignment.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message
             }
         }
@@ -94,11 +95,17 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
         binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 isAssignmentAdapter?.filter(s.toString())
+                if (isAssignmentAdapter?.itemCount == 0) {
+                    binding.rcyAssignment.visibility = View.GONE
+                    binding.lytList.visibility = View.VISIBLE
+                    binding.txtNoData.text = getString(R.string.no_list_found)
+                } else {
+                    binding.rcyAssignment.visibility = View.VISIBLE
+                    binding.lytList.visibility = View.GONE
+                }
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
 

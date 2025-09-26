@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
-        android:text="@string/HomeWork"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="@dimen/twenty"
         app:layout_constraintStart_toStartOf="parent"

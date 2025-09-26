@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.LSRW
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +35,8 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         )
 
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
+        binding.lblHeaderTitle.text = Constant.isParentMenuName
+        Log.d("isParentMenuName",Constant.isParentMenuName)
         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
@@ -137,7 +140,6 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
-
 
         }
 

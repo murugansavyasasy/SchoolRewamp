@@ -382,17 +382,11 @@ object ApiCallRequest {
         iframe: String,
         id: String,
         thumbnail: String,
-        description: String,
+        description: String
     ): JsonObject {
-
         val jsonObject = JsonObject()
-
         val filePathArray = JsonArray()
 
-        val textObject = JsonObject()
-        textObject.addProperty("url", description)
-        textObject.addProperty("type", "TEXT")
-        filePathArray.add(textObject)
 
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
@@ -403,6 +397,7 @@ object ApiCallRequest {
             )
             filePathArray.add(isSelectedObject)
         }
+
         jsonObject.addProperty(APIKeyNames.iframe, iframe)
         jsonObject.addProperty(APIKeyNames.thumbnail, thumbnail)
         jsonObject.addProperty(APIKeyNames.id, id)

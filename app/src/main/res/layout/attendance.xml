@@ -212,7 +212,7 @@
                                     android:layout_height="match_parent"
                                     android:indeterminate="false"
                                     android:max="100"
-                                    android:progress="100"
+                                    android:progress="0"
                                     android:progressDrawable="@drawable/progress_circle_drawable"
                                     android:rotation="270" />
 
@@ -220,13 +220,14 @@
                                     android:layout_width="match_parent"
                                     android:orientation="horizontal"
                                     android:gravity="center"
+                                    android:layout_gravity="center"
                                     android:layout_height="match_parent">
                                     <TextView
                                         android:id="@+id/lblAttendancePercentage"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="100"
-                                        android:maxLength="4"
+                                        android:text="0"
+                                        android:maxLength="3"
                                         style="@style/CustomTextStylePoppinsBold"
                                         android:textSize="@dimen/fifteen_sp"
                                         android:textColor="@color/PrimaryColor"
@@ -237,7 +238,7 @@
                                         android:text="%"
                                         android:layout_marginTop="@dimen/three"
                                         style="@style/CustomTextStylePoppinsBold"
-                                        android:textSize="@dimen/fourteen_sp"
+                                        android:textSize="@dimen/thirteen_sp"
                                         android:textColor="@color/PrimaryColor"
                                         />
                                 </LinearLayout>
@@ -277,7 +278,7 @@
                                     android:layout_height="match_parent"
                                     android:indeterminate="false"
                                     android:max="100"
-                                    android:progress="50"
+                                    android:progress="0"
                                     android:progressDrawable="@drawable/progress_circle_drawable"
                                     android:rotation="270" />
 
@@ -286,7 +287,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:text="50"
+                                    android:text="0"
                                     android:maxLength="3"
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:textColor="@color/PrimaryColor"
@@ -327,7 +328,7 @@
                                     android:layout_height="match_parent"
                                     android:indeterminate="false"
                                     android:max="100"
-                                    android:progress="50"
+                                    android:progress="0"
                                     android:progressDrawable="@drawable/progress_circle_drawable"
                                     android:rotation="270" />
 
@@ -336,7 +337,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:text="50"
+                                    android:text="0"
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:maxLength="3"
                                     android:textColor="@color/PrimaryColor"

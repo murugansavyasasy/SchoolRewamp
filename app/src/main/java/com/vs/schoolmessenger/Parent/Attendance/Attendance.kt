@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendanceBinding
+import kotlin.math.roundToInt
 
 
 class Attendance : BaseActivity<AttendanceBinding>() {
@@ -119,12 +120,12 @@ class Attendance : BaseActivity<AttendanceBinding>() {
     }
 
     private fun isLoadStudentStats(data: getStudentStatsData) {
-        binding.lblAttendancePercentage.text = data.attendance_percentage
+        binding.lblAttendancePercentage.text = (data.attendance_percentage.toFloatOrNull()?.roundToInt() ?: 0).toString()
         binding.lblLeaveTakenPercentage.text = data.absent_days.toString()
         binding.lblOngoingDaysPercentage.text = data.completed_working_days.toString()
         animateProgress(
             binding.attendanceProgressBar,
-            data.attendance_percentage.toIntOrNull() ?: 0,
+            data.attendance_percentage.toFloatOrNull()?.roundToInt() ?: 0,
             100
         )
         animateProgress(binding.leaveTakenProgressBar, data.absent_days, 20)
@@ -153,18 +154,44 @@ class Attendance : BaseActivity<AttendanceBinding>() {
     }
 
 
-    fun animateProgress(progressBar: ProgressBar, current: Int, max: Int, duration: Long = 1000) {
+//    fun animateProgress(progressBar: ProgressBar, current: Int, max: Int, duration: Long = 1000) {
+//        val safeMax = if (max <= 0) 1 else max           // Avoid divide by zero
+//        val safeCurrent = current.coerceIn(0, safeMax)   // Clamp current within valid range
+//
+//        val percentage = ((safeCurrent.toFloat() / safeMax) * 100).toInt()
+//
+//        progressBar.max = 100
+//        val animator = ObjectAnimator.ofInt(progressBar, Constant.progress, 0, percentage)
+//        animator.duration = duration
+//        animator.interpolator = DecelerateInterpolator()
+//        animator.start()
+//    }
+
+    fun animateProgress(
+        progressBar: ProgressBar,
+        current: Int,
+        max: Int,
+        duration: Long = 1000
+    ) {
         val safeMax = if (max <= 0) 1 else max           // Avoid divide by zero
         val safeCurrent = current.coerceIn(0, safeMax)   // Clamp current within valid range
 
         val percentage = ((safeCurrent.toFloat() / safeMax) * 100).toInt()
 
         progressBar.max = 100
-        val animator = ObjectAnimator.ofInt(progressBar, Constant.progress, 0, percentage)
+        val animator = ObjectAnimator.ofInt(
+            progressBar,
+            Constant.progress,
+            progressBar.progress,   // start from current progress, not always 0
+            percentage              // animate to target percentage
+        )
         animator.duration = duration
         animator.interpolator = DecelerateInterpolator()
         animator.start()
     }
+
+
+
 
     private fun loadStudentStats() {
         appViewModel!!.isStudentStats(isAccessToken!!)

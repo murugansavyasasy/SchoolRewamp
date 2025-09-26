@@ -6,8 +6,7 @@
     android:layout_height="36dp"
     android:layout_marginTop="@dimen/five"
     android:layout_marginBottom="@dimen/five"
-    android:background="@drawable/bg_image_background_white_coupon"
-    android:fitsSystemWindows="true">
+    android:background="@drawable/bg_image_background_white_coupon">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ImgPDF"

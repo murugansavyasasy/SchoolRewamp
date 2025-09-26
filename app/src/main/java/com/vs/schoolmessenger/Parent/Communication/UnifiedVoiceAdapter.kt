@@ -269,6 +269,7 @@ class UnifiedVoiceAdapter(
                             listener.onUpdateCommunicationStatus(data.type, data.id)
                         }
                         data.is_unread = false
+                        lblnewiconText.visibility=View.GONE
                     }
                     listener.onItemClick(data, this@DataViewHolder)
                 }

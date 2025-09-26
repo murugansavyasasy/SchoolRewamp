@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
+
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -57,19 +58,22 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
 
-        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
-            if (binding.rytSearch1.isVisible) {
-                binding.rytSearch1.visibility = View.GONE
-                binding.txtVideoMenuBox.setText("")
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.toolbarLayout.rytSearch.isVisible) {
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.txtVideoMenu.setText("")
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.txtVideoMenuBox.windowToken, 0)
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtVideoMenu.windowToken, 0)
             } else {
-                binding.rytSearch1.visibility = View.VISIBLE
-                binding.txtVideoMenuBox.setText("")
-                binding.txtVideoMenuBox.requestFocus()
+                binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                binding.toolbarLayout.txtVideoMenu.setText("")
+                binding.toolbarLayout.txtVideoMenu.requestFocus()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(binding.txtVideoMenuBox, InputMethodManager.SHOW_IMPLICIT)
+                imm.showSoftInput(
+                    binding.toolbarLayout.txtVideoMenu,
+                    InputMethodManager.SHOW_IMPLICIT
+                )
             }
         }
         binding.headerview.visibility = View.GONE
@@ -84,11 +88,39 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
         loadeventdata()
 
-        binding.txtVideoMenuBox.addTextChangedListener(object : TextWatcher {
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (::mAdapter.isInitialized) mAdapter.filter.filter(s)
-                if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(s)
-                if (::eventupcomingadapter.isInitialized) eventupcomingadapter.filter.filter(s)
+                val query = s?.toString() ?: ""
+
+                if (selectedCategory == null || selectedCategory?.name.equals("All", true)) {
+                    // 🔹 Case 1: All categories → search across all lists
+                    if (::mAdapter.isInitialized) mAdapter.filter.filter(query)
+                    if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(query)
+                    if (::eventupcomingadapter.isInitialized) eventupcomingadapter.filter.filter(query)
+                } else {
+                    // 🔹 Case 2: Specific category → only filter data for that category
+                    val categoryName = selectedCategory?.name ?: ""
+
+                    // Ongoing
+                    val ongoingFiltered = allOngoingEvents?.filter { it.category == categoryName }
+                    mAdapter.updateList(
+                        if (query.isEmpty()) ongoingFiltered else ongoingFiltered?.filter { it.title.contains(query, true) }
+                    )
+
+                    // Upcoming
+                    val upcomingFiltered = allUpcomingEvents?.filter { it.category == categoryName }
+                    eventupcomingadapter.updateList(
+                        if (query.isEmpty()) upcomingFiltered else upcomingFiltered?.filter { it.title.contains(query, true) }
+                    )
+
+                    // Completed
+                    val completedFiltered = allCompletedEvents?.filter { it.category == categoryName }
+                    eventcompletedadapter.updateList(
+                        if (query.isEmpty()) completedFiltered else completedFiltered?.filter { it.title.contains(query, true) }
+                    )
+                }
+
+                // 🔹 Delay UI refresh for smoother updates
                 binding.root.postDelayed({
                     val isAllEmpty = mAdapter.itemCount == 0 &&
                             eventupcomingadapter.itemCount == 0 &&
@@ -96,33 +128,22 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
                     binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                    if (mAdapter.itemCount > 0) {
-                        binding.rcyongoingevent.visibility = View.VISIBLE
-                        binding.headerview.visibility = View.VISIBLE
-                    } else {
-                        binding.rcyongoingevent.visibility = View.GONE
-                        binding.headerview.visibility = View.GONE
-                    }
+                    binding.rcyongoingevent.visibility =
+                        if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.headerview.visibility =
+                        if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.dotindicator.visibility =
+                        if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
 
-                    if (eventupcomingadapter.itemCount > 0) {
-                        binding.rcyupcomingevent.visibility = View.VISIBLE
-                        binding.upcomingeventHeaderview.visibility = View.VISIBLE
-                    } else {
-                        binding.rcyupcomingevent.visibility = View.GONE
-                        binding.upcomingeventHeaderview.visibility = View.GONE
-                    }
+                    binding.rcyupcomingevent.visibility =
+                        if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.upcomingeventHeaderview.visibility =
+                        if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
 
-                    if (eventcompletedadapter.itemCount > 0) {
-                        binding.rcycompletedevent.visibility = View.VISIBLE
-                        binding.completedeventHeaderview.visibility = View.VISIBLE
-                    } else {
-                        binding.rcycompletedevent.visibility = View.GONE
-                        binding.completedeventHeaderview.visibility = View.GONE
-                    }
-
-//                    binding.rcyongoingevent.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
-//                    binding.rcyupcomingevent.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
-//                    binding.rcycompletedevent.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.rcycompletedevent.visibility =
+                        if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.completedeventHeaderview.visibility =
+                        if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
                 }, 100)
             }
 
@@ -132,34 +153,32 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
 
+
         appViewModel?.IsGetEventReport?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
                 allOngoingEvents = data.on_going
                 allUpcomingEvents = data.up_coming
                 allCompletedEvents = data.completed
+
+                val isAllEmpty = allOngoingEvents.isNullOrEmpty() &&
+                        allUpcomingEvents.isNullOrEmpty() &&
+                        allCompletedEvents.isNullOrEmpty()
+
+                binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+
                 binding.dotindicator.visibility =
                     if (!allOngoingEvents.isNullOrEmpty()) View.VISIBLE else View.GONE
 
-
                 val CategoryList = data.categories
 
-                updateVisibility(
-                    allOngoingEvents,
-                    binding.rcyongoingevent,
-                    binding.headerview,
-                    binding.dotindicator
-                )
+                updateVisibility(allOngoingEvents, binding.rcyongoingevent, binding.headerview, binding.dotindicator)
                 updateVisibility(CategoryList, binding.rcycategoryEvent, binding.categoryHeaderview)
-                updateVisibility(
-                    allUpcomingEvents, binding.rcyupcomingevent, binding.upcomingeventHeaderview
-                )
-                updateVisibility(
-                    allCompletedEvents, binding.rcycompletedevent, binding.completedeventHeaderview
-                )
+                updateVisibility(allUpcomingEvents, binding.rcyupcomingevent, binding.upcomingeventHeaderview)
+                updateVisibility(allCompletedEvents, binding.rcycompletedevent, binding.completedeventHeaderview)
 
                 isloadeventData(allOngoingEvents)
                 isloadCategoryData(CategoryList)
@@ -167,10 +186,12 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 isloadCompletedData(allCompletedEvents)
 
             } else {
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 hideAllSections()
+                binding.lytNoDataFound.visibility = View.VISIBLE
             }
         }
+
     }
 
     private fun <T> updateVisibility(
@@ -258,19 +279,24 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     }
 
 
+    private fun updateDotIndicator() {
+        binding.dotindicator.visibility =
+            if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+    }
+
+
     private fun filterAllEventLists() {
         val selectedId = selectedCategory?.name
-        Log.d("selectedId",selectedId.toString())
+        Log.d("selectedId", selectedId.toString())
 
         if (selectedId.isNullOrEmpty()) {
             mAdapter.updateList(allOngoingEvents)
             eventupcomingadapter.updateList(allUpcomingEvents)
             eventcompletedadapter.updateList(allCompletedEvents)
-        }
-        else {
-            Log.d("isComing","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        } else {
+            Log.d("isComing", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             val ongoingFiltered = if (selectedId == "All") {
-                allOngoingEvents // return full list
+                allOngoingEvents
             } else {
                 allOngoingEvents?.filter { it.category == selectedId }
             }
@@ -287,15 +313,15 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 allCompletedEvents?.filter { it.category == selectedId }
             }
 
-            Log.d("ongoingFiltered",ongoingFiltered!!.size.toString())
-            Log.d("ongoingFiltered",ongoingFiltered!!.toString())
-            Log.d("upcomingFiltered",upcomingFiltered!!.size.toString())
-            Log.d("upcomingFiltered",upcomingFiltered!!.toString())
-            Log.d("completedFiltered",completedFiltered!!.size.toString())
-            Log.d("completedFiltered",completedFiltered!!.toString())
+            Log.d("ongoingFiltered", ongoingFiltered!!.size.toString())
+            Log.d("ongoingFiltered", ongoingFiltered!!.toString())
+            Log.d("upcomingFiltered", upcomingFiltered!!.size.toString())
+            Log.d("upcomingFiltered", upcomingFiltered!!.toString())
+            Log.d("completedFiltered", completedFiltered!!.size.toString())
+            Log.d("completedFiltered", completedFiltered!!.toString())
 
 
-            if (ongoingFiltered.size> 0) {
+            if (ongoingFiltered.size > 0) {
                 mAdapter.updateList(ongoingFiltered)
                 binding.rcyongoingevent.visibility = View.VISIBLE
                 binding.headerview.visibility = View.VISIBLE
@@ -305,6 +331,8 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 binding.headerview.visibility = View.GONE
                 binding.dotindicator.visibility = View.GONE
             }
+            updateDotIndicator()
+
 
             if (upcomingFiltered.size > 0) {
                 eventupcomingadapter.updateList(upcomingFiltered)
@@ -359,7 +387,8 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     override fun onCategoryClicked(data: Category) {
         selectedCategory = data
-        Log.d("selectedCategory",selectedCategory.toString())
+        Log.d("selectedCategory", selectedCategory.toString())
+        binding.toolbarLayout.txtVideoMenu.setText("")
         filterAllEventLists()
     }
 

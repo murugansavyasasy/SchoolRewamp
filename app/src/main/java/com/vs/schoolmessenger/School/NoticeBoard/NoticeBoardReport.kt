@@ -101,6 +101,18 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rytSearch323.visibility == View.VISIBLE) {
+                binding.rytSearch323.visibility = View.GONE
+                binding.edtSearch.text.clear()
+
+            } else {
+                binding.rytSearch323.visibility = View.VISIBLE
+                binding.edtSearch.text.clear()
+            }
+        }
+
         binding.toolbarLayout.layoutCreateSlot.visibility = View.VISIBLE
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
             val intent = Intent(this, CreateNoticeBoard::class.java)
@@ -155,11 +167,18 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.rytSearch323.visibility=View.GONE
+                binding.edtSearch.text.clear()
+
             } else {
                 isloadhomeworkData(emptyList())
                 binding.rcyNoticeBoard.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.rytSearch323.visibility=View.GONE
+                binding.edtSearch.text.clear()
             }
         }
 

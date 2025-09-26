@@ -8,8 +8,7 @@
     android:layout_marginStart="@dimen/five"
     android:layout_marginTop="@dimen/five"
     android:layout_marginEnd="@dimen/five"
-    android:layout_height="wrap_content"
-    android:fitsSystemWindows="true">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout

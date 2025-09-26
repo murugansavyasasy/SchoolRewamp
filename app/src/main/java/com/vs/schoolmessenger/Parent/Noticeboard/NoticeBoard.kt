@@ -100,17 +100,17 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
             R.id.imgBack -> onBackPressed()
 
             R.id.imgSearchToolBar -> {
-                if (binding.rytsearch.visibility == View.VISIBLE) {
-                    binding.rytsearch.visibility = View.GONE
-                    binding.txtVideoMenu.setText("")
+                if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.toolbarLayout.txtVideoMenu.setText("")
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
+                    imm.hideSoftInputFromWindow(binding.toolbarLayout.txtVideoMenu.windowToken, 0)
                 } else {
-                    binding.rytsearch.visibility = View.VISIBLE
-                    binding.txtVideoMenu.setText("")
-                    binding.txtVideoMenu.requestFocus()
+                    binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                    binding.toolbarLayout.txtVideoMenu.setText("")
+                    binding.toolbarLayout.txtVideoMenu.requestFocus()
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.showSoftInput(binding.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                    imm.showSoftInput(binding.toolbarLayout.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
                 }
             }
 
