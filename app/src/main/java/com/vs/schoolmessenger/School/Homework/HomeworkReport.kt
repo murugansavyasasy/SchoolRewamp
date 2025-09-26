@@ -175,6 +175,9 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
                     fullHomeworkList=isHomeWorkReport
                     loadHomeWorkReportData(isHomeWorkReportDataData!!)
                 } else {
+                    binding.search.visibility=View.GONE
+                    binding.line1.visibility=View.GONE
+                    binding.line2.visibility=View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.line1.visibility = View.GONE
                     binding.line2.visibility = View.GONE
@@ -183,10 +186,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
                     binding.noDataFound.text = response.message
                 }
             }
-        }
-
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            binding.search.visibility = View.VISIBLE
         }
 
                 binding.edtSearch.addTextChangedListener(object : TextWatcher {

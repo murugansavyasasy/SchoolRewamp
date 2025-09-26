@@ -151,6 +151,10 @@
             android:layout_toEndOf="@id/imgSearch1"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
@@ -161,6 +165,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rytSearch1"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/rcUpcoming"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -170,9 +175,10 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/rcUpcoming"
+        app:layout_constraintTop_toBottomOf="@+id/rytSearch1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/rcCompleted"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -181,7 +187,7 @@
 
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/rcCompleted"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
