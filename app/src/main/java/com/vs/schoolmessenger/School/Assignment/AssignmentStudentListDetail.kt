@@ -26,8 +26,14 @@ class AssignmentStudentListDetail : BaseActivity<AssignmentStudentDetailreportBi
         super.setupViews()
         setupToolbarBlueWhite()
 
-        isStaffDetails = SharedPreference.getStaffDetails(this)
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
+        }
 
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         val submissionList = intent.getParcelableArrayListExtra<SubmissionDetail>(Constant.submission_list)
 

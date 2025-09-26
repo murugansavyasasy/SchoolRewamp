@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/header"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/five"
     tools:ignore="MissingDefaultResource">
@@ -89,7 +90,6 @@
                         android:layout_toEndOf="@id/rcyAssignment"
                         android:background="@drawable/bg_image_background_white_coupon"
                         android:gravity="center"
-                        android:padding="@dimen/ten"
                         android:text=""
                         android:textSize="15sp" />
 
