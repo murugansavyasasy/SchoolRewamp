@@ -83,9 +83,21 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
 
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.search.visibility == View.VISIBLE) {
+                binding.search.visibility = View.GONE
+                binding.edtSearch.text.clear()
+
+            } else {
+                binding.search.visibility = View.VISIBLE
+                binding.edtSearch.text.clear()
+            }
+        }
+
+
 //        binding.lnrTabOneName.setOnClickListener(this)
 //        binding.lnrTabTwoName.setOnClickListener(this)
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
+//        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isUserDetails = SharedPreference.getUserDetails(this)
@@ -121,14 +133,20 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
                 if (response.status) {
                     binding.rcyAttachment.visibility= View.VISIBLE
                     binding.lytList.visibility= View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                    binding.search.visibility=View.GONE
                     val isHomeAttachmentReport = response.data
                     isLoadAttachmentReportList(isHomeAttachmentReport)
                 }else{
                     binding.rcyAttachment.visibility= View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.search.visibility=View.GONE
                     binding.lytList.visibility= View.VISIBLE
                 }
             }else{
                 binding.rcyAttachment.visibility= View.GONE
+                binding.search.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.lytList.visibility= View.VISIBLE
             }
         }
