@@ -111,13 +111,19 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
 
         val inputFormat = SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_a, Locale.getDefault())
 
-        val sortedData = data.sortedBy {
+        val sortedData = data.sortedWith(compareBy<AnswerData> {
             try {
                 inputFormat.parse(it.asked_on)
             } catch (e: Exception) {
                 Date(0)
             }
-        }
+        }.thenBy {
+            try {
+                it.question_id.toInt()
+            } catch (e: Exception) {
+                0
+            }
+        })
 
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
