@@ -54,7 +54,6 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -145,10 +144,12 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             }
 
             if (response.status) {
-                Constant.commonFileList.add(
-                    0,
-                    CommonFileData(response.data[0], Constant.PDF)
-                )
+                Constant.commonFileList.isEmpty()
+                Constant.commonFileList.clear()
+                Constant.commonFileList.add(CommonFileData(type = Constant.PDF, path = response.data[0]))
+                Constant.selectedFileIndex = 0
+                Log.d("File",Constant.commonFileList.toString())
+                Log.d("FileSize",Constant.commonFileList.size.toString())
                 val intent = Intent(this, FilesViewActivity::class.java)
                 intent.putExtra(Constant.subjectName, examTitle)
                 this.startActivity(intent)

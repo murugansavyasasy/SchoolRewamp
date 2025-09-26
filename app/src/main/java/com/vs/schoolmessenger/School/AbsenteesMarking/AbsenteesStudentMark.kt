@@ -136,6 +136,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         appViewModel!!.isStudentList!!.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
+                    binding.rytSearchBar.visibility=View.VISIBLE
                     binding.imgSearch.isEnabled = true
                     binding.lnrHeader.visibility = View.VISIBLE
                     binding.recycleStudents.visibility = View.VISIBLE
@@ -145,6 +146,8 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     loadStudentAbsenteesList(studentsList!!)
 
                 } else {
+                    binding.rytSearchBar.visibility=View.GONE
+                    binding.toolbarLayout.imgSearch.visibility=View.GONE
                     binding.lnrHeader.visibility = View.GONE
                     binding.imgSearch.isEnabled = false
                     binding.recycleStudents.visibility = View.GONE
@@ -154,6 +157,8 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     ErrorMessage(response.message)
                 }
             } else {
+                binding.rytSearchBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearch.visibility=View.GONE
                 binding.imgSearch.isEnabled = false
                 binding.recycleStudents.visibility = View.GONE
                 binding.rlaSortSearch.visibility = View.GONE
@@ -299,12 +304,24 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     }
 
     fun loadStudentAbsenteesList(studentsList: List<NameAndIds>) {
-        isCountAttendance()
-        mAdapter =
-            AbsenteesMarkAdapter(
-                studentsList, this, Constant.isShimmerViewDisable, this, this
-            )
-        binding.recycleStudents.adapter = mAdapter
+        if(studentsList.isNotEmpty()){
+            ShowData()
+            binding.rytSearchBar.visibility=View.VISIBLE
+            isCountAttendance()
+            binding.toolbarLayout.imgSearch.visibility=View.VISIBLE
+            mAdapter =
+                AbsenteesMarkAdapter(
+                    studentsList, this, Constant.isShimmerViewDisable, this, this
+                )
+            binding.recycleStudents.adapter = mAdapter
+        }
+        else{
+            binding.toolbarLayout.imgSearch.visibility=View.GONE
+            binding.recycleStudents.visibility = View.GONE
+            binding.rytSearchBar.visibility=View.GONE
+            ErrorMessage(getString(R.string.no_student_found))
+        }
+
     }
 
     override fun onPause() {
