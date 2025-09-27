@@ -212,10 +212,11 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     }
 
     override fun onItemClick(data: GetHomeworkDetails, isHomeWorkDate: String) {
+        Log.d("flag",data.is_unread.toString())
         if (data.is_unread) {
             val jsonObject = JsonObject().apply {
                 addProperty(APIKeyNames.type, Constant.HOMEWORK)
-                addProperty(APIKeyNames.detail_id, data.id)
+                addProperty(APIKeyNames.detail_id, data.detail_id)
             }
             isAccessToken?.let {
                 appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)

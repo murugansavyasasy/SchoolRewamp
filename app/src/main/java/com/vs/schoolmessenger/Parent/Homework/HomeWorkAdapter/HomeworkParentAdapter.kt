@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,7 +95,9 @@ class HomeworkParentAdapter(
                 binding.redDot.visibility = View.INVISIBLE
             }
             binding.cardRoot.setOnClickListener {
-                item.is_unread = false
+                Log.d("data",item.id)
+
+//                item.is_unread = false
                 binding.redDot.visibility = View.INVISIBLE
                 listener.onItemClick(item, isDate)
             }
