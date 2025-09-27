@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.School.LSRW.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
@@ -18,6 +21,9 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDeta
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
 import com.vs.schoolmessenger.Utils.Constant
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 class LsrwAdapter(
     private var itemList: List<LsrwTask>,
@@ -32,6 +38,7 @@ class LsrwAdapter(
         return HeaderViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         val item = itemList[position]
         holder.bind(item)
@@ -59,12 +66,14 @@ class LsrwAdapter(
         private val imgIcon: ImageView = itemView.findViewById(R.id.imgIcon)
         private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(item: LsrwTask) {
             txtTitle.text = item.subject
             txtSubTitle.text = item.activity_type
             txtDescription.text = item.title
             txtsubdesc.text = item.description
-            txtDate.text = Constant.convertDateTimeFormat(item.created_on)
+            txtDate.text = getFormattedDateText(item.created_on)
+
             txtSubmitted.text = item.submitted_average + " "+context.getString(R.string.submitted)
 
 
@@ -221,6 +230,28 @@ class LsrwAdapter(
                 rcyAssignment.adapter = fileAdapter
             }
 
+
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        private fun getFormattedDateText(dateString: String): String {
+            if (dateString.isBlank()) return ""
+
+            try {
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                val date = LocalDate.parse(dateString, formatter)
+                val today = LocalDate.now()
+                val yesterday = today.minusDays(1)
+
+                return when {
+                    date == today -> "Today"
+                    date == yesterday -> "Yesterday"
+                    else -> Constant.convertToReadableDate(dateString)
+                }
+            } catch (e: DateTimeParseException) {
+                Log.e("DateParsing", "Invalid date format: $dateString", e)
+                return Constant.convertToReadableDate(dateString)
+            }
         }
     }
 }

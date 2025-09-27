@@ -100,15 +100,30 @@
                         app:cardCornerRadius="@dimen/three"
                         app:cardUseCompatPadding="true">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rvTopPerformance"
-                            android:layout_width="@dimen/three_fifty"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/eight"
-                            android:nestedScrollingEnabled="false"
-                            android:overScrollMode="never"
-                            android:visibility="visible" />
+                            android:orientation="vertical"
+                            android:padding="@dimen/eight">
 
+                            <TextView
+                                android:id="@+id/topperformance_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Top Performance"
+                                android:textColor="@color/black"
+                                style="@style/CustomTextStylePoppinsBold"/>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvTopPerformance"
+                                android:layout_width="@dimen/three_fifty"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/eight"
+                                android:nestedScrollingEnabled="false"
+                                android:overScrollMode="never"
+                                android:visibility="visible" />
+
+                        </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                 </LinearLayout>

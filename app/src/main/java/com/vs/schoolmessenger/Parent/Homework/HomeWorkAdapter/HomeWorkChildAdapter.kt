@@ -86,6 +86,7 @@ class HomeWorkChildAdapter(
             binding.imgView.setBackgroundColor(Color.TRANSPARENT)
 
             Log.d("ParentAssigmentValue",isParentAssignment.toString())
+            Log.d("selectedSchoolMenuvalue",selectedSchoolMenu.toString())
             if (selectedSchoolMenu == M_ASSIGNMENT) {
                 Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
                 binding.imgView.visibility = View.GONE
@@ -332,6 +333,8 @@ class HomeWorkChildAdapter(
                     }
                 }
             } else {
+                Log.d("else part condition", selectedSchoolMenu.toString())
+
                 binding.relativelayoutHeader.visibility = View.VISIBLE
                 binding.imgView.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.VISIBLE
