@@ -114,6 +114,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     var isTotalSelectedItem = 0
     private var dummyPath: String? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
@@ -121,6 +122,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+        Constant.Remaining = MAX_FILES
+
         binding.childlsrwlayoutxml.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -273,54 +276,49 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     if (result.resultCode == RESULT_OK) {
                         val selectedUris =
                             result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                        val remaining =
-                            ChildHomeWork.Companion.MAX_FILES - Constant.selectedFiles.size
+                        if(Constant.Remaining!! > 0) {
+                            Constant.Remaining = Constant.Remaining - selectedUris!!.size
+                            selectedUris?.forEach { uri ->
+                                val mimeType = contentResolver.getType(uri)
+                                val path = when (uri.scheme) {
+                                    "file" -> uri.path
+                                    else -> getPathFromUri(uri)
+                                }
 
-                        selectedUris?.take(remaining)?.forEach { uri ->
-                            val mimeType = contentResolver.getType(uri)
-                            val path = when (uri.scheme) {
-                                "file" -> uri.path
-                                else -> getPathFromUri(uri)
+                                if (path == null) {
+                                    Log.w("addPath", "Could not resolve path from URI: $uri")
+                                    return@forEach
+                                }
+
+                                val fileName = getFileName(uri).ifEmpty { File(path).name }
+                                val type = when {
+                                    mimeType?.startsWith("image/") == true -> FileType.IMAGE
+                                    mimeType?.startsWith("video/") == true -> FileType.VIDEO
+                                    mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+                                    fileName.endsWith(".pdf", true) -> FileType.PDF
+                                    fileName.endsWith(".doc", true) || fileName.endsWith(
+                                        ".docx", true
+                                    ) -> FileType.DOC
+
+                                    fileName.endsWith(".xls", true) || fileName.endsWith(
+                                        ".xlsx", true
+                                    ) -> FileType.EXCEL
+
+                                    fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                        ".pptx", true
+                                    ) -> FileType.PPT
+
+                                    fileName.endsWith(".txt", true) -> FileType.TXT
+                                    else -> FileType.OTHER
+                                }
+
+                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+
+                                Log.d("SelectedFile", "URI: $uri, Type: $type")
                             }
+                            mAdapter!!.notifyDataSetChanged()
 
-                            if (path == null) {
-                                Log.w("addPath", "Could not resolve path from URI: $uri")
-                                return@forEach
-                            }
 
-                            val fileName = getFileName(uri).ifEmpty { File(path).name }
-                            val type = when {
-                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-                                fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(
-                                    ".docx", true
-                                ) -> FileType.DOC
-
-                                fileName.endsWith(".xls", true) || fileName.endsWith(
-                                    ".xlsx", true
-                                ) -> FileType.EXCEL
-
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                    ".pptx", true
-                                ) -> FileType.PPT
-
-                                fileName.endsWith(".txt", true) -> FileType.TXT
-                                else -> FileType.OTHER
-                            }
-
-                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
-
-                            Log.d("SelectedFile", "URI: $uri, Type: $type")
-                        }
-
-                        if ((selectedUris?.size ?: 0) > remaining) {
-                            Toast.makeText(
-                                this,
-                                "Only $remaining files added (max ${ChildHomeWork.Companion.MAX_FILES})",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
                     }
                     mAdapter?.notifyDataSetChanged()
@@ -549,9 +547,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     private fun LsrwSubmitSkill() {
         val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
+        if (description.isEmpty()) {
+            binding.childlsrwlayoutxml.editDescription.error = "Description is required"
+            binding.childlsrwlayoutxml.editDescription.requestFocus()
+            return
+        }
+        val totalSizeKB = file_size.split(" ")[0].toIntOrNull() ?: 0
+        if (totalSizeKB <= 0) {
+            Toast.makeText(this, "At least one attachment is required", Toast.LENGTH_SHORT).show()
+            return
+        }
         Constant.showLoading(this@ChildHomeWork)
         isUploadFilesInServer("Documents")
     }
+
 
     fun isUploadFilesInServer(isFileType: String?) {
         Log.d("ChildHomeWork", "Starting file upload, total: ${Constant.selectedFiles.size}")
@@ -840,6 +849,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         isVideoSelectedArrayList.clear()
+        Constant.Remaining = MAX_FILES
+
         super.onBackPressed()
     }
 
@@ -980,17 +991,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         if (resultCode != RESULT_OK) return
 
-        val remaining = ChildHomeWork.Companion.MAX_FILES - Constant.selectedFiles.size
-        if (remaining <= 0) {
-            Toast.makeText(
-                this, "Max ${ChildHomeWork.Companion.MAX_FILES} files allowed", Toast.LENGTH_SHORT
-            ).show()
+        if (Constant.Remaining!! == 0) {
+            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
             return
         }
 
         fun addPath(uri: Uri) {
             Log.d("isFilePickingUrl", uri.toString())
-            if (Constant.selectedFiles.size >= ChildHomeWork.Companion.MAX_FILES) return
 
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
@@ -1031,6 +1038,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                             }
                         }
                         val uri = Uri.fromFile(file)
+                        Constant.Remaining = Constant.Remaining - 1
+
                         addPath(uri)
                     } else {
                         Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
@@ -1050,8 +1059,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         val uri = clipData.getItemAt(i).uri
                         addPath(uri)
                     }
+                    Constant.Remaining = Constant.Remaining - clipData.itemCount
+
                 } else if (singleUri != null) {
                     addPath(singleUri)
+                    Constant.Remaining = Constant.Remaining - 1
+
                 }
             }
         }
@@ -1059,7 +1072,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
     private fun getPathFromUri(uri: Uri): String? {
-        // Content scheme
+
         if (uri.scheme.equals("content", ignoreCase = true)) {
             val projection = arrayOf(MediaStore.Images.Media.DATA)
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
@@ -1070,7 +1083,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
 
-        // File scheme fallback
         if (uri.scheme.equals("file", ignoreCase = true)) {
             return uri.path
         }

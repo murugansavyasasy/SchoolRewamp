@@ -82,7 +82,7 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
                 when {
                     progress < 30 -> binding.imgEmoji.setImageResource(R.drawable.sademoji)
                     progress in 30..70 -> binding.imgEmoji.setImageResource(R.drawable.neutralemoji)
-                    else -> binding.imgEmoji.setImageResource(R.drawable.happyemoji)
+                    else -> binding.imgEmoji.setImageResource(R.drawable.staremoji)
                 }
             }
 
