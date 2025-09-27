@@ -25,6 +25,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -71,6 +72,9 @@ import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.Date
 import java.util.Locale
 import kotlin.text.endsWith
@@ -193,8 +197,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.txtDescription.text = data!!.title
             binding.childlsrwlayoutxml.txtDescription1.text = data!!.description
             binding.childlsrwlayoutxml.lsrwgragmentcontainer.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.txtDate.text =
-                Constant.convertToReadableDate(data?.created_date ?: "")
+            binding.childlsrwlayoutxml.txtDate.text = getFormattedDateText(data?.created_date ?: "")
             Log.d("FragmentCheck", "Loading LsrwStudentListFragment with ID: ${data!!.id}")
             subloadFragment(
                 LsrwStudentListFragment.newInstance(
@@ -230,7 +233,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.txtSubTitle.text = data!!.assignmentid
             binding.childlsrwlayoutxml.txtDescription.text = data!!.title
             binding.childlsrwlayoutxml.txtDescription1.text = data!!.description
-            binding.childlsrwlayoutxml.txtDate.text = data!!.sentBy
+            binding.childlsrwlayoutxml.txtDate.text = getFormattedDateText(data?.sentBy ?: "")
             if (data!!.assignmentid == "Listening") {
                 binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
                 binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
@@ -397,6 +400,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             (SELECTED_SCHOOL_MENU == M_LSRW && data?.isParentAssignment == true)
 
 
+        Log.d("Child Homework Redirection",SELECTED_SCHOOL_MENU.toString())
+        Log.d("Child Homework Redirection",isParentAssignment.toString())
+
         val adapter = HomeWorkChildAdapter(
             this,
             data!!.fileList,
@@ -405,7 +411,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             isParentAssignment
         )
 
-        val recyclerView = if (SELECTED_SCHOOL_MENU == M_LSRW && isParentAssignment) {
+        val recyclerView = if (SELECTED_SCHOOL_MENU == M_LSRW) {
             binding.childlsrwlayoutxml.rcChildHW
         } else {
             binding.rcChildHW
@@ -460,40 +466,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         when {
             isAssignment && data!!.isParentAssignment == true -> {
-                binding.childlsrwlayoutxml.rcChildHW.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
-                binding.childlsrwlayoutxml.lblAttachments.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
-                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
+                binding.rcChildHW.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.lblAttachments.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.imgAttachmentIcon.visibility = if (isEmpty) View.GONE else View.VISIBLE
             }
-            isAssignment && data!!.isParentAssignment == false ->{
-                binding.rcChildHW.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
-                binding.lblAttachments.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
-                binding.imgAttachmentIcon.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
+            isAssignment && data!!.isParentAssignment == false -> {
+                binding.rcChildHW.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.lblAttachments.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.imgAttachmentIcon.visibility = if (isEmpty) View.GONE else View.VISIBLE
             }
-
-            isLsrw && data!!.isParentAssignment == true -> {
-                binding.childlsrwlayoutxml.rcChildHW.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
-                binding.childlsrwlayoutxml.lblAttachments.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
-                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
+            isLsrw -> {
+                binding.childlsrwlayoutxml.rcChildHW.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.lblAttachments.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility = if (isEmpty) View.GONE else View.VISIBLE
             }
-
-            isLsrw && data!!.isParentAssignment == false -> {
-                binding.childlsrwlayoutxml.rcChildHW.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
-                binding.childlsrwlayoutxml.lblAttachments.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
-                binding.childlsrwlayoutxml.imgAttachmentIcon.visibility =
-                    if (isEmpty) View.GONE else View.VISIBLE
-            }
-
             else -> {
                 recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
                 binding.lblAttachments.visibility = if (isEmpty) View.GONE else View.VISIBLE
@@ -535,6 +521,29 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         alertDialog.show()
 
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getFormattedDateText(dateString: String): String {
+        if (dateString.isBlank()) return ""
+
+        try {
+            val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+            val date = LocalDate.parse(dateString, formatter)
+            val today = LocalDate.now()
+            val yesterday = today.minusDays(1)
+
+            return when {
+                date == today -> "Today"
+                date == yesterday -> "Yesterday"
+                else -> Constant.convertToReadableDate(dateString)
+            }
+        } catch (e: DateTimeParseException) {
+            Log.e("DateParsing", "Invalid date format: $dateString", e)
+            return Constant.convertToReadableDate(dateString)
+        }
+    }
+
 
 
     private fun LsrwSubmitSkill() {

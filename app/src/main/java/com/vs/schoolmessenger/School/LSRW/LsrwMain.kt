@@ -126,12 +126,18 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
                 setupFilters(allTaskItems, allCompletedItems)
 
                 binding.rcylsrwreport.visibility = View.VISIBLE
+                binding.headerLabel.visibility = View.VISIBLE
+                binding.completedLabel.visibility = View.VISIBLE
                 binding.rcylsrwcompletedreport.visibility = View.VISIBLE
                 binding.noDataFound.visibility = View.GONE
+                binding.noDataImage.visibility = View.GONE
             } else {
                 binding.rcylsrwreport.visibility = View.GONE
+                binding.headerLabel.visibility = View.GONE
+                binding.completedLabel.visibility = View.GONE
                 binding.rcylsrwcompletedreport.visibility = View.GONE
                 binding.noDataFound.visibility = View.VISIBLE
+                binding.noDataImage.visibility = View.VISIBLE
             }
         }
     }
@@ -156,16 +162,41 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
     }
 
     private fun setupFilters(active: List<LsrwTask>, completed: List<LsrwTask>) {
-        val filters = mutableListOf(Constant.All_)
+        val filters = mutableListOf(Constant.All_, "Pending", "Completed")
         filters.addAll((active + completed).map { it.activity_type }.distinct())
 
         filterAdapter = LsrwFilterAdapter(filters) { selectedFilter ->
+            val filteredActive: List<LsrwTask>
+            val filteredCompleted: List<LsrwTask>
+
             if (selectedFilter == Constant.All_) {
-                adapter.updateList(active)
-                completedviewadapter.updateList(completed)
+                filteredActive = allTaskItems
+                filteredCompleted = allCompletedItems
+            } else if (selectedFilter == "Pending") {
+                filteredActive = allTaskItems
+                filteredCompleted = emptyList()
+            } else if (selectedFilter == "Completed") {
+                filteredActive = emptyList()
+                filteredCompleted = allCompletedItems
             } else {
-                adapter.updateList(active.filter { it.activity_type == selectedFilter })
-                completedviewadapter.updateList(completed.filter { it.activity_type == selectedFilter })
+                filteredActive = allTaskItems.filter { it.activity_type == selectedFilter }
+                filteredCompleted = allCompletedItems.filter { it.activity_type == selectedFilter }
+            }
+
+            adapter.updateList(filteredActive)
+            completedviewadapter.updateList(filteredCompleted)
+
+            binding.rcylsrwreport.visibility = if (filteredActive.isNotEmpty()) View.VISIBLE else View.GONE
+            binding.headerLabel.visibility = if (filteredActive.isNotEmpty()) View.VISIBLE else View.GONE
+            binding.rcylsrwcompletedreport.visibility = if (filteredCompleted.isNotEmpty()) View.VISIBLE else View.GONE
+            binding.completedLabel.visibility = if (filteredCompleted.isNotEmpty()) View.VISIBLE else View.GONE
+
+            if (filteredActive.isEmpty() && filteredCompleted.isEmpty()) {
+                binding.noDataFound.visibility = View.VISIBLE
+                binding.noDataImage.visibility = View.VISIBLE
+            } else {
+                binding.noDataFound.visibility = View.GONE
+                binding.noDataImage.visibility = View.GONE
             }
         }
 
@@ -174,4 +205,3 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         binding.rcyFilter.adapter = filterAdapter
     }
 }
-
