@@ -114,6 +114,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     var isTotalSelectedItem = 0
     private var dummyPath: String? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
@@ -546,9 +547,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     private fun LsrwSubmitSkill() {
         val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
+        if (description.isEmpty()) {
+            binding.childlsrwlayoutxml.editDescription.error = "Description is required"
+            binding.childlsrwlayoutxml.editDescription.requestFocus()
+            return
+        }
+        val totalSizeKB = file_size.split(" ")[0].toIntOrNull() ?: 0
+        if (totalSizeKB <= 0) {
+            Toast.makeText(this, "At least one attachment is required", Toast.LENGTH_SHORT).show()
+            return
+        }
         Constant.showLoading(this@ChildHomeWork)
         isUploadFilesInServer("Documents")
     }
+
 
     fun isUploadFilesInServer(isFileType: String?) {
         Log.d("ChildHomeWork", "Starting file upload, total: ${Constant.selectedFiles.size}")
@@ -1060,7 +1072,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
     private fun getPathFromUri(uri: Uri): String? {
-        // Content scheme
+
         if (uri.scheme.equals("content", ignoreCase = true)) {
             val projection = arrayOf(MediaStore.Images.Media.DATA)
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
@@ -1071,7 +1083,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
 
-        // File scheme fallback
         if (uri.scheme.equals("file", ignoreCase = true)) {
             return uri.path
         }
