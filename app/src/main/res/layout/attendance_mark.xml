@@ -532,6 +532,7 @@
 
                             </View>
                             <ImageView
+                                android:id="@+id/imgPresentStatus"
                                 android:layout_width="@dimen/fifty"
                                 android:src="@drawable/graph_gain"
                                 android:layout_gravity="center"
@@ -582,6 +583,7 @@
 
                             </View>
                             <ImageView
+                                android:id="@+id/imgAbsentStatus"
                                 android:layout_marginTop="@dimen/five"
                                 android:layout_width="@dimen/fifty"
                                 android:layout_gravity="center"

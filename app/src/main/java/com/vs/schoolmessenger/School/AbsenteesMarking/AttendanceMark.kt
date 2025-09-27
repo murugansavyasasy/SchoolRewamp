@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.support.annotation.DrawableRes
@@ -727,6 +728,42 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             AttendanceStudentReportAdapter(studentReportData, this, Constant.isShimmerViewDisable)
 
         binding.rcyAttendanceReport.adapter = mAdapter
+
+        when {
+            absentFormatted.toFloat() == 100f -> {
+                binding.imgAbsentStatus.setImageResource(R.drawable.graph_up)
+                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
+                binding.imgPresentStatus.setImageResource(R.drawable.ifffin_icon)
+                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
+            }
+            presentFormatted.toFloat() == 100f -> {
+                binding.imgPresentStatus.setImageResource(R.drawable.graph_up)
+                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
+                binding.imgAbsentStatus.setImageResource(R.drawable.ifffin_icon)
+                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
+
+            }
+            presentPercentage > absentPercentage -> {
+                binding.imgPresentStatus.setImageResource(R.drawable.graph_up)
+                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
+                binding.imgAbsentStatus.setImageResource(R.drawable.graph_down)
+                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.red), PorterDuff.Mode.SRC_IN)
+            }
+            absentPercentage > presentPercentage -> {
+                binding.imgAbsentStatus.setImageResource(R.drawable.graph_up)
+                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
+                binding.imgPresentStatus.setImageResource(R.drawable.graph_down)
+                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.red), PorterDuff.Mode.SRC_IN)
+            }
+            else -> {
+                // Equal percentages (optional: handle tie)
+                binding.imgPresentStatus.setImageResource(R.drawable.ifffin_icon)
+                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.yellow), PorterDuff.Mode.SRC_IN)
+                binding.imgAbsentStatus.setImageResource(R.drawable.ifffin_icon)
+                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.yellow), PorterDuff.Mode.SRC_IN)
+            }
+        }
+        
     }
 
 

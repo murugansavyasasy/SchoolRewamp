@@ -42,7 +42,6 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         isAccessToken = isChildDetails?.access_token
         isGetNoticeBoardList()
 
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
         binding.toolbarLayout.lblStudentSection.text =
@@ -68,11 +67,13 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
             } else {
                 binding.rcyNoticeBoard.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }

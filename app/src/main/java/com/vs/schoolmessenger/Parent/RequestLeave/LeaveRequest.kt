@@ -44,7 +44,9 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var totalLeaveDays: Int = 0
     private val dateFormat = SimpleDateFormat(Constant.dd_MM_yyyy, Locale.getDefault())
     private var currentTab = TabType.LeaveRequest
-    private var isLeaveList: List<MonthWiseLeaveData>? = emptyList()
+    private var selectedStatus: String = Constant.All_
+    private var originalLeaveList: List<MonthWiseLeaveData> = emptyList()
+    private var isLeaveList: List<MonthWiseLeaveData> = emptyList()
 
 
 
@@ -140,8 +142,9 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
                 binding.lytList.visibility=View.GONE
-                isloadleaverequestData(response.data)
+                originalLeaveList = response.data
                 isLeaveList=response.data
+                isloadleaverequestData(isLeaveList)
                 binding.imgSearchBtn.visibility=View.VISIBLE
             } else {
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
@@ -219,21 +222,33 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             override fun onTabSelected(tab: TabLayout.Tab) {
                 binding.txtVideoMenu.text.clear()
                 val selectedTitle = tab.text.toString()
-                val filterStatus = tabStatusMap[selectedTitle] ?: Constant.All_
-                mAdapter.filterByStatus(filterStatus)
+                selectedStatus = tabStatusMap[selectedTitle] ?: Constant.All_
+
+                // filter from originalLeaveList, not isLeaveList
+                val tabFilteredList = if (selectedStatus == Constant.All_) {
+                    originalLeaveList
+                } else {
+                    originalLeaveList.mapNotNull { monthWiseLeave ->
+                        val filteredDetails = monthWiseLeave.details.filter { it.status == selectedStatus }
+                        if (filteredDetails.isNotEmpty()) monthWiseLeave.copy(details = filteredDetails) else null
+                    }
+                }
+
+                isLeaveList = tabFilteredList
+                mAdapter.updateData(isLeaveList)
 
                 if (mAdapter.itemCount == 0) {
-                    binding.imgSearchBtn.visibility=View.GONE
-                    binding.rytSearch.visibility=View.GONE
-                    binding.lytList.visibility=View.VISIBLE
+                    binding.imgSearchBtn.visibility = View.GONE
+                    binding.rytSearch.visibility = View.GONE
+                    binding.lytList.visibility = View.VISIBLE
                     binding.rcyLeaveRequestHistory.visibility = View.GONE
                 } else {
-                    binding.lytList.visibility=View.VISIBLE
-                    binding.imgSearchBtn.visibility=View.VISIBLE
-                    binding.rytSearch.visibility=View.VISIBLE
+                    binding.lytList.visibility = View.GONE
+                    binding.imgSearchBtn.visibility = View.VISIBLE
                     binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
                 }
             }
+
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
@@ -250,10 +265,25 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private fun filter(text: String) {
         val searchWords = text.trim().lowercase().split("\\s+".toRegex())
 
-        val filteredMonthList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
-            isLeaveList.orEmpty()
+        // Step 1: Filter by selected tab status
+        val statusFilteredList = if (selectedStatus.equals(Constant.All_, ignoreCase = true)) {
+            originalLeaveList
         } else {
-            isLeaveList.orEmpty().mapNotNull { monthWiseLeave ->
+            originalLeaveList.mapNotNull { monthData ->
+                val filteredDetails = monthData.details.filter {
+                    it.status.equals(selectedStatus, ignoreCase = true)
+                }
+                if (filteredDetails.isNotEmpty()) {
+                    monthData.copy(details = filteredDetails)
+                } else null
+            }
+        }
+
+        // Step 2: Apply search filter
+        val searchFilteredList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
+            statusFilteredList
+        } else {
+            statusFilteredList.mapNotNull { monthWiseLeave ->
                 val filteredDetails = monthWiseLeave.details.filter { leave ->
                     val fieldsToSearch = listOf(
                         leave.student_name.lowercase(),
@@ -274,31 +304,26 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 }
 
                 if (filteredDetails.isNotEmpty()) {
-                    Log.d("filteredMonthList",filteredDetails.size.toString())
-                    Log.d("DataComing","DataComing")
-                    monthWiseLeave.copy(details = filteredDetails) // keep month, but only matching details
-                } else {
-                    Log.d("filteredMonthList",filteredDetails.size.toString())
-                    Log.d("DataNotComing","DataNotComing")
-                    null
-                }
+                    monthWiseLeave.copy(details = filteredDetails) // keep month
+                } else null
             }
         }
 
-        // 🔹 Update UI
-        if (filteredMonthList.isNotEmpty()) {
-            ShowData()
-            Log.d("filteredMonthList",filteredMonthList.size.toString())
-            Log.d("DataComing","DataComingCCCCCCCCCCCCCCCCCCCCCC")
-            mAdapter.updateData(filteredMonthList)
-        } else {
-            Log.d("filteredMonthList",filteredMonthList.size.toString())
-            Log.d("DataNotComing","DataNotComingAAAAAAAAAAAAAAA")
+        isLeaveList = searchFilteredList
 
+        // 🔹 Update UI
+        if (isLeaveList.isNotEmpty()) {
+            binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
+            binding.lytList.visibility = View.GONE
+            mAdapter.updateData(isLeaveList)
+        } else {
             binding.rcyLeaveRequestHistory.visibility = View.GONE
-            ErrorMessage(getString(R.string.no_data_found))
+            binding.lytList.visibility = View.VISIBLE
+            binding.txtNoData.text = getString(R.string.no_data_found)
         }
     }
+
+
 
     fun ShowData() {
         binding.rcyLeaveRequestHistory.visibility = View.VISIBLE

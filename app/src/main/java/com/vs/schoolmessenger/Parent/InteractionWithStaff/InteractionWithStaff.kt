@@ -47,7 +47,6 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
             statusBarBgView = binding.statusBarBackground
         )
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
             if (binding.rytsearch.isVisible) {
@@ -98,11 +97,9 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
             }
             if (response.status) {
                 isLoadStaffData(response.data)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
                 showErrorUI(response.message ?: "No data available")
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-
             }
         }
     }
@@ -124,10 +121,11 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
 
     private fun isLoadStaffData(data: List<Staff>?) {
         if (data.isNullOrEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             showErrorUI(getString(R.string.no_staff_data_available))
             return
         }
-
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
         binding.rcystaffdata.visibility = View.VISIBLE

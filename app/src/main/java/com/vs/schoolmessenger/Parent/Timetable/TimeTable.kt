@@ -216,7 +216,6 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
                 binding.bottomsheettimetable.lnrNoRecords.visibility = View.GONE
                 binding.bottomsheettimetable.imgNoData.visibility = View.GONE
                 binding.bottomsheettimetable.txtNoData.visibility = View.GONE
-
                 setupScheduleRecyclerView()
             } else {
                 timeTableDataList = emptyList()

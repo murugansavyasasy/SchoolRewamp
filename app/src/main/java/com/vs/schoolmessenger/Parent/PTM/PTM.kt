@@ -60,7 +60,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             statusBarBgView = binding.statusBarBackground
         )
 
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.rytsearch.visibility = View.GONE
         binding.txtSearchMeeting.setText("")
         binding.lblScheduleMeeting.setOnClickListener(this)
@@ -184,11 +183,15 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                     binding.rytNoDataFound.visibility = View.GONE
                     binding.recyclerViewSlots.visibility = View.VISIBLE
                     isLoadMeetingData(response.data)
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+
                 } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.rytNoDataFound.visibility = View.VISIBLE
                     binding.recyclerViewSlots.visibility = View.GONE
                 }
             } else {
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rytNoDataFound.visibility = View.VISIBLE
                 binding.recyclerViewSlots.visibility = View.GONE
             }
@@ -316,6 +319,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         when (v!!.id) {
             R.id.lblScheduleMeeting -> {
                 isChangeBackGroundTab(binding.lblScheduleMeeting)
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+
             }
 
             R.id.lblYourMeeting -> {

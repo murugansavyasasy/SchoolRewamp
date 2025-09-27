@@ -37,7 +37,6 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
         binding.lblHeaderTitle.text = Constant.isParentMenuName
         Log.d("isParentMenuName",Constant.isParentMenuName)
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
 
@@ -87,10 +86,12 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyrecyclerview.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.rlNoDataContainer.visibility = View.GONE
                 allItems = response.data
                 adapter.updateList(allItems)
             } else {
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rcyrecyclerview.visibility = View.GONE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.rlNoDataContainer.visibility = View.VISIBLE
