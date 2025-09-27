@@ -122,6 +122,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+        Constant.Remaining = MAX_FILES
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -244,49 +245,47 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 if (result.resultCode == RESULT_OK) {
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    val remaining = MAX_FILES - Constant.selectedFiles.size
+                    if(Constant.Remaining!! > 0) {
+                        Constant.Remaining = Constant.Remaining - selectedUris!!.size
+                        selectedUris?.forEach { uri ->
+                            val mimeType = contentResolver.getType(uri)
+                            val path = when (uri.scheme) {
+                                Constant.file_ -> uri.path
+                                else -> getPathFromUri(uri)
+                            }
 
-                    selectedUris?.take(remaining)?.forEach { uri ->
-                        val mimeType = contentResolver.getType(uri)
-                        val path = when (uri.scheme) {
-                            Constant.file_ -> uri.path
-                            else -> getPathFromUri(uri)
+                            if (path == null) {
+                                Log.w("addPath", "Could not resolve path from URI: $uri")
+                                return@forEach
+                            }
+
+                            val fileName = getFileName(uri).ifEmpty { File(path).name }
+                            val type = when {
+                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
+                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
+                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+                                fileName.endsWith(".pdf", true) -> FileType.PDF
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx", true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx", true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx", true
+                                ) -> FileType.PPT
+
+                                fileName.endsWith(".txt", true) -> FileType.TXT
+                                else -> FileType.OTHER
+                            }
+
+                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
                         }
+                        mAdapter!!.notifyDataSetChanged()
 
-                        if (path == null) {
-                            Log.w("addPath", "Could not resolve path from URI: $uri")
-                            return@forEach
-                        }
 
-                        val fileName = getFileName(uri).ifEmpty { File(path).name }
-                        val type = when {
-                            mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                            mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                            mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-                            fileName.endsWith(".pdf", true) -> FileType.PDF
-                            fileName.endsWith(".doc", true) || fileName.endsWith(
-                                ".docx", true
-                            ) -> FileType.DOC
-
-                            fileName.endsWith(".xls", true) || fileName.endsWith(
-                                ".xlsx", true
-                            ) -> FileType.EXCEL
-
-                            fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                ".pptx", true
-                            ) -> FileType.PPT
-
-                            fileName.endsWith(".txt", true) -> FileType.TXT
-                            else -> FileType.OTHER
-                        }
-
-                        Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                    }
-
-                    if ((selectedUris?.size ?: 0) > remaining) {
-                        Toast.makeText(
-                            this, "${getString(R.string.Only)} $remaining ${getString(R.string.files_added_max)}$MAX_FILES)", Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
             }
@@ -464,6 +463,8 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
     override fun onBackPressed() {
         Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
+        Constant.Remaining = MAX_FILES
+
         super.onBackPressed()
     }
 
@@ -715,15 +716,13 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
         if (resultCode != RESULT_OK) return
 
-        val remaining = MAX_FILES - Constant.selectedFiles.size
-        if (remaining <= 0) {
-            Toast.makeText(this, "${getString(R.string.Max)} $MAX_FILES ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+        if (Constant.Remaining!! == 0) {
+            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
             return
         }
 
         fun addPath(uri: Uri) {
             Log.d("isFilePickingUrl", uri.toString())
-            if (Constant.selectedFiles.size >= MAX_FILES) return
 
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
@@ -764,6 +763,8 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                             }
                         }
                         val uri = Uri.fromFile(file)
+                        Constant.Remaining = Constant.Remaining - 1
+
                         addPath(uri)
                     } else {
                         Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
@@ -783,8 +784,12 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                         val uri = clipData.getItemAt(i).uri
                         addPath(uri)
                     }
+                    Constant.Remaining = Constant.Remaining - clipData.itemCount
+
                 } else if (singleUri != null) {
                     addPath(singleUri)
+                    Constant.Remaining = Constant.Remaining - 1
+
                 }
             }
         }

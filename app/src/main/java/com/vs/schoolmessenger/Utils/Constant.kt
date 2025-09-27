@@ -321,6 +321,7 @@ object Constant {
     var VOICE_ALL = "VOICE_ALL"
     var dateForMate = "%02d:%02d"
     var isSelectedFiles = "isSelectedFiles"
+    var Remaining = 10
 
     var IMAGE = "IMAGE"
     var M4A = "M4A"

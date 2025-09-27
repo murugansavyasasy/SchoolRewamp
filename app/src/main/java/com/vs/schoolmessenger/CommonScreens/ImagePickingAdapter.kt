@@ -81,6 +81,7 @@ class ImagePickingAdapter(
         holder.del.visibility = if (pos == 0) GONE else VISIBLE
         holder.del.setOnClickListener {
             Log.d("isPosition", pos.toString())
+            Constant.Remaining = Constant.Remaining + 1
             items.removeAt(pos)
             notifyItemRemoved(pos)
             notifyItemRangeChanged(pos, items.size)

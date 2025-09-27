@@ -48,8 +48,11 @@ class AlbumSelectActivity : AppCompatActivity() {
 
         binding.toolbarLayout.tvSelectionCount.text =
             "Selected Files : 0 / ${Constant.isFileLimit}"
-        binding.toolbarLayout.tvSelectedFiles.text =
-            "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+
+//        binding.toolbarLayout.tvSelectedFiles.text =
+//            "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+
+        Log.d("isFileLimit",Constant.isFileLimit.toString())
 
         adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =
@@ -73,6 +76,7 @@ class AlbumSelectActivity : AppCompatActivity() {
 
         binding.toolbarLayout.btnDone.setOnClickListener {
             val selectedUris = adapter.getSelectedItems()
+            Log.d("done_selectedFiles", Constant.selectedFiles.size.toString())
             val intent = Intent().apply {
                 putParcelableArrayListExtra(Constant.isSelectedFiles, ArrayList(selectedUris))
             }
