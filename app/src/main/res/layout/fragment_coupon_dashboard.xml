@@ -5,7 +5,7 @@
     android:layout_alignParentBottom="true"
     android:background="@drawable/dual_color_background"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+  >
 
     <!-- Content Area -->
     <FrameLayout

@@ -71,51 +71,23 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/AcademicYear"
-            android:layout_margin="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/gray_bg_radius"
-            android:gravity="center"
-            android:padding="@dimen/five"
-            android:visibility="gone">
 
-            <ImageView
-                android:layout_width="@dimen/twenty_five"
-                android:layout_height="@dimen/twenty_five"
-                android:alpha="0.4"
-                android:src="@drawable/search_icon"></ImageView>
-
-            <EditText
-                android:id="@+id/txtSearchMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/five"
-                android:background="@null"
-                android:hint="@string/search"
-                android:text=""
-                android:textSize="@dimen/fifteen_sp"></EditText>
-
-
-        </LinearLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyAssignmentReport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/search"
-            android:layout_marginTop="5dp"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_below="@+id/AcademicYear"
+            android:layout_marginTop="5dp">
+        </androidx.recyclerview.widget.RecyclerView>
 
 
         <LinearLayout
             android:id="@+id/lytNoDataFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/search"
+            android:layout_below="@+id/AcademicYear"
             android:layout_centerInParent="true"
             android:orientation="vertical"
             android:visibility="gone">

@@ -54,6 +54,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         binding.imgSearchBtn.setOnClickListener {
             if (binding.rytSearch.visibility == View.VISIBLE) {
                 binding.rytSearch.visibility = View.GONE
+                binding.txtVideoMenu.text.clear()
             } else {
                 binding.rytSearch.visibility = View.VISIBLE
                 binding.txtVideoMenu.text.clear()
@@ -86,7 +87,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                 val dataList = response.data
 
                 if (!dataList.isNullOrEmpty()) {
-
+                    binding.imgSearchBtn.visibility=View.VISIBLE
                     binding.rcyAttendanceReport.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
 
@@ -100,12 +101,12 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                     binding.rcyAttendanceReport.layoutManager = GridLayoutManager(this, 2)
                     binding.rcyAttendanceReport.adapter = mAdapter
                 } else {
-
+                    binding.imgSearchBtn.visibility=View.GONE
                     binding.rcyAttendanceReport.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
                 }
             } else {
-
+                binding.imgSearchBtn.visibility=View.GONE
                 binding.rcyAttendanceReport.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
             }

@@ -3,7 +3,6 @@
     android:id="@+id/calendarRoot"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:padding="12dp">
 
     <com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesCustomCalender

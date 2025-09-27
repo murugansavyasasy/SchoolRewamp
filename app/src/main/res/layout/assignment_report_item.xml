@@ -5,7 +5,7 @@
     android:id="@+id/headerrelative_layout"
     android:layout_height="wrap_content"
     android:background="@drawable/rect_shadow_white"
-    android:fitsSystemWindows="true">
+>
 
     <TextView
         android:id="@+id/lblTitle"

@@ -93,9 +93,11 @@
                 android:layout_toEndOf="@+id/imgSearch"
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
-                android:imeOptions="actionSearch"
                 android:inputType="text"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
                 android:singleLine="true"
+                android:scrollHorizontally="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -189,14 +191,13 @@
 
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/recycleracademic"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_centerInParent="true"
         android:orientation="vertical">
 

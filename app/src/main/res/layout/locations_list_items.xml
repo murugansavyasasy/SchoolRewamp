@@ -6,7 +6,6 @@
      android:layout_marginHorizontal="@dimen/five"
     android:layout_marginVertical="@dimen/ten"
     android:background="@drawable/rect_white"
-    android:fitsSystemWindows="true"
     android:padding="@dimen/five">
 
     <LinearLayout

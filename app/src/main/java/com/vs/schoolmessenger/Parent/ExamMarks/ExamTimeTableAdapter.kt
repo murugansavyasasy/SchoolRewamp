@@ -70,6 +70,7 @@ class ExamTimeTableAdapter(
                                 exam.exam_subject_details.any { subject ->
                                     subject.subject_name.lowercase().contains(query) ||
                                             subject.exam_date.lowercase().contains(query) ||
+                                            subject.max_mark.lowercase().contains(query) ||
                                             subject.syllabus.lowercase().contains(query)
                                 }
                     }

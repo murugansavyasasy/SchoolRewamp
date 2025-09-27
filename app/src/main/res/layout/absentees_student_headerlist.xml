@@ -4,7 +4,7 @@
     android:id="@+id/header_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true">
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="@dimen/one_fifty"

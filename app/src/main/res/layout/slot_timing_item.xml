@@ -6,7 +6,6 @@
     android:id="@+id/lnrHeader"
     android:background="@drawable/outline_gray_card"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:padding="@dimen/ten">
 
     <TextView

@@ -6,7 +6,6 @@
     android:layout_marginEnd="@dimen/fourty_five"
     android:background="@drawable/rect_white_light_radious"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:paddingBottom="@dimen/ten">
 
     <TextView

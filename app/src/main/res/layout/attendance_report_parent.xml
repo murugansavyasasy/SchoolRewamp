@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:background="@color/AthensGray"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+   >
 
 
     <RelativeLayout
@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:visibility="gone"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:padding="@dimen/five"
                 android:src="@drawable/search_icon_white"
@@ -119,6 +120,10 @@
             android:layout_toEndOf="@id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>

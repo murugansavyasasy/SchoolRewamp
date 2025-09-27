@@ -90,7 +90,9 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         appViewModel?.isAttachmentResponse?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.txtNoData.visibility = View.GONE
-                binding.lytList.visibility = View.GONE
+//                binding.lytList.visibility = View.GONE
+                binding.nomessage.visibility = View.GONE
+
                 binding.recycleracademic.visibility = View.VISIBLE
                 isLoadData(response.data)
             } else {
@@ -134,7 +136,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private fun showEmptyState(message: String) {
         binding.recycleracademic.visibility = View.GONE
         binding.nomessage.visibility = View.VISIBLE
-        binding.lytList.visibility = View.VISIBLE
+//        binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
     }

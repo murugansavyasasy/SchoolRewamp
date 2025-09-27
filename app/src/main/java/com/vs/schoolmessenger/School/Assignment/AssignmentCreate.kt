@@ -1132,6 +1132,16 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.edtTitle.setText(data!!.title)
         binding.edtDescription.setText(data.description)
+        val category = data.category
+        val adapter = binding.spinnerType.adapter
+        if (adapter != null) {
+            for (i in 0 until adapter.count) {
+                if (adapter.getItem(i).toString().equals(category, ignoreCase = true)) {
+                    binding.spinnerType.setSelection(i)
+                    break
+                }
+            }
+        }
         binding.lblDatePick.text = Constant.covertDateFormate(data.created_date)
         binding.lblTimePick.text = data.created_time
 
