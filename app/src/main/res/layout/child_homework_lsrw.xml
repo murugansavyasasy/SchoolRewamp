@@ -112,8 +112,6 @@
                     android:layout_below="@id/txtDescription"
                     android:layout_marginTop="@dimen/four"
                     android:layout_marginEnd="@dimen/twenty"
-                    android:ellipsize="end"
-                    android:maxLines="4"
                     android:text="The First Time the two"
                     android:textColor="#666666"
                     android:textSize="13sp" />

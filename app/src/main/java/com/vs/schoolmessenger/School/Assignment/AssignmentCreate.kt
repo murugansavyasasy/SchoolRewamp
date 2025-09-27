@@ -107,6 +107,14 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     private var cameraPermissionDeniedCount = 0
 
 
+    private var originalTitle: String? = null
+    private var originalDescription: String? = null
+
+    private var originalCategory: String? = null
+    private var originalDate: String? = null
+    private var originalTime: String? = null
+    private var originalFiles: List<FileItem> = emptyList()
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
@@ -136,6 +144,8 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+        Constant.Remaining = MAX_FILES
+
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
@@ -153,62 +163,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-
-
-//        binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
-//
-//        adapter = AssignmentStudentListAdapter(
-//            itemList = emptyList(),
-//            listener = this,
-//            context = this,
-//            isLoading = false,
-//            noDataImage = binding.noDataImage,
-//            noDataText = binding.noDataFound
-//        )
-
-//        binding.rcyAssignmentReport.adapter = isAssignmentAdapter
-//
-//        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                isAssignmentAdapter?.filter?.filter(s)
-//                binding.rcyAssignmentReport.post {
-//                    if (isAssignmentAdapter?.itemCount == 0) {
-//                        binding.rcyAssignmentReport.visibility = View.GONE
-//                        binding.lytNoDataFound.visibility = View.VISIBLE
-//                    } else {
-//                        binding.rcyAssignmentReport.visibility = View.VISIBLE
-//                        binding.lytNoDataFound.visibility = View.GONE
-//                    }
-//                }
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//            override fun afterTextChanged(s: Editable?) {
-//            }
-//        })
-
-
-//
-//        binding.txtSearchMenu.setOnEditorActionListener { _, actionId, _ ->
-//            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-//                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
-//                binding.txtSearchMenu.clearFocus()
-//                true
-//            } else false
-//        }
-//
-//        appViewModel?.getassignmentlist?.observe(this) { response ->
-//            if (response?.status == true && !response.data.isNullOrEmpty()) {
-//                adapter.updateList(response.data)
-//                binding.rcyAssignmentReport.visibility = View.VISIBLE
-//                binding.lytNoDataFound.visibility = View.GONE
-//            } else {
-//                binding.rcyAssignmentReport.visibility = View.GONE
-//                binding.lytNoDataFound.visibility = View.VISIBLE
-//                binding.noDataFound.text = getString(R.string.no_data_found)
-//            }
-//        }
 
 
         saveDrawableToCache(R.drawable.add_image)?.let {
@@ -238,51 +192,49 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
                     val remaining = MAX_FILES - Constant.selectedFiles.size
 
-                    selectedUris?.take(remaining)?.forEach { uri ->
-                        val mimeType = contentResolver.getType(uri)
-                        val path = when (uri.scheme) {
-                            Constant.file_ -> uri.path
-                            else -> getPathFromUri(uri)
+                    if(Constant.Remaining!! > 0) {
+                        Constant.Remaining = Constant.Remaining - selectedUris!!.size
+                        selectedUris?.forEach { uri ->
+                            val mimeType = contentResolver.getType(uri)
+                            val path = when (uri.scheme) {
+                                Constant.file_ -> uri.path
+                                else -> getPathFromUri(uri)
+                            }
+
+                            if (path == null) {
+                                Log.w("addPath", "Could not resolve path from URI: $uri")
+                                return@forEach
+                            }
+
+                            val fileName = getFileName(uri).ifEmpty { File(path).name }
+                            val type = when {
+                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
+                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
+                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+                                fileName.endsWith(".pdf", true) -> FileType.PDF
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx", true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx", true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx", true
+                                ) -> FileType.PPT
+
+                                fileName.endsWith(".txt", true) -> FileType.TXT
+                                else -> FileType.OTHER
+                            }
+
+                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+
+                            Log.d("SelectedFile", "URI: $uri, Type: $type")
                         }
+                        mAdapter!!.notifyDataSetChanged()
 
-                        if (path == null) {
-                            Log.w("addPath", "Could not resolve path from URI: $uri")
-                            return@forEach
-                        }
 
-                        val fileName = getFileName(uri).ifEmpty { File(path).name }
-                        val type = when {
-                            mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                            mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                            mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-                            fileName.endsWith(".pdf", true) -> FileType.PDF
-                            fileName.endsWith(".doc", true) || fileName.endsWith(
-                                ".docx", true
-                            ) -> FileType.DOC
-
-                            fileName.endsWith(".xls", true) || fileName.endsWith(
-                                ".xlsx", true
-                            ) -> FileType.EXCEL
-
-                            fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                ".pptx", true
-                            ) -> FileType.PPT
-
-                            fileName.endsWith(".txt", true) -> FileType.TXT
-                            else -> FileType.OTHER
-                        }
-
-                        Constant.selectedFiles.add(FileItem(uri.toString(), type))
-
-                        Log.d("SelectedFile", "URI: $uri, Type: $type")
-                    }
-
-                    if ((selectedUris?.size ?: 0) > remaining) {
-                        Toast.makeText(
-                            this,
-                            "${getString(R.string.Only)} $remaining ${getString(R.string.files_added_max)} ${MAX_FILES})",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
             }
@@ -294,61 +246,8 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
         }
 
-
-//        appViewModel!!.isAssignmentDelete?.observe(this) { response ->
-//            if (response != null) {
-//                if (response.status) {
-//                    Constant.hideLoading(this@AssignmentCreate)
-//                    isAssignmentAdapter!!.removeItemAt(isAssignmentPosition)
-//                } else {
-//                    Constant.showDataValidation(
-//                        resources.getString(R.string.fail), response.message, this
-//                    )
-//                }
-//            }
-//        }
-
-//        appViewModel!!.isGetAssignmentReport?.observe(this) { response ->
-//            Constant.hideLoading(this@AssignmentCreate)
-//            if (response != null) {
-//                if (response.status) {
-//                    binding.rcyAssignmentReport.visibility = View.VISIBLE
-//                    binding.lytNoDataFound.visibility = View.GONE
-//                    val isAssignmentReport = response.data
-//                    isAssignmentReportData = isAssignmentReport
-//                    loadAssignmentReportData()
-//                } else {
-//                    binding.rcyAssignmentReport.visibility = View.GONE
-//                    binding.lytNoDataFound.visibility = View.VISIBLE
-//                    binding.noDataFound.text = getString(R.string.no_data_found)
-//                }
-//            }
-//        }
-
         spinnerType()
     }
-
-//    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
-//        val adapter = AcademicYearAdapter(this, isAcademicYear)
-//        binding.isSpinner.adapter = adapter
-//        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>, view: View?, position: Int, id: Long
-//            ) {
-//                adapter.selectedPosition = position
-//                val selectedOption = isAcademicYear!![position]
-//                isAcademicYearId = selectedOption.id
-//                isCurrentAcademicYear = selectedOption.current_academic_year
-//                Log.d(
-//                    "DropdownMenu",
-//                    "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
-//                )
-//                fetchAssignmentReportData()
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {}
-//        }
-//    }
 
 
     private fun spinnerType() {
@@ -379,19 +278,16 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
             R.id.btnChooseRecipient -> {
                 if (binding.btnChooseRecipient.text.toString() == getString(R.string.update_assignment)) {
-                    showSendConfirmationDialog(true)
+                    if (!hasChanges()) {
+                        Toast.makeText(this, "No changes detected", Toast.LENGTH_SHORT).show()
+                    } else {
+                        showSendConfirmationDialog(true)
+                    }
                 } else {
                     isRedirectToSectionStudents()
                 }
             }
 
-//            R.id.imgSearchToolBar -> {
-//                if (binding.search.isVisible) {
-//                    binding.search.visibility = View.GONE
-//                } else {
-//                    binding.search.visibility = View.VISIBLE
-//                }
-//            }
 
             R.id.lblTimePick -> {
                 showTimePickerDialog(this, this)
@@ -401,65 +297,10 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                 showDatePickerDialog(this, this)
             }
 
-//            R.id.lnrTabOneName -> {
-//                binding.btnChooseRecipient.text = getString(R.string.ChooseRecipients)
-//                binding.line1.setBackgroundResource(R.color.iconBlue)
-//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//                binding.line3.setBackgroundResource(R.color.white)
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//                //  binding.rlaAssignmentReport.visibility = View.GONE
-//                //    binding.rytCreateAssignment.visibility = View.VISIBLE
-//            }
 
-//            R.id.lnrTabTwoName -> {
-////                binding.btnHistory.isEnabled = false
-////                binding.btnCreate.isEnabled = true
-////                isBackRoundChange(binding.btnHistory)
-//
-//                binding.btnChooseRecipient.text = getString(R.string.update_assignment)
-//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//                binding.line3.setBackgroundResource(R.color.iconBlue)
-//                binding.line1.setBackgroundResource(R.color.white)
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-//                //     binding.rlaAssignmentReport.visibility = View.VISIBLE
-//                //    binding.rytCreateAssignment.visibility = View.GONE
-////                isAcademicYear = Constant.isAcademicYearList
-////              //  isLoadAcademicYear(isAcademicYear)
-////                isValidAcademicYear =
-////                    isAcademicYear?.any { it.current_academic_year == true } == true
-////                isAcademicYearId = isAcademicYear!![0].id
-////                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-//
-//            }
         }
     }
 
-//    private fun fetchAssignmentReportData() {
-//        Constant.showLoading(this@AssignmentCreate)
-//        binding.rcyAssignmentReport.visibility = View.VISIBLE
-//        isAssignmentAdapter =
-//            AssignmentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
-//        binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
-//        binding.rcyAssignmentReport.isNestedScrollingEnabled = false
-//        binding.rcyAssignmentReport.adapter = isAssignmentAdapter
-//        appViewModel?.isGetAssignmentReport(
-//            isAccessToken!!, isAcademicYearId, this
-//        )
-//    }
-
-
-//    private fun loadAssignmentReportData() {
-//        binding.rcyAssignmentReport.visibility = View.VISIBLE
-//        isAssignmentAdapter = AssignmentAdapter(
-//            isAssignmentReportData!!.toMutableList(), this, this, Constant.isShimmerViewDisable
-//        )
-//        binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
-//        binding.rcyAssignmentReport.isNestedScrollingEnabled = false
-//        binding.rcyAssignmentReport.adapter = isAssignmentAdapter
-//
-//    }
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
@@ -547,6 +388,8 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     override fun onBackPressed() {
         Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
+        Constant.Remaining = MAX_FILES
+
         super.onBackPressed()
     }
 
@@ -671,19 +514,13 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
         if (resultCode != RESULT_OK) return
 
-        val remaining = MAX_FILES - Constant.selectedFiles.size
-        if (remaining <= 0) {
-            Toast.makeText(
-                this,
-                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
-                Toast.LENGTH_SHORT
-            ).show()
+        if (Constant.Remaining!! == 0) {
+            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
             return
         }
 
         fun addPath(uri: Uri) {
             Log.d("isFilePickingUrl", uri.toString())
-            if (Constant.selectedFiles.size >= MAX_FILES) return
 
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
@@ -724,6 +561,8 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                             }
                         }
                         val uri = Uri.fromFile(file)
+                        Constant.Remaining = Constant.Remaining - 1
+
                         addPath(uri)
                     } else {
                         Toast.makeText(
@@ -750,8 +589,12 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                         val uri = clipData.getItemAt(i).uri
                         addPath(uri)
                     }
+                    Constant.Remaining = Constant.Remaining - clipData.itemCount
+
                 } else if (singleUri != null) {
                     addPath(singleUri)
+                    Constant.Remaining = Constant.Remaining - 1
+
                 }
             }
         }
@@ -1111,39 +954,21 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
 
     fun isEditProcess(data: AssignmentData?) {
+        if (data == null) return
+
+
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
         saveDrawableToCache(R.drawable.add_image)?.let {
-            Constant.selectedFiles.add(
-                FileItem(
-                    it, FileType.IMAGE
-                )
-            )
+            Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
         }
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-        binding.rytRecyclewview.visibility = View.VISIBLE
-        binding.line1.setBackgroundResource(R.color.iconBlue)
-        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-        binding.line3.setBackgroundResource(R.color.white)
 
-        //  binding.rytCreateAssignment.visibility = View.VISIBLE
-        //  binding.rlaAssignmentReport.visibility = View.GONE
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-        binding.edtTitle.setText(data!!.title)
-        binding.edtDescription.setText(data.description)
-        val category = data.category
-        val adapter = binding.spinnerType.adapter
-        if (adapter != null) {
-            for (i in 0 until adapter.count) {
-                if (adapter.getItem(i).toString().equals(category, ignoreCase = true)) {
-                    binding.spinnerType.setSelection(i)
-                    break
-                }
-            }
-        }
-        binding.lblDatePick.text = Constant.covertDateFormate(data.created_date)
-        binding.lblTimePick.text = data.created_time
+
+        originalTitle = data.title
+        originalDescription = data.description
+        originalCategory = data.category
+        originalDate = Constant.covertDateFormate(data.created_date)
+        originalTime = data.created_time
 
         if (data.file_path.isNotEmpty()) {
             val mappedList = data.file_path.map { filePath ->
@@ -1155,12 +980,57 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                 FileItem(path = filePath.url, type = fileType)
             }
             Constant.selectedFiles.addAll(mappedList)
+            originalFiles = mappedList
         }
+
+
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.rytRecyclewview.visibility = View.VISIBLE
+        binding.line1.setBackgroundResource(R.color.iconBlue)
+        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.line3.setBackgroundResource(R.color.white)
+
+        binding.edtTitle.setText(data.title)
+        binding.edtDescription.setText(data.description)
+
+
+        val adapter = binding.spinnerType.adapter
+        if (adapter != null) {
+            for (i in 0 until adapter.count) {
+                if (adapter.getItem(i).toString().equals(data.category, ignoreCase = true)) {
+                    binding.spinnerType.setSelection(i)
+                    break
+                }
+            }
+        }
+
+        binding.lblDatePick.text = Constant.covertDateFormate(data.created_date)
+        binding.lblTimePick.text = data.created_time
+
+
         binding.rcyImages.visibility = View.VISIBLE
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
     }
+
+    private fun hasChanges(): Boolean {
+        val currentTitle = binding.edtTitle.text.toString().trim()
+        val currentDescription = binding.edtDescription.text.toString().trim()
+        val currentCategory = binding.spinnerType.selectedItem?.toString()
+        val currentDate = binding.lblDatePick.text.toString().trim()
+        val currentTime = binding.lblTimePick.text.toString().trim()
+        val currentFiles = Constant.selectedFiles.filter { it.type != FileType.IMAGE }
+
+        return currentTitle != originalTitle ||
+                currentDescription != originalDescription ||
+                currentCategory != originalCategory ||
+                currentDate != originalDate ||
+                currentTime != originalTime ||
+                currentFiles != originalFiles
+    }
+
 
     override fun onResume() {
         super.onResume()

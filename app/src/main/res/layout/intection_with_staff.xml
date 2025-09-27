@@ -78,6 +78,10 @@
             android:layout_toEndOf="@id/imgSearch1"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>

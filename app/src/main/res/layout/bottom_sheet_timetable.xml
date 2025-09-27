@@ -29,8 +29,7 @@
     <LinearLayout
         android:id="@+id/lnrNoRecords"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/zero"
-        android:layout_marginBottom="@dimen/hundred_fifty"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
