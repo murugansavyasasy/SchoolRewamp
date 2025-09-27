@@ -333,6 +333,7 @@ object Constant {
     var XLSX = "PPT"
     var PPTX = "PPTX"
     var TXT = "TXT"
+    var TET2 = "TEXT"
     var EXCEL = "EXCEL"
     var data = "data"
     var MGMT_MSG_TEXT = "MGMT_MSG_TEXT"
@@ -598,6 +599,7 @@ object Constant {
     var CTAredirect = "CTAredirect"
     var Terms_and_Conditions = "Terms and Conditions"
     var offer_show = "offer_show"
+
 
     // VIMEO
     var isVimeoToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"

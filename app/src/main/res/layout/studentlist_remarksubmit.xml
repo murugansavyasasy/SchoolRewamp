@@ -151,7 +151,7 @@
                 android:id="@+id/imgEmoji"
                 android:layout_width="@dimen/fourty"
                 android:layout_height="@dimen/fourty"
-                android:src="@drawable/happyemoji"/>
+                android:src="@drawable/neutralemoji"/>
         </LinearLayout>
 
 

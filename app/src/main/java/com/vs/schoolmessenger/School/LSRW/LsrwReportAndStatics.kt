@@ -45,6 +45,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
+    private var selectedMonth: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -115,6 +116,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 binding.rclsrwheader.adapter = headerAdapter
 
                 val allDetails = mutableListOf<AvgStudentSubmission>()
+                allDetails.addAll(data.listening?.details ?: emptyList())
                 allDetails.addAll(data.reading?.details ?: emptyList())
                 allDetails.addAll(data.speaking?.details ?: emptyList())
                 allDetails.addAll(data.writing?.details ?: emptyList())
@@ -126,9 +128,11 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 val topPerformers = calculateTopPerformers(allDetails)
                 if (topPerformers.isNotEmpty()) {
                     binding.rvTopPerformance.visibility = View.VISIBLE
+                    binding.topperformanceLabel.visibility = View.VISIBLE
                     binding.rvTopPerformance.adapter = TopPerformanceAdapter(topPerformers)
                 } else {
                     binding.rvTopPerformance.visibility = View.GONE
+                    binding.topperformanceLabel.visibility = View.GONE
                 }
                 binding.rvTopPerformance.layoutManager = LinearLayoutManager(this)
                 binding.rvTopPerformance.adapter = TopPerformanceAdapter(topPerformers)
@@ -136,17 +140,26 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
 
                 binding.rclsrwheader.visibility = View.VISIBLE
                 binding.rvWeekly.visibility = View.VISIBLE
+                binding.weeklyreportLabel.visibility = View.VISIBLE
                 binding.monthlyLabel.visibility = View.VISIBLE
                 binding.rvTopPerformance.visibility = View.VISIBLE
+                binding.topperformanceLabel.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
                 binding.noDataFound.visibility = View.GONE
+
+                // Initially select Today_Submitted and show its student list
+                if (headerItems.isNotEmpty()) {
+                    filterByHeader(headerItems[0], data)
+                }
             } else {
 
                 binding.rclsrwheader.visibility = View.GONE
                 binding.rvWeekly.visibility = View.GONE
+                binding.weeklyreportLabel.visibility = View.GONE
                 binding.monthlyLabel.visibility = View.GONE
                 binding.studentsLabel.visibility = View.GONE
                 binding.rvTopPerformance.visibility = View.GONE
+                binding.topperformanceLabel.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
                 binding.noDataFound.text = response?.message
                 binding.noDataImage.visibility = View.VISIBLE
@@ -195,12 +208,15 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                     position: Int,
                     id: Long
                 ) {
-                    val selectedMonthNumber = position + 1
-                    fetchLsrwstatsReportData(selectedMonthNumber)
+                    selectedMonth = position + 1
+                    fetchLsrwstatsReportData(selectedMonth)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+
+        // Initial fetch for current month
+        fetchLsrwstatsReportData(selectedMonth)
     }
 
 
@@ -234,14 +250,13 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
 
 
         val formatter = DateTimeFormatter.ofPattern(Constant.ddMMyyyy, Locale.getDefault())
-        val currentMonth = LocalDate.now().monthValue
         val currentYear = LocalDate.now().year
 
         val weeks = mutableMapOf<Int, MutableList<Int>>()
 
         details.forEach { detail ->
             val date = LocalDate.parse(detail.submission_date, formatter)
-            if (date.monthValue == currentMonth && date.year == currentYear) {
+            if (date.monthValue == selectedMonth && date.year == currentYear) {
                 val weekOfMonth = date.get(WeekFields.of(Locale.getDefault()).weekOfMonth())
                 val remarkValue = detail.remark.replace("%", "").toIntOrNull() ?: 0
                 weeks.getOrPut(weekOfMonth) { mutableListOf() }.add(remarkValue)

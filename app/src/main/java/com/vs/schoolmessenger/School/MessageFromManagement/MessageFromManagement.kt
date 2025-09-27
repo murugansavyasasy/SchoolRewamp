@@ -390,10 +390,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         Log.d("SelectedData",data.toString())
         showResumeListDialog(this,data)
         if (data.is_unread){
+
 //            isMenuCount-=1
 //            setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
 
-            if(data.type.equals(Constant.TXT)){
+            if(data.type.equals(Constant.TET2)){
                 TYPE = Constant.MGMT_MSG_TEXT
             }
             else if(data.type.equals(Constant.VOICE)){
