@@ -25,7 +25,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/rlaStudentName"
             android:layout_toEndOf="@+id/imgBack"
-            android:text=""
+            android:text="dahiahsdkj"
             android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp">

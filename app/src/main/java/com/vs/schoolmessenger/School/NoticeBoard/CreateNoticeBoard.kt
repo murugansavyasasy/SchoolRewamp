@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.NoticeBoard
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -16,11 +17,13 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -43,6 +46,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -58,6 +62,9 @@ import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
+import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
+import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -247,7 +254,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             Constant.hideLoading(this@CreateNoticeBoard)
             if (response != null) {
                 Log.d("Response", response.status.toString())
-                Constant.showTopAlertPopup(response.message, this)
+                showTopAlertPopup(response.message, this)
             }
         }
 
@@ -418,6 +425,59 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             }
         }
     }
+
+
+    fun showTopAlertPopup(message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true // prevent clicks on background
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            isAwsUploadedFiles.clear()
+            selectedFiles.clear()
+            isCommunicationType = 1
+            val intent = Intent(activity, NoticeBoardReport::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
+            closePopup()
+        }
+        dimView.isFocusable = true
+        dimView.isFocusableInTouchMode = true
+
+    }
+
 
     private fun showCameraPermissionSettingsDialog() {
         AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))

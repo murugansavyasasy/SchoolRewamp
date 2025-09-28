@@ -388,6 +388,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.lblClickComplete.visibility = View.GONE
 //            binding.lblPostedDate.visibility = View.GONE
             binding.lblPostedBy.visibility = View.GONE
+            binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
+            binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
         }
 
         for (i in data!!.fileList.indices) {
@@ -905,12 +907,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.filepick_bottom_sheet)
 
+
         val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
         val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
         val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
+        rlaVoice.visibility = View.VISIBLE
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
             Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())

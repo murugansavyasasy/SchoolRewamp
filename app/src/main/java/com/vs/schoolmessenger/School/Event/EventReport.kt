@@ -124,7 +124,11 @@ class EventReport  : BaseActivity<EventReportBinding>(),
                 allCompletedEvents = data.completed
 
                 binding.dotindicator.visibility =
-                    if (!allOngoingEvents.isNullOrEmpty()) View.VISIBLE else View.GONE
+                    if (!allOngoingEvents.isNullOrEmpty() && allOngoingEvents!!.size > 1) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
 
                 updateVisibility(
                     allOngoingEvents,
@@ -150,6 +154,7 @@ class EventReport  : BaseActivity<EventReportBinding>(),
                 hideAllSections()
             }
         }
+
 
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
