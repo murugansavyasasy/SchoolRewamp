@@ -370,6 +370,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         binding.lblScheduleMeeting.background = null
         binding.lblYourMeeting.background = null
         isSelectedTab.background = this.getDrawable(R.drawable.white_radious)
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(binding.txtSearchMeeting, InputMethodManager.SHOW_IMPLICIT)
 
         if (isSelectedTab == binding.lblYourMeeting) {
             binding.rytScheduleMeeting.visibility = View.GONE

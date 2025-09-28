@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
@@ -169,11 +170,16 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         if (isHomeAttachmentReport.isNullOrEmpty()){
             binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             binding.search.visibility = View.GONE
-
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
         }
         else{
             binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             binding.search.visibility = View.GONE
+
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+
 
             mAttachmentReportAdapter = AttachmentReportAdapter(
                 isHomeAttachmentReport,

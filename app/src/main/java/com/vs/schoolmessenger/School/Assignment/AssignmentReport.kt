@@ -161,12 +161,16 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
         appViewModel?.getassignmentlist?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 adapter.updateList(response.data)
                 binding.rcyAssignmentReport.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
             } else {
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.rcyAssignmentReport.visibility = View.GONE
@@ -192,14 +196,16 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             Constant.hideLoading(this@AssignmentReport)
             if (response != null) {
                 if (response.status) {
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-                    binding.toolbarLayout.rytSearch.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
                     val isAssignmentReport = response.data
                     isAssignmentReportData = isAssignmentReport
                     loadAssignmentReportData()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                 } else {
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.GONE
@@ -249,13 +255,21 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
 
     private fun loadAssignmentReportData() {
-        binding.rcyAssignmentReport.visibility = View.VISIBLE
-        isAssignmentAdapter = AssignmentAdapter(
-            isAssignmentReportData!!.toMutableList(), this, this, Constant.isShimmerViewDisable
-        )
-        binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
-        binding.rcyAssignmentReport.isNestedScrollingEnabled = false
-        binding.rcyAssignmentReport.adapter = isAssignmentAdapter
+        if (isAssignmentReportData.isNullOrEmpty()){
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.toolbarLayout.rytSearch.visibility = View.GONE
+        }
+        else{
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.toolbarLayout.rytSearch.visibility = View.GONE
+            binding.rcyAssignmentReport.visibility = View.VISIBLE
+            isAssignmentAdapter = AssignmentAdapter(
+                isAssignmentReportData!!.toMutableList(), this, this, Constant.isShimmerViewDisable
+            )
+            binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
+            binding.rcyAssignmentReport.isNestedScrollingEnabled = false
+            binding.rcyAssignmentReport.adapter = isAssignmentAdapter
+        }
 
     }
 

@@ -216,6 +216,10 @@
                 android:layout_marginStart="@dimen/five"
                 android:background="@null"
                 android:hint="@string/search"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                android:scrollHorizontally="true"
                 android:text=""
                 android:textSize="@dimen/fifteen_sp">
 

@@ -276,10 +276,16 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
     private fun loadStudentReport(studentReportData: List<StudentReportData>) {
         if(studentReportData.isNullOrEmpty()){
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
+
             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rytSearchBar.visibility = View.GONE
         }
         else{
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
+
             binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.rytSearchBar.visibility = View.GONE
             originalStudentList = studentReportData
