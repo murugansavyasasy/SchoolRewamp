@@ -24,9 +24,11 @@ class MonthwiseLeaveAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+    private var currentStatusFilter: String = Constant.All_
 
-    private var fullList: List<MonthWiseLeaveData> = itemList ?: emptyList()
-    private var filteredList: List<MonthWiseLeaveData> = fullList
+
+     var fullList: List<MonthWiseLeaveData> = itemList ?: emptyList()
+     var filteredList: List<MonthWiseLeaveData> = fullList
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -47,22 +49,26 @@ class MonthwiseLeaveAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 20 else filteredList.size
     }
-
     fun filterByStatus(status: String) {
-        filteredList = if (status.equals(Constant.All_, ignoreCase = true)) {
-            fullList
-        } else {
-            fullList.mapNotNull { monthData ->
-                val filteredDetails = monthData.details.filter {
-                    it.status.equals(status, ignoreCase = true)
-                }
-                if (filteredDetails.isNotEmpty()) {
-                    MonthWiseLeaveData(month = monthData.month, details = filteredDetails)
-                } else null
-            }
-        }
-        notifyDataSetChanged()
+        currentStatusFilter = status
+        filter.filter("") // trigger filter with empty query to apply status
     }
+
+//    fun filterByStatus(status: String) {
+//        filteredList = if (status.equals(Constant.All_, ignoreCase = true)) {
+//            fullList
+//        } else {
+//            fullList.mapNotNull { monthData ->
+//                val filteredDetails = monthData.details.filter {
+//                    it.status.equals(status, ignoreCase = true)
+//                }
+//                if (filteredDetails.isNotEmpty()) {
+//                    MonthWiseLeaveData(month = monthData.month, details = filteredDetails)
+//                } else null
+//            }
+//        }
+//        notifyDataSetChanged()
+//    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
@@ -77,31 +83,73 @@ class MonthwiseLeaveAdapter(
     }
 
 
+//    override fun getFilter(): Filter {
+//        return object : Filter() {
+//            override fun performFiltering(constraint: CharSequence?): FilterResults {
+//                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+//
+//                val result = if (query.isEmpty()) {
+//                    fullList
+//                } else {
+//                    fullList.mapNotNull { monthData ->
+//                        val filteredDetails = monthData.details.filter {
+//                            it.student_name.lowercase().contains(query) ||
+//                                    it.section_name.lowercase().contains(query) ||
+//                                    it.reason.lowercase()
+//                                        .contains(query) || it.no_of_days.lowercase()
+//                                .contains(query)
+//                                    || it.leave_type.lowercase()
+//                                .contains(query) || it.class_name.lowercase().contains(query)
+//
+//                        }
+//                        if (filteredDetails.isNotEmpty()) {
+//                            MonthWiseLeaveData(month = monthData.month, details = filteredDetails)
+//                        } else {
+//                            null
+//                        }
+//                    }
+//                }
+//
+//                return FilterResults().apply { values = result }
+//            }
+//
+//            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+//                filteredList = results?.values as? List<MonthWiseLeaveData> ?: emptyList()
+//                leaveRequestClickListener.onSearchResultEmpty(filteredList.isEmpty())
+//                notifyDataSetChanged()
+//            }
+//        }
+//    }
+// Add a variable to track the selected status
+
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val query = constraint?.toString()?.lowercase()?.trim() ?: ""
 
-                val result = if (query.isEmpty()) {
-                    fullList
-                } else {
-                    fullList.mapNotNull { monthData ->
-                        val filteredDetails = monthData.details.filter {
-                            it.student_name.lowercase().contains(query) ||
-                                    it.section_name.lowercase().contains(query) ||
-                                    it.reason.lowercase()
-                                        .contains(query) || it.no_of_days.lowercase()
-                                .contains(query)
-                                    || it.leave_type.lowercase()
-                                .contains(query) || it.class_name.lowercase().contains(query)
+                val result = fullList.mapNotNull { monthData ->
+                    // First, filter details by status
+                    val statusFiltered = monthData.details.filter { leave ->
+                        currentStatusFilter == Constant.All_ || leave.status.equals(currentStatusFilter, ignoreCase = true)
+                    }
 
-                        }
-                        if (filteredDetails.isNotEmpty()) {
-                            MonthWiseLeaveData(month = monthData.month, details = filteredDetails)
-                        } else {
-                            null
+                    // Then, apply text query on the filtered list
+                    val finalFiltered = if (query.isEmpty()) {
+                        statusFiltered
+                    } else {
+                        statusFiltered.filter { leave ->
+                            leave.student_name.lowercase().contains(query) ||
+                                    leave.section_name.lowercase().contains(query) ||
+                                    leave.reason.lowercase().contains(query) ||
+                                    leave.no_of_days.lowercase().contains(query) ||
+                                    leave.leave_type.lowercase().contains(query) ||
+                                    leave.class_name.lowercase().contains(query)
                         }
                     }
+
+                    if (finalFiltered.isNotEmpty()) {
+                        MonthWiseLeaveData(month = monthData.month, details = finalFiltered)
+                    } else null
                 }
 
                 return FilterResults().apply { values = result }
@@ -114,6 +162,8 @@ class MonthwiseLeaveAdapter(
             }
         }
     }
+
+
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {

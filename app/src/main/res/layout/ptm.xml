@@ -2,253 +2,259 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/AthensGray"
-    android:id="@+id/main">
+    android:background="@color/AthensGray">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <RelativeLayout
-        android:id="@+id/relative_layout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
 
         <include
             android:id="@+id/toolbarLayout"
-            layout="@layout/parent_side_tool_bar_without_curve" />
+            layout="@layout/parent_side_tool_bar_without_curve"
+            app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
 
-    <RelativeLayout
-        android:layout_below="@+id/toolbarLayout"
-        android:id="@+id/cltDateSelection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/thirty"
-        android:background="@drawable/bottom_right_left_radious">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/ten"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/lblScheduleMeeting"
-                style="@style/CustomTextStylePoppinsBold1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/white_bg_card"
-                android:gravity="center"
-                android:padding="@dimen/ten"
-                android:text="Schedule Meeting"
-                android:textColor="@color/black">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblYourMeeting"
-                style="@style/CustomTextStylePoppinsBold1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/ten"
-                android:text="Your Meetings"
-                android:textColor="@color/black">
-
-            </TextView>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rytScheduleMeeting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cltDateSelection">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewDates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/ten" />
+            />
 
         <RelativeLayout
-            android:id="@+id/rytSubjectList"
-            android:layout_width="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+            android:id="@+id/cltDateSelection"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/recyclerViewDates"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:background="@drawable/bg_white_light_radious"
-            android:gravity="center">
+            android:background="@drawable/bottom_right_left_radious"
+            android:paddingBottom="@dimen/thirty">
 
-            <Spinner
-                android:id="@+id/spinnerType"
+
+            <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_spinner_background" />
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/lblScheduleMeeting"
+                    style="@style/CustomTextStylePoppinsBold1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/white_bg_card"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="Schedule Meeting"
+                    android:textColor="@color/black">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblYourMeeting"
+                    style="@style/CustomTextStylePoppinsBold1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="Your Meetings"
+                    android:textColor="@color/black">
+
+                </TextView>
+
+            </LinearLayout>
 
         </RelativeLayout>
 
+        <RelativeLayout
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cltDateSelection"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/rytScheduleMeeting"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSlots"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/lblBookSlots"
-            android:layout_below="@+id/rytSubjectList"
-            android:padding="@dimen/ten" />
-
-        <LinearLayout
-            android:id="@+id/rytNoDataFound"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rytSubjectList"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewDates"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/two_hundred"
-                android:src="@drawable/nodataimage">
-            </ImageView>
+                android:layout_height="wrap_content"
+                android:padding="@dimen/ten" />
+
+            <RelativeLayout
+                android:id="@+id/rytSubjectList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recyclerViewDates"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:background="@drawable/bg_white_light_radious"
+                android:gravity="center">
+
+                <Spinner
+                    android:id="@+id/spinnerType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_spinner_background" />
+
+            </RelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSlots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/lblBookSlots"
+                android:layout_below="@+id/rytSubjectList"
+                android:padding="@dimen/ten" />
+
+            <LinearLayout
+                android:id="@+id/rytNoDataFound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytSubjectList"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/two_hundred"
+                    android:src="@drawable/nodataimage"></ImageView>
+
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:gravity="center"
+                    android:text="No meeting found."
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+            </LinearLayout>
 
 
             <TextView
+                android:id="@+id/lblBookSlots"
                 style="@style/CustomTextStylePoppinsBold1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/twenty"
+                android:background="@drawable/bg_orange"
+                android:backgroundTint="@color/PrimaryColor"
                 android:gravity="center"
-                android:text="No meeting found."
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp">
+                android:orientation="horizontal"
+                android:padding="@dimen/ten"
+                android:paddingHorizontal="@dimen/sixteen"
+                android:text="Book Slot"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone">
+
 
             </TextView>
-        </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/lblBookSlots"
-            style="@style/CustomTextStylePoppinsBold1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_orange"
-            android:backgroundTint="@color/PrimaryColor"
-            android:padding="@dimen/ten"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/sixteen"
-            android:text="Book Slot"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone">
-
-
-        </TextView>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rytYourMeeting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cltDateSelection"
-        android:visibility="gone">
+        </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rytsearch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cltDateSelection"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/rytYourMeeting"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:background="@drawable/rect_grey">
+            android:layout_height="0dp"
+            android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/imgSearch1"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_centerVertical="true"
+            <RelativeLayout
+                android:id="@+id/rytsearch"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thirty_five"
                 android:layout_marginStart="@dimen/ten"
-                android:src="@drawable/ic_search_grey" />
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:visibility="gone"
+                android:background="@drawable/rect_grey">
 
-            <EditText
-                android:id="@+id/txtSearchMeeting"
+                <ImageView
+                    android:id="@+id/imgSearch1"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:src="@drawable/ic_search_grey" />
+
+                <EditText
+                    android:id="@+id/txtSearchMeeting"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@id/imgSearch1"
+                    android:background="@android:color/transparent"
+                    android:hint="Search meetings..."
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/lytList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toEndOf="@id/imgSearch1"
-                android:background="@android:color/transparent"
-                android:hint="Search meetings..."
-                android:inputType="text"
-                android:maxLines="1"
-                android:imeOptions="actionDone"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                android:layout_below="@+id/rytsearch"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgNoData"
+                    android:layout_width="350dp"
+                    android:layout_height="350dp"
+                    android:contentDescription="@string/no_data"
+                    android:src="@drawable/nomessages" />
+
+                <TextView
+                    android:id="@+id/txtNoData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_data_found"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyMeetingHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rytsearch"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten" />
+
+
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/lytList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/rytsearch"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/imgNoData"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
-                android:contentDescription="@string/no_data"
-                android:src="@drawable/nomessages" />
-
-            <TextView
-                android:id="@+id/txtNoData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_data_found"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcyMeetingHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rytsearch"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten" />
-
-
-    </RelativeLayout>
-
-
-</RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

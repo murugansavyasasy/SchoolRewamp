@@ -162,11 +162,13 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         appViewModel?.getassignmentlist?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
                 adapter.updateList(response.data)
                 binding.rcyAssignmentReport.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.rcyAssignmentReport.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
                 binding.noDataFound.text = getString(R.string.no_data_found)
@@ -191,6 +193,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             if (response != null) {
                 if (response.status) {
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
                     val isAssignmentReport = response.data
@@ -198,6 +201,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                     loadAssignmentReportData()
                 } else {
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
                     binding.noDataFound.text = getString(R.string.no_data_found)

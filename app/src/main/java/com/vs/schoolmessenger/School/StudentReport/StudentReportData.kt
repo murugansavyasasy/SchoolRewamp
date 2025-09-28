@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.vs.schoolmessenger.Repository.APIKeyNames
 
 
-enum class SortType { NO_ASC, NO_DESC, NAME_ASC, NAME_DESC }
+enum class SortType { NO_ASC, NO_DESC, ROLL_ASC, ROLL_DESC, NAME_ASC, NAME_DESC }
 enum class GenderType { ALL, MALE, FEMALE, OTHERS }
 
 data class StudentReportData(

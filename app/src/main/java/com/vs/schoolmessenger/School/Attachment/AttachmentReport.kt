@@ -17,6 +17,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -85,7 +86,18 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
 
 //        binding.lnrTabOneName.setOnClickListener(this)
 //        binding.lnrTabTwoName.setOnClickListener(this)
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+            if (binding.search.isVisible) {
+                binding.search.visibility = View.GONE
+                binding.edtSearch.text.clear()
+            } else {
+                binding.search.visibility = View.VISIBLE
+                binding.edtSearch.text.clear()
+
+            }
+        }
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isUserDetails = SharedPreference.getUserDetails(this)
@@ -120,16 +132,24 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
             if (response != null) {
                 if (response.status) {
                     binding.rcyAttachment.visibility= View.VISIBLE
-                    binding.lytList.visibility= View.GONE
+                    binding.txtNoData.visibility= View.GONE
+                    binding.nomessage.visibility= View.GONE
                     val isHomeAttachmentReport = response.data
                     isLoadAttachmentReportList(isHomeAttachmentReport)
                 }else{
                     binding.rcyAttachment.visibility= View.GONE
-                    binding.lytList.visibility= View.VISIBLE
+                    binding.txtNoData.visibility= View.VISIBLE
+                    binding.nomessage.visibility= View.VISIBLE
+                    binding.search.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 }
             }else{
                 binding.rcyAttachment.visibility= View.GONE
-                binding.lytList.visibility= View.VISIBLE
+                binding.txtNoData.visibility= View.VISIBLE
+                binding.nomessage.visibility= View.VISIBLE
+                binding.search.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+
             }
         }
 
@@ -146,19 +166,29 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
 
     fun isLoadAttachmentReportList(isHomeAttachmentReport: List<AttachmentDataReport>) {
 
-        mAttachmentReportAdapter = AttachmentReportAdapter(
-            isHomeAttachmentReport,
-            this,
-            this,
-            Constant.isShimmerViewDisable,
-            binding.nomessage,
-            binding.txtNoData
-        )
+        if (isHomeAttachmentReport.isNullOrEmpty()){
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.search.visibility = View.GONE
+
+        }
+        else{
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.search.visibility = View.GONE
+
+            mAttachmentReportAdapter = AttachmentReportAdapter(
+                isHomeAttachmentReport,
+                this,
+                this,
+                Constant.isShimmerViewDisable,
+                binding.nomessage,
+                binding.txtNoData
+            )
 
 
-        binding.rcyAttachment.layoutManager = LinearLayoutManager(this)
-        binding.rcyAttachment.isNestedScrollingEnabled = false
-        binding.rcyAttachment.adapter = mAttachmentReportAdapter
+            binding.rcyAttachment.layoutManager = LinearLayoutManager(this)
+            binding.rcyAttachment.isNestedScrollingEnabled = false
+            binding.rcyAttachment.adapter = mAttachmentReportAdapter
+        }
     }
 
 

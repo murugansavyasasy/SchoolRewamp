@@ -53,8 +53,11 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
             if (binding.rytsearch1.isVisible) {
                 binding.rytsearch1.visibility = View.GONE
+                binding.txtVideoMenu1.text.clear()
             } else {
                 binding.rytsearch1.visibility = View.VISIBLE
+                binding.txtVideoMenu1.text.clear()
+
             }
         }
         appViewModel?.getstudentdetailsforchat?.observe(this) { response ->
@@ -66,10 +69,11 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
             }
             if (response.status) {
                 isLoadStaffData(response.data)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
                 showErrorUI(response.message ?: "No data available")
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.rytsearch1.visibility = View.GONE
+
             }
         }
 
@@ -105,10 +109,13 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
     private fun isLoadStaffData(data: List<StudentChatData>?) {
         if (data.isNullOrEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.rytsearch1.visibility = View.GONE
             showErrorUI(getString(R.string.no_staff_data_available))
             return
         }
-
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        binding.rytsearch1.visibility = View.GONE
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
         binding.rcystudentdata.visibility = View.VISIBLE

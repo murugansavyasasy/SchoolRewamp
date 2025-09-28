@@ -46,10 +46,11 @@
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayoutStatus"
         android:id="@+id/rcyleaverequest"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_below="@+id/tabLayoutStatus"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten">
@@ -60,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcyleaverequest"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayoutStatus"
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

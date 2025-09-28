@@ -10,6 +10,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -84,13 +85,23 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         appViewModel!!.init()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rlaSort.setOnClickListener(this)
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            binding.rytSearchBar.visibility = View.VISIBLE
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+            if (binding.rytSearchBar.isVisible) {
+                binding.rytSearchBar.visibility = View.GONE
+                binding.txtSearchMenu.text.clear()
+            } else {
+                binding.rytSearchBar.visibility = View.VISIBLE
+                binding.txtSearchMenu.text.clear()
+
+            }
         }
+
         binding.imgDelete.setOnClickListener(this)
         binding.tapNameAsc.setOnClickListener(this)
         binding.tapNoDsc.setOnClickListener(this)
+        binding.tapRollAsc.setOnClickListener(this)
+        binding.tapRollDsc.setOnClickListener(this)
         binding.tapNameDsc.setOnClickListener(this)
         binding.tapNoAsc.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -130,9 +141,21 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     mAdapter.updateData(emptyList())
                     binding.tabLayout.visibility = View.GONE
                     ErrorMessage(response.message)
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.rytSearchBar.visibility = View.GONE
                 }
+            }else{
+                originalStudentList = emptyList()
+                currentFilteredList = emptyList()
+                mAdapter.updateData(emptyList())
+                binding.tabLayout.visibility = View.GONE
+                ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.rytSearchBar.visibility = View.GONE
             }
         }
+
+
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             Constant.hideLoading(this@StudentReport)
             if (response != null) {
@@ -157,7 +180,17 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     }
                 }
             }
+            else{
+                originalStudentList = emptyList()
+                currentFilteredList = emptyList()
+                mAdapter.updateData(emptyList())
+                binding.tabLayout.visibility = View.GONE
+                binding.rlaStandardPicking.visibility = View.GONE
+                ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later))
+
+            }
         }
+
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -212,6 +245,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private fun sortList(sortType: SortType) {
         currentSortType = sortType
         val sortedList = when (sortType) {
+            SortType.ROLL_ASC -> currentFilteredList.sortedBy { it.roll_no }
+            SortType.ROLL_DESC -> currentFilteredList.sortedByDescending { it.roll_no }
             SortType.NO_ASC -> currentFilteredList.sortedBy { it.admission_no }
             SortType.NO_DESC -> currentFilteredList.sortedByDescending { it.admission_no }
             SortType.NAME_ASC -> currentFilteredList.sortedBy { it.name }
@@ -240,20 +275,28 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     }
 
     private fun loadStudentReport(studentReportData: List<StudentReportData>) {
-        originalStudentList = studentReportData
-        currentFilteredList = originalStudentList
+        if(studentReportData.isNullOrEmpty()){
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+            binding.rytSearchBar.visibility = View.GONE
+        }
+        else{
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+            binding.rytSearchBar.visibility = View.GONE
+            originalStudentList = studentReportData
+            currentFilteredList = originalStudentList
 
-        mAdapter =
-            StudentReportAdapter(currentFilteredList, this, this, Constant.isShimmerViewDisable)
-        binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
-        binding.rcyStudentReport.adapter = mAdapter
-        //whenever we call the student report we make it as default gender filter all and sort NoAsc
-        genderSpinnerAdapter.selectedPosition = 0
-        genderSpinnerAdapter.notifyDataSetChanged()
-        binding.isGenderCatory.setSelection(0)
-        filterByGender(GenderType.ALL)
-        highlightSelectedTab(binding.tapNameAsc)
-        sortList(SortType.NO_ASC)
+            mAdapter =
+                StudentReportAdapter(currentFilteredList, this, this, Constant.isShimmerViewDisable)
+            binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
+            binding.rcyStudentReport.adapter = mAdapter
+            //whenever we call the student report we make it as default gender filter all and sort NoAsc
+            genderSpinnerAdapter.selectedPosition = 0
+            genderSpinnerAdapter.notifyDataSetChanged()
+            binding.isGenderCatory.setSelection(0)
+            filterByGender(GenderType.ALL)
+            highlightSelectedTab(binding.tapNameAsc)
+            sortList(SortType.NO_ASC)
+        }
     }
 
     private fun isGetStandardSection() {
@@ -270,6 +313,14 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             currentFilteredList.filter { student ->
                 val fieldsToSearch = listOf(
                     student.name.lowercase(),
+                    student.gender.lowercase(),
+                    student.class_teacher.lowercase(),
+                    student.roll_no.lowercase(),
+                    student.admission_no.lowercase(),
+                    student.class_name.lowercase(),
+                    student.section_name.lowercase(),
+                    student.dob.lowercase(),
+                    student.father_name.lowercase(),
                     student.admission_no.lowercase(),
                     student.email.lowercase(),
                     student.primary_mobile.lowercase()
@@ -420,11 +471,15 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.tapNoDsc.isEnabled = true
         binding.tapNameAsc.isEnabled = true
         binding.tapNameDsc.isEnabled = true
+        binding.tapRollAsc.isEnabled = true
+        binding.tapRollDsc.isEnabled = true
         // Reset all tabs to white
         binding.tapNoAsc.setBackgroundResource(R.drawable.light_gray_radius)
         binding.tapNoDsc.setBackgroundResource(R.drawable.light_gray_radius)
         binding.tapNameAsc.setBackgroundResource(R.drawable.light_gray_radius)
         binding.tapNameDsc.setBackgroundResource(R.drawable.light_gray_radius)
+        binding.tapRollAsc.setBackgroundResource(R.drawable.light_gray_radius)
+        binding.tapRollDsc.setBackgroundResource(R.drawable.light_gray_radius)
 
         // Highlight the selected tab
         selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
@@ -446,6 +501,16 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
+            }
+
+            R.id.tapRollAsc -> {
+                highlightSelectedTab(binding.tapRollAsc)
+                sortList(SortType.ROLL_ASC)
+            }
+
+            R.id.tapRollDsc -> {
+                highlightSelectedTab(binding.tapRollDsc)
+                sortList(SortType.ROLL_DESC)
             }
 
             R.id.tapNoAsc -> {
