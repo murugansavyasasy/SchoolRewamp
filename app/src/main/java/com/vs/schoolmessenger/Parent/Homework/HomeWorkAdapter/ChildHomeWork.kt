@@ -130,6 +130,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.btnSubmit.setOnClickListener(this)
 
+        binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
+        if(Constant.isSchoolMenuName.isNullOrBlank()) {
+            binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
+        } else {
+            binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
+        }
         binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
             Log.d("ChildHomeWork", "Button clicked!")
             LsrwSubmitSkill()
@@ -151,7 +157,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
-            binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
+            if(Constant.isSchoolMenuName.isNullOrBlank()) {
+                binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
+            } else {
+                binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
+            }
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
             binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
@@ -397,7 +407,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 //            binding.lblPostedDate.visibility = View.GONE
             binding.lblPostedBy.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
-            binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
+
+            if(Constant.isSchoolMenuName.isNullOrBlank()) {
+                binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
+            } else {
+                binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
+            }
+
         }
 
         for (i in data!!.fileList.indices) {

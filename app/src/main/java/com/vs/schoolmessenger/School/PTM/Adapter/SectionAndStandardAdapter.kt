@@ -82,12 +82,10 @@ class SectionAndStandardAdapter(
 
             lblClasses.setOnClickListener {
                 if (selectedItems.contains(itemKey)) {
-                    // Unselect
                     selectedItems.remove(itemKey)
                     lblClasses.background = context.getDrawable(R.drawable.gray_bg_radius)
                     lblClasses.setTextColor(context.getColor(R.color.black))
                 } else {
-                    // Select
                     selectedItems.add(itemKey)
                     lblClasses.background = context.getDrawable(R.drawable.bg_button_blue_color)
                     lblClasses.setTextColor(context.getColor(R.color.white))
