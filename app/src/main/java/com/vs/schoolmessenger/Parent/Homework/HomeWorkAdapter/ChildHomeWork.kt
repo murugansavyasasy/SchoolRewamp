@@ -515,6 +515,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         builder.setTitle("Well done!")
         builder.setCancelable(false)
         builder.setPositiveButton("Ok") { dialog, which ->
+            Constant.isCompletedHomeworkId=isHomeworkId
             finish()
         }
         val alertDialog = builder.create()

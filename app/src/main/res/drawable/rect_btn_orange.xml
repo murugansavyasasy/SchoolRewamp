@@ -1,6 +1,13 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-<!--    <solid android:color="@color/dark_orange"-->
-    <solid android:color="#e26b26"
+    <!--    <solid android:color="@color/dark_orange"-->
+    <solid android:color="@color/PrimaryColor"
         android:shape="rectangle"/>
     <corners android:radius="6dp" />
 </shape>
+
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--&lt;!&ndash;    <solid android:color="@color/dark_orange"&ndash;&gt;-->
+<!--    <solid android:color="#e26b26"-->
+<!--        android:shape="rectangle"/>-->
+<!--    <corners android:radius="6dp" />-->
+<!--</shape>-->

@@ -47,6 +47,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/imgSearch"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                android:scrollHorizontally="true"
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
                 />

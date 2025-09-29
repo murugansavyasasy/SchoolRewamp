@@ -183,8 +183,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                     binding.rytNoDataFound.visibility = View.GONE
                     binding.recyclerViewSlots.visibility = View.VISIBLE
                     isLoadMeetingData(response.data)
-                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-
                 } else {
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.rytNoDataFound.visibility = View.VISIBLE
@@ -258,37 +256,44 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
     }
 
     fun isLoadMeetingData(data: List<MeetingDataWrapper>) {
-        binding.rcyMeetingHistory.layoutManager = LinearLayoutManager(this)
+        if (data.isNullOrEmpty()){
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        }
+        else{
 
-        val meetingItems = mutableListOf<MeetingListItem>()
+            binding.rcyMeetingHistory.layoutManager = LinearLayoutManager(this)
 
-        val todayMeetings = data.firstOrNull()?.today ?: emptyList()
-        val upcomingMeetings = data.firstOrNull()?.upcoming ?: emptyList()
-        val completedMeetings = data.firstOrNull()?.completed ?: emptyList()
+            val meetingItems = mutableListOf<MeetingListItem>()
 
-        if (todayMeetings.isNotEmpty()) {
-            meetingItems.add(MeetingListItem.Header("Today"))
-            todayMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
+            val todayMeetings = data.firstOrNull()?.today ?: emptyList()
+            val upcomingMeetings = data.firstOrNull()?.upcoming ?: emptyList()
+            val completedMeetings = data.firstOrNull()?.completed ?: emptyList()
+
+            if (todayMeetings.isNotEmpty()) {
+                meetingItems.add(MeetingListItem.Header("Today"))
+                todayMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
+            }
+
+            if (upcomingMeetings.isNotEmpty()) {
+                meetingItems.add(MeetingListItem.Header("Upcoming"))
+                upcomingMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
+            }
+
+            if (completedMeetings.isNotEmpty()) {
+                meetingItems.add(MeetingListItem.Header("Completed Meetings"))
+                completedMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
+            }
+
+
+            val adapter = MeetingHistoryAdapter(meetingItems, this) { isEmpty ->
+                binding.lytList.visibility = if (isEmpty) View.VISIBLE else View.GONE
+                binding.rcyMeetingHistory.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            }
+
+            isMeetingHistoryAdapter = adapter
+            binding.rcyMeetingHistory.adapter = adapter
         }
 
-        if (upcomingMeetings.isNotEmpty()) {
-            meetingItems.add(MeetingListItem.Header("Upcoming"))
-            upcomingMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
-        }
-
-        if (completedMeetings.isNotEmpty()) {
-            meetingItems.add(MeetingListItem.Header("Completed Meetings"))
-            completedMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
-        }
-
-
-        val adapter = MeetingHistoryAdapter(meetingItems, this) { isEmpty ->
-            binding.lytList.visibility = if (isEmpty) View.VISIBLE else View.GONE
-            binding.rcyMeetingHistory.visibility = if (isEmpty) View.GONE else View.VISIBLE
-        }
-
-        isMeetingHistoryAdapter = adapter
-        binding.rcyMeetingHistory.adapter = adapter
     }
 
 
@@ -365,6 +370,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         binding.lblScheduleMeeting.background = null
         binding.lblYourMeeting.background = null
         isSelectedTab.background = this.getDrawable(R.drawable.white_radious)
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(binding.txtSearchMeeting, InputMethodManager.SHOW_IMPLICIT)
 
         if (isSelectedTab == binding.lblYourMeeting) {
             binding.rytScheduleMeeting.visibility = View.GONE
@@ -377,7 +384,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         } else {
             binding.rytYourMeeting.visibility = View.GONE
             binding.rytScheduleMeeting.visibility = View.VISIBLE
-            binding.toolbarLayout.imgBack.visibility = View.GONE
+            binding.toolbarLayout.imgBack.visibility = View.VISIBLE
             binding.rytsearch.visibility = View.GONE
             binding.txtSearchMeeting.setText("")
         }

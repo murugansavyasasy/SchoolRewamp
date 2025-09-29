@@ -36,7 +36,6 @@
         android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/five"
-
         android:visibility="gone">
 
         <RelativeLayout
@@ -66,6 +65,10 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="@string/lblSearch"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                android:scrollHorizontally="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -80,6 +83,7 @@
             android:layout_marginEnd="@dimen/eight"
             android:background="@drawable/white_circle_bg"
             android:padding="@dimen/five"
+            android:visibility="gone"
             android:src="@drawable/del_icon">
 
         </ImageView>
@@ -217,12 +221,64 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
                     android:gravity="center"
                     android:padding="@dimen/ten"
                     android:text="@string/namedsc"
                     android:textSize="@dimen/ten_sp" />
+
+
+                <TextView
+                    android:id="@+id/tapRollAsc"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="@string/roll_no"
+                    android:drawableEnd="@drawable/arrow_down2"
+                    android:textSize="@dimen/ten_sp" />
+
+
+                <TextView
+                    android:id="@+id/tapRollDsc"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:drawableEnd="@drawable/arrow_up"
+                    android:text="@string/roll_no"
+                    android:textSize="@dimen/ten_sp">
+                </TextView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <TextView
                     android:id="@+id/tapNoAsc"
@@ -356,9 +412,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rlaStandardPicking"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/rcyStudentReport"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_below="@+id/rlaStandardPicking"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten">
@@ -367,7 +424,7 @@
     <LinearLayout
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcyStudentReport"
+        app:layout_constraintTop_toBottomOf="@+id/rlaStandardPicking"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/lytNoDataFound"
         android:layout_width="wrap_content"

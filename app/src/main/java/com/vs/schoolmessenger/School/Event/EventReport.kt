@@ -111,11 +111,24 @@ class EventReport  : BaseActivity<EventReportBinding>(),
             startActivity(intent)
         }
 
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rytSearch323.visibility == View.VISIBLE) {
+                binding.rytSearch323.visibility = View.GONE
+                binding.edtSearch.text.clear()
+
+            } else {
+                binding.rytSearch323.visibility = View.VISIBLE
+                binding.edtSearch.text.clear()
+            }
+        }
+
 
 
         appViewModel?.IsGetEventSchoolReport?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.rytSearch323.visibility = View.GONE
 
                 val data = response.data[0]
 
@@ -151,6 +164,8 @@ class EventReport  : BaseActivity<EventReportBinding>(),
                 isloadCompletedData(allCompletedEvents)
 
             } else {
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.rytSearch323.visibility = View.GONE
                 hideAllSections()
             }
         }

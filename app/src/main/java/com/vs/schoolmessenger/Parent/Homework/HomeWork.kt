@@ -176,6 +176,23 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         return list
     }
 
+    fun updateList(homeworkId: String) {
+        val data = mAdapter?.isHomeWorkData?.find { it.id == homeworkId }
+        data?.let {
+            val updatedData = it.copy(is_completed = true)
+            mAdapter?.updateItem(updatedData)
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        Constant.isCompletedHomeworkId?.let { homeworkId ->
+            updateList(homeworkId)
+            Constant.isCompletedHomeworkId = null
+        }
+    }
+
 
 
     override fun onClick(v: View?) {
@@ -221,6 +238,9 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             isAccessToken?.let {
                 appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
             }
+            // locally mark as read (before/after API success)
+            val updatedData = data.copy(is_unread = false)
+            mAdapter?.updateItem(updatedData)
         }
 
         val isHomeWorkData = FilePreview(

@@ -273,6 +273,10 @@
             android:layout_toEndOf="@id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
@@ -306,6 +310,7 @@
             android:layout_marginTop="@dimen/five"
             android:layout_toStartOf="@+id/btnDone"
             android:gravity="start"
+            android:visibility="gone"
             android:text="Selected Files : 0"
             android:textColor="@color/white" />
 
