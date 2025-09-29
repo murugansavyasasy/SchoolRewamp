@@ -165,9 +165,8 @@ class NoticeBoardAdapter(
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 rcyImgPDF.adapter =
                     FilePathAdapter(visibleList, fileList, context, Constant.isShimmerViewDisable)
-
-                setupPreviewListeners(noticeData)
             }
+            setupPreviewListeners(noticeData)
 
             remaindertag.setOnClickListener { showReminderPicker(context) }
         }

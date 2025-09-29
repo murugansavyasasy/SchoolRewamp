@@ -130,6 +130,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.btnSubmit.setOnClickListener(this)
 
+        binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblStudentName.setText(Constant.isSchoolMenuName)
         binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
             Log.d("ChildHomeWork", "Button clicked!")
             LsrwSubmitSkill()
