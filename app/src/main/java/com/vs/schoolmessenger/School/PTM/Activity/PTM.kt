@@ -147,7 +147,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         binding.lblSlotCount.text = if (todayList.isNotEmpty()) {
             "You have ${todayList.size} meeting's today"
         } else {
-            "No meeting's today"
+            "You have 0 meeting's today"
         }
     }
 
