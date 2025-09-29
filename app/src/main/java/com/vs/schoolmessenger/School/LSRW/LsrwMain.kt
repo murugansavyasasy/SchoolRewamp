@@ -54,10 +54,10 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         isAccessToken = isStaffDetails?.access_token
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblSchoolName.text = getString(R.string.listening_speaking_reading_writing)
+        binding.toolbarLayout.lblSchoolName.text =
+            getString(R.string.listening_speaking_reading_writing)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.newtaskbutton.setOnClickListener(this)
-
 
         binding.rcylsrwreport.layoutManager = LinearLayoutManager(this)
         adapter = LsrwAdapter(
@@ -68,7 +68,6 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         )
         binding.rcylsrwreport.adapter = adapter
 
-
         binding.rcylsrwcompletedreport.layoutManager = LinearLayoutManager(this)
         completedviewadapter = LsrwCompletedAdapter(
             itemList = emptyList(),
@@ -78,18 +77,17 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         )
         binding.rcylsrwcompletedreport.adapter = completedviewadapter
 
-
         binding.rcylsrwheader.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         dashboardviewadapter = LsRwDashboardAdapter(
             itemList = emptyList(),
             context = this,
-            onDashboardClick = { overviewItem ->
+            onDashboardClick = {
                 val intent = Intent(this, ActiveTaskList::class.java)
                 intent.putParcelableArrayListExtra(Constant.TASK_LIST, ArrayList(allTaskItems))
                 startActivity(intent)
             },
-            onCompletedClick = { overviewItem ->
+            onCompletedClick = {
                 val intent = Intent(this, CompletedTaskList::class.java)
                 intent.putParcelableArrayListExtra(
                     Constant.COMPLETED_TASK_LIST,
@@ -98,11 +96,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
                 startActivity(intent)
             }
         )
-
-
-
         binding.rcylsrwheader.adapter = dashboardviewadapter
-
 
         fetchLsrwSkillReportData()
 
@@ -111,33 +105,21 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
 
-
                 allOverviewItems = data.overview
                 dashboardviewadapter.updateList(allOverviewItems)
 
-
                 allTaskItems = data.active
                 adapter.updateList(allTaskItems)
-
 
                 allCompletedItems = data.completed
                 completedviewadapter.updateList(allCompletedItems)
 
                 setupFilters(allTaskItems, allCompletedItems)
 
-                binding.rcylsrwreport.visibility = View.VISIBLE
-                binding.headerLabel.visibility = View.VISIBLE
-                binding.completedLabel.visibility = View.VISIBLE
-                binding.rcylsrwcompletedreport.visibility = View.VISIBLE
-                binding.noDataFound.visibility = View.GONE
-                binding.noDataImage.visibility = View.GONE
+                handleVisibility(allTaskItems, allCompletedItems)
+
             } else {
-                binding.rcylsrwreport.visibility = View.GONE
-                binding.headerLabel.visibility = View.GONE
-                binding.completedLabel.visibility = View.GONE
-                binding.rcylsrwcompletedreport.visibility = View.GONE
-                binding.noDataFound.visibility = View.VISIBLE
-                binding.noDataImage.visibility = View.VISIBLE
+                handleVisibility(emptyList(), emptyList())
             }
         }
     }
@@ -169,39 +151,54 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
             val filteredActive: List<LsrwTask>
             val filteredCompleted: List<LsrwTask>
 
-            if (selectedFilter == Constant.All_) {
-                filteredActive = allTaskItems
-                filteredCompleted = allCompletedItems
-            } else if (selectedFilter == "Pending") {
-                filteredActive = allTaskItems
-                filteredCompleted = emptyList()
-            } else if (selectedFilter == "Completed") {
-                filteredActive = emptyList()
-                filteredCompleted = allCompletedItems
-            } else {
-                filteredActive = allTaskItems.filter { it.activity_type == selectedFilter }
-                filteredCompleted = allCompletedItems.filter { it.activity_type == selectedFilter }
+            when (selectedFilter) {
+                Constant.All_ -> {
+                    filteredActive = allTaskItems
+                    filteredCompleted = allCompletedItems
+                }
+                "Pending" -> {
+                    filteredActive = allTaskItems
+                    filteredCompleted = emptyList()
+                }
+                "Completed" -> {
+                    filteredActive = emptyList()
+                    filteredCompleted = allCompletedItems
+                }
+                else -> {
+                    filteredActive = allTaskItems.filter { it.activity_type == selectedFilter }
+                    filteredCompleted = allCompletedItems.filter { it.activity_type == selectedFilter }
+                }
             }
 
             adapter.updateList(filteredActive)
             completedviewadapter.updateList(filteredCompleted)
 
-            binding.rcylsrwreport.visibility = if (filteredActive.isNotEmpty()) View.VISIBLE else View.GONE
-            binding.headerLabel.visibility = if (filteredActive.isNotEmpty()) View.VISIBLE else View.GONE
-            binding.rcylsrwcompletedreport.visibility = if (filteredCompleted.isNotEmpty()) View.VISIBLE else View.GONE
-            binding.completedLabel.visibility = if (filteredCompleted.isNotEmpty()) View.VISIBLE else View.GONE
-
-            if (filteredActive.isEmpty() && filteredCompleted.isEmpty()) {
-                binding.noDataFound.visibility = View.VISIBLE
-                binding.noDataImage.visibility = View.VISIBLE
-            } else {
-                binding.noDataFound.visibility = View.GONE
-                binding.noDataImage.visibility = View.GONE
-            }
+            handleVisibility(filteredActive, filteredCompleted)
         }
 
         binding.rcyFilter.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcyFilter.adapter = filterAdapter
+    }
+
+    private fun handleVisibility(active: List<LsrwTask>, completed: List<LsrwTask>) {
+        val hasActive = active.isNotEmpty()
+        val hasCompleted = completed.isNotEmpty()
+
+        binding.rcylsrwreport.visibility = if (hasActive) View.VISIBLE else View.GONE
+        binding.headerLabel.visibility = if (hasActive) View.VISIBLE else View.GONE
+
+        binding.rcylsrwcompletedreport.visibility = if (hasCompleted) View.VISIBLE else View.GONE
+        binding.completedLabel.visibility = if (hasCompleted) View.VISIBLE else View.GONE
+
+        if (!hasActive && !hasCompleted) {
+            binding.lytNoDataFound.visibility = View.VISIBLE
+            binding.noDataFound.visibility = View.VISIBLE
+            binding.noDataImage.visibility = View.VISIBLE
+        } else {
+            binding.lytNoDataFound.visibility = View.GONE
+            binding.noDataFound.visibility = View.GONE
+            binding.noDataImage.visibility = View.GONE
+        }
     }
 }

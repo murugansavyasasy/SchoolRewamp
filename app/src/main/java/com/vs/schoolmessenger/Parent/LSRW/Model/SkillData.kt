@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Parent.LSRW.Model
+
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 
 data class SkillData(
@@ -13,7 +14,7 @@ data class SkillData(
     val time: String,
     val submitted_date: String,
     val is_submitted: Boolean,
-    val is_unread: Boolean,
+    var is_unread: Boolean,
     val sent_by: String,
     val iframe: String,
     val file_size: String,

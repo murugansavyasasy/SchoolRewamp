@@ -56,7 +56,7 @@ class AssignmentParentAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.assignment_parent_report_item, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view, context, listener)
         }
     }
 
@@ -102,7 +102,7 @@ class AssignmentParentAdapter(
         return if (isLoading) 20 else filteredList.size
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
+    class DataViewHolder(itemView: View, private val context: Context,  private val listener: AssignmentClickListener) :
         RecyclerView.ViewHolder(itemView) {
 
         private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
@@ -121,6 +121,7 @@ class AssignmentParentAdapter(
         private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
         private val lblsubject: TextView = itemView.findViewById(R.id.lblsubject)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
+        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
 
         private val headerrelative_layout: RelativeLayout =
             itemView.findViewById(R.id.headerrelative_layout)
@@ -146,6 +147,20 @@ class AssignmentParentAdapter(
             }
 
 
+            imgNewImage.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+
+
+            val markAsRead = {
+                if (data.is_unread) {
+                    data.is_unread = false
+                    imgNewImage.visibility = View.GONE
+                    listener.onReadStatusClick(data, adapterPosition)
+                }
+            }
+
+            headerrelative_layout.setOnClickListener {
+                markAsRead()
+            }
 
             val hasFiles = !data.file_path.isNullOrEmpty()
 
@@ -154,6 +169,7 @@ class AssignmentParentAdapter(
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
+                markAsRead()
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -185,7 +201,7 @@ class AssignmentParentAdapter(
             }
 
             rytList.setOnClickListener {
-
+                markAsRead()
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -219,6 +235,7 @@ class AssignmentParentAdapter(
 
             rcyAssignment.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
                 override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    markAsRead()
                     val child = rv.findChildViewUnder(e.x, e.y)
                     if (child != null && e.action == MotionEvent.ACTION_UP) {
                         rv.getChildAdapterPosition(child)
@@ -257,6 +274,7 @@ class AssignmentParentAdapter(
             })
 
             lblSubmitted.setOnClickListener {
+                markAsRead()
                 val intent = Intent(context, Mysubmission::class.java)
                 intent.putExtra(Constant.assignment_id, data.header_id)
                 intent.putExtra(Constant.title_, data.title)
@@ -264,6 +282,7 @@ class AssignmentParentAdapter(
                 context.startActivity(intent)
             }
             lblNotSubmitted.setOnClickListener {
+                markAsRead()
                 val intent = Intent(context, MyAssignmentSubmit::class.java)
                 intent.putExtra(Constant.assignment_id, data.header_id)
                 intent.putExtra(Constant.title_, data.title)

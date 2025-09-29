@@ -113,6 +113,7 @@ object Constant {
     var isNonTeachingStaffRole: String? = "p5"
     val M_ABSENTEES_REPORT = 1
     val M_ASSIGNMENT = 2
+
     val M_ATTENDANCE_MARKING = 3
     val M_ATTENDANCE_REPORT = 4
     val M_CERTIFICATE_REQUEST = 5

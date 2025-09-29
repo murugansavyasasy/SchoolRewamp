@@ -5,7 +5,9 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
@@ -115,4 +117,19 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
     override fun onNotSubmittedClick(data: AssignmentData) {
         TODO("Not yet implemented")
     }
+
+    override fun onItemClick(
+        data: AssignmentData,
+        holder: AssignmentAdapter.DataViewHolder
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onReadStatusClick(
+        isData: ParentAssignmentData,
+        isPosition: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
 }

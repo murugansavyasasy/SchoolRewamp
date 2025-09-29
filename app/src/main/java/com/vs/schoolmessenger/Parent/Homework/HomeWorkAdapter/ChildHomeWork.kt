@@ -177,6 +177,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.fragmentContainer.visibility = View.GONE
 
         } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false) {
+            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
             if (data!!.assignmentid == "Listening") {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.headphonesvgformat)
             } else if (data!!.assignmentid == "Speaking") {
@@ -192,6 +193,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
                 "Listening,Speaking,Reading,Writing"
+
             binding.toolbarLayout.imgBack.visibility = View.VISIBLE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.root.visibility = View.VISIBLE
@@ -340,11 +342,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if (data?.created_date.isNullOrBlank()) {
-            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
-        } else {
-            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
-        }
+//        if (data?.created_date.isNullOrBlank()) {
+//            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
+//        } else {
+//            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+//        }
 
 
         binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener(this)

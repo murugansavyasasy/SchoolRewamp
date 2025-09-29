@@ -48,6 +48,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -702,6 +703,20 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         intent.putExtra(Constant.assignment_id, data.id)
         intent.putExtra(Constant.type, Constant.NOTSUBMITTED)
         startActivity(intent)
+    }
+
+    override fun onItemClick(
+        data: AssignmentData,
+        holder: AssignmentAdapter.DataViewHolder
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onReadStatusClick(
+        isData: ParentAssignmentData,
+        isPosition: Int
+    ) {
+        TODO("Not yet implemented")
     }
 
 
