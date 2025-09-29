@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionEditResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
@@ -357,7 +358,6 @@ interface ApiInterfaces {
     fun isAssignmentUpdate(
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<HomeWorkSendResponse>?
-
 
 
     @POST(APIMethods.isSendVoice)
@@ -885,7 +885,6 @@ interface ApiInterfaces {
     ): Call<AvgSkillResponse?>?
 
 
-
     @PUT(APIMethods.islsrwremarkupdate)
     fun islsrwremarkupdate(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
@@ -931,6 +930,7 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
     ): Call<StatusMessageModel?>?
+
     @GET(APIMethods.isSlotsAvailabilityForStudent)
     fun isSlotsAvailabilityForStudent(
         @Header(APIKeyNames.Authorization) token: String,
@@ -969,8 +969,6 @@ interface ApiInterfaces {
     fun isSubjectListClassTeacher(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<SubjectResponse?>?
-
-
 
 
     @GET(APIMethods.isGetQuizExamList)
@@ -1075,7 +1073,7 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String
     ): Call<ProfileListResponse?>?
 
-    
+
     @GET(APIMethods.islsrwmysubmission)
     fun islsrwmysubmission(
         @Header(APIKeyNames.Authorization) token: String,
@@ -1100,4 +1098,10 @@ interface ApiInterfaces {
         @Query("invoice_id") invoiceId: String
     ): Call<InvoiceDetailsResponse>
 
+
+    @PUT(APIMethods.getmysubmissionedit)
+    fun getmysubmissionedit(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+        ): Call<MySubmissionEditResponse?>
 }

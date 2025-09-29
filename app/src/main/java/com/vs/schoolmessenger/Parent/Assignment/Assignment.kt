@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
+import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -172,6 +173,14 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             addProperty(APIKeyNames.detail_id, isData.id)
         }
         appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+    }
+
+    override fun onClickListener(
+        data: SubmittedAssignment,
+        anchorView: View,
+        adapterPosition: Int
+    ) {
+        TODO("Not yet implemented")
     }
 
 

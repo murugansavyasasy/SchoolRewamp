@@ -282,6 +282,7 @@ object Constant {
     var section_data = "section_data"
     var create_quiz_exam_data = "create_quiz_exam_data"
     var notice_data = "notice_data"
+    var mysubmission_data = "mysubmission_data"
     var event_data = "event_data"
     var assignment_data = "assignment_data"
     var homework_data = "homework_data"

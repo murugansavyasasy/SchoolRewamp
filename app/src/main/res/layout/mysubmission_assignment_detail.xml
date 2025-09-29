@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rect_shadow_white"
-   >
+    >
 
     <TextView
         android:id="@+id/lblTitle"
@@ -106,7 +106,6 @@
             android:id="@+id/rytList2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
             android:minHeight="@dimen/sixty"
             android:orientation="horizontal"
             android:visibility="gone">
@@ -182,19 +181,47 @@
             android:visibility="gone" />
 
     </LinearLayout>
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/rightContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/submitteddetails"
-        android:text="Submitted on "
-        android:textColor="@color/red"
-        style="@style/CustomTextStylePoppinsMedium"
         android:layout_below="@+id/rytList"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginBottom="@dimen/ten"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/submitteddetails"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submitted on "
+            android:textColor="@color/red"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/rightIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/edit_icon_1_2_3"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/rightText"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/grey"/>
+    </LinearLayout>
+
+
 
 </RelativeLayout>

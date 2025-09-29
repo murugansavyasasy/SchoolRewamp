@@ -114,6 +114,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
+
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
@@ -146,7 +147,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 if (result.resultCode == RESULT_OK) {
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    if(Constant.Remaining!! > 0) {
+                    if (Constant.Remaining!! > 0) {
                         Constant.Remaining = Constant.Remaining - selectedUris!!.size
                         selectedUris?.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
@@ -181,10 +182,9 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
-                            if(Constant.selectedFiles.size < MAX_FILES +1) {
+                            if (Constant.selectedFiles.size < MAX_FILES + 1) {
                                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                            }
-                            else{
+                            } else {
                                 Constant.Remaining = 0
                             }
 
@@ -503,8 +503,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this,
-                        getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -594,8 +596,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this,
-                    getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT
+                ).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -646,8 +650,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this,
-                    getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
@@ -660,7 +666,11 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         if (resultCode != RESULT_OK) return
 
         if (Constant.Remaining!! == 0) {
-            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -686,10 +696,9 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
-            if(Constant.selectedFiles.size < MAX_FILES +1) {
+            if (Constant.selectedFiles.size < MAX_FILES + 1) {
                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
-            }
-            else{
+            } else {
                 Constant.Remaining = 0
             }
             for (item in Constant.selectedFiles) {
@@ -714,12 +723,18 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
                         addPath(uri)
                     } else {
-                        Toast.makeText(this,
-                            getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this,
+                            getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_image_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
