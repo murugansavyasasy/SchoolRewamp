@@ -230,6 +230,9 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                             if(Constant.selectedFiles.size < MAX_FILES +1) {
                                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
                             }
+                            else{
+                                Constant.Remaining = 0
+                            }
 
                             Log.d("SelectedFile", "URI: $uri, Type: $type")
                         }
@@ -544,6 +547,9 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
             if(Constant.selectedFiles.size < MAX_FILES +1) {
                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            }
+            else{
+                Constant.Remaining = 0
             }
             for (item in Constant.selectedFiles) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
