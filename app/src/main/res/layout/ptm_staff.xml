@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Today Meeting"
+                android:text="Today Meetings"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
 
@@ -204,7 +204,7 @@
                 android:layout_below="@+id/rcyToday"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:text="UpComing Meeting"
+                android:text="Upcoming Meetings"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
 
@@ -231,7 +231,7 @@
                 android:layout_below="@+id/rcyUpcoming"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Complete Meeting"
+                android:text="Completed Meetings"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
 

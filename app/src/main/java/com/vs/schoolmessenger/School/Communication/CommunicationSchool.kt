@@ -211,8 +211,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         changeLabel()
         binding.SwitchEmergencyVoice.setOnClickListener {
-            if (mediaPlayer!!.isPlaying) {
-                mediaPlayer!!.stop()
+            mediaPlayer?.let { player ->
+                if (player.isPlaying) {
+                    player.stop()
+                }
             }
             if (isRecording) {
                 stopRecording()

@@ -187,7 +187,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             }
             popupWindow.dismiss()
         }
-
         popupWindow.showAsDropDown(anchor)
     }
 

@@ -23,12 +23,11 @@
 
             <TextView
                 android:id="@+id/lblFirstLetter"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="S"
-                style="@style/CustomTextStylePoppinsBold"
-                />
+                android:text="S" />
         </RelativeLayout>
 
         <!-- Name and Details Section -->
@@ -41,20 +40,18 @@
 
             <TextView
                 android:id="@+id/lblName"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="sathish             "
-                style="@style/CustomTextStylePoppinsBold"
-                />
+                android:text="sathish             " />
 
             <TextView
                 android:id="@+id/lblRegNo"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ajith"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/light_gray"
-                 />
+                android:textColor="@color/light_gray" />
 
         </LinearLayout>
 
@@ -63,10 +60,10 @@
             android:id="@+id/ivArrow"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/fourty"
-            android:visibility="gone"
             android:layout_marginEnd="@dimen/thirty"
             android:padding="@dimen/five"
-            android:src="@drawable/ic_down_round" />
+            android:src="@drawable/ic_down_round"
+            android:visibility="gone" />
 
         <CheckBox
             android:id="@+id/cbSelect"
@@ -79,8 +76,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/point_five"
         android:layout_below="@+id/lytName"
-        android:layout_marginTop="@dimen/five"
         android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/ten"
         android:background="@color/grey_mild">
 
