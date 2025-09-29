@@ -44,7 +44,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.lblHeaderTitle.text=Constant.isParentMenuName
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
             if (binding.rytSearch1.visibility == View.VISIBLE) {
@@ -92,10 +91,11 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 binding.txtNoData.visibility = View.GONE
 //                binding.lytList.visibility = View.GONE
                 binding.nomessage.visibility = View.GONE
-
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 binding.recycleracademic.visibility = View.VISIBLE
                 isLoadData(response.data)
             } else {
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 showEmptyState(response?.message ?: getString(R.string.no_data_found))
             }
         }

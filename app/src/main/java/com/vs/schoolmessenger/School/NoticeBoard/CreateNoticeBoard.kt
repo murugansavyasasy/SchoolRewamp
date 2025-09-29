@@ -233,8 +233,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
-
-                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            if(Constant.selectedFiles.size < MAX_FILES +1) {
+                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            }
                             Log.d("SelectedFile", "URI: $uri, Type: $type")
                         }
                         mAdapter!!.notifyDataSetChanged()
@@ -702,8 +703,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
-
-            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            if(Constant.selectedFiles.size < MAX_FILES +1) {
+                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            }
             for (item in Constant.selectedFiles) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
             }

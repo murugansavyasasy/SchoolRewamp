@@ -78,7 +78,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         isMenuCount=Constant.isSchoolMenuCount
@@ -98,12 +97,14 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 }
                 else {
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.rytSearch1.visibility = View.GONE
                     binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                     binding.rcMessageStaff.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.rytSearch1.visibility = View.GONE
                 binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                 binding.rcMessageStaff.visibility = View.GONE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
@@ -213,6 +214,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private fun isLoadMsgStaff(data: List<GetMessagesStaffData>) {
         if (data.isNotEmpty()) {
             binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.rytSearch1.visibility = View.GONE
             adapter = MessageFromStaffAdapter(data,this, this, Constant.isShimmerViewDisable)
             binding.rcMessageStaff.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
             binding.rcMessageStaff.adapter = adapter
@@ -221,6 +223,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             binding.lytList.visibility = View.GONE
         } else {
             binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.rytSearch1.visibility = View.GONE
             binding.rcMessageStaff.visibility = View.GONE
             binding.lytList.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_data_found)

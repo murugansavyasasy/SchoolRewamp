@@ -67,7 +67,6 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
             } else {
@@ -91,9 +90,17 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
 
     private fun isloadhomeworkData(newData: List<Notice>?) {
-        mAdapter =
-            NoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcyNoticeBoard.adapter = mAdapter
+
+        if (newData.isNullOrEmpty()){
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        }
+        else{
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            mAdapter =
+                NoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
+            binding.rcyNoticeBoard.adapter = mAdapter
+        }
+
     }
 
     override fun onClick(p0: View?) {

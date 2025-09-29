@@ -13,7 +13,7 @@ import com.vs.schoolmessenger.databinding.HomeworkParentItemBinding
 import java.util.Locale
 
 class HomeworkParentAdapter(
-    private var isHomeWorkData: List<GetHomeworkDetails>,
+    var isHomeWorkData: List<GetHomeworkDetails>,
     private val listener: HomeWorkDateClickListener,
     private var isLoading: Boolean,
     isHomeWorkDate: String
@@ -52,6 +52,19 @@ class HomeworkParentAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 5 else isHomeWorkData.size
     }
+
+
+    fun updateItem(updatedItem: GetHomeworkDetails) {
+        val index = isHomeWorkData.indexOfFirst { it.id == updatedItem.id }
+        if (index != -1) {
+            val mutableList = isHomeWorkData.toMutableList()
+            mutableList[index] = updatedItem
+            isHomeWorkData = mutableList
+            originalList = mutableList
+            notifyItemChanged(index)
+        }
+    }
+
 
 
     fun updateList(newData: List<GetHomeworkDetails>, date: String) {

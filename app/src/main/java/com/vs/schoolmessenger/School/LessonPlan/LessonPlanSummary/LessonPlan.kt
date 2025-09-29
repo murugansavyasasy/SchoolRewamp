@@ -48,7 +48,6 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
@@ -116,13 +115,22 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     }
 
     private fun islpStaffData(data: List<AllClassData>?, requestType: String) {
-        lessonplanAdapter = LessonPlanPicChartAdapter(
-            data, this, this, Constant.isShimmerViewDisable, requestType
-        )
-        binding.rcyLessonPlan.adapter = lessonplanAdapter
+        if(data.isNullOrEmpty()){
+            binding.rytSearch1.visibility = View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        }
+        else{
+            binding.rytSearch1.visibility = View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            lessonplanAdapter = LessonPlanPicChartAdapter(
+                data, this, this, Constant.isShimmerViewDisable, requestType
+            )
+            binding.rcyLessonPlan.adapter = lessonplanAdapter
+        }
     }
 
     private fun loadlpAllClassdata(requestType: String) {
+
 
         currentRequestType = requestType
         lessonplanAdapter =

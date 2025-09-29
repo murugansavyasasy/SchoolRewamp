@@ -192,7 +192,12 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
-                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            if(Constant.selectedFiles.size < MAX_FILES +1) {
+                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            }
+                            else{
+                                Constant.Remaining = 0
+                            }
                             Log.d("SelectedFile", "URI: $uri, Type: $type")
                             Log.d("FisSelectedFile", Constant.selectedFiles.size.toString())
                         }
@@ -468,7 +473,12 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 else -> FileType.OTHER
             }
 
-            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            if(Constant.selectedFiles.size < MAX_FILES +1) {
+                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            }
+            else{
+                Constant.Remaining = 0
+            }
             for (item in Constant.selectedFiles) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
             }
@@ -573,6 +583,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             R.id.imgBack -> onBackPressed()
 
             R.id.btnChooseRecipient -> {
+                Log.d("Final_selection", Constant.selectedFiles.size.toString())
                 if (binding.btnChooseRecipient.text.toString() == getString(R.string.update_attachment)) {
                     showSendConfirmationDialog(true)
                 } else {

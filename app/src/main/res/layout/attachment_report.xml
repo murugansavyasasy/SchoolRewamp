@@ -71,6 +71,10 @@
                 android:background="@null"
                 android:hint="@string/search"
                 android:text=""
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                android:scrollHorizontally="true"
                 android:textSize="@dimen/fifteen_sp">
 
             </EditText>
@@ -97,7 +101,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytAttachmentReport"
-        android:visibility="gone"
         android:orientation="vertical">
 
         <ImageView
@@ -107,6 +110,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
+            android:visibility="gone"
             android:src="@drawable/nomessages"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
@@ -118,6 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/no_list_found"
             android:textColor="@color/black"

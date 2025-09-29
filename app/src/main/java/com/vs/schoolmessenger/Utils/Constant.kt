@@ -204,6 +204,9 @@ object Constant {
     var isSchoolMenuName = ""
     var isSchoolMenuCount =-1
 
+    var isCompletedHomeworkId: String? = null
+
+
 
 //    var isForward = false
     //MarkAttendanceDetails

@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
@@ -167,8 +168,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-                binding.rytSearch323.visibility=View.GONE
                 binding.edtSearch.text.clear()
 
             } else {
@@ -236,6 +235,12 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         Log.d("SearchDebug", "isloadhomeworkData called with ${newData?.size ?: 0} items")
 
         if (newData != null && newData.isNotEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.rytSearch323.visibility=View.GONE
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+
+
             noticeList = newData
             noticeboardadapter.isLoading = false
             noticeboardadapter.updateList(newData, true)
@@ -249,6 +254,12 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
                 "Data loaded successfully, adapter item count: ${noticeboardadapter.itemCount}"
             )
         } else {
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.rytSearch323.visibility=View.GONE
+
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+
             noticeList = emptyList()
             noticeboardadapter.isLoading = false
             noticeboardadapter.updateList(emptyList(), true)

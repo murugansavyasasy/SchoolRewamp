@@ -4,6 +4,7 @@ import android.text.TextWatcher
 import android.util.Log
 import com.vs.schoolmessenger.databinding.QuizBinding
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,9 +67,13 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
                 binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
             } else {
                 binding.rytSearch1.visibility = View.VISIBLE
                 binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
 
             }
         }
@@ -107,6 +112,9 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
 
         binding.lnrTabOneName.setOnClickListener {
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
+
             binding.lnrTabOneName.isEnabled=false
             binding.lnrTabTwoName.isEnabled=true
             isStatusType="1"
@@ -121,6 +129,9 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
 
         binding.lnrTabTwoName.setOnClickListener {
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
+
             isStatusType="2"
             binding.lnrTabOneName.isEnabled=true
             binding.lnrTabTwoName.isEnabled=false

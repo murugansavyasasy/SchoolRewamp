@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,9 +68,14 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
                 binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
+
             } else {
                 binding.rytSearch1.visibility = View.VISIBLE
                 binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
 
             }
         }
@@ -181,12 +187,14 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
     private fun isLoadEQReport(data: List<GetQuizExamReportData>) {
         if (data.isNotEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             adapter = ExamQuizReportAdapter(data, this, Constant.isShimmerViewDisable)
             binding.rcQuizExamReport.layoutManager = LinearLayoutManager(this)
             binding.rcQuizExamReport.adapter = adapter
             binding.rcQuizExamReport.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
         } else {
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             binding.rcQuizExamReport.visibility = View.GONE
             binding.lytList.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_data_found)
@@ -244,6 +252,8 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         binding.lytList.visibility = View.GONE
         binding.txtSearch1.text.clear()
         binding.rytSearch1.visibility = View.GONE
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
         binding.rlaQuizExamReport.visibility = View.GONE
         binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
         binding.svOverallCreateQE.visibility = View.VISIBLE
@@ -251,7 +261,6 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
     private fun showTabTwo() {
         binding.lytList.visibility = View.GONE
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
         binding.svOverallCreateQE.visibility = View.GONE
         binding.rlaQuizExamReport.visibility = View.VISIBLE
     }

@@ -57,6 +57,10 @@
             android:layout_toEndOf="@id/imgSearch1"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
@@ -69,6 +73,7 @@
         android:id="@+id/rcystudentdata"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/five"
         android:background="@color/gray_white"
         tools:listitem="@layout/interaction_student_item"
         android:nestedScrollingEnabled="false" />

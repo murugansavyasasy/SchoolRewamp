@@ -17,12 +17,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AlbumSelectActivityBinding
+import com.vs.schoolmessenger.databinding.AttachmentBinding
 
-class AlbumSelectActivity : AppCompatActivity() {
+class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 
-    private lateinit var binding: AlbumSelectActivityBinding
+//    private lateinit var binding: AlbumSelectActivityBinding
     private lateinit var adapter: FileGridAdapter
     private lateinit var documentPickerLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
@@ -36,11 +39,22 @@ class AlbumSelectActivity : AppCompatActivity() {
         private const val TAG = "DocumentScan"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = AlbumSelectActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
+    override fun getViewBinding(): AlbumSelectActivityBinding {
+        return AlbumSelectActivityBinding.inflate(layoutInflater)
+    }
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        binding = AlbumSelectActivityBinding.inflate(layoutInflater)
+//
+//        setContentView(binding.root)
+override fun setupViews() {
+    super.setupViews()
+    isToolBarPrimarySchool(
+        mainViewId = R.id.main,
+        statusBarBgView = binding.statusBarBackground
+    )
+    binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
 
         fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
         setupPermissionLauncher()

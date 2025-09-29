@@ -3,7 +3,9 @@ package com.vs.schoolmessenger.School.LeaveRequests
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,13 +56,14 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.txtSearch.text.clear()
+
             } else {
                 binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
                 binding.toolbarLayout.txtSearch.text.clear()
@@ -93,16 +96,28 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val selectedTitle = tab.text.toString()
                 val filterStatus = tabStatusMap[selectedTitle] ?: Constant.All_
+                binding.toolbarLayout.txtSearch.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                 mAdapter.filterByStatus(filterStatus)
 
-                if (mAdapter.itemCount == 0) {
-                    binding.txtNoData.visibility = View.VISIBLE
-                    binding.nomessage.visibility = View.VISIBLE
-                    binding.rcyleaverequest.visibility = View.GONE
-                } else {
-                    binding.txtNoData.visibility = View.GONE
-                    binding.nomessage.visibility = View.GONE
-                    binding.rcyleaverequest.visibility = View.VISIBLE
+                binding.rcyleaverequest.post {
+                    val count = mAdapter.filteredList.size
+                    if (count == 0) {
+                        Log.d("NOdata","No Data")
+                        binding.toolbarLayout.rytSearch.visibility = View.GONE
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                        binding.txtNoData.visibility = View.VISIBLE
+                        binding.nomessage.visibility = View.VISIBLE
+                        binding.rcyleaverequest.visibility = View.GONE
+                    } else {
+                        Log.d("data","Data")
+                        binding.toolbarLayout.rytSearch.visibility = View.GONE
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                        binding.txtNoData.visibility = View.GONE
+                        binding.nomessage.visibility = View.GONE
+                        binding.rcyleaverequest.visibility = View.VISIBLE
+                    }
                 }
             }
 
@@ -124,6 +139,8 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         appViewModel?.getleaverequest?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 binding.rcyleaverequest.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
@@ -131,7 +148,8 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 isloadleaverequestData(leaveRequestMonthWiseList)
 
             } else {
-
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.tabLayoutStatus.visibility = View.GONE
                 binding.rcyleaverequest.visibility = View.GONE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
@@ -226,10 +244,19 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
 
 
     private fun isloadleaverequestData(newData: List<MonthWiseLeaveData>?) {
-        mAdapter = MonthwiseLeaveAdapter(
-            newData, this, this, Constant.isShimmerViewDisable
-        )
-        binding.rcyleaverequest.adapter = mAdapter
+
+        if(newData.isNullOrEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+            binding.toolbarLayout.rytSearch.visibility = View.GONE
+        }
+        else{
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+            binding.toolbarLayout.rytSearch.visibility = View.GONE
+            mAdapter = MonthwiseLeaveAdapter(
+                newData, this, this, Constant.isShimmerViewDisable
+            )
+            binding.rcyleaverequest.adapter = mAdapter
+        }
     }
 
     private fun isGetLeaveRequestList() {

@@ -165,7 +165,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
             if (response != null) {
                 isFirstLoad = true
                 if (response.status) {
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                     binding.rcyHomeWorkReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
                     binding.line1.visibility = View.VISIBLE
@@ -319,15 +318,25 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
     }
 
     private fun loadHomeWorkReportData(isHomeWorkReportDataDetails: List<HomeWorkReportData>) {
-        binding.rcyHomeWorkReport.visibility = View.VISIBLE
-        mHomeWorkReportAdapter = HomeWorkReportAdapter(
-            this, isHomeWorkReportDataDetails, this, Constant.isShimmerViewDisable
-        )
-        binding.rcyHomeWorkReport.layoutManager =
-            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-        binding.rcyHomeWorkReport.setHasFixedSize(true)
-        binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
-        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+        if(isHomeWorkReportDataDetails.isNullOrEmpty()){
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.search.visibility = View.GONE
+
+        }else{
+            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.search.visibility = View.GONE
+
+
+            binding.rcyHomeWorkReport.visibility = View.VISIBLE
+            mHomeWorkReportAdapter = HomeWorkReportAdapter(
+                this, isHomeWorkReportDataDetails, this, Constant.isShimmerViewDisable
+            )
+            binding.rcyHomeWorkReport.layoutManager =
+                GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+            binding.rcyHomeWorkReport.setHasFixedSize(true)
+            binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
+            binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+        }
     }
 
     private fun isGetStandardSection() {
