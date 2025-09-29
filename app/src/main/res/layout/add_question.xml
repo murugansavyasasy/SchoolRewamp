@@ -126,6 +126,7 @@
                 android:background="@drawable/bg_light_orange"
                 android:drawableStart="@drawable/send_icon"
                 android:drawablePadding="@dimen/five"
+                android:backgroundTint="@color/PrimaryColor"
                 android:gravity="center"
                 android:paddingStart="@dimen/twenty_five"
                 android:paddingTop="@dimen/five"

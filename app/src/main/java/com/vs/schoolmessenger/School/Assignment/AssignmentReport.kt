@@ -30,6 +30,7 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
+import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -310,7 +311,13 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         TODO("Not yet implemented")
     }
 
-
+    override fun onClickListener(
+        data: SubmittedAssignment,
+        anchorView: View,
+        adapterPosition: Int
+    ) {
+        TODO("Not yet implemented")
+    }
 
 
     fun showEditDeletePopup(data: AssignmentData, anchor: View) {

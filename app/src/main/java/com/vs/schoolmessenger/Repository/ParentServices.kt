@@ -9,6 +9,7 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionEditResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
@@ -101,6 +102,7 @@ class ParentServices {
     var islsrwmysubmission: MutableLiveData<ActivityResponse?>
     var isParentprofilelist: MutableLiveData<ProfileListResponse?>
     var ispresubmission: MutableLiveData<ProfileUpdateResponse?>
+    var getmysubmissionedit: MutableLiveData<MySubmissionEditResponse?>
 
     init {
         client_auth = RestClient()
@@ -146,6 +148,7 @@ class ParentServices {
         islsrwmysubmission = MutableLiveData()
         isParentprofilelist= MutableLiveData()
         ispresubmission= MutableLiveData()
+        getmysubmissionedit= MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1918,4 +1921,48 @@ class ParentServices {
                 }
             })
     }
+
+
+    fun getmysubmissionedit(
+        isToken: String,
+        jsonObject: JsonObject,
+    ) {
+        RestClient.apiInterfaces.getmysubmissionedit(isToken,jsonObject)
+            ?.enqueue(object : Callback<MySubmissionEditResponse?> {
+                override fun onResponse(
+                    call: Call<MySubmissionEditResponse?>,
+                    response: Response<MySubmissionEditResponse?>
+                ) {
+                    Log.d(
+                        "SubmitQuizResponse Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("SubmitQuizResponse", response.body().toString())
+                                getmysubmissionedit.postValue(response.body())
+                            } else {
+                                Log.d("SubmitQuizResponse", response.body().toString())
+                                getmysubmissionedit.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<MySubmissionEditResponse?>,
+                    t: Throwable
+                ) {
+                    getmysubmissionedit.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getmysubmissioneditLiveData: LiveData<MySubmissionEditResponse?>
+        get() = getmysubmissionedit
+
+
 }

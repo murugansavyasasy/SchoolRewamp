@@ -49,6 +49,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
+import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -721,6 +722,14 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     override fun onReadStatusClick(
         isData: ParentAssignmentData,
         isPosition: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onClickListener(
+        data: SubmittedAssignment,
+        anchorView: View,
+        adapterPosition: Int
     ) {
         TODO("Not yet implemented")
     }

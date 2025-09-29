@@ -125,35 +125,13 @@ class LessonPlanPicChartAdapter(
             val percentage = data.percentage_value
             customPieChart.setProgress(data.percentage_value)
 
-            //old Functionality
-//            val context = rootHeader.context
-//            val color = ContextCompat.getColor(
-//                context,
-//                if (position % 2 == 0) R.color.pale_white_3 else R.color.pale_white_3
-//            )
-//            (rootHeader as CardView).setCardBackgroundColor(color)
+
 
             val context = rootHeader.context
             val color = ContextCompat.getColor(context, R.color.pale_white_3)
             (rootHeader as CardView).setCardBackgroundColor(color)
 
 
-
-
-//Old Functionality
-//            if (percentage == 0) {
-//                Log.d("percentangelblview", percentage.toString())
-//                lblView.setBackgroundColor(
-//                    ContextCompat.getColor(
-//                        context,
-//                        android.R.color.darker_gray
-//                    )
-//                )
-//            } else if (percentage == 100) {
-//                lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.green))
-//            } else {
-//                lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_orange4))
-//            }
 
             lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.pale_white_3))
 

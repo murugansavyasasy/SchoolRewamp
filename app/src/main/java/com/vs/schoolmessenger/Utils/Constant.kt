@@ -282,6 +282,7 @@ object Constant {
     var section_data = "section_data"
     var create_quiz_exam_data = "create_quiz_exam_data"
     var notice_data = "notice_data"
+    var mysubmission_data = "mysubmission_data"
     var event_data = "event_data"
     var assignment_data = "assignment_data"
     var homework_data = "homework_data"
@@ -1083,6 +1084,41 @@ object Constant {
         datePickerDialog.show()
     }
 
+
+
+    fun showDatePicker12(
+        context: Context,
+        dateFormatType: Boolean,
+        onDateSelected: (String) -> Unit
+    ) {
+        val calendar = Calendar.getInstance()
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedCalendar = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(selectedCalendar.time)
+
+                onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+
+        if (dateFormatType) {
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+        }
+
+        datePickerDialog.show()
+    }
 
     //Leave Request
     fun handleRestrictDatePicker(

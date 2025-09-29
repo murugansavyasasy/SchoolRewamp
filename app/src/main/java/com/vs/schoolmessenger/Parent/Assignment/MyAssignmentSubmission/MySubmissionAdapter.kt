@@ -111,8 +111,9 @@ class MySubmissionAdapter(
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val submitteddetails: TextView = itemView.findViewById(R.id.submitteddetails)
         private val datevalue: TextView = itemView.findViewById(R.id.datevalue)
-        private val headerrelative_layout: RelativeLayout =
-            itemView.findViewById(R.id.headerrelative_layout)
+        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
+        private val options: ImageView = itemView.findViewById(R.id.options)
+        private val rightText: TextView = itemView.findViewById(R.id.rightText)
 
         @SuppressLint("ClickableViewAccessibility", "SetJavaScriptEnabled")
         fun bind(
@@ -126,6 +127,10 @@ class MySubmissionAdapter(
             lblDescription1.text = data.description
             lblTitle.text = title
             lblDescription.text = subject
+
+            rightText.setOnClickListener {
+                listener.onClickListener(data, it, adapterPosition)
+            }
 
 
             try {

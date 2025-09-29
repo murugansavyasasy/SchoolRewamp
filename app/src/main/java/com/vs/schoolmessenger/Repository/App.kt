@@ -19,6 +19,7 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionEditResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
@@ -379,6 +380,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isParentprofilelist: LiveData<ProfileListResponse?>? = null
     var isSchoolprofilelist: LiveData<ProfileListResponse?>? = null
     var islsrwmysubmission: LiveData<ActivityResponse?>? = null
+    var getmysubmissionedit: LiveData<MySubmissionEditResponse?>? = null
     var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
         private set
 
@@ -537,6 +539,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isSchoolprofilelist = apiSchoolRepositories.isSchoolprofilelistLiveData
         islsrwmysubmission = apiParentRepositories.islsrwmysubmissionLiveData
         isFeeInvoices = apiParentRepositories.isFeeInvoices
+        getmysubmissionedit = apiParentRepositories.getmysubmissioneditLiveData
 
 
     }
@@ -1364,6 +1367,14 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getInvoiceDetails(isToken: String, invoiceId: String) {
         apiParentRepositories.getInvoiceDetails(isToken, invoiceId)
+    }
+
+    fun getmysubmissionedit(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiParentRepositories.getmysubmissionedit(
+            isToken, jsonObject
+        )
     }
 }
 

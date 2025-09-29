@@ -234,7 +234,7 @@
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardStart"
                                 android:layout_width="@dimen/hundred"
-                                android:layout_height="@dimen/eighty"
+                                android:layout_height="@dimen/hundred"
                                 app:cardCornerRadius="@dimen/ten">
 
                                 <LinearLayout
@@ -319,7 +319,7 @@
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardEnd"
                                 android:layout_width="@dimen/hundred"
-                                android:layout_height="@dimen/eighty"
+                                android:layout_height="@dimen/hundred"
                                 app:cardCornerRadius="@dimen/ten">
 
                                 <LinearLayout

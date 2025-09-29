@@ -1,10 +1,13 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +20,7 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlan
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LessonPlanBinding
+import androidx.core.view.isVisible
 
 class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     LessonPlanChartClickListener {
@@ -77,6 +81,8 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         loadlpAllClassdata(Constant.allclass)
 
         binding.lnrTabOneName.setOnClickListener {
+            hideKeyboard()
+
             binding.lnrTabOneName.isEnabled = false
             binding.lnrTabTwoName.isEnabled = true
             binding.line1.setBackgroundResource(R.color.iconBlue)
@@ -84,10 +90,13 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.line2.setBackgroundResource(R.color.athens_gray)
             binding.txtSearchMenu1.text.clear()
+            binding.rytSearch1.visibility = View.GONE
             loadlpAllClassdata(Constant.allclass)
         }
 
         binding.lnrTabTwoName.setOnClickListener {
+            hideKeyboard()
+
             binding.lnrTabOneName.isEnabled = true
             binding.lnrTabTwoName.isEnabled = false
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -95,9 +104,11 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             binding.line2.setBackgroundResource(R.color.iconBlue)
             binding.line1.setBackgroundResource(R.color.athens_gray)
             binding.txtSearchMenu1.text.clear()
+            binding.rytSearch1.visibility = View.GONE
             loadlpAllClassdata(Constant.myclass)
-
         }
+
+
 
 
         binding.txtSearchMenu1.addTextChangedListener(object : TextWatcher {
@@ -113,6 +124,15 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
 
     }
+
+    fun Activity.hideKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
 
     private fun islpStaffData(data: List<AllClassData>?, requestType: String) {
         if(data.isNullOrEmpty()){

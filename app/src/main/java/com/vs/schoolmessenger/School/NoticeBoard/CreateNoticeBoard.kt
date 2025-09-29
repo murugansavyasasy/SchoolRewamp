@@ -603,7 +603,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
-                Constant.showDatePicker(this, false) { selectedDate ->
+                Constant.showDatePicker12(this, false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     txtStartDate = Constant.covertDateFormate(selectedDate)
                     val parts = txtStartDate!!.split(" ")
@@ -618,7 +618,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
             R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
                 selectedDateField = 2
-                Constant.showDatePicker(this, false) { selectedDate ->
+                Constant.showDatePicker12(this, false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     txtEndDate = Constant.covertDateFormate(selectedDate)
                     val parts = txtEndDate!!.split(" ")
