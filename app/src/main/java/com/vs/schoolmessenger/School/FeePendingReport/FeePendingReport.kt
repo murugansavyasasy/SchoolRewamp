@@ -4,12 +4,15 @@ import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
+import com.vs.schoolmessenger.CommonScreens.SchoolList.NewAcademicYearAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeeData
@@ -43,17 +46,26 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             statusBarBgView = binding.statusBarBackground
         )
 
+        val params = binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
+        params.removeRule(RelativeLayout.START_OF)// Remove the old rule
+        params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)// Add the new rule -> align to start of rlaSpinner
+        binding.toolbarLayout.lytTitleAndName.layoutParams = params// Re-apply params
+
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.AcademicYear.setOnClickListener(this)
-        binding.categoryName.setOnClickListener(this)
-        binding.className.setOnClickListener(this)
+//        binding.AcademicYear.setOnClickListener(this)
+        binding.lnrTabTwoName.setOnClickListener(this)
+        binding.lnrTabOneName.setOnClickListener(this)
+
+
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+        binding.toolbarLayout.rlaSpinner.visibility=View.VISIBLE
 
 
         isLoadAcademicYear(isAcademicYearList)
@@ -75,7 +87,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility = View.GONE
+                binding.relativeLayout6.visibility = View.VISIBLE
             } else {
                 showNoDataMessage(response?.message ?: getString(R.string.no_fee_pending_data_available))
                 binding.relativeLayout6.visibility = View.GONE
@@ -90,7 +102,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility = View.GONE
+                binding.relativeLayout6.visibility = View.VISIBLE
             } else {
                 showNoDataMessage(response?.message ?: getString(R.string.no_fee_pending_data_available))
                 binding.relativeLayout6.visibility = View.GONE
@@ -189,9 +201,9 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
     }
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
-        val adapter = AcademicYearAdapter(this, isAcademicYear)
-        binding.isSpinner.adapter = adapter
-        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        val adapter = NewAcademicYearAdapter(this, isAcademicYear)
+        binding.toolbarLayout.isAcademicSpinner.adapter = adapter
+        binding.toolbarLayout.isAcademicSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>, view: View?, position: Int, id: Long
             ) {
@@ -224,26 +236,31 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                 onBackPressed()
             }
 
-
-            R.id.category_name -> {
-                if (!isClassWiseSelected) return
-                isClassWiseSelected = false
-                binding.categoryName.setBackgroundResource(R.drawable.white_radious)
-                binding.categoryName.setTextColor(Color.BLACK)
-                binding.className.setBackgroundResource(R.drawable.bg_light_blue)
-                binding.className.setTextColor(Color.BLACK)
-                isGetDailyCollection()
-            }
-
-            R.id.class_name -> {
+            R.id.lnrTabTwoName->{
                 if (isClassWiseSelected) return
                 isClassWiseSelected = true
-                binding.className.setBackgroundResource(R.drawable.white_radious)
-                binding.className.setTextColor(Color.BLACK)
-                binding.categoryName.setBackgroundResource(R.drawable.bg_light_blue)
-                binding.categoryName.setTextColor(Color.BLACK)
+                binding.lnrTabOneName.isEnabled = true
+                binding.lnrTabTwoName.isEnabled = false
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.line2.setBackgroundResource(R.color.iconBlue)
+                binding.line1.setBackgroundResource(R.color.athens_gray)
                 isGetDailyWiseCollection()
             }
+
+            R.id.lnrTabOneName->{
+                if (!isClassWiseSelected) return
+                isClassWiseSelected = false
+                binding.lnrTabOneName.isEnabled = false
+                binding.lnrTabTwoName.isEnabled = true
+                binding.line1.setBackgroundResource(R.color.iconBlue)
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.line2.setBackgroundResource(R.color.athens_gray)
+                isGetDailyCollection()
+
+            }
+
         }
     }
 

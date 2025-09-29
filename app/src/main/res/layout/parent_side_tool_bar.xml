@@ -13,6 +13,7 @@
         <ImageView
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty_five"
+            android:layout_centerVertical="true"
             android:layout_height="@dimen/thirty_five"
             android:src="@drawable/arrow_left_white">
         </ImageView>

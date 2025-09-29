@@ -1,59 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:background="@color/mild_grey5">
 
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <RelativeLayout
-        android:id="@+id/rlaTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/five">
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_centerVertical="true"
-            android:src="@drawable/left_arrow_blue">
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
-        </ImageView>
-
-        <TextView
-            android:id="@+id/lblSchoolName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text="@string/select_recipient"
-            android:textColor="@color/navi_blue2"
-            android:textStyle="bold">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/lblSchoolRegionalName"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblSchoolName"
-            android:layout_marginStart="@dimen/twele"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text=""
-            android:visibility="gone">
-
-        </TextView>
-
-    </RelativeLayout>
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/sendlabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlaTitle"
         android:layout_marginStart="@dimen/ten"
         android:text="@string/send_to"
         android:textColor="@color/black"
@@ -62,6 +39,9 @@
         android:visibility="gone" />
 
     <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@+id/sendlabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/lnrAcademicYearView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,7 +62,7 @@
             android:text="@string/lblchoose_academic_year"
             android:layout_marginEnd="@dimen/five"
             android:textColor="@color/light_gray"
-          />
+            />
 
         <RelativeLayout
             android:layout_toEndOf="@+id/tvAcademicYearLabel"
@@ -106,6 +86,9 @@
 
 
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/lnrAcademicYearView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fourty"
@@ -179,16 +162,18 @@
             android:gravity="center"
             android:textSize="@dimen/ten_sp"
             android:text="@string/staff"
-          >
+            >
         </TextView>
 
 
     </LinearLayout>
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/grouplabel"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tabLayout"
         android:layout_marginStart="@dimen/twenty"
@@ -197,6 +182,9 @@
     </TextView>
 
     <RelativeLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grouplabel"
         android:id="@+id/rytStandardDropDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -215,6 +203,8 @@
     </RelativeLayout>
 
     <CheckBox
+        app:layout_constraintTop_toBottomOf="@+id/rytStandardDropDown"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/chAllSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -230,12 +220,16 @@
     </CheckBox>
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@+id/rytStandardDropDown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/lblCreatedOn"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytStandardDropDown"
         android:layout_alignParentEnd="true"
+        android:gravity="end"
         android:layout_marginEnd="@dimen/twenty"
         android:text="@string/group_created"
         android:layout_marginTop="@dimen/ten"
@@ -246,10 +240,14 @@
     </TextView>
 
     <RelativeLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chAllSelect"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/rytList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/thirty_five"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/fourty_five"
         android:layout_below="@+id/chAllSelect">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -268,6 +266,8 @@
     </RelativeLayout>
 
     <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rytList"
         android:id="@+id/subjectlabel"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
@@ -280,6 +280,9 @@
 
 
     <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@+id/subjectlabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/rytSubjectDropDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -299,6 +302,9 @@
     </RelativeLayout>
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@+id/nomessageEntire"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/textdesc"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
@@ -312,6 +318,9 @@
         android:visibility="gone" />
 
     <LinearLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/bottomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -397,6 +406,10 @@
     </LinearLayout>
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/lblNoRecord"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
@@ -410,6 +423,10 @@
     </TextView>
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@+id/nomessage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/txtNoData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -425,6 +442,10 @@
 
 
     <ImageView
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/nomessage"
         android:layout_width="@dimen/two_fifty"
         android:layout_height="@dimen/two_fifty"
@@ -437,6 +458,10 @@
         android:visibility="gone" />
 
     <ImageView
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/nomessageEntire"
         android:layout_width="@dimen/two_fifty"
         android:layout_height="@dimen/two_fifty"
@@ -449,6 +474,10 @@
         android:visibility="gone" />
 
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/rytAcademicYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -475,7 +504,7 @@
             android:layout_marginEnd="@dimen/twenty_five"
             android:gravity="center"
             android:text="@string/your_academic_year_configuration_are_incorrect_please_contact_school_chimes"
-           >
+            >
 
         </TextView>
 
@@ -493,4 +522,4 @@
 
         </TextView>
     </LinearLayout>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

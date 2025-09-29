@@ -111,14 +111,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+//        setupToolbar()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+
 
 //        binding.rlaSubject.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
         binding.btnSpecificStudent.setOnClickListener(this)
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytAcademicYear.setOnClickListener(this)
 
         binding.tapEntireSchool.setOnClickListener(this)
@@ -133,13 +138,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         isAccessToken = isStaffDetails!!.access_token
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isUserDetails = SharedPreference.getUserDetails(this)
-        binding.lblSchoolName.text = isStaffDetails!!.school_name
+        binding.toolbarLayout.lblParentToolBar.text = isStaffDetails!!.school_name
 
         if (isStaffDetails!!.school_name_regional != "") {
-            binding.lblSchoolRegionalName.visibility = View.GONE
-            binding.lblSchoolRegionalName.text = isStaffDetails!!.school_name_regional
+            binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name_regional
         } else {
-            binding.lblSchoolRegionalName.visibility = View.GONE
+            binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         }
 
         isGetAcademicYear()

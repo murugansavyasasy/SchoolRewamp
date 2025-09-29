@@ -1,4 +1,4 @@
-<!-- res/drawable/rounded_orange_bar.xml -->
+   <!-- res/drawable/rounded_orange_bar.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="#FF9800" /> <!-- Orange color -->
     <corners
