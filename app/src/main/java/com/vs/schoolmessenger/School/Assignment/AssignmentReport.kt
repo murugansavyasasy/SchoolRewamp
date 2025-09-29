@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +28,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
+import com.vs.schoolmessenger.CommonScreens.SchoolList.NewAcademicYearAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
@@ -86,12 +88,18 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
+        val params = binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
+        params.removeRule(RelativeLayout.START_OF)// Remove the old rule
+        params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)// Add the new rule -> align to start of rlaSpinner
+        binding.toolbarLayout.lytTitleAndName.layoutParams = params// Re-apply params
+
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.toolbarLayout.layoutCreateSlot.visibility = View.VISIBLE
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-
+        binding.toolbarLayout.rlaSpinner.visibility=View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
@@ -104,7 +112,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
 
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+        binding.toolbarLayout.imgSearchToolBarforCreate.setOnClickListener {
             if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.toolbarLayout.txtSearch.text.clear()
@@ -165,7 +173,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.VISIBLE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 adapter.updateList(response.data)
                 binding.rcyAssignmentReport.visibility = View.VISIBLE
@@ -173,7 +181,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             } else {
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.GONE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.rcyAssignmentReport.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
@@ -208,7 +216,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                 } else {
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.GONE
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
@@ -220,9 +228,9 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
-        val adapter = AcademicYearAdapter(this, isAcademicYear)
-        binding.isSpinner.adapter = adapter
-        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        val adapter = NewAcademicYearAdapter(this, isAcademicYear)
+        binding.toolbarLayout.isAcademicSpinner.adapter = adapter
+        binding.toolbarLayout.isAcademicSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>, view: View?, position: Int, id: Long
             ) {
@@ -258,11 +266,11 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
     private fun loadAssignmentReportData() {
         if (isAssignmentReportData.isNullOrEmpty()){
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.GONE
             binding.toolbarLayout.rytSearch.visibility = View.GONE
         }
         else{
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.VISIBLE
             binding.toolbarLayout.rytSearch.visibility = View.GONE
             binding.rcyAssignmentReport.visibility = View.VISIBLE
             isAssignmentAdapter = AssignmentAdapter(

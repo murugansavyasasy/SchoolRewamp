@@ -10,58 +10,183 @@
         android:paddingBottom="@dimen/twenty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_marginTop="@dimen/fifteen"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_left_white">
-
-        </ImageView>
-
-        <LinearLayout
-            android:layout_marginTop="@dimen/fifteen"
-            android:id="@+id/lytTitleAndName"
+        <RelativeLayout
+            android:id="@+id/rlaHeaderTab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/rlaStudentName"
-            android:layout_toEndOf="@+id/imgBack"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/thirty_five"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_centerVertical="true"
+                android:src="@drawable/arrow_left_white">
 
-            <TextView
-                android:id="@+id/lblParentToolBar"
-                style="@style/CustomTextStylePoppinsBold"
+            </ImageView>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/fifteen"
+                android:id="@+id/lytTitleAndName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/rlaStudentName"
+                android:layout_toEndOf="@+id/imgBack"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lblParentToolBar"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblSchoolName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp"
+                    android:visibility="gone">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/monthSelectorLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/fifteen_sp">
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:gravity="center_vertical">
 
-            </TextView>
+                <Spinner
+                    android:id="@+id/lblDropDownMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:spinnerMode="dropdown"
+                    android:padding="4dp"
+                    android:popupBackground="@android:color/white"
+                    android:entries="@array/months" />
 
-            <TextView
-                android:id="@+id/lblSchoolName"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/twele_sp"
-                android:visibility="gone">
-            </TextView>
+                <ImageView
+                    android:id="@+id/imgMonthIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/arrow_down_whitesvg" />
+            </LinearLayout>
+
+
 
             <RelativeLayout
+                android:id="@+id/rlaStudentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/lblStudentName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblStudentSection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblStudentName"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
+
+                <CheckBox
+                    android:id="@+id/cbSelect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:button="@drawable/ch_square"
+                    android:padding="@dimen/five"
+                    android:text="@string/Selectallaspresent"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rlaSpinner"
+                android:background="@drawable/bg_white_stroke"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/isAcademicSpinner"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:background="@null"
+                    android:layout_height="wrap_content"
+                    />
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_toEndOf="@+id/isAcademicSpinner"
+                    android:src="@drawable/ic_drop_down"
+                    android:layout_marginEnd="@dimen/three"
+                    android:tint="@color/white"
+                    android:layout_height="wrap_content">
+
+                </ImageView>
+            </RelativeLayout>
+
+
+
+            <ImageView
+                android:id="@+id/imgSearchToolBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:padding="@dimen/five"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search_icon_white"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/rlaHeaderTab"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/thirty_five"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_centerVertical="true"
                 android:id="@+id/layoutCreateSlot"
                 android:layout_width="@dimen/hundred_thirty"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblSlotCount"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:visibility="gone"
-                android:layout_toEndOf="@+id/imgBack"
                 android:background="@drawable/bg_curve"
                 android:paddingVertical="@dimen/six"
                 android:paddingHorizontal="@dimen/ten">
@@ -88,123 +213,18 @@
 
             </RelativeLayout>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/monthSelectorLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            android:gravity="center_vertical">
-
-            <Spinner
-                android:id="@+id/lblDropDownMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:spinnerMode="dropdown"
-                android:padding="4dp"
-                android:popupBackground="@android:color/white"
-                android:entries="@array/months" />
-
             <ImageView
-                android:id="@+id/imgMonthIcon"
+                android:id="@+id/imgSearchToolBarforCreate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_gravity="center"
-                android:src="@drawable/arrow_down_whitesvg" />
-        </LinearLayout>
-
-
-
-        <RelativeLayout
-            android:id="@+id/rlaStudentName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/ten">
-
-            <TextView
-                android:id="@+id/lblStudentName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblStudentSection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblStudentName"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
-
-            <CheckBox
-                android:id="@+id/cbSelect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:button="@drawable/ch_square"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/ten"
                 android:padding="@dimen/five"
-                android:text="@string/Selectallaspresent"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search_icon_white"
                 android:visibility="gone" />
 
-
         </RelativeLayout>
-
-
-
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/rlaSpinner"
-            android:background="@drawable/bg_white_stroke"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_height="wrap_content">
-            <Spinner
-                android:id="@+id/isAcademicSpinner"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:background="@null"
-                android:layout_height="wrap_content"
-                />
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_toEndOf="@+id/isAcademicSpinner"
-                android:src="@drawable/ic_drop_down"
-                android:layout_marginEnd="@dimen/three"
-                android:layout_height="wrap_content">
-
-            </ImageView>
-        </RelativeLayout>
-
-
-
-        <ImageView
-            android:id="@+id/imgSearchToolBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/ten"
-            android:padding="@dimen/five"
-            android:layout_centerVertical="true"
-            android:src="@drawable/search_icon_white"
-            android:visibility="gone" />
 
     </RelativeLayout>
 
