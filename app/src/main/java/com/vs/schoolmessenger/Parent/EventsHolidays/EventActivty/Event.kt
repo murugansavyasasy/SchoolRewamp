@@ -164,6 +164,13 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 allUpcomingEvents = data.up_coming
                 allCompletedEvents = data.completed
 
+                binding.dotindicator.visibility =
+                    if (!allOngoingEvents.isNullOrEmpty() && allOngoingEvents!!.size > 1) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+
                 val isAllEmpty = allOngoingEvents.isNullOrEmpty() &&
                         allUpcomingEvents.isNullOrEmpty() &&
                         allCompletedEvents.isNullOrEmpty()
@@ -171,7 +178,8 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
                 binding.dotindicator.visibility =
-                    if (!allOngoingEvents.isNullOrEmpty()) View.VISIBLE else View.GONE
+                    if (!allOngoingEvents.isNullOrEmpty() && allOngoingEvents!!.size > 1) View.VISIBLE else View.GONE
+
 
                 val CategoryList = data.categories
 
@@ -281,8 +289,9 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     private fun updateDotIndicator() {
         binding.dotindicator.visibility =
-            if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+            if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
     }
+
 
 
     private fun filterAllEventLists() {
@@ -321,16 +330,18 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             Log.d("completedFiltered", completedFiltered!!.toString())
 
 
-            if (ongoingFiltered.size > 0) {
+            if (!ongoingFiltered.isNullOrEmpty()) {
                 mAdapter.updateList(ongoingFiltered)
                 binding.rcyongoingevent.visibility = View.VISIBLE
                 binding.headerview.visibility = View.VISIBLE
-                binding.dotindicator.visibility = View.VISIBLE
+                binding.dotindicator.visibility =
+                    if (ongoingFiltered.size > 1) View.VISIBLE else View.GONE
             } else {
                 binding.rcyongoingevent.visibility = View.GONE
                 binding.headerview.visibility = View.GONE
                 binding.dotindicator.visibility = View.GONE
             }
+
             updateDotIndicator()
 
 
