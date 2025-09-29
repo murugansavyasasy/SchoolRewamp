@@ -45,6 +45,7 @@ import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission.MyAssignmentSubmit
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 
@@ -314,7 +315,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                                     else -> FileType.OTHER
                                 }
 
-                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                                if(Constant.selectedFiles.size < MAX_FILES +1) {
+                                    Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                                }
+                                else{
+                                    Constant.Remaining = 0
+                                }
 
                                 Log.d("SelectedFile", "URI: $uri, Type: $type")
                             }
@@ -1026,7 +1032,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 else -> FileType.OTHER
             }
 
-            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+
+            if(Constant.selectedFiles.size < MAX_FILES +1) {
+                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            }
+            else{
+                Constant.Remaining = 0
+            }
             for (item in Constant.selectedFiles) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
             }

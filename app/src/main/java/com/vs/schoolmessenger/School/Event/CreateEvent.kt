@@ -160,7 +160,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
                     if(Constant.Remaining!! > 0) {
                         Constant.Remaining = Constant.Remaining - selectedUris!!.size
-                        selectedUris?.take(Constant.Remaining)?.forEach { uri ->
+                        selectedUris?.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
                             val path = when (uri.scheme) {
                                 Constant.file_ -> uri.path
@@ -198,6 +198,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                             }
                             if(Constant.selectedFiles.size < MAX_FILES +1) {
                                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            }
+                            else{
+                                Constant.Remaining = 0
                             }
                             Log.d("SelectedFile", "URI: $uri, Type: $type")
                         }
@@ -921,6 +924,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
             if(Constant.selectedFiles.size < MAX_FILES +1) {
                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            }
+            else{
+                Constant.Remaining = 0
             }
             for (item in Constant.selectedFiles) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")

@@ -161,7 +161,7 @@
                         android:gravity="center"
                         android:paddingVertical="@dimen/five"
                         android:paddingHorizontal="@dimen/ten"
-                        android:text="Online"
+                        android:text="Virtual"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp">
 
@@ -315,7 +315,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:text="Select date and time"
+                    android:text="Select date &amp; time"
                     android:textSize="@dimen/fifteen_sp">
 
                 </TextView>
@@ -508,7 +508,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:text="Duration and Break"
+                    android:text="Duration &amp; Break"
                     android:textSize="@dimen/fifteen_sp">
 
                 </TextView>

@@ -140,7 +140,6 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         binding.rcyAttendanceReport.layoutManager = GridLayoutManager(this, 2)
         binding.rcyAttendanceReport.isNestedScrollingEnabled = false
         binding.rcyAttendanceReport.adapter = shimmerAdapter
-
     }
 
     private fun loadData() {
