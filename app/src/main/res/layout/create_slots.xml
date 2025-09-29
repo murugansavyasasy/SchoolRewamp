@@ -44,8 +44,7 @@
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp">
-        </TextView>
+            android:textSize="@dimen/thirteen_sp"></TextView>
 
         <TextView
             style="@style/CustomTextStylePoppinsBold"
@@ -62,6 +61,7 @@
         </TextView>
     </RelativeLayout>
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -70,16 +70,16 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:background="@color/gray"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/gray">
 
             <RelativeLayout
                 android:id="@+id/rytMeetingTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/ten"
+                android:layout_margin="@dimen/ten"
                 android:background="@drawable/card_outline_border"
-                android:layout_margin="@dimen/ten">
+                android:padding="@dimen/ten">
 
                 <TextView
                     android:id="@+id/lblPurposeOfMeeting"
@@ -142,8 +142,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/gray_bg_radius"
                         android:gravity="center"
-                        android:paddingVertical="@dimen/five"
                         android:paddingHorizontal="@dimen/ten"
+                        android:paddingVertical="@dimen/five"
                         android:text="In Person"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp">
@@ -159,8 +159,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/gray_bg_radius"
                         android:gravity="center"
-                        android:paddingVertical="@dimen/five"
                         android:paddingHorizontal="@dimen/ten"
+                        android:paddingVertical="@dimen/five"
                         android:text="Virtual"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp">
@@ -176,8 +176,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/gray_bg_radius"
                         android:gravity="center"
-                        android:paddingVertical="@dimen/five"
                         android:paddingHorizontal="@dimen/ten"
+                        android:paddingVertical="@dimen/five"
                         android:text="Phone call"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp">
@@ -194,10 +194,10 @@
                     android:layout_below="@+id/meetingMode"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
-                    android:visibility="gone"
                     android:text="Meeting link"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp">
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone">
 
                 </TextView>
 
@@ -209,12 +209,12 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:visibility="gone"
                     android:layout_marginBottom="@dimen/ten"
                     android:background="@drawable/outline_gray"
                     android:hint="Paste the meeting link"
                     android:padding="@dimen/ten"
-                    android:textSize="@dimen/thirteen_sp">
+                    android:textSize="@dimen/thirteen_sp"
+                    android:visibility="gone">
 
                 </com.vs.schoolmessenger.Utils.UrlPasteOnlyEditText>
 
@@ -281,19 +281,18 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:text="Select Your Classes"
-                    android:textSize="@dimen/fifteen_sp">
-                </TextView>
+                    android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcySectionAndStandardList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="5dp"
                     android:layout_below="@+id/lblSelectAcademicYear"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten"/>
+                    android:layout_marginBottom="@dimen/ten"
+                    android:padding="5dp" />
 
             </RelativeLayout>
 
@@ -301,10 +300,10 @@
                 android:id="@+id/rytDateAndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/ten"
-                android:background="@drawable/card_outline_border"
                 android:layout_below="@+id/rytSectionSelection"
-                android:layout_margin="@dimen/ten">
+                android:layout_margin="@dimen/ten"
+                android:background="@drawable/card_outline_border"
+                android:padding="@dimen/ten">
 
 
                 <TextView
@@ -338,8 +337,7 @@
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginBottom="@dimen/ten"
-                        android:src="@drawable/calendar_black">
-                    </ImageView>
+                        android:src="@drawable/calendar_black"></ImageView>
 
                     <TextView
                         android:id="@+id/lblSelectDate"
@@ -372,9 +370,8 @@
                     android:id="@+id/rcySelectedDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_below="@id/rytPickDate">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_below="@id/rytPickDate"
+                    android:layout_marginTop="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
 
 
                 <LinearLayout
@@ -411,12 +408,12 @@
 
                         <TextView
                             android:id="@+id/lblFromTime"
-                            android:layout_toStartOf="@+id/imgFromTimeDownArrow"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/ten"
+                            android:layout_toStartOf="@+id/imgFromTimeDownArrow"
                             android:layout_toEndOf="@+id/imgFromTime"
                             android:text="Start with"
                             android:textColor="@color/black">
@@ -461,13 +458,13 @@
                         </ImageView>
 
                         <TextView
-                            android:layout_toStartOf="@+id/imgDownArrowToTime"
                             android:id="@+id/lblToTime"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/ten"
+                            android:layout_toStartOf="@+id/imgDownArrowToTime"
                             android:layout_toEndOf="@+id/imgToTime"
                             android:text="End with"
                             android:textColor="@color/black">
@@ -494,10 +491,10 @@
                 android:id="@+id/rytBreakDuration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/ten"
-                android:background="@drawable/card_outline_border"
                 android:layout_below="@+id/rytDateAndTime"
-                android:layout_margin="@dimen/ten">
+                android:layout_margin="@dimen/ten"
+                android:background="@drawable/card_outline_border"
+                android:padding="@dimen/ten">
 
 
                 <TextView
@@ -539,8 +536,7 @@
                             android:layout_height="@dimen/twenty"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/five"
-                            android:src="@drawable/stopwatch_gray">
-                        </ImageView>
+                            android:src="@drawable/stopwatch_gray"></ImageView>
 
                         <RelativeLayout
                             android:id="@+id/rytSendingType"
@@ -579,8 +575,8 @@
                             android:layout_toStartOf="@+id/lblSlotDuration"
                             android:gravity="center"
                             android:hint="Enter"
-                            android:maxLines="5"
-                            android:inputType="number">
+                            android:inputType="number"
+                            android:maxLines="5">
 
                         </EditText>
 
@@ -613,8 +609,7 @@
                     android:layout_marginTop="@dimen/fifteen"
                     android:layout_marginBottom="@dimen/ten"
                     android:text="Need break between slots?"
-                    android:textColor="@color/black">
-                </TextView>
+                    android:textColor="@color/black"></TextView>
 
 
                 <com.vs.schoolmessenger.Utils.CustomSwitch
@@ -645,29 +640,28 @@
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginBottom="@dimen/ten"
                         android:text="Break After"
-                        android:textColor="@color/black">
-                    </TextView>
+                        android:textColor="@color/black"></TextView>
 
 
                     <LinearLayout
                         android:id="@+id/rytBreakPick"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="@dimen/two"
                         android:layout_marginStart="@dimen/twenty_five"
                         android:layout_toEndOf="@+id/lblBreakAfter"
                         android:background="@drawable/rounded_bg"
-                        android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:paddingHorizontal="@dimen/thirteen">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="@dimen/thirteen"
+                        android:paddingVertical="@dimen/two">
 
                         <ImageView
                             android:id="@+id/imgCountDown"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/negative"
                             android:contentDescription="decrease"
-                            android:padding="4dp"/>
+                            android:padding="4dp"
+                            android:src="@drawable/negative" />
 
                         <TextView
                             android:id="@+id/lblSlotsCount"
@@ -683,9 +677,9 @@
                             android:id="@+id/imgCountUp"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/ic_plus_blue"
                             android:contentDescription="increase"
-                            android:padding="4dp"/>
+                            android:padding="4dp"
+                            android:src="@drawable/ic_plus_blue" />
 
                     </LinearLayout>
 
@@ -700,8 +694,7 @@
                         android:layout_marginBottom="@dimen/ten"
                         android:layout_toEndOf="@+id/rytBreakPick"
                         android:text="Slot"
-                        android:textColor="@color/black">
-                    </TextView>
+                        android:textColor="@color/black"></TextView>
 
 
                     <TextView
@@ -714,8 +707,7 @@
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginBottom="@dimen/ten"
                         android:text="Break Duration"
-                        android:textColor="@color/black">
-                    </TextView>
+                        android:textColor="@color/black"></TextView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -742,7 +734,6 @@
                             android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
-
 
 
                         <TextView
