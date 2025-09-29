@@ -18,6 +18,7 @@ data class AssignmentData(
     val can_delete: Boolean,
     val total_count: Int,
     val end_date: String,
+    var is_unread: Boolean,
     val iframe: String,
     val file_size: String,
     val thumbnail: String,

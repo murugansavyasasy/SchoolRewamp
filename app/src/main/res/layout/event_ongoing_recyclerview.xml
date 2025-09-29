@@ -109,29 +109,29 @@
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_radiantwhite1"
                 android:orientation="horizontal">
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyImgPDF"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingStart="@dimen/ten"
-                    android:paddingEnd="@dimen/ten"
+                    android:paddingStart="@dimen/five"
+                    android:paddingEnd="@dimen/five"
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/total_numbers"
-                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="@dimen/thirty_six"
                     android:layout_height="@dimen/thirty_six"
-                    android:layout_marginStart="@dimen/minus_ten"
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginBottom="@dimen/five"
                     android:background="@drawable/bg_image_background_white_coupon"
-                    android:gravity="center"
                     android:text="+9"
-                    android:textColor="@color/black"
+                    android:gravity="center"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textSize="@dimen/fifteen_sp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/minus_fifteen"
+                    android:layout_marginEnd="@dimen/five"
+                    />
 
             </LinearLayout>
 
@@ -170,6 +170,8 @@
                 android:layout_width="@dimen/zero"
                 android:layout_height="@dimen/zero"
                 android:layout_weight="1" />
+
+
 
             <TextView
                 android:id="@+id/status_event"

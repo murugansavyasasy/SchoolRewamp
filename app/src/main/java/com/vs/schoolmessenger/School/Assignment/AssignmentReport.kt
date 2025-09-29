@@ -29,6 +29,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -294,6 +295,22 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         intent.putExtra(Constant.type, Constant.NOTSUBMITTED)
         startActivity(intent)
     }
+
+    override fun onItemClick(
+        data: AssignmentData,
+        holder: AssignmentAdapter.DataViewHolder
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onReadStatusClick(
+        isData: ParentAssignmentData,
+        isPosition: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
+
 
 
     fun showEditDeletePopup(data: AssignmentData, anchor: View) {

@@ -12,6 +12,16 @@
     android:layout_marginBottom="@dimen/five"
     android:clipToPadding="false">
 
+    <ImageView
+        android:id="@+id/imgNewImage"
+        android:layout_width="@dimen/ten"
+        android:layout_height="@dimen/ten"
+        android:layout_alignParentEnd="true"
+        android:elevation="@dimen/ten"
+        android:background="@drawable/bg_red_circle"
+        android:visibility="gone">
+    </ImageView>
+
 
     <ImageView
         android:id="@+id/imgIcon"

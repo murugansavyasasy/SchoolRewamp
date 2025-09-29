@@ -13,23 +13,26 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
+import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.LSRW.Model.SkillData
+import com.vs.schoolmessenger.Parent.LSRW.Model.lsrwitemclicklistener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
 
 class LSRWAdapter(
     private var itemList: List<SkillData>,
-    private val context: Context
+    private val context: Context,
+    private val listener: lsrwitemclicklistener
 ) : RecyclerView.Adapter<LSRWAdapter.HeaderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_parent_lsrw, parent, false)
-        return HeaderViewHolder(view)
+        return HeaderViewHolder(view, context, listener)
     }
 
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
@@ -44,7 +47,9 @@ class LSRWAdapter(
         notifyDataSetChanged()
     }
 
-    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class HeaderViewHolder(
+        itemView: View, private val context: Context, private val listener: lsrwitemclicklistener
+    ) : RecyclerView.ViewHolder(itemView) {
 
         private val txtTitle: TextView = itemView.findViewById(R.id.txtTitle)
         private val txtSubtitle: TextView = itemView.findViewById(R.id.txtSubtitle)
@@ -58,7 +63,9 @@ class LSRWAdapter(
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val imgArrow: ImageView = itemView.findViewById(R.id.imgArrow)
-        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
+        private val headerrelative_layout: RelativeLayout =
+            itemView.findViewById(R.id.headerrelative_layout)
+        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
 
 
         fun bind(item: SkillData) {
@@ -70,13 +77,24 @@ class LSRWAdapter(
 
             imgArrow.visibility = View.GONE
 
+            imgNewImage.visibility = if (item.is_unread) View.VISIBLE else View.GONE
+
+
+            val markAsRead = {
+                if (item.is_unread) {
+                    item.is_unread = false
+                    imgNewImage.visibility = View.GONE
+                    listener.onReadStatusClick(item, adapterPosition)
+                }
+            }
+
             if (item.activity_type == Constant.Listening) {
                 imgIcon.setImageResource(R.drawable.headphonesvgformat)
             } else if (item.activity_type == Constant.Speaking) {
                 imgIcon.setImageResource(R.drawable.micsvgformatstyle)
-            } else if (item.activity_type == Constant.Reading){
+            } else if (item.activity_type == Constant.Reading) {
                 imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
-            } else if (item.activity_type == Constant.Writing){
+            } else if (item.activity_type == Constant.Writing) {
                 imgIcon.setImageResource(R.drawable.pensvgformatstyle)
             } else {
                 imgIcon.setImageResource(R.drawable.questionmark)
@@ -89,7 +107,11 @@ class LSRWAdapter(
             rytList2.visibility = if (hasFiles) View.GONE else View.GONE
             total_numbers.visibility = View.GONE
 
+
+
+
             rytList2.setOnClickListener {
+                markAsRead()
                 val convertedList = item.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -123,6 +145,7 @@ class LSRWAdapter(
             }
 
             headerrelative_layout.setOnClickListener {
+                markAsRead()
                 val convertedList = item.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -155,47 +178,46 @@ class LSRWAdapter(
                 context.startActivity(intent)
             }
 
-            rcyAssignment.addOnItemTouchListener(
-                object : RecyclerView.SimpleOnItemTouchListener() {
-                    override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                        val child = rv.findChildViewUnder(e.x, e.y)
-                        if (child != null && e.action == MotionEvent.ACTION_UP) {
-                            rv.getChildAdapterPosition(child)
-                            val convertedList = item.file_path.map {
-                                GetFilePathDetails(
-                                    type = it.type,
-                                    url = it.url,
-                                )
-                            }
-                            val isHomeWorkData = FilePreview(
-                                id = item.id,
-                                title = item.title,
-                                description = item.description,
-                                subjectName = item.subject,
-                                sentBy = item.created_on,
-                                thumbnail = item.thumbnail,
-                                isUnread = true,
-                                isCompleted = true,
-                                isMenuType = Constant.M_LSRW,
-                                fileList = convertedList,
-                                submittedCount = 0,
-                                totalCount = 0,
-                                assignmentid = item.activity_type,
-                                created_date = item.submitted_date,
-                                category = "",
-                                assignmentsubject = "",
-                                isParentAssignment = true
+            rcyAssignment.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    markAsRead()
+                    val child = rv.findChildViewUnder(e.x, e.y)
+                    if (child != null && e.action == MotionEvent.ACTION_UP) {
+                        rv.getChildAdapterPosition(child)
+                        val convertedList = item.file_path.map {
+                            GetFilePathDetails(
+                                type = it.type,
+                                url = it.url,
                             )
-
-                            val intent = Intent(context, ChildHomeWork::class.java)
-                            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            context.startActivity(intent)
                         }
-                        return false
+                        val isHomeWorkData = FilePreview(
+                            id = item.id,
+                            title = item.title,
+                            description = item.description,
+                            subjectName = item.subject,
+                            sentBy = item.created_on,
+                            thumbnail = item.thumbnail,
+                            isUnread = true,
+                            isCompleted = true,
+                            isMenuType = Constant.M_LSRW,
+                            fileList = convertedList,
+                            submittedCount = 0,
+                            totalCount = 0,
+                            assignmentid = item.activity_type,
+                            created_date = item.submitted_date,
+                            category = "",
+                            assignmentsubject = "",
+                            isParentAssignment = true
+                        )
+
+                        val intent = Intent(context, ChildHomeWork::class.java)
+                        intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        context.startActivity(intent)
                     }
+                    return false
                 }
-            )
+            })
 
 
             if (hasFiles) {

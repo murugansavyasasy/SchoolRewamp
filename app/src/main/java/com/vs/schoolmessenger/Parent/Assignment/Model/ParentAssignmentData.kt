@@ -14,7 +14,7 @@ data class ParentAssignmentData(
     val time: String,
     val submitted_count: Int,
     val end_date: String,
-    val is_unread: Boolean,
+    var is_unread: Boolean,
     val sent_by: String,
     val sort_order: String,
     val is_archive: Boolean,

@@ -133,7 +133,7 @@ class AssignmentAdapter(
 
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val lblSubmittedCount: TextView = itemView.findViewById(R.id.lblSubmittedCount)
-
+        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
 
         private val options: ImageView = itemView.findViewById(R.id.options)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
@@ -149,6 +149,9 @@ class AssignmentAdapter(
             adapter: AssignmentAdapter,
             listener: AssignmentClickListener
         ) {
+
+
+
 
             lblDescription.text = data.description
             lblTitle.text = data.title
@@ -179,6 +182,8 @@ class AssignmentAdapter(
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
+
+
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -212,6 +217,8 @@ class AssignmentAdapter(
             }
 
             headerrelative_layout.setOnClickListener {
+
+
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -256,6 +263,7 @@ class AssignmentAdapter(
                                     url = it.url,
                                 )
                             }
+
                             val isHomeWorkData = FilePreview(
                                 id = "",
                                 title = data.title,
@@ -317,13 +325,16 @@ class AssignmentAdapter(
             lblNotSubmitted.setOnClickListener { listener.onNotSubmittedClick(data) }
 
             if (data.can_edit && data.can_delete) {
+
                 options.visibility = View.VISIBLE
             } else {
+
                 options.visibility = View.GONE
             }
 
 
             options.setOnClickListener {
+
                 listener.onEditAndDeleteClick(data, it, adapterPosition)
             }
         }

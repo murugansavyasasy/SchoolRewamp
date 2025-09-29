@@ -7,16 +7,20 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.Parent.LSRW.Model.SkillData
+import com.vs.schoolmessenger.Parent.LSRW.Model.lsrwitemclicklistener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwBinding
 
 
-class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
+class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklistener {
 
     private lateinit var adapter: LSRWAdapter
     private lateinit var appViewModel: App
@@ -36,7 +40,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
 
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
         binding.lblHeaderTitle.text = Constant.isParentMenuName
-        Log.d("isParentMenuName",Constant.isParentMenuName)
+        Log.d("isParentMenuName", Constant.isParentMenuName)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
 
@@ -67,7 +71,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
         appViewModel.init()
 
         binding.rcyrecyclerview.layoutManager = LinearLayoutManager(this)
-        adapter = LSRWAdapter(emptyList(), this)
+        adapter = LSRWAdapter(emptyList(), this, this)
         binding.rcyrecyclerview.adapter = adapter
 
         fetchLsrwSkillReportData()
@@ -137,7 +141,6 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
     }
 
 
-
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
@@ -146,4 +149,16 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener {
 
 
     }
+
+    override fun onReadStatusClick(
+        isData: SkillData,
+        isPosition: Int
+    ) {
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, "LSRW")
+            addProperty(APIKeyNames.detail_id, isData.id)
+        }
+        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+    }
+
 }

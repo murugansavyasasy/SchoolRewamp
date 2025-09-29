@@ -7,11 +7,14 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AssignmentParentBinding
@@ -57,7 +60,10 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                 binding.toolbarLayout.txtVideoMenu.setText("")
                 binding.toolbarLayout.txtVideoMenu.requestFocus()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(binding.toolbarLayout.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                imm.showSoftInput(
+                    binding.toolbarLayout.txtVideoMenu,
+                    InputMethodManager.SHOW_IMPLICIT
+                )
             }
         }
 
@@ -65,7 +71,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
         binding.lblHeaderTitle.text = Constant.isParentMenuName
-        Log.d("isParentMenuName",Constant.isParentMenuName)
+        Log.d("isParentMenuName", Constant.isParentMenuName)
 
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
@@ -79,11 +85,10 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 isAssignmentReportData = response.data
                 loadAssignmentReportData()
-                if (response.data.isNotEmpty()){
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-                }
-                else{
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                if (response.data.isNotEmpty()) {
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 }
                 binding.rcyAssignment.visibility = View.VISIBLE
                 binding.lytList.visibility = View.GONE
@@ -91,7 +96,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                 binding.rcyAssignment.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.VISIBLE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.txtNoData.text = response?.message
             }
         }
@@ -112,6 +117,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                     binding.lytList.visibility = View.GONE
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -135,7 +141,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     }
 
 
-
     override fun onSubmittedClick(data: AssignmentData) {
 
     }
@@ -151,9 +156,28 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
     }
 
+    override fun onItemClick(
+        data: AssignmentData,
+        holder: AssignmentAdapter.DataViewHolder
+    ) {
+
+    }
+
+    override fun onReadStatusClick(
+        isData: ParentAssignmentData,
+        isPosition: Int
+    ) {
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, "ASSIGNMENT")
+            addProperty(APIKeyNames.detail_id, isData.id)
+        }
+        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+    }
+
+
     override fun onClick(v: View?) {
         when (v?.id) {
-            
+
         }
     }
 }

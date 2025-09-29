@@ -6,6 +6,17 @@
     android:layout_height="wrap_content"
     android:background="@drawable/rect_shadow_white">
 
+    <ImageView
+        android:id="@+id/imgNewImage"
+        android:layout_width="@dimen/ten"
+        android:layout_height="@dimen/ten"
+        android:layout_alignParentEnd="true"
+        android:elevation="@dimen/ten"
+        android:background="@drawable/bg_red_circle"
+        android:visibility="gone">
+    </ImageView>
+
+
     <TextView
         android:id="@+id/lblTitle"
         style="@style/CustomTextStylePoppinsBold"

@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty"
-                android:text="@string/ongoing_events"
+                android:text="Today's Events"
                 android:textColor="@color/black"
                 android:textSize="@dimen/eighteen_sp" />
 
