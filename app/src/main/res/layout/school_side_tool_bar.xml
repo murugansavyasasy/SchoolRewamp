@@ -310,6 +310,7 @@
             android:layout_marginTop="@dimen/five"
             android:layout_toStartOf="@+id/btnDone"
             android:gravity="start"
+            android:visibility="gone"
             android:text="Selected Files : 0"
             android:textColor="@color/white" />
 
