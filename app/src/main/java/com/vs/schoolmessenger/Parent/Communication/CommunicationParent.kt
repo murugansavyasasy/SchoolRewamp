@@ -239,12 +239,30 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             else -> allVoiceData
         }
 
+//        if (currentSearchQuery.isNotEmpty()) {
+//            filteredList = filteredList.filter {
+//                it.content?.contains(
+//                    currentSearchQuery,
+//                    ignoreCase = true
+//                ) == true || it.content?.contains(currentSearchQuery, ignoreCase = true) == true
+//            }
+//        }
+
         if (currentSearchQuery.isNotEmpty()) {
-            filteredList = filteredList.filter {
-                it.content?.contains(
-                    currentSearchQuery,
-                    ignoreCase = true
-                ) == true || it.content?.contains(currentSearchQuery, ignoreCase = true) == true
+            filteredList = filteredList.filter { item ->
+                val contentMatch = item.content.orEmpty().contains(currentSearchQuery, ignoreCase = true)
+                val titleMatch = item.title.orEmpty().contains(currentSearchQuery, ignoreCase = true)
+                val typeMatch = item.type.orEmpty().contains(currentSearchQuery, ignoreCase = true)
+                val timeMatch = item.time.orEmpty().contains(currentSearchQuery, ignoreCase = true)
+
+                val dateToCheck = try {
+                    Constant.convertDateTimeFormat(item.date.orEmpty())
+                } catch (e: Exception) {
+                    item.date.orEmpty()
+                }
+                val dateMatch = dateToCheck.contains(currentSearchQuery, ignoreCase = true)
+
+                contentMatch || titleMatch || dateMatch || typeMatch || timeMatch
             }
         }
 
@@ -287,12 +305,14 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
             R.id.seeMoreLabel -> {
                 Log.d("hasFetchedMoreBefore",hasFetchedMore.toString())
+                Log.d("seeMoreVisbilityBefore",binding.seeMoreLabel.isVisible.toString())
                 if (!hasFetchedMore) {
                     Log.d("isComing","iscoming")
                     Log.d("hasFetchedMore",hasFetchedMore.toString())
                     hasFetchedMore = true
                     isSeeMoreClick = false
                     binding.seeMoreLabel.visibility = View.GONE
+                    Log.d("seeMoreVisbilityAfter",binding.seeMoreLabel.isVisible.toString())
                     fetchMoreData()
                 }
             }
@@ -344,8 +364,13 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         val isEmpty = listToCheck.isEmpty()
         binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
 
+        //Old Code to hide seemore
+//        if (!isFilterClick) {
+//            binding.seeMoreLabel.visibility = if (isEmpty && isSeeMoreClick) View.VISIBLE else View.GONE
+//        }
+
         if (!isFilterClick) {
-            binding.seeMoreLabel.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.seeMoreLabel.visibility = if (isEmpty && isSeeMoreClick) View.VISIBLE else View.GONE
         }
         binding.nomessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding.recyclerInitial.visibility = if (isEmpty) View.GONE else View.VISIBLE

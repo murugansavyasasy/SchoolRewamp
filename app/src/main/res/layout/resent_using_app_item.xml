@@ -36,6 +36,7 @@
             android:textSize="@dimen/twele_sp" />
 
         <ImageView
+            android:id="@+id/imgReadCountMenu"
             android:layout_width="@dimen/ten"
             android:layout_height="@dimen/ten"
             android:layout_alignParentEnd="true"
