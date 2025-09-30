@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView android:id="@+id/cardview"
     android:layout_width="@dimen/one_eighty"
-    android:layout_height="@dimen/one_twenty"
-    android:id="@+id/cardview"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/eight"
-    android:background="@drawable/rect_shadow_white"
     card_view:cardCornerRadius="@dimen/sixteen"
-    card_view:cardElevation="@dimen/four">
+    card_view:cardElevation="@dimen/four"
+    card_view:cardBackgroundColor="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
 
     <LinearLayout
         android:id="@+id/root_linearlayout"
@@ -60,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0 Students"
-            android:textColor="#808080"
+            android:textColor="@color/black"
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="@dimen/fourteen_sp"

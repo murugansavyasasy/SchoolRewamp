@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
     <include
         android:id="@+id/toolbarLayout"
@@ -88,21 +87,21 @@
                             android:orientation="vertical"
                             android:padding="@dimen/eight">
 
-                        <TextView
-                            android:id="@+id/weeklyreport_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Weekly Report"
-                            android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsBold"/>
+                            <TextView
+                                android:id="@+id/weeklyreport_label"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Weekly Report"
+                                android:textColor="@color/black" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rvWeekly"
-                            android:layout_width="@dimen/three_fifty"
-                            android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="false"
-                            android:overScrollMode="never"
-                            android:visibility="visible" />
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvWeekly"
+                                android:layout_width="@dimen/three_fifty"
+                                android:layout_height="wrap_content"
+                                android:nestedScrollingEnabled="false"
+                                android:overScrollMode="never"
+                                android:visibility="visible" />
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -124,11 +123,11 @@
 
                             <TextView
                                 android:id="@+id/topperformance_label"
+                                style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Top Performance"
-                                android:textColor="@color/black"
-                                style="@style/CustomTextStylePoppinsBold"/>
+                                android:textColor="@color/black" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rvTopPerformance"
@@ -153,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Students"
+                android:text="Tasks"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp" />
 

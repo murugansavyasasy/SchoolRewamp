@@ -7,7 +7,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +23,6 @@ import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgStudentSubmissi
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwHeaderItem
 import com.vs.schoolmessenger.School.LSRW.Model.TopPerformanceItem
 import com.vs.schoolmessenger.School.LSRW.Model.WeeklyReportItem
-
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwReportstaticsBinding
@@ -147,7 +145,6 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 binding.lytNoDataFound.visibility = View.GONE
                 binding.noDataFound.visibility = View.GONE
 
-                // Initially select Today_Submitted and show its student list
                 if (headerItems.isNotEmpty()) {
                     filterByHeader(headerItems[0], data)
                 }
@@ -173,9 +170,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         val monthList = months.take(12)
 
         val adapter = object : ArrayAdapter<String>(
-            this,
-            android.R.layout.simple_spinner_item,
-            monthList
+            this, android.R.layout.simple_spinner_item, monthList
         ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent) as TextView
@@ -185,7 +180,9 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 return view
             }
 
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+            override fun getDropDownView(
+                position: Int, convertView: View?, parent: ViewGroup
+            ): View {
                 val view = super.getDropDownView(position, convertView, parent) as TextView
                 view.setTextColor(ContextCompat.getColor(context, android.R.color.black))
                 view.textSize = 16f
@@ -203,10 +200,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         binding.toolbarLayout.lblDropDownMonth.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
                     selectedMonth = position + 1
                     fetchLsrwstatsReportData(selectedMonth)
@@ -220,8 +214,6 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     }
 
 
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun filterByHeader(selected: LsrwHeaderItem, data: AvgSkillData) {
         val details = when (selected.title) {
@@ -233,17 +225,20 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
             else -> emptyList()
         }
 
+        val uniqueDetails = details.groupBy { it.id }.map { entry -> entry.value.first() }
+
         binding.rcstudents.layoutManager = LinearLayoutManager(this)
-        binding.rcstudents.adapter = StudentListAdapter(details)
-        if (details.isEmpty()) {
+        binding.rcstudents.adapter = StudentListAdapter(uniqueDetails, this)
+
+        if (uniqueDetails.isEmpty()) {
             binding.studentsLabel.visibility = View.GONE
             binding.rcstudents.visibility = View.GONE
-            binding.studentsLabel.visibility = View.GONE
         } else {
             binding.studentsLabel.visibility = View.VISIBLE
             binding.rcstudents.visibility = View.VISIBLE
         }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun calculateWeeklyReport(details: List<AvgStudentSubmission>): List<WeeklyReportItem> {
@@ -252,21 +247,26 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         val formatter = DateTimeFormatter.ofPattern(Constant.ddMMyyyy, Locale.getDefault())
         val currentYear = LocalDate.now().year
 
-        val weeks = mutableMapOf<Int, MutableList<Int>>()
+        // Get unique activities by id to avoid double-counting
+        val uniqueActivities = details.groupBy { it.id }.mapValues { entry -> entry.value.first() }.values.toList()
 
-        details.forEach { detail ->
-            val date = LocalDate.parse(detail.submission_date, formatter)
+        val sums = mutableMapOf<Int, Pair<Int, Int>>() // week -> (sum_submitted, sum_member)
+
+        uniqueActivities.forEach { activity ->
+            val date = LocalDate.parse(activity.submission_date, formatter)
             if (date.monthValue == selectedMonth && date.year == currentYear) {
                 val weekOfMonth = date.get(WeekFields.of(Locale.getDefault()).weekOfMonth())
-                val remarkValue = detail.remark.replace("%", "").toIntOrNull() ?: 0
-                weeks.getOrPut(weekOfMonth) { mutableListOf() }.add(remarkValue)
+                val current = sums.getOrDefault(weekOfMonth, 0 to 0)
+                val submitted = activity.submitted_count ?: 0
+                val members = activity.member_count ?: 0
+                sums[weekOfMonth] = (current.first + submitted) to (current.second + members)
             }
         }
 
         val weeklyReport = mutableListOf<WeeklyReportItem>()
         for (week in 1..6) {
-            val values = weeks[week] ?: emptyList()
-            val avg = if (values.isNotEmpty()) values.sum() / values.size else 0
+            val (sub, mem) = sums.getOrDefault(week, 0 to 0)
+            val avg = if (mem > 0) ((sub.toDouble() / mem) * 100).toInt() else 0
             weeklyReport.add(WeeklyReportItem("${Constant.Week} $week", avg))
         }
         return weeklyReport
@@ -279,11 +279,8 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 className = "${Constant.Class} ${it.std_sec}",
                 percentage = it.remark.replace("%", "").toIntOrNull() ?: 0
             )
-        }
-            .filter { it.percentage > 0 }
-            .sortedByDescending { it.percentage }
+        }.filter { it.percentage > 0 }.sortedByDescending { it.percentage }
     }
-
 
     private fun fetchLsrwstatsReportData(month: Int) {
         binding.rclsrwheader.visibility = View.VISIBLE

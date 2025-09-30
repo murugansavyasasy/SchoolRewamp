@@ -48,6 +48,7 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = childDetails!!.name
         binding.toolbarLayout.lblSchoolName.text = childDetails!!.school_name
+//        binding.descriptionValue.text = data!!.description
 
         val adapter = StudentSubmittedListRemarkAdapter(
             this, data!!.fileList, data!!.subjectName!!, SELECTED_SCHOOL_MENU, false
