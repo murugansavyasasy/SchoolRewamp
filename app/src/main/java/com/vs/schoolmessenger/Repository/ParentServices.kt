@@ -9,6 +9,7 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionDeleteResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionEditResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
@@ -103,6 +104,7 @@ class ParentServices {
     var isParentprofilelist: MutableLiveData<ProfileListResponse?>
     var ispresubmission: MutableLiveData<ProfileUpdateResponse?>
     var getmysubmissionedit: MutableLiveData<MySubmissionEditResponse?>
+    var ismysubmissiondelete: MutableLiveData<MySubmissionDeleteResponse?>
 
     init {
         client_auth = RestClient()
@@ -149,6 +151,7 @@ class ParentServices {
         isParentprofilelist= MutableLiveData()
         ispresubmission= MutableLiveData()
         getmysubmissionedit= MutableLiveData()
+        ismysubmissiondelete= MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1923,11 +1926,11 @@ class ParentServices {
     }
 
 
-    fun getmysubmissionedit(
-        isToken: String,
-        jsonObject: JsonObject,
-    ) {
-        RestClient.apiInterfaces.getmysubmissionedit(isToken,jsonObject)
+
+
+    fun getmysubmissionedit(isToken: String, jsonObject: JsonObject,  activity: Activity ) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.getmysubmissionedit(isToken, jsonObject)
             ?.enqueue(object : Callback<MySubmissionEditResponse?> {
                 override fun onResponse(
                     call: Call<MySubmissionEditResponse?>,
@@ -1963,6 +1966,49 @@ class ParentServices {
 
     val getmysubmissioneditLiveData: LiveData<MySubmissionEditResponse?>
         get() = getmysubmissionedit
+
+
+
+
+    fun ismysubmissiondelete(
+        isToken: String, jsonObject: JsonObject,  activity: Activity
+    ) {
+        RestClient.apiInterfaces.ismysubmissiondelete(isToken,jsonObject)
+            ?.enqueue(object : Callback<MySubmissionDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<MySubmissionDeleteResponse?>, response: Response<MySubmissionDeleteResponse?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                ismysubmissiondelete.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                ismysubmissiondelete.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<MySubmissionDeleteResponse?>, t: Throwable
+                ) {
+                    ismysubmissiondelete.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val ismysubmissiondeleteLiveData: LiveData<MySubmissionDeleteResponse?>
+        get() = ismysubmissiondelete
+
+
 
 
 }

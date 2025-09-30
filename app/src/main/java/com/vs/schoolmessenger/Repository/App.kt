@@ -19,6 +19,7 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionDeleteResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionEditResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
@@ -381,6 +382,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSchoolprofilelist: LiveData<ProfileListResponse?>? = null
     var islsrwmysubmission: LiveData<ActivityResponse?>? = null
     var getmysubmissionedit: LiveData<MySubmissionEditResponse?>? = null
+    var ismysubmissiondelete: LiveData<MySubmissionDeleteResponse?>? = null
     var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
         private set
 
@@ -540,6 +542,7 @@ class App(application: Application) : AndroidViewModel(application) {
         islsrwmysubmission = apiParentRepositories.islsrwmysubmissionLiveData
         isFeeInvoices = apiParentRepositories.isFeeInvoices
         getmysubmissionedit = apiParentRepositories.getmysubmissioneditLiveData
+        ismysubmissiondelete = apiParentRepositories.ismysubmissiondeleteLiveData
 
 
     }
@@ -1370,11 +1373,16 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getmysubmissionedit(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
         apiParentRepositories.getmysubmissionedit(
-            isToken, jsonObject
+            isToken, jsonObject,activity
         )
+    }
+
+
+    fun ismysubmissiondelete(isToken: String, request: JsonObject, activity: Activity) {
+        apiParentRepositories.ismysubmissiondelete(isToken, request, activity)
     }
 }
 
