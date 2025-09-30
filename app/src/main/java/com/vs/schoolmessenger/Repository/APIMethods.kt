@@ -184,6 +184,7 @@ object APIMethods {
     const val ispresubmission = "admin/api/student-profile/pre-submission"
 
     const val getmysubmissionedit = "comm/api/assignment/update-submission"
+    const val ismysubmissiondelete = "comm/api/assignment/delete-submission"
 
 }
 

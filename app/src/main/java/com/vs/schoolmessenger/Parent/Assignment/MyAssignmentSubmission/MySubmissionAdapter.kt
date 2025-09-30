@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -108,12 +109,14 @@ class MySubmissionAdapter(
 
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
+        private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val submitteddetails: TextView = itemView.findViewById(R.id.submitteddetails)
         private val datevalue: TextView = itemView.findViewById(R.id.datevalue)
         private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
         private val options: ImageView = itemView.findViewById(R.id.options)
         private val rightText: TextView = itemView.findViewById(R.id.rightText)
+        private val rightIcon: ImageView = itemView.findViewById(R.id.rightIcon)
 
         @SuppressLint("ClickableViewAccessibility", "SetJavaScriptEnabled")
         fun bind(
@@ -129,6 +132,10 @@ class MySubmissionAdapter(
             lblDescription.text = subject
 
             rightText.setOnClickListener {
+                listener.onClickListener(data, it, adapterPosition)
+            }
+
+            rightIcon.setOnClickListener {
                 listener.onClickListener(data, it, adapterPosition)
             }
 
@@ -193,7 +200,7 @@ class MySubmissionAdapter(
                 context.startActivity(intent)
             }
 
-            headerrelative_layout.setOnClickListener {
+            rytList.setOnClickListener {
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,

@@ -83,6 +83,20 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
             }
         }
 
+
+        appViewModel!!.ismysubmissiondelete?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@Mysubmission)
+                    mAdapter!!.removeItemAt(isMySubmissionPosition)
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
+
         fetchAssignmentReportData()
     }
 
@@ -201,24 +215,15 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-        // if (isNoticeBoardUpdate) {
         alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_noticeboard)
-//        } else {
-//            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-//        }
 
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            // if (isNoticeBoardUpdate) {
-//            ProgressDialogHelper.show(this)
-//            ProgressDialogHelper.updateProgress(10)
-//            isUploadFilesInServer(Constant.file_)
-//            } else {
             val jsonObject = JsonObject()
             jsonObject.addProperty(APIKeyNames.id, isMySubmissionId)
-            appViewModel?.isnoticeboarddelete(isAccessToken!!, jsonObject, this)
+            appViewModel?.ismysubmissiondelete(isAccessToken!!, jsonObject, this)
 //            }
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }

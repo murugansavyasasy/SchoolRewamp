@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -16,11 +17,13 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -32,6 +35,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
@@ -39,12 +44,17 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
+import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
+import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
@@ -86,6 +96,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     var assignmentId: String? = null
     var titleName: String? = null
     var subjectName: String? = null
+    var submissionData: SubmittedAssignment? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -106,9 +117,14 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         assignmentId = intent.getStringExtra(Constant.assignment_id)
         titleName = intent.getStringExtra(Constant.title_)
         subjectName = intent.getStringExtra(Constant.subject)
+        submissionData = intent.getParcelableExtra(Constant.mysubmission_data)
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.submit_your_assignment)
+        if (submissionData != null) {
+            binding.toolbarLayout.lblParentToolBar.text = "Edit your assignment"
+        } else {
+            binding.toolbarLayout.lblParentToolBar.text = getString(R.string.submit_your_assignment)
+        }
         binding.toolbarLayout.rytSearch.visibility = View.GONE
 
         binding.toolbarLayout.imgBack.setOnClickListener {
@@ -119,6 +135,8 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         binding.edtTitle.setText(titleName)
+
+        Constant.selectedFiles.clear()
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -126,13 +144,44 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 )
             )
         }
+        if (submissionData != null) {
+            binding.edtDescription.setText(submissionData!!.description)
+            for (file in submissionData!!.file_path) {
+                val type = when (file.type) {
+                    "IMAGE" -> FileType.IMAGE
+                    "VIDEO" -> FileType.VIDEO
+                    "AUDIO" -> FileType.AUDIO
+                    "PDF" -> FileType.PDF
+                    "DOC" -> FileType.DOC
+                    "EXCEL" -> FileType.EXCEL
+                    "PPT" -> FileType.PPT
+                    "TXT" -> FileType.TXT
+                    else -> FileType.OTHER
+                }
+                Constant.selectedFiles.add(FileItem(file.url, type))
+            }
+            Constant.Remaining = MAX_FILES - submissionData!!.file_path.size
+        }
 
         appViewModel!!.isSubmitAssignment?.observe(this) { response ->
             Constant.hideLoading(this@MyAssignmentSubmit)
             if (response != null) {
                 Log.d("Response", response.status.toString())
                 Constant.showTopAlertPopup(response.message, this)
+                if (response.status == true) {
+                    finish()
+                }
+            }
+        }
 
+        appViewModel!!.getmysubmissionedit?.observe(this) { response ->
+            Constant.hideLoading(this@MyAssignmentSubmit)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                showTopAlertPopup(response.message, this)
+                if (response.status == true) {
+                    finish()
+                }
             }
         }
 
@@ -199,6 +248,57 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
     }
 
+
+    fun showTopAlertPopup(message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true // prevent clicks on background
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            isAwsUploadedFiles.clear()
+            selectedFiles.clear()
+            isCommunicationType = 1
+            val intent = Intent(activity, Mysubmission::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
+            closePopup()
+        }
+        dimView.isFocusable = true
+        dimView.isFocusableInTouchMode = true
+
+    }
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
         if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
@@ -267,7 +367,11 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-        alertMessage.text = getString(R.string.Are_you_sure_want_to_submit)
+        if (submissionData != null) {
+            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_assignment)
+        } else {
+            alertMessage.text = getString(R.string.Are_you_sure_want_to_submit)
+        }
 
         lblSelectTarget.visibility = View.GONE
 
@@ -299,6 +403,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         when {
             Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+            else -> {
+                ProgressDialogHelper.dismiss()
+                isAssignmentSend()
+            }
         }
         ProgressDialogHelper.updateProgress(80)
     }
@@ -644,7 +752,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
+                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
                 Toast.makeText(this,
                     getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
@@ -698,7 +806,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         }
 
         when (requestCode) {
-            CreateEvent.Companion.CAMERA_IMAGE_REQUEST -> {
+            CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)
                     if (file.exists()) {
@@ -746,12 +854,24 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
     fun isAssignmentSend() {
 
-        val jsonObject = ApiCallRequest.isSubmitAssignment(
-            id = assignmentId!!,
-            description = binding.edtDescription.text.toString(),
-            iframe = "",
-            file_size = ""
-        )
-        appViewModel!!.isSubmitAssignment(isAccessToken!!, jsonObject, this)
+        val id = if (submissionData != null) submissionData!!.id else assignmentId!!
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("id", id)
+        jsonObject.addProperty("description", binding.edtDescription.text.toString())
+        jsonObject.addProperty("iframe", "")
+        jsonObject.addProperty("file_size", Constant.isAwsUploadedFiles.size.toString())
+        val filePathArray = JsonArray()
+        for (file in Constant.isAwsUploadedFiles) {
+            val obj = JsonObject()
+            obj.addProperty("url", file.isFileUrl)
+            obj.addProperty("type", file.isFileType)
+            filePathArray.add(obj)
+        }
+        jsonObject.add("file_path", filePathArray)
+        if (submissionData != null) {
+            appViewModel!!.getmysubmissionedit(isAccessToken!!, jsonObject,this)
+        } else {
+            appViewModel!!.isSubmitAssignment(isAccessToken!!, jsonObject, this)
+        }
     }
 }

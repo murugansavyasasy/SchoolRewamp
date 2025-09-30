@@ -93,14 +93,26 @@ class InteractionWithStudentAdapter(
         private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
         private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
+        private val lblDesc: TextView = itemView.findViewById(R.id.lblDesc)
+        private val yesterdayheader: TextView = itemView.findViewById(R.id.yesterdayheader)
         private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(student: StudentChatData, position: Int, adapter: InteractionWithStudentAdapter) {
             nameheader.text = student.name
             subjectheader.text = student.subject_name
-//            unreadcount.text = student.unread_count
+            unreadcount.text = student.unread_count.toString()
             lblLogo.text = Constant.getNameInitials(student.name)
+
+            if (student.last_msg.isNullOrBlank()) {
+                lblDesc.text = "No messages yet"
+            } else {
+                lblDesc.text = student.last_msg
+            }
+
+            val isVisible = student.unread_count > Constant.zero__
+            unreadcount.visibility = if (isVisible) View.VISIBLE else View.GONE
+            yesterdayheader.visibility = if (isVisible) View.VISIBLE else View.GONE
 
 
             relative_layout.setOnClickListener {
