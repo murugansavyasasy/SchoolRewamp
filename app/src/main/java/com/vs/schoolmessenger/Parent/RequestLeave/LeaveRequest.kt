@@ -285,23 +285,43 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         } else {
             statusFilteredList.mapNotNull { monthWiseLeave ->
                 val filteredDetails = monthWiseLeave.details.filter { leave ->
+                    val appliedOn = try {
+                        Constant.convertDateTimeFormat(leave.applied_on)
+                    } catch (e: Exception) {
+                        leave.applied_on
+                    }
+
+                    val leaveFrom = try {
+                        Constant.convertDateTimeFormat(leave.leave_from)
+                    } catch (e: Exception) {
+                        leave.leave_from
+                    }
+
+                    val leaveTo = try {
+                        Constant.convertDateTimeFormat(leave.leave_to)
+                    } catch (e: Exception) {
+                        leave.leave_to
+                    }
+
                     val fieldsToSearch = listOf(
                         leave.student_name.lowercase(),
                         leave.class_name.lowercase(),
                         leave.section_name.lowercase(),
-                        leave.applied_on.lowercase(),
+                        appliedOn.lowercase(),
                         leave.no_of_days.lowercase(),
-                        leave.leave_from.lowercase(),
-                        leave.leave_to.lowercase(),
+                        leaveFrom.lowercase(),
+                        leaveTo.lowercase(),
                         leave.leave_type.lowercase(),
                         leave.reason.lowercase(),
                         leave.from_session.lowercase(),
                         leave.to_session.lowercase(),
                     )
+
                     searchWords.all { word ->
-                        fieldsToSearch.any { field -> field.contains(word) }
+                        fieldsToSearch.any { field -> field.contains(word.lowercase()) }
                     }
                 }
+
 
                 if (filteredDetails.isNotEmpty()) {
                     monthWiseLeave.copy(details = filteredDetails) // keep month

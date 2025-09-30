@@ -173,18 +173,25 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
                 sourceList
             } else {
                 sourceList.filter { item ->
+                    val convertedDate = try {
+                        Constant.convertDateFormatType(item.created_on.orEmpty())
+                    } catch (e: Exception) {
+                        item.created_on.orEmpty()
+                    }
+
                     val fieldsToSearch = listOf(
                         item.title?.lowercase().orEmpty(),
                         item.description?.lowercase().orEmpty(),
                         item.subject?.lowercase().orEmpty(),
-                        item.created_on?.lowercase().orEmpty(),
+                        convertedDate.lowercase(),
                         item.SentBy?.lowercase().orEmpty(),
                         item.max_mark.toString().lowercase(),
                         item.no_of_questions.toString().lowercase(),
                         item.level.toString().lowercase()
                     )
+
                     searchWords.all { word ->
-                        fieldsToSearch.any { field -> field.contains(word) }
+                        fieldsToSearch.any { field -> field.contains(word.lowercase()) }
                     }
                 }
             }

@@ -139,16 +139,21 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
             certificateRequestList.orEmpty()
         } else {
             certificateRequestList.orEmpty().filter { student ->
+                val convertedDate = try {
+                    Constant.convertDateTimeFormat(student.requested_on.orEmpty())
+                } catch (e: Exception) {
+                    student.requested_on.orEmpty()
+                }
+
                 val fieldsToSearch = listOf(
-                    student.requested_on?.lowercase().orEmpty(),
+                    convertedDate.lowercase(),
                     student.status?.lowercase().orEmpty(),
                     student.reason?.lowercase().orEmpty(),
-                    student.issued_on?.lowercase().orEmpty(),
                     student.urgency_level?.lowercase().orEmpty(),
                 )
 
                 searchWords.all { word ->
-                    fieldsToSearch.any { field -> field.contains(word) }
+                    fieldsToSearch.any { field -> field.contains(word.lowercase()) }
                 }
             }
         }
