@@ -68,6 +68,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
+        binding.toolbarLayout.cbSelect.buttonTintList = null
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
 
@@ -131,6 +132,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 mAdapter.selectAll(false)
             }
         }
+
         appViewModel!!.isAttachmentSend?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {

@@ -286,7 +286,10 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             }
 
             R.id.seeMoreLabel -> {
+                Log.d("hasFetchedMoreBefore",hasFetchedMore.toString())
                 if (!hasFetchedMore) {
+                    Log.d("isComing","iscoming")
+                    Log.d("hasFetchedMore",hasFetchedMore.toString())
                     hasFetchedMore = true
                     isSeeMoreClick = false
                     binding.seeMoreLabel.visibility = View.GONE
