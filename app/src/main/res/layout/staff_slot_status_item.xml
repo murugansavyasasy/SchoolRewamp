@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-   >
-
-
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/rytSlots"
         android:layout_width="match_parent"
@@ -12,7 +9,6 @@
         android:layout_margin="@dimen/ten"
         android:background="@drawable/outline_gray"
         android:padding="@dimen/ten">
-
         <RelativeLayout
             android:id="@+id/rltStatus"
             android:layout_width="wrap_content"
@@ -21,7 +17,6 @@
             android:layout_marginStart="@dimen/ten"
             android:background="@drawable/bg_light_green"
             android:padding="@dimen/five">
-
             <ImageView
                 android:id="@+id/imgStatus"
                 android:layout_width="@dimen/twenty"
@@ -29,7 +24,6 @@
                 android:layout_marginStart="@dimen/five"
                 android:src="@drawable/checkmark_circle">
             </ImageView>
-
             <TextView
                 android:id="@+id/lblStatus"
                 style="@style/CustomTextStylePoppinsMedium1"
@@ -43,11 +37,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
             </TextView>
-
-
         </RelativeLayout>
-
-
         <ImageView
             android:id="@+id/imgDot"
             android:layout_width="@dimen/thirty_five"
@@ -59,7 +49,6 @@
             android:padding="@dimen/ten"
             android:src="@drawable/threedot">
         </ImageView>
-
         <TextView
             android:id="@+id/lblTime"
             style="@style/CustomTextStylePoppinsBold1"
@@ -72,7 +61,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp">
         </TextView>
-
         <TextView
             android:id="@+id/lblDuration"
             style="@style/CustomTextStylePoppinsMedium"
@@ -85,7 +73,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
         </TextView>
-
         <TextView
             android:id="@+id/lblWaitingBooking"
             android:layout_width="match_parent"
@@ -100,9 +87,7 @@
             android:layout_marginEnd="@dimen/twenty_five"
             android:background="@drawable/bg_light_radious_blue"
             android:layout_height="wrap_content">
-
         </TextView>
-
         <RelativeLayout
             android:id="@+id/rltBookedBy"
             android:layout_width="match_parent"
@@ -114,7 +99,6 @@
             android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/bg_light_green"
             android:padding="@dimen/ten">
-
             <TextView
                 android:id="@+id/lblBookedBy"
                 style="@style/CustomTextStylePoppinsBold"
@@ -125,8 +109,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
             </TextView>
-
-
             <ImageView
                 android:id="@+id/imgUser"
                 android:layout_width="@dimen/twenty"
@@ -136,7 +118,6 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:src="@drawable/user_sample">
             </ImageView>
-
             <TextView
                 android:id="@+id/lblBookedName"
                 style="@style/CustomTextStylePoppinsMedium"
@@ -150,7 +131,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
             </TextView>
-
             <TextView
                 android:id="@+id/lblStandardAndSection"
                 style="@style/CustomTextStylePoppinsBold"
@@ -165,10 +145,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
             </TextView>
-
         </RelativeLayout>
-
-
     </RelativeLayout>
-
 </RelativeLayout>
