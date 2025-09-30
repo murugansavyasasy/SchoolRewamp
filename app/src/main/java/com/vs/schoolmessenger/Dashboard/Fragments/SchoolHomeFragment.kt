@@ -190,8 +190,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isSchoolMenuDetails = isSchoolDashBoardData!![0].menus
                     FrequentSchoollyUsedMenuItems = isSchoolDashBoardData!![0].frequently_used
                     allMenuItems = isSchoolMenuDetails!!
-                    setupRecyclerView()
-
                 }
             }
         }
@@ -205,6 +203,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isDashBoardCountData = isDashboardResponse
                     isSchoolMenuCountDetails = isDashBoardCountData!![0].menu_details
                     isGetAds()
+                    setupRecyclerView()
+
                 }
             }
         }
@@ -249,7 +249,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
-            adapter = AutoScrollAdapterWithDots(FrequentSchoollyUsedMenuItems!!, this)
+            adapter = AutoScrollAdapterWithDots(FrequentSchoollyUsedMenuItems!!,isSchoolMenuCountDetails, this)
             binding.autoScrollRecyclerView.adapter = adapter
 
             if (binding.autoScrollRecyclerView.onFlingListener == null) {
