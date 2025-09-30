@@ -32,7 +32,6 @@ class SlotTimingLoadAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val slot = slotTimes[position]
         holder.lblTiming.text = "${slot.slot_from} - ${slot.slot_to}"
-
         holder.lblSlotStatus.text = slot.slot_availablity
         if (slot.slot_availablity.equals("Available", true)) {
             holder.imgRemove.visibility = View.VISIBLE
@@ -49,7 +48,6 @@ class SlotTimingLoadAdapter(
             onDayUpdate(slotTimes)
         }
     }
-
     override fun getItemCount(): Int = slotTimes.size
 }
 

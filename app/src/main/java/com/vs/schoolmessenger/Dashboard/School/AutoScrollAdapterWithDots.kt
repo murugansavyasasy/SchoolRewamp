@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.School
 
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,14 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
 class AutoScrollAdapterWithDots(
     private var items: List<MenuDetail>,
+    private var itemCountList: ArrayList<MenuCountDetail>?,
     private var listener: MenuClickListener,
 
     ) : RecyclerView.Adapter<AutoScrollAdapterWithDots.ViewHolder>() {
@@ -31,8 +34,15 @@ class AutoScrollAdapterWithDots(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        holder.bind(item, listener)
+//        val item = items[position]
+//        holder.bind(item,itemCountList, listener)
+        when (holder) {
+            is ViewHolder -> {
+                items.getOrNull(position)?.let { item ->
+                    holder.bind(item,position, itemCountList, listener)
+                }
+            }
+        }
     }
 
     fun getMiddlePosition(): Int {
@@ -45,9 +55,31 @@ class AutoScrollAdapterWithDots(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val itemImage: ImageView = itemView.findViewById(R.id.itemImage)
         private val itemText: TextView = itemView.findViewById(R.id.itemText)
+        private val imgReadCountMenu: ImageView = itemView.findViewById(R.id.imgReadCountMenu)
 
-        fun bind(item: MenuDetail, listener: MenuClickListener) {
+        fun bind(
+            item: MenuDetail,
+            position: Int,
+            itemCountList: ArrayList<MenuCountDetail>?,
+            listener: MenuClickListener
+        ) {
             itemText.text = item.name
+
+            val matchingCount = itemCountList?.find { it.id == item.id }
+
+            if (matchingCount != null && matchingCount.unread_count > 0) {
+                imgReadCountMenu.visibility = View.VISIBLE
+                Log.d(
+                    "AutoScrollAdapter",
+                    "ItemMenu=${item.name}, ItemCountMenu=${matchingCount.name}, Unread=${matchingCount.unread_count}"
+                )
+            } else {
+                imgReadCountMenu.visibility = View.GONE
+                Log.d(
+                    "AutoScrollAdapter",
+                    "ItemMenu=${item.name}, No matching count OR Unread=0"
+                )
+            }
 
             when (item.id) {
                 Constant.M_COMMUNICATION -> itemImage.setImageResource(R.drawable.communication_icon_dashboard)

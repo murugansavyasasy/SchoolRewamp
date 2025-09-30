@@ -13,6 +13,9 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.PTM.DataClass.Slot
 import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotCancelReOpenClickListener
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class StaffSlotStatusAdapter(
     private var itemList: List<Slot>? = null,
@@ -20,19 +23,17 @@ class StaffSlotStatusAdapter(
     private var listener: StaffSlotCancelReOpenClickListener,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
                 ShimmerUtil.wrapWithShimmer(parent, R.layout.staff_slot_status_item)
-            ShimmerViewHolder(
+            DataViewHolder.ShimmerViewHolder(
                 shimmerView
             )
         } else {
@@ -50,7 +51,7 @@ class StaffSlotStatusAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
+        return if (isLoading) 20
         else itemList?.size ?: 0
     }
 
@@ -83,9 +84,8 @@ class StaffSlotStatusAdapter(
                     lblWaitingBooking.visibility = View.VISIBLE
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.exclamationmark_circle))
                     imgDot.visibility = View.VISIBLE
-                    imgDot.visibility = if (!data.can_cancel) View.VISIBLE else View.GONE
+                    imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
-
                 "Cancelled" -> {
                     rltStatus.background = context.getDrawable(R.drawable.bg_light_red_radious)
                     lblWaitingBooking.visibility = View.VISIBLE
@@ -94,10 +94,9 @@ class StaffSlotStatusAdapter(
                     lblWaitingBooking.setTextColor(context.getColor(R.color.red))
                     lblWaitingBooking.background = context.getDrawable(R.drawable.bg_light_red_radious)
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.cancelled))
-                    imgDot.visibility = View.VISIBLE
+                    imgDot.visibility = View.GONE
+                    imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
-
-
                 "Expired" -> {
                     rltStatus.background = context.getDrawable(R.drawable.gray_bg_radius)
                     lblWaitingBooking.visibility = View.VISIBLE
@@ -107,36 +106,64 @@ class StaffSlotStatusAdapter(
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.expired))
                     imgDot.visibility = View.GONE
                 }
-
                 "Completed" -> {
-                    rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
-                    lblWaitingBooking.visibility = View.VISIBLE
-                    lblWaitingBooking.text = "Slot Completed"
+                    rltStatus.background = context.getDrawable(R.drawable.bg_light_green)
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
-                    lblWaitingBooking.setTextColor(context.getColor(R.color.black))
-                    lblWaitingBooking.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
                     imgDot.visibility = View.GONE
-                }
-
-                "Booked" -> {
-                    rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
-                    lblWaitingBooking.visibility = View.GONE
+                    rltBookedBy.visibility = View.VISIBLE
                     lblBookedName.visibility = View.VISIBLE
+                    lblBookedName.text = data.booked_by
+                }
+                "Booked" -> {
+                    rltStatus.background =
+                        context.getDrawable(R.drawable.rect_bg_light_green_present)
+                    lblBookedName.visibility = View.VISIBLE
+                    rltBookedBy.visibility = View.VISIBLE
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
                     imgDot.visibility = View.VISIBLE
                 }
+                "Upcoming" -> {
+                    rltStatus.background =
+                        context.getDrawable(R.drawable.rect_bg_light_green_present)
+                    lblStatus.text = "Booked"
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
+                    lblBookedName.visibility = View.VISIBLE
+                    rltBookedBy.visibility = View.VISIBLE
+                    lblBookedName.text = data.booked_by
+                    imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
+                    imgDot.visibility = shouldShowImgDot(data.date, data.to_time)
+                }
             }
-
             imgDot.setOnClickListener {
                 listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
             }
         }
 
-    }
+        fun shouldShowImgDot(slotDate: String, toTime: String): Int {
+            return try {
+                val normalizedDate = slotDate.replace("-", "/").trim()
+                val normalizedTime = toTime.trim().uppercase(Locale.getDefault())
 
-    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun startShimmer() {
-            ShimmerUtil.startShimmer(itemView)
+                val dateTimeFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+                val slotEndDateTime = dateTimeFormat.parse("$normalizedDate $normalizedTime")
+
+                val now = Calendar.getInstance().time
+
+                if (slotEndDateTime != null && now.before(slotEndDateTime)) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                View.GONE
+            }
+        }
+
+        class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            fun startShimmer() {
+                ShimmerUtil.startShimmer(itemView)
+            }
         }
     }
 }

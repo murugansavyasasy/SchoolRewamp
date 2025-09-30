@@ -140,7 +140,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     )
 
                     Log.d("isMenuDetails", isParentMenuDetails!!.size.toString())
-                    setupRecyclerView()
 
                 }
             }
@@ -155,6 +154,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isDashBoardCountData = isDashboardResponse
                     isParentMenuCountDetails = isDashBoardCountData!![0].menu_details
                     isGetAds()
+                    setupRecyclerView()
+
                 }
             }
         }
@@ -189,7 +190,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
-            adapter = AutoScrollAdapterWithDots(FrequentParentlyUsedMenuItems!!, this)
+            adapter = AutoScrollAdapterWithDots(FrequentParentlyUsedMenuItems!!,isParentMenuCountDetails, this)
             binding.autoScrollRecyclerView.adapter = adapter
 
             if (binding.autoScrollRecyclerView.onFlingListener == null) {
