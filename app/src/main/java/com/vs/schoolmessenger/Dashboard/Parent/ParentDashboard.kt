@@ -71,7 +71,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
             insets
         }
 
-
+        Constant.isParentChoose = true
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
@@ -92,7 +92,6 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navigationView
-
 
         val menu = navigationView.menu
         val menuItem = menu.findItem(R.id.role_click)
@@ -145,6 +144,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
                 R.id.role_click -> {
                     val intent = Intent(this, PrioritySelection::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
 

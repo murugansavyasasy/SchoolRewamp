@@ -22,11 +22,7 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
         // Enable JavaScript
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = "Terms and Conditions"
-        if (Constant.isParentChoose) {
-            isToolBarPrimaryTheme()
-        } else {
-            setupToolbarBlueWhite()
-        }
+
 
         Constant.loadWebView(
             this,

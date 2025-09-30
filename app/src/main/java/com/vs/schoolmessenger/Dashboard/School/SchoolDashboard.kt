@@ -36,7 +36,6 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
@@ -93,6 +92,8 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             view.updatePadding(bottom = systemBars.bottom)
             insets
         }
+
+        Constant.isParentChoose = false
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -169,6 +170,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
                 R.id.role_click -> {
                     val intent = Intent(this, PrioritySelection::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
 
