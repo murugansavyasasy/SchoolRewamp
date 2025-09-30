@@ -94,6 +94,7 @@ class InteractionWithStaffAdapter(
         private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
         private val yesterdayheader: TextView = itemView.findViewById(R.id.yesterdayheader)
+        private val lblDesc: TextView = itemView.findViewById(R.id.lblDesc)
         private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
         private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
 
@@ -105,11 +106,20 @@ class InteractionWithStaffAdapter(
             subjectheader.text = staff.subject_name
             unreadcount.text = staff.unread_count
             lblLogo.text = Constant.getNameInitials(staff.name)
+            yesterdayheader.text = staff.last_msg_time
+
+            if (staff.last_msg.isNullOrBlank()) {
+                lblDesc.text = "No messages yet"
+            } else {
+                lblDesc.text = staff.last_msg
+
+            }
+
 
 
             if (staff.unread_count > Constant.zero) {
                 unreadcount.visibility = View.VISIBLE
-                yesterdayheader.visibility = View.GONE
+                yesterdayheader.visibility = View.VISIBLE
             } else {
                 unreadcount.visibility = View.GONE
                 yesterdayheader.visibility = View.GONE
