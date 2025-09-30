@@ -462,6 +462,7 @@ object Constant {
     var EEE = "EEE"
     var HOMEWORK = "HOMEWORK"
     var zero = "0"
+    var zero__ = 0
     var Not_answered_yet = "Not answered yet"
     var dd_MM_yyyy_hh_mm_a = "dd-MM-yyyy hh:mm a"
     var reminder_channel = "reminder_channel"
