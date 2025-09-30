@@ -72,11 +72,19 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             isHomeWorkDate = it.fullDate
             val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
             if (isHomeWorkData != null) {
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 binding.cytNoDataFound.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
+                binding.lytSearch.visibility = View.GONE
+                binding.edtSearch.setText("")
                 mAdapter!!.updateList(isHomeWorkData.homework, isHomeWorkData.date)
             } else {
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+                binding.lytSearch.visibility = View.GONE
+                binding.edtSearch.setText("")
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.cytNoDataFound.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
@@ -126,16 +134,30 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                 isHomeWorkData = response.data
                 val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
                 if (isHomeWorkData != null) {
+                    binding.lytSearch.visibility = View.GONE
+                    binding.edtSearch.setText("")
+                    Log.d("isHomeWorkData",isHomeWorkData.toString())
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                     binding.cytNoDataFound.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
                     isLoadHomeWorkData(isHomeWorkData.homework, isHomeWorkData.date)
                 } else {
+                    binding.lytSearch.visibility = View.GONE
+                    binding.edtSearch.setText("")
+                    Log.d("isHomeWorkData",isHomeWorkData.toString())
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.cytNoDataFound.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE
                     isLoadHomeWorkData(emptyList(), "")
                 }
+            }
+            else{
+                binding.lytSearch.visibility = View.GONE
+                binding.edtSearch.setText("")
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.cytNoDataFound.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+                isLoadHomeWorkData(emptyList(), "")
             }
         }
     }

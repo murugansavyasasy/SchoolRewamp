@@ -103,7 +103,7 @@ class LocationHistoryAdapter(
             lblPlaceName.text = data.location
             lblAddress.text = getAddressFromLocation(data.latitude,data.longitude)
             lblLatLang.text = data.latitude + " - " + data.longitude
-            lblDistance.text = data.distance + " "+context.getString(R.string.Meters)
+            lblDistance.text ="±"+data.distance + " "+context.getString(R.string.Meters)
 
 
             rytImgDelete.setOnClickListener {
