@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LSRW.Model.WeeklyReportItem
 import com.vs.schoolmessenger.databinding.ItemWeeklyReportBinding
-
 class WeeklyReportAdapter(
     private val items: List<WeeklyReportItem>
 ) : RecyclerView.Adapter<WeeklyReportAdapter.ViewHolder>() {

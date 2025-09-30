@@ -15,6 +15,10 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatDat
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class InteractionWithStudentAdapter(
     private var itemList: List<StudentChatData>?,
@@ -99,8 +103,9 @@ class InteractionWithStudentAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(student: StudentChatData, position: Int, adapter: InteractionWithStudentAdapter) {
-            nameheader.text = student.name
-            subjectheader.text = student.subject_name
+            nameheader.text = student.subject_name
+            subjectheader.text = "Class - ${student.name} (${student.section_name})"
+
             unreadcount.text = student.unread_count.toString()
             lblLogo.text = Constant.getNameInitials(student.name)
 
@@ -109,6 +114,8 @@ class InteractionWithStudentAdapter(
             } else {
                 lblDesc.text = student.last_msg
             }
+
+            yesterdayheader.text = getRelativeTime(student.last_msg_time)
 
             val isVisible = student.unread_count > Constant.zero__
             unreadcount.visibility = if (isVisible) View.VISIBLE else View.GONE
@@ -120,6 +127,31 @@ class InteractionWithStudentAdapter(
             }
 
         }
+
+        fun getRelativeTime(apiTime: String): String {
+            return try {
+                val format = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+                val date = format.parse(apiTime) ?: return apiTime
+
+                val now = Date()
+                val diffInMillis = now.time - date.time
+
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillis)
+                val hours = TimeUnit.MILLISECONDS.toHours(diffInMillis)
+                val days = TimeUnit.MILLISECONDS.toDays(diffInMillis)
+
+                when {
+                    minutes < 1 -> "Just now"
+                    minutes < 60 -> "$minutes min ago"
+                    hours < 24 -> "$hours hr ago"
+                    days < 7 -> "$days day${if (days > 1) "s" else ""} ago"
+                    else -> SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
+                }
+            } catch (e: Exception) {
+                apiTime
+            }
+        }
+
     }
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

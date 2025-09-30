@@ -13,7 +13,7 @@ class LsrwHeaderAdapter(
     private val onItemClick: (LsrwHeaderItem) -> Unit
 ) : RecyclerView.Adapter<LsrwHeaderAdapter.ViewHolder>() {
 
-    private var selectedPosition = 0 // auto-select first item by default
+    private var selectedPosition = 0
 
     inner class ViewHolder(val binding: ItemLsrwHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -22,7 +22,6 @@ class LsrwHeaderAdapter(
                 val previousPosition = selectedPosition
                 selectedPosition = adapterPosition
 
-                // refresh only changed items
                 notifyItemChanged(previousPosition)
                 notifyItemChanged(selectedPosition)
 

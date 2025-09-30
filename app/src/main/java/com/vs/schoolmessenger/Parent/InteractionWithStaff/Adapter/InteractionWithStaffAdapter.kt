@@ -17,6 +17,10 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 
 class InteractionWithStaffAdapter(
@@ -104,9 +108,10 @@ class InteractionWithStaffAdapter(
 
             nameheader.text = staff.name
             subjectheader.text = staff.subject_name
+
             unreadcount.text = staff.unread_count
             lblLogo.text = Constant.getNameInitials(staff.name)
-            yesterdayheader.text = staff.last_msg_time
+            yesterdayheader.text = getRelativeTime(staff.last_msg_time)
 
             if (staff.last_msg.isNullOrBlank()) {
                 lblDesc.text = "No messages yet"
@@ -133,6 +138,29 @@ class InteractionWithStaffAdapter(
                 }
             }
 
+        }
+        fun getRelativeTime(apiTime: String): String {
+            return try {
+                val format = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+                val date = format.parse(apiTime) ?: return apiTime
+
+                val now = Date()
+                val diffInMillis = now.time - date.time
+
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillis)
+                val hours = TimeUnit.MILLISECONDS.toHours(diffInMillis)
+                val days = TimeUnit.MILLISECONDS.toDays(diffInMillis)
+
+                when {
+                    minutes < 1 -> "Just now"
+                    minutes < 60 -> "$minutes min ago"
+                    hours < 24 -> "$hours hr ago"
+                    days < 7 -> "$days day${if (days > 1) "s" else ""} ago"
+                    else -> SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
+                }
+            } catch (e: Exception) {
+                apiTime
+            }
         }
     }
 

@@ -9,5 +9,6 @@ data class Staff(
     val is_class_teacher: Boolean,
     val unread_count: String,
     val last_msg_time: String,
-    val last_msg: String
+    val last_msg: String,
+    val section_name: String
 )
