@@ -53,7 +53,7 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         )
 
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentName1.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
