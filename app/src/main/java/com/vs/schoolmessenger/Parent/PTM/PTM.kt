@@ -69,7 +69,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-        binding.toolbarLayout.lblStudentName.text = childDetails?.name
+        binding.toolbarLayout.lblStudentName1.text = childDetails?.name
         binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
         isSelectedDate = Constant.getCurrentDate()

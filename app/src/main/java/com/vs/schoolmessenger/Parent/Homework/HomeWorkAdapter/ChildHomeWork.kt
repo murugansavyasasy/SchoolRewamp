@@ -129,9 +129,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.btnSubmit.setOnClickListener(this)
+        Log.d("isSchoolMenuName",Constant.isSchoolMenuName.length.toString())
+        Log.d("isSchoolMenuName",Constant.isParentMenuName.length.toString())
+        Log.d("isParentMenuName",Constant.isSchoolMenuName)
+        Log.d("isParentMenuName",Constant.isParentMenuName)
 
         binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
-        if(Constant.isSchoolMenuName.isNullOrBlank()) {
+        if(!Constant.isSchoolMenuName.isNullOrBlank()) {
             binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
         } else {
             binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
@@ -157,7 +161,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
-            if(Constant.isSchoolMenuName.isNullOrBlank()) {
+            if(!Constant.isSchoolMenuName.isNullOrBlank()) {
                 binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
             } else {
                 binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
@@ -408,7 +412,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.lblPostedBy.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
 
-            if(Constant.isSchoolMenuName.isNullOrBlank()) {
+            if(!Constant.isSchoolMenuName.isNullOrBlank()) {
                 binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
             } else {
                 binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
