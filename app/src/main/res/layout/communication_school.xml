@@ -816,8 +816,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/thirteen"
                             android:elevation="@dimen/ten"
-                            android:src="@drawable/close_red_color">
-                        </ImageView>
+                            android:src="@drawable/close_red_color"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
