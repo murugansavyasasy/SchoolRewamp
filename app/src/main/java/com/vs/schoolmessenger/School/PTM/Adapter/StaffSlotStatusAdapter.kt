@@ -134,10 +134,7 @@ class StaffSlotStatusAdapter(
                     imgDot.visibility = shouldShowImgDot(data.date, data.to_time)
                 }
             }
-            imgDot.setOnClickListener {
-                listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
-            }
-        }
+            imgDot.setOnClickListener { listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition) } }
 
         fun shouldShowImgDot(slotDate: String, toTime: String): Int {
             return try {

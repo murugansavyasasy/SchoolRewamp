@@ -66,12 +66,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:text=""
-                    >
-
+                    android:text="">
                 </TextView>
             </RelativeLayout>
-
 
             <LinearLayout
                 android:id="@+id/lnrCommunicationIcon"
@@ -116,7 +113,6 @@
                         android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
-
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/rlaScheduleCall"
@@ -189,7 +185,6 @@
                 </RelativeLayout>
             </LinearLayout>
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -208,7 +203,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="1">
-
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -258,7 +252,6 @@
                             android:src="@drawable/calender_icon">
                         </ImageView>
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:id="@+id/lnrFromTime"
@@ -592,8 +585,6 @@
                         </EditText>
 
                     </RelativeLayout>
-
-
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -649,10 +640,7 @@
 <!--                            android:textColor="@color/black"-->
 <!--                            android:textSize="@dimen/thirteen_sp" />-->
                     </RelativeLayout>
-
-
                 </LinearLayout>
-
                 <RelativeLayout
                     android:id="@+id/rlaSendText"
                     android:layout_width="wrap_content"
@@ -665,7 +653,6 @@
                     android:background="@drawable/rect_green_light_radious"
                     android:padding="@dimen/seven"
                     android:visibility="gone">
-
 
                     <TextView
                         android:id="@+id/lblNExt"
@@ -685,11 +672,7 @@
                         android:layout_marginEnd="@dimen/five"
                         android:layout_toEndOf="@+id/lblNExt"
                         android:src="@drawable/rightwhitearrow" />
-
-
                 </RelativeLayout>
-
-
                 <RelativeLayout
                     android:id="@+id/rlaRecordVoice"
                     android:layout_width="match_parent"
@@ -729,10 +712,7 @@
                             android:text="ℹ️"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp" />
-
-
                     </LinearLayout>
-
                     <RelativeLayout
                         android:id="@+id/rytVoiceRecord"
                         android:layout_width="@dimen/hundred"
@@ -753,7 +733,6 @@
                             app:lottie_rawRes="@raw/voice_record">
                         </com.airbnb.lottie.LottieAnimationView>
 
-
                         <ImageView
                             android:id="@+id/imgVoiceRecord"
                             android:layout_width="match_parent"
@@ -762,9 +741,7 @@
                             android:layout_marginTop="@dimen/twenty_five"
                             android:src="@drawable/record_voice_icon">
                         </ImageView>
-
                     </RelativeLayout>
-
 
                     <TextView
                         android:id="@+id/lblDurationOfVoice"
@@ -776,7 +753,6 @@
                         android:layout_marginTop="@dimen/ten"
                         android:text="00:00 / 03:00">
                     </TextView>
-
 
                     <RelativeLayout
                         android:id="@+id/rlaAddLocalFile"
@@ -818,7 +794,6 @@
                             android:elevation="@dimen/ten"
                             android:src="@drawable/close_red_color">
                         </ImageView>
-
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -883,7 +858,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp">
                             </TextView>
-
                         </RelativeLayout>
                     </RelativeLayout>
 
@@ -919,8 +893,6 @@
                             android:text="@string/mandatory"
                             android:textColor="@color/red"
                             android:textSize="@dimen/thirteen_sp" />
-
-
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -946,8 +918,6 @@
                                 android:textSize="@dimen/thirteen_sp">
                             </EditText>
                         </RelativeLayout>
-
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -990,7 +960,5 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
-
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,7 +67,6 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
             noDataText = binding.noDataFound
         )
         binding.rcylsrwreport.adapter = adapter
-
         binding.rcylsrwcompletedreport.layoutManager = LinearLayoutManager(this)
         completedviewadapter = LsrwCompletedAdapter(
             itemList = emptyList(),
@@ -76,7 +75,6 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
             noDataText = binding.noDataFound
         )
         binding.rcylsrwcompletedreport.adapter = completedviewadapter
-
         binding.rcylsrwheader.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         dashboardviewadapter = LsRwDashboardAdapter(
@@ -97,27 +95,20 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
             }
         )
         binding.rcylsrwheader.adapter = dashboardviewadapter
-
         fetchLsrwSkillReportData()
 
         appViewModel?.islsrwskillsreport?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
-
                 allOverviewItems = data.overview
                 dashboardviewadapter.updateList(allOverviewItems)
-
                 allTaskItems = data.active
                 adapter.updateList(allTaskItems)
-
                 allCompletedItems = data.completed
                 completedviewadapter.updateList(allCompletedItems)
-
                 setupFilters(allTaskItems, allCompletedItems)
-
                 handleVisibility(allTaskItems, allCompletedItems)
-
             } else {
                 handleVisibility(emptyList(), emptyList())
             }
@@ -172,7 +163,6 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
 
             adapter.updateList(filteredActive)
             completedviewadapter.updateList(filteredCompleted)
-
             handleVisibility(filteredActive, filteredCompleted)
         }
 
@@ -184,13 +174,10 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
     private fun handleVisibility(active: List<LsrwTask>, completed: List<LsrwTask>) {
         val hasActive = active.isNotEmpty()
         val hasCompleted = completed.isNotEmpty()
-
         binding.rcylsrwreport.visibility = if (hasActive) View.VISIBLE else View.GONE
         binding.headerLabel.visibility = if (hasActive) View.VISIBLE else View.GONE
-
         binding.rcylsrwcompletedreport.visibility = if (hasCompleted) View.VISIBLE else View.GONE
         binding.completedLabel.visibility = if (hasCompleted) View.VISIBLE else View.GONE
-
         if (!hasActive && !hasCompleted) {
             binding.lytNoDataFound.visibility = View.VISIBLE
             binding.noDataFound.visibility = View.VISIBLE
