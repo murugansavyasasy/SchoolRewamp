@@ -203,7 +203,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                                 startActivity(intent)
                             } else if (Constant.user_data!![0].user_details.is_staff) {
 
-                                if (Constant.user_data!![0].user_details.staff_role.equals(Constant.isStaffRole)) {
 
                                     if (Constant.user_data!![0].user_details.staff_details.size > 1) {
                                         val intent =
@@ -220,13 +219,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                                         )
                                         startActivity(intent)
                                     }
-                                } else {
-                                    val intent = Intent(
-                                        this@Splash,
-                                        SchoolDashboard::class.java
-                                    )
-                                    startActivity(intent)
-                                }
+
                             } else if (Constant.user_data!![0].user_details.is_parent) {
                                 Constant.isParentChoose = true
                                 if (Constant.user_data!![0].user_details.child_details.size > 1) {
@@ -394,6 +387,21 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(CommunicationParent::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
+                Constant.M_PARENT_CLASS_EVENTS  -> {
+                    val detailIntent = Intent(this, Event::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(Event::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
