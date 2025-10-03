@@ -48,7 +48,6 @@
                 android:padding="@dimen/ten"
                 android:visibility="gone">
 
-
                 <ImageView
                     android:id="@+id/imgAcademicYear"
                     android:layout_width="@dimen/fifteen"
@@ -83,7 +82,6 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:orientation="horizontal">
-
 
                 <RelativeLayout
                     android:id="@+id/rlaVoiceMessage"
@@ -120,7 +118,6 @@
                     </TextView>
 
                 </RelativeLayout>
-
                 <RelativeLayout
                     android:id="@+id/rlaScheduleCall"
                     android:layout_width="@dimen/zero"
@@ -259,7 +256,6 @@
                             android:layout_gravity="end"
                             android:layout_weight="0.6"
                             android:src="@drawable/calender_icon">
-
                         </ImageView>
                     </LinearLayout>
 
@@ -364,7 +360,6 @@
                                 android:text="@string/do_not_dial_beyond"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp">
-
                             </TextView>
 
                             <TextView
@@ -377,7 +372,6 @@
                                 android:textColor="@color/red"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
-
 
                         <TextView
                             android:layout_width="@dimen/twenty"
@@ -429,7 +423,6 @@
                     android:numColumns="3"
                     android:visibility="gone"
                     tools:listitem="@layout/schedule_call_date_data">
-
                 </com.vs.schoolmessenger.Utils.ExpandableGridView>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -449,8 +442,6 @@
                     android:layout_marginTop="@dimen/hundred"
                     android:orientation="vertical"
                     android:visibility="gone">
-
-
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/two_hundred"
@@ -465,7 +456,6 @@
                         android:layout_marginTop="@dimen/fifty"
                         android:textSize="@dimen/fifteen_sp"
                         android:gravity="center">
-
                     </TextView>
 
                 </LinearLayout>
@@ -489,9 +479,7 @@
                         android:text="@string/back_to_compose"
                         android:textColor="@color/navi_blue2"
                         android:textSize="@dimen/thirteen_sp">
-
                     </TextView>
-
                     <ImageView
                         android:id="@+id/imgEndArrow1"
 
@@ -1000,8 +988,6 @@
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
-
-
         </RelativeLayout>
     </ScrollView>
 

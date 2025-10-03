@@ -796,6 +796,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.llEmergencyContainer.visibility = View.GONE
                 isScheduleCall = false
                 Constant.isCommunicationType = 3
+                selectedDates.clear()
+                selectedDatesAdapter?.submitSelectedDates(emptyList())
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
