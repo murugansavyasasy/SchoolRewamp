@@ -400,6 +400,21 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     pendingIntent?.send()
                 }
 
+                Constant.M_PARENT_CLASS_EVENTS  -> {
+                    val detailIntent = Intent(this, Event::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(Event::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
                 Constant.M_PTM  -> {
                     val detailIntent = Intent(this, PTM::class.java)
                     detailIntent.putExtra(Constant.menu_name, menu_name)
