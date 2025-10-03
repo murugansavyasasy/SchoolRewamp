@@ -1,12 +1,14 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +25,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
@@ -178,6 +181,20 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 isLoadData()
             }
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (userDetails!!.is_parent && userDetails!!.is_staff ||  userDetails!!.staff_details.size > 1) {
+                    val intent = Intent(requireActivity(), PrioritySelection::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                else {
+                    handleBackPress()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
         return binding.root
     }
 
@@ -204,6 +221,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.autoScrollRecyclerView.visibility = View.GONE
         }
 
+    }
+    private fun handleBackPress() {
+        AlertDialog.Builder(requireContext()).setTitle(getString(R.string.Go_Back))
+            .setMessage(getString(R.string.Do_you_want_Exit))
+            .setPositiveButton(getString(R.string.Yes)) { _, _ ->
+                requireActivity().finishAffinity()
+            }.setNegativeButton(getString(R.string.No), null).show()
     }
 
 
