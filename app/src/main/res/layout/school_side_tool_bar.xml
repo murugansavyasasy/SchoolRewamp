@@ -87,8 +87,6 @@
                     android:src="@drawable/arrow_down_whitesvg" />
             </LinearLayout>
 
-
-
             <RelativeLayout
                 android:id="@+id/rlaStudentName"
                 android:layout_width="wrap_content"

@@ -1,11 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ten"
+        android:background="@color/PrimaryColor" />
 
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
+        layout="@layout/school_side_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/statusBarBackground"
+        />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -20,7 +31,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <TextView
                 android:id="@+id/header_label"
                 style="@style/CustomTextStylePoppinsBold"
@@ -33,7 +43,6 @@
                 android:textColor="@color/mild_grey_dark"
                 android:textSize="15sp" />
 
-
             <RelativeLayout
                 android:id="@+id/headerrelative_layout"
                 android:layout_width="match_parent"
@@ -41,7 +50,6 @@
                 android:layout_below="@+id/header_label"
                 android:background="@drawable/rect_shadow_white"
                 android:padding="20dp">
-
 
                 <LinearLayout
                     android:id="@+id/iconContainer"
@@ -60,7 +68,6 @@
                         android:contentDescription="icon"
                         android:src="@drawable/booksvgformatstyle" />
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:id="@+id/titleContainer"
@@ -88,7 +95,6 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-
                 <TextView
                     android:id="@+id/txtDescription"
                     style="@style/CustomTextStylePoppinsBold"
@@ -103,7 +109,6 @@
                     android:textColor="@color/black"
                     android:textSize="13sp" />
 
-
                 <TextView
                     android:id="@+id/txtDescription1"
                     style="@style/CustomTextStylePoppinsMedium"
@@ -115,7 +120,6 @@
                     android:text="The First Time the two"
                     android:textColor="#666666"
                     android:textSize="13sp" />
-
 
                 <LinearLayout
                     android:id="@+id/attachments_container"
@@ -143,7 +147,6 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcSeekBarAndTitle"
                     android:layout_width="match_parent"
@@ -155,7 +158,6 @@
                     android:layout_marginBottom="@dimen/ten"
                     android:visibility="gone" />
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcChildHW"
                     android:layout_width="match_parent"
@@ -163,10 +165,6 @@
                     android:layout_below="@+id/rcSeekBarAndTitle"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginBottom="@dimen/ten" />
-
-
-
-
 
                 <LinearLayout
                     android:id="@+id/bottomRow"
@@ -213,11 +211,7 @@
                         android:visibility="gone" />
 
                 </LinearLayout>
-
-
-
             </RelativeLayout>
-
 
             <TextView
                 android:id="@+id/attachment_label"
@@ -230,7 +224,6 @@
                 android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
-
 
             <RelativeLayout
                 android:id="@+id/rytRecyclewview"
@@ -249,7 +242,6 @@
                 </androidx.recyclerview.widget.RecyclerView>
             </RelativeLayout>
 
-
             <TextView
                 android:id="@+id/description_label"
                 style="@style/CustomTextStylePoppinsBold"
@@ -261,8 +253,6 @@
                 android:text="Add description"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
-
-
 
             <EditText
                 android:id="@+id/edit_description"
@@ -276,9 +266,7 @@
                 android:hint="description"
                 android:visibility="gone"
                 android:padding="12dp"
-                android:textSize="@dimen/fifteen_sp"
-                />
-
+                android:textSize="@dimen/fifteen_sp" />
 
             <Button
                 android:id="@+id/btnSubmit"
@@ -292,9 +280,6 @@
                 android:textSize="@dimen/fourteen_sp"
                 android:visibility="gone" />
 
-
-
-
             <TextView
                 android:id="@+id/footer_label"
                 style="@style/CustomTextStylePoppinsBold"
@@ -306,14 +291,11 @@
                 android:textColor="@color/mild_grey_dark"
                 android:textSize="15sp" />
 
-
             <FrameLayout
                 android:id="@+id/lsrwgragmentcontainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible" />
-
-
         </LinearLayout>
     </ScrollView>
 
