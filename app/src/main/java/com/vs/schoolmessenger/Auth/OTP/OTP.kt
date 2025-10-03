@@ -96,8 +96,6 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
 
                             } else if (Constant.user_data!![0].user_details.is_staff) {
 
-                                if (Constant.user_data!![0].user_details.staff_role.equals(Constant.isStaffRole)) {
-
                                     if (Constant.user_data!![0].user_details.staff_details.size > 1) {
                                         val intent =
                                             Intent(this@OTP, PrioritySelection::class.java)
@@ -113,13 +111,7 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                                         )
                                         startActivity(intent)
                                     }
-                                } else {
-                                    val intent = Intent(
-                                        this@OTP,
-                                        SchoolDashboard::class.java
-                                    )
-                                    startActivity(intent)
-                                }
+
                             } else if (Constant.user_data!![0].user_details.is_parent) {
                                 Constant.isParentChoose = true
                                 if (Constant.user_data!![0].user_details.child_details.size > 1) {

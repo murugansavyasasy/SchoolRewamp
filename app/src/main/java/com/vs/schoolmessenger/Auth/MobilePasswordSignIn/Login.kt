@@ -100,11 +100,6 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
                                 } else if (Constant.user_data!![0].user_details.is_staff) {
 
-                                    if (Constant.user_data!![0].user_details.staff_role.equals(
-                                            Constant.isStaffRole
-                                        )
-                                    ) {
-
                                         if (Constant.user_data!![0].user_details.staff_details.size > 1) {
                                             val intent =
                                                 Intent(this@Login, PrioritySelection::class.java)
@@ -119,10 +114,6 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
                                             )
                                             startActivity(intent)
                                         }
-                                    } else {
-                                        val intent = Intent(this@Login, SchoolDashboard::class.java)
-                                        startActivity(intent)
-                                    }
                                 } else if (Constant.user_data!![0].user_details.is_parent) {
                                     if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                         val intent =
