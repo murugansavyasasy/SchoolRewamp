@@ -57,8 +57,14 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
+        val isChildDetails = SharedPreference.getChildDetails(this)
+
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Assignment)
         binding.toolbarLayout.rytSearch.visibility = View.GONE
+
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         binding.lblHeaderTitle.setText("My Submission")
 
