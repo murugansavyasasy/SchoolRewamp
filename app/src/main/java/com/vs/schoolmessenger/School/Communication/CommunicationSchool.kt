@@ -797,7 +797,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 isScheduleCall = false
                 Constant.isCommunicationType = 3
                 selectedDates.clear()
-                selectedDatesAdapter?.submitSelectedDates(emptyList())
+//                selectedDatesAdapter?.submitSelectedDates(emptyList())
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }

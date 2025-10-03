@@ -229,11 +229,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (userDetails!!.is_parent && userDetails!!.is_staff) {
+                if (userDetails!!.is_parent && userDetails!!.is_staff ||  userDetails!!.staff_details.size > 1) {
                     val intent = Intent(requireActivity(), PrioritySelection::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
-                } else {
+                }
+                else {
                     handleBackPress()
                 }
             }
