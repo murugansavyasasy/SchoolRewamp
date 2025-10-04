@@ -28,7 +28,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "MyFirebaseMessaging"
-        private const val CHANNEL_ID = "custom_channel"
+        private const val CHANNEL_ID = "fcm_default_channel"
         private const val CHANNEL_NAME = "Custom Notifications"
     }
 
@@ -46,12 +46,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             // Extract data values if present, with defaults
             val menuName = remoteMessage.data["menu_name"] ?: "Messages"
             val menuId = remoteMessage.data["menu_id"]?.toIntOrNull() ?: 1
-            val msgId = remoteMessage.data["msg_id"]?.toIntOrNull() ?: 1
+            val msg_id = remoteMessage.data["msg_id"]?.toIntOrNull() ?: 1
 
             Log.d(TAG, "Notification Data - Title: ${notification.title}, Body: ${notification.body}, Image: ${notification.imageUrl}")
-            Log.d(TAG, "Data Payload - MenuName: $menuName, MenuId: $menuId, MsgId: $msgId")
+            Log.d(TAG, "Data Payload - MenuName: $menuName, MenuId: $menuId, msg_id: $msg_id")
 
-            sendNotification(notification.title, notification.body, notification.imageUrl?.toString(), menuName, menuId, msgId)
+            sendNotification(notification.title, notification.body, notification.imageUrl?.toString(), menuName, menuId, msg_id)
         }
 
         if (remoteMessage.data.isNotEmpty()) {
@@ -67,7 +67,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "New FCM Token: $token")
     }
 
-    private fun sendNotification(title: String?, messageBody: String?, imageUrl: String?, menuName: String, menuId: Int, msgId: Int) {
+    private fun sendNotification(title: String?, messageBody: String?, imageUrl: String?, menuName: String, menuId: Int, msg_id: Int) {
         // Check for notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -80,7 +80,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val intent = Intent(this, Splash::class.java).apply {
             putExtra(Constant.menu_name, menuName)
             putExtra(Constant.menu_id, menuId)
-            putExtra(Constant.msg_id, msgId)
+            putExtra(Constant.msg_id, msg_id)
             putExtra(Constant.fromNotification, true)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }

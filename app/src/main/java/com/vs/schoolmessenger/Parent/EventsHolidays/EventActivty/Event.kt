@@ -1,11 +1,13 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 
+import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +46,9 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     private var allOngoingEvents: List<EventItem>? = null
     private var allUpcomingEvents: List<EventItem>? = null
     private var allCompletedEvents: List<EventItem>? = null
+    private var msg_id: Int = -1
 
+    private var fromNotification: Boolean = false
 
     override fun setupViews() {
         super.setupViews()
@@ -54,6 +58,10 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         )
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
+
+        msg_id = intent.getIntExtra(Constant.msg_id, -1)
+
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
@@ -192,6 +200,8 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 isloadCategoryData(CategoryList)
                 isloadUpcomingData(allUpcomingEvents)
                 isloadCompletedData(allCompletedEvents)
+                Log.d("Message Id Value Indication",msg_id.toString())
+                scrollToMessageId(msg_id)
 
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -286,6 +296,61 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         appViewModel!!.IsGetEventReport(isAccessToken!!, this)
     }
 
+
+    private fun scrollToMessageId(msg_id: Int) {
+        if (msg_id == -1) return
+
+
+        allOngoingEvents?.let { list ->
+            val index = list.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
+                binding.rcyongoingevent.post {
+                    binding.rcyongoingevent.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcyongoingevent, index)
+                }
+                return
+            }
+        }
+
+        allUpcomingEvents?.let { list ->
+            val index = list.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index in upcoming")
+                binding.rcyupcomingevent.post {
+                    binding.rcyupcomingevent.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcyupcomingevent, index)
+                }
+
+                return
+            }
+        }
+
+        allCompletedEvents?.let { list ->
+            val index = list.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index in completed")
+                binding.rcycompletedevent.post {
+                    binding.rcycompletedevent.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcycompletedevent, index)
+                }
+
+                return
+            }
+        }
+        Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+    }
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
+            recyclerView.postDelayed({
+                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+            }, 2000)
+        }
+    }
 
     private fun updateDotIndicator() {
         binding.dotindicator.visibility =
