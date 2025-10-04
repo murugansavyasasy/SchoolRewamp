@@ -35,6 +35,7 @@ import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
+import com.vs.schoolmessenger.Parent.EBooks.Ebooks
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
@@ -190,6 +191,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isSchoolMenuDetails = isSchoolDashBoardData!![0].menus
                     FrequentSchoollyUsedMenuItems = isSchoolDashBoardData!![0].frequently_used
                     allMenuItems = isSchoolMenuDetails!!
+
+                    //We are saving the menu name in list to use anywhere
+                    Constant.setMenuNames(allMenuItems)
                 }
             }
         }
@@ -570,6 +574,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 LeaveRequests::class.java
             }
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
+            Constant.M_ONLINE_TEXT_BOOK -> Ebooks::class.java
+
             Constant.M_FEEDBACK -> ImportantInfo::class.java
             Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
 

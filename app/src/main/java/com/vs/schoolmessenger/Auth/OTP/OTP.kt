@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Auth.OTP
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Paint
@@ -11,6 +12,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -165,11 +167,24 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
         // Move forward automatically
         boxes.forEachIndexed { index, editText ->
             editText.doAfterTextChanged {
+//                if (it?.length == 1) {
+//                    if (index < boxes.lastIndex) {
+//                        boxes[index + 1].requestFocus()
+//                    } else {
+//                        editText.clearFocus()
+//                    }
+//                }
                 if (it?.length == 1) {
                     if (index < boxes.lastIndex) {
                         boxes[index + 1].requestFocus()
-                    } else {
+                    }
+
+                    val allFilled = boxes.all { box -> box.text?.length == 1 }
+                    if (allFilled) {
+                        // Hide keyboard
                         editText.clearFocus()
+                        val imm = editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(editText.windowToken, 0)
                     }
                 }
             }

@@ -236,6 +236,18 @@ object Constant {
     var isSchoolAdItem: List<AdItem>? = null
 
 
+
+    var menuNameList: MutableList<String> = mutableListOf()
+    fun setMenuNames(allMenuItems: List<MenuDetail>?) {
+        menuNameList.clear()
+        menuNameList.add("Select the menu")
+
+        allMenuItems?.forEach { menu ->
+            menuNameList.add(menu.name)
+        }
+    }
+
+
     var secondHalf = "SH"
     var firstHalf = "FH"
     var fullDay = "F"
