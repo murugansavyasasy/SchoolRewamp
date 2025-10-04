@@ -71,7 +71,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private var isInitialized = false
-    private var selectedDatesAdapter: SelectedDatesAdapter? = null
+    private  var selectedDatesAdapter: SelectedDatesAdapter? = null
 
     private var mediaRecorder: MediaRecorder? = null
     private var isRecording = false
@@ -1076,23 +1076,51 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     fun isClearData() {
+        if (isRecording) {
+            stopRecording()
+        }
         binding.SwitchEmergencyVoice.setChecked(false)
+        isEmergency = false
+        MAX_RECORDING_TIME = 180
         binding.lblDurationOfVoice.text = Constant._00_00_03_00
+
         binding.rlaSeekBarAndTitle.visibility = View.GONE
         binding.rlaTitle.visibility = View.GONE
-        Constant.selectedFiles.clear()
+        binding.lblStartDuration.text = Constant.time_zero
+        binding.lblEndDuration.text = ""
+        binding.waveformSeekBar.updateWithLevel(0f)
+        binding.edtTitle.setText("")
+
+
         binding.rlaAddLocalFile.visibility = View.VISIBLE
-//                binding.imgVoiceRecord.visibility = View.VISIBLE
         binding.rytVoiceRecord.visibility = View.VISIBLE
         binding.lblDurationOfVoice.visibility = View.VISIBLE
+//        binding.imgVoiceRecord.visibility = View.VISIBLE  // Uncommented and ensured visible
+        binding.imgVoiceRecord.setImageDrawable(
+            ContextCompat.getDrawable(this, R.drawable.record_icon)
+        )
+
         mediaPlayer?.let {
             if (it.isPlaying) {
                 it.stop()
             }
+            it.reset()
+            it.release()
         }
+        mediaPlayer = null
+        isPrepared = false
+        isPlayingVoice = false
+        lastPosition = 0
+        recordingTime = 0
+        audioFilePath = null
+        isFileName = null
+        Constant.isVoiceType = 0
         Constant.selectedFiles.clear()
-    }
 
+
+        handler.removeCallbacks(progressUpdater)
+        recordingHandler.removeCallbacks(recordingRunnable)
+    }
     private fun infosymbolload(): PopupWindow {
         val popupView = layoutInflater.inflate(R.layout.custom_tooltip, null)
 
