@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Parent.EBooks.Ebooks
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
@@ -62,6 +63,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_MARK_YOUR_ATTENDANCE
 import com.vs.schoolmessenger.Utils.Constant.M_MESSAGES_FROM_MANAGEMENT
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_ONLINE_MEETING
+import com.vs.schoolmessenger.Utils.Constant.M_ONLINE_TEXT_BOOK
 import com.vs.schoolmessenger.Utils.Constant.M_PTM
 import com.vs.schoolmessenger.Utils.Constant.M_QUIZ_EXAM
 import com.vs.schoolmessenger.Utils.Constant.M_SCHEDULE_EXAM_TEST

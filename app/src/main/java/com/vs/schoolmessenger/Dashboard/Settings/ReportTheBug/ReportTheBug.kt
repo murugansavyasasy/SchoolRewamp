@@ -55,7 +55,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
     private val PICK_DOCUMENT_REQUEST = 1003
     private val MAX_FILES = 10
 
-    private lateinit var menuItems: List<String>
+//    private lateinit var menuItems: List<String>
     private var selectedMenu: String? = null
     private var cameraPermissionDeniedCount = 0
     private val CAMERA_IMAGE_REQUEST = 1001
@@ -617,30 +617,31 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
 
     private fun loadMenu() {
-        menuItems = listOf(
-            "Select the menu",
-            "Communication",
-            "Assignment",
-            "Attachments",
-            "Homework",
-            "Student Attendance Marking",
-            "Punch Attendance",
-            "Fee Details",
-            "Events",
-            "Notice Board",
-            "PTM",
-            "Lesson Plan",
-            "LSRW",
-            "QUIZ",
-            "Student Attendance Report",
-            "Staff Attendance Report",
-            "Messages from management",
-            "Student Report",
-            "Daily Collection",
-            "Fee Pending Report"
-        )
+//        menuItems = listOf(
+//            "Select the menu",
+//            "Communication",
+//            "Assignment",
+//            "Attachments",
+//            "Homework",
+//            "Student Attendance Marking",
+//            "Punch Attendance",
+//            "Fee Details",
+//            "Events",
+//            "Notice Board",
+//            "PTM",
+//            "Lesson Plan",
+//            "LSRW",
+//            "QUIZ",
+//            "Student Attendance Report",
+//            "Staff Attendance Report",
+//            "Messages from management",
+//            "Student Report",
+//            "Daily Collection",
+//            "Fee Pending Report"
+//        )
+        Log.d("DropdownMenuList",Constant.menuNameList.toString())
 
-        val adapter = SpinnerLoadingAdapter(this, menuItems)
+        val adapter = SpinnerLoadingAdapter(this,Constant.menuNameList)
         binding.isMenuSpinner.adapter = adapter
 
         binding.isMenuSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -650,7 +651,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                 adapter.selectedPosition = position
                 adapter.notifyDataSetChanged()
 
-                selectedMenu = menuItems[position]
+                selectedMenu = Constant.menuNameList[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}

@@ -115,6 +115,8 @@ class SchoolMenuAdapter(
                 Constant.M_PTM -> imgMenu.setImageResource(R.drawable.ptm_school)
                 Constant.M_FEE_PENDING_REPORT -> imgMenu.setImageResource(R.drawable.fee_pending_reports)
                 Constant.M_SCHOOL_NEEDS -> imgMenu.setImageResource(R.drawable.school_needs)
+                Constant.M_ONLINE_TEXT_BOOK -> imgMenu.setImageResource(R.drawable.book)
+
             }
 
             rlaMenu.setOnClickListener {
