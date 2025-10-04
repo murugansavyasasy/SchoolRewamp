@@ -158,7 +158,6 @@
                     android:background="@drawable/bg_white_stroke_box"
                     android:inputType="number"
                     android:maxLength="1"
-
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/twenty_sp" />

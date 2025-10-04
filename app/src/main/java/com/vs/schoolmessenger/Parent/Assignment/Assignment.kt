@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.Assignment
 
+import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
@@ -32,6 +34,10 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     private var appViewModel: App? = null
     private var isAssignmentReportData: List<ParentAssignmentData>? = null
 
+    private var msg_id: Int = -1
+
+    private var fromNotification: Boolean = false
+
     lateinit var mAdapter: AssignmentAdapter
     override fun setupViews() {
         super.setupViews()
@@ -47,6 +53,12 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         val isChildDetails = SharedPreference.getChildDetails(this)
 
         isAccessToken = isChildDetails?.access_token
+
+
+        msg_id = intent.getIntExtra(Constant.msg_id, -1)
+
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
 
@@ -93,6 +105,9 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                 }
                 binding.rcyAssignment.visibility = View.VISIBLE
                 binding.lytList.visibility = View.GONE
+                Log.d("Message Id Value Indication",msg_id.toString())
+                scrollToMessageId(msg_id)
+
             } else {
                 binding.rcyAssignment.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
@@ -139,6 +154,34 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             isAssignmentReportData!!.toMutableList(), this, this, Constant.isShimmerViewDisable
         )
         binding.rcyAssignment.adapter = isAssignmentAdapter
+    }
+
+    private fun scrollToMessageId(msg_id: Int) {
+        if (msg_id == -1) return
+
+        isAssignmentReportData?.let { list ->
+            val index = list.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index in completed")
+                binding.rcyAssignment.post {
+                    binding.rcyAssignment.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcyAssignment, index)
+                }
+                return
+            }
+        }
+        Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+    }
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
+            recyclerView.postDelayed({
+                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+            }, 2000)
+        }
     }
 
 

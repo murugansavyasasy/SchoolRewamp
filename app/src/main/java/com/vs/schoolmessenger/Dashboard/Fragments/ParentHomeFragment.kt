@@ -138,6 +138,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     FrequentParentlyUsedMenuItems = isParentDashBoardData!![0].frequently_used
                     allMenuItems = isParentMenuDetails!!
 
+                    //We are saving the menu name in list to use anywhere
+                    Constant.setMenuNames(allMenuItems)
+
                     appViewModel!!.isDashBoardCountData(
                         access_token, Constant.parent, requireActivity()
                     )

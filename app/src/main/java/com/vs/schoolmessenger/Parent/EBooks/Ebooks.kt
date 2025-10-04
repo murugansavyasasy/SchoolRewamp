@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Parent.EBooks
+import android.util.Log
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -20,7 +21,14 @@ class Ebooks : BaseActivity<EbooksBinding>(),
         )
 
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
-        binding.toolbarLayout.lblParentToolBar.text=Constant.isParentMenuName
+
+        if (Constant.isParentMenuName.isNullOrEmpty()){
+            binding.toolbarLayout.lblParentToolBar.text=Constant.isSchoolMenuName
+        }
+        else{
+            binding.toolbarLayout.lblParentToolBar.text=Constant.isParentMenuName
+        }
+
 
         Constant.loadWebView(
             this,
@@ -28,6 +36,7 @@ class Ebooks : BaseActivity<EbooksBinding>(),
             Constant.isGlobalVariableData!!.ebooks_url
 
         )
+        Log.d("EbooksUrl",Constant.isGlobalVariableData!!.ebooks_url)
     }
 
     override fun onClick(v: View?) {

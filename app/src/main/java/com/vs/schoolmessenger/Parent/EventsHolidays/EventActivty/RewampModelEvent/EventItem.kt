@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent
 
 data class EventItem(
+    val id : String,
     val title: String,
     val category: String,
     val description: String,
