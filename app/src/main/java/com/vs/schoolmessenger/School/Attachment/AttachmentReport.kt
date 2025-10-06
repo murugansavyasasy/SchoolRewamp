@@ -140,6 +140,7 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
                 }else{
                     binding.rcyAttachment.visibility= View.GONE
                     binding.txtNoData.visibility= View.VISIBLE
+                    binding.txtNoData.text=response.message
                     binding.nomessage.visibility= View.VISIBLE
                     binding.search.visibility = View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
@@ -147,6 +148,7 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
             }else{
                 binding.rcyAttachment.visibility= View.GONE
                 binding.txtNoData.visibility= View.VISIBLE
+                binding.txtNoData.text=response?.message?:getString(R.string.no_list_found)
                 binding.nomessage.visibility= View.VISIBLE
                 binding.search.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE

@@ -103,17 +103,16 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
                         }
                     }
                 }
-
+                binding.lytList.visibility=View.GONE
+                binding.rcyNotification.visibility=View.VISIBLE
                 // Refresh adapter
                 isNotificationAdapter = NotificationAdapter(isNotificationItems, this, this,false)
                 binding.rcyNotification.adapter = isNotificationAdapter
 
             } else {
-                Constant.showDataValidation(
-                    response?.status.toString(),
-                    response?.message ?: "Unknown error",
-                    this
-                )
+                binding.rcyNotification.visibility=View.GONE
+                binding.lytList.visibility=View.VISIBLE
+                binding.txtNoData.text=response?.message?:"No notification received"
             }
         }
 
