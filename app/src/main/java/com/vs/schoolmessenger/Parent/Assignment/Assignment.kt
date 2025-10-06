@@ -13,14 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
-import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AssignmentParentBinding

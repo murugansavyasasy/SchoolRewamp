@@ -62,7 +62,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-        isNotificationAdapter = NotificationAdapter(isNotificationItems, this, this,true)
+        isNotificationAdapter = NotificationAdapter(isNotificationItems, this, this, true)
         binding.rcyNotification.layoutManager = LinearLayoutManager(this)
         binding.rcyNotification.adapter = isNotificationAdapter
 
@@ -103,16 +103,16 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
                         }
                     }
                 }
-                binding.lytList.visibility=View.GONE
-                binding.rcyNotification.visibility=View.VISIBLE
+                binding.lytList.visibility = View.GONE
+                binding.rcyNotification.visibility = View.VISIBLE
                 // Refresh adapter
-                isNotificationAdapter = NotificationAdapter(isNotificationItems, this, this,false)
+                isNotificationAdapter = NotificationAdapter(isNotificationItems, this, this, false)
                 binding.rcyNotification.adapter = isNotificationAdapter
 
             } else {
-                binding.rcyNotification.visibility=View.GONE
-                binding.lytList.visibility=View.VISIBLE
-                binding.txtNoData.text=response?.message?:"No notification received"
+                binding.rcyNotification.visibility = View.GONE
+                binding.lytList.visibility = View.VISIBLE
+                binding.txtNoData.text = response?.message ?: "No notification received"
             }
         }
 
@@ -161,7 +161,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
                 it.title?.contains(text, ignoreCase = true) == true
             }
         }
-        isNotificationAdapter = NotificationAdapter(filteredList.toMutableList(), this, this,false)
+        isNotificationAdapter = NotificationAdapter(filteredList.toMutableList(), this, this, false)
         binding.rcyNotification.adapter = isNotificationAdapter
     }
 
@@ -176,191 +176,244 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(CommunicationParent::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_HOMEWORK  -> {
+            Constant.M_HOMEWORK -> {
                 val detailIntent = Intent(this, HomeWork::class.java)
 
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(CommunicationParent::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_ATTENDANCE_REPORT  -> {
+            Constant.M_ATTENDANCE_REPORT -> {
                 val detailIntent = Intent(this, Attendance::class.java)
 
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(Attendance::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_FEE_DETAILS  -> {
+            Constant.M_FEE_DETAILS -> {
                 val detailIntent = Intent(this, FeeDetails::class.java)
 
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(FeeDetails::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_EXAM  -> {
+            Constant.M_EXAM -> {
                 val detailIntent = Intent(this, ExamMark::class.java)
 
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(ExamMark::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_QUIZ_EXAM  -> {
+            Constant.M_QUIZ_EXAM -> {
                 val detailIntent = Intent(this, Quiz::class.java)
 
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(Quiz::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_CLASS_TIME_TABLE  -> {
+            Constant.M_CLASS_TIME_TABLE -> {
                 val detailIntent = Intent(this, TimeTable::class.java)
 
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(TimeTable::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_NOTICEBOARD  -> {
+            Constant.M_NOTICEBOARD -> {
                 val detailIntent = Intent(this, NoticeBoard::class.java)
 
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(NoticeBoard::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_ASSIGNMENT  -> {
+            Constant.M_ASSIGNMENT -> {
                 val detailIntent = Intent(this, Assignment::class.java)
 
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(Assignment::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_ATTACHMENTS  -> {
+            Constant.M_ATTACHMENTS -> {
                 val detailIntent = Intent(this, Attachment::class.java)
 
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(Attachment::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_SCHOOL_CLASS_EVENTS  -> {
+            Constant.M_SCHOOL_CLASS_EVENTS -> {
                 val detailIntent = Intent(this, Event::class.java)
 
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(EventReport::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_PARENT_CLASS_EVENTS  -> {
+            Constant.M_PARENT_CLASS_EVENTS -> {
                 val detailIntent = Intent(this, Event::class.java)
 
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(Event::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_PTM  -> {
+            Constant.M_PTM -> {
                 val detailIntent = Intent(this, PTM::class.java)
 
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(CommunicationParent::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_CERTIFICATE_REQUEST  -> {
+            Constant.M_CERTIFICATE_REQUEST -> {
                 val detailIntent = Intent(this, CertificateRequest::class.java)
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(CertificateRequest::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_LSRW  -> {
+            Constant.M_LSRW -> {
                 val detailIntent = Intent(this, LSRW::class.java)
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(LSRW::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
 
-            Constant.M_INTERACTION_WITH_STAFF  -> {
+            Constant.M_INTERACTION_WITH_STAFF -> {
                 val detailIntent = Intent(this, InteractionWithStaff::class.java)
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(InteractionWithStaff::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 pendingIntent?.send()
             }
-            Constant.M_ONLINE_TEXT_BOOK  -> {
+
+            Constant.M_ONLINE_TEXT_BOOK -> {
                 val detailIntent = Intent(this, Ebooks::class.java)
                 // Build proper back stack
                 val pendingIntent = TaskStackBuilder.create(this).apply {
                     addParentStack(Ebooks::class.java)
                     addNextIntent(detailIntent)
-                }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
                 pendingIntent?.send()
             }
+
             else -> {
                 // default behavior
             }

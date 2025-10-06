@@ -226,13 +226,14 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
     private fun formatDateDisplay(date: String): String {
         val input = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val output = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+        val output = SimpleDateFormat("EEE MMM dd, yyyy", Locale.getDefault())
         return try {
             output.format(input.parse(date)!!)
         } catch (e: Exception) {
             date
         }
     }
+
 
     private fun showErrorUI(message: String) {
         binding.linearLayoutcontainer.visibility = View.GONE
