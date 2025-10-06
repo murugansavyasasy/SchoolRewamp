@@ -937,6 +937,7 @@
     <string name="present_rate">Present Rate</string>
     <string name="absent_rate">Absent Rate</string>
     <string name="send_quiz">Send Quiz</string>
+    <string name="default_notification_channel_id">fcm_default_channel</string>
 
 
 </resources>

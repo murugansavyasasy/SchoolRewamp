@@ -16,86 +16,87 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-<RelativeLayout
-    android:id="@+id/relative_layout2"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
-
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/headerview"
+    <RelativeLayout
+        android:id="@+id/relative_layout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/twenty"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:id="@+id/lblHeaderTitle"
-            style="@style/CustomTextStylePoppinsBold"
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/parent_side_tool_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/headerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp" />
-    </LinearLayout>
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblHeaderTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp" />
+        </LinearLayout>
 
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyAssignment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/headerview"
-        android:layout_marginTop="@dimen/ten"
-        android:clipToPadding="false"
-        android:fadeScrollbars="false"
-        android:visibility="visible"
-        android:paddingHorizontal="@dimen/five"
-        android:scrollbars="none" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyAssignment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/headerview"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/ten"
+            android:clipToPadding="false"
+            android:fadeScrollbars="false"
+            android:visibility="visible"
+            android:paddingHorizontal="@dimen/five"
+            android:scrollbars="none" />
 
 
-    <LinearLayout
-        android:id="@+id/lytList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rcyAssignment"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/nomessage"
-            android:layout_width="@dimen/two_fifty"
-            android:layout_height="@dimen/two_fifty"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/nomessages"
-            />
-
-        <TextView
-            android:id="@+id/txtNoData"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/lytList"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:text="@string/no_list_found"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp" />
-    </LinearLayout>
+            android:layout_below="@+id/rcyAssignment"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/nomessage"
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:src="@drawable/nomessages"
+                />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="@string/no_list_found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
