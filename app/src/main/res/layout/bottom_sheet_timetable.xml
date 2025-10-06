@@ -40,7 +40,7 @@
             android:layout_width="@dimen/three_hundred"
             android:layout_height="@dimen/three_hundred"
             android:contentDescription="@string/no_data"
-            android:src="@drawable/no_data_available" />
+            android:src="@drawable/no_timtable_message" />
 
         <TextView
             android:id="@+id/txtNoData"

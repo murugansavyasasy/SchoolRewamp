@@ -75,7 +75,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/eighty"
-            android:src="@drawable/nomessages"
+            android:src="@drawable/no_leave_request_message"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />

@@ -81,7 +81,7 @@
                 android:layout_height="@dimen/two_fifty"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/twenty"
-                android:src="@drawable/nomessages"
+                android:src="@drawable/no_assignment_message"
                 />
 
             <TextView
