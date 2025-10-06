@@ -111,7 +111,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
             android:visibility="gone"
-            android:src="@drawable/nomessages"
+            android:src="@drawable/no_files_message"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
              />

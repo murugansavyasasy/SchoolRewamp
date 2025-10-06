@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.LSRW
 
+import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
@@ -27,6 +29,11 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
     private var isAccessToken: String? = null
     private var allItems: List<SkillData> = emptyList()
 
+    private var msg_id: Int = -1
+
+    private var fromNotification: Boolean = false
+
+
     override fun getViewBinding(): LsrwBinding {
         return LsrwBinding.inflate(layoutInflater)
     }
@@ -37,6 +44,11 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        msg_id = intent.getIntExtra(Constant.msg_id, -1)
+
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
 
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
         binding.lblHeaderTitle.text = Constant.isParentMenuName
@@ -94,6 +106,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
                 binding.rlNoDataContainer.visibility = View.GONE
                 allItems = response.data
                 adapter.updateList(allItems)
+                scrollToMessageId(msg_id)
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rcyrecyclerview.visibility = View.GONE
@@ -104,6 +117,36 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
         }
 
     }
+
+
+    private fun scrollToMessageId(msg_id: Int) {
+        if (msg_id == -1) return
+
+        allItems?.let { list ->
+            val index = list.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index in completed")
+                binding.rcyrecyclerview.post {
+                    binding.rcyrecyclerview.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcyrecyclerview, index)
+                }
+                return
+            }
+        }
+        Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+    }
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
+            recyclerView.postDelayed({
+                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+            }, 2000)
+        }
+    }
+
 
     private fun fetchLsrwSkillReportData() {
         Constant.showLoading(this)

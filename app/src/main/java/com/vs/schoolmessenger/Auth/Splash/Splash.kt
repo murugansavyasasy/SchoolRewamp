@@ -45,13 +45,16 @@ import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
+import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
+import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.School.Event.EventReport
 import com.vs.schoolmessenger.Utils.AnimationHelper
 import com.vs.schoolmessenger.Utils.AppDataCleaner
 import com.vs.schoolmessenger.Utils.AppSignatureHelper
@@ -341,7 +344,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     detailIntent.putExtra(Constant.fromNotification, fromNotification)
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
-                        addParentStack(CommunicationParent::class.java)
+                        addParentStack(NoticeBoard::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
@@ -356,7 +359,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     detailIntent.putExtra(Constant.fromNotification, fromNotification)
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
-                        addParentStack(CommunicationParent::class.java)
+                        addParentStack(Assignment::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
@@ -371,7 +374,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     detailIntent.putExtra(Constant.fromNotification, fromNotification)
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
-                        addParentStack(CommunicationParent::class.java)
+                        addParentStack(Attachment::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
@@ -386,7 +389,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     detailIntent.putExtra(Constant.fromNotification, fromNotification)
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
-                        addParentStack(CommunicationParent::class.java)
+                        addParentStack(EventReport::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
@@ -417,6 +420,21 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(CommunicationParent::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+                    pendingIntent?.send()
+                }
+
+                Constant.M_FEE_DETAILS  -> {
+                    val detailIntent = Intent(this, PTM::class.java)
+                    detailIntent.putExtra(Constant.menu_name, menu_name)
+                    detailIntent.putExtra(Constant.menu_id, menu_id)
+                    detailIntent.putExtra(Constant.msg_id, msg_id)
+                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(FeeDetails::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 

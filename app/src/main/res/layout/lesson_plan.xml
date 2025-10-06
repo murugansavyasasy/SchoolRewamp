@@ -212,7 +212,7 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/twenty"
-        android:src="@drawable/nomessages"
+        android:src="@drawable/no_lessonplan_message"
         android:textColor="@color/black"
         android:textSize="@dimen/eighteen_sp"
         android:visibility="gone" />

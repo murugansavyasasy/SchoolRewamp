@@ -34,33 +34,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "onMessageReceived called")
-        val json = JSONObject()
 
-        remoteMessage.notification?.let { notification ->
-            val notifJson = JSONObject()
-            notifJson.put("title", notification.title)
-            notifJson.put("body", notification.body)
-            notifJson.put("imageUrl", notification.imageUrl?.toString())
-            json.put("notification", notifJson)
+        val title = remoteMessage.data["title"] ?: remoteMessage.notification?.title ?: "Default Title"
+        val body = remoteMessage.data["body"] ?: remoteMessage.notification?.body ?: "Default Body"
+        val imageUrl = remoteMessage.data["imageUrl"]
+        val menuName = remoteMessage.data["menu_name"] ?: "Messages"
+        val menuId = remoteMessage.data["menu_id"]?.toIntOrNull() ?: 1
+        val msg_id = remoteMessage.data["msg_id"]?.toIntOrNull() ?: 1
 
-            // Extract data values if present, with defaults
-            val menuName = remoteMessage.data["menu_name"] ?: "Messages"
-            val menuId = remoteMessage.data["menu_id"]?.toIntOrNull() ?: 1
-            val msg_id = remoteMessage.data["msg_id"]?.toIntOrNull() ?: 1
+        Log.d(TAG, "Data received: title=$title, body=$body, imageUrl=$imageUrl, menu=$menuName, id=$menuId, msg=$msg_id")
 
-            Log.d(TAG, "Notification Data - Title: ${notification.title}, Body: ${notification.body}, Image: ${notification.imageUrl}")
-            Log.d(TAG, "Data Payload - MenuName: $menuName, MenuId: $menuId, msg_id: $msg_id")
-
-            sendNotification(notification.title, notification.body, notification.imageUrl?.toString(), menuName, menuId, msg_id)
-        }
-
-        if (remoteMessage.data.isNotEmpty()) {
-            val dataJson = JSONObject(remoteMessage.data as Map<*, *>)
-            json.put("data", dataJson)
-        }
-
-        Log.d(TAG, "Remote Message JSON: ${json.toString()}")
+        sendNotification(title, body, imageUrl, menuName, menuId, msg_id)
     }
+
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)

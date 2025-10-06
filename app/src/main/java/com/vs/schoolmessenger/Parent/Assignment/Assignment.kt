@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.Assignment
 
+import android.content.Intent
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
 import com.vs.schoolmessenger.R
@@ -105,7 +108,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                 }
                 binding.rcyAssignment.visibility = View.VISIBLE
                 binding.lytList.visibility = View.GONE
-                Log.d("Message Id Value Indication",msg_id.toString())
+                Log.d("Message Id Value Indication", msg_id.toString())
                 scrollToMessageId(msg_id)
 
             } else {
@@ -182,6 +185,14 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                 viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
             }, 2000)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 
 

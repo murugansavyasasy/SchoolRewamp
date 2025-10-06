@@ -30,6 +30,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDeta
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
@@ -110,6 +111,11 @@ class NoticeBoardAdapter(
 
         }
     }
+
+    fun getCurrentList(): List<Notice> {
+        return filteredList
+    }
+
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {

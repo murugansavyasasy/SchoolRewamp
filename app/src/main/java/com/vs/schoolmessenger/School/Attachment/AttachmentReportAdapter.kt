@@ -117,6 +117,11 @@ class AttachmentReportAdapter(
         }
     }
 
+    fun getCurrentList(): List<AttachmentDataReport> {
+        return filteredList
+    }
+
+
     class DataViewHolder(
         itemView: View,
         private val context: Context,

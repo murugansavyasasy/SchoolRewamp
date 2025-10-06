@@ -233,8 +233,8 @@
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardStart"
-                                android:layout_width="@dimen/hundred"
-                                android:layout_height="@dimen/hundred"
+                                android:layout_width="@dimen/one_ten"
+                                android:layout_height="@dimen/one_ten"
                                 app:cardCornerRadius="@dimen/ten">
 
                                 <LinearLayout
@@ -302,8 +302,8 @@
 
                         <ImageView
                             android:id="@+id/imagearrow_view"
-                            android:layout_width="@dimen/sixteen"
-                            android:layout_height="@dimen/sixteen"
+                            android:layout_width="@dimen/eighteen"
+                            android:layout_height="@dimen/eighteen"
                             android:layout_weight="1"
                             android:src="@drawable/exchangearrow">
                         </ImageView>
@@ -318,8 +318,8 @@
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardEnd"
-                                android:layout_width="@dimen/hundred"
-                                android:layout_height="@dimen/hundred"
+                                android:layout_width="@dimen/one_ten"
+                                android:layout_height="@dimen/one_ten"
                                 app:cardCornerRadius="@dimen/ten">
 
                                 <LinearLayout

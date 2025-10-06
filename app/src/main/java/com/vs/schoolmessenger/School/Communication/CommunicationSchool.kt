@@ -922,6 +922,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (!isPrepared) {
                         initializeMediaPlayer()
                     } else {
+                        Log.d("AudioDebug","Stared playing from last resume"+lastPosition)
                         mediaPlayer?.let {
                             it.seekTo(lastPosition)
                             it.start()
@@ -930,6 +931,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 ContextCompat.getDrawable(this, R.drawable.pause_icon)
                             )
                             startAudioProgressUpdate()
+                            updateCurrentTime(lastPosition)
                         } ?: Log.e("AudioDebug", "mediaPlayer is null on resume!")
                     }
                 }
@@ -943,6 +945,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         player.reset()
                     }
                 }
+                binding.rlaAddLocalFile.visibility=View.GONE
 
                 binding.lblStartDuration.text = Constant.time_zero
                 stopAudioProgressUpdate()
