@@ -296,6 +296,9 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
+        layoutEdit.visibility=if(data.can_edit)View.VISIBLE else View.GONE
+        layoutDelete.visibility=if(data.can_delete)View.VISIBLE else View.GONE
+
         layoutEdit.setOnClickListener {
             Constant.isClickEdit=true
             val intent = Intent(this, CreateNoticeBoard::class.java)
