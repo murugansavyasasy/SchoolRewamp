@@ -65,9 +65,9 @@
 
     <ImageView
         android:id="@+id/noDataImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/nomessages"
+        android:layout_width="@dimen/two_fifty"
+        android:layout_height="@dimen/two_fifty"
+        android:src="@drawable/no_events_message"
         android:visibility="gone"
       android:layout_centerInParent="true" />
 
@@ -79,6 +79,7 @@
         android:text="@string/no_data_found"
         android:textColor="@color/black"
         android:textSize="@dimen/sixteen_sp"
+        android:layout_marginTop="@dimen/five"
         android:visibility="gone"
       android:layout_below="@+id/noDataImage"/>
 

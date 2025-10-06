@@ -122,7 +122,7 @@
                         android:layout_width="@dimen/two_fifty"
                         android:layout_height="@dimen/two_fifty"
                         android:contentDescription="@string/no_data_found"
-                        android:src="@drawable/no_data_found" />
+                        android:src="@drawable/no_events_message" />
 
                     <TextView
                         android:id="@+id/txtNoDataFound"
