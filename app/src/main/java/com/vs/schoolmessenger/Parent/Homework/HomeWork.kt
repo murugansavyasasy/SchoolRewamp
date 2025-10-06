@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.Homework
 
 import android.content.Intent
+import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.CalendarAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeworkParentAdapter
@@ -39,6 +41,10 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     private lateinit var dateList: List<CalendarDate>
     private lateinit var calendarAdapter: CalendarAdapter
 
+    private var msg_id: Int = -1
+
+    private var fromNotification: Boolean = false
+
     override fun getViewBinding(): ParentHomeworkActivityBinding {
         return ParentHomeworkActivityBinding.inflate(layoutInflater)
     }
@@ -62,6 +68,13 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.recyclerViewCalendar.layoutManager =
             LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+
+        msg_id = intent.getIntExtra(Constant.msg_id, -1)
+
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
+
+
 
         dateList = generateCalendarDates()
 
@@ -141,6 +154,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                     binding.cytNoDataFound.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
                     isLoadHomeWorkData(isHomeWorkData.homework, isHomeWorkData.date)
+                    scrollToMessageId(msg_id)
                 } else {
                     binding.lytSearch.visibility = View.GONE
                     binding.edtSearch.setText("")
@@ -286,4 +300,44 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         startActivity(intent)
     }
 
+
+    private fun scrollToMessageId(msg_id: Int) {
+        if (msg_id == -1) return
+
+        isHomeWorkData?.let { dateWiseList ->
+            val flatList = dateWiseList.flatMap { it.homework }
+
+            val index = flatList.indexOfFirst { it.id.toIntOrNull() == msg_id }
+
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index (msg_id: $msg_id)")
+                binding.recyclerView.post {
+                    binding.recyclerView.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.recyclerView, index)
+                }
+            } else {
+                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+            }
+        }
+    }
+
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
+            recyclerView.postDelayed({
+                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+            }, 2000)
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 }

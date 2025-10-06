@@ -26,8 +26,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -46,14 +48,19 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     private var isChildDetails: ChildDetails? = null
 
     lateinit var mAdapter: FeeReceiptAdapter
-//    private lateinit var invoiceList: List<InvoiceDetails>
+
+    //    private lateinit var invoiceList: List<InvoiceDetails>
     private var appViewModel: App? = null
-    var isChildId=""
-    var isSchoolID=""
+    var isChildId = ""
+    var isSchoolID = ""
 
     private val popupWebViewStack = Stack<WebView>()
     var alertDialogView: AlertDialog? = null
 
+
+    private var msg_id: Int = -1
+
+    private var fromNotification: Boolean = false
 
     override fun setupViews() {
         super.setupViews()
@@ -67,16 +74,24 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
-        isChildId=isChildDetails!!.child_id
-        isSchoolID=isChildDetails!!.school_id
+        isChildId = isChildDetails!!.child_id
+        isSchoolID = isChildDetails!!.school_id
 
-        val feeUrl =Constant.isGlobalVariableData!!.fees_url
+        msg_id = intent.getIntExtra(Constant.msg_id, -1)
+
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
+
+        val feeUrl = Constant.isGlobalVariableData!!.fees_url
 
         val isFinalFeeUrl = feeUrl
             .replace(Constant.isStudentID, isChildId)
             .replace(Constant.isSchoolID, isSchoolID)
 
-        Log.d("isFinalFeeUrl","isChildId: ${isChildId} |isSchoolID: ${isSchoolID} | StudentFinalFeeUrl: ${isFinalFeeUrl}" )
+        Log.d(
+            "isFinalFeeUrl",
+            "isChildId: ${isChildId} |isSchoolID: ${isSchoolID} | StudentFinalFeeUrl: ${isFinalFeeUrl}"
+        )
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
         binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
@@ -86,7 +101,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         alertDialogView = AlertDialog.Builder(this@FeeDetails).create()
-         binding.lblHeaderTitle.text=Constant.isParentMenuName
+        binding.lblHeaderTitle.text = Constant.isParentMenuName
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
@@ -107,6 +122,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mAdapter.filter.filter(s)
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -124,15 +140,15 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 binding.rvReceipts.visibility = View.VISIBLE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                scrollToMessageId(msg_id)
             } else {
-
                 mAdapter.setData(listOf())
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
                 Log.d("FeeDetails_Response", "No invoices found or response null")
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
 
             }
         }
@@ -311,8 +327,12 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
                 when {
                     url.contains("/#/paymentsucccess/success") -> {
-                        paymentSuccess("Payment Done!!", "Payment Successful. View/Download Receipt on Receipt Tab.")
+                        paymentSuccess(
+                            "Payment Done!!",
+                            "Payment Successful. View/Download Receipt on Receipt Tab."
+                        )
                     }
+
                     url.contains("/#/paymentsucccess/failed") -> {
                         paymentFailed("Payment failed..", "Please try again later!!")
                     }
@@ -330,18 +350,53 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             Constant.hideLoading(this)
             if (response != null && response.status && response.data.isNotEmpty()) {
 //                val pdfUrl = response.data[0]
-                val pdfUrl = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                val pdfUrl =
+                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
                 val intent = Intent(this, FeeReceiptViewActivity::class.java)
                 intent.putExtra("pdf_url", pdfUrl)
                 startActivity(intent)
             } else {
-                Toast.makeText(this, response?.message ?: "Unable to fetch invoice", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    response?.message ?: "Unable to fetch invoice",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
+    private fun scrollToMessageId(msg_id: Int) {
+        if (msg_id == -1) return
+
+        val dataList = mAdapter?.getCurrentList()
+        if (!dataList.isNullOrEmpty()) {
+            val index = dataList.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index")
+                binding.rvReceipts.post {
+                    binding.rvReceipts.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rvReceipts, index)
+                }
+            } else {
+                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+            }
+        }
+    }
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
+            recyclerView.postDelayed({
+                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+            }, 2000)
+        }
+    }
+
     private fun paymentSuccess(title: String, msg: String) {
-        val dialogView = LayoutInflater.from(this@FeeDetails).inflate(R.layout.payment_success, null)
+        val dialogView =
+            LayoutInflater.from(this@FeeDetails).inflate(R.layout.payment_success, null)
         val builder = AlertDialog.Builder(this@FeeDetails)
         builder.setView(dialogView)
         val alertDialog = builder.create()
@@ -422,6 +477,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             return
         }
         super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 
     override fun onDestroy() {
@@ -465,7 +524,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     }
 
 
-    override fun onItemClick(data: FeeInvoiceResponse.InvoiceData, holder: FeeReceiptAdapter.DataViewHolder) {
+    override fun onItemClick(
+        data: FeeInvoiceResponse.InvoiceData,
+        holder: FeeReceiptAdapter.DataViewHolder
+    ) {
         Log.d("InvoiceID", data.id)
 
         val intent = Intent(this@FeeDetails, FeeReceiptViewActivity::class.java)

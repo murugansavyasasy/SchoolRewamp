@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -13,6 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class NotificationAdapter(
     private var itemList: List<NotificationDataClass>?,
+    private val listener: NotificationClickListener,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -62,7 +64,7 @@ class NotificationAdapter(
                 val lastIndex = list.lastIndex
                 val nextIsHeader = position < lastIndex && list[position + 1].isHeader
                 val showDivider = position < lastIndex && !nextIsHeader
-                holder.bind(item, showDivider)
+                holder.bind(item, showDivider,listener)
             }
             is HeaderViewHolder -> holder.bind(item)
         }
@@ -84,13 +86,20 @@ class NotificationAdapter(
         private val lblNotification: TextView = itemView.findViewById(R.id.lblNotification)
         private val line: View = itemView.findViewById(R.id.line)
 
-        fun bind(data: NotificationDataClass, showDivider: Boolean) {
+        private val fab : RelativeLayout = itemView.findViewById(R.id.fab)
+
+        fun bind(data: NotificationDataClass, showDivider: Boolean,listener: NotificationClickListener){
             lblSendBy.text = data.sendBy
             lblTitle.text = data.title
             lblContent.text = data.content.replace("•", "")
             first_letter.visibility = View.GONE
             first_letter.text = data.sendBy.firstOrNull()?.toString() ?: "?"
             line.visibility = if (showDivider) View.VISIBLE else View.GONE
+
+            fab.setOnClickListener {
+                listener.onClickListener(data, it, adapterPosition)
+            }
+
         }
     }
 

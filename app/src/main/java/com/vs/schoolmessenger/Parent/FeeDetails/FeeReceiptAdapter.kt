@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class FeeReceiptAdapter(
@@ -80,6 +81,10 @@ class FeeReceiptAdapter(
                 filterResultListener?.onFilterResult(filteredList.isNullOrEmpty())
             }
         }
+    }
+
+    fun getCurrentList(): List<FeeInvoiceResponse.InvoiceData> {
+        return filteredList!!
     }
 
     class DataViewHolder(itemView: View, private val context: Context) :
