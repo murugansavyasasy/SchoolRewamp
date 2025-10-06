@@ -72,8 +72,7 @@
         android:divider="@null"
         android:layout_marginTop="@dimen/fifteen"
         android:dividerHeight="0dp"
-        android:scrollbars="none"
-        tools:listitem="@layout/resent_notifications" />
+        android:scrollbars="none" />
 
 </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

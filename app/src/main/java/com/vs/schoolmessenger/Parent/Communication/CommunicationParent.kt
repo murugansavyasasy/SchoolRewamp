@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.Parent.Communication
 
+import android.content.Intent
+import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -11,8 +13,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -39,6 +43,10 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     var isFilterClick = false
     private var currentSearchQuery: String = ""
 
+    private var msg_id: Int = -1
+
+    private var fromNotification: Boolean = false
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryParent(
@@ -50,6 +58,10 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.rlaVoiceMessage.setOnClickListener(this)
         binding.seeMoreLabel.setOnClickListener(this)
         binding.imgFilter.setOnClickListener(this)
+
+        msg_id = intent.getIntExtra(Constant.msg_id, -1)
+
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
 
 
         val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
@@ -107,6 +119,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 }
                 appendData(response.data, archiveFlag = true)
+                scrollToMessageId(msg_id)
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 checkAndShowNoData(message = response?.message)
@@ -121,6 +134,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 }
                 appendData(response.data, archiveFlag = false)
+                scrollToMessageId(msg_id)
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 checkAndShowNoData(message = response?.message)
@@ -177,6 +191,35 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             isChangeBackgroundFilter(binding.lblRead)
         }
         fetchInitialData()
+    }
+
+
+    private fun scrollToMessageId(msg_id: Int) {
+        if (msg_id == -1) return
+
+        allVoiceData?.let { list ->
+            val index = list.indexOfFirst { it.id?.toIntOrNull() == msg_id }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index in completed")
+                binding.recyclerInitial.post {
+                    binding.recyclerInitial.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.recyclerInitial, index)
+                }
+                return
+            }
+        }
+        Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+    }
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
+            recyclerView.postDelayed({
+                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+            }, 2000)
+        }
     }
 
     private fun isChangeBackgroundFilter(isSelectedFilter: TextView) {
@@ -477,11 +520,16 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         }
     }
 
+
     override fun onBackPressed() {
         if (adapter != null) {
             adapter!!.releaseMediaPlayer()
         }
         super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }
 

@@ -253,7 +253,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         val sums = mutableMapOf<Int, Pair<Int, Int>>() // week -> (sum_submitted, sum_member)
 
         uniqueActivities.forEach { activity ->
-            val date = LocalDate.parse(activity.submission_date, formatter)
+            val date = LocalDate.parse(activity.student_submited_on, formatter)
             if (date.monthValue == selectedMonth && date.year == currentYear) {
                 val weekOfMonth = date.get(WeekFields.of(Locale.getDefault()).weekOfMonth())
                 val current = sums.getOrDefault(weekOfMonth, 0 to 0)

@@ -1,14 +1,19 @@
 package com.vs.schoolmessenger.Parent.Attachment
 
+import android.content.Intent
+import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -32,6 +37,11 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private var appViewModel: App? = null
     lateinit var mAdapter: AttachmentAdapter
 
+    private var msg_id: Int = -1
+
+    private var fromNotification: Boolean = false
+
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryParent(
@@ -40,6 +50,10 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         )
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
+
+        msg_id = intent.getIntExtra(Constant.msg_id, -1)
+
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
 
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
@@ -94,6 +108,8 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 binding.recycleracademic.visibility = View.VISIBLE
                 isLoadData(response.data)
+                Log.d("Message Id Value Indication", msg_id.toString())
+                scrollToMessageId(msg_id)
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 showEmptyState(response?.message ?: getString(R.string.no_data_found))
@@ -141,11 +157,51 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.txtNoData.visibility = View.VISIBLE
     }
 
+
+    private fun scrollToMessageId(msg_id: Int) {
+        if (msg_id == -1) return
+
+        val dataList = mAttachmentReportAdapter?.getCurrentList()
+        if (!dataList.isNullOrEmpty()) {
+            val index = dataList.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index")
+                binding.recycleracademic.post {
+                    binding.recycleracademic.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.recycleracademic, index)
+                }
+            } else {
+                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+            }
+        }
+    }
+
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
+            recyclerView.postDelayed({
+                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+            }, 2000)
+        }
+    }
+
+
     override fun onClick(v: View?) {
         when (v?.id) {
         }
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 
     override fun onResume() {
         super.onResume()

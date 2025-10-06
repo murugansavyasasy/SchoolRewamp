@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Parent.QuizExam
+
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -17,6 +18,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+
 class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
     private lateinit var adapter: QuizUpcomingAdapter
@@ -26,11 +28,10 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
-    var isType="2"
-    var isStatusType="1"
+    var isType = "2"
+    var isStatusType = "1"
     private var isUpcoming: List<GetQuizExamListData>? = emptyList()
     private var isCompleted: List<GetQuizExamListData>? = emptyList()
-
 
     override fun getViewBinding(): QuizBinding {
         return QuizBinding.inflate(layoutInflater)
@@ -54,11 +55,11 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         binding.toolbarLayout.lnrParent.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)
-        isAccessToken=isChildDetails!!.access_token
+        isAccessToken = isChildDetails!!.access_token
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        binding.toolbarLayout.lblParentToolBar.text =getString(R.string.quiz)
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.quiz)
 
 
         isFetchUpcomingEQList()
@@ -79,31 +80,29 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         }
 
         appViewModel?.isQuizExamList?.observe(this) { response ->
-            if(response != null){
+            if (response != null) {
                 if (response.status == true) {
                     binding.lytList.visibility = View.GONE
 
-                    if (isStatusType==Constant.one&& isType==Constant.two){
+                    if (isStatusType == Constant.one && isType == Constant.two) {
                         binding.rcCompleted.visibility = View.GONE
                         binding.rcUpcoming.visibility = View.VISIBLE
                         isLoadUpcomingEQ(response.data)
-                        isUpcoming=response.data
+                        isUpcoming = response.data
                     }
-                    if (isStatusType==Constant.two&& isType==Constant.two){
+                    if (isStatusType == Constant.two && isType == Constant.two) {
                         binding.rcUpcoming.visibility = View.GONE
                         binding.rcCompleted.visibility = View.VISIBLE
                         isLoadCompletedEQ(response.data)
-                        isCompleted=response.data
+                        isCompleted = response.data
                     }
 
-                }
-                else{
+                } else {
                     binding.rcCompleted.visibility = View.GONE
                     binding.rcUpcoming.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
-            }
-            else {
+            } else {
                 binding.rcCompleted.visibility = View.GONE
                 binding.rcUpcoming.visibility = View.GONE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
@@ -115,9 +114,9 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
 
-            binding.lnrTabOneName.isEnabled=false
-            binding.lnrTabTwoName.isEnabled=true
-            isStatusType="1"
+            binding.lnrTabOneName.isEnabled = false
+            binding.lnrTabTwoName.isEnabled = true
+            isStatusType = "1"
             binding.line1.setBackgroundResource(R.color.iconBlue)
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -132,9 +131,9 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
 
-            isStatusType="2"
-            binding.lnrTabOneName.isEnabled=true
-            binding.lnrTabTwoName.isEnabled=false
+            isStatusType = "2"
+            binding.lnrTabOneName.isEnabled = true
+            binding.lnrTabTwoName.isEnabled = false
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
             binding.line2.setBackgroundResource(R.color.iconBlue)
@@ -155,7 +154,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
-                Log.d("Search",s.toString())
+                Log.d("Search", s.toString())
 
             }
         })
@@ -244,58 +243,55 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
     }
 
 
-
     private fun isLoadUpcomingEQ(data: List<GetQuizExamListData>) {
-        if (data.size>0){
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        if (data.size > 0) {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
             binding.rcUpcoming.visibility = View.VISIBLE
-            adapter = QuizUpcomingAdapter(data,this, false)
+            adapter = QuizUpcomingAdapter(data, this, false)
             binding.rcUpcoming.layoutManager = LinearLayoutManager(this)
             binding.rcUpcoming.adapter = adapter
-        }
-        else{
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        } else {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rcUpcoming.visibility = View.GONE
             ErrorMessage(getString(R.string.no_data_found))
         }
     }
 
     private fun isLoadCompletedEQ(data: List<GetQuizExamListData>) {
-        if (data.size>0){
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        if (data.size > 0) {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
             binding.rcCompleted.visibility = View.VISIBLE
-            adapter1 = CompletedQuizAdapter(data,this, false)
+            adapter1 = CompletedQuizAdapter(data, this, false)
             binding.rcCompleted.layoutManager = LinearLayoutManager(this)
             binding.rcCompleted.adapter = adapter1
-        }
-        else{
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        } else {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rcCompleted.visibility = View.GONE
             ErrorMessage(getString(R.string.no_data_found))
         }
     }
 
-    fun ErrorMessage(errorMessage:String){
+    fun ErrorMessage(errorMessage: String) {
         binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = errorMessage
     }
 
     private fun isFetchUpcomingEQList() {
-        adapter = QuizUpcomingAdapter(null,this, false)
+        adapter = QuizUpcomingAdapter(null, this, false)
         binding.rcUpcoming.layoutManager = LinearLayoutManager(this)
         binding.rcUpcoming.adapter = adapter
 
-        appViewModel?.isQuizExamList(isAccessToken ?: "",isType,isStatusType)
+        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType)
     }
 
     private fun isFetchCompletedEQList() {
-        adapter1 = CompletedQuizAdapter(null,this, false)
+        adapter1 = CompletedQuizAdapter(null, this, false)
         binding.rcCompleted.layoutManager = LinearLayoutManager(this)
         binding.rcCompleted.adapter = adapter1
 
-        appViewModel?.isQuizExamList(isAccessToken ?: "",isType,isStatusType)
+        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType)
     }
 
 

@@ -2,14 +2,17 @@ package com.vs.schoolmessenger.Parent.Noticeboard
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.graphics.Color
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.R
@@ -28,6 +31,9 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     lateinit var mAdapter: NoticeBoardAdapter
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
+    private var msg_id: Int = -1
+
+    private var fromNotification: Boolean = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -40,6 +46,8 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         appViewModel?.init()
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
+        msg_id = intent.getIntExtra(Constant.msg_id, -1)
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
         isGetNoticeBoardList()
 
 
@@ -69,6 +77,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
+                scrollToMessageId(msg_id)
             } else {
                 binding.rcyNoticeBoard.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
@@ -87,6 +96,38 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         manager.createNotificationChannel(channel)
 
     }
+
+
+    private fun scrollToMessageId(msg_id: Int) {
+        if (msg_id == -1) return
+
+        val dataList = mAdapter?.getCurrentList()
+        if (!dataList.isNullOrEmpty()) {
+            val index = dataList.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index")
+                binding.rcyNoticeBoard.post {
+                    binding.rcyNoticeBoard.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcyNoticeBoard, index)
+                }
+            } else {
+                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+            }
+        }
+    }
+
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
+            recyclerView.postDelayed({
+                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+            }, 2000)
+        }
+    }
+
 
 
     private fun isloadhomeworkData(newData: List<Notice>?) {
