@@ -194,6 +194,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
                     //We are saving the menu name in list to use anywhere
                     Constant.setMenuNames(allMenuItems)
+                    isLoadData()
+                    setupRecyclerView()
                 }
             }
         }
@@ -206,7 +208,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isDashBoardCountData = isDashboardResponse
                     isSchoolMenuCountDetails = isDashBoardCountData!![0].menu_details
-                    isGetAds()
+                   // isGetAds()
+                    isLoadData()
                     setupRecyclerView()
 
                 }
@@ -244,6 +247,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
         return binding.root
     }
     private fun setupRecyclerView() {
@@ -271,7 +275,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
 
-        Log.d("isMenuCountDetails", isSchoolMenuCountDetails!!.size.toString())
         isMenuAdapter = SchoolMenuAdapter(
             requireActivity(),
             this,
@@ -350,6 +353,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         else{
             isLoadData()
             setupRecyclerView()
+            appViewModel!!.isDashBoardCountData(
+                access_token, Constant.staff_, requireActivity()
+            )
         }
         Log.d("Loading", "Dashboard Data is Refreshed")
     }

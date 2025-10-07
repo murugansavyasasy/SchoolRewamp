@@ -144,7 +144,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
 
             R.id.btnContinue -> {
                 if (isCountrySelected == true) {
-//                    if (isAgree) {
+                    if (isAgree) {
                     ToastManager.cancelToast()
                     SharedPreference.putCountryId(
                         this,
@@ -154,10 +154,10 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                     RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
                     val intent = Intent(this@CountryScreen, MobileNumber::class.java)
                     startActivity(intent)
-                    // }
-//                    else {
-//                        ToastManager.showToast(this, R.string.AgreeTermsConditions)
-//                    }
+                     }
+                    else {
+                        ToastManager.showToast(this, R.string.AgreeTermsConditions)
+                    }
                 } else {
                     ToastManager.showToast(this, R.string.lblChoosecountry)
                 }

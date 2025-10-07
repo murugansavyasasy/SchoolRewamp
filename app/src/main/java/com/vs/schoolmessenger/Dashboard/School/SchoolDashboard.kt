@@ -13,6 +13,7 @@ import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -118,7 +119,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         navigationView = binding.navigationView
 
 
-
         val menu = navigationView.menu
         val menuItem = menu.findItem(R.id.role_click)
         if(userDetails!!.is_parent && userDetails!!.is_staff){
@@ -181,6 +181,24 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+
+        // ✅ Use correct lifecycle-aware callback
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                when (currentFragment) {
+                    is SchoolHomeFragment -> {
+                        // Exit app when on HomeFragment
+                        finish()
+                    }
+                    else -> {
+                        // Navigate to HomeFragment
+                        updateNavBar(R.id.icon_home)
+                        supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, SchoolHomeFragment())?.commit()
+                    }
+                }
+            }
+        })
 
         accessChildView(
             binding,

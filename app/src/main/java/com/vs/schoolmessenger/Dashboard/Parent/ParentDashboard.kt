@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -31,6 +32,7 @@ import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -163,7 +165,23 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
             }
         }
-
+        // ✅ Use correct lifecycle-aware callback
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                when (currentFragment) {
+                    is ParentHomeFragment -> {
+                        // Exit app when on HomeFragment
+                        finish()
+                    }
+                    else -> {
+                        // Navigate to HomeFragment
+                        updateNavBar(R.id.icon_home)
+                        supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, ParentHomeFragment())?.commit()
+                    }
+                }
+            }
+        })
 
         accessChildView(
             binding,

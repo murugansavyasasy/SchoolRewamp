@@ -198,7 +198,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="@string/notice_display_date_range"
+                        android:text="@string/notice_active_period"
                          />
 
                     <TextView
