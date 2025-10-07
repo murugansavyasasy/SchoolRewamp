@@ -164,38 +164,128 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
         startOtpTimer()
     }
 
-    private fun setupOtp() {
-        val boxes = listOf(binding.txtOtp1, binding.txtOtp2, binding.txtOtp3, binding.txtOtp4, binding.txtOtp5, binding.txtOtp6)
-
-        // Move forward automatically
-        boxes.forEachIndexed { index, editText ->
-            editText.doAfterTextChanged {
+//    private fun setupOtp() {
+//        val boxes = listOf(binding.txtOtp1, binding.txtOtp2, binding.txtOtp3, binding.txtOtp4, binding.txtOtp5, binding.txtOtp6)
+//
+//        // Move forward automatically
+//        boxes.forEachIndexed { index, editText ->
+//            editText.doAfterTextChanged {
+////                if (it?.length == 1) {
+////                    if (index < boxes.lastIndex) {
+////                        boxes[index + 1].requestFocus()
+////                    } else {
+////                        editText.clearFocus()
+////                    }
+////                }
 //                if (it?.length == 1) {
 //                    if (index < boxes.lastIndex) {
 //                        boxes[index + 1].requestFocus()
-//                    } else {
+//                    }
+//
+//                    val allFilled = boxes.all { box -> box.text?.length == 1 }
+//                    if (allFilled) {
+//                        // Hide keyboard
 //                        editText.clearFocus()
+//                        val imm = editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//                        imm.hideSoftInputFromWindow(editText.windowToken, 0)
 //                    }
 //                }
-                if (it?.length == 1) {
-                    if (index < boxes.lastIndex) {
-                        boxes[index + 1].requestFocus()
-                    }
+//            }
+//
+//            // Backspace handling
+//            editText.setOnKeyListener { _, keyCode, event ->
+//                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
+//                    if (editText.text.isEmpty() && index > 0) {
+//                        boxes[index - 1].apply {
+//                            requestFocus()
+//                            setSelection(text.length)
+//                        }
+//                        return@setOnKeyListener true
+//                    }
+//                }
+//                false
+//            }
+//
+//            // Paste full OTP
+//            editText.addTextChangedListener(object : TextWatcher {
+//                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                    val pasted = s?.toString() ?: return
+//                    if (pasted.length > 1) {
+//                        fillFromString(pasted.take(6), boxes)
+//                    }
+//                }
+//                override fun afterTextChanged(s: Editable?) {}
+//            })
+//        }
+//
+//        binding.txtOtp1.requestFocus()
+//    }
 
-                    val allFilled = boxes.all { box -> box.text?.length == 1 }
-                    if (allFilled) {
-                        // Hide keyboard
-                        editText.clearFocus()
-                        val imm = editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                        imm.hideSoftInputFromWindow(editText.windowToken, 0)
+    private fun setupOtp() {
+        val boxes = listOf(binding.txtOtp1, binding.txtOtp2, binding.txtOtp3, binding.txtOtp4, binding.txtOtp5, binding.txtOtp6)
+
+        boxes.forEachIndexed { index, editText ->
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    val text = s.toString()
+                    if (text.length == 1) {
+                        // Single digit entered: move to next field
+                        if (index < boxes.size - 1) {
+                            boxes[index + 1].requestFocus()
+                        }
+                        // Check if all filled
+                        val allFilled = boxes.all { it.text.length == 1 }
+                        if (allFilled) {
+                            editText.clearFocus()
+                            val imm = editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                            imm.hideSoftInputFromWindow(editText.windowToken, 0)
+                        }
+                    } else if (text.isEmpty()) {
+                        // Backspace on empty field: move to previous field
+                        if (index > 0) {
+                            boxes[index - 1].requestFocus()
+                        }
+                    } else if (text.length > 1) {
+                        // Multi-character paste detected: distribute digits
+                        val digitsOnly = text.filter { it.isDigit() }
+                        if (digitsOnly.isNotEmpty()) {
+                            s?.replace(0, s.length, digitsOnly[0].toString()) // Keep first digit in current field
+                            var remaining = digitsOnly.substring(1).take(6 - index) // Limit to remaining fields
+                            var j = index + 1
+                            while (remaining.isNotEmpty() && j < boxes.size) {
+                                val nextEditText = boxes[j]
+                                if (nextEditText.text.isEmpty()) {
+                                    nextEditText.setText(remaining[0].toString())
+                                    remaining = remaining.substring(1)
+                                }
+                                j++
+                            }
+                            // Move focus to the last filled or first empty field
+                            val focusIndex = minOf(index + digitsOnly.length, boxes.size - 1)
+                            boxes[focusIndex].requestFocus()
+                            // Check if all filled after paste
+                            val allFilled = boxes.all { it.text.length == 1 }
+                            if (allFilled) {
+                                boxes[focusIndex].clearFocus()
+                                val imm = editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                                imm.hideSoftInputFromWindow(editText.windowToken, 0)
+                            }
+                        } else {
+                            s?.clear() // Clear invalid paste
+                        }
                     }
                 }
-            }
+            })
 
-            // Backspace handling
-            editText.setOnKeyListener { _, keyCode, event ->
-                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
-                    if (editText.text.isEmpty() && index > 0) {
+            // Backspace handling for empty field
+            editText.setOnKeyListener { v, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && (v as EditText).text.isEmpty()) {
+                    if (index > 0) {
                         boxes[index - 1].apply {
                             requestFocus()
                             setSelection(text.length)
@@ -206,17 +296,12 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                 false
             }
 
-            // Paste full OTP
-            editText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    val pasted = s?.toString() ?: return
-                    if (pasted.length > 1) {
-                        fillFromString(pasted.take(6), boxes)
-                    }
+            // Ensure cursor is always at the end when the field gains focus
+            editText.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) {
+                    (v as EditText).setSelection(v.text.length)
                 }
-                override fun afterTextChanged(s: Editable?) {}
-            })
+            }
         }
 
         binding.txtOtp1.requestFocus()

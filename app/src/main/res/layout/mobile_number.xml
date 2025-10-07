@@ -38,7 +38,7 @@
             android:layout_margin="@dimen/ten"
             android:gravity="center"
             android:textSize="@dimen/fifteen_sp"
-            android:text="@string/seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times"
+            android:text="@string/stay_connected_with_your_school_community_your_updates_communication_and_school_life_all_in_one_place"
             style="@style/CustomTextStylePoppinsRegular">
         </TextView>
 

@@ -1104,9 +1104,10 @@ object Constant {
     fun showDatePicker12(
         context: Context,
         dateFormatType: Boolean,
+        defaultDate: Calendar? = null,
         onDateSelected: (String) -> Unit
     ) {
-        val calendar = Calendar.getInstance()
+        val calendar = defaultDate ?: Calendar.getInstance()
 
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -1120,22 +1121,21 @@ object Constant {
                 }
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(selectedCalendar.time)
-
                 onDateSelected(formattedDate)
             },
             year, month, day
         )
 
-        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+        datePickerDialog.datePicker.minDate = Calendar.getInstance().timeInMillis
 
         if (dateFormatType) {
-            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+            datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
         }
 
         datePickerDialog.show()
     }
 
-    //Leave Request
+
     fun handleRestrictDatePicker(
         context: Context,
         minDate: Long? = null,
@@ -1974,22 +1974,39 @@ object Constant {
         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 val fingerPrintEnabled = SharedPreference.isFingerprintEnabled(activity)
+                Log.d("fingerPrintEnabled",fingerPrintEnabled.toString())
                 if (!fingerPrintEnabled) {
+
                     val fingerPrintSkipped = SharedPreference.isFingerPrintSkipped(activity)
                     if (!fingerPrintSkipped) {
-                        AlertDialog.Builder(activity)
-                            .setTitle("Enable Fingerprint Login?")
-                            .setMessage("Would you like to enable fingerprint authentication for faster and secure access in the future?")
-                            .setPositiveButton("Yes") { _, _ ->
-                                SharedPreference.setFingerprintEnabled(activity, true)
-                            }
-                            .setNegativeButton("No") { _, _ ->
-                                SharedPreference.setFingerPrintSkipped(activity, true)
-                                SharedPreference.setFingerprintEnabled(activity, false)
+                        val dialogView = LayoutInflater.from(activity)
+                            .inflate(R.layout.enable_fingerprint_popup, null)
+                        val builder = AlertDialog.Builder(activity)
+                        builder.setView(dialogView)
+                        val alertDialog = builder.create()
+                        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+                        alertDialog.show()
+                        // Access views
+                        val titleText = dialogView.findViewById<TextView>(R.id.alertTitle)
+                        val messageText = dialogView.findViewById<TextView>(R.id.alertMessage)
+                        val lblYes = dialogView.findViewById<TextView>(R.id.lblYes)
+                        val lblNo = dialogView.findViewById<TextView>(R.id.lblNo)
+                        messageText.text =
+                            "Would you like to enable fingerprint authentication for faster and secure access in the future?"
+                        titleText.text = "Enable Fingerprint Login?"
 
-                            }
-                            .show()
+                        lblYes.setOnClickListener {
+                            SharedPreference.setFingerprintEnabled(activity, true)
+                            alertDialog.dismiss()
+                        }
+                        lblNo.setOnClickListener {
+                            SharedPreference.setFingerPrintSkipped(activity, true)
+                            SharedPreference.setFingerprintEnabled(activity, false)
+                            alertDialog.dismiss()
+                        }
                     }
+
+
                 }
                 true
             }

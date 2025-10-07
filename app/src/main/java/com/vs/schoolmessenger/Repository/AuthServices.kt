@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Repository
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -17,6 +18,7 @@ import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import retrofit2.Call
 import retrofit2.Callback
@@ -150,7 +152,7 @@ class AuthServices {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
-                        Constant.errorAlert(activity, "", errorModel.message)
+                        Constant.errorAlert(activity, activity.getString(R.string.Oops), errorModel.message)
                     }
 
                 }

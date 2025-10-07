@@ -629,13 +629,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         @JvmStatic
         fun loadFragment(activity: FragmentActivity, fragment: Fragment) {
             val currentFragment =
-                activity.supportFragmentManager.findFragmentById(R.id.fragment_container)
+                activity?.supportFragmentManager?.findFragmentById(R.id.fragment_container)
             if (currentFragment != null && currentFragment::class == fragment::class) {
                 return
             }
-            activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, fragment)?.commit()
         }
     }
 
@@ -685,6 +683,44 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         )
         datePickerDialog.show()
     }
+
+
+    fun lsrwshowDatePickerDialog(
+        context: Context,
+        listener: OnDateSelectedListener,
+        preselectedDate: String? = null
+    ) {
+        val calendar = Calendar.getInstance()
+
+        if (!preselectedDate.isNullOrEmpty()) {
+            try {
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val date = sdf.parse(preselectedDate)
+                calendar.time = date!!
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val cal = Calendar.getInstance()
+                cal.set(selectedYear, selectedMonth, selectedDay)
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(cal.time)
+                listener.onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        datePickerDialog.show()
+    }
+
 
 
     //Homework report sender

@@ -39,10 +39,9 @@
 
             <ImageView
                 android:id="@+id/imgBack"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/fifteen"
                 android:layout_centerInParent="true"
-                android:padding="8dp"
                 android:src="@drawable/ic_arrow_back_black" />
         </RelativeLayout>
 
@@ -68,15 +67,20 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/set_a_otp"
+                android:layout_marginEnd="@dimen/twenty"
+                android:layout_marginStart="@dimen/twenty"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_five_sp" />
 
             <TextView
                 android:id="@+id/lblEnter"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/ten"
                 android:gravity="start"
                 android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
                 android:textColor="@color/black"
@@ -93,7 +97,10 @@
                     android:id="@+id/rytMobileNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:layout_marginStart="@dimen/twenty"
                     android:orientation="horizontal"
                     android:weightSum="6">
 
@@ -106,7 +113,6 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_white_stroke_box"
                         android:inputType="number"
-                        android:maxLength="1"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twenty_sp" />
@@ -122,7 +128,6 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_white_stroke_box"
                         android:inputType="number"
-                        android:maxLength="1"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twenty_sp" />
@@ -137,7 +142,6 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_white_stroke_box"
                         android:inputType="number"
-                        android:maxLength="1"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twenty_sp" />
@@ -152,7 +156,6 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_white_stroke_box"
                         android:inputType="number"
-                        android:maxLength="1"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twenty_sp" />
@@ -167,7 +170,6 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_white_stroke_box"
                         android:inputType="number"
-                        android:maxLength="1"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twenty_sp" />
@@ -182,13 +184,14 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_white_stroke_box"
                         android:inputType="number"
-                        android:maxLength="1"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twenty_sp" />
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/twenty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/ten"
@@ -236,7 +239,10 @@
                     style="@style/CustomTextStylePoppinsRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten"
                     android:gravity="start"
                     android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"
                     android:textSize="@dimen/thirteen_sp">
@@ -264,9 +270,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblDidNot"
-                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/thirty"
-                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty"
                     android:layout_marginBottom="@dimen/ten"
                     android:background="@drawable/rect_btn_blue"
                     android:gravity="center"

@@ -32,6 +32,7 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+        binding.rytBack.setOnClickListener(this)
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
@@ -42,13 +43,8 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
                 Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
                 isValidateUser()
             } else {
-                Toast.makeText(
-                    this,
-                    resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(
-                        R.string.digit_mobile_number
-                    ), Toast.LENGTH_SHORT
-                ).show()
-
+//                Toast.makeText(this, resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(R.string.digit_mobile_number), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.enter_a_valid_mobile_number), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -85,12 +81,12 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
                         }
                     } else {
                         Constant.errorAlert(this@MobileNumber,
-                            "Oops!", message)
+                            getString(R.string.Oops), message)
                     }
                 }
                 else {
                     Constant.errorAlert(this@MobileNumber,
-                       "Oops!", message)
+                       getString(R.string.Oops), message)
                 }
             }
         }
@@ -117,6 +113,9 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.rytBack -> {
+                onBackPressed()
+            }
 
         }
     }

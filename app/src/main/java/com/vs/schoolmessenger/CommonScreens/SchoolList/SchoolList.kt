@@ -190,8 +190,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
 
             val selectedRadioButton = group.findViewById<RadioButton>(checkedId)
-            selectedRadioButton?.setBackgroundResource(R.drawable.radio_selected_bg) // Set selected background
+            selectedRadioButton?.setBackgroundResource(R.drawable.radio_selected_bg)
         }
+        binding.radioGroupSendTo.check(R.id.radioAll)
+        binding.radioAll.setBackgroundResource(R.drawable.radio_selected_bg)
+
 
     }
 
