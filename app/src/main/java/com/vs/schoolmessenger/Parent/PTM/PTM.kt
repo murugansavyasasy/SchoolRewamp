@@ -133,13 +133,38 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             }
         }
 
+//        appViewModel?.isSlotBookingForStudent?.observe(this) { response ->
+//            binding.rcyMeetingHistory.postDelayed({
+//                Constant.hideLoading(this)
+//                if (response?.status == true) {
+//                    Constant.showTopAlertPopup(response.message, this)
+//                } else {
+//                    Constant.showTopAlertPopup("Booking failed!", this)
+//                }
+//            }, 2000)
+//        }
+
         appViewModel?.isSlotBookingForStudent?.observe(this) { response ->
             binding.rcyMeetingHistory.postDelayed({
                 Constant.hideLoading(this)
+
                 if (response?.status == true) {
-                    Constant.showTopAlertPopup(response.message, this)
+                    AlertDialog.Builder(this)
+                        .setMessage(response.message ?: "Slot booked successfully!")
+                        .setCancelable(false)
+                        .setPositiveButton("OK") { dlg, _ ->
+                            dlg.dismiss()
+                            selectedSlotIds.clear()
+                            binding.lblBookSlots.visibility = View.GONE
+                            isScheduleCallList()
+                        }
+                        .show()
                 } else {
-                    Constant.showTopAlertPopup("Booking failed!", this)
+                    AlertDialog.Builder(this)
+                        .setMessage(response?.message ?: "Booking failed!")
+                        .setCancelable(false)
+                        .setPositiveButton("OK") { dlg, _ -> dlg.dismiss() }
+                        .show()
                 }
             }, 2000)
         }
@@ -163,6 +188,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             binding.recyclerViewDates.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.recyclerViewDates.adapter = adapter
+
             val calendar = Calendar.getInstance()
             val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
             val todayMonth = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)

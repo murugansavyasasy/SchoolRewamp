@@ -48,7 +48,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty_five"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="@string/CreateMeeting"
+            android:text="@string/open_above_slots"
             android:textColor="@color/white"
             android:textSize="@dimen/sixteen">
         </TextView>

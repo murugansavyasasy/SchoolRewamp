@@ -269,7 +269,7 @@
                 android:layout_below="@+id/lblTextCount"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Selected Date"
+                android:text="Submission Date"
                 android:textSize="@dimen/fifteen_sp" />
 
             <TextView

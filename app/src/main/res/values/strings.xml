@@ -136,7 +136,7 @@
     <string name="EventTitle">Event Title</string>
     <string name="Eventdetail">Event detail</string>
     <string name="AddPhotos">Add Photos</string>
-    <string name="Optional">(Optional?)</string>
+    <string name="Optional">(Optional)</string>
     <string name="EventDateTime">Event Date Time</string>
     <string name="Start">Start</string>
     <string name="End">End</string>
@@ -938,6 +938,9 @@
     <string name="absent_rate">Absent Rate</string>
     <string name="send_quiz">Send Quiz</string>
     <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="open_above_slots">Open Above Slots</string>
+    <string name="book_ptm_slots">Book PTM Slots</string>
+    <string name="notice_active_period">Notice Active Period</string>
 
 
 </resources>
