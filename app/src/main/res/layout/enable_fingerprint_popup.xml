@@ -1,0 +1,82 @@
+<!-- res/layout/custom_alert.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/twenty"
+    android:background="@drawable/rect_white">
+
+    <TextView
+        android:id="@+id/alertTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable "
+        android:layout_gravity="center"
+        android:gravity="left"
+        android:visibility="visible"
+        android:textSize="@dimen/eighteen_sp"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_marginTop="@dimen/ten"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/alertMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="sdsdsdsd"
+        android:textSize="@dimen/sixteen_sp"
+        android:layout_marginTop="@dimen/ten"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:textColor="@color/black"/>
+
+    <ImageView
+        android:layout_marginTop="@dimen/twenty"
+        android:layout_width="@dimen/fifty"
+        android:layout_height="@dimen/fifty"
+        android:src="@drawable/ic_fingerprint"
+        android:layout_gravity="center"/>
+
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/five"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+
+        <TextView
+            android:padding="@dimen/ten"
+            android:id="@+id/lblNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NO"
+            android:visibility="visible"
+            android:textSize="@dimen/fifteen_sp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_marginTop="@dimen/ten"
+            android:textColor="@color/PrimaryColor"/>
+
+        <TextView
+            android:layout_marginStart="@dimen/fifty"
+            android:id="@+id/lblYes"
+            android:layout_toEndOf="@+id/lblNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YES"
+            android:visibility="visible"
+            android:textSize="@dimen/fifteen_sp"
+            android:padding="@dimen/ten"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_marginTop="@dimen/ten"
+            android:textColor="@color/PrimaryColor"/>
+
+
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

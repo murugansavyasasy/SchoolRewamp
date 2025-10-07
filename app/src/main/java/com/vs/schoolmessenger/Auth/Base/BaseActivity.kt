@@ -629,13 +629,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         @JvmStatic
         fun loadFragment(activity: FragmentActivity, fragment: Fragment) {
             val currentFragment =
-                activity.supportFragmentManager.findFragmentById(R.id.fragment_container)
+                activity?.supportFragmentManager?.findFragmentById(R.id.fragment_container)
             if (currentFragment != null && currentFragment::class == fragment::class) {
                 return
             }
-            activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, fragment)?.commit()
         }
     }
 
