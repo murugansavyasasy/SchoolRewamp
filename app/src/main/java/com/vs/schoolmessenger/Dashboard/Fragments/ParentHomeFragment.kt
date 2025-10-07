@@ -118,7 +118,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         else{
             isLoadData()
             setupRecyclerView()
-
+            appViewModel!!.isDashBoardCountData(
+                access_token, Constant.parent, requireActivity()
+            )
         }
         binding.imgBurgerMenu.setOnClickListener(this)
         binding.imgBurgerMenu.setOnClickListener {
@@ -140,6 +142,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
                     //We are saving the menu name in list to use anywhere
                     Constant.setMenuNames(allMenuItems)
+                    isLoadData()
+                    setupRecyclerView()
 
                     appViewModel!!.isDashBoardCountData(
                         access_token, Constant.parent, requireActivity()
@@ -159,7 +163,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isDashBoardCountData = isDashboardResponse
                     isParentMenuCountDetails = isDashBoardCountData!![0].menu_details
-                    isGetAds()
+                   // isGetAds()
+                    isLoadData()
                     setupRecyclerView()
 
                 }

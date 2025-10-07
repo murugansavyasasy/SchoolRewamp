@@ -49,7 +49,7 @@ class AbsenteesReportDetailAdapter(
             tvClassName.text = "Class : ${classWise.class_name}"
             tvSectionName.text = "Section : ${sectionWise.section_name}"
             val absent = sectionWise.total_absentees.toIntOrNull() ?: 0
-            val total = classWise.student_counts.toIntOrNull() ?: 1
+            val total = sectionWise.student_counts.toIntOrNull() ?: 1
             tvAbsentCount.text = "Absent : $absent / $total"
             progressBar.max = total
             progressBar.progress = absent
