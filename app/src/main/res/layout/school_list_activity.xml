@@ -150,6 +150,7 @@
                 android:layout_width="match_parent"
                 android:textColor="@color/dark_blue_1"
                 android:layout_weight="1"
+                android:checked="true"
                 android:buttonTint="@color/dark_blue_1"
                 android:textSize="@dimen/thirteen_sp" />
 

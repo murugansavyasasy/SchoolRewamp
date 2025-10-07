@@ -1102,9 +1102,10 @@ object Constant {
     fun showDatePicker12(
         context: Context,
         dateFormatType: Boolean,
+        defaultDate: Calendar? = null,
         onDateSelected: (String) -> Unit
     ) {
-        val calendar = Calendar.getInstance()
+        val calendar = defaultDate ?: Calendar.getInstance()
 
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -1118,22 +1119,21 @@ object Constant {
                 }
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(selectedCalendar.time)
-
                 onDateSelected(formattedDate)
             },
             year, month, day
         )
 
-        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+        datePickerDialog.datePicker.minDate = Calendar.getInstance().timeInMillis
 
         if (dateFormatType) {
-            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+            datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
         }
 
         datePickerDialog.show()
     }
 
-    //Leave Request
+
     fun handleRestrictDatePicker(
         context: Context,
         minDate: Long? = null,

@@ -219,8 +219,13 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             }
 
             R.id.edtdate -> {
-                showDatePickerDialog(this, this)
+                if (isSelectedDate.isNotEmpty()) {
+                    lsrwshowDatePickerDialog(this, this, isSelectedDate)
+                } else {
+                    lsrwshowDatePickerDialog(this, this)
+                }
             }
+
 
             R.id.btnChooseRecipient -> {
                 isRedirectToSectionStudents()
@@ -246,6 +251,8 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             else -> Constant.Listening
         }
     }
+
+
 
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -593,7 +600,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.lsrwskill_data, isLsrwnewTaskSendingData)
         startActivity(intent)
-
     }
 
 

@@ -601,7 +601,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 //                }
 //            }
 
-            R.id.txtStartDate, R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar -> {
+            R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
                 Constant.showDatePicker12(this, false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)

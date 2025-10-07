@@ -185,13 +185,13 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edtTitle"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:paddingHorizontal="@dimen/ten" />
+                <EditText
+                    android:id="@+id/edtTitle"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:paddingHorizontal="@dimen/ten" />
 
             </LinearLayout>
 
@@ -232,20 +232,19 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edtDescription"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/lblDescription"
-                android:background="@android:color/transparent"
-                android:editable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:gravity="start"
-                android:hint="@string/Description"
-                android:padding="@dimen/ten"
-                android:textSize="@dimen/thirteen_sp" />
+                <EditText
+                    android:id="@+id/edtDescription"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:editable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="start"
+                    android:hint="@string/Description"
+                    android:padding="@dimen/ten"
+                    android:textSize="@dimen/thirteen_sp" />
             </LinearLayout>
 
             <TextView
