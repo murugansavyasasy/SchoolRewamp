@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:textSize="@dimen/twenty_sp"
-            android:text="@string/welcome_aboard"
+            android:text="@string/welcome_to_school_chimes"
             style="@style/CustomTextStylePoppinsBold"
            >
 
@@ -36,7 +36,7 @@
             android:layout_marginTop="@dimen/ten"
             android:gravity="start"
             android:textSize="@dimen/thirteen_sp"
-            android:text="@string/seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times"
+            android:text="@string/stay_connected_with_your_school_community_your_updates_communication_and_school_life_all_in_one_place"
             style="@style/CustomTextStylePoppinsRegular">
 
         </TextView>
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/twenty_five"
                     android:gravity="start"
-                    android:text="@string/let_s_get_started"
+                    android:text="@string/log_in_to_stay_connected"
                     style="@style/CustomTextStylePoppinsBold"
                     android:textSize="@dimen/eighteen_sp"
                     />

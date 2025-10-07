@@ -81,8 +81,13 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
                             startActivity(intent)
                         }
                     } else {
-                        Constant.errorAlert(this@MobileNumber, "", message)
+                        Constant.errorAlert(this@MobileNumber,
+                            "Oops!", message)
                     }
+                }
+                else {
+                    Constant.errorAlert(this@MobileNumber,
+                       "Oops!", message)
                 }
             }
         }

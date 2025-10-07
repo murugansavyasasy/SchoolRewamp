@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/five"
-                    android:text="@string/you_can_change_the_language_in_your_profile_settings_after_signing_in"
+                    android:text="@string/select_the_country_where_your_educational_institution_is_located"
                     android:textColor="@color/bpWhite"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
-            android:text="@string/popular_country"
+            android:text="@string/top_countries"
             android:textSize="@dimen/fifteen_sp" />
 
 
@@ -166,7 +166,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/five"
                 android:padding="@dimen/five"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
