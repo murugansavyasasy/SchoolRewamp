@@ -28,7 +28,10 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
@@ -81,8 +84,13 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
                             startActivity(intent)
                         }
                     } else {
-                        Constant.errorAlert(this@MobileNumber, "", message)
+                        Constant.errorAlert(this@MobileNumber,
+                            "Oops!", message)
                     }
+                }
+                else {
+                    Constant.errorAlert(this@MobileNumber,
+                       "Oops!", message)
                 }
             }
         }

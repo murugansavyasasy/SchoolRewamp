@@ -50,13 +50,16 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        // Access a specific view using its ID
 
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryThemePassword(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         binding.lblResend.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         binding.lblContactUs.setOnClickListener(this)
-        binding.rytBack.setOnClickListener(this)
+        binding.rytHeader.setOnClickListener(this)
 
         startSmsRetriever()
         authViewModel = ViewModelProvider(this)[Auth::class.java]
@@ -363,7 +366,7 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                 isForgetPassword()
             }
 
-            R.id.rytBack -> {
+            R.id.rytHeader -> {
                 onBackPressed()
             }
 
