@@ -328,7 +328,8 @@
         <activity
             android:name=".School.Communication.CommunicationSchool"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name=".CommonScreens.SpecificStudentData.SpecificStudent"
             android:theme="@style/AppTheme"

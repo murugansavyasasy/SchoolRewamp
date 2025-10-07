@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
@@ -14,9 +15,12 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
@@ -25,6 +29,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -297,7 +304,23 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 //            this, binding.edtTitle, Constant.isTitleLength, binding.lblCountOfTitleVoice
 //        )
 
+        binding.edtContentTextMessage.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) { binding.scrollRoot.post { binding.scrollRoot.smoothScrollTo(0, v.top) } }
+        }
+
+        binding.edtContentTextMessage.addTextChangedListener { binding.scrollRoot.post { binding.scrollRoot.fullScroll(View.FOCUS_DOWN) }
+        }
+
+        binding.edtContentTextMessage.apply {
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
+            setSingleLine(false)
+            requestFocus()
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
+
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
         mTextAdapter =

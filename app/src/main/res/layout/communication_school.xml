@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     android:background="@color/white">
 
     <View
@@ -15,6 +16,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollRoot"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
 
     <RelativeLayout
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
@@ -616,7 +629,8 @@
                             <EditText
                                 android:id="@+id/edtContentTextMessage"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/two_hundred"
+                                android:layout_height="wrap_content"
+                                android:minHeight="@dimen/two_hundred"
                                 android:layout_below="@id/txtDescriptionLabel"
                                 android:layout_marginTop="@dimen/ten"
                                 android:background="@drawable/bg_outline_black"
@@ -961,4 +975,5 @@
             </RelativeLayout>
         </ScrollView>
     </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

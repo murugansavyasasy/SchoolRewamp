@@ -4,7 +4,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-
     <LinearLayout
         android:id="@+id/categorylinear_layout"
         android:layout_width="match_parent"
@@ -14,7 +13,7 @@
         <LinearLayout
             android:id="@+id/linear_layout_categorychild"
             android:layout_width="@dimen/hundred"
-            android:layout_height="@dimen/one_fourty"
+            android:layout_height="@dimen/one_twenty"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/category_white_box"
@@ -33,12 +32,12 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
                 android:gravity="center"
                 android:maxWidth="@dimen/one_thirty"
                 android:text="All"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/twenty_sp"
                 android:maxLines="5"
