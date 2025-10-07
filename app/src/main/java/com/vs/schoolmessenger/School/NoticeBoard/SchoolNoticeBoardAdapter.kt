@@ -244,6 +244,7 @@ class SchoolNoticeBoardAdapter(
                 setupPreviewListeners(noticeData)
             } else {
                 rcyImgPDF.adapter = null
+                setupPreviewListeners(noticeData)
             }
 
             remaindertag.setOnClickListener { showReminderPicker(context) }
@@ -259,13 +260,15 @@ class SchoolNoticeBoardAdapter(
                 title = noticeData.title,
                 description = noticeData.description,
                 subjectName = "",
-                sentBy = "",
+                sentBy =noticeData.sent_by,
                 thumbnail = "",
                 isUnread = true,
+                created_date=noticeData.created_on,
                 isCompleted = true,
                 isMenuType = Constant.M_NOTICEBOARD,
                 fileList = convertedList
             )
+            Log.d("previewData",preview.toString())
             val intent = Intent(context, ChildHomeWork::class.java)
             intent.putExtra(Constant.isPreViewData, preview)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

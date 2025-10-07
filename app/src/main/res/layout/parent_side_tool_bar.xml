@@ -64,6 +64,19 @@
             </TextView>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/lblPostedOn"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textColor="@color/white"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
         <ImageView
             android:id="@+id/imgSearchToolBar"
             android:layout_width="wrap_content"

@@ -106,10 +106,11 @@
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
-        android:maxLines="2"
         android:text="Tomorrow Exkj vdvnwsvnsk;jvnsjvbsjvnsovnsodvnspijvbsjvnsjvnsjdvnamsdoi........"
         android:textColor="@android:color/black"
         android:textSize="@dimen/thirteen_sp"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rytHeader" />

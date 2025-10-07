@@ -8,6 +8,7 @@ data class HomeWorkReportData(
     val id: String,
     val description: String,
     val subject_name: String,
-//    val created_by: String,
+    val sent_by:String,
+    val created_by: String,
     val file_path: List<FilePath>
 )  : Parcelable
