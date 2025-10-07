@@ -37,7 +37,10 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         binding.rytBack.setOnClickListener(this)
         binding.btnContinue.setOnClickListener(this)
 //        setupToolbar()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
         Log.d("CountryScreen", "onCreate triggered")
 
