@@ -123,7 +123,7 @@ class HomeWorkReportAdapter(
                     subjectName = item.subject_name,
                     sentBy = item.sent_by,
                     thumbnail = "",
-                    created_date=item.created_by,
+                    created_date=item.created_on,
                     isUnread = true,
                     isCompleted = true,
                     isMenuType = Constant.M_HOMEWORK,
