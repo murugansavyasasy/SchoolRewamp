@@ -33,8 +33,12 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
         binding.imgHide.setOnClickListener(this)
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)
-        binding.rytBack.setOnClickListener(this)
-        isToolBarPrimaryTheme()
+        binding.rytHeader.setOnClickListener(this)
+        isToolBarPrimaryThemePassword(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         binding.lblForgetPassword.paintFlags =
             binding.lblForgetPassword.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
@@ -197,7 +201,7 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
                 isForgetPassword()
             }
 
-            R.id.rytBack -> {
+            R.id.rytHeader -> {
                 onBackPressed()
             }
         }

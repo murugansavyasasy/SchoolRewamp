@@ -28,7 +28,10 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()

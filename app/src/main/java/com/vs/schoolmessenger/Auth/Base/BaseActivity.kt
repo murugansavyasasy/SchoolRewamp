@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.PendingIntent
@@ -148,6 +149,105 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
 
+        }
+    }
+
+    @SuppressLint("UseCompatLoadingForColorStateLists")
+    fun isToolBarPrimaryTheme1(mainViewId: Int, statusBarBgView: View) {
+        // Enables edge-to-edge rendering
+        enableEdgeToEdge()
+
+        val mainView = findViewById<View>(mainViewId)
+        val toolbarLayout = findViewById<View?>(R.id.toolbarLayout)
+        val headerView = findViewById<View?>(R.id.rytHeader)
+
+        // Apply window insets to the main view (safe call)
+        mainView?.let { view ->
+            ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.updatePadding(
+                    left = systemBars.left,
+                    right = systemBars.right,
+                    bottom = systemBars.bottom
+                )
+                // Adjust status bar background height
+                statusBarBgView.updateLayoutParams {
+                    height = systemBars.top
+                }
+                insets
+            }
+        }
+
+        // Apply window insets to toolbarLayout if it exists
+        toolbarLayout?.let { toolbar ->
+            ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
+                insets // no custom handling, just consume
+            }
+        }
+
+        // Apply window insets to headerView if it exists
+        headerView?.let { header ->
+            ViewCompat.setOnApplyWindowInsetsListener(header) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.updatePadding(top = systemBars.top)
+                WindowInsetsCompat.CONSUMED
+            }
+        }
+
+        // Customize window colors and theme
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = resources.getColor(R.color.PrimaryColor, theme)
+            window.navigationBarColor = resources.getColor(R.color.bpWhite, theme)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
+    }
+    @SuppressLint("UseCompatLoadingForColorStateLists")
+    fun isToolBarPrimaryThemePassword(mainViewId: Int, statusBarBgView: View) {
+        enableEdgeToEdge()
+
+        val mainView = findViewById<View>(mainViewId)
+        val toolbarLayout = findViewById<View?>(R.id.toolbarLayout)
+        val headerView = findViewById<View?>(R.id.rytHeader)
+
+        mainView?.let { view ->
+            ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.updatePadding(
+                    left = systemBars.left,
+                    right = systemBars.right,
+                    bottom = systemBars.bottom
+                )
+                statusBarBgView.updateLayoutParams {
+                    height = systemBars.top
+                }
+                insets
+            }
+        }
+
+        toolbarLayout?.let { toolbar ->
+            ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
+                insets
+            }
+        }
+
+        headerView?.let { header ->
+            ViewCompat.setOnApplyWindowInsetsListener(header) { v, insets ->
+
+                WindowInsetsCompat.CONSUMED
+            }
+        }
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = resources.getColor(R.color.PrimaryColor, theme)
+            window.navigationBarColor = resources.getColor(R.color.bpWhite, theme)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
 
