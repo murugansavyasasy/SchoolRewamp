@@ -57,7 +57,7 @@
                     android:background="@drawable/white_bg_card"
                     android:gravity="center"
                     android:padding="@dimen/ten"
-                    android:text="Schedule Meeting"
+                    android:text="@string/book_ptm_slots"
                     android:textColor="@color/black">
 
                 </TextView>

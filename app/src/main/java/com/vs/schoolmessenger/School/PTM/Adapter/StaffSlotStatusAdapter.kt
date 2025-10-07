@@ -83,8 +83,11 @@ class StaffSlotStatusAdapter(
                     rltStatus.background = context.getDrawable(R.drawable.bg_light_radious_blue)
                     lblWaitingBooking.visibility = View.VISIBLE
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.exclamationmark_circle))
-                    imgDot.visibility = View.VISIBLE
-                    imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
+                    imgDot.visibility = if (data.can_cancel && shouldShowImgDot(data.date, data.to_time) == View.VISIBLE)
+                        View.VISIBLE else View.GONE
+                    imgDot.setOnClickListener {
+                        listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
+                    }
                 }
                 "Cancelled" -> {
                     rltStatus.background = context.getDrawable(R.drawable.bg_light_red_radious)
@@ -120,21 +123,28 @@ class StaffSlotStatusAdapter(
                     lblBookedName.visibility = View.VISIBLE
                     rltBookedBy.visibility = View.VISIBLE
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
-                    imgDot.visibility = View.VISIBLE
+                    imgDot.visibility = View.GONE
                 }
                 "Upcoming" -> {
-                    rltStatus.background =
-                        context.getDrawable(R.drawable.rect_bg_light_green_present)
+                    rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
                     lblStatus.text = "Booked"
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
                     lblBookedName.visibility = View.VISIBLE
                     rltBookedBy.visibility = View.VISIBLE
                     lblBookedName.text = data.booked_by
-                    imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
-                    imgDot.visibility = shouldShowImgDot(data.date, data.to_time)
+
+                    // Show dot only if slot can be canceled
+                    imgDot.visibility = if (data.can_cancel && shouldShowImgDot(data.date, data.to_time) == View.VISIBLE)
+                        View.VISIBLE else View.GONE
+
+                    // Only Cancel action, not Reopen
+                    imgDot.setOnClickListener {
+                        listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
+                    }
                 }
+
             }
-            imgDot.setOnClickListener { listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition) } }
+        }
 
         fun shouldShowImgDot(slotDate: String, toTime: String): Int {
             return try {

@@ -136,7 +136,7 @@
     <string name="EventTitle">Event Title</string>
     <string name="Eventdetail">Event detail</string>
     <string name="AddPhotos">Add Photos</string>
-    <string name="Optional">(Optional?)</string>
+    <string name="Optional">(Optional)</string>
     <string name="EventDateTime">Event Date Time</string>
     <string name="Start">Start</string>
     <string name="End">End</string>
@@ -938,12 +938,14 @@
     <string name="absent_rate">Absent Rate</string>
     <string name="send_quiz">Send Quiz</string>
     <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="open_above_slots">Open Above Slots</string>
+    <string name="book_ptm_slots">Book PTM Slots</string>
+    <string name="notice_active_period">Notice Active Period</string>
     <string name="top_countries">Top Countries</string>
     <string name="select_the_country_where_your_educational_institution_is_located">Select the country where your educational institution is located.</string>
     <string name="welcome_to_school_chimes">Welcome to School Chimes!</string>
     <string name="stay_connected_with_your_school_community_your_updates_communication_and_school_life_all_in_one_place">Stay connected with your school community.Your updates, communication, and school life—all in one place.</string>
     <string name="log_in_to_stay_connected">Log in to stay connected!</string>
-
 
 
 </resources>
