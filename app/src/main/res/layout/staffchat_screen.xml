@@ -34,6 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbarLayout" />
 
 
+
     <LinearLayout
         android:id="@+id/bottomChatInput"
         android:layout_width="0dp"
@@ -42,9 +43,11 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/ten"
+        android:animateLayoutChanges="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
 
         <ImageView
             android:id="@+id/btnAdd"
@@ -59,15 +62,15 @@
             android:id="@+id/edtMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:overScrollMode="ifContentScrolls"
+            android:gravity="top|start"
             android:layout_weight="1"
             android:background="@drawable/bg_message_input"
-            android:gravity="center_vertical"
             android:hint="@string/type_your_message_here"
             android:inputType="textMultiLine"
             android:maxLines="4"
             android:minLines="1"
-            android:scrollbars="vertical"
-            android:overScrollMode="ifContentScrolls"
             android:paddingHorizontal="12dp"
             android:textColor="@color/black"
             android:textSize="14sp" />
@@ -86,10 +89,9 @@
     <LinearLayout
         android:id="@+id/lytList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomChatInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
@@ -98,7 +100,6 @@
             android:id="@+id/nomessage"
             android:layout_width="@dimen/two_fifty"
             android:layout_height="@dimen/two_fifty"
-            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
             android:src="@drawable/nomessages"

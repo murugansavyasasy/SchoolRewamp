@@ -113,18 +113,24 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
         appViewModel?.isGetCommmunicationlist?.observe(this) { response ->
             if (response?.status == true) {
-                if (response.data.size>0){
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-                }else{
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                if (response.data.isNotEmpty()) {
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    appendData(response.data, archiveFlag = true)
+                    scrollToMessageId(msg_id)
+                } else {
+                    hasFetchedMore = true
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    checkAndShowNoData(
+                        filteredList = allVoiceData,
+                        message = response.message
+                    )
                 }
-                appendData(response.data, archiveFlag = true)
-                scrollToMessageId(msg_id)
             } else {
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 checkAndShowNoData(message = response?.message)
             }
         }
+
 
         appViewModel?.isGetCommmunicationlistload?.observe(this) { response ->
             if (response?.status == true) {
@@ -532,5 +538,3 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         finish()
     }
 }
-
-

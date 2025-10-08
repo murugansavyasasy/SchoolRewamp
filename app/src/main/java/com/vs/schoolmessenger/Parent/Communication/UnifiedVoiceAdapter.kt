@@ -123,6 +123,7 @@ class UnifiedVoiceAdapter(
         private val lblnewiconText: ImageView = itemView.findViewById(R.id.lblnewiconText)
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
+        private val rytIsEmergency: View = itemView.findViewById(R.id.rytIsEmergency)
         private var isExpanded = false
         private var mediaPlayer: MediaPlayer? = null
 
@@ -163,6 +164,9 @@ class UnifiedVoiceAdapter(
                 lblSeeMoreClick.visibility = View.GONE
                 listener.onSeeMoreClick(data, this@DataViewHolder)
             }
+
+
+            rytIsEmergency.visibility = if (data.is_emergency!!) View.VISIBLE else View.GONE
 
             if (data.type.equals(Constant.VOICE)) {
                 rlaVoice.visibility = View.VISIBLE

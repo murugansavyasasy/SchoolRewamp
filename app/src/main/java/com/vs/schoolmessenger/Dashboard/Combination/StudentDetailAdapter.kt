@@ -15,7 +15,6 @@ import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant.isParentDashBoardData
-import com.vs.schoolmessenger.databinding.StudentDetailsListItemBinding
 import com.vs.schoolmessenger.databinding.StudentDetailsListItemNewBinding
 
 class StudentDetailAdapter(

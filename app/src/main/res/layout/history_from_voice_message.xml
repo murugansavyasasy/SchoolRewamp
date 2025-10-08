@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/rytCommunication"
@@ -11,9 +10,9 @@
 
         <RelativeLayout
             android:id="@+id/rlaVoice"
-            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/lblnewiconVoice"
@@ -34,17 +33,53 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
-                android:visibility="visible"
                 android:layout_marginEnd="@dimen/ten"
-                android:background="@drawable/rect_shadow_white">
+                android:background="@drawable/rect_shadow_white"
+                android:visibility="visible">
+
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/rytIsEmergency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/thirteen">
+
+
+                    <ImageView
+                        android:id="@+id/imgEmergencyIndicator"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_marginTop="@dimen/seven"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/emergencyvoice_indicator">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/lblIsEmergencyVoice"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten_sp"
+                        android:layout_toEndOf="@+id/imgEmergencyIndicator"
+                        android:text="Emergency voice"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/lblTitle"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/rytIsEmergency"
                     android:layout_marginStart="@dimen/thirteen"
-                    android:layout_marginTop="@dimen/thirteen"
+                    android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten_sp"
                     android:text="Function Call"
                     android:textSize="@dimen/thirteen_sp">
@@ -86,8 +121,7 @@
                         android:layout_below="@+id/imgVoicePlay"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_toEndOf="@+id/imgVoicePlay"
-                        android:text="00:00"
-                        >
+                        android:text="00:00">
 
                     </TextView>
 
@@ -113,8 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imgVoicePlay"
                         android:layout_toEndOf="@+id/lblSlash"
-                        android:text="00:00"
-                        >
+                        android:text="00:00">
 
                     </TextView>
 
@@ -137,8 +170,7 @@
                         android:layout_marginEnd="@dimen/sixteen"
                         android:text="10:56 AM"
                         android:textColor="@color/grey"
-                        android:textSize="@dimen/twele_sp">
-                    </TextView>
+                        android:textSize="@dimen/twele_sp"></TextView>
 
                     <TextView
                         android:id="@+id/lblDate"
@@ -150,8 +182,7 @@
                         android:text="01 Apr 2024"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
-                        android:visibility="visible">
-                    </TextView>
+                        android:visibility="visible"></TextView>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -177,15 +208,15 @@
                             android:id="@+id/imgSend"
                             android:layout_width="@dimen/fifteen"
                             android:layout_height="@dimen/fifteen"
-                            android:layout_marginEnd="@dimen/five"
                             android:layout_marginStart="@dimen/five"
+                            android:layout_marginEnd="@dimen/five"
                             android:contentDescription="@string/send"
                             android:src="@drawable/send_icon_white" />
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/CustomTextStylePoppinsMedium"
                             android:text="@string/select"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
@@ -236,8 +267,7 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:text="Friday Leave"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
-                </TextView>
+                    android:textSize="@dimen/thirteen_sp"></TextView>
 
 
                 <TextView
@@ -252,8 +282,7 @@
                     android:maxLines="3"
                     android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
-                </TextView>
+                    android:textSize="@dimen/thirteen_sp"></TextView>
 
                 <TextView
                     android:id="@+id/lblSeeMore"
@@ -286,8 +315,7 @@
                         android:layout_marginEnd="@dimen/sixteen"
                         android:text="10:56 AM"
                         android:textColor="@color/grey"
-                        android:textSize="@dimen/twele_sp">
-                    </TextView>
+                        android:textSize="@dimen/twele_sp"></TextView>
 
                     <TextView
                         android:id="@+id/lblDateText"
@@ -299,8 +327,7 @@
                         android:text="01 Apr 2024"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
-                        android:visibility="visible">
-                    </TextView>
+                        android:visibility="visible"></TextView>
 
                     <RelativeLayout
                         android:id="@+id/rlaSelectText"
@@ -350,8 +377,9 @@
         android:layout_marginBottom="@dimen/twenty"
         android:text="@string/see_archived_messages"
         android:textColor="@color/navi_blue2"
-        android:textSize="@dimen/fifteen_sp">
-    </TextView>
+        android:textSize="@dimen/fifteen_sp"></TextView>
+
+
 
 
 </RelativeLayout>
