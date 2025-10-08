@@ -948,6 +948,7 @@
     <string name="log_in_to_stay_connected">Log in to stay connected!</string>
     <string name="Oops">Oops!</string>
     <string name="enter_a_valid_mobile_number">Enter a valid mobile Number</string>
+    <string name="see_archived_messages">See Archived Messages</string>
 
 
 </resources>

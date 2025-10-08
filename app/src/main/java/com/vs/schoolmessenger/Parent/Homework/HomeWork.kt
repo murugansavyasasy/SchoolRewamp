@@ -286,6 +286,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             subjectName = data.subject_name,
             sentBy = data.sent_by,
             thumbnail = data.thumbnail,
+            created_date=isHomeWorkDate,
             isUnread = data.is_unread,
             isCompleted = data.is_completed,
             isMenuType = Constant.M_HOMEWORK,

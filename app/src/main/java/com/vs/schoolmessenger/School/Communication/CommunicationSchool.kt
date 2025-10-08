@@ -689,7 +689,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             returnedFromSettings = false
             hasRequestedPermissions = false
         }
-
         if (checkAndRequestPermissions(this)) {
             proceedToMainScreen()
         }

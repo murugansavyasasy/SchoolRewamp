@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="3"
+            android:maxLines="2"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
             android:textColor="@color/mild_grey7"
             android:textSize="@dimen/twele_sp" />

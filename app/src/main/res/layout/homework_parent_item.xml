@@ -19,21 +19,22 @@
 
     <View
         android:id="@+id/redDot"
-        android:layout_width="@dimen/ten"
-        android:layout_height="@dimen/ten"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
         android:layout_marginStart="@dimen/five"
-        android:layout_marginTop="@dimen/five"
-        android:background="@drawable/bg_red_circle" />
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:layout_marginTop="-25dp"
+        android:background="@drawable/new_icon1" />
 
     <TextView
-
         android:layout_toStartOf="@+id/rytImage"
         android:id="@+id/lblSubject"
+        android:layout_below="@id/redDot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/redDot"
         android:layout_marginStart="@dimen/five"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="10dp"
         android:text="Science sujdfsjkfsjfskfahkfjhafdskhdasfj hsfhjdsfjdf"
         android:textColor="@android:color/black"
         android:textSize="@dimen/fifteen_sp"
@@ -44,7 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/five"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/redDot"
         android:layout_marginEnd="@dimen/ten">
 
     <ImageView

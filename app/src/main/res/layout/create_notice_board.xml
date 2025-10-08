@@ -182,10 +182,7 @@
                 <RelativeLayout
                     android:id="@+id/rytEventDateTime"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    >
-
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/lblStart"
@@ -286,14 +283,11 @@
                                             android:text="Fri, Jun 2025"
                                             android:textColor="@color/grey"
                                             android:textSize="12sp" />
-
-
                                     </LinearLayout>
 
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
                         </RelativeLayout>
-
 
                         <ImageView
                             android:id="@+id/imagearrow_view"
@@ -302,7 +296,6 @@
                             android:layout_weight="1"
                             android:src="@drawable/exchangearrow">
                         </ImageView>
-
 
                         <RelativeLayout
                             android:id="@+id/rytEndDate"
@@ -377,8 +370,6 @@
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
                         </RelativeLayout>
-
-
                     </LinearLayout>
 
                     <RelativeLayout
