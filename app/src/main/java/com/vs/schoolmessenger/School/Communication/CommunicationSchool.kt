@@ -31,6 +31,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -623,14 +624,39 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             ContextCompat.getDrawable(this, R.drawable.video_play)
         )
     }
-    fun checkAndRequestPermissions(activity: Activity): Boolean {
-        val permissions = mutableListOf<String>()
 
+
+    fun checkAndRequestAccessFilePermissions(activity: Activity): Boolean {
+        val permissions = mutableListOf<String>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             permissions.add(Manifest.permission.READ_MEDIA_AUDIO)
         } else {
             permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
+
+        val deniedPermissions = permissions.filter {
+            ContextCompat.checkSelfPermission(activity, it) != PackageManager.PERMISSION_GRANTED
+        }
+        return if (deniedPermissions.isEmpty()) {
+            true
+        } else {
+            if (!hasRequestedPermissions) {
+                hasRequestedPermissions = true
+                ActivityCompat.requestPermissions(
+                    activity, deniedPermissions.toTypedArray(), REQUEST_PERMISSIONS
+                )
+            }
+            false
+        }
+    }
+    fun checkAndRequestPermissions(activity: Activity): Boolean {
+        val permissions = mutableListOf<String>()
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            permissions.add(Manifest.permission.READ_MEDIA_AUDIO)
+//        } else {
+//            permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+//        }
         permissions.add(Manifest.permission.RECORD_AUDIO)
 
         val deniedPermissions = permissions.filter {
@@ -826,17 +852,20 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaAddLocalFile -> {
-                KeyboardUtils.hideKeyboard(this)
-                stopAudioProgressUpdate()
-                mediaPlayer?.let {
-                    if (it.isPlaying) it.stop()
-                    it.reset()
+
+                if(checkAndRequestAccessFilePermissions(this)) {
+                    KeyboardUtils.hideKeyboard(this)
+                    stopAudioProgressUpdate()
+                    mediaPlayer?.let {
+                        if (it.isPlaying) it.stop()
+                        it.reset()
+                    }
+                    lastPosition = 0
+                    isPlayingVoice = false
+                    binding.lblStartDuration.text = "00:00"
+                    Constant.selectedFiles.clear()
+                    openAudioFilePicker()
                 }
-                lastPosition = 0
-                isPlayingVoice = false
-                binding.lblStartDuration.text = "00:00"
-                Constant.selectedFiles.clear()
-                openAudioFilePicker()
             }
 
 
@@ -1548,6 +1577,41 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             mAdapter!!.releaseMediaPlayer()
         }
         Constant.selectedFiles.clear()
-        super.onBackPressed()
+
+        if(binding.lnrHistoryList.isVisible == false){
+            binding.rytNORecordFound.visibility = View.GONE
+            if (mAdapter != null) {
+                mAdapter!!.releaseMediaPlayer()
+            }
+            Log.d("Constant.isCommunicationType", Constant.isCommunicationType.toString())
+            when (Constant.isCommunicationType) {
+                1 -> {
+                    binding.gridViewScheduleCall.visibility = View.GONE
+                    binding.rlaScheduleCallPickDate.visibility = View.GONE
+                    binding.rlaRecordVoice.visibility = View.VISIBLE
+                    binding.llEmergencyContainer.visibility = View.VISIBLE
+                }
+                2 -> {
+                    binding.gridViewScheduleCall.visibility = View.VISIBLE
+                    binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
+                    binding.rlaRecordVoice.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.gridViewScheduleCall.visibility = View.GONE
+                    binding.rlaScheduleCallPickDate.visibility = View.GONE
+                    binding.rlaMessageFromText.visibility = View.VISIBLE
+                    binding.rlaSendText.visibility = View.VISIBLE
+                }
+            }
+            binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+            binding.rlaBackRecord.visibility = View.GONE
+            binding.lnrHistoryList.visibility = View.VISIBLE
+
+        }
+        else{
+            super.onBackPressed()
+        }
+
+
     }
 }
