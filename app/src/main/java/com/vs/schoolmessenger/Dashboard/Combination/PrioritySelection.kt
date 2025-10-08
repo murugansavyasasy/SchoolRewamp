@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.RoleSelecionBinding
 
@@ -106,8 +107,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
 
         binding.btnGo.setOnClickListener {
+            isSchoolDashBoardData = null
             val staffDetails = userDetails!!.staff_details.get(0)
-//            val staffDetails = Constant.user_data?.getOrNull(0)?.user_details?.staff_details?.getOrNull(0)
             if (staffDetails != null) {
                 SharedPreference.putStaffDetails(this, staffDetails)
                 val intent = Intent(this, SchoolDashboard::class.java)

@@ -13,6 +13,7 @@ data class VoiceData(
     @SerializedName(APIKeyNames.duration) var duration: String?,
     @SerializedName(APIKeyNames.subject) var subject: String?,
     @SerializedName(APIKeyNames.is_unread) var is_unread: Boolean? = null,
+    @SerializedName(APIKeyNames.is_emergency) var is_emergency: Boolean? = null,
     @SerializedName(APIKeyNames.is_archive) var is_archive: Boolean? = null
 )
 

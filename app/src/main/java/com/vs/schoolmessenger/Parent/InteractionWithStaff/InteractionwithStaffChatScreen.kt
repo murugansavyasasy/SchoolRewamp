@@ -1,6 +1,8 @@
 package com.vs.schoolmessenger.Parent.InteractionWithStaff
 
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -92,12 +94,19 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         binding.toolbarLayout.lblStudentName.text = staffData?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text = staffData?.subject_name ?: ""
 
-        // Add focus listener to scroll to bottom when EditText is focused (keyboard opens)
-        binding.edtMessage.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && ::interactionWithStaffChatAdapter.isInitialized) {
-                binding.rcystaffchatdata.scrollToPosition(interactionWithStaffChatAdapter.itemCount - 1)
+        binding.edtMessage.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                binding.rcystaffchatdata.post {
+                    if (::interactionWithStaffChatAdapter.isInitialized && interactionWithStaffChatAdapter.itemCount > 0) {
+                        binding.rcystaffchatdata.scrollToPosition(interactionWithStaffChatAdapter.itemCount - 1)
+                    }
+                }
             }
-        }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
     }
 
 

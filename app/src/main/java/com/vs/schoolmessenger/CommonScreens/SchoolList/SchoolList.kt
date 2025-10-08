@@ -406,12 +406,12 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     fun isUploadFilesInServer(isFileType: String?) {
         ProgressDialogHelper.show(this)
-        ProgressDialogHelper.updateProgress(10)
+        ProgressDialogHelper.updateProgress(0)  // Start at 0% for accurate incremental updates
 
         if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-        ProgressDialogHelper.updateProgress(50)
+
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
         Constant.isAwsUploadedFiles.clear()
@@ -423,15 +423,41 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 iterator.remove()
             }
         }
-        when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+
+
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+        val totalTasks = (numNonVideoFiles * 2) + numVideos
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
         }
-        ProgressDialogHelper.updateProgress(80)
+
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+            else -> {
+                ProgressDialogHelper.dismiss()
+                when (SELECTED_SCHOOL_MENU) {
+                    M_COMMUNICATION -> voiceSendApi()
+                    M_ATTACHMENTS -> attachmentSendApi()
+                    M_NOTICEBOARD -> noticeboardsendapi()
+                }
+            }
+        }
     }
 
+
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
     ) {
         Constant.isAwsUploadedFiles.clear()
         val iterator = Constant.selectedFiles.iterator()
@@ -454,104 +480,111 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 when (SELECTED_SCHOOL_MENU) {
                     M_COMMUNICATION -> voiceSendApi()
                     M_ATTACHMENTS -> attachmentSendApi()
+                    M_NOTICEBOARD -> noticeboardsendapi()
                 }
             } else {
-                videoUploading()
+                videoUploading(totalTasks, onTaskComplete)
             }
-        } else {
-            val outputDir =
-                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
-            outputDir.mkdirs()
-            val newSelectedFiles = mutableListOf<FileItem>()
-            Constant.compressImageFilesOnly(
-                context = this,
-                files = Constant.selectedFiles,
-                outputDir = outputDir.absolutePath,
-                format = Bitmap.CompressFormat.JPEG,
-                quality = 80,
-                maxWidth = 1280,
-                maxHeight = 1280,
-                onEachProcessed = { original, outputPath, success ->
-                    if (success && outputPath != null) {
-                        val compressedFile = File(outputPath)
-                        val originalSizeKB = try {
-                            if (original.path.startsWith("content://")) {
-                                contentResolver.openFileDescriptor(
-                                    Uri.parse(original.path), "r"
-                                )?.statSize ?: 0
-                            } else {
-                                File(original.path).length()
-                            }
-                        } catch (e: Exception) {
-                            0L
+            return
+        }
+
+        val outputDir =
+            File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+        outputDir.mkdirs()
+        val newSelectedFiles = mutableListOf<FileItem>()
+        Constant.compressImageFilesOnly(
+            context = this,
+            files = Constant.selectedFiles,
+            outputDir = outputDir.absolutePath,
+            format = Bitmap.CompressFormat.JPEG,
+            quality = 80,
+            maxWidth = 1280,
+            maxHeight = 1280,
+            onEachProcessed = { original, outputPath, success ->
+                if (success && outputPath != null) {
+                    val compressedFile = File(outputPath)
+                    val originalSizeKB = try {
+                        if (original.path.startsWith("content://")) {
+                            contentResolver.openFileDescriptor(
+                                Uri.parse(original.path), "r"
+                            )?.statSize ?: 0
+                        } else {
+                            File(original.path).length()
                         }
-
-                        Log.d(
-                            "Compressor",
-                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
-                        )
-
-                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
-                    } else {
-                        Log.e("Compressor", "Failed: ${original.path}")
+                    } catch (e: Exception) {
+                        0L
                     }
-                },
-                onComplete = {
-                    Constant.selectedFiles.clear()
-                    Constant.selectedFiles.addAll(newSelectedFiles)
-                    val isAwsUploadingFile = ArrayList<String>()
 
-                    val isSelectedFileCount = Constant.selectedFiles.size
-                    for (i in Constant.selectedFiles.indices) {
-                        isAwsUploadingPreSigned?.getPreSignedUrl(
-                            Constant.selectedFiles[i].path,
-                            isStaffData!!.school_id,
-                            isFileType!!,
-                            this,
-                            isCountryId!!,
-                            true,
-                            false,
-                            object : UploadCallback {
+                    Log.d(
+                        "Compressor",
+                        "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                    )
 
-                                override fun onUploadSuccess(
-                                    response: String?, isFileUploaded: String?
-                                ) {
-                                    isAwsUploadingFile.add(isFileUploaded!!)
-                                    Constant.isAwsUploadedFiles.add(
-                                        AwsUploadedFiles(
-                                            isFileUrl = isFileUploaded,
-                                            isFileType = Constant.selectedFiles[i].type.name
-                                        )
+                    newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                } else {
+                    Log.e("Compressor", "Failed: ${original.path}")
+                }
+                onTaskComplete()  // Increment for each compression task
+            },
+            onComplete = {
+                Constant.selectedFiles.clear()
+                Constant.selectedFiles.addAll(newSelectedFiles)
+                val isAwsUploadingFile = ArrayList<String>()
+
+                val isSelectedFileCount = Constant.selectedFiles.size
+                for (i in Constant.selectedFiles.indices) {
+                    isAwsUploadingPreSigned?.getPreSignedUrl(
+                        Constant.selectedFiles[i].path,
+                        isStaffData!!.school_id,
+                        isFileType!!,
+                        this,
+                        isCountryId!!,
+                        true,
+                        false,
+                        object : UploadCallback {
+
+                            override fun onUploadSuccess(
+                                response: String?, isFileUploaded: String?
+                            ) {
+                                isAwsUploadingFile.add(isFileUploaded!!)
+                                Constant.isAwsUploadedFiles.add(
+                                    AwsUploadedFiles(
+                                        isFileUrl = isFileUploaded,
+                                        isFileType = Constant.selectedFiles[i].type.name
                                     )
+                                )
+                                onTaskComplete()  // Increment for each upload task
 
-                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
-                                        ProgressDialogHelper.dismiss()
-                                        when (SELECTED_SCHOOL_MENU) {
-                                            M_ATTACHMENTS -> attachmentSendApi()
-                                            M_COMMUNICATION -> voiceSendApi()
-                                            M_NOTICEBOARD -> noticeboardsendapi()
-                                        }
-                                    } else {
-                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
-                                            videoUploading()
-                                        }
+                                if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+                                    ProgressDialogHelper.dismiss()
+                                    when (SELECTED_SCHOOL_MENU) {
+                                        M_ATTACHMENTS -> attachmentSendApi()
+                                        M_COMMUNICATION -> voiceSendApi()
+                                        M_NOTICEBOARD -> noticeboardsendapi()
+                                    }
+                                } else {
+                                    if (isAwsUploadingFile.size == isSelectedFileCount) {
+                                        videoUploading(totalTasks, onTaskComplete)
                                     }
                                 }
+                            }
 
-                                override fun onUploadError(error: String?) {
-                                    Log.d("isUploadIssue", error.toString())
-                                }
-                            })
-                    }
+                            override fun onUploadError(error: String?) {
+                                Log.d("isUploadIssue", error.toString())
+                                onTaskComplete()  // Still increment on error to avoid hanging, but you can handle errors differently if needed
+                            }
+                        })
+                }
 
-                    Log.d("Compressor", "All files compressed and uploaded.")
-                })
-        }
+                Log.d("Compressor", "All files compressed and uploaded.")
+            })
     }
 
 
-    private fun videoUploading() {
-
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -565,11 +598,22 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
 
-
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
                 VimeoVideoUpload.uploadVideo(
-                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, object : VimeoVideoUpload.UploadCompletionListener {
+                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+                            // Delegate to the activity's onUploadComplete for main logic
+                            this@SchoolList.onUploadComplete(success, iframe, link)
+                            onTaskComplete()  // Increment for each video upload task
+                        }
+
+                        override fun onFailure(errorMessage: String?) {
+                            // Delegate to the activity's onFailure
+                            this@SchoolList.onFailure(errorMessage)
+                            onTaskComplete()  // Increment on error to avoid hanging
+                        }
+                    }
                 )
             }
         } else {
