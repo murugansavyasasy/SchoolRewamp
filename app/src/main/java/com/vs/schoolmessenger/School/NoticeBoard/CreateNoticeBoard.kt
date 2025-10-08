@@ -166,7 +166,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        saveDrawableToCache(R.drawable.attachment_img)?.let {
+        saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
@@ -1217,7 +1217,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     fun isEditProcess(data: NoticeStaffData?) {
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.attachment_img)?.let {
+        saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
