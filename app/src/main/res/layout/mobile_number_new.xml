@@ -73,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:gravity="start"
                 android:text="@string/stay_connected_with_your_school_community_your_updates_communication_and_school_life_all_in_one_place"

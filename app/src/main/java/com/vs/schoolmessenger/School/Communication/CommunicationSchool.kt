@@ -304,23 +304,30 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 //            this, binding.edtTitle, Constant.isTitleLength, binding.lblCountOfTitleVoice
 //        )
 
-        binding.edtContentTextMessage.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) { v.postDelayed({ binding.scrollRoot.smoothScrollTo(0, v.bottom) }, 250) } }
+//        binding.edtContentTextMessage.setOnFocusChangeListener { v, hasFocus ->
+//            if (hasFocus) { v.postDelayed({ binding.scrollRoot.smoothScrollTo(0, v.bottom) }, 250) } }
+//
+//        binding.edtContentTextMessage.addTextChangedListener { binding.scrollRoot.postDelayed({
+//                binding.scrollRoot.smoothScrollTo(0, binding.edtContentTextMessage.bottom + 100)
+//            }, 150)
+//        }
+//
+//        binding.edtContentTextMessage.apply { inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+//            imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
+//            setSingleLine(false)
+//            isVerticalScrollBarEnabled = true
+//            overScrollMode = View.OVER_SCROLL_ALWAYS
+//            requestFocus()
+//            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+//        }
 
-        binding.edtContentTextMessage.addTextChangedListener { binding.scrollRoot.postDelayed({
-                binding.scrollRoot.smoothScrollTo(0, binding.edtContentTextMessage.bottom + 100)
-            }, 150)
-        }
+        Constant.setupEditTextWithScroll(
+            this,
+            binding.scrollRoot,
+            binding.edtContentTextMessage
+        )
 
-        binding.edtContentTextMessage.apply { inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or InputType.TYPE_TEXT_FLAG_MULTI_LINE
-            imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
-            setSingleLine(false)
-            isVerticalScrollBarEnabled = true
-            overScrollMode = View.OVER_SCROLL_ALWAYS
-            requestFocus()
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-        }
     }
 
 

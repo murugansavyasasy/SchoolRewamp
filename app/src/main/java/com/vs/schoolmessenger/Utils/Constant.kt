@@ -19,6 +19,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
@@ -26,17 +27,21 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.GridView
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentActivity
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.Country
@@ -1134,6 +1139,49 @@ object Constant {
 
         datePickerDialog.show()
     }
+    fun DatePicker(
+        context: Context,
+        dateFormatType: Boolean,
+        defaultDate: Calendar? = null,
+        minDate: Long? = null,
+        maxDate: Long? = null,
+        onDateSelected: (String) -> Unit
+    ) {
+        val calendar = defaultDate ?: Calendar.getInstance()
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedCalendar = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(selectedCalendar.time)
+                onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        // Set min date if provided, otherwise default to today
+        datePickerDialog.datePicker.minDate = minDate ?: Calendar.getInstance().timeInMillis
+
+        // Set max date if provided
+        maxDate?.let {
+            datePickerDialog.datePicker.maxDate = it
+        }
+
+        // If dateFormatType = true, restrict max date to today (optional)
+        if (dateFormatType) {
+            datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
+        }
+
+        datePickerDialog.show()
+    }
+
 
 
     fun handleRestrictDatePicker(
@@ -2177,41 +2225,35 @@ object Constant {
         datePicker.show()
     }
 
-    fun DatePicker(
-        context: Context,
-        dateFormatType: Boolean,
-        defaultDate: Calendar? = null,
-        minDate: Long? = null,
-        maxDate: Long? = null,
-        onDateSelected: (String) -> Unit
-    ) {
-        val calendar = defaultDate ?: Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedCalendar = Calendar.getInstance().apply {
-                    set(selectedYear, selectedMonth, selectedDay)
-                }
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val formattedDate = sdf.format(selectedCalendar.time)
-                onDateSelected(formattedDate)
-            },
-            year, month, day
-        )
-
-        datePickerDialog.datePicker.minDate = Calendar.getInstance().timeInMillis
-        if (dateFormatType) {
-            datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
+    fun setupEditTextWithScroll(context: Context, scrollView: ScrollView, editText: EditText) {
+        editText.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                v.postDelayed({
+                    scrollView.smoothScrollTo(0, v.bottom)
+                }, 250)
+            }
         }
-        if (minDate != null) datePickerDialog.datePicker.minDate = minDate
-        if (maxDate != null) datePickerDialog.datePicker.maxDate = maxDate
 
-        datePickerDialog.show()
+        editText.addTextChangedListener {
+            scrollView.postDelayed({
+                scrollView.smoothScrollTo(0, editText.bottom + 100)
+            }, 150)
+        }
+
+        editText.apply {
+            inputType = InputType.TYPE_CLASS_TEXT or
+                    InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or
+                    InputType.TYPE_TEXT_FLAG_MULTI_LINE
+
+            imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
+            setSingleLine(false)
+            isVerticalScrollBarEnabled = true
+            overScrollMode = View.OVER_SCROLL_ALWAYS
+
+            requestFocus()
+            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
-
-
 }

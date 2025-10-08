@@ -146,7 +146,7 @@
                         android:layout_below="@id/rytMobile"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/twenty"
-                        android:layout_marginEnd="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/twenty"
                         android:text="@string/lblForgotPassword"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp" />

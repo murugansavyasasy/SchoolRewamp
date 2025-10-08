@@ -41,18 +41,18 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
 
         screen_type = intent.getStringExtra("type")
         if (screen_type.equals("change")) {
-            binding.lblTitle.text = getString(R.string.lblChangePassword)
+            binding.lblHeading.text = getString(R.string.lblChangePassword)
             binding.lblCreatePassword.text = getString(R.string.lblOldPassword)
             binding.lblPassword.text = getString(R.string.lblNewPassword)
             binding.btnCreate.text = getString(R.string.lblChange)
         } else {
             if (Constant.isPasswordCreation!!) {
-                binding.lblTitle.text = getString(R.string.lblCreateNewPassword)
+                binding.lblHeading.text = getString(R.string.lblCreateNewPassword)
                 binding.lblCreatePassword.text = getString(R.string.lblCreateNewPassword)
                 binding.btnCreate.text = getString(R.string.lblCreate)
 
             } else {
-                binding.lblTitle.text = getString(R.string.ResetThePassword)
+                binding.lblHeading.text = getString(R.string.ResetThePassword)
                 binding.lblCreatePassword.text = getString(R.string.ResetThePassword)
                 binding.btnCreate.text = getString(R.string.lblReset)
 

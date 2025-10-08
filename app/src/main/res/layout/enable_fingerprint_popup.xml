@@ -59,7 +59,7 @@
             android:textColor="@color/PrimaryColor"/>
 
         <TextView
-            android:layout_marginStart="@dimen/fifty"
+            android:layout_marginStart="@dimen/thirty"
             android:id="@+id/lblYes"
             android:layout_toEndOf="@+id/lblNo"
             android:layout_width="wrap_content"
