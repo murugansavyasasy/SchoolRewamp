@@ -160,7 +160,6 @@
             style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:text="@string/top_countries"
             android:textSize="@dimen/fifteen_sp" />
