@@ -182,6 +182,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 if (status) {
                     val isDashboardResponse = response.data
                     isSchoolDashBoardData = isDashboardResponse
+                    Log.d("DashboardDataMenus","DashboardData")
 
                     isSchoolContactDetails = isSchoolDashBoardData!![0].contactDetails
 
