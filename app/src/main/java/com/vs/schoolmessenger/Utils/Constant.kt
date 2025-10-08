@@ -416,8 +416,10 @@ object Constant {
     var wav_ = "wav"
 
     var GET_ALL_STUDENT = "GET ALL STUDENT"
+    var ALL_STUDENTS = "ALL STUDENTS"
     var STANDARD = "STANDARD"
     var STANDARD_AND_SECTION = "STANDARD AND SECTION"
+    var CLASS_AND_SECTION = "CLASS AND SECTION"
 
     var NO_DATA_FOUND = "No Data Found"
     var No_STANDARD_FOUND = "No Standard Found"

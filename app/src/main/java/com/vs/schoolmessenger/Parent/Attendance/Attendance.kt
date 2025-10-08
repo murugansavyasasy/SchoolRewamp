@@ -89,11 +89,17 @@ class Attendance : BaseActivity<AttendanceBinding>() {
 
 
                 } else {
-                    Constant.showDataValidation(
-                        response.status.toString(), response.message, this
+                    Constant.showDataValidationNoDashboardRedirect(
+                        getString(R.string.Oops), response.message, this
                     )
                 }
             }
+            else {
+                Constant.showDataValidationNoDashboardRedirect(
+                    getString(R.string.Oops),getString(R.string.Something_went_wrong_Please_try_again), this
+                )
+            }
+
         }
 
 
