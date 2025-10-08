@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.InteractionWithStaff
 import android.os.Build
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,7 +43,9 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarPrimaryParent(
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        isToolBarPrimaryParentInteractionwithStaff(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
@@ -88,6 +91,13 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
 
         binding.toolbarLayout.lblStudentName.text = staffData?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text = staffData?.subject_name ?: ""
+
+        // Add focus listener to scroll to bottom when EditText is focused (keyboard opens)
+        binding.edtMessage.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && ::interactionWithStaffChatAdapter.isInitialized) {
+                binding.rcystaffchatdata.scrollToPosition(interactionWithStaffChatAdapter.itemCount - 1)
+            }
+        }
     }
 
 

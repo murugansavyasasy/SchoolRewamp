@@ -300,7 +300,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
 
             R.id.lblDatePick -> {
-                showDatePickerDialog(this, this)
+                CustomshowDatePickerDialog(this, this)
             }
 
 
@@ -682,7 +682,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             description,
             isAssignmentType,
             isSelectedDate,
-            binding.lblTimePick.text.toString()
+            ""
         )
 //        Constant.selectedFiles.removeAt(0)
         val intent = Intent(this, RecipientActivity::class.java)

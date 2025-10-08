@@ -340,6 +340,55 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
+
+    fun isToolBarPrimaryParentInteractionwithStaff(mainViewId: Int, statusBarBgView: View) {
+        enableEdgeToEdge()
+
+        val mainView = findViewById<View>(mainViewId)
+        val toolbarLayout = findViewById<View>(R.id.toolbarLayout)
+        val headerView = findViewById<View>(R.id.rytHeader)
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+            val combinedType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            val combinedInsets = insets.getInsets(combinedType)
+
+            v.updatePadding(
+                left = combinedInsets.left,
+                right = combinedInsets.right,
+                bottom = combinedInsets.bottom
+            )
+
+            statusBarBgView.updateLayoutParams {
+                height = combinedInsets.top
+            }
+
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { _, insets ->
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(headerView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(top = systemBars.top)
+            WindowInsetsCompat.CONSUMED
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = resources.getColor(R.color.PrimaryColor)
+            window.navigationBarColor = resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
+    }
+
+
+
+
+
     // Method to allow child activities to access specific views
     protected fun <T : ViewBinding> accessChildView(
         binding: T,
@@ -681,6 +730,34 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             },
             year, month, day
         )
+        datePickerDialog.show()
+    }
+
+
+    fun CustomshowDatePickerDialog(
+    context: Context,
+    listener: OnDateSelectedListener
+    ) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val cal = Calendar.getInstance()
+                cal.set(selectedYear, selectedMonth, selectedDay)
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(cal.time)
+                listener.onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        // Restrict past dates
+        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+
         datePickerDialog.show()
     }
 
