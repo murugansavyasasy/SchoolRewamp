@@ -62,6 +62,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.covertDateFormate
 import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
 import com.vs.schoolmessenger.Utils.Constant.selectedFiles
@@ -75,6 +76,7 @@ import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -164,7 +166,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_img)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
@@ -601,6 +603,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 //                }
 //            }
 
+
             R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
                 Constant.showDatePicker12(this, false) { selectedDate ->
@@ -616,18 +619,56 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 }
             }
 
+//            R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
+//                selectedDateField = 2
+//                Constant.showDatePicker12(this, false) { selectedDate ->
+//                    Log.d("selectedDate", selectedDate)
+//                    txtEndDate = Constant.covertDateFormate(selectedDate)
+//                    val parts = txtEndDate!!.split(" ")
+//                    val day = parts[0]
+//                    val Month = parts[1]
+//                    val Year = parts[2]
+//                    binding.txtEndDate.text = Month + " " + Year
+//                    binding.lblEndDay.text = day
+////                    binding.lblEndDate.text = Date
+//                }
+//            }
+
             R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
                 selectedDateField = 2
-                Constant.showDatePicker12(this, false) { selectedDate ->
-                    Log.d("selectedDate", selectedDate)
-                    txtEndDate = Constant.covertDateFormate(selectedDate)
+                if (txtStartDate.isNullOrEmpty()) {
+                    return
+                }
+
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val startDate: Date = try {
+                    sdf.parse(txtStartDate!!)!!
+                } catch (e: Exception) {
+                    Date()
+                }
+
+                val calendar = Calendar.getInstance()
+                calendar.time = startDate
+                val minDate = calendar.timeInMillis
+
+                calendar.add(Calendar.DAY_OF_MONTH, 30)
+                val maxDate = calendar.timeInMillis
+
+                Constant.DatePicker(
+                    context = this,
+                    dateFormatType = false,
+                    minDate = minDate,
+                    maxDate = maxDate
+                ) { selectedDate ->
+                    txtEndDate = covertDateFormate(selectedDate)
                     val parts = txtEndDate!!.split(" ")
-                    val day = parts[0]
-                    val Month = parts[1]
-                    val Year = parts[2]
-                    binding.txtEndDate.text = Month + " " + Year
-                    binding.lblEndDay.text = day
-//                    binding.lblEndDate.text = Date
+                    if (parts.size >= 3) {
+                        val day = parts[0]
+                        val month = parts[1]
+                        val year = parts[2]
+                        binding.txtEndDate.text = "$month $year"
+                        binding.lblEndDay.text = day
+                    }
                 }
             }
 
@@ -1176,7 +1217,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     fun isEditProcess(data: NoticeStaffData?) {
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_img)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
