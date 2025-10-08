@@ -951,8 +951,7 @@
     <string name="see_archived_messages">See Archived Messages</string>
     <string name="all_student">ALL STUDENT</string>
     <string name="class_and_section">CLASS AND SECTION</string>
-
-
+    <string name="remove">Remove</string>
 
 
 </resources>

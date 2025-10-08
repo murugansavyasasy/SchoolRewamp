@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:padding="@dimen/ten">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/white_bg_radius"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/lnrHeader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/LnrCancelOk"
+            android:layout_margin="@dimen/ten"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Note: The following students are marked as absent. Their parents will receive an automatic call. Please double-check before confirming attendance"
+                android:textColor="@color/black_2">
+
+            </TextView>
+
+            <TextView
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="match_parent"
+                android:text="Absentees Students"
+                android:textSize="@dimen/fifteen_sp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_height="wrap_content">
+            </TextView>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcFinalList"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LnrCancelOk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lblClose"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:padding="@dimen/five"
+                android:text="Cancel"
+                android:textColor="@color/red">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblMarkAsAbsent"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:padding="@dimen/five"
+                android:text="Mark as absent"
+                android:textColor="@color/PrimaryColor">
+
+            </TextView>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

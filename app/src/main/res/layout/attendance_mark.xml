@@ -384,7 +384,7 @@
                             android:layout_weight="0.08"
                             android:gravity="center"
                             android:layout_width="match_parent"
-                            android:text="AF"
+                            android:text="AN"
                             android:paddingVertical="@dimen/three"
                             android:layout_height="wrap_content">
                         </TextView>
@@ -431,17 +431,15 @@
             </RelativeLayout>
             <TextView
                 android:id="@+id/btnAbsent"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/thirty_five"
                 android:gravity="center"
-                android:paddingStart="@dimen/ten"
-                android:paddingEnd="@dimen/ten"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/rect_shadow_gray"
                 android:enabled="false"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/twenty"
                 android:text="@string/mark_attendance"
                 android:textColor="@color/white"
                 android:visibility="visible">

@@ -6,8 +6,11 @@ import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.compose.foundation.interaction.DragInteraction
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,6 +58,20 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
+        if (Constant.user_details!!.staff_role == "p3") {
+            binding.lnrTabOneName.visibility = View.GONE
+            binding.line1.visibility = View.GONE
+            binding.line2.visibility = View.GONE
+            binding.tabTwoName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+            binding.tabTwoName.gravity = Gravity.START
+            loadlpAllClassdata(Constant.myclass)
+        } else {
+            binding.lnrTabOneName.visibility = View.VISIBLE
+            binding.line1.visibility = View.VISIBLE
+            loadlpAllClassdata(Constant.allclass)
+        }
+
+
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
@@ -78,11 +95,11 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         }
 
 
-        loadlpAllClassdata(Constant.allclass)
+
 
         binding.lnrTabOneName.setOnClickListener {
-            hideKeyboard()
 
+            hideKeyboard()
             binding.lnrTabOneName.isEnabled = false
             binding.lnrTabTwoName.isEnabled = true
             binding.line1.setBackgroundResource(R.color.iconBlue)
@@ -92,24 +109,26 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             binding.txtSearchMenu1.text.clear()
             binding.rytSearch1.visibility = View.GONE
             loadlpAllClassdata(Constant.allclass)
+
+
         }
 
         binding.lnrTabTwoName.setOnClickListener {
-            hideKeyboard()
-
-            binding.lnrTabOneName.isEnabled = true
-            binding.lnrTabTwoName.isEnabled = false
-            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-            binding.line2.setBackgroundResource(R.color.iconBlue)
-            binding.line1.setBackgroundResource(R.color.athens_gray)
-            binding.txtSearchMenu1.text.clear()
-            binding.rytSearch1.visibility = View.GONE
-            loadlpAllClassdata(Constant.myclass)
+            if (Constant.user_details!!.staff_role == "p3") {
+                Log.d("Empty Click", "Empty")
+            } else {
+                hideKeyboard()
+                binding.lnrTabOneName.isEnabled = true
+                binding.lnrTabTwoName.isEnabled = false
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.line2.setBackgroundResource(R.color.iconBlue)
+                binding.line1.setBackgroundResource(R.color.athens_gray)
+                binding.txtSearchMenu1.text.clear()
+                binding.rytSearch1.visibility = View.GONE
+                loadlpAllClassdata(Constant.myclass)
+            }
         }
-
-
-
 
         binding.txtSearchMenu1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -135,13 +154,12 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
 
     private fun islpStaffData(data: List<AllClassData>?, requestType: String) {
-        if(data.isNullOrEmpty()){
+        if (data.isNullOrEmpty()) {
             binding.rytSearch1.visibility = View.GONE
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-        }
-        else{
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        } else {
             binding.rytSearch1.visibility = View.GONE
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             lessonplanAdapter = LessonPlanPicChartAdapter(
                 data, this, this, Constant.isShimmerViewDisable, requestType
             )

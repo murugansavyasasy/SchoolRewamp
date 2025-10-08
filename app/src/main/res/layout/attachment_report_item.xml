@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/rytHeader"
@@ -6,48 +5,44 @@
 
     <ImageView
         android:id="@+id/imgReadUnRead"
-        android:layout_width="@dimen/ten"
-        android:src="@drawable/circle_bg_red"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/five"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
         android:layout_marginStart="@dimen/five"
-        android:layout_height="@dimen/ten">
-
-    </ImageView>
-
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-25dp"
+        android:visibility="gone"
+        android:background="@drawable/new_icon1"/>
 
     <ImageView
         android:id="@+id/imgDate"
         android:layout_width="@dimen/twenty_five"
         android:layout_height="@dimen/twenty_five"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/imgReadUnRead"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/ten"
-        android:layout_toEndOf="@+id/imgReadUnRead"
-        android:layout_marginTop="@dimen/fifteen"
-        android:src="@drawable/calendar_black"></ImageView>
+        android:src="@drawable/calendar_black"/>
 
     <TextView
         android:id="@+id/lblDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imgDate"
+        android:layout_alignTop="@id/imgDate"
         android:layout_marginStart="@dimen/ten"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_marginTop="@dimen/seventeen"
         android:textColor="@color/grey"
-        android:layout_toEndOf="@+id/imgDate"
-        android:text="">
-
-    </TextView>
+        android:text=""/>
 
     <ImageView
         android:id="@+id/imgEditAndDelete"
         android:layout_width="@dimen/twenty_five"
         android:layout_height="@dimen/twenty_five"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/imgReadUnRead"
         android:layout_marginEnd="@dimen/twenty_five"
-        android:src="@drawable/ic_more_vert">
-    </ImageView>
+        android:src="@drawable/ic_more_vert"/>
 
     <TextView
         android:id="@+id/lblTitle"
@@ -57,9 +52,7 @@
         android:layout_below="@+id/imgDate"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:text="">
-
-    </TextView>
+        android:text=""/>
 
     <TextView
         android:id="@+id/lblDescription"
@@ -72,7 +65,7 @@
         android:text=""
         android:textColor="@color/black"
         android:maxLines="10"
-        android:ellipsize="end" />
+        android:ellipsize="end"/>
 
     <TextView
         android:id="@+id/lblSeeMore"
@@ -85,34 +78,30 @@
         android:visibility="gone"
         android:text="@string/SeeMore"
         android:textColor="@color/dark_blue_1"
-        android:textSize="@dimen/thirteen_sp" />
-
+        android:textSize="@dimen/thirteen_sp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyFile"
         android:layout_width="match_parent"
-        android:layout_marginEnd="@dimen/ten"
-        android:visibility="gone"
         android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblSeeMore">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_below="@+id/lblSeeMore"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/lblPostedBy"
         android:layout_width="match_parent"
         android:textSize="@dimen/thirteen_sp"
         android:layout_marginEnd="@dimen/twenty"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="10dp"
         android:textColor="@color/mild_grey_dark"
         android:gravity="end"
         android:text="Posted By : "
         android:layout_below="@+id/rcyFile"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"/>
 
-    </TextView>
-
+    <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/point_one"
@@ -120,7 +109,5 @@
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
-        android:background="@color/grey">
-
-    </View>
+        android:background="@color/grey"/>
 </RelativeLayout>
