@@ -603,42 +603,54 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 //                }
 //            }
 
+//
+//                R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
+//                    selectedDateField = 1
+//                    Constant.DatePicker(this, false) { selectedDate ->
+//                        Log.d("selectedDate", selectedDate)
+//                        txtStartDate = Constant.covertDate(selectedDate)
+//                        val parts = txtStartDate!!.split(" ")
+//                        val day = parts[0]
+//                        val Month = parts[1]
+//                        val Year = parts[2]
+//                        binding.txtStartDate.text = Month + " " + Year
+//                        binding.lblDay.text = day
+//    //                    binding.lblDate.text = Date
+//                    }
+//                }
+
+    //            R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
+    //                selectedDateField = 2
+    //                Constant.showDatePicker12(this, false) { selectedDate ->
+    //                    Log.d("selectedDate", selectedDate)
+    //                    txtEndDate = Constant.covertDateFormate(selectedDate)
+    //                    val parts = txtEndDate!!.split(" ")
+    //                    val day = parts[0]
+    //                    val Month = parts[1]
+    //                    val Year = parts[2]
+    //                    binding.txtEndDate.text = Month + " " + Year
+    //                    binding.lblEndDay.text = day
+    ////                    binding.lblEndDate.text = Date
+    //                }
+    //            }
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
-                Constant.showDatePicker12(this, false) { selectedDate ->
+                Constant.DatePicker(this, false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
-                    txtStartDate = Constant.covertDateFormate(selectedDate)
+                    txtStartDate = Constant.covertDate(selectedDate)
                     val parts = txtStartDate!!.split(" ")
                     val day = parts[0]
                     val Month = parts[1]
                     val Year = parts[2]
                     binding.txtStartDate.text = Month + " " + Year
                     binding.lblDay.text = day
-//                    binding.lblDate.text = Date
                 }
             }
 
-//            R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
-//                selectedDateField = 2
-//                Constant.showDatePicker12(this, false) { selectedDate ->
-//                    Log.d("selectedDate", selectedDate)
-//                    txtEndDate = Constant.covertDateFormate(selectedDate)
-//                    val parts = txtEndDate!!.split(" ")
-//                    val day = parts[0]
-//                    val Month = parts[1]
-//                    val Year = parts[2]
-//                    binding.txtEndDate.text = Month + " " + Year
-//                    binding.lblEndDay.text = day
-////                    binding.lblEndDate.text = Date
-//                }
-//            }
-
             R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
                 selectedDateField = 2
-                if (txtStartDate.isNullOrEmpty()) {
-                    return
-                }
+                if (txtStartDate.isNullOrEmpty()) return
 
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val startDate: Date = try {
@@ -654,21 +666,28 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 calendar.add(Calendar.DAY_OF_MONTH, 30)
                 val maxDate = calendar.timeInMillis
 
+                val defaultCalendar = Calendar.getInstance()
+                defaultCalendar.timeInMillis = maxDate
+
+                fun updateEndDateUI(date: Date) {
+                    val day = SimpleDateFormat("d", Locale.getDefault()).format(date)
+                    val monthYear = SimpleDateFormat("MMM yyyy", Locale.getDefault()).format(date)
+                    binding.lblEndDay.text = day
+                    binding.txtEndDate.text = monthYear
+                    txtEndDate = monthYear
+                }
+
+                updateEndDateUI(defaultCalendar.time)
+
                 Constant.DatePicker(
                     context = this,
                     dateFormatType = false,
+                    defaultDate = defaultCalendar,
                     minDate = minDate,
                     maxDate = maxDate
                 ) { selectedDate ->
-                    txtEndDate = covertDateFormate(selectedDate)
-                    val parts = txtEndDate!!.split(" ")
-                    if (parts.size >= 3) {
-                        val day = parts[0]
-                        val month = parts[1]
-                        val year = parts[2]
-                        binding.txtEndDate.text = "$month $year"
-                        binding.lblEndDay.text = day
-                    }
+                    val selected: Date = try { sdf.parse(selectedDate)!! } catch (e: Exception) { Date() }
+                    updateEndDateUI(selected)
                 }
             }
 
