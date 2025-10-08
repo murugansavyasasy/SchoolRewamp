@@ -72,6 +72,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     protected lateinit var binding: VB
     protected abstract fun getViewBinding(): VB
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
@@ -624,7 +626,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
-
     companion object {
         @JvmStatic
         fun loadFragment(activity: FragmentActivity, fragment: Fragment) {
@@ -634,6 +635,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 return
             }
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, fragment)?.commit()
+
         }
     }
 

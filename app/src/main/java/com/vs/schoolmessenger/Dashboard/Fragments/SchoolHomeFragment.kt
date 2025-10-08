@@ -288,6 +288,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.gridRecyclerView.adapter = isMenuAdapter
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
     private fun filter(text: String) {
         val query = text.lowercase(Locale.ROOT)
