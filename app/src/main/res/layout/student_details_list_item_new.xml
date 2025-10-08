@@ -11,13 +11,11 @@
     android:layout_marginEnd="@dimen/twenty"
     android:shadowRadius="100"
     app:cardCornerRadius="@dimen/ten"
-    android:layout_height="wrap_content"
-   >
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rlaStudent"
-
         android:layout_height="wrap_content">
 
         <RelativeLayout
