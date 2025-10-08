@@ -1,45 +1,32 @@
+<!--<vector xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:width="24dp"-->
+<!--    android:height="24dp"-->
+<!--    android:viewportWidth="932"-->
+<!--    android:viewportHeight="900">-->
+
+<!--  &lt;!&ndash; Blue square background, scaled to 960x960 &ndash;&gt;-->
+<!--  <path-->
+<!--      android:pathData="M840,80H120C104,80 80,104 80,120v720c0,16 16,40 40,40h720c16,0 40,-16 40,-40V120C880,104 856,80 840,80z"-->
+<!--      android:fillColor="@color/navi_blue4" />-->
+
+<!--  &lt;!&ndash; White symbol (original image) &ndash;&gt;-->
+<!--  <path-->
+<!--      android:fillColor="@android:color/black"-->
+<!--      android:pathData="M330,720Q226,720 153,647Q80,574 80,470Q80,366 153,293Q226,220 330,220L700,220Q775,220 827.5,272.5Q880,325 880,400Q880,475 827.5,527.5Q775,580 700,580L350,580Q304,580 272,548Q240,516 240,470Q240,424 272,392Q304,360 350,360L720,360L720,440L350,440Q337,440 328.5,448.5Q320,457 320,470Q320,483 328.5,491.5Q337,500 350,500L700,500Q742,499 771,470.5Q800,442 800,400Q800,358 771,329Q742,300 700,300L330,300Q259,299 209.5,349Q160,399 160,470Q160,540 209.5,589Q259,638 330,640L720,640L720,720L330,720Z"/>-->
+<!--</vector>-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="932"
-    android:viewportHeight="900">
+    android:viewportWidth="24"
+    android:viewportHeight="24">
 
-  <!-- Blue square background, scaled to 960x960 -->
+  <!-- Blue outline of the square -->
   <path
-      android:pathData="M840,80H120C104,80 80,104 80,120v720c0,16 16,40 40,40h720c16,0 40,-16 40,-40V120C880,104 856,80 840,80z"
+      android:pathData="M21,2H3C2.4,2 2,2.4 2,3v18c0,0.6 0.4,1 1,1h18c0.6,0 1,-0.4 1,-1V3C22,2.4 21.6,2 21,2z"
       android:fillColor="@color/navi_blue4" />
 
-  <!-- White symbol (original image) -->
+  <!-- Smaller, centered black plus symbol -->
   <path
-      android:fillColor="@android:color/black"
-      android:pathData="M330,720Q226,720 153,647Q80,574 80,470Q80,366 153,293Q226,220 330,220L700,220Q775,220 827.5,272.5Q880,325 880,400Q880,475 827.5,527.5Q775,580 700,580L350,580Q304,580 272,548Q240,516 240,470Q240,424 272,392Q304,360 350,360L720,360L720,440L350,440Q337,440 328.5,448.5Q320,457 320,470Q320,483 328.5,491.5Q337,500 350,500L700,500Q742,499 771,470.5Q800,442 800,400Q800,358 771,329Q742,300 700,300L330,300Q259,299 209.5,349Q160,399 160,470Q160,540 209.5,589Q259,638 330,640L720,640L720,720L330,720Z"/>
+      android:pathData="M12,8h-1v3H8v1h3v3h1v-3h3v-1h-3V8z"
+      android:fillColor="#000000" />
 </vector>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--<vector xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:width="24dp"-->
-<!--    android:height="24dp"-->
-<!--    android:viewportWidth="24"-->
-<!--    android:viewportHeight="24">-->
-
-<!--  &lt;!&ndash; Blue outline of the square &ndash;&gt;-->
-<!--  <path-->
-<!--      android:pathData="M21,2H3C2.4,2 2,2.4 2,3v18c0,0.6 0.4,1 1,1h18c0.6,0 1,-0.4 1,-1V3C22,2.4 21.6,2 21,2z"-->
-<!--      android:fillColor="@color/navi_blue4" />-->
-
-<!--  &lt;!&ndash; Smaller, centered black plus symbol &ndash;&gt;-->
-<!--  <path-->
-<!--      android:pathData="M12,8h-1v3H8v1h3v3h1v-3h3v-1h-3V8z"-->
-<!--      android:fillColor="#000000" />-->
-<!--</vector>-->
