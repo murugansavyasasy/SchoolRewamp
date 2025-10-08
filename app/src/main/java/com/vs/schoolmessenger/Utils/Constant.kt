@@ -2177,4 +2177,41 @@ object Constant {
         datePicker.show()
     }
 
+    fun DatePicker(
+        context: Context,
+        dateFormatType: Boolean,
+        defaultDate: Calendar? = null,
+        minDate: Long? = null,
+        maxDate: Long? = null,
+        onDateSelected: (String) -> Unit
+    ) {
+        val calendar = defaultDate ?: Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedCalendar = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(selectedCalendar.time)
+                onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        datePickerDialog.datePicker.minDate = Calendar.getInstance().timeInMillis
+        if (dateFormatType) {
+            datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
+        }
+        if (minDate != null) datePickerDialog.datePicker.minDate = minDate
+        if (maxDate != null) datePickerDialog.datePicker.maxDate = maxDate
+
+        datePickerDialog.show()
+    }
+
+
 }
