@@ -15,7 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-
     <RelativeLayout
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +65,6 @@
             </View>
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_marginStart="@dimen/five"
             android:id="@+id/lnrTabTwoName"
@@ -94,7 +92,6 @@
                 >
             </View>
         </LinearLayout>
-
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -242,7 +239,8 @@
                         android:layout_width="@dimen/one_fifty"
                         android:layout_height="@dimen/one_fifty"
                         android:layout_marginTop="@dimen/ten"
-                        android:src="@drawable/no_data_found"></ImageView>
+                        android:src="@drawable/no_data_found">
+                    </ImageView>
 
                     <TextView
                         android:id="@+id/noDataFound1"
@@ -324,7 +322,6 @@
                         android:background="@drawable/mild_gray_radius"
                         android:layout_height="wrap_content">
                     </TextView>
-
                 </LinearLayout>
 
 
@@ -389,9 +386,6 @@
                             android:layout_height="wrap_content">
                         </TextView>
                     </LinearLayout>
-
-
-
                 </LinearLayout>
 
                 <TextView
@@ -406,7 +400,6 @@
                     android:enabled="false"
                     style="@style/CustomTextStylePoppinsBold"
                     android:gravity="center"
-
                     android:padding="@dimen/ten"
                     android:text="@string/select_all_as_present"
                     android:textColor="@color/white"
@@ -498,8 +491,7 @@
                         app:cardCornerRadius="@dimen/ten"
                         android:layout_height="wrap_content"
                         app:cardUseCompatPadding="true"
-                        app:cardPreventCornerOverlap="false"
-                        >
+                        app:cardPreventCornerOverlap="false">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:orientation="vertical"
@@ -537,7 +529,6 @@
                                 android:layout_height="@dimen/fifty">
 
                             </ImageView>
-
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -588,7 +579,6 @@
                                 android:layout_height="@dimen/fifty">
 
                             </ImageView>
-
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -654,7 +644,8 @@
                         android:layout_width="@dimen/two_hundred"
                         android:layout_height="@dimen/two_hundred"
                         android:layout_marginTop="@dimen/twenty_five"
-                        android:src="@drawable/no_attendance_taken"></ImageView>
+                        android:src="@drawable/no_attendance_taken">
+                    </ImageView>
 
                     <TextView
                         android:id="@+id/noDataFound"
@@ -665,22 +656,9 @@
                         android:text="">
 
                     </TextView>
-
                 </LinearLayout>
-
             </LinearLayout>
-
-
-
-
         </LinearLayout>
-
-
-
     </androidx.core.widget.NestedScrollView>
-
-
-
-
 </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

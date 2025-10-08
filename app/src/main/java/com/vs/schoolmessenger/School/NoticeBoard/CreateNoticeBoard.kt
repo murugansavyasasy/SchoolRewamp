@@ -119,6 +119,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
+        initializeDefaultDates()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -166,7 +167,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        saveDrawableToCache(R.drawable.attachment_img)?.let {
+        saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
@@ -198,7 +199,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 //
 //            override fun afterTextChanged(s: Editable?) {}
 //        })
-
 
 
         albumResultLauncher =
@@ -410,7 +410,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
     }
 
-
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -448,7 +447,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             )
-            isClickable = true // prevent clicks on background
+            isClickable = true
         }
 
         val marginInPx = TypedValue.applyDimension(
@@ -481,9 +480,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
         dimView.isFocusable = true
         dimView.isFocusableInTouchMode = true
-
     }
-
 
     private fun showCameraPermissionSettingsDialog() {
         AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
@@ -603,72 +600,99 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 //                }
 //            }
 
+//
+//                R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
+//                    selectedDateField = 1
+//                    Constant.DatePicker(this, false) { selectedDate ->
+//                        Log.d("selectedDate", selectedDate)
+//                        txtStartDate = Constant.covertDate(selectedDate)
+//                        val parts = txtStartDate!!.split(" ")
+//                        val day = parts[0]
+//                        val Month = parts[1]
+//                        val Year = parts[2]
+//                        binding.txtStartDate.text = Month + " " + Year
+//                        binding.lblDay.text = day
+//    //                    binding.lblDate.text = Date
+//                    }
+//                }
+
+    //            R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
+    //                selectedDateField = 2
+    //                Constant.showDatePicker12(this, false) { selectedDate ->
+    //                    Log.d("selectedDate", selectedDate)
+    //                    txtEndDate = Constant.covertDateFormate(selectedDate)
+    //                    val parts = txtEndDate!!.split(" ")
+    //                    val day = parts[0]
+    //                    val Month = parts[1]
+    //                    val Year = parts[2]
+    //                    binding.txtEndDate.text = Month + " " + Year
+    //                    binding.lblEndDay.text = day
+    ////                    binding.lblEndDate.text = Date
+    //                }
+    //            }
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
-                Constant.showDatePicker12(this, false) { selectedDate ->
-                    Log.d("selectedDate", selectedDate)
+                Constant.DatePicker(this, false) { selectedDate ->
                     txtStartDate = Constant.covertDateFormate(selectedDate)
                     val parts = txtStartDate!!.split(" ")
                     val day = parts[0]
-                    val Month = parts[1]
-                    val Year = parts[2]
-                    binding.txtStartDate.text = Month + " " + Year
+                    val month = parts[1]
+                    val year = parts[2]
                     binding.lblDay.text = day
-//                    binding.lblDate.text = Date
+                    binding.txtStartDate.text = "$month $year"
+
+                    val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                    val startDate = sdf.parse(txtStartDate!!) ?: Date()
+                    val cal = Calendar.getInstance()
+                    cal.time = startDate
+                    cal.add(Calendar.DAY_OF_MONTH, 30)
+                    val endDate = cal.time
+                    txtEndDate = sdf.format(endDate)
+                    val endParts = txtEndDate!!.split(" ")
+                    binding.lblEndDay.text = endParts[0]
+                    binding.txtEndDate.text = "${endParts[1]} ${endParts[2]}"
                 }
             }
 
-//            R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
-//                selectedDateField = 2
-//                Constant.showDatePicker12(this, false) { selectedDate ->
-//                    Log.d("selectedDate", selectedDate)
-//                    txtEndDate = Constant.covertDateFormate(selectedDate)
-//                    val parts = txtEndDate!!.split(" ")
-//                    val day = parts[0]
-//                    val Month = parts[1]
-//                    val Year = parts[2]
-//                    binding.txtEndDate.text = Month + " " + Year
-//                    binding.lblEndDay.text = day
-////                    binding.lblEndDate.text = Date
-//                }
-//            }
-
             R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
                 selectedDateField = 2
+
                 if (txtStartDate.isNullOrEmpty()) {
+                    Toast.makeText(this, "Please select a start date first", Toast.LENGTH_SHORT).show()
                     return
                 }
 
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val startDate: Date = try {
-                    sdf.parse(txtStartDate!!)!!
+                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val startDate = sdf.parse(txtStartDate!!) ?: Date()
+                val cal = Calendar.getInstance()
+                cal.time = startDate
+                val minDate = cal.timeInMillis
+                cal.add(Calendar.DAY_OF_MONTH, 30)
+                val maxDate = cal.timeInMillis
+
+                val defaultEndDate = try {
+                    sdf.parse(txtEndDate ?: "") ?: Date(maxDate)
                 } catch (e: Exception) {
-                    Date()
+                    Date(maxDate)
                 }
-
-                val calendar = Calendar.getInstance()
-                calendar.time = startDate
-                val minDate = calendar.timeInMillis
-
-                calendar.add(Calendar.DAY_OF_MONTH, 30)
-                val maxDate = calendar.timeInMillis
+                val defaultCal = Calendar.getInstance()
+                defaultCal.time = defaultEndDate
 
                 Constant.DatePicker(
                     context = this,
                     dateFormatType = false,
+                    defaultDate = defaultCal,
                     minDate = minDate,
                     maxDate = maxDate
                 ) { selectedDate ->
-                    txtEndDate = covertDateFormate(selectedDate)
+                    txtEndDate = Constant.covertDateFormate(selectedDate)
                     val parts = txtEndDate!!.split(" ")
-                    if (parts.size >= 3) {
-                        val day = parts[0]
-                        val month = parts[1]
-                        val year = parts[2]
-                        binding.txtEndDate.text = "$month $year"
-                        binding.lblEndDay.text = day
-                    }
+                    val day = parts[0]
+                    val month = parts[1]
+                    val year = parts[2]
+                    binding.lblEndDay.text = day
+                    binding.txtEndDate.text = "$month $year"
                 }
             }
 
@@ -680,6 +704,24 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 }
             }
         }
+    }
+
+    private fun initializeDefaultDates() {
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val today = Calendar.getInstance().time
+        txtStartDate = sdf.format(today)
+        val startParts = txtStartDate!!.split(" ")
+        binding.lblDay.text = startParts[0]
+        binding.txtStartDate.text = "${startParts[1]} ${startParts[2]}"
+        val cal = Calendar.getInstance()
+        cal.time = today
+        cal.add(Calendar.DAY_OF_MONTH, 30)
+        val endDate = cal.time
+
+        txtEndDate = sdf.format(endDate)
+        val endParts = txtEndDate!!.split(" ")
+        binding.lblEndDay.text = endParts[0]
+        binding.txtEndDate.text = "${endParts[1]} ${endParts[2]}"
     }
 
 
@@ -1217,7 +1259,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     fun isEditProcess(data: NoticeStaffData?) {
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.attachment_img)?.let {
+        saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
