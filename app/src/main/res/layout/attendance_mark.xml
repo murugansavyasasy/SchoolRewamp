@@ -371,7 +371,7 @@
                             android:id="@+id/lblFirstHalf"
                             android:layout_weight="0.08"
                             android:layout_width="match_parent"
-                            android:text="F/N"
+                            android:text="FN"
                             android:gravity="center"
                             android:background="@drawable/gray_bg_radius"
                             android:paddingVertical="@dimen/three"
@@ -384,10 +384,9 @@
                             android:layout_weight="0.08"
                             android:gravity="center"
                             android:layout_width="match_parent"
-                            android:text="A/F"
+                            android:text="AF"
                             android:paddingVertical="@dimen/three"
                             android:layout_height="wrap_content">
-
                         </TextView>
                     </LinearLayout>
 

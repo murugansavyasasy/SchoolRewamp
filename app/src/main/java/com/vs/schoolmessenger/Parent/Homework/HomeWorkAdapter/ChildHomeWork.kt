@@ -414,11 +414,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS) {
 
-            binding.toolbarLayout.lblPostedOn.visibility=View.VISIBLE
+            if(data!!.created_date.isNullOrBlank()) {
+                binding.toolbarLayout.lblPostedOn.visibility=View.GONE
+            } else {
+                binding.toolbarLayout.lblPostedOn.visibility=View.VISIBLE
+            }
+
             val params = binding.toolbarLayout.rlaStudentName.layoutParams as RelativeLayout.LayoutParams// Assuming you already have view binding set up
             params.removeRule(RelativeLayout.START_OF) // Remove the old rule pointing to imgSearchToolBar
             params.addRule(RelativeLayout.START_OF, R.id.lblPostedOn) // Add a new rule pointing to lblPostedOn
             binding.toolbarLayout.rlaStudentName.layoutParams = params // Apply the updated layout params
+            Log.d("data!!.created_date",data!!.created_date.toString())
             binding.toolbarLayout.lblPostedOn.text="Posted On : ${Constant.convertToReadableDateformat(data!!.created_date.toString())}"
 
             //            binding.lblSubjectName.visibility = View.GONE
