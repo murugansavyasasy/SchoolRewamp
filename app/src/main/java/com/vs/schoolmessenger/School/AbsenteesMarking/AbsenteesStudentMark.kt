@@ -372,12 +372,14 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         val lblAbsenteesListCount = dialogView.findViewById<TextView>(R.id.lblAbsenteesListCount)
         val lytNoDataFound = dialogView.findViewById<LinearLayout>(R.id.lytNoDataFound)
 
+        val removedStudents = mutableListOf<NameAndIds>()
+
         if (selectedFinalList.isEmpty()) {
             rcFinalList.visibility = View.GONE
             lytNoDataFound?.visibility = View.VISIBLE
             noDataFound?.text = "No Absentees,All students are marked as present!"
         } else {
-            lblAbsenteesListCount.text="${getString(R.string.absentees_students_list)}(${selectedFinalList.size})"
+            lblAbsenteesListCount.text = "${activity.getString(R.string.absentees_students_list)}(${selectedFinalList.size})"
 
             rcFinalList.visibility = View.VISIBLE
             lytNoDataFound?.visibility = View.GONE
@@ -387,16 +389,16 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 context = activity,
                 isLoading = false,
                 onRemove = { data ->
-                    mAdapter.unselectStudent(data)
+                    removedStudents.add(data)
                 },
                 onListCountChange = { count ->
                     if (count == 0) {
-                        lblAbsenteesListCount.text="${getString(R.string.absentees_students_list)}(${count})"
+                        lblAbsenteesListCount.text = "${activity.getString(R.string.absentees_students_list)}(${count})"
                         lytNoDataFound.visibility = View.VISIBLE
                         noDataFound?.text = "No Absentees,All students are marked as present!"
                         rcFinalList.visibility = View.GONE
                     } else {
-                        lblAbsenteesListCount.text="${getString(R.string.absentees_students_list)}(${count})"
+                        lblAbsenteesListCount.text = "${activity.getString(R.string.absentees_students_list)}(${count})"
                         lytNoDataFound.visibility = View.GONE
                         rcFinalList.visibility = View.VISIBLE
                     }
@@ -407,13 +409,15 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         }
 
         lblMarkAsAbsent.setOnClickListener {
-            isMarkAttendance()
             alertDialog.dismiss()
-
+            isMarkAttendance()
         }
 
         lblClose.setOnClickListener {
             alertDialog.dismiss()
+            removedStudents.forEach { data ->
+                mAdapter.unselectStudent(data)
+            }
         }
     }
 
@@ -456,6 +460,8 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     private fun isMarkAttendance() {
         AllPresent = if (isSelectedIds.isNullOrEmpty()) Constant.allPresent else Constant.fullDay
+        Log.d("isSelectedIds",isSelectedIds.toString())
+        Log.d("AllPresent",AllPresent.toString())
         if (Constant.isMarkAttendanceDataSending?.class_id != "" && Constant.isMarkAttendanceDataSending?.section_id != ""
             && Constant.isMarkAttendanceDataSending?.attendance_date != null
         ) {
@@ -492,7 +498,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             val studentArray = JsonArray().apply {
                 isSelectedIds?.forEach { student ->
                     add(JsonObject().apply {
-                        addProperty(APIKeyNames.id_, student.id)
+                        addProperty(APIKeyNames.id_, student.id.toString())
                     })
                 }
             }

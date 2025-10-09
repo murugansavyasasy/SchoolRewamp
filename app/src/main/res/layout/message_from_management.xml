@@ -78,8 +78,20 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/five">
 
+            <Spinner
+                android:id="@+id/schoollistfilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:background="@drawable/spinner_bg"
+                android:padding="@dimen/twele"
+                android:spinnerMode="dropdown"
+                />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcMessageStaff"
+                android:layout_below="@+id/schoollistfilter"
                 android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -66,6 +66,7 @@
             app:layout_constraintTop_toBottomOf="@+id/rytSearch323"
             android:background="@drawable/spinner_bg"
             android:padding="@dimen/twele"
+            android:visibility="gone"
             android:spinnerMode="dropdown"
          />
 

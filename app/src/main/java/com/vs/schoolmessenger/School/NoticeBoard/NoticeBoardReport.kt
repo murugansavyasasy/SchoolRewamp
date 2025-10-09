@@ -88,10 +88,23 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         appViewModel!!.init()
 
         userDetails = SharedPreference.getUserDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
 
-        userDetails?.let {
-            setupSchoolSpinner(it.staff_details)
+        if (userDetails?.staff_role.equals(Constant.isStaffRole)){
+            binding.schoollistfilter.visibility=View.GONE
+            isAccessToken = isStaffDetails!!.access_token
         }
+        else{
+            if (userDetails?.staff_details?.size!! > 1) {
+                binding.schoollistfilter.visibility = View.VISIBLE
+                userDetails?.let { setupSchoolSpinner(it.staff_details) }
+            }
+            else{
+                isAccessToken = userDetails!!.staff_details.get(0).access_token
+                binding.schoollistfilter.visibility=View.GONE
+            }
+        }
+
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)

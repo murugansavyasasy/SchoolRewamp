@@ -467,15 +467,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
             Constant.M_MESSAGES_FROM_MANAGEMENT -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    MessageFromManagement::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        MessageFromManagement::class.java
-                    }
-                }
+                MessageFromManagement::class.java
             }
 
             Constant.M_INTERACTION_WITH_STUDENT -> {

@@ -82,29 +82,30 @@
 
 <!--        </LinearLayout>-->
 
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
         <ScrollView
-            app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp">
 
 
             <RelativeLayout
                 android:id="@+id/rlaHomework"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/toolbarLayout"
                 android:visibility="visible">
 
-                <include
-                    android:id="@+id/toolbarLayout"
-                    layout="@layout/school_side_tool_bar" />
-
-
                 <RelativeLayout
-                    android:layout_below="@+id/toolbarLayout"
-
                     android:id="@+id/rlaTitleDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

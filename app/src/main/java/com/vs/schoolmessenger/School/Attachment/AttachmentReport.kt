@@ -99,11 +99,32 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
             }
         }
 
+
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+
         isUserDetails = SharedPreference.getUserDetails(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
-        isLoadSchoolList()
+
+        if (isUserDetails?.staff_role.equals(Constant.isStaffRole)){
+            binding.schoollistfilter.visibility=View.GONE
+            isAccessToken = isStaffDetails!!.access_token
+        }
+        else{
+            if (isUserDetails?.staff_details?.size!! > 1) {
+                binding.schoollistfilter.visibility = View.VISIBLE
+                isUserDetails?.let { setupSchoolSpinner(it.staff_details) }
+            }
+            else{
+                isAccessToken = isUserDetails!!.staff_details.get(0).access_token
+                binding.schoollistfilter.visibility=View.GONE
+            }
+        }
+        isGetAttachmentReport()
+
+
+//        isLoadSchoolList()
 
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
@@ -200,11 +221,11 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
     }
 
 
-    fun isLoadSchoolList() {
-        isUserDetails?.let {
-            setupSchoolSpinner(it.staff_details)
-        }
-    }
+//    fun isLoadSchoolList() {
+//        isUserDetails?.let {
+//            setupSchoolSpinner(it.staff_details)
+//        }
+//    }
 
     fun isGetAttachmentReport() {
         mAttachmentReportAdapter =
