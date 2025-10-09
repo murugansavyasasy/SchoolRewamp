@@ -328,7 +328,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.scrollRoot,
             binding.edtContentTextMessage
         )
-
     }
 
 

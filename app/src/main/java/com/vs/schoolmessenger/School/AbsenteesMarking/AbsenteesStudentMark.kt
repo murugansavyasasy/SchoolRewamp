@@ -1,16 +1,29 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
+import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -21,11 +34,18 @@ import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudentS
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesFinalListAdapter.AbsenteesFinalListAdapter
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter.AbsenteesMarkAdapter
+import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.AttachmentMediaAdapter
+import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
+import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
+import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBankData
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.AbsenteesStudentMarkingBinding
+import me.relex.circleindicator.CircleIndicator2
 
 class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     SpecificStudentSelectClickListener,
@@ -36,7 +56,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     private var appViewModel: App? = null
     val isSpecificStudent = mutableListOf<NameAndIds>()
     private var studentsList: List<NameAndIds>? = null
-    private var isSelectedIds: List<String>? = null
+    private var isSelectedIds: List<NameAndIds>? = null
     private lateinit var isStandardName: String
     private lateinit var isSectionName: String
     private var AllPresent: String? = null
@@ -324,6 +344,51 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     }
 
+    fun showResumeListDialog(
+        activity: Activity,
+        selectedFinalList: List<NameAndIds>,
+    ) {
+        if (activity.isFinishing || activity.isDestroyed) return
+
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.absentees_final_list, null)
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        if (!activity.isFinishing && !activity.isDestroyed) {
+            alertDialog.show()
+        }
+
+        val lblClose = dialogView.findViewById<TextView>(R.id.lblClose)
+        val lblMarkAsAbsent = dialogView.findViewById<TextView>(R.id.lblMarkAsAbsent)
+        val rcFinalList = dialogView.findViewById<RecyclerView>(R.id.rcFinalList)
+
+        rcFinalList.layoutManager = LinearLayoutManager(activity)
+
+        val adapter = AbsenteesFinalListAdapter(
+            itemList = selectedFinalList.toMutableList(),
+            context = activity,
+            isLoading = false,
+            onRemove = { data ->
+                mAdapter.unselectStudent(data)
+            }
+        )
+        rcFinalList.adapter = adapter
+
+        lblMarkAsAbsent.setOnClickListener {
+            isMarkAttendance()
+        }
+
+
+        lblClose.setOnClickListener {
+            alertDialog.dismiss()
+        }
+    }
+
+
     override fun onPause() {
         super.onPause()
         Constant.stopDelay()
@@ -336,17 +401,23 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             }
 
             R.id.rytSend -> {
-                Constant.showSendConfirmationDialog(
-                    this,
-                    getString(R.string.confirmation),
-                    getString(R.string.permission_ok),
-                    getString(R.string.Cancel),
-                    "",
-                    getString(R.string.are_you_sure_want_to_submit_the_attendance)
-                ) { confirmed ->
-                    if (confirmed) {
-                        Constant.showLoading(this)
-                        isMarkAttendance()
+                if (!isSelectedIds.isNullOrEmpty()){
+                    Log.d("FinalList",isSelectedIds.toString())
+                    showResumeListDialog(this, isSelectedIds!!)
+                }
+                else {
+                    Constant.showSendConfirmationDialog(
+                        this,
+                        getString(R.string.confirmation),
+                        getString(R.string.permission_ok),
+                        getString(R.string.Cancel),
+                        "",
+                        getString(R.string.are_you_sure_want_to_submit_the_attendance)
+                    ) { confirmed ->
+                        if (confirmed) {
+                            Constant.showLoading(this)
+                            isMarkAttendance()
+                        }
                     }
                 }
             }
@@ -359,7 +430,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         if (Constant.isMarkAttendanceDataSending?.class_id != "" && Constant.isMarkAttendanceDataSending?.section_id != ""
             && Constant.isMarkAttendanceDataSending?.attendance_date != null
         ) {
-
             if (Constant.isMarkAttendanceDataSending?.attendance_type == Constant.fullDay && Constant.isMarkAttendanceDataSending?.session_type == "") {
                 isUpdateMarkAtttendance()
 
@@ -387,21 +457,22 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 Constant.isMarkAttendanceDataSending?.attendance_date
             )
             val studentArray = JsonArray().apply {
-                isSelectedIds?.forEach { id ->
+                isSelectedIds?.forEach { student ->
                     add(JsonObject().apply {
-                        addProperty(APIKeyNames.id_, id)
+                        addProperty(APIKeyNames.id_, student.id)
                     })
                 }
             }
             add(APIKeyNames.student_id, studentArray)
             Log.d("AbsenteesStudentID", studentArray.toString())
+            Log.d("AttendanceList", isSelectedIds.toString())
         }
-        appViewModel?.isUpdateSendAbsenteeSMS(isAccessToken!!, jsonObject, this)
+//        appViewModel?.isUpdateSendAbsenteeSMS(isAccessToken!!, jsonObject, this)
 
     }
 
 
-    override fun onSelectionChanged(selectedIds: List<String>) {
+    override fun onSelectionChanged(selectedIds: List<NameAndIds>) {
         Log.d("ActivitySelectedIDs", selectedIds.toString())
         isSelectedIds = selectedIds
     }
