@@ -25,7 +25,7 @@ data class QuizQuestionRequest(
     val iframe: String? = null,
     val file_size: String? = null,
     val thumbnail: String? = null,
-    val file_path: List<FilePath> = emptyList()
+    val file_path: List<FilePath>?= emptyList()
 )
 
 

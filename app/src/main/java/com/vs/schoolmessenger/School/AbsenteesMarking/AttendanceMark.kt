@@ -93,7 +93,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         AttendanceType = Constant.fullDay
         isSelectedDate = LocalDate.now()
         binding.AttendanceSelectedDate.text=Constant.formatToPretty(isSelectedDate.toString())
-        SelectedDate = Constant.formatToUi(isSelectedDate.toString())
+        SelectedDate = Constant.formatToUi2(isSelectedDate.toString())
 
         styleLabel(binding.lblFullDay, R.drawable.mild_gray_radius, R.color.PrimaryColor, R.color.white)
         styleLabel(binding.lblHalfDay, R.drawable.mild_gray_radius, R.color.gray, R.color.black)
@@ -200,6 +200,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         this
                     )
                 }
+            }
+            else {
+                Constant.showDataValidation(getString(R.string.fail),getString(R.string.something_went_wrong_please_try_again_later), this)
             }
         }
 
@@ -425,7 +428,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         when (tag) {
             Constant.FROM_DATE -> {
                 Log.d("selectedDate", selected.toString())
-                SelectedDate = Constant.formatToUi(selected.toString())
+                SelectedDate = Constant.formatToUi2(selected.toString())
                 isSelectedDate = selected//This Date for Fragemnt to change the next date
                 binding.AttendanceSelectedDate.text=Constant.formatToPretty(selected.toString())
                 if (callApi) {
@@ -645,14 +648,14 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         if (isStandardId != null && SectionID != null) {
 
 //            binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_green)
-            binding.btnAbsent.setBackgroundResource(R.drawable.rect_shadow_red)
+            binding.btnAbsent.setBackgroundResource(R.drawable.bg_btn_blue)
             binding.btnAbsent.background.setTint(ContextCompat.getColor(this, R.color.PrimaryColor))
 //            binding.btnSelectPresent.isEnabled = true
             binding.btnAbsent.isEnabled = true
         } else {
 //            binding.btnSelectPresent.isEnabled = false
             binding.btnAbsent.isEnabled = false
-            binding.btnAbsent.setBackgroundResource(R.drawable.rect_shadow_gray)
+            binding.btnAbsent.setBackgroundResource(R.drawable.bg_btn_blue)
 //            binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_gray)
 
         }
@@ -665,8 +668,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             && SelectedDate != null && isSelectedIds?.size == null
         ) {
             AllPresent = Constant.allPresent
-
-
             val jsonObject = JsonObject().apply {
                 addProperty(APIKeyNames.class_id, isStandardId.toString())
                 addProperty(APIKeyNames.section_id, SectionID.toString())

@@ -23,16 +23,19 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Note: The following students are marked as absent. Their parents will receive an automatic call. Please double-check before confirming attendance"
-                android:textColor="@color/black_2">
+                android:background="@drawable/rect_black_stoke_bg"
+                android:padding="@dimen/ten"
+                android:text="@string/note_the_following_students_are_marked_as_absent_their_parents_will_receive_an_automatic_call_please_double_check_before_confirming_attendance"
+                android:textColor="@color/red">
 
             </TextView>
 
+
             <TextView
+                android:id="@+id/lblAbsenteesListCount"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
-                android:text="Absentees Students"
+                android:text="@string/absentees_students_list"
                 android:textSize="@dimen/fifteen_sp"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_height="wrap_content">
@@ -47,46 +50,89 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
+            <LinearLayout
+                android:id="@+id/lytNoDataFound"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/two_fifty"
+                    android:layout_height="@dimen/two_fifty"
+                    android:layout_marginTop="@dimen/twenty_five"
+                    android:src="@drawable/no_takeattendence_message">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/noDataFound"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/ten"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:text="">
+
+                </TextView>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/LnrCancelOk"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/LnrCancelOk"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:layout_height="wrap_content">
+            <View
+                android:layout_marginTop="@dimen/five"
+                android:layout_width="match_parent"
+                android:background="@color/gray"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_height="@dimen/one">
+            </View>
 
-            <TextView
-                android:id="@+id/lblClose"
-                style="@style/CustomTextStylePoppinsBold"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/ten"
-                android:layout_weight="0.5"
-                android:gravity="center"
-                android:padding="@dimen/five"
-                android:text="Cancel"
-                android:textColor="@color/red">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-            </TextView>
+                <TextView
+                    android:id="@+id/lblClose"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/ten"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:padding="@dimen/five"
+                    android:text="@string/Cancel"
+                    android:textColor="@color/red">
 
-            <TextView
-                android:id="@+id/lblMarkAsAbsent"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/ten"
-                android:layout_weight="0.5"
-                android:gravity="center"
-                android:padding="@dimen/five"
-                android:text="Mark as absent"
-                android:textColor="@color/PrimaryColor">
+                </TextView>
 
-            </TextView>
+                <TextView
+                    android:id="@+id/lblMarkAsAbsent"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/ten"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:padding="@dimen/five"
+                    android:text="@string/confirm"
+                    android:textColor="@color/PrimaryColor">
+
+                </TextView>
 
 
-        </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
 

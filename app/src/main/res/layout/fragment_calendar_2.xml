@@ -16,7 +16,7 @@
         <RelativeLayout
             android:background="@drawable/gray_bg_radius"
             android:layout_width="match_parent"
-            android:backgroundTint="@color/PrimaryColor"
+            android:backgroundTint="@color/white"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingVertical="@dimen/fifteen">
@@ -29,7 +29,7 @@
                 android:layout_height="@dimen/twenty_five"
                 android:layout_marginStart="@dimen/eight"
                 android:src="@drawable/left_arrow"
-                android:tint="@color/white"
+                android:tint="@color/PrimaryColor"
                 android:contentDescription="Previous Month" />
 
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="January 2024"
                 android:layout_toStartOf="@+id/nextMonthButton"
-                android:textColor="@color/white"
+                android:textColor="@color/PrimaryColor"
                 android:textSize="@dimen/sixteen_sp"
                 />
 
@@ -55,7 +55,7 @@
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
                 android:layout_marginEnd="@dimen/eight"
-                android:tint="@color/white"
+                android:tint="@color/PrimaryColor"
                 android:src="@drawable/right_arrow"
                 android:contentDescription="Next Month" />
         </RelativeLayout>
