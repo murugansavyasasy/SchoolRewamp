@@ -107,6 +107,8 @@ class SchoolEventAdapter(
     }
 
 
+
+
     class DataViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
         private val event_header: TextView = itemView.findViewById(R.id.event_header)
         private val event_time: TextView = itemView.findViewById(R.id.event_time)

@@ -39,11 +39,35 @@
                 android:paddingBottom="@dimen/sixteen">
 
                 <TextView
+                    android:id="@+id/category_headerview"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:text="@string/event_categories"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/eighteen_sp" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcycategory_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/category_headerview"
+                    android:layout_marginTop="@dimen/five"
+                    android:clipToPadding="false"
+                    android:fadeScrollbars="false"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:scrollbars="none" />
+
+                <TextView
                     android:id="@+id/headerview"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/twenty"
+                    android:layout_below="@+id/rcycategory_event"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/ongoing_events"
                     android:textSize="@dimen/eighteen_sp" />
@@ -71,29 +95,7 @@
                     android:src="@drawable/dotindicator" />
 
 
-                <TextView
-                    android:id="@+id/category_headerview"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/dotindicator"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:text="@string/event_categories"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/eighteen_sp" />
 
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcycategory_event"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/category_headerview"
-                    android:layout_marginTop="@dimen/five"
-                    android:clipToPadding="false"
-                    android:fadeScrollbars="false"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:scrollbars="none" />
 
 
                 <TextView
@@ -101,7 +103,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rcycategory_event"
+                    android:layout_below="@+id/dotindicator"
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/upcoming_events"
