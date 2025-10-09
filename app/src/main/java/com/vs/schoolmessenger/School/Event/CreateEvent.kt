@@ -121,6 +121,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 //        binding.rytSearch323.setOnClickListener(this)
         binding.btnNext.text = getString(R.string.NEXT)
         binding.txtStartTime.setOnClickListener(this)
+        binding.btnEventsReport.setOnClickListener(this)
 //        binding.lnrTabOneName.setOnClickListener(this)
 //        binding.lnrTabTwoName.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
@@ -749,6 +750,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 showTimePickerDialog(this, this)
 
             }
+
+            R.id.btnEventsReport -> startActivity(Intent(this, EventReport::class.java))
+
 
             R.id.btnNext -> {
                 if (binding.btnNext.text.toString() == getString(R.string.update_event)) {

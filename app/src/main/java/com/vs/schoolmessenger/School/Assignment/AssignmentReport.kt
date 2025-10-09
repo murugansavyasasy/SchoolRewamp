@@ -96,7 +96,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        binding.toolbarLayout.layoutCreateSlot.visibility = View.VISIBLE
+        binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.rlaSpinner.visibility=View.VISIBLE

@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.Event.Listener
 
 import android.view.View
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 
 interface SchoolEventClickListener {
@@ -8,5 +9,8 @@ interface SchoolEventClickListener {
     fun onDeleteEvent(type: String?, id: String?, position: Int)
 
     fun onEditAndDelete(data: SchoolEventItem, anchorView: View, adapterPosition: Int)
+
+    fun onCategoryClicked(data: Category)
+
 
 }

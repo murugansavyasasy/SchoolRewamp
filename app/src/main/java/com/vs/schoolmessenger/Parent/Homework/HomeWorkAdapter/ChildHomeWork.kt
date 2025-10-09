@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -16,12 +17,15 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -45,6 +49,8 @@ import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission.MyAssignmentSubmit
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
@@ -65,6 +71,9 @@ import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
+import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
+import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -255,27 +264,56 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.childlsrwlayoutxml.txtDescription1.text = data!!.description
             binding.childlsrwlayoutxml.txtDate.text = getFormattedDateText(data?.sentBy ?: "")
             if (data!!.assignmentid == "Listening") {
-                binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
-                binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
-                binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
-                binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
-                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
+                if(data!!.is_submitted == true) {
+                    binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                    binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
+                    binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
+                    binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
+                    binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
+                } else {
+                    binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.rcyImages.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
+                }
             } else if (data!!.assignmentid == "Reading") {
-                binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
-                binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
-                binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
-                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
-                binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
+                if(data!!.is_submitted == true) {
+                    binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                    binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
+                    binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
+                    binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
+                    binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
+                } else {
+                    binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.rcyImages.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
+                }
             } else {
-                binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.rcyImages.visibility = View.VISIBLE
-                binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
+                if(data!!.is_submitted == true) {
+                    binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                    binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
+                    binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
+                    binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
+                    binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
+                } else {
+                    binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.rcyImages.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
+                }
             }
             dummyPath = saveDrawableToCache(R.drawable.add_image)
             dummyPath?.let {
@@ -492,7 +530,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             Constant.hideLoading(this@ChildHomeWork)
             response?.let {
                 Log.d("Response", it.status.toString())
-                Constant.showTopAlertPopup(it.message, this)
+                showTopAlertParentPopup(it.message, this)
                 if (it.status) {
                     Constant.selectedFiles.clear()
                     Constant.isAwsUploadedFiles.clear()
@@ -575,6 +613,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         alertDialog.show()
 
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -1180,6 +1219,58 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
+    }
+
+
+   private fun showTopAlertParentPopup(message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true // prevent clicks on background
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            isAwsUploadedFiles.clear()
+            selectedFiles.clear()
+            isCommunicationType = 1
+            val intent = Intent(activity, ParentDashboard::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
+            closePopup()
+        }
+        dimView.isFocusable = true
+        dimView.isFocusableInTouchMode = true
+
     }
 
 

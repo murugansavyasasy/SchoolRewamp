@@ -199,7 +199,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
     ) {
         val jsonObject = JsonObject().apply {
             addProperty(APIKeyNames.type, "LSRW")
-            addProperty(APIKeyNames.detail_id, isData.id)
+            addProperty(APIKeyNames.detail_id, isData.detail_id)
         }
         appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
     }
