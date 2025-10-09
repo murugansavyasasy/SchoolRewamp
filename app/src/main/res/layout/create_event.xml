@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/light_white">
 
     <View
@@ -11,491 +11,511 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
-
-
-    <ScrollView
-        android:id="@+id/eventCreate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarLayout"
-        android:scrollbars="none"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
-        <RelativeLayout
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
+
+
+        <ScrollView
+            android:id="@+id/eventCreate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:padding="@dimen/ten">
-
-
-            <TextView
-                android:id="@+id/lblLocation"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="@dimen/five"
-                android:text="@string/Venue"
-                 />
-
-            <TextView
-                android:id="@+id/lblStar"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/lblLocation"
-                android:text="@string/mandatory"
-                android:textColor="@color/red"
-                />
-
-            <TextView
-                android:id="@+id/btnEventsReport"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/twenty"
-                android:padding="@dimen/four"
-                android:text="Events Report"
-                />
-
-            <LinearLayout
-                android:id="@+id/lnrVenue"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/fourty_five"
-                android:layout_below="@+id/lblLocation"
-                android:layout_alignStart="@+id/lblLocation"
-                android:layout_marginTop="@dimen/fifteen"
-                android:background="@drawable/field_background"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-
-            <EditText
-                android:id="@+id/txtLocation"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:inputType="text"
-                android:paddingHorizontal="@dimen/ten"
-                android:textSize="@dimen/thirteen_sp" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-                android:layout_below="@+id/lblLocation"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_location" />
-
-
-            <TextView
-                android:id="@+id/lblEventTitle"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lnrVenue"
-                android:layout_marginTop="@dimen/fifteen"
-                android:text="@string/Title"
-               />
-
-            <TextView
-                android:id="@+id/lblStar1"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lnrVenue"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_toEndOf="@id/lblEventTitle"
-                android:text="@string/mandatory"
-                android:textColor="@color/red"
-                android:textSize="@dimen/thirteen_sp" />
-
-            <LinearLayout
-                android:id="@+id/lnrTitle"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/fourty_five"
-                android:layout_below="@+id/lblEventTitle"
-                android:layout_marginTop="@dimen/fifteen"
-                android:background="@drawable/field_background"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-            <EditText
-                android:id="@+id/txtTitle"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:inputType="text"
-                android:paddingHorizontal="@dimen/ten"
-                android:textSize="@dimen/thirteen_sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/lbtitleTextCount"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lnrTitle"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:visibility="gone"
-                android:text="0 of 50"
-               />
-
-            <TextView
-                android:id="@+id/lblEventDesc"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lbtitleTextCount"
-                android:layout_marginTop="@dimen/fifteen"
-                android:text="@string/Description"
-                />
-
-
-            <TextView
-                android:id="@+id/lblStar3"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lbtitleTextCount"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_toEndOf="@id/lblEventDesc"
-                android:text="@string/mandatory"
-                android:textColor="@color/red"
-                />
-
-
-            <RelativeLayout
-                android:id="@+id/rytDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblEventDesc"
-                android:layout_marginTop="@dimen/fifteen"
-                android:background="@drawable/field_background"
-                android:layout_alignStart="@+id/lblEventDesc">
-
-
-                <EditText
-                    android:id="@+id/txtDesc"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/hundred"
-                    android:editable="true"
-                    android:focusable="true"
-                    android:background="@android:color/transparent"
-                    android:focusableInTouchMode="true"
-                    android:gravity="start"
-                    android:hint="@string/Description"
-                    android:maxLength="500"
-                    android:padding="@dimen/ten"
-                   >
-
-                </EditText>
-
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/lbTextCount"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rytDesc"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:visibility="gone"
-                android:text="@string/_0_of_500"
-               />
-
-            <TextView
-                android:id="@+id/lblSelectCategory"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lbTextCount"
-                android:layout_alignStart="@+id/lnrTitle"
-                android:layout_marginTop="@dimen/fifteen"
-                android:text="@string/select_category"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/crdSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblSelectCategory"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/five"
-                android:backgroundTint="@android:color/white"
-                app:cardCornerRadius="@dimen/five">
-
-                <Spinner
-                    android:id="@+id/isCategorySpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </Spinner>
-
-            </androidx.cardview.widget.CardView>
-
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbarLayout"
+            android:scrollbars="none"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/crdSpinner"
-                android:layout_alignStart="@+id/rytDesc"
-                android:layout_marginTop="@dimen/fifteen">
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:padding="@dimen/ten">
 
 
                 <RelativeLayout
-                    android:id="@+id/rytEventDateTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten">
-
+                    android:id="@+id/rytTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/lblStart"
+                        android:id="@+id/lblLocation"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ten"
-                        android:text="@string/starts_on"
-                       />
-
-                    <TextView
-                        android:id="@+id/lblStar4"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginTop="@dimen/five"
-                        android:layout_toEndOf="@id/lblStart"
+                        android:text="@string/Venue" />
+
+                    <TextView
+                        android:id="@+id/lblStar"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/lblLocation"
                         android:text="@string/mandatory"
-                        android:textColor="@color/red"
-                         />
+                        android:textColor="@color/red" />
+
+                    <ImageView
+                        android:layout_toEndOf="@+id/lblStar"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:src="@drawable/ic_location" />
 
 
                     <RelativeLayout
-                        android:id="@+id/rytStart"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/lblStart"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/ten">
-
-                        <RelativeLayout
-                            android:id="@+id/rytStartDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cardStart"
-                                android:layout_width="@dimen/sixty"
-                                android:layout_height="@dimen/sixty"
-                                app:cardCornerRadius="@dimen/ten">
-
-                                <LinearLayout
-                                    android:id="@+id/lnrStartCalendar"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/bg_stroke_rect_black"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:id="@+id/lblDay"
-                                        style="@style/CustomTextStylePoppinsBold"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center_horizontal"
-                                        android:layout_marginTop="@dimen/five"
-                                        android:text="Fri"
-                                        android:textSize="@dimen/fifteen_sp" />
-
-                                    <TextView
-                                        android:id="@+id/lblDate"
-                                        style="@style/CustomTextStylePoppinsBold"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/primary_light"
-                                        android:gravity="center"
-                                        android:text="12"
-                                        android:textSize="@dimen/fifteen_sp" />
-
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-
-
-                            <ImageView
-                                android:id="@+id/imgDateDown"
-                                android:layout_width="@dimen/twenty"
-                                android:layout_height="@dimen/twenty"
-                                android:layout_centerVertical="true"
-                                android:layout_toEndOf="@+id/cardStart"
-                                android:src="@drawable/ic_down_arrow" />
-
-
-                            <TextView
-                                android:id="@+id/txtStartDate"
-                                style="@style/CustomTextStylePoppinsRegular"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginStart="@dimen/five"
-                                android:layout_marginTop="@dimen/ten"
-                                android:layout_toEndOf="@+id/imgDateDown"
-                                android:text=""
-                                android:textSize="@dimen/thirteen_sp" />
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/rytStartTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@id/rytStartDate">
-
-                            <ImageView
-                                android:id="@+id/imgTimeDown"
-                                android:layout_width="@dimen/twenty"
-                                android:layout_height="@dimen/twenty"
-                                android:layout_centerVertical="true"
-                                android:layout_toStartOf="@+id/txtStartTime"
-                                android:src="@drawable/ic_down_arrow" />
-
-                            <TextView
-                                android:id="@+id/txtStartTime"
-                                style="@style/CustomTextStylePoppinsMedium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:text=""
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp" />
-
-                        </RelativeLayout>
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/one"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="@dimen/sixty"
-                            android:background="@color/grey" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rlaFilePicking"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/rytStart"
-                        android:layout_marginTop="@dimen/five">
-
-                        <TextView
-                            android:id="@+id/lblAddPhoto"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ten"
-                            android:text="@string/add_attachment"
-                           >
-
-                        </TextView>
-
-                        <TextView
-                            android:id="@+id/lblOptional"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/eight"
-                            android:layout_marginTop="@dimen/ten"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_toEndOf="@+id/lblAddPhoto"
-                            android:text="@string/Optional"
-                            android:textColor="@color/mild_grey1"
-                            android:textSize="@dimen/thirteen_sp">
-
-                        </TextView>
+                        android:id="@+id/rytHistory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:paddingHorizontal="@dimen/ten">
 
                         <ImageView
-                            android:layout_width="@dimen/twenty_five"
-                            android:layout_height="@dimen/twenty_five"
-                            android:layout_alignParentEnd="true"
+                            android:id="@+id/imgHistory"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
                             android:layout_marginTop="@dimen/ten"
-                            android:src="@drawable/ic_attach_file">
+                            android:layout_marginEnd="@dimen/five"
+                            android:backgroundTint="@color/PrimaryColor"
+                            android:src="@drawable/ic_history">
 
                         </ImageView>
 
-                        <RelativeLayout
-                            android:id="@+id/rytRecyclewview"
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/btnNoticeBoardReport"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/lblAddPhoto">
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/imgHistory"
+                            android:text="History >>"
+                            android:textColor="@color/PrimaryColor" />
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rcyImages"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/ten"
-                                android:orientation="vertical">
+                    </RelativeLayout>
+                </RelativeLayout>
 
-                            </androidx.recyclerview.widget.RecyclerView>
-                        </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/lnrVenue"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_below="@+id/rytTitle"
+                    android:layout_alignStart="@+id/rytTitle"
+                    android:background="@drawable/field_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <EditText
+                        android:id="@+id/txtLocation"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:inputType="text"
+                        android:paddingHorizontal="@dimen/ten"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/lblEventTitle"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrVenue"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:text="@string/Title" />
+
+                <TextView
+                    android:id="@+id/lblStar1"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrVenue"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_toEndOf="@id/lblEventTitle"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <LinearLayout
+                    android:id="@+id/lnrTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_below="@+id/lblEventTitle"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:background="@drawable/field_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <EditText
+                        android:id="@+id/txtTitle"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:inputType="text"
+                        android:paddingHorizontal="@dimen/ten"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/lbtitleTextCount"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrTitle"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:text="0 of 50"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/lblEventDesc"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lbtitleTextCount"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:text="@string/Description" />
+
+
+                <TextView
+                    android:id="@+id/lblStar3"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lbtitleTextCount"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_toEndOf="@id/lblEventDesc"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rytDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblEventDesc"
+                    android:layout_alignStart="@+id/lblEventDesc"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:background="@drawable/field_background">
+
+
+                    <EditText
+                        android:id="@+id/txtDesc"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hundred"
+                        android:background="@android:color/transparent"
+                        android:editable="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="start"
+                        android:hint="@string/Description"
+                        android:maxLength="500"
+                        android:padding="@dimen/ten">
+
+                    </EditText>
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/lbTextCount"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rytDesc"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:text="@string/_0_of_500"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/lblSelectCategory"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lbTextCount"
+                    android:layout_alignStart="@+id/lnrTitle"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:text="@string/select_category"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/crdSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblSelectCategory"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/five"
+                    android:backgroundTint="@android:color/white"
+                    app:cardCornerRadius="@dimen/five">
+
+                    <Spinner
+                        android:id="@+id/isCategorySpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </Spinner>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/crdSpinner"
+                    android:layout_alignStart="@+id/rytDesc"
+                    android:layout_marginTop="@dimen/fifteen">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rytEventDateTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten">
+
 
                         <TextView
-                            android:id="@+id/btnNext"
+                            android:id="@+id/lblStart"
                             style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/rytRecyclewview"
-                            android:layout_marginStart="@dimen/twenty_five"
-                            android:layout_marginTop="@dimen/fifty"
-                            android:layout_marginEnd="@dimen/twenty_five"
-                            android:layout_marginBottom="@dimen/thirty"
-                            android:background="@drawable/rect_btn_orange"
-                            android:gravity="center"
-                            android:padding="@dimen/ten"
-                            android:text="@string/NEXT"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/thirteen_sp">
+                            android:layout_marginTop="@dimen/ten"
+                            android:text="@string/starts_on" />
 
-                        </TextView>
+                        <TextView
+                            android:id="@+id/lblStar4"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/five"
+                            android:layout_toEndOf="@id/lblStart"
+                            android:text="@string/mandatory"
+                            android:textColor="@color/red" />
+
+
+                        <RelativeLayout
+                            android:id="@+id/rytStart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/lblStart"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten">
+
+                            <RelativeLayout
+                                android:id="@+id/rytStartDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/cardStart"
+                                    android:layout_width="@dimen/sixty"
+                                    android:layout_height="@dimen/sixty"
+                                    app:cardCornerRadius="@dimen/ten">
+
+                                    <LinearLayout
+                                        android:id="@+id/lnrStartCalendar"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/bg_stroke_rect_black"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/lblDay"
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_horizontal"
+                                            android:layout_marginTop="@dimen/five"
+                                            android:text="Fri"
+                                            android:textSize="@dimen/fifteen_sp" />
+
+                                        <TextView
+                                            android:id="@+id/lblDate"
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@color/primary_light"
+                                            android:gravity="center"
+                                            android:text="12"
+                                            android:textSize="@dimen/fifteen_sp" />
+
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+
+                                <ImageView
+                                    android:id="@+id/imgDateDown"
+                                    android:layout_width="@dimen/twenty"
+                                    android:layout_height="@dimen/twenty"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toEndOf="@+id/cardStart"
+                                    android:src="@drawable/ic_down_arrow" />
+
+
+                                <TextView
+                                    android:id="@+id/txtStartDate"
+                                    style="@style/CustomTextStylePoppinsRegular"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="@dimen/five"
+                                    android:layout_marginTop="@dimen/ten"
+                                    android:layout_toEndOf="@+id/imgDateDown"
+                                    android:text=""
+                                    android:textSize="@dimen/thirteen_sp" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rytStartTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/rytStartDate">
+
+                                <ImageView
+                                    android:id="@+id/imgTimeDown"
+                                    android:layout_width="@dimen/twenty"
+                                    android:layout_height="@dimen/twenty"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@+id/txtStartTime"
+                                    android:src="@drawable/ic_down_arrow" />
+
+                                <TextView
+                                    android:id="@+id/txtStartTime"
+                                    style="@style/CustomTextStylePoppinsMedium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:text=""
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/thirteen_sp" />
+
+                            </RelativeLayout>
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/one"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginStart="@dimen/sixty"
+                                android:background="@color/grey" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlaFilePicking"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/rytStart"
+                            android:layout_marginTop="@dimen/five">
+
+                            <TextView
+                                android:id="@+id/lblAddPhoto"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ten"
+                                android:text="@string/add_attachment">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/lblOptional"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/eight"
+                                android:layout_marginTop="@dimen/ten"
+                                android:layout_toEndOf="@+id/lblAddPhoto"
+                                android:text="@string/Optional"
+                                android:textColor="@color/mild_grey1"
+                                android:textSize="@dimen/thirteen_sp">
+
+                            </TextView>
+
+                            <ImageView
+                                android:layout_width="@dimen/twenty_five"
+                                android:layout_height="@dimen/twenty_five"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/ten"
+                                android:src="@drawable/ic_attach_file">
+
+                            </ImageView>
+
+                            <RelativeLayout
+                                android:id="@+id/rytRecyclewview"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/lblAddPhoto">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rcyImages"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/ten"
+                                    android:orientation="vertical">
+
+                                </androidx.recyclerview.widget.RecyclerView>
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/btnNext"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/rytRecyclewview"
+                                android:layout_marginStart="@dimen/twenty_five"
+                                android:layout_marginTop="@dimen/fifty"
+                                android:layout_marginEnd="@dimen/twenty_five"
+                                android:layout_marginBottom="@dimen/thirty"
+                                android:background="@drawable/rect_btn_orange"
+                                android:gravity="center"
+                                android:padding="@dimen/ten"
+                                android:text="@string/NEXT"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/thirteen_sp">
+
+                            </TextView>
+                        </RelativeLayout>
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
-    </ScrollView>
+        </ScrollView>
 
 
     </RelativeLayout>

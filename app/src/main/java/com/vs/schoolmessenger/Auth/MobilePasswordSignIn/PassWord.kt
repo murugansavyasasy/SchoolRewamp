@@ -11,8 +11,10 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -26,6 +28,8 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
     }
 
     var authViewModel: Auth? = null
+    private var appViewModel: App? = null
+
 
     override fun setupViews() {
         super.setupViews()
@@ -41,6 +45,7 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
 
         binding.lblForgetPassword.paintFlags =
             binding.lblForgetPassword.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
@@ -52,6 +57,15 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
                 val status = response.status
                 response.message
                 if (status) {
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_login)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                        addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
+
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser
                     Constant.user_details = Constant.user_data!![0].user_details

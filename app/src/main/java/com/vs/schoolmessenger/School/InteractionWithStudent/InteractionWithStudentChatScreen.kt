@@ -1,9 +1,11 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent
 
 
+import android.content.Context
 import android.os.Build
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,7 +83,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             }
         }
 
-        binding.lblStudentName.text = QuestionDataSending?.name ?: ""
+        binding.lblStudentName.text = "${QuestionDataSending?.name ?: ""} (${QuestionDataSending?.section_name ?: ""})"
         binding.lblStudentSection.text = QuestionDataSending?.subject_name ?: ""
     }
 
@@ -183,13 +185,17 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
                 binding.replyLinearlayout.visibility = View.GONE
                 binding.btnAdd.visibility = View.GONE
                 binding.edtMessage.visibility = View.GONE
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.edtMessage.windowToken, 0)
             }
+
         }
     }
 
     override fun onAnswerClick(chat: QuestionData, position: Int) {
         binding.replyLinearlayout.visibility = View.VISIBLE
         binding.txtReplyingTo.text = "${getString(R.string.Replying_To)} ${chat.student_name}"
+        Log.d("Student Name Reply Value",chat.student_name.toString())
         binding.btnAdd.visibility = View.GONE
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
@@ -202,6 +208,8 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         chat: QuestionData, position: Int, type: Boolean
     ) {
         binding.replyLinearlayout.visibility = View.VISIBLE
+        binding.txtReplyingTo.text = "${getString(R.string.Replying_To)} ${chat.student_name}"
+        Log.d("Student Name Reply Value",chat.student_name.toString())
         binding.btnAdd.visibility = View.GONE
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question

@@ -90,6 +90,11 @@ class SchoolEventCategoryAdapter (
         notifyItemChanged(newPosition)
     }
 
+    fun updateList(newData: List<Category>?) {
+        itemList = newData
+        notifyDataSetChanged()
+    }
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 

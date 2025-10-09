@@ -121,6 +121,11 @@ class SchoolEventUpcomingAdapter(
         }
     }
 
+    fun getCurrentList(): List<SchoolEventItem> {
+        return filteredList
+    }
+
+
 
     fun updateList(newList: List<SchoolEventItem>?) {
         this.itemList = newList

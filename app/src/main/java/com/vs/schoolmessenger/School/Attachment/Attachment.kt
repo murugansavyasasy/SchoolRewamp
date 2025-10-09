@@ -112,7 +112,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         Constant.Remaining = MAX_FILES
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.btnAttachmentsRepprt.setOnClickListener(this)
+        binding.rytHistory.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
 
@@ -583,7 +583,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
 
-            R.id.btnAttachmentsRepprt ->  startActivity(Intent(this, AttachmentReport::class.java))
+            R.id.rytHistory ->  startActivity(Intent(this, AttachmentReport::class.java))
 
             R.id.btnChooseRecipient -> {
                 Log.d("Final_selection", Constant.selectedFiles.size.toString())

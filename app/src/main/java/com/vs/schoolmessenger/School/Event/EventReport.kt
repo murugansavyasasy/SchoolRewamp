@@ -58,30 +58,21 @@ class EventReport : BaseActivity<EventReportBinding>(),
     }
 
     var isTotalSelectedItem = 0
-    private var cameraPermissionDeniedCount = 0
 
-    private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
 
     companion object {
-        private const val PICK_DOCUMENT_REQUEST = 1003
-        private const val MAX_FILES = 10
         internal const val CAMERA_IMAGE_REQUEST = 1004
     }
 
     var isEventId = ""
     var isEventPosition = 0
-    var isSelectedCategory = ""
 
-    private var cameraImageFilePath: String? = null
-    private val CAMERA_PERMISSION_REQUEST_CODE = 200
-    private var mAdapter: ImagePickingAdapter? = null
+
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var selectedCategory: Category? = null
 
-    var isFromTime = true
     private var isStaffDetails: StaffDetails? = null
-    private var selectedDateField: Int = 0
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     lateinit var schooleventAdapter: SchoolEventAdapter
@@ -132,14 +123,32 @@ class EventReport : BaseActivity<EventReportBinding>(),
                 binding.edtSearch.setText("")
                 binding.edtSearch.requestFocus()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(
-                    binding.edtSearch,
-                    InputMethodManager.SHOW_IMPLICIT
-                )
+                imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
             }
         }
 
+        // Initialize adapters once
+        schooleventAdapter = SchoolEventAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
+        binding.rcyongoingevent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcyongoingevent.isNestedScrollingEnabled = false
+        binding.rcyongoingevent.adapter = schooleventAdapter
 
+        categoryadapter = SchoolEventCategoryAdapter(null, this, this, Constant.isShimmerViewDisable)
+        binding.rcycategoryEvent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcycategoryEvent.isNestedScrollingEnabled = false
+        binding.rcycategoryEvent.adapter = categoryadapter
+
+        eventupcomingadapter = SchoolEventUpcomingAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
+        binding.rcyupcomingevent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rcyupcomingevent.isNestedScrollingEnabled = false
+        binding.rcyupcomingevent.adapter = eventupcomingadapter
+
+        eventcompletedadapter = SchoolEventCompletedAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
+        binding.rcycompletedevent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rcycompletedevent.isNestedScrollingEnabled = false
+        binding.rcycompletedevent.adapter = eventcompletedadapter
+
+        // Observe event data
         appViewModel?.IsGetEventSchoolReport?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
@@ -147,42 +156,29 @@ class EventReport : BaseActivity<EventReportBinding>(),
                 binding.rytSearch323.visibility = View.GONE
 
                 val data = response.data[0]
-
-                val CategoryList = data.categories
-
                 allOngoingEvents = data.on_going
                 allUpcomingEvents = data.up_coming
                 allCompletedEvents = data.completed
+                val categoryList = data.categories
 
-                binding.dotindicator.visibility =
-                    if (!allOngoingEvents.isNullOrEmpty() && allOngoingEvents!!.size > 1) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
-
-                updateVisibility(
-                    allOngoingEvents,
-                    binding.rcyongoingevent,
-                    binding.headerview
-                )
-                updateVisibility(CategoryList, binding.rcycategoryEvent, binding.categoryHeaderview)
-
-                updateVisibility(
-                    allUpcomingEvents,
-                    binding.rcyupcomingevent,
-                    binding.upcomingeventHeaderview
-                )
-                updateVisibility(
-                    allCompletedEvents,
-                    binding.rcycompletedevent,
-                    binding.completedeventHeaderview
-                )
-
+                // Update adapters with initial data
                 isloadeventData(allOngoingEvents)
-                isloadCategoryData(CategoryList)
+                isloadCategoryData(categoryList)
                 isloadUpcomingData(allUpcomingEvents)
                 isloadCompletedData(allCompletedEvents)
+
+                // Update visibility for all sections
+                updateVisibility(allOngoingEvents, binding.rcyongoingevent, binding.headerview, binding.dotindicator)
+                updateVisibility(categoryList, binding.rcycategoryEvent, binding.categoryHeaderview)
+                updateVisibility(allUpcomingEvents, binding.rcyupcomingevent, binding.upcomingeventHeaderview)
+                updateVisibility(allCompletedEvents, binding.rcycompletedevent, binding.completedeventHeaderview)
+
+                // Update no-data image visibility
+                val isAllEmpty = allOngoingEvents.isNullOrEmpty() &&
+                        allUpcomingEvents.isNullOrEmpty() &&
+                        allCompletedEvents.isNullOrEmpty()
+                binding.noDataImage.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+                binding.noDataText.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -191,19 +187,19 @@ class EventReport : BaseActivity<EventReportBinding>(),
             }
         }
 
-
-
+        // Update TextWatcher to respect selected category
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query = s?.toString() ?: ""
+                val query = s?.toString()?.trim() ?: ""
 
                 if (selectedCategory == null || selectedCategory?.name.equals("All", true)) {
-                    if (::schooleventAdapter.isInitialized) schooleventAdapter.filter.filter(query)
-                    if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(query)
-                    if (::eventupcomingadapter.isInitialized) eventupcomingadapter.filter.filter(query)
+                    // Filter all events if no category or "All" is selected
+                    schooleventAdapter.filter.filter(query)
+                    eventupcomingadapter.filter.filter(query)
+                    eventcompletedadapter.filter.filter(query)
                 } else {
+                    // Filter by selected category and search query
                     val categoryName = selectedCategory?.name ?: ""
-
                     val ongoingFiltered = allOngoingEvents?.filter { it.category == categoryName }
                     schooleventAdapter.updateList(
                         if (query.isEmpty()) ongoingFiltered else ongoingFiltered?.filter { it.title.contains(query, true) }
@@ -220,30 +216,17 @@ class EventReport : BaseActivity<EventReportBinding>(),
                     )
                 }
 
+                // Update visibility after filtering
                 binding.root.postDelayed({
+                    updateVisibility(schooleventAdapter.getCurrentList(), binding.rcyongoingevent, binding.headerview, binding.dotindicator)
+                    updateVisibility(eventupcomingadapter.getCurrentList(), binding.rcyupcomingevent, binding.upcomingeventHeaderview)
+                    updateVisibility(eventcompletedadapter.getCurrentList(), binding.rcycompletedevent, binding.completedeventHeaderview)
+
                     val isAllEmpty = schooleventAdapter.itemCount == 0 &&
                             eventupcomingadapter.itemCount == 0 &&
                             eventcompletedadapter.itemCount == 0
-
                     binding.noDataImage.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
                     binding.noDataText.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
-
-                    binding.rcyongoingevent.visibility =
-                        if (schooleventAdapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.headerview.visibility =
-                        if (schooleventAdapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.dotindicator.visibility =
-                        if (schooleventAdapter.itemCount > 0) View.VISIBLE else View.GONE
-
-                    binding.rcyupcomingevent.visibility =
-                        if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.upcomingeventHeaderview.visibility =
-                        if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
-
-                    binding.rcycompletedevent.visibility =
-                        if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.completedeventHeaderview.visibility =
-                        if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
                 }, 100)
             }
 
@@ -251,53 +234,7 @@ class EventReport : BaseActivity<EventReportBinding>(),
             override fun afterTextChanged(s: Editable?) {}
         })
 
-
-        schooleventAdapter = SchoolEventAdapter(
-            mutableListOf(),
-            this,
-            this,
-            Constant.isShimmerViewDisable
-        )
-        binding.rcyongoingevent.adapter = schooleventAdapter
-        binding.rcyongoingevent.layoutManager = LinearLayoutManager(this)
-
-
-        fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            schooleventAdapter.filter.filter(s)
-
-            binding.rcyongoingevent.post {
-                if (schooleventAdapter.itemCount == 0) {
-                    binding.noDataImage.visibility = View.VISIBLE
-                    binding.noDataText.visibility = View.VISIBLE
-                    binding.rcyongoingevent.visibility = View.GONE
-                } else {
-                    binding.noDataImage.visibility = View.GONE
-                    binding.noDataText.visibility = View.GONE
-                    binding.rcyongoingevent.visibility = View.VISIBLE
-                }
-            }
-        }
-
-        appViewModel!!.isEventDelete?.observe(this) { response ->
-            if (response != null) {
-                if (response.status) {
-                    Constant.hideLoading(this@EventReport)
-                    eventupcomingadapter.removeItemAt(isEventPosition)
-                } else {
-                    Constant.showDataValidation(
-                        resources.getString(R.string.fail), response.message, this
-                    )
-                }
-            }
-        }
-
         loadeventdata()
-        binding.headerview.visibility = View.GONE
-        binding.categoryHeaderview.visibility = View.GONE
-        binding.upcomingeventHeaderview.visibility = View.GONE
-        binding.completedeventHeaderview.visibility = View.GONE
-        binding.dotindicator.visibility = View.GONE
-        binding.rcycategoryEvent.visibility = View.GONE
     }
 
 
@@ -316,7 +253,7 @@ class EventReport : BaseActivity<EventReportBinding>(),
 
     private fun hideAllSections() {
         updateVisibility(
-            emptyList<Any>(), binding.rcyongoingevent, binding.headerview
+            emptyList<Any>(), binding.rcyongoingevent, binding.headerview, binding.dotindicator
         )
         updateVisibility(emptyList<Any>(), binding.rcycategoryEvent, binding.categoryHeaderview)
         updateVisibility(
@@ -329,68 +266,26 @@ class EventReport : BaseActivity<EventReportBinding>(),
 
 
     private fun isloadCategoryData(newData: List<Category>?) {
-        categoryadapter = SchoolEventCategoryAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcycategoryEvent.adapter = categoryadapter
+        categoryadapter.updateList(newData ?: emptyList())
     }
+
 
     private fun loadeventdata() {
         Constant.showLoading(this)
-
-        schooleventAdapter =
-            SchoolEventAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
-        binding.rcyongoingevent.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rcyongoingevent.isNestedScrollingEnabled = false
-        binding.rcyongoingevent.adapter = schooleventAdapter
-
-        categoryadapter = SchoolEventCategoryAdapter(null, this, this, Constant.isShimmerViewDisable)
-        binding.rcycategoryEvent.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rcycategoryEvent.isNestedScrollingEnabled = false
-        binding.rcycategoryEvent.adapter = categoryadapter
-
-
-
-        eventupcomingadapter =
-            SchoolEventUpcomingAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
-        binding.rcyupcomingevent.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rcyupcomingevent.isNestedScrollingEnabled = false
-        binding.rcyupcomingevent.adapter = eventupcomingadapter
-
-        eventcompletedadapter =
-            SchoolEventCompletedAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
-        binding.rcycompletedevent.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rcycompletedevent.isNestedScrollingEnabled = false
-        binding.rcycompletedevent.adapter = eventcompletedadapter
-
-
         appViewModel!!.IsGetEventSchoolReport(isAccessToken!!, this)
     }
 
 
     private fun isloadeventData(newData: List<SchoolEventItem>?) {
-        val list = newData?.toMutableList() ?: mutableListOf()
-        if (::schooleventAdapter.isInitialized) {
-            schooleventAdapter.updateList(list)
-        } else {
-            schooleventAdapter = SchoolEventAdapter(list, this, this, Constant.isShimmerViewDisable)
-            binding.rcyongoingevent.adapter = schooleventAdapter
-        }
+        schooleventAdapter.updateList(newData ?: emptyList())
     }
 
-
     private fun isloadUpcomingData(newData: List<SchoolEventItem>?) {
-        eventupcomingadapter =
-            SchoolEventUpcomingAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcyupcomingevent.adapter = eventupcomingadapter
+        eventupcomingadapter.updateList(newData ?: emptyList())
     }
 
     private fun isloadCompletedData(newData: List<SchoolEventItem>?) {
-        eventcompletedadapter =
-            SchoolEventCompletedAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcycompletedevent.adapter = eventcompletedadapter
+        eventcompletedadapter.updateList(newData ?: emptyList())
     }
 
 
@@ -612,7 +507,6 @@ class EventReport : BaseActivity<EventReportBinding>(),
         binding.edtSearch.setText("")
         filterAllEventLists()
     }
-
     fun showConfirmationDialog(
         title: String,
         message: String,

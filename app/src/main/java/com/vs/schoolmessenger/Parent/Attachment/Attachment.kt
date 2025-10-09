@@ -15,6 +15,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
+import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -102,8 +103,17 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         appViewModel?.isAttachmentResponse?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+                val mobileNumber = SharedPreference.getMobileNumber(this)
+
+                val jsonObject = JsonObject().apply {
+                    addProperty(APIKeyNames.mobile_number, mobileNumber)
+                    addProperty(APIKeyNames.activity, Constant.add_points_view_attachments)
+                    addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                    addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
+                }
+                appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+
                 binding.txtNoData.visibility = View.GONE
-//                binding.lytList.visibility = View.GONE
                 binding.nomessage.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 binding.recycleracademic.visibility = View.VISIBLE
