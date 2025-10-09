@@ -79,6 +79,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
 
 object Constant {
@@ -1645,6 +1646,37 @@ object Constant {
         }
 
     }
+
+
+
+    fun formatChatDate(createdOn: String): String {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+        val date = inputFormat.parse(createdOn) ?: return createdOn
+
+        val now = Calendar.getInstance()
+        val messageCal = Calendar.getInstance().apply { time = date }
+
+        val diffMillis = now.timeInMillis - messageCal.timeInMillis
+        val daysDiff = TimeUnit.MILLISECONDS.toDays(diffMillis)
+
+        return when {
+
+            now.get(Calendar.YEAR) == messageCal.get(Calendar.YEAR) &&
+                    now.get(Calendar.DAY_OF_YEAR) == messageCal.get(Calendar.DAY_OF_YEAR) -> {
+                SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
+            }
+
+            daysDiff == 1L -> {
+                "1 day ago"
+            }
+
+
+            else -> {
+                SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
+            }
+        }
+    }
+
 
     fun CustomisedconvertDateTimeFormat(input: String): String {
         return try {
