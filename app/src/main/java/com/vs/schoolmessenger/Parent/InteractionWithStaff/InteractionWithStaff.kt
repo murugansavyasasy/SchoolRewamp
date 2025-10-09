@@ -38,7 +38,6 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
         return IntectionWithStaffBinding.inflate(layoutInflater)
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()

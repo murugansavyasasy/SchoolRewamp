@@ -800,7 +800,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
     }
 
     private fun getPathFromUri(uri: Uri): String? {
-        // Content scheme
         if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
             val projection = arrayOf(MediaStore.Images.Media.DATA)
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
@@ -811,7 +810,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             }
         }
 
-        // File scheme fallback
         if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
             return uri.path
         }

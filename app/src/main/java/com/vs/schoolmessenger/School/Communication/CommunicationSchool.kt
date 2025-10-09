@@ -330,7 +330,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         )
     }
 
-
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
         mTextAdapter =
             TextHistoryAdapter(isTextHistoryDetails, this, this, Constant.isShimmerViewDisable)
@@ -517,7 +516,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             Log.e("MediaPlayerError", "Audio file path is null or empty")
             return
         }
-        // Release any existing player
         mediaPlayer?.apply {
             try {
                 stop()
@@ -623,7 +621,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             ContextCompat.getDrawable(this, R.drawable.video_play)
         )
     }
-
 
     fun checkAndRequestAccessFilePermissions(activity: Activity): Boolean {
         val permissions = mutableListOf<String>()

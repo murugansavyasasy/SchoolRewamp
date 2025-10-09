@@ -2023,7 +2023,6 @@ object Constant {
             newHeight = maxHeight
             newWidth = (maxHeight * ratio).toInt()
         }
-
         return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
     }
 
@@ -2253,7 +2252,6 @@ object Constant {
 
     fun setupEditTextWithScroll(context: Context, scrollView: ScrollView, editText: EditText) {
         val delayMillis = 300L
-
         editText.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
                 v.postDelayed({
@@ -2277,7 +2275,6 @@ object Constant {
             setSingleLine(false)
             isVerticalScrollBarEnabled = true
             overScrollMode = View.OVER_SCROLL_ALWAYS
-
             requestFocus()
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
