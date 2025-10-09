@@ -105,7 +105,7 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isLoadSchoolList()
 
-        binding.toolbarLayout.layoutCreateSlot.visibility = View.VISIBLE
+        binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
             val intent = Intent(this, Attachment::class.java)
             startActivity(intent)

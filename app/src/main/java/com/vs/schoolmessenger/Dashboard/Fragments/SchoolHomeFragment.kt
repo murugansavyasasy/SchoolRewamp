@@ -40,9 +40,9 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
 import com.vs.schoolmessenger.School.Assignment.AssignmentReport
 import com.vs.schoolmessenger.School.Attachment.Attachment
-import com.vs.schoolmessenger.School.Attachment.AttachmentReport
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -275,9 +275,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
     private fun isLoadData() {
-
+        val safeActivity = activity ?: return
         isMenuAdapter = SchoolMenuAdapter(
-            requireActivity(),
+            safeActivity,
             this,
             isSchoolMenuDetails,
             isSchoolMenuCountDetails,
@@ -373,12 +373,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_COMMUNICATION -> CommunicationSchool::class.java
             Constant.M_ASSIGNMENT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    AssignmentReport::class.java
+                    AssignmentCreate::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
-                        AssignmentReport::class.java
+                        AssignmentCreate::class.java
                     }
                 }
             }
@@ -386,12 +386,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_HOMEWORK -> {
 
                 if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    HomeworkReport::class.java
+                    HomeWorkCreate::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
-                        HomeworkReport::class.java
+                        HomeWorkCreate::class.java
                     }
                 }
             }
@@ -444,16 +444,23 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.M_NOTICEBOARD -> NoticeBoardReport::class.java
+            Constant.M_NOTICEBOARD ->{
+                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                    NoticeBoardReport::class.java
+                }
+                else{
+                    CreateNoticeBoard::class.java
+                }
+            }
             Constant.M_SCHOOL_CLASS_EVENTS -> {
 
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    EventReport::class.java
+                    CreateEvent::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
-                        EventReport::class.java
+                        CreateEvent::class.java
                     }
                 }
             }
@@ -575,7 +582,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
             Constant.M_ATTACHMENTS -> {
-                AttachmentReport::class.java
+                Attachment::class.java
             }
 
             Constant.M_LEAVE_REQUEST -> {

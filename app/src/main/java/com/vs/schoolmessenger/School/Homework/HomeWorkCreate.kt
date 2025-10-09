@@ -128,6 +128,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         appViewModel!!.init()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.btnHomeWorkReport.setOnClickListener(this)
 //        binding.lnrTabOneName.setOnClickListener(this)
 //        binding.lnrTabTwoName.setOnClickListener(this)
 //        binding.AcademicYear.setOnClickListener(this)
@@ -541,6 +542,8 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                     isRedirectToSectionStudents()
                 }
             }
+
+            R.id.btnHomeWorkReport -> startActivity(Intent(this, HomeworkReport::class.java))
         }
     }
 

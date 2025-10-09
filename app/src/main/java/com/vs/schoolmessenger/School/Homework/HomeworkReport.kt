@@ -104,7 +104,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
-        binding.toolbarLayout.layoutCreateSlot.visibility = View.VISIBLE
+        binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
             val intent = Intent(this, HomeWorkCreate::class.java)
             startActivity(intent)
