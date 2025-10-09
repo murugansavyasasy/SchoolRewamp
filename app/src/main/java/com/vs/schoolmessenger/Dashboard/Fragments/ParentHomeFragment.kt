@@ -240,9 +240,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
     private fun isLoadData() {
+        val safeActivity = activity ?: return
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         isMenuAdapter = ChildMenuAdapter(
-            requireActivity(),
+            safeActivity,
             this,
             isParentMenuDetails,
             isParentMenuCountDetails,

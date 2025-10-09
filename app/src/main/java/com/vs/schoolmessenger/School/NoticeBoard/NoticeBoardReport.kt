@@ -114,7 +114,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
             }
         }
 
-        binding.toolbarLayout.layoutCreateSlot.visibility = View.VISIBLE
+        binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
             val intent = Intent(this, CreateNoticeBoard::class.java)
             startActivity(intent)

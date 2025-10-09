@@ -1705,6 +1705,19 @@ object Constant {
         }
     }
 
+    // yyyy-MM-dd → dd-MM-yyyy
+    fun formatToUi2(dateStr: String?): String {
+        if (dateStr.isNullOrBlank()) return "--"
+        return try {
+            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
+            val outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault())
+            val localDate = LocalDate.parse(dateStr, inputFormatter)
+            localDate.format(outputFormatter)
+        } catch (e: Exception) {
+            dateStr
+        }
+    }
+
     // yyyy-MM-dd → Monday, October 12 2025
     fun formatToPretty(dateStr: String?): String {
         if (dateStr.isNullOrBlank()) return "--"

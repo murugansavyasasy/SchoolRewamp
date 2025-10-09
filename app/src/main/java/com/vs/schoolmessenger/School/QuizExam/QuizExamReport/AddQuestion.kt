@@ -582,133 +582,155 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     }
 
     fun isAddQuestionSubmit() {
-        Log.d("quizAttachments", quizAttachments.size.toString())
-        for (i in quizAttachments.indices) {
-            isUploadFilesInServer(
-                quizAttachments[i].isUrl,
-                quizAttachments.get(i).isType,
-                quizAttachments.get(i).isPosition
-            )
-        }
-//        Log.d("isQuizUploadedFiles==============", isQuizUploadedFiles.size.toString())
-//        for (i in isQuizUploadedFiles.indices) {
-//            Log.d("isFileUploading+++++++++++++++", isQuizUploadedFiles.get(i).isUrl.toString())
-//            Log.d(
-//                "isFileUploading+++++++++++++++",
-//                isQuizUploadedFiles.get(i).isPosition.toString()
+//        Log.d("quizAttachments", quizAttachments.size.toString())
+//        for (i in quizAttachments.indices) {
+//            isUploadFilesInServer(
+//                quizAttachments[i].isUrl,
+//                quizAttachments.get(i).isType,
+//                quizAttachments.get(i).isPosition
 //            )
 //        }
-        Log.d("isQuizUploadedFiles___isPosition1",isQuizUploadedFiles.size.toString())
-        Log.d("isQuizUploadedFiles___isPosition2",quizAttachments.size.toString())
-if (isQuizUploadedFiles.size == quizAttachments.size){
+////        Log.d("isQuizUploadedFiles==============", isQuizUploadedFiles.size.toString())
+////        for (i in isQuizUploadedFiles.indices) {
+////            Log.d("isFileUploading+++++++++++++++", isQuizUploadedFiles.get(i).isUrl.toString())
+////            Log.d(
+////                "isFileUploading+++++++++++++++",
+////                isQuizUploadedFiles.get(i).isPosition.toString()
+////            )
+////        }
+//        Log.d("isQuizUploadedFiles___isPosition1",isQuizUploadedFiles.size.toString())
+//        Log.d("isQuizUploadedFiles___isPosition2",quizAttachments.size.toString())
+//if (isQuizUploadedFiles.size == quizAttachments.size){
+//        val allQuestions = quizAdapter!!.getUpdatedList()
+//        val root = JsonObject()
+//        for (i in allQuestions.indices) {
+//            if (allQuestions[i].sourceType == QuestionSource.API ||
+//                allQuestions[i].sourceType == QuestionSource.USER ||
+//                allQuestions[i].sourceType == QuestionSource.QBANK
+//            ) {
+//
+//                root.addProperty("quiz_id", "1308")
+//                root.addProperty("max_mark", 7)
+//                root.addProperty("ok_flag", false)
+//
+//                val questionsArray = JsonArray()
+//
+//                for (i in allQuestions.indices) {
+//                    val q = allQuestions[i]
+//
+////                    if (q.sourceType == QuestionSource.API ||
+////                        q.sourceType == QuestionSource.USER ||
+////                        q.sourceType == QuestionSource.QBANK
+////                    ) {
+//                    val questionObj = JsonObject()
+//                    questionObj.addProperty("a_option", q.a_option)
+//                    questionObj.addProperty("b_option", q.b_option)
+//                    questionObj.addProperty("c_option", q.c_option)
+//                    questionObj.addProperty("d_option", q.d_option)
+//                    questionObj.addProperty("answer", q.answer)
+//                    questionObj.addProperty("chapter", q.chapter)
+//                    questionObj.addProperty("ques_no", q.id)
+//                    questionObj.addProperty("question", q.question)
+//                    questionObj.addProperty("mark", q.mark)
+//                    questionObj.addProperty("iframe", q.iframe ?: "")
+//                    questionObj.addProperty("file_size", "4")
+//                    questionObj.addProperty("thumbnail", q.thumbnail ?: "")
+//
+//                    val filePathArray = JsonArray()
+//                    for (file in isQuizUploadedFiles) {
+//                        if (file.isPosition.toString() == q.toString()) {
+//                            val fileObj = JsonObject()
+//                            fileObj.addProperty("type", file.isType)
+//                            fileObj.addProperty("url", file.isUrl)
+//                            filePathArray.add(fileObj)
+//                        }
+//                    }
+//                    questionObj.add("file_path", filePathArray)
+//
+//                    questionsArray.add(questionObj)
+//                    // }
+//                }
+//                root.add("questions", questionsArray)
+//                val updateArray = JsonArray()
+//                val updateObj = JsonObject()
+//                updateObj.addProperty("a_option", "90°C")
+//                updateObj.addProperty("b_option", "100°C")
+//                updateObj.addProperty("c_option", "81°C")
+//                updateObj.addProperty("d_option", "80°C")
+//                updateObj.addProperty("answer", "2")
+//                updateObj.addProperty("chapter", "Chapter-1")
+//                updateObj.addProperty("ques_no", "")
+//                updateObj.addProperty("question", "Modified question Bank")
+//                updateObj.addProperty("mark", 2)
+//                updateObj.addProperty("subject_id", "112613")
+//
+//                updateArray.add(updateObj)
+//                root.add("update_question_bank", updateArray)
+//
+//            }
+//
+//            val jsonString = root.toString()
+//            Log.d("QuizRequestJSON", jsonString)
+//        }
+
+//        val apiUserQuestions = allQuestions
+//            .filter { it.sourceType == QuestionSource.API || it.sourceType == QuestionSource.USER || it.sourceType == QuestionSource.QBANK }
+//            .map {
+//                QuizQuestionRequest(
+//                    ques_no = it.id,
+//                    chapter = it.chapter,
+//                    question = it.question,
+//                    a_option = it.a_option,
+//                    b_option = it.b_option,
+//                    c_option = it.c_option,
+//                    d_option = it.d_option,
+//                    answer = it.answer,
+//                    mark = it.mark,
+//                    iframe = it.iframe ?: "",
+//                    file_size = "4",
+//                    thumbnail = it.thumbnail ?: "",
+//                    file_path = listOf(
+//                        FilePath(
+//                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782816.jpg",
+//                            type = "IMAGE"
+//                        ),
+//                        FilePath(
+//                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782401.jpg",
+//                            type = "IMAGE"
+//                        ),
+//                        FilePath(
+//                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_150kB.pdf",
+//                            type = "PDF"
+//                        ),
+//                        FilePath(
+//                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_100kB.docx",
+//                            type = "WORD"
+//                        )
+//                    )
+//                )
+//            }
+
         val allQuestions = quizAdapter!!.getUpdatedList()
-        val root = JsonObject()
-        for (i in allQuestions.indices) {
-            if (allQuestions[i].sourceType == QuestionSource.API ||
-                allQuestions[i].sourceType == QuestionSource.USER ||
-                allQuestions[i].sourceType == QuestionSource.QBANK
-            ) {
-
-                root.addProperty("quiz_id", "1308")
-                root.addProperty("max_mark", 7)
-                root.addProperty("ok_flag", false)
-
-                val questionsArray = JsonArray()
-
-                for (i in allQuestions.indices) {
-                    val q = allQuestions[i]
-
-//                    if (q.sourceType == QuestionSource.API ||
-//                        q.sourceType == QuestionSource.USER ||
-//                        q.sourceType == QuestionSource.QBANK
-//                    ) {
-                    val questionObj = JsonObject()
-                    questionObj.addProperty("a_option", q.a_option)
-                    questionObj.addProperty("b_option", q.b_option)
-                    questionObj.addProperty("c_option", q.c_option)
-                    questionObj.addProperty("d_option", q.d_option)
-                    questionObj.addProperty("answer", q.answer)
-                    questionObj.addProperty("chapter", q.chapter)
-                    questionObj.addProperty("ques_no", q.id)
-                    questionObj.addProperty("question", q.question)
-                    questionObj.addProperty("mark", q.mark)
-                    questionObj.addProperty("iframe", q.iframe ?: "")
-                    questionObj.addProperty("file_size", "4")
-                    questionObj.addProperty("thumbnail", q.thumbnail ?: "")
-
-                    val filePathArray = JsonArray()
-                    for (file in isQuizUploadedFiles) {
-                        if (file.isPosition.toString() == q.toString()) {
-                            val fileObj = JsonObject()
-                            fileObj.addProperty("type", file.isType)
-                            fileObj.addProperty("url", file.isUrl)
-                            filePathArray.add(fileObj)
-                        }
-                    }
-                    questionObj.add("file_path", filePathArray)
-
-                    questionsArray.add(questionObj)
-                    // }
-                }
-                root.add("questions", questionsArray)
-                val updateArray = JsonArray()
-                val updateObj = JsonObject()
-                updateObj.addProperty("a_option", "90°C")
-                updateObj.addProperty("b_option", "100°C")
-                updateObj.addProperty("c_option", "81°C")
-                updateObj.addProperty("d_option", "80°C")
-                updateObj.addProperty("answer", "2")
-                updateObj.addProperty("chapter", "Chapter-1")
-                updateObj.addProperty("ques_no", "")
-                updateObj.addProperty("question", "Modified question Bank")
-                updateObj.addProperty("mark", 2)
-                updateObj.addProperty("subject_id", "112613")
-
-                updateArray.add(updateObj)
-                root.add("update_question_bank", updateArray)
-
-            }
-
-            val jsonString = root.toString()
-            Log.d("QuizRequestJSON", jsonString)
-        }
 
         val apiUserQuestions = allQuestions
-            .filter { it.sourceType == QuestionSource.API || it.sourceType == QuestionSource.USER || it.sourceType == QuestionSource.QBANK }
-            .map {
-                QuizQuestionRequest(
-                    ques_no = it.id,
-                    chapter = it.chapter,
-                    question = it.question,
-                    a_option = it.a_option,
-                    b_option = it.b_option,
-                    c_option = it.c_option,
-                    d_option = it.d_option,
-                    answer = it.answer,
-                    mark = it.mark,
-                    iframe = it.iframe ?: "",
-                    file_size = "4",
-                    thumbnail = it.thumbnail ?: "",
-                    file_path = listOf(
-                        FilePath(
-                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782816.jpg",
-                            type = "IMAGE"
-                        ),
-                        FilePath(
-                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-08-22/IMG_1755839782401.jpg",
-                            type = "IMAGE"
-                        ),
-                        FilePath(
-                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_150kB.pdf",
-                            type = "PDF"
-                        ),
-                        FilePath(
-                            url = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents/file-sample_100kB.docx",
-                            type = "WORD"
-                        )
-                    )
-                )
-            }
+        .filter { it.sourceType == QuestionSource.API || it.sourceType == QuestionSource.USER || it.sourceType == QuestionSource.QBANK }
+        .map {
+            QuizQuestionRequest(
+                ques_no = it.id,
+                chapter = it.chapter,
+                question = it.question,
+                a_option = it.a_option,
+                b_option = it.b_option,
+                c_option = it.c_option,
+                d_option = it.d_option,
+                answer = it.answer,
+                mark = it.mark,
+                iframe = it.iframe ?: "",
+                file_size = "",
+                thumbnail = it.thumbnail ?: "",
+                file_path = emptyList()
+            )
+        }
 
         val updateQBankList: List<UpdateQBankItem> = allQuestions
             .filter { it.sourceType == QuestionSource.QBANK }
@@ -780,16 +802,15 @@ if (isQuizUploadedFiles.size == quizAttachments.size){
                 isMessage
             ) { confirmed ->
                 if (confirmed) {
-//                    Constant.showLoading(this)
-//                    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+                    Constant.showLoading(this)
+                    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
                 }
             }
 
         } else {
-            // Constant.showLoading(this)
-            //    appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+             Constant.showLoading(this)
+                appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
         }
-    }
     }
 
 
@@ -900,6 +921,7 @@ if (isQuizUploadedFiles.size == quizAttachments.size){
 
         }
     }
+
 
     override fun onCountUpdated() {
         UpdateQuestionCount()

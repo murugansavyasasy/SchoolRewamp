@@ -134,6 +134,7 @@ class LSRWAdapter(
                     assignmentid = item.activity_type,
                     created_date = item.submitted_date,
                     category = "",
+                    is_submitted = item.is_submitted,
                     assignmentsubject = "",
                     isParentAssignment = true
                 )
@@ -168,6 +169,7 @@ class LSRWAdapter(
                     assignmentid = item.activity_type,
                     created_date = item.submitted_date,
                     category = "",
+                    is_submitted = item.is_submitted,
                     assignmentsubject = "",
                     isParentAssignment = true
                 )
@@ -206,6 +208,7 @@ class LSRWAdapter(
                             assignmentid = item.activity_type,
                             created_date = item.submitted_date,
                             category = "",
+                            is_submitted = item.is_submitted,
                             assignmentsubject = "",
                             isParentAssignment = true
                         )

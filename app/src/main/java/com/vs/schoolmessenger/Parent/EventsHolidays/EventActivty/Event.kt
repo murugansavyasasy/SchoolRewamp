@@ -101,34 +101,28 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 val query = s?.toString() ?: ""
 
                 if (selectedCategory == null || selectedCategory?.name.equals("All", true)) {
-                    // 🔹 Case 1: All categories → search across all lists
                     if (::mAdapter.isInitialized) mAdapter.filter.filter(query)
                     if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(query)
                     if (::eventupcomingadapter.isInitialized) eventupcomingadapter.filter.filter(query)
                 } else {
-                    // 🔹 Case 2: Specific category → only filter data for that category
                     val categoryName = selectedCategory?.name ?: ""
 
-                    // Ongoing
                     val ongoingFiltered = allOngoingEvents?.filter { it.category == categoryName }
                     mAdapter.updateList(
                         if (query.isEmpty()) ongoingFiltered else ongoingFiltered?.filter { it.title.contains(query, true) }
                     )
 
-                    // Upcoming
                     val upcomingFiltered = allUpcomingEvents?.filter { it.category == categoryName }
                     eventupcomingadapter.updateList(
                         if (query.isEmpty()) upcomingFiltered else upcomingFiltered?.filter { it.title.contains(query, true) }
                     )
 
-                    // Completed
                     val completedFiltered = allCompletedEvents?.filter { it.category == categoryName }
                     eventcompletedadapter.updateList(
                         if (query.isEmpty()) completedFiltered else completedFiltered?.filter { it.title.contains(query, true) }
                     )
                 }
 
-                // 🔹 Delay UI refresh for smoother updates
                 binding.root.postDelayed({
                     val isAllEmpty = mAdapter.itemCount == 0 &&
                             eventupcomingadapter.itemCount == 0 &&

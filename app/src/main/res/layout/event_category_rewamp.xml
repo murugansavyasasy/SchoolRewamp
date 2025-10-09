@@ -32,16 +32,17 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/twenty_sp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:gravity="center"
                 android:maxWidth="@dimen/one_thirty"
                 android:text="All"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/twenty_sp"
-                android:maxLines="5"
-                android:ellipsize="end" />
+                android:textSize="@dimen/eleven_sp" />
 
 
         </LinearLayout>

@@ -150,6 +150,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     Constant.showDataValidation(getString(R.string.fail), response.message, this)
                 }
             }
+            else {
+                Constant.showDataValidation(getString(R.string.fail),getString(R.string.something_went_wrong_please_try_again_later), this)
+            }
         }
 
 
@@ -365,23 +368,49 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         val lblClose = dialogView.findViewById<TextView>(R.id.lblClose)
         val lblMarkAsAbsent = dialogView.findViewById<TextView>(R.id.lblMarkAsAbsent)
         val rcFinalList = dialogView.findViewById<RecyclerView>(R.id.rcFinalList)
+        val noDataFound = dialogView.findViewById<TextView>(R.id.noDataFound)
+        val lblAbsenteesListCount = dialogView.findViewById<TextView>(R.id.lblAbsenteesListCount)
+        val lytNoDataFound = dialogView.findViewById<LinearLayout>(R.id.lytNoDataFound)
 
-        rcFinalList.layoutManager = LinearLayoutManager(activity)
+        if (selectedFinalList.isEmpty()) {
+            rcFinalList.visibility = View.GONE
+            lytNoDataFound?.visibility = View.VISIBLE
+            noDataFound?.text = "No Absentees,All students are marked as present!"
+        } else {
+            lblAbsenteesListCount.text="${getString(R.string.absentees_students_list)}(${selectedFinalList.size})"
 
-        val adapter = AbsenteesFinalListAdapter(
-            itemList = selectedFinalList.toMutableList(),
-            context = activity,
-            isLoading = false,
-            onRemove = { data ->
-                mAdapter.unselectStudent(data)
-            }
-        )
-        rcFinalList.adapter = adapter
+            rcFinalList.visibility = View.VISIBLE
+            lytNoDataFound?.visibility = View.GONE
+            rcFinalList.layoutManager = LinearLayoutManager(activity)
+            val adapter = AbsenteesFinalListAdapter(
+                itemList = selectedFinalList.toMutableList(),
+                context = activity,
+                isLoading = false,
+                onRemove = { data ->
+                    mAdapter.unselectStudent(data)
+                },
+                onListCountChange = { count ->
+                    if (count == 0) {
+                        lblAbsenteesListCount.text="${getString(R.string.absentees_students_list)}(${count})"
+                        lytNoDataFound.visibility = View.VISIBLE
+                        noDataFound?.text = "No Absentees,All students are marked as present!"
+                        rcFinalList.visibility = View.GONE
+                    } else {
+                        lblAbsenteesListCount.text="${getString(R.string.absentees_students_list)}(${count})"
+                        lytNoDataFound.visibility = View.GONE
+                        rcFinalList.visibility = View.VISIBLE
+                    }
+                    Log.d("AbsentessCount", "Current Absentess Count: $count")
+                }
+            )
+            rcFinalList.adapter = adapter
+        }
 
         lblMarkAsAbsent.setOnClickListener {
             isMarkAttendance()
-        }
+            alertDialog.dismiss()
 
+        }
 
         lblClose.setOnClickListener {
             alertDialog.dismiss()
@@ -437,6 +466,10 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 isUpdateMarkAtttendance()
             }
         }
+        else{
+            Constant.errorAlert(this,getString(R.string.Oops),getString(R.string.something_went_wrong_please_try_again_later))
+        }
+
     }
 
     private fun isUpdateMarkAtttendance() {
@@ -467,7 +500,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             Log.d("AbsenteesStudentID", studentArray.toString())
             Log.d("AttendanceList", isSelectedIds.toString())
         }
-//        appViewModel?.isUpdateSendAbsenteeSMS(isAccessToken!!, jsonObject, this)
+        appViewModel?.isUpdateSendAbsenteeSMS(isAccessToken!!, jsonObject, this)
 
     }
 
