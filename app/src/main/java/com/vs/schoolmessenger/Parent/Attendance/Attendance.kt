@@ -85,15 +85,27 @@ class Attendance : BaseActivity<AttendanceBinding>() {
             if (response != null) {
                 if (response.status) {
                     isStudentStatsData = response.data.firstOrNull()
+                    binding.lblErrorMessage.visibility=View.GONE
                     isLoadStudentStats(isStudentStatsData!!)
-
-
-                } else {
-                    Constant.showDataValidation(
-                        response.status.toString(), response.message, this
-                    )
+                    binding.lblHeading.visibility=View.VISIBLE
+                }
+                else {
+//                    Constant.showDataValidationNoDashboardRedirect(getString(R.string.Oops), response.message, this)
+                    binding.lblErrorMessage.visibility=View.VISIBLE
+                    binding.lblErrorMessage.text=response.message
+                    binding.lblHeading.visibility=View.GONE
+                    binding.rcWeekStatus.visibility = View.GONE
                 }
             }
+            else {
+                binding.rcWeekStatus.visibility = View.GONE
+                binding.lblHeading.visibility=View.GONE
+                binding.lblErrorMessage.visibility=View.GONE
+                Constant.showDataValidationNoDashboardRedirect(
+                    getString(R.string.Oops),getString(R.string.Something_went_wrong_Please_try_again), this
+                )
+            }
+
         }
 
 

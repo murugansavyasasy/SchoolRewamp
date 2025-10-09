@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -70,8 +71,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             statusBarBgView = binding.statusBarBackground
         )
         filterCaterotyType = listOf(
-            resources.getString(R.string.get_all_student),
-            resources.getString(R.string.standard_and_section)
+            resources.getString(R.string.all_student),
+            resources.getString(R.string.class_and_section)
         )
         val filterGenderCaterotyType = listOf(
             getString(R.string.all),
@@ -213,14 +214,14 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
         binding.rcyStudentReport.adapter = mAdapter
 
-        if (Constant.GET_ALL_STUDENT == filterSelectedOption) {
+        if (getString(R.string.all_student) == filterSelectedOption) {
             binding.rlaStandardPicking.visibility = View.GONE
             appViewModel!!.getStudentReportDetails(
                 isAccessToken!!, isAcademicYearId, activity = this
             )
         }
 
-        if (Constant.STANDARD_AND_SECTION == filterSelectedOption) {
+        if (getString(R.string.class_and_section) == filterSelectedOption) {
             binding.rlaStandardPicking.visibility = View.VISIBLE
             if (isAllSectionSelected) {
                 appViewModel!!.getStudentReportDetails(

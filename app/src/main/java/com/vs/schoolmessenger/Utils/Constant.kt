@@ -416,8 +416,10 @@ object Constant {
     var wav_ = "wav"
 
     var GET_ALL_STUDENT = "GET ALL STUDENT"
+    var ALL_STUDENTS = "ALL STUDENTS"
     var STANDARD = "STANDARD"
     var STANDARD_AND_SECTION = "STANDARD AND SECTION"
+    var CLASS_AND_SECTION = "CLASS AND SECTION"
 
     var NO_DATA_FOUND = "No Data Found"
     var No_STANDARD_FOUND = "No Standard Found"
@@ -1139,6 +1141,7 @@ object Constant {
 
         datePickerDialog.show()
     }
+
     fun DatePicker(
         context: Context,
         dateFormatType: Boolean,
@@ -1165,22 +1168,31 @@ object Constant {
             },
             year, month, day
         )
-
-        // Set min date if provided, otherwise default to today
         datePickerDialog.datePicker.minDate = minDate ?: Calendar.getInstance().timeInMillis
 
-        // Set max date if provided
         maxDate?.let {
             datePickerDialog.datePicker.maxDate = it
         }
 
-        // If dateFormatType = true, restrict max date to today (optional)
         if (dateFormatType) {
             datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
         }
 
         datePickerDialog.show()
     }
+
+
+    fun covertDate(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input
+        }
+    }
+
 
 
 

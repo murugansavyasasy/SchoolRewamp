@@ -165,7 +165,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_weight="0.70"
+            android:layout_weight="0.6"
             android:id="@+id/rytGenderCatory"
             android:layout_marginStart="@dimen/ten"
             android:layout_width="match_parent"
@@ -183,7 +183,7 @@
 
         <HorizontalScrollView
             android:id="@+id/tabLayout1"
-            android:layout_weight="0.30"
+            android:layout_weight="0.4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"

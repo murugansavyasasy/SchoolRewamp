@@ -46,8 +46,6 @@
         android:theme="@style/Theme.SchoolChimes"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-
         <profileable android:shell="true" />
 
         <provider
@@ -437,7 +435,6 @@
         <!-- android:name=".Parent.QuizExam.Quiz" -->
         <!-- android:theme="@style/AppTheme" -->
         <!-- android:windowSoftInputMode="adjustPan|adjustResize"> -->
-        <!--  -->
         <!-- </activity> -->
         <activity
             android:name=".Dashboard.Combination.PrioritySelection"
