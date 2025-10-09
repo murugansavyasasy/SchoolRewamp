@@ -2,14 +2,12 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,11 +29,9 @@
                 android:text="@string/welcome_back"
                 style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                >
+                android:textSize="@dimen/fifteen_sp">
 
             </TextView>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -120,8 +116,6 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/light_gray_"
                             android:textSize="@dimen/thirteen_sp" />
-
-
                     </RelativeLayout>
 
                     <TextView
@@ -135,7 +129,6 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp" />
 
-
                     <RelativeLayout
                         android:id="@+id/rytPassword"
                         android:layout_width="match_parent"
@@ -143,7 +136,6 @@
                         android:layout_below="@+id/lblPassword"
                         android:layout_marginTop="@dimen/ten"
                         android:background="@drawable/rect_white">
-
 
                         <EditText
                             android:id="@+id/txtPassword"
@@ -165,9 +157,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/ten"
                             android:src="@drawable/password_hide" />
-
                     </RelativeLayout>
-
 
                     <TextView
                         android:id="@+id/lblForgetPassword"
@@ -180,7 +170,6 @@
                         android:text="@string/lblForgotPassword"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp" />
-
 
                     <TextView
                         android:id="@+id/btnLoginContinue"
@@ -212,7 +201,6 @@
                             android:layout_height="@dimen/fourty"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_fingerprint"/>
-
                         <TextView
                             android:layout_marginStart="@dimen/ten"
                             android:layout_toEndOf="@+id/imgFingerPrint"
@@ -224,8 +212,6 @@
                             android:text="Use Fingerprint or Mobile Number to login"/>
                         
                     </RelativeLayout>
-
-
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>

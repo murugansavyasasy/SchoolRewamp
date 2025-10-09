@@ -58,6 +58,9 @@ class InteractionWithQuestionAdapter(
         private val questionText: TextView = itemView.findViewById(R.id.questionText)
         private val answerText: TextView = itemView.findViewById(R.id.answerText)
         private val more_options: ImageView = itemView.findViewById(R.id.more_options)
+        private val student_name: TextView = itemView.findViewById(R.id.aboveText)
+        private val created_date: TextView = itemView.findViewById(R.id.belowText)
+        private val reply_type: TextView = itemView.findViewById(R.id.reply_type)
         private val linear_layout: LinearLayout = itemView.findViewById(R.id.linear_layout)
 
 
@@ -65,6 +68,16 @@ class InteractionWithQuestionAdapter(
         fun bind(chat: QuestionData, listener: ReplyClickListener, position: Int) {
             questionText.text = chat.question
             answerText.text = chat.answer
+            student_name.text = chat.student_name
+            if(chat.reply_type == "1") {
+                reply_type.text = "Public Reply"
+            } else if (chat.reply_type == "2") {
+                reply_type.text = "Private Reply"
+            } else {
+                reply_type.visibility = View.GONE
+            }
+            created_date.text = Constant.formatChatDate(chat.created_on)
+
             answerText.visibility =
                 if (chat.answer == Constant.Not_answered_yet) View.GONE else View.VISIBLE
 

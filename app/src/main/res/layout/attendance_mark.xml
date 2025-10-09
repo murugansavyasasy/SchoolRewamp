@@ -192,9 +192,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_spinner_background_two" />
-
                     </RelativeLayout>
-
 
                     <RelativeLayout
                         android:id="@+id/rlaSection"
@@ -212,16 +210,13 @@
                             android:tint="@color/black"
                             android:src="@drawable/rectangle_stack"
                             android:layout_height="@dimen/twenty">
-
                         </ImageView>
-
                         <Spinner
                             android:layout_toEndOf="@+id/imgSessionIcon"
                             android:id="@+id/isSpinnerSection"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_spinner_background_two" />
-
                     </RelativeLayout>
 
                 </LinearLayout>

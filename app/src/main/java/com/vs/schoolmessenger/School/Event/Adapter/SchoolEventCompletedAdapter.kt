@@ -115,6 +115,10 @@ class SchoolEventCompletedAdapter(
         notifyDataSetChanged()
     }
 
+    fun getCurrentList(): List<SchoolEventItem> {
+        return filteredList
+    }
+
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {

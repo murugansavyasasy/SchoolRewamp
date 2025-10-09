@@ -7,122 +7,101 @@
     android:background="@drawable/rect_white"
     android:padding="@dimen/ten">
 
-
     <TextView
         android:id="@+id/lblLogo"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="@dimen/fifty"
         android:layout_height="@dimen/fifty"
-        android:gravity="center"
-        android:text="SA"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
+        android:background="@drawable/circle_bg_violet"
+        android:gravity="center"
+        android:text="SA"
         android:textColor="@color/white"
-        android:textSize="@dimen/sixteen_sp"
-        style="@style/CustomTextStylePoppinsBold"
-        android:background="@drawable/circle_bg_violet" />
+        android:textSize="@dimen/sixteen_sp" />
 
-
-    <RelativeLayout
-        android:layout_centerVertical="true"
-        android:id="@+id/rytHeader"
-        android:layout_toEndOf="@id/lblLogo"
+    <LinearLayout
+        android:id="@+id/lytHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <RelativeLayout
-            android:layout_alignParentStart="true"
-            android:id="@+id/rytDetails"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_centerVertical="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_toEndOf="@id/lblLogo"
+        android:orientation="horizontal">
+        <!-- Left Side: Details -->
+        <LinearLayout
+            android:id="@+id/lytDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/nameheader"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Saran Raj"
                 android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/subjectheader"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/nameheader"
                 android:layout_marginTop="@dimen/eight"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="TAMIL"
                 android:textColor="@color/PrimaryColor" />
 
             <TextView
-                android:layout_marginTop="@dimen/eight"
                 android:id="@+id/lblDesc"
-                android:layout_below="@id/subjectheader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/twele_sp"
+                android:layout_marginTop="@dimen/eight"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="A common messages"
-                android:textColor="@color/grey" />
+                android:textColor="@color/grey"
+                android:textSize="@dimen/twele_sp" />
+        </LinearLayout>
 
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_alignParentEnd="true"
-            android:id="@+id/rytUnread"
-            android:layout_centerVertical="true"
+        <LinearLayout
+            android:id="@+id/lytUnread"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:gravity="end|center_vertical"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/yesterdayheader"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/ten"
                 android:text="Yesterday"
                 android:textColor="@color/Emerald1" />
-
 
             <TextView
                 android:id="@+id/unreadcount"
                 android:layout_width="@dimen/fourty"
                 android:layout_height="@dimen/fourty"
-                android:layout_below="@+id/yesterdayheader"
-                android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/circle_bg_red"
                 android:gravity="center"
-                android:scaleType="centerCrop"
                 android:text="1"
                 android:textColor="@color/white" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-
-
-
-
+        </LinearLayout>
+    </LinearLayout>
 
     <View
         android:id="@+id/viewline"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/rytHeader"
+        android:layout_below="@id/lytHeader"
         android:layout_marginTop="@dimen/twenty"
         android:background="@color/light_white_4"
         android:visibility="visible" />
-
-
 </RelativeLayout>
-
-
-
-

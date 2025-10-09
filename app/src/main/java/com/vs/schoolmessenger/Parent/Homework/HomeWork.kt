@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
+import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.CalendarAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeworkParentAdapter
@@ -144,6 +145,15 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
         appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
             if (response!!.status) {
+                val mobileNumber = SharedPreference.getMobileNumber(this)
+                val jsonObject = JsonObject().apply {
+                    addProperty(APIKeyNames.mobile_number, mobileNumber)
+                    addProperty(APIKeyNames.activity, Constant.add_points_homework)
+                    addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                    addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
+                }
+                appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+
                 isHomeWorkData = response.data
                 val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
                 if (isHomeWorkData != null) {

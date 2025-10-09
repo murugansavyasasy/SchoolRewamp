@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
     android:background="@color/white">
 
     <View
@@ -33,7 +32,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <include
                     android:id="@+id/toolbarLayout"
@@ -131,7 +130,6 @@
                             android:layout_centerHorizontal="true"
                             android:paddingTop="@dimen/ten"
                             android:src="@drawable/call_schedule_icon_black">
-
                         </ImageView>
 
                         <TextView
@@ -148,7 +146,6 @@
                             android:text="@string/schedule_call"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp">
-
                         </TextView>
 
                     </RelativeLayout>
@@ -166,7 +163,6 @@
                             android:layout_centerHorizontal="true"
                             android:paddingTop="@dimen/ten"
                             android:src="@drawable/text_icon_black">
-
                         </ImageView>
 
                         <TextView
@@ -183,7 +179,6 @@
                             android:text="@string/text_message"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp">
-
                         </TextView>
                     </RelativeLayout>
                 </LinearLayout>
@@ -235,7 +230,6 @@
                                     android:textColor="@color/red"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
-
                             <TextView
                                 android:layout_width="@dimen/twenty"
                                 android:layout_height="wrap_content"
@@ -244,7 +238,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"
                                 android:textStyle="bold">
-
                             </TextView>
 
                             <ImageView
@@ -278,7 +271,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/twenty"
                                     android:text="@string/from_time">
-
                                 </TextView>
 
                                 <TextView
@@ -300,7 +292,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"
                                 android:textStyle="bold">
-
                             </TextView>
 
                             <RelativeLayout
@@ -377,7 +368,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"
                                 android:textStyle="bold">
-
                             </TextView>
 
                             <RelativeLayout
@@ -398,13 +388,11 @@
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp">
                                 </TextView>
-
                                 <ImageView
                                     android:layout_width="@dimen/twenty"
                                     android:layout_height="@dimen/twenty"
                                     android:layout_toEndOf="@+id/lblEndTime"
                                     android:src="@drawable/ic_down_arrow">
-
                                 </ImageView>
                             </RelativeLayout>
                         </LinearLayout>
@@ -453,7 +441,6 @@
                             android:textSize="@dimen/fifteen_sp"
                             android:gravity="center">
                         </TextView>
-
                     </LinearLayout>
 
                     <RelativeLayout
@@ -478,16 +465,13 @@
                         </TextView>
                         <ImageView
                             android:id="@+id/imgEndArrow1"
-
                             android:layout_width="@dimen/twenty"
                             android:layout_height="@dimen/twenty"
                             android:layout_marginStart="@dimen/fifteen"
                             android:layout_marginTop="@dimen/twenty"
                             android:src="@drawable/right_arrow_round"
                             android:visibility="gone">
-
                         </ImageView>
-
                     </RelativeLayout>
 
                     <LinearLayout
@@ -515,9 +499,7 @@
                             android:layout_width="@dimen/twenty"
                             android:layout_height="@dimen/twenty"
                             android:src="@drawable/arrowright">
-
                         </ImageView>
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -528,7 +510,6 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:orientation="vertical"
                         android:visibility="gone">
-
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -574,7 +555,6 @@
                                 android:visibility="gone"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp">
-
                             </TextView>
 
                             <EditText
@@ -777,7 +757,6 @@
                                 android:text="@string/choose_pre_recorded_file"
                                 android:textColor="@color/navi_blue1"
                                 android:textSize="@dimen/thirteen_sp">
-
                             </TextView>
                         </RelativeLayout>
 
@@ -812,7 +791,6 @@
                                     android:layout_marginStart="@dimen/five"
                                     android:layout_marginTop="@dimen/thirteen"
                                     android:src="@drawable/play_icon_voice">
-
                                 </ImageView>
 
                                 <com.vs.schoolmessenger.Utils.WaveformSeekBar
@@ -912,7 +890,6 @@
                                 <!--                                android:text="0/50"-->
                                 <!--                                android:textColor="@color/black"-->
                                 <!--                                android:textSize="@dimen/thirteen_sp">-->
-
                                 <!--                            </TextView>-->
 
                                 <EditText
@@ -935,7 +912,6 @@
                             android:background="@drawable/rect_green_light_radious"
                             android:padding="@dimen/seven">
 
-
                             <TextView
                                 android:id="@+id/lblSend"
                                 style="@style/CustomTextStylePoppinsRegular"
@@ -947,7 +923,6 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/fourteen_sp">
                             </TextView>
-
 
                             <ImageView
                                 android:id="@+id/imgSend"

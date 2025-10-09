@@ -159,6 +159,8 @@ object APIKeyNames {
     const val requested_for = "requested_for"
     const val urgency_level = "urgency_level"
     const val answers = "answers"
+    const val invoice_id = "invoice_id"
+    const val activity = "activity"
 
 
 

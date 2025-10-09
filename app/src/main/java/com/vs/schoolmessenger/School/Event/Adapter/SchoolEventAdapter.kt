@@ -106,6 +106,10 @@ class SchoolEventAdapter(
         notifyDataSetChanged()
     }
 
+    fun getCurrentList(): List<SchoolEventItem> {
+        return filteredList
+    }
+
 
 
 

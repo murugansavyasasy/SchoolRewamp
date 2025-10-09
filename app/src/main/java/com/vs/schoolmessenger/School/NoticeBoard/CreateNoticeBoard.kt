@@ -137,7 +137,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
-        binding.btnNoticeBoardReport.setOnClickListener(this)
+//        binding.rytHistory.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
 //        binding.rytEnd.setOnClickListener(this)
@@ -704,7 +704,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     isRedirectToSchoolList()
                 }
             }
-            R.id.btnNoticeBoardReport -> startActivity(Intent(this, NoticeBoardReport::class.java))
+            R.id.rytHistory -> startActivity(Intent(this, NoticeBoardReport::class.java))
         }
     }
 

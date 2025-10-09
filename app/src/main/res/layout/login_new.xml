@@ -4,9 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/PrimaryColor"
-    >
-
+    android:background="@color/PrimaryColor">
 
     <ScrollView
         android:layout_marginTop="@dimen/eighty"
@@ -14,7 +12,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/bg_rect_white_large_top_radius"
         android:fillViewport="true">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,11 +27,9 @@
                 android:gravity="start"
                 android:text="@string/welcome_back"
                 android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp"
-                >
+                android:textSize="@dimen/twenty_sp">
 
             </TextView>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,7 +41,6 @@
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
-
 
             <ImageView
                 android:id="@+id/image_banner"
@@ -64,7 +58,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/twenty">
-
 
                     <TextView
                         android:id="@+id/lblMobile"
@@ -111,13 +104,10 @@
                             android:inputType="number"
                             android:maxLength="10"
                             android:background="@drawable/edittext_background_selector"
-
                             android:paddingHorizontal="@dimen/ten"
                             android:textColor="@color/black"
                             android:textColorHint="@color/light_gray_"
                             android:textSize="@dimen/thirteen_sp" />
-
-
                     </RelativeLayout>
 
                     <TextView
@@ -139,7 +129,6 @@
                         android:layout_marginTop="@dimen/ten"
                         android:background="@drawable/login_bg_rect_grey">
 
-
                         <EditText
                             android:id="@+id/txtPassword"
                             style="@style/CustomTextStylePoppinsRegular"
@@ -147,7 +136,7 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/edittext_background_selector"
                             android:hint="@string/star"
-                            android:inputType="textPassword"
+                            android:inputType="textPassword|textCapSentences"
                             android:paddingHorizontal="@dimen/ten"
                             android:textColor="@color/black"
                             android:textColorHint="@color/grey"
@@ -161,9 +150,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/ten"
                             android:src="@drawable/password_hide" />
-
                     </RelativeLayout>
-
 
                     <TextView
                         android:id="@+id/lblForgetPassword"
@@ -176,7 +163,6 @@
                         android:text="@string/lblForgotPassword"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp" />
-
 
                     <TextView
                         android:id="@+id/btnLoginContinue"
@@ -218,10 +204,7 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/black"
                             android:text="@string/use_fingerprint_or_mobile_number_to_login"/>
-
                     </RelativeLayout>
-
-
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>

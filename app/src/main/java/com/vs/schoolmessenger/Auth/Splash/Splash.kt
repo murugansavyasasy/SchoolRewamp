@@ -44,6 +44,7 @@ import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
+import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
@@ -52,6 +53,7 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.Event.EventReport
@@ -106,6 +108,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
     }
 
     private var authViewModel: Auth? = null
+    private var appViewModel: App? = null
+
 
     override fun setupViews() {
         super.setupViews()
@@ -113,6 +117,9 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
+
+        appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+
 
         // Run cleanup
 //        val cleaned = AppDataCleaner.clearOldDataIfNeeded(this)
@@ -179,6 +186,17 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 val status = response.status
                 response.message
                 if (status) {
+
+
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_login)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                        addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
+
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser
                     Constant.user_details = Constant.user_data!![0].user_details
@@ -503,7 +521,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     startActivity(intent)
                 }
             } else {
-                isValidateUser()
+                if (SharedPreference.isLoggedIn(this)) {
+                    isValidateUser()
+                }
+                else{
+                    val intent = Intent(this@Splash, Login::class.java)
+                    startActivity(intent)
+                }
             }
         } else {
             val isLogout = SharedPreference.getLogout(this)
