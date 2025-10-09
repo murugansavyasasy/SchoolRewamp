@@ -1063,6 +1063,13 @@ interface ApiInterfaces {
         @Body requestBody: JsonObject
     ): Call<SpentPointsModel?>
 
+
+    @POST(APIMethods.isAddRewardPoints)
+    fun isAddRewardPoints(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
     @GET(APIMethods.isParentprofilelist)
     fun isParentprofilelist(
         @Header(APIKeyNames.Authorization) token: String
@@ -1088,15 +1095,15 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject,
     ): Call<ProfileUpdateResponse?>?
 
-    @GET("fee/api/fee-details/student-invoice")
+    @GET(APIMethods.fee_student_invoice)
     fun getStudentInvoices(
-        @Header("Authorization") token: String
+        @Header(APIKeyNames.Authorization) token: String
     ): Call<FeeInvoiceResponse>
 
-    @GET("fee/api/fee-details-invoice-details")
+    @GET(APIMethods.fee_student_invoice_details)
     fun getInvoiceDetails(
-        @Header("Authorization") token: String,
-        @Query("invoice_id") invoiceId: String
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.invoice_id) invoiceId: String
     ): Call<InvoiceDetailsResponse>
 
 

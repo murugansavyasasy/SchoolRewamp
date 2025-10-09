@@ -372,6 +372,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var islsrwSkilllist: LiveData<LsrwSkillResponse?>? = null
     var isGetPauketPoints: LiveData<PauketPointsResponse?>? = null
     var isSpentPoints: LiveData<SpentPointsModel?>? = null
+    var isAddRewardPoints: LiveData<StatusMessageModel?>? = null
     var isGetQuizQuestionReport: LiveData<GetQuizQuestionReport?>? = null
     var isGetQuizSubmissionList: LiveData<GetQuizSubmissionList?>? = null
     var isGetPickFromQBank: LiveData<GetPickFromQBank?>? = null
@@ -537,6 +538,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
         isGetPauketPoints = apiParentRepositories.isGetPauketPointsLiveData
         isSpentPoints = apiParentRepositories.isSpentPointsLiveData
+        isAddRewardPoints = apiParentRepositories.isAddRewardPointsLiveData
         isParentprofilelist = apiParentRepositories.isprofilelistLiveData
         isSchoolprofilelist = apiSchoolRepositories.isSchoolprofilelistLiveData
         islsrwmysubmission = apiParentRepositories.islsrwmysubmissionLiveData
@@ -1337,6 +1339,12 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String, jsonObject: JsonObject
     ) {
         apiParentRepositories.isSpentPoints(
+            isToken, jsonObject,
+        )
+    }
+
+    fun isAddRewardPoints(isToken: String, jsonObject: JsonObject) {
+        apiParentRepositories.isAddRewardPoints(
             isToken, jsonObject,
         )
     }
