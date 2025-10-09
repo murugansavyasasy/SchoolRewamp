@@ -521,7 +521,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     startActivity(intent)
                 }
             } else {
-                isValidateUser()
+                if (SharedPreference.isLoggedIn(this)) {
+                    isValidateUser()
+                }
+                else{
+                    val intent = Intent(this@Splash, Login::class.java)
+                    startActivity(intent)
+                }
             }
         } else {
             val isLogout = SharedPreference.getLogout(this)
