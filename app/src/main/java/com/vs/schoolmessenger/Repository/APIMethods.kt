@@ -178,10 +178,13 @@ object APIMethods {
     const val isGetMessageFromStaff = "comm/api/msg-from-management/get-messages-staff"
     const val isGetPauketPoints = "dashboard/api/pauket/get-points"
     const val isSpentPoints = "dashboard/api/pauket/spent-points"
+    const val isAddRewardPoints = "dashboard/api/pauket/add-points"
     const val isParentprofilelist = "admin/api/student-profile/list"
     const val isSchoolprofilelist = "admin/api/staff-profile/list"
     const val islsrwmysubmission = "lms/api/lsrw/my-submissions"
     const val ispresubmission = "admin/api/student-profile/pre-submission"
+    const val fee_student_invoice = "fee/api/fee-details/student-invoice"
+    const val fee_student_invoice_details = "fee/api/fee-details-invoice-details"
 
     const val getmysubmissionedit = "comm/api/assignment/update-submission"
     const val ismysubmissiondelete = "comm/api/assignment/delete-submission"

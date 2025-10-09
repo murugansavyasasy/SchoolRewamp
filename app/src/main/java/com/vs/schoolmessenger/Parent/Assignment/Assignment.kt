@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
+import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -97,6 +98,16 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
         appViewModel?.isAssignmentlist?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+                val mobileNumber = SharedPreference.getMobileNumber(this)
+
+                val jsonObject = JsonObject().apply {
+                    addProperty(APIKeyNames.mobile_number, mobileNumber)
+                    addProperty(APIKeyNames.activity, Constant.add_points_view_assignmnents)
+                    addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                    addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
+                }
+                appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+
                 isAssignmentReportData = response.data
                 loadAssignmentReportData()
                 if (response.data.isNotEmpty()) {

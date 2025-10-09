@@ -119,7 +119,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        initializeDefaultDates()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -138,7 +137,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
-        binding.btnNoticeBoardReport.setOnClickListener(this)
+        binding.rytHistory.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
 //        binding.rytEnd.setOnClickListener(this)
@@ -200,6 +199,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 //
 //            override fun afterTextChanged(s: Editable?) {}
 //        })
+
 
 
         albumResultLauncher =
@@ -307,7 +307,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 //        )
 //        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 //        manager.createNotificationChannel(channel)
-
+        initializeDefaultDates()
     }
 
 //    private fun loadNoticeData(newData: List<NoticeStaffData>) {
@@ -617,20 +617,20 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 //                    }
 //                }
 
-    //            R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
-    //                selectedDateField = 2
-    //                Constant.showDatePicker12(this, false) { selectedDate ->
-    //                    Log.d("selectedDate", selectedDate)
-    //                    txtEndDate = Constant.covertDateFormate(selectedDate)
-    //                    val parts = txtEndDate!!.split(" ")
-    //                    val day = parts[0]
-    //                    val Month = parts[1]
-    //                    val Year = parts[2]
-    //                    binding.txtEndDate.text = Month + " " + Year
-    //                    binding.lblEndDay.text = day
-    ////                    binding.lblEndDate.text = Date
-    //                }
-    //            }
+            //            R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
+            //                selectedDateField = 2
+            //                Constant.showDatePicker12(this, false) { selectedDate ->
+            //                    Log.d("selectedDate", selectedDate)
+            //                    txtEndDate = Constant.covertDateFormate(selectedDate)
+            //                    val parts = txtEndDate!!.split(" ")
+            //                    val day = parts[0]
+            //                    val Month = parts[1]
+            //                    val Year = parts[2]
+            //                    binding.txtEndDate.text = Month + " " + Year
+            //                    binding.lblEndDay.text = day
+            ////                    binding.lblEndDate.text = Date
+            //                }
+            //            }
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
@@ -704,7 +704,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     isRedirectToSchoolList()
                 }
             }
-            R.id.btnNoticeBoardReport -> startActivity(Intent(this, NoticeBoardReport::class.java))
+            R.id.rytHistory -> startActivity(Intent(this, NoticeBoardReport::class.java))
         }
     }
 
@@ -1022,8 +1022,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-       // if (isNoticeBoardUpdate) {
-            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_noticeboard)
+        // if (isNoticeBoardUpdate) {
+        alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_noticeboard)
 //        } else {
 //            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
 //        }
@@ -1032,10 +1032,10 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-           // if (isNoticeBoardUpdate) {
-                ProgressDialogHelper.show(this)
-                ProgressDialogHelper.updateProgress(10)
-                isUploadFilesInServer(Constant.file_)
+            // if (isNoticeBoardUpdate) {
+            ProgressDialogHelper.show(this)
+            ProgressDialogHelper.updateProgress(10)
+            isUploadFilesInServer(Constant.file_)
 //            } else {
 //                val jsonObject = JsonObject()
 //                jsonObject.addProperty(APIKeyNames.id, isNoticeBoardId)
@@ -1275,9 +1275,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 //        binding.line2.setBackgroundResource(R.color.white)
 
         binding.noticeboardCreate.visibility = View.VISIBLE
-     //   binding.rcyNoticeBoard.visibility = View.GONE
+        //   binding.rcyNoticeBoard.visibility = View.GONE
 //        binding.rytSearch323.visibility = View.GONE
-    //    binding.schoollistfilter.visibility = View.GONE
+        //    binding.schoollistfilter.visibility = View.GONE
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.txtTitle.setText(data!!.title)
         binding.txtDesc.setText(data.description)

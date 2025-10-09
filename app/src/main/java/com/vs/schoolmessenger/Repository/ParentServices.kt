@@ -100,6 +100,7 @@ class ParentServices {
     var islsrwSkillSubmit: MutableLiveData<LSRWSkillSubmitResponse?>
     var isGetPauketPoints: MutableLiveData<PauketPointsResponse?>
     var isSpentPoints: MutableLiveData<SpentPointsModel?>
+    var isAddRewardPoints: MutableLiveData<StatusMessageModel?>
     var islsrwmysubmission: MutableLiveData<ActivityResponse?>
     var isParentprofilelist: MutableLiveData<ProfileListResponse?>
     var ispresubmission: MutableLiveData<ProfileUpdateResponse?>
@@ -147,6 +148,7 @@ class ParentServices {
         islsrwSkillSubmit = MutableLiveData()
         isGetPauketPoints = MutableLiveData()
         isSpentPoints = MutableLiveData()
+        isAddRewardPoints = MutableLiveData()
         islsrwmysubmission = MutableLiveData()
         isParentprofilelist= MutableLiveData()
         ispresubmission= MutableLiveData()
@@ -1585,6 +1587,49 @@ class ParentServices {
 
     val isSpentPointsLiveData: LiveData<SpentPointsModel?>
         get() = isSpentPoints
+
+
+
+    fun isAddRewardPoints(
+        isToken: String,
+        jsonObject: JsonObject,
+    ) {
+        RestClient.apiInterfaces.isAddRewardPoints(isToken,jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "addPoints Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("addPointsResponse", response.body().toString())
+                                isAddRewardPoints.postValue(response.body())
+                            } else {
+                                Log.d("addPointsResponse", response.body().toString())
+                                isAddRewardPoints.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StatusMessageModel?>,
+                    t: Throwable
+                ) {
+                    isAddRewardPoints.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isAddRewardPointsLiveData: LiveData<StatusMessageModel?>
+        get() = isAddRewardPoints
 
 
 

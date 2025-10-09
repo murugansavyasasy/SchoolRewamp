@@ -62,8 +62,10 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListData
+import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
@@ -666,6 +668,41 @@ object Constant {
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "text/plain"
     )
+
+
+    // add  reward points types
+    var add_points_login = "LOGIN"
+    var add_points_homework = "HOMEWORK"
+    var add_points_listen_voice = "LISTEN_VOICE"
+    var add_points_read_message = "READ_MESSAGE"
+    var add_points_submit_assignment = "SUBMIT_ASSIGNMENT"
+    var add_points_pay_fees = "PAY_ONLINE_FEES"
+    var add_points_view_exam_schedule = "VIEW_EXAM_SCHUDLE"
+    var add_points_view_exam_mark = "VIEW_EXAM_MARK"
+    var add_points_view_progress_card = "VIEW_PROGRESS_CARD"
+    var add_points_apply_leave = "APPLY_LEAVE"
+    var add_points_update_profile = "UPDATE_PROFILE"
+    var add_points_view_videos = "VIEW_VIDEOS"
+    var add_points_view_image = "VIEW_IMAGE_PDF"
+    var add_points_view_events = "VIEW_EVENTS"
+    var add_points_view_noticeboard = "VIEW_NOTICE_BOARD"
+    var add_points_view_holidays = "VIEW_HOLIDAYS"
+    var add_points_view_attachments = "VIEW_ATTACHMENTS"
+    var add_points_view_assignmnents = "VIEW_ASSIGNMENT"
+
+    var add_points_send_voice = "SEND_VOICE"
+    var add_points_send_text = "SEND_TEXT"
+    var add_points_send_attachment = "SEND_ATTACHMENT"
+    var add_points_send_homework = "SEND_HOMEWORK"
+    var add_points_send_assignment = "SEND_ASSIGNMENT"
+    var add_points_send_attendance = "SEND_ATTENDANCE"
+    var add_points_edit_lesson_plan = "EDIT_LESSONPLAN"
+    var add_points_mark_attendance = "MARK_ATTENDANCE"
+    var add_points_send_ptm = "SEND_PTM"
+    var user_type_as_parent = "1"
+    var user_type_as_staff = "2"
+
+
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
@@ -1737,6 +1774,19 @@ object Constant {
         }
     }
 
+    // yyyy-MM-dd → dd-MM-yyyy
+    fun formatToUi2(dateStr: String?): String {
+        if (dateStr.isNullOrBlank()) return "--"
+        return try {
+            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
+            val outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault())
+            val localDate = LocalDate.parse(dateStr, inputFormatter)
+            localDate.format(outputFormatter)
+        } catch (e: Exception) {
+            dateStr
+        }
+    }
+
     // yyyy-MM-dd → Monday, October 12 2025
     fun formatToPretty(dateStr: String?): String {
         if (dateStr.isNullOrBlank()) return "--"
@@ -2271,18 +2321,20 @@ object Constant {
 
 
     fun setupEditTextWithScroll(context: Context, scrollView: ScrollView, editText: EditText) {
+        val delayMillis = 300L
+
         editText.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
                 v.postDelayed({
                     scrollView.smoothScrollTo(0, v.bottom)
-                }, 250)
+                }, delayMillis)
             }
         }
 
         editText.addTextChangedListener {
             scrollView.postDelayed({
-                scrollView.smoothScrollTo(0, editText.bottom + 100)
-            }, 150)
+                scrollView.smoothScrollTo(0, editText.bottom)
+            }, delayMillis)
         }
 
         editText.apply {
@@ -2300,4 +2352,5 @@ object Constant {
             imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
         }
     }
+
 }

@@ -111,6 +111,12 @@
             android:layout_marginTop="@dimen/ten"
             android:visibility="visible">
 
+
+            <RelativeLayout
+                android:id="@+id/rytTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/lblCategory"
                 style="@style/CustomTextStylePoppinsBold"
@@ -123,25 +129,50 @@
 
             </TextView>
 
-            <TextView
-                android:id="@+id/btnAssignmentsReports"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/twenty"
-                android:padding="@dimen/four"
-                android:text="Assignment Report"
-                />
+
+                <RelativeLayout
+                    android:id="@+id/rytHistory"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgHistory"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_marginTop="@dimen/ten"
+                        android:backgroundTint="@color/PrimaryColor"
+                        android:layout_marginEnd="@dimen/five"
+                        android:src="@drawable/ic_history">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/imgHistory"
+                        android:id="@+id/btnNoticeBoardReport"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="History"
+                        android:textColor="@color/PrimaryColor" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rytSendingType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblCategory"
+                android:layout_below="@+id/rytTitle"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:background="@drawable/bg_white_light_radious"
                 android:gravity="center">

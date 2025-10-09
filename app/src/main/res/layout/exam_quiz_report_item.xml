@@ -159,7 +159,7 @@
                     android:paddingBottom="@dimen/five"
                     android:layout_width="wrap_content"
                     android:background="@drawable/bg_light_orange"
-                    android:text="@string/submit_report"
+                    android:text="@string/submission_report"
                     android:textColor="@color/white"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_height="wrap_content">

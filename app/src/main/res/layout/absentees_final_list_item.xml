@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
+        android:padding="@dimen/eight"
         android:gravity="center"
         android:background="@drawable/rounded_border_background"
         >
@@ -31,7 +31,6 @@
                 android:id="@+id/lblRegNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/fourteen_sp"
                 android:text=""
                 android:textColor="@color/mild_grey_dark"
                 style="@style/CustomTextStylePoppinsMedium"
@@ -42,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 style="@style/CustomTextStylePoppinsMedium"
-                android:textSize="@dimen/fourteen_sp"
+                android:textStyle="bold"
                 android:textColor="@color/mild_grey_dark"
                 />
         </LinearLayout>
@@ -55,7 +54,7 @@
             android:text="@string/remove"
             android:paddingVertical="@dimen/ten"
             android:paddingHorizontal="@dimen/twenty"
-            android:background="@drawable/rect_shadow_red"
+            android:background="@drawable/red_rounded_rectangle"
             android:backgroundTint="@color/red"
             style="@style/CustomTextStylePoppinsBold"
             android:textColor="@color/white"
