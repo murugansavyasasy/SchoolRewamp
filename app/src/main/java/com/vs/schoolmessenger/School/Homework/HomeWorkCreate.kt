@@ -128,7 +128,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         appViewModel!!.init()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.btnHomeWorkReport.setOnClickListener(this)
+        binding.rytHistory.setOnClickListener(this)
 //        binding.lnrTabOneName.setOnClickListener(this)
 //        binding.lnrTabTwoName.setOnClickListener(this)
 //        binding.AcademicYear.setOnClickListener(this)
@@ -543,7 +543,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 }
             }
 
-            R.id.btnHomeWorkReport -> startActivity(Intent(this, HomeworkReport::class.java))
+            R.id.rytHistory -> startActivity(Intent(this, HomeworkReport::class.java))
         }
     }
 
