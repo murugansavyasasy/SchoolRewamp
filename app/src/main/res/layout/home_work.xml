@@ -132,6 +132,18 @@
                         android:text="@string/mandatory"
                         android:textColor="@color/red" />
 
+                    <TextView
+                        android:id="@+id/btnHomeWorkReport"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:padding="@dimen/four"
+                        android:text="Homework Report"
+                        />
+
                     <LinearLayout
                         android:id="@+id/lnrTitle"
                         android:layout_width="match_parent"

@@ -123,6 +123,18 @@
 
             </TextView>
 
+            <TextView
+                android:id="@+id/btnAssignmentsReports"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:padding="@dimen/four"
+                android:text="Assignment Report"
+                />
+
             <RelativeLayout
                 android:id="@+id/rytSendingType"
                 android:layout_width="match_parent"

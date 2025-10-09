@@ -154,6 +154,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         binding.lblDatePick.setOnClickListener(this)
         binding.lnrTabOneName.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
+        binding.btnAssignmentsReports.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.lblTimePick.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -302,6 +303,8 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             R.id.lblDatePick -> {
                 CustomshowDatePickerDialog(this, this)
             }
+
+            R.id.btnAssignmentsReports -> startActivity(Intent(this, AssignmentReport::class.java))
 
 
         }

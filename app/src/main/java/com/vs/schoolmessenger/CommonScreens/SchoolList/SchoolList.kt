@@ -30,10 +30,13 @@ import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
 import com.vs.schoolmessenger.School.Assignment.AssignmentReport
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
+import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.Event.EventReport
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
+import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
 import com.vs.schoolmessenger.School.Homework.HomeworkReport
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
@@ -337,11 +340,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                val intent = Intent(this, HomeworkReport::class.java)
+                val intent = Intent(this, HomeWorkCreate::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
-                val intent = Intent(this, EventReport::class.java)
+                val intent = Intent(this, CreateEvent::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT) {
@@ -393,7 +396,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                val intent = Intent(this, AssignmentReport::class.java)
+                val intent = Intent(this, AssignmentCreate::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_QUIZ_EXAM) {
