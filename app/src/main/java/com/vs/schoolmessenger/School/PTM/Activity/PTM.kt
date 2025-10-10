@@ -139,9 +139,11 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         binding.lblComplete.visibility = if (completedList.isNotEmpty()) View.VISIBLE else View.GONE
         binding.rcyComplete.visibility = binding.lblComplete.visibility
 
-        binding.tvNoData.visibility =
-            if (todayList.isEmpty() && upcomingList.isEmpty() && completedList.isEmpty())
-                View.VISIBLE else View.GONE
+        val hasData = todayList.isNotEmpty() || upcomingList.isNotEmpty() || completedList.isNotEmpty()
+        binding.tvNoData.visibility = if (hasData) View.GONE else View.VISIBLE
+        binding.imgNoData.visibility = if (hasData) View.GONE else View.VISIBLE
+
+
 
         binding.lblSlotCount.visibility = View.VISIBLE
         binding.lblSlotCount.text = if (todayList.isNotEmpty()) {

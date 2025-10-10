@@ -8,9 +8,12 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
@@ -159,4 +162,21 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         Constant.QuestionDataSending = saveStaffQuestionData
         startActivity(intent)
     }
+
+    override fun onReadStatusClick(
+        data: StudentChatData,
+        isPosition: Int
+    ) {
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, "STAFFCHAT")
+            addProperty(APIKeyNames.detail_id, data.section_id)
+        }
+        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchStudentData()
+    }
+
 }

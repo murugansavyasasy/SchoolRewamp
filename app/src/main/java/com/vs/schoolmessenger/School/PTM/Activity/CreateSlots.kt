@@ -459,9 +459,17 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             AvailableSlotGroup(slot.date, slot.slots.toMutableList())
         }
 
-        val adapter = CheckAvailableSlotsDate(this, groupedData) { updatedList ->
-            selectedSlots = updatedList
-        }
+        val adapter = CheckAvailableSlotsDate(
+            context = this,
+            dates = groupedData,
+            onUpdate = { updatedList ->
+                selectedSlots = updatedList
+            },
+            onAllRemoved = {
+                bottomSheetDialog?.dismiss()
+            }
+        )
+
 
         isRcySlotDate.layoutManager = GridLayoutManager(this, 1)
         isRcySlotDate.adapter = adapter

@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Adapter.InteractionWithStaffAdapter
@@ -19,6 +20,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWi
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -166,5 +168,21 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
         )
         Constant.StaffDataSending = saveStaffData
         startActivity(intent)
+    }
+
+    override fun onReadStatusClick(
+        data: Staff,
+        isPosition: Int
+    ) {
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, "STUDENTCHAT")
+            addProperty(APIKeyNames.detail_id, data.id)
+        }
+        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchstaffdata()
     }
 }

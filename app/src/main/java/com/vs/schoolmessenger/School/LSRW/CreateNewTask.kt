@@ -140,7 +140,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
         setSelectedTab(binding.listeningLayout)
 
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE

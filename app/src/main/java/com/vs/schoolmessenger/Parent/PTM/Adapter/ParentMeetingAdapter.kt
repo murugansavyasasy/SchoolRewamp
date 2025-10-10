@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.PTM.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,8 @@ class ParentMeetingAdapter(
         val btnMeetingType: TextView = itemView.findViewById(R.id.btnMeetingType)
         val rvSlots: RecyclerView = itemView.findViewById(R.id.rvSlots)
         val tvProfileIcon: TextView = itemView.findViewById(R.id.tvProfileIcon)
+
+        val imgMeetingType: ImageView = itemView.findViewById(R.id.imgMeetingType)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParentMeetingViewHolder {
@@ -38,17 +41,25 @@ class ParentMeetingAdapter(
         holder.tvMeetingTitle.text = meeting.event_name
         holder.tvParentName.text = meeting.staff_name
         holder.tvSubject.text = meeting.subject_name
-        holder.btnMeetingType.text = meeting.slots.firstOrNull()?.event_mode ?: "Meeting"
+
+        val mode = meeting.slots.firstOrNull()?.event_mode ?: "Meeting"
+        holder.btnMeetingType.text = mode
 
         val firstLetter = meeting.staff_name?.trim()?.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
         holder.tvProfileIcon.text = firstLetter
 
-        holder.rvSlots.layoutManager = GridLayoutManager(holder.itemView.context, 2)
+        val modeIconRes = when (mode.lowercase()) {
+            "in person" -> R.drawable.person_white_bg
+            "phone call" -> R.drawable.phone_icon_bg
+            "virtual" -> R.drawable.close_icon
+            else -> R.drawable.phone_icon_bg
+        }
+        holder.imgMeetingType.setImageResource(modeIconRes)
 
-        // Flatten all slots from all meetings
+        // Setup slots RecyclerView
+        holder.rvSlots.layoutManager = GridLayoutManager(holder.itemView.context, 2)
         val allSlots = meetings.flatMap { it.slots }
         val allSelectedSlots = selectedSlotsMap.values.toList()
-        // Create a unique key for this meeting
         val meetingKey = "${meeting.staff_id}_${meeting.start_time}_${meeting.event_name}"
         val meetingSelectedSlot = selectedSlotsMap[meetingKey]
         val slotAdapter = ParentSlotTimingAdapter(
@@ -60,7 +71,6 @@ class ParentMeetingAdapter(
             notifyDataSetChanged()
             onSlotSelected(meeting, slot)
         }
-
         holder.rvSlots.adapter = slotAdapter
         val myBookedSlot = meeting.slots.find { it.my_booking }
         slotAdapter.setSelectedSlot(meetingSelectedSlot)

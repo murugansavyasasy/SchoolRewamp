@@ -492,8 +492,8 @@
                     android:id="@+id/isViewSignalCheck"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/point_one"
-                    android:visibility="gone"
-                    android:layout_below="@+id/lnrwhatsnew"
+                    android:visibility="visible"
+                    android:layout_below="@+id/lnrEnableFingerPrint"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"
@@ -501,16 +501,16 @@
 
 
                 <LinearLayout
-                    android:id="@+id/lnrSignalCheck"
+                    android:id="@+id/lnrSaveContact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/isViewSignalCheck"
                     android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
                     android:layout_marginBottom="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/thirty"
                     android:gravity="center"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
@@ -528,7 +528,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        android:text="@string/check_network_speed"
+                        android:text="@string/save_contact_to_avoid"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 

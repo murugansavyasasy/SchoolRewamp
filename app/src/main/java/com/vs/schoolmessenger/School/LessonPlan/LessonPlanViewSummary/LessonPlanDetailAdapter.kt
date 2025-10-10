@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryDetail
 import com.vs.schoolmessenger.Utils.Constant
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class LessonPlanDetailAdapter(
     private val details: List<LessonPlanViewSummaryDetail>,
@@ -47,13 +49,14 @@ class LessonPlanDetailAdapter(
 
             imgIcon.setImageResource(getIconForName(detail.name))
 
-            setColoredText(
+            setColoredTextWithDateCheck(
                 tvText,
                 detail.name,
                 detail.value,
                 ContextCompat.getColor(context, R.color.PrimaryColor),
-                Color.BLACK // default value color
+                Color.BLACK
             )
+
 
 //            tvText.text = if (detail.value.isNotEmpty()) {
 //                "${detail.name}: ${detail.value}"
@@ -75,6 +78,39 @@ class LessonPlanDetailAdapter(
             else -> R.drawable.ic_circle_check_mark
         }
     }
+
+    fun setColoredTextWithDateCheck(
+        tvText: TextView,
+        name: String,
+        value: String,
+        highlightColor: Int,
+        defaultColor: Int
+    ) {
+        val formattedValue = if (isDateFormat(value)) {
+            convertDateFormat(value)
+        } else {
+            value
+        }
+
+        setColoredText(tvText, name, formattedValue, highlightColor, defaultColor)
+    }
+
+    fun isDateFormat(value: String): Boolean {
+        val dateRegex = Regex("^\\d{2}-\\d{2}-\\d{4}$")
+        return dateRegex.matches(value)
+    }
+
+    fun convertDateFormat(dateStr: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(dateStr)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            dateStr
+        }
+    }
+
     fun setColoredText(
         textView: TextView,
         name: String,
@@ -90,7 +126,6 @@ class LessonPlanDetailAdapter(
 
         val spannable = SpannableString(fullText)
 
-        // Color only the name part
         spannable.setSpan(
             ForegroundColorSpan(primaryColor),
             0,
@@ -98,11 +133,10 @@ class LessonPlanDetailAdapter(
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        // Color only the value part if not empty
         if (value.isNotEmpty()) {
             spannable.setSpan(
                 ForegroundColorSpan(defaultColor),
-                name.length + 2, // +2 to skip ": "
+                name.length + 2,
                 fullText.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
@@ -112,7 +146,7 @@ class LessonPlanDetailAdapter(
     }
 
 
-    override fun getItemCount(): Int = 1 // single card with all chips
+    override fun getItemCount(): Int = 1
 
 }
 

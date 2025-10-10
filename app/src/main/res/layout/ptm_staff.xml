@@ -211,17 +211,29 @@
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never">
             </androidx.recyclerview.widget.RecyclerView>
+
+            <ImageView
+            android:id="@+id/imgNoData"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/nomessages"
+            android:visibility="gone"/>
+
             <TextView
                 android:id="@+id/tvNoData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/imgNoData"
                 android:gravity="center"
                 android:padding="@dimen/twenty"
-                android:text="No  Meeting Found"
-                android:layout_marginTop="@dimen/twenty"
+                android:text="No Meeting Found"
+                android:layout_marginTop="@dimen/ten"
                 android:textSize="@dimen/sixteen_sp"
                 style="@style/CustomTextStylePoppinsBold"
                 android:visibility="gone"/>
+
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

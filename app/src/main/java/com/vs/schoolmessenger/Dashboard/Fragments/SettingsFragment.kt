@@ -1,10 +1,14 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
+import android.Manifest
 import android.app.AlertDialog
+import android.content.ContentProviderOperation
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -16,6 +20,8 @@ import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.tasks.Task
@@ -58,6 +64,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     private lateinit var chArabic: CheckBox
     private lateinit var btnConfirm: TextView
     private var isChecking = false
+    private val REQUEST_CONTACT_PERMISSION = 1001
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +80,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrLogout.setOnClickListener(this)
         binding.lnrLanguage.setOnClickListener(this)
         binding.lnrChangePassword.setOnClickListener(this)
-        binding.lnrSignalCheck.setOnClickListener(this)
+        binding.lnrSaveContact.setOnClickListener(this)
         binding.lnrwhatsnew.setOnClickListener(this)
 
         if (Constant.checkBiometricSupport(requireActivity())) {
@@ -148,9 +155,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 RedirectToWhatsnew()
             }
 
-            R.id.lnrSignalCheck -> {
-                val networkSpeedMonitor = NetworkSpeedMonitor(requireContext())
-                networkSpeedMonitor.showNetworkSpeedPopup()
+            R.id.lnrSaveContact -> {
+                checkContactPermission()
+//                val networkSpeedMonitor = NetworkSpeedMonitor(requireContext())
+//                networkSpeedMonitor.showNetworkSpeedPopup()
             }
         }
     }
@@ -161,8 +169,110 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         startActivity(intent)
     }
 
+    private fun addContact(name: String, phone: String) {
+        val ops = ArrayList<ContentProviderOperation>()
 
+        ops.add(
+            ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build()
+        )
 
+        // Name
+        ops.add(
+            ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(
+                    ContactsContract.Data.MIMETYPE,
+                    ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE
+                )
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name)
+                .build()
+        )
+
+        // Phone number
+        ops.add(
+            ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(
+                    ContactsContract.Data.MIMETYPE,
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
+                )
+                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
+                .withValue(
+                    ContactsContract.CommonDataKinds.Phone.TYPE,
+                    ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
+                )
+                .build()
+        )
+
+        try {
+            val resolver = requireActivity().contentResolver
+            resolver.applyBatch(ContactsContract.AUTHORITY, ops)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun checkContactPermission() {
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_CONTACTS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.WRITE_CONTACTS),
+                REQUEST_CONTACT_PERMISSION
+            )
+        } else {
+            checkAndShowPopup()
+        }
+    }
+
+    private fun checkAndShowPopup() {
+        val contacts = listOf(
+            Pair("New School Chimes", "9876543210"),
+            Pair("New School Chimes", "8765432109"),
+            Pair("New School Chimes", "7654321098")
+        )
+
+        val missingContacts = contacts.filterNot { contactExists(it.second) }
+
+        if (missingContacts.isNotEmpty()) {
+            // Show popup only if one or more contacts are missing
+            AlertDialog.Builder(requireActivity())
+                .setTitle("Save Contacts")
+                .setMessage("Some contacts are not saved. Do you want to save them now?")
+                .setPositiveButton("Yes") { _, _ ->
+                    for (c in missingContacts) {
+                        addContact(c.first, c.second)
+                    }
+                    Toast.makeText(requireActivity(), "Contacts saved successfully!", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("No", null)
+                .show()
+        } else {
+            Toast.makeText(requireActivity(), "All contacts are already saved", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun contactExists(phoneNumber: String): Boolean {
+        val uri = Uri.withAppendedPath(
+            ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+            Uri.encode(phoneNumber)
+        )
+
+        val projection = arrayOf(ContactsContract.PhoneLookup._ID)
+        var exists = false
+        val resolver = requireActivity().contentResolver
+        val cursor = resolver.query(uri, projection, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                exists = true
+            }
+        }
+        return exists
+    }
    private fun showInAppReview(requireActivity: FragmentActivity) {
         val manager = ReviewManagerFactory.create(requireActivity())
         val request: Task<com.google.android.play.core.review.ReviewInfo> = manager.requestReviewFlow()

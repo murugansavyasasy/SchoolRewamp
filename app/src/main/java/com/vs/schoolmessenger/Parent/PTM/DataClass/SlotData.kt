@@ -10,4 +10,5 @@ data class SlotData( val id: String,
                      val event_name: String,
                      val event_mode: String,
                      val event_link: String,
-                     val my_booking: Boolean,)
+                     val my_booking: Boolean,
+                     var isSelected: Boolean = false )

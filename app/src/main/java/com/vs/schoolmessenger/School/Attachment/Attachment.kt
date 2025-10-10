@@ -120,7 +120,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
@@ -833,7 +833,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
