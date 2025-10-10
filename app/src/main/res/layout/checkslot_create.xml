@@ -22,7 +22,7 @@
         android:background="@drawable/bg_orange"
         android:padding="@dimen/ten"
         android:gravity="center"
-        android:text="@string/CreateMeeting"
+        android:text="Open Above Slots"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp"/>
 </RelativeLayout>

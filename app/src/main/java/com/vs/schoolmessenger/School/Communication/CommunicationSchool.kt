@@ -19,6 +19,7 @@ import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -280,6 +281,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.scrollRoot,
             binding.edtContentTextMessage
         )
+//        Constant.setupEditTextWithScroll(
+//            this,
+//            binding.scrollRoot,
+//            binding.edtTitle
+//        )
+
     }
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {

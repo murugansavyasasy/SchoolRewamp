@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import android.view.inputmethod.InputMethodManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
@@ -199,6 +200,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     "DropdownMenu",
                     "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
                 )
+                isSelectedList.clear()
                 isGetStandardSection()
             }
 
@@ -678,16 +680,24 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             setTextColor(ContextCompat.getColor(context, R.color.white))
         }
 
-        isMeetingMode = isSelectedTextView.text.toString()
-        if (isSelectedTextView.text.toString() == "Online") {
-            binding.edtMobileOrLink.visibility = View.VISIBLE
+        isMeetingMode = when (isSelectedTextView.id) {
+            R.id.lblOnline -> "Online"
+            R.id.lblPerson -> "Person"
+            R.id.lblPhoneCall -> "Phone Call"
+            else -> ""
+        }
+        if (isMeetingMode.equals("Online", ignoreCase = true)) {
             binding.lblLinkOrNumber.visibility = View.VISIBLE
+            binding.edtMobileOrLink.visibility = View.VISIBLE
+            binding.lblLinkOrNumber.text = "Paste the meeting link"
+            binding.edtMobileOrLink.hint = "Paste the meeting link here"
             isOnlineMeeting = true
         } else {
-            binding.edtMobileOrLink.visibility = View.GONE
             binding.lblLinkOrNumber.visibility = View.GONE
+            binding.edtMobileOrLink.visibility = View.GONE
             isOnlineMeeting = false
         }
+
+    }
     }
 
-}
