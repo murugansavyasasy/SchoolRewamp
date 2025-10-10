@@ -127,7 +127,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
@@ -827,7 +827,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE

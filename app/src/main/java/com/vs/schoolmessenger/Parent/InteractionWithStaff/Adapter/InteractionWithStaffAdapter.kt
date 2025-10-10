@@ -122,6 +122,7 @@ class InteractionWithStaffAdapter(
 
 
 
+
             if (staff.unread_count > Constant.zero) {
                 unreadcount.visibility = View.VISIBLE
                 yesterdayheader.visibility = View.VISIBLE
@@ -131,6 +132,11 @@ class InteractionWithStaffAdapter(
             }
 
             relative_layout.setOnClickListener {
+                if (staff.unread_count > Constant.zero) {
+                    listener.onReadStatusClick(staff, adapterPosition)
+                } else {
+                    Log.d("Message Read Status", "Message")
+                }
                 if (staff.is_assigned == true) {
                     listener.onClickItem(staff)
                 } else {

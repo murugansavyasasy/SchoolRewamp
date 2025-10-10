@@ -130,7 +130,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
@@ -651,7 +651,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     override fun onClickListener(data: CreateEvent) {
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
@@ -924,7 +924,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     fun isEditProcess(data: SchoolEventItem?) {
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
