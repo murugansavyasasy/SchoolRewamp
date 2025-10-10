@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.MarkYourAttendance
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -14,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
@@ -83,21 +85,31 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         getCurrentLocation()
 
         appViewModel!!.isAddLocation?.observe(this) { response ->
-            if (response != null && response.status) {
+            if (response != null) {
                 Constant.hideLoading(this@AddLocationActivity)
-                Constant.showTopAlertPopup(response.message, this)
+                showSuccessPopup(response.message,response.status)
+//                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
         appViewModel!!.isLocationHistory?.observe(this) { response ->
-            if (response != null && response.status) {
-            val isLocationHistory = response!!.data
-            isLoadLocationHistory(isLocationHistory, response.message)
+            if (response != null) {
+                if(response.status) {
+                    recyleLocations?.visibility = View.VISIBLE
+                    lblNoRecords?.visibility = View.GONE
+                    val isLocationHistory = response!!.data
+                    isLoadLocationHistory(isLocationHistory, response.message)
+                }
+                else{
+                    recyleLocations?.visibility = View.GONE
+                    lblNoRecords?.visibility = View.VISIBLE
+                    lblNoRecords?.text = response.message
+                }
             }
         }
 
         appViewModel!!.isUpdateLocation?.observe(this) { response ->
-            if (response != null && response.status) {
+            if (response != null) {
                 Constant.hideLoading(this@AddLocationActivity)
                 val dialogRootView = view as ViewGroup
                 showTopAlertPopup(response.message, dialogRootView, -1, response.status, Constant.isUpdate)
@@ -287,12 +299,15 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         }
     }
 
-    private fun showEditLocationPopup(id: Int, rootView: ViewGroup) {
+    private fun showEditLocationPopup(data: LocationHistoryData, rootView: ViewGroup) {
         val popupView = LayoutInflater.from(this).inflate(R.layout.edit_location, null)
         val edtLocationName = popupView.findViewById<EditText>(R.id.edtLocationName)
         val edtDistance = popupView.findViewById<EditText>(R.id.edtDistance)
         val btnCancel = popupView.findViewById<TextView>(R.id.btnCancel)
         val btnUpdate = popupView.findViewById<Button>(R.id.btnUpdate)
+        edtLocationName.setText(data.location)
+        edtDistance.setText(data.distance)
+
 
         val dimView = View(this).apply {
             setBackgroundColor(Color.parseColor("#80000000"))
@@ -327,12 +342,12 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             val locationName = edtLocationName.text.toString().trim()
             val distance = edtDistance.text.toString().trim()
 
-            if (locationName.isNotEmpty() || distance.isNotEmpty()) {
+            if (locationName.isNotEmpty() && distance.isNotEmpty()) {
                 Constant.showLoading(this)
                 val jsonObject = JsonObject().apply {
-                    addProperty(APIKeyNames.id, id)
+                    addProperty(APIKeyNames.id, data.id.toString())
                     addProperty(APIKeyNames.location, locationName)
-                    addProperty(APIKeyNames.distance, distance)
+                    addProperty(APIKeyNames.distance, distance.toIntOrNull())
                 }
                 appViewModel?.updateLocation(isAccessToken!!, jsonObject, this)
                 closePopup()
@@ -357,7 +372,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
                 Constant.isRemove
             )
         } else {
-            showEditLocationPopup(data.id, dialogRootView)
+            showEditLocationPopup(data, dialogRootView)
         }
     }
 
