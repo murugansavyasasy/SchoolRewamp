@@ -100,9 +100,9 @@ class SchoolEventAdapter(
 
 
     fun updateList(newList: List<SchoolEventItem>?) {
-        this.itemList = newList ?: listOf()
-        fullList = this.itemList!!
-        filteredList = fullList
+        if (newList != null) {
+            filteredList = newList
+        }
         notifyDataSetChanged()
     }
 

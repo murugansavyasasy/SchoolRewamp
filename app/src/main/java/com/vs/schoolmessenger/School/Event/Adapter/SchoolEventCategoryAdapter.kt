@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventCategoryAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.EventCategory
@@ -63,7 +65,6 @@ class SchoolEventCategoryAdapter (
         }
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ShimmerViewHolder -> holder.startShimmer()
@@ -94,17 +95,13 @@ class SchoolEventCategoryAdapter (
         notifyItemChanged(newPosition)
     }
 
-    fun updateList(newData: List<EventCategory>?) {
-        itemList = newData
-        notifyDataSetChanged()
-    }
-
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
         private val categoryName: TextView = itemView.findViewById(R.id.category_name)
         private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
         private val layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
+
 
         fun bind(
             data: EventCategory, position: Int, isSelected: Boolean, adapter: SchoolEventCategoryAdapter
@@ -122,7 +119,6 @@ class SchoolEventCategoryAdapter (
                 else ContextCompat.getColor(context, R.color.black)
             )
 
-
             layout.setOnClickListener {
                 adapter.onCategorySelected(adapterPosition)
                 adapter.listener.onCategoryClicked(data)
@@ -137,8 +133,10 @@ class SchoolEventCategoryAdapter (
         private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
         private val layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
 
+
         fun bind(
-            isSelected: Boolean, adapter: SchoolEventCategoryAdapter
+            isSelected: Boolean,
+            adapter: SchoolEventCategoryAdapter
         ) {
             categoryName.text = context.getString(R.string.all)
             categoryImage.setImageResource(R.drawable.allimage)

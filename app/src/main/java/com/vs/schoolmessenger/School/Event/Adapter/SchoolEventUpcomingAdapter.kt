@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventFilePathAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
@@ -128,7 +129,9 @@ class SchoolEventUpcomingAdapter(
 
 
     fun updateList(newList: List<SchoolEventItem>?) {
-        this.itemList = newList
+        if (newList != null) {
+            filteredList = newList
+        }
         notifyDataSetChanged()
     }
 
