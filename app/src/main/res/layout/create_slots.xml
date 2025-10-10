@@ -48,7 +48,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty_five"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="@string/open_above_slots"
+            android:text="Create Meeting"
             android:textColor="@color/white"
             android:textSize="@dimen/sixteen">
         </TextView>
@@ -129,21 +129,6 @@
                         android:textSize="@dimen/twele_sp">
                     </TextView>
                     <TextView
-                        android:id="@+id/lblOnline"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:layout_weight="1"
-                        android:background="@drawable/gray_bg_radius"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/ten"
-                        android:paddingVertical="@dimen/five"
-                        android:text="Virtual"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/twele_sp">
-                    </TextView>
-                    <TextView
                         android:id="@+id/lblPhoneCall"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
@@ -155,6 +140,21 @@
                         android:paddingHorizontal="@dimen/ten"
                         android:paddingVertical="@dimen/five"
                         android:text="Phone call"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/lblOnline"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_weight="1"
+                        android:background="@drawable/gray_bg_radius"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/ten"
+                        android:paddingVertical="@dimen/five"
+                        android:text="Virtual"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp">
                     </TextView>

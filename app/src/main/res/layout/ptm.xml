@@ -16,8 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
         <include
             android:id="@+id/toolbarLayout"
             layout="@layout/parent_side_tool_bar_without_curve"

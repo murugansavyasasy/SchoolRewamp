@@ -281,12 +281,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.scrollRoot,
             binding.edtContentTextMessage
         )
-        Constant.setupEditTextWithScroll(
-            this,
-            binding.scrollRoot,
-            binding.edtTitle
-        )
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+//        Constant.setupEditTextWithScroll(
+//            this,
+//            binding.scrollRoot,
+//            binding.edtTitle
+//        )
 
     }
 
