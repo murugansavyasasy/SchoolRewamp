@@ -1560,6 +1560,24 @@ object Constant {
         }
     }
 
+    //We use this to convert the Date Format 12 May 2025 to 12 Monday(we get Date And Day)
+    fun getDayAndDateOnly2(inputDateStr: String): Pair<String, String> {
+        return try {
+            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val dayNameFormat = SimpleDateFormat("EEEE", Locale.getDefault()) // e.g., Fri
+            val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
+
+            val date = inputFormat.parse(inputDateStr)!!
+            val dayName = dayNameFormat.format(date)     // "Fri"
+            val dayNumber = dayNumberFormat.format(date) // "13"
+
+            Pair(dayNumber, dayName)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Pair("", "") // fallback
+        }
+    }
+
 
     //Convert dd-MM-YYYY to dd MMM YYYY (12-02-2025 to 12 Feb 2025)
     fun convertToReadableDate(inputDateStr: String): String {
@@ -1623,6 +1641,19 @@ object Constant {
 
         val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
         val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
+        val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
+        val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+        val customFormat =
+            SimpleDateFormat("EEE, MMM yyyy", Locale.getDefault()).format(calendar.time)
+
+        return listOf(dayOnly, dayOfWeek, fullDate, slashDate, customFormat)
+    }
+
+    fun getCurrentDateInfo2(): List<String> {
+        val calendar = android.icu.util.Calendar.getInstance()
+
+        val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
+        val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)
         val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
         val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
         val customFormat =

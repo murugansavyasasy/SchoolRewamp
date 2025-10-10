@@ -94,8 +94,7 @@ class HomeWorkReportAdapter(
 
         fun bind(item: HomeWorkReportData, listener: HomeWorkReportClickListener, context: Context) {
             binding.lblSubject.text = item.subject_name
-//            binding.lblTitle.text = item.title
-            binding.lblTitle.text = item.sent_by
+            binding.lblTitle.text = item.title
             binding.redDot.visibility = View.GONE
             binding.imgSuccess.visibility = View.GONE
             binding.progressContainer.visibility = View.GONE

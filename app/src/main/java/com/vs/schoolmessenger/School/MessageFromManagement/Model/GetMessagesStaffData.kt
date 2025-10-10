@@ -6,6 +6,7 @@ import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 data class GetMessagesStaffData (
     val type: String,
     val id: String,
+    val school_id: String,
     val header_id: String,
     val title: String?,
     val role: String?,

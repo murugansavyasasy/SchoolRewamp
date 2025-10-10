@@ -272,7 +272,7 @@
                                             android:id="@+id/bottomdaylinear"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/light_orangecolor"
+                                            android:background="@color/very_light_gray_2"
                                             android:gravity="center"
                                             android:orientation="vertical">
 
@@ -352,7 +352,7 @@
                                             android:id="@+id/bottomdaylinear1"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/primary_light"
+                                            android:background="@color/very_light_gray_2"
                                             android:gravity="center"
                                             android:orientation="vertical">
 

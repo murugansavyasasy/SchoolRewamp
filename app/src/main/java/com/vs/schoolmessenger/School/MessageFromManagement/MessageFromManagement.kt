@@ -35,6 +35,7 @@ import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentFilePathAdapte
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.AttachmentMediaAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.MessageFromStaffAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
@@ -55,13 +56,13 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private lateinit var adapter: MessageFromStaffAdapter
     private var handler: Handler? = null
     private var mediaPlayer: MediaPlayer? = null
-
+    private var completeAttachmentList: List<GetMessagesStaffData> = emptyList()
     private var isMsgStaff: List<GetMessagesStaffData>? = emptyList()
     private var userDetails: UserDetails? = null
     private var updateRunnable: Runnable? = null
     var isMenuCount=-1
 
-    public var TYPE: String? = ""
+    var TYPE: String? = ""
 
 
     override fun getViewBinding(): MessageFromManagementBinding {
@@ -77,35 +78,38 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         )
 
 
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
+
+
         userDetails = SharedPreference.getUserDetails(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
         if (userDetails?.staff_role.equals(Constant.isStaffRole)){
-            binding.schoollistfilter.visibility=View.GONE
+            binding.rytSpinner.visibility=View.GONE
             isAccessToken = isStaffDetails!!.access_token
+            isGetMessageFromStaff()
+            binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         }
         else{
             if (userDetails?.staff_details?.size!! > 1) {
-                binding.schoollistfilter.visibility = View.VISIBLE
+                binding.rytSpinner.visibility = View.VISIBLE
+                //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
                 userDetails?.let { setupSchoolSpinner(it.staff_details) }
             }
             else{
                 isAccessToken = userDetails!!.staff_details.get(0).access_token
-                binding.schoollistfilter.visibility=View.GONE
+                binding.rytSpinner.visibility=View.GONE
+                isGetMessageFromStaff()
+                binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+                binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
             }
         }
 
-
-
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
-        appViewModel = ViewModelProvider(this)[App::class.java]
-        appViewModel!!.init()
-        isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         isMenuCount=Constant.isSchoolMenuCount
-        binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
 //        setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
 
 
@@ -117,9 +121,10 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.rcMessageStaff.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
                     isLoadMsgStaff(response.data)
-                    isMsgStaff=response.data
+                    completeAttachmentList=response.data
                 }
                 else {
+                    binding.rytSpinner.visibility=View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.rytSearch1.visibility = View.GONE
                     binding.rlaMessageFFromStaff.visibility = View.VISIBLE
@@ -127,6 +132,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     ErrorMessage(response.message)
                 }
             } else {
+                binding.rytSpinner.visibility=View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.rytSearch1.visibility = View.GONE
                 binding.rlaMessageFFromStaff.visibility = View.VISIBLE
@@ -167,35 +173,49 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     }
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-        val schoolNames = staffList.map { it.school_name }
+        val schoolNames = listOf("All") + staffList.map { it.school_name }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.schoollistfilter.adapter = adapter
 
+        binding.schoollistfilter.setSelection(0)
         binding.schoollistfilter.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
+                private var lastSelectedPosition: Int = -1
                 override fun onItemSelected(
                     parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
-                    val selectedStaff = staffList[position]
-                    isAccessToken = selectedStaff.access_token
-                    isStaffDetails = selectedStaff
-                    Log.d(
-                        "SpinnerSelection",
-                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
-                    )
-                    isGetMessageFromStaff()
+                    if (position != lastSelectedPosition) {
+                        lastSelectedPosition = position
+                        if (position == 0) {
+                            isLoadMsgStaff(completeAttachmentList)
+                            binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+                            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+                        } else {
+                            val selectedStaff = staffList[position - 1]
+                            isAccessToken = selectedStaff.access_token
+                            isStaffDetails = selectedStaff
+                            val selectedSchoolId = selectedStaff.school_id
+                            val filteredList = completeAttachmentList.filter { it.school_id == selectedSchoolId }
+                            Log.d("SpinnerSelection", "Selected school: ${selectedStaff.school_name}, Selected school id: ${selectedStaff.school_id}, Data: ${filteredList}, Token: $isAccessToken")
+                            isLoadMsgStaff(filteredList)
+                            binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+                            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+                        }
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-
-//        if (staffList.isNotEmpty()) {
-//            isAccessToken = staffList[0].access_token
-//            isStaffDetails = staffList[0]
-//            Log.d("DefaultSelection", "Default token: $isAccessToken")
-//        }
+        //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
+        // Initial fetch for all schools
+        if (staffList.isNotEmpty()) {
+            isAccessToken = staffList[0].access_token
+            isStaffDetails = staffList[0]
+            Log.d("DefaultSelection", "Default token: $isAccessToken")
+            isGetMessageFromStaff()
+        }
     }
 
     private fun filter(text: String) {
@@ -269,6 +289,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
     private fun isLoadMsgStaff(data: List<GetMessagesStaffData>) {
         if (data.isNotEmpty()) {
+            isMsgStaff=data
             binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             binding.rytSearch1.visibility = View.GONE
             adapter = MessageFromStaffAdapter(data,this, this, Constant.isShimmerViewDisable)

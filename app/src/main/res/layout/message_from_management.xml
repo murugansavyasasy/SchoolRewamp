@@ -62,9 +62,27 @@
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/rytSpinner"
+            android:layout_below="@+id/rytSearch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@drawable/bg_white_light_radious"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/schoollistfilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_spinner_background"                android:padding="@dimen/twele"
+
+                />
+        </RelativeLayout>
+
 
     <ScrollView
-        android:layout_below="@+id/rytSearch1"
+        android:layout_below="@+id/rytSpinner"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -75,27 +93,13 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/five"
             android:paddingBottom="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/five">
-
-            <Spinner
-                android:id="@+id/schoollistfilter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:background="@drawable/spinner_bg"
-                android:padding="@dimen/twele"
-                android:spinnerMode="dropdown"
-                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcMessageStaff"
-                android:layout_below="@+id/schoollistfilter"
                 android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
                 >
             </androidx.recyclerview.widget.RecyclerView>
 

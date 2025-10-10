@@ -5,117 +5,123 @@
     android:id="@+id/rlaHeader"
     android:clipToPadding="false"
     android:clipChildren="false"
-    android:paddingBottom="@dimen/fifteen"
+    android:paddingTop="@dimen/fifteen"
     android:paddingStart="@dimen/ten"
+    android:paddingBottom="@dimen/five"
     android:paddingEnd="@dimen/ten"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/fifteen"
-        app:cardElevation="4dp">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/imgReadStatus"
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/minus_thirty_four"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:elevation="@dimen/ten"
+            android:src="@drawable/new_icon"
+            android:visibility="gone">
+
+        </ImageView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/ten">
+            app:cardCornerRadius="@dimen/fifteen"
+            app:cardElevation="4dp">
+
             <RelativeLayout
-                android:id="@+id/lnrDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/lblLogo"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
-                    android:gravity="center"
-                    android:text="SA"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sixteen_sp"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:background="@drawable/bg_light_blue_circle"
-                    android:backgroundTint="@color/PrimaryColor" />
-
-                <RelativeLayout
-                    android:layout_marginEnd="@dimen/ten"
-                    android:id="@+id/rlaNRDetails"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/lblLogo"
-                    android:layout_below="@+id/imgReadStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                   >
-
-                    <TextView
-                        android:id="@+id/lblName"
-                        android:layout_alignParentStart="true"
-                        android:layout_width="wrap_content"
-                        android:layout_toStartOf="@+id/lblRole"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Dr. Senthana Abert"
-                        style="@style/CustomTextStylePoppinsMedium" />
-
-                    <TextView
-                        android:id="@+id/lblRole"
-                        android:layout_alignParentEnd="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/ten"
-                        android:paddingVertical="@dimen/four"
-                        android:paddingHorizontal="@dimen/thirteen"
-                        android:text=" Vice Principal "
-                        android:textSize="@dimen/twele_sp"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:background="@drawable/gray_bg_radius" />
-                </RelativeLayout>
-                <View
-                    android:visibility="gone"
-                    android:id="@+id/imgReadStatus"
-                    android:layout_width="100dp"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="@dimen/five"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="-25dp"
-                    android:background="@drawable/new_icon1">
-
-                </View>
-            </RelativeLayout>
-            <!-- Logo -->
-
-
-            <!-- Details Section -->
-            <LinearLayout
-                android:layout_marginTop="@dimen/five"
-                android:layout_below="@+id/lnrDetails"
-                android:id="@+id/rlaDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
-                android:orientation="vertical">
+                android:padding="@dimen/ten">
+                <RelativeLayout
+                    android:id="@+id/lnrDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/lblLogo"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:gravity="center"
+                        android:text="SA"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sixteen_sp"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:background="@drawable/bg_light_blue_circle"
+                        android:backgroundTint="@color/PrimaryColor" />
+
+                    <RelativeLayout
+                        android:layout_marginEnd="@dimen/ten"
+                        android:id="@+id/rlaNRDetails"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/lblLogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:id="@+id/lblName"
+                            android:layout_alignParentStart="true"
+                            android:layout_width="wrap_content"
+                            android:layout_toStartOf="@+id/lblRole"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="Dr. Senthana Abert"
+                            style="@style/CustomTextStylePoppinsMedium" />
+
+                        <TextView
+                            android:id="@+id/lblRole"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/ten"
+                            android:paddingVertical="@dimen/four"
+                            android:paddingHorizontal="@dimen/thirteen"
+                            android:text=" Vice Principal "
+                            android:textSize="@dimen/twele_sp"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:background="@drawable/gray_bg_radius" />
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!-- Logo -->
 
 
-                <!-- Title -->
-                <TextView
-                    android:id="@+id/lblTitle"
-                    android:layout_width="wrap_content"
+                <!-- Details Section -->
+                <LinearLayout
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_below="@+id/lnrDetails"
+                    android:id="@+id/rlaDetails"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Meeting Reminder"
-                    style="@style/CustomTextStylePoppinsBold" />
+                    android:layout_marginStart="@dimen/ten"
+                    android:orientation="vertical">
 
-                <!-- Description -->
-                <TextView
-                    android:id="@+id/lblDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="Please attend the meeting scheduled at 5 PM."
-                    style="@style/CustomTextStylePoppinsMedium" />
+
+                    <!-- Title -->
+                    <TextView
+                        android:id="@+id/lblTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Meeting Reminder"
+                        style="@style/CustomTextStylePoppinsBold" />
+
+                    <!-- Description -->
+                    <TextView
+                        android:id="@+id/lblDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Please attend the meeting scheduled at 5 PM."
+                        style="@style/CustomTextStylePoppinsMedium" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -135,24 +141,25 @@
                         android:layout_height="wrap_content">
 
                     </TextView>
-                <TextView
-                    android:id="@+id/lblTimeDate"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:textColor="@color/gnt_gray"
-                    android:layout_marginTop="@dimen/five"
-                    android:text="Today 04:45 PM"
-                    android:textSize="@dimen/twele_sp"
-                    >
+                    <TextView
+                        android:id="@+id/lblTimeDate"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@color/gnt_gray"
+                        android:layout_marginTop="@dimen/five"
+                        android:text="Today 04:45 PM"
+                        android:textSize="@dimen/twele_sp"
+                        >
 
-                </TextView>
+                    </TextView>
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </RelativeLayout>
