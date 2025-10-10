@@ -111,6 +111,20 @@ class SchoolEventAdapter(
     }
 
 
+    fun removeItemAt(position: Int) {
+        if (position in filteredList.indices) {
+            val removedNotice = filteredList[position]
+            filteredList = filteredList.toMutableList().apply {
+                removeAt(position)
+            }
+            fullList = fullList.filterNot { it.id == removedNotice.id }
+            notifyItemRemoved(position)
+
+            if (filteredList.isEmpty()) {
+                listener.onSearchResultEmpty(Constant.ONGOING, true)
+            }
+        }
+    }
 
 
     class DataViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
