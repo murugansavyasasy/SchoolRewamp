@@ -127,6 +127,18 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                         if (::isMeetingHistoryAdapter.isInitialized && lastCancelledPosition >= 0) {
                             isMeetingHistoryAdapter.removeItem(lastCancelledPosition)
                             lastCancelledPosition = -1
+                            isMeetingHistoryList()
+
+                            if (isMeetingHistoryAdapter.itemCount == 0) {
+                                binding.rytNoDataFound.visibility = View.VISIBLE
+                                binding.rcyMeetingHistory.visibility = View.GONE
+                                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                            } else {
+                                binding.rytNoDataFound.visibility = View.GONE
+                                binding.rcyMeetingHistory.visibility = View.VISIBLE
+                                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                            }
+
                         }
                     }
                     .show()
@@ -296,12 +308,12 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             val completedMeetings = data.firstOrNull()?.completed ?: emptyList()
 
             if (todayMeetings.isNotEmpty()) {
-                meetingItems.add(MeetingListItem.Header("Today"))
+                meetingItems.add(MeetingListItem.Header("Today Meetings"))
                 todayMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
             }
 
             if (upcomingMeetings.isNotEmpty()) {
-                meetingItems.add(MeetingListItem.Header("Upcoming"))
+                meetingItems.add(MeetingListItem.Header("Upcoming Meetings"))
                 upcomingMeetings.forEach { meetingItems.add(MeetingListItem.Item(it)) }
             }
 
@@ -356,6 +368,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
 
             R.id.lblYourMeeting -> {
                 isChangeBackGroundTab(binding.lblYourMeeting)
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             }
 
             R.id.lblBookSlots -> {

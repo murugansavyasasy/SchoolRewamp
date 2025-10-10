@@ -94,6 +94,23 @@ class MeetingHistoryAdapter(
             tvTime.text = meeting.time
             tvStatus.text = meeting.status
 
+            val modeDrawable = when (meeting.mode.lowercase()) {
+                "in person" -> R.drawable.person_2_fill
+                "phone call" -> R.drawable.phone_icon_black
+                "virtual" -> R.drawable.close_icon
+                else -> 0
+            }
+
+            if (modeDrawable != 0) {
+                val drawable = ContextCompat.getDrawable(itemView.context, modeDrawable)
+                drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+                tvMode.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null)
+                tvMode.compoundDrawablePadding = 8
+            } else {
+                tvMode.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
+            }
+
+
 
 //            tvStatus.setBackgroundColor(
 //                if (meeting.status.equals("Completed", true)) Color.parseColor("#5cc885")
@@ -159,11 +176,23 @@ class MeetingHistoryAdapter(
 
             callButton.setOnClickListener {
                 val context = itemView.context
-                val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
-                    data = android.net.Uri.parse("tel:${meeting.staff_phone}")
+                val phoneNumber = meeting.staff_phone?.trim()?.takeIf { it.isNotEmpty() } ?: ""
+
+                if (phoneNumber.isNotEmpty()) {
+                    try {
+                        val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
+                            data = android.net.Uri.parse("tel:$phoneNumber")
+                        }
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        Toast.makeText(context, "Cannot open dialer", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "Phone number not available", Toast.LENGTH_SHORT).show()
                 }
-                context.startActivity(intent)
             }
+
         }
     }
 
@@ -175,24 +204,38 @@ class MeetingHistoryAdapter(
         }
     }
 
+
     private fun cleanUpEmptyHeaders() {
         val newList = mutableListOf<MeetingListItem>()
         var currentHeader: MeetingListItem.Header? = null
+        var headerHasItems = false
 
         items.forEach {
             when (it) {
-                is MeetingListItem.Header -> currentHeader = it
+                is MeetingListItem.Header -> {
+                    if (headerHasItems && currentHeader != null) {
+                        newList.add(currentHeader!!)
+                    }
+                    currentHeader = it
+                    headerHasItems = false
+                }
                 is MeetingListItem.Item -> {
-                    currentHeader?.let { newList.add(it) }
+                    headerHasItems = true
                     newList.add(it)
-                    currentHeader = null
                 }
             }
+        }
+
+        if (headerHasItems && currentHeader != null) {
+            newList.add(0, currentHeader!!)
         }
 
         items = newList
         notifyDataSetChanged()
     }
+
+
+
 
 
     override fun getFilter(): Filter {

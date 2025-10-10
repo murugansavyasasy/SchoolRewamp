@@ -17,7 +17,8 @@ import java.util.Locale
 class CheckAvailableSlotsDate(
     private val context: Context,
     private val dates: List<AvailableSlotGroup>,
-    private val onUpdate: (List<Pair<String, SlotAvailability>>) -> Unit
+    private val onUpdate: (List<Pair<String, SlotAvailability>>) -> Unit,
+    private val onAllRemoved: () -> Unit
 ) : RecyclerView.Adapter<CheckAvailableSlotsDate.ViewHolder>() {
 
     private val allDaySlots = mutableMapOf<Int, Pair<String, List<SlotAvailability>>>()
@@ -37,31 +38,37 @@ class CheckAvailableSlotsDate(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dayGroup = dates[position]
-
         val formattedDate = formatDateForDisplay(dayGroup.date)
         holder.tvDate.text = formattedDate
 
-        val adapter = SlotTimingLoadAdapter(dayGroup.slots, context) { updatedDaySlots ->
-            allDaySlots[position] = dayGroup.date to updatedDaySlots
+        val adapter = SlotTimingLoadAdapter(
+            dayGroup.slots.toMutableList(),
+            context,
+            onDayUpdate = { updatedDaySlots ->
+                allDaySlots[position] = dayGroup.date to updatedDaySlots
 
-            val combined = allDaySlots.values.flatMap { (date, slots) ->
-                slots.map { slot -> date to slot }
+                val combined = allDaySlots.values.flatMap { (date, slots) ->
+                    slots.map { slot -> date to slot }
+                }
+                onUpdate(combined)
+
+                if (updatedDaySlots.isEmpty()) {
+                    (dates as MutableList).removeAt(position)
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, dates.size)
+
+                    if (dates.isEmpty()) {
+                        onAllRemoved()
+                    }
+                }
             }
-            onUpdate(combined)
-        }
+        )
 
         holder.rcySlotTiming.layoutManager = GridLayoutManager(context, 2)
         holder.rcySlotTiming.adapter = adapter
-
-        if (!allDaySlots.containsKey(position)) {
-            allDaySlots[position] = dayGroup.date to dayGroup.slots
-
-            val combined = allDaySlots.values.flatMap { (date, slots) ->
-                slots.map { slot -> date to slot }
-            }
-            onUpdate(combined)
-        }
     }
+
+
 
     private fun formatDateForDisplay(input: String?): String {
         if (input.isNullOrBlank()) return ""
