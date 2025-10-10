@@ -137,7 +137,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         binding.edtTitle.setText(titleName)
 
         Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE

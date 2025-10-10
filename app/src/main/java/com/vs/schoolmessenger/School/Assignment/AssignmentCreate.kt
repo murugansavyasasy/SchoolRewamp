@@ -168,7 +168,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
@@ -984,7 +984,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
         }
 

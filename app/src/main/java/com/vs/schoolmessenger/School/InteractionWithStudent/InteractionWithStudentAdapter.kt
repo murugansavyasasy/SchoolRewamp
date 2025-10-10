@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.InteractionWithStudent
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -123,6 +124,11 @@ class InteractionWithStudentAdapter(
 
 
             relative_layout.setOnClickListener {
+                if (student.unread_count > Constant.zero__) {
+                    listener.onReadStatusClick(student, adapterPosition)
+                } else {
+                    Log.d("Message Read Status", "Message")
+                }
                 listener.onClickItem(student)
             }
 
