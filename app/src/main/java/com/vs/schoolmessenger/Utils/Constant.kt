@@ -1975,22 +1975,11 @@ object Constant {
         onComplete: () -> Unit
     ) {
         Thread {
-//            val newList = mutableListOf<QuizAttachmentData>()
 
 //            for (fileItem in files.toList()) {
                 try {
                     val uri = Uri.parse(files)
-                    val mimeType = context.contentResolver.getType(uri)
-
-                    val isImage = mimeType?.startsWith("image/") == true ||
-                            files.endsWith(".jpg", true) ||
-                            files.endsWith(".jpeg", true) ||
-                            files.endsWith(".png", true)
-
-//                    if (!isImage) {
-                        onEachProcessed(files, true)
-//                        continue
-//                    }
+                    onEachProcessed(files, true)
 
                     val inputStream = context.contentResolver.openInputStream(uri)
                     val bitmap = inputStream?.use { BitmapFactory.decodeStream(it) }
@@ -2047,25 +2036,6 @@ object Constant {
     }
 
 
-    fun scaleBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
-        val width = bitmap.width
-        val height = bitmap.height
-
-        if (width <= maxWidth && height <= maxHeight) return bitmap
-
-        val ratio = width.toFloat() / height.toFloat()
-        val newWidth: Int
-        val newHeight: Int
-
-        if (ratio > 1) {
-            newWidth = maxWidth
-            newHeight = (maxWidth / ratio).toInt()
-        } else {
-            newHeight = maxHeight
-            newWidth = (maxHeight * ratio).toInt()
-        }
-        return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
-    }
 
     fun showNotificationPermissionDialog(
         packageName: String, activity: Activity, isTitle: String, isContent: String
@@ -2240,26 +2210,6 @@ object Constant {
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
     }
-
-//    fun showEnrollDialog(activity: Activity) {
-//        AlertDialog.Builder(activity)
-//            .setTitle("Fingerprint not set up")
-//            .setMessage("To use fingerprint login, please add at least one fingerprint in your device settings.")
-//            .setPositiveButton("Go to Settings") { _, _ ->
-//                // Open biometric enrollment screen
-//                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
-//                    putExtra(
-//                        Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-//                        BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
-//                    )
-//                }
-//                activity.startActivity(enrollIntent)
-//            }
-//            .setNegativeButton("SKIP") { _, _ ->
-//            }
-//            .show()
-//    }
-
     fun showDatePickerNormal(
         context: Context,
         onDateSelected: (String) -> Unit
