@@ -50,6 +50,7 @@
 
 
             <LinearLayout
+                android:layout_toStartOf="@+id/imgArrow"
                 android:gravity="center"
                 android:layout_centerVertical="true"
                 android:layout_width="match_parent"
@@ -188,6 +189,16 @@
                     android:layout_height="@dimen/eight"></View>
 
             </LinearLayout>
+
+
+            <ImageView
+                android:layout_marginEnd="@dimen/ten"
+                android:id="@+id/imgArrow"
+                android:layout_alignParentEnd="true"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_circle_arrow_right"/>
 
 
         </RelativeLayout>
