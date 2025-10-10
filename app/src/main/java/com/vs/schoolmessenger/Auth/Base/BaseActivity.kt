@@ -7,11 +7,8 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -19,6 +16,8 @@ import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +39,6 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
@@ -48,13 +46,6 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFra
 import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
-import com.vs.schoolmessenger.Parent.Assignment.Assignment
-import com.vs.schoolmessenger.Parent.Attachment.Attachment
-import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
-import com.vs.schoolmessenger.Parent.Homework.HomeWork
-import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
-import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.LocalHelperForLanguage
@@ -841,5 +832,57 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         datePickerDialog.show()
     }
+
+     fun showSuccessPopup(message: String, status: Boolean){
+
+             val inflater = LayoutInflater.from(this)
+             val view = inflater.inflate(R.layout.success_popup, null)
+
+             val messageText = view.findViewById<TextView>(R.id.alertMessage)
+             val okButton = view.findViewById<TextView>(R.id.btnOk)
+             messageText.text = message
+
+             val rootView = this.findViewById<ViewGroup>(android.R.id.content)
+
+             val dimView = View(this).apply {
+                 setBackgroundColor(Color.parseColor("#80000000"))
+                 layoutParams = ViewGroup.LayoutParams(
+                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+                 )
+                 isClickable = true // prevent clicks on background
+             }
+
+             val marginInPx = TypedValue.applyDimension(
+                 TypedValue.COMPLEX_UNIT_DIP, 20f, this.resources.displayMetrics
+             ).toInt()
+
+             val popupLayoutParams = FrameLayout.LayoutParams(
+                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+             ).apply {
+                 gravity = Gravity.CENTER
+                 setMargins(marginInPx, 0, marginInPx, 0)
+             }
+
+             rootView.addView(dimView)
+             rootView.addView(view, popupLayoutParams)
+
+             val closePopup = {
+                 rootView.removeView(view)
+                 rootView.removeView(dimView)
+             }
+
+             okButton.setOnClickListener {
+                 if(status) {
+                     closePopup()
+                     finish()
+                 }else{
+                     closePopup()
+                 }
+             }
+             dimView.isFocusable = true
+             dimView.isFocusableInTouchMode = true
+
+
+     }
 
 }

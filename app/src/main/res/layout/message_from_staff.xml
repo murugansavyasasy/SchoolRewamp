@@ -40,10 +40,10 @@
                 <RelativeLayout
                     android:layout_marginEnd="@dimen/ten"
                     android:id="@+id/rlaNRDetails"
-                    android:layout_toStartOf="@+id/imgReadStatus"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/lblLogo"
+                    android:layout_below="@+id/imgReadStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -76,10 +76,12 @@
                 <View
                     android:visibility="gone"
                     android:id="@+id/imgReadStatus"
+                    android:layout_width="100dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="@dimen/five"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/circle_bg_red"
-                    android:layout_width="@dimen/ten"
-                    android:layout_height="@dimen/ten">
+                    android:layout_marginTop="-25dp"
+                    android:background="@drawable/new_icon1">
 
                 </View>
             </RelativeLayout>

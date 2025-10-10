@@ -110,13 +110,31 @@ class SchoolEventCompletedAdapter(
         }
     }
 
+
     fun updateList(newList: List<SchoolEventItem>?) {
-        this.itemList = newList
+        if (newList != null) {
+            filteredList = newList
+        }
         notifyDataSetChanged()
     }
 
     fun getCurrentList(): List<SchoolEventItem> {
         return filteredList
+    }
+
+    fun removeItemAt(position: Int) {
+        if (position in filteredList.indices) {
+            val removedNotice = filteredList[position]
+            filteredList = filteredList.toMutableList().apply {
+                removeAt(position)
+            }
+            fullList = fullList.filterNot { it.id == removedNotice.id }
+            notifyItemRemoved(position)
+
+            if (filteredList.isEmpty()) {
+                listener.onSearchResultEmpty(Constant.COMPLETED, true)
+            }
+        }
     }
 
 

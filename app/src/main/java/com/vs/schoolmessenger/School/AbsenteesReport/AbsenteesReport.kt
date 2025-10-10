@@ -168,10 +168,10 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
         val adapter =
             AbsenteesReportDetailAdapter(flatList, selectedDate, object : OnAbsenteeClickListener {
-                override fun onAbsenteeClicked(absentOn: String, sectionId: String, classname: String, sectionname: String, absent: String, total: String) {
+                override fun onAbsenteeClicked(absentOn: String, sectionId: String, classname: String, sectionname: String, student_counts: String, absent: String, total: String) {
                     showStudentShimmer()
                     binding.absenteecount.text = "Absentees : $absent"
-                    binding.totalstudentscount.text = "Total students : $total"
+                    binding.totalstudentscount.text = "Total students : $student_counts"
                     binding.classDetailname.text = "Class : $classname. Section : $sectionname"
 
                     binding.progressAbsent.max = total.toIntOrNull() ?: 1
@@ -188,9 +188,10 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             val (classWise, sectionWise) = flatList[0]
             val absent = sectionWise.total_absentees.toIntOrNull() ?: 0
             val total = classWise.student_counts.toIntOrNull() ?: 1
+            val sectiontotal = sectionWise.student_counts.toIntOrNull() ?: 1
             // Set initial UI values for the first item
             binding.absenteecount.text = "Absentees : $absent"
-            binding.totalstudentscount.text = "Total students : $total"
+            binding.totalstudentscount.text = "Total students : $sectiontotal"
             binding.classDetailname.text = "Class : ${classWise.class_name}. Section : ${sectionWise.section_name}"
             binding.progressAbsent.max = total
             binding.progressAbsent.progress = absent

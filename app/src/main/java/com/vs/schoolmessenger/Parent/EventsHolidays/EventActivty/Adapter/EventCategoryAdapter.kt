@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
@@ -14,6 +16,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEven
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import okhttp3.internal.cache2.Relay
 
 class EventCategoryAdapter(
     private var itemList: List<Category>?,
@@ -93,7 +96,8 @@ class EventCategoryAdapter(
 
         private val categoryName: TextView = itemView.findViewById(R.id.category_name)
         private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
-        private val layout: LinearLayout = itemView.findViewById(R.id.linear_layout_categorychild)
+        private val layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
+
 
         fun bind(
             data: Category, position: Int, isSelected: Boolean, adapter: EventCategoryAdapter
@@ -101,9 +105,14 @@ class EventCategoryAdapter(
             categoryName.text = data.name
             Glide.with(context).load(data.url).placeholder(R.drawable.allimage).into(categoryImage)
 
-            layout.setBackgroundResource(
+            categoryImage.setBackgroundResource(
                 if (isSelected) R.drawable.custom_coupon_rounded_background_click
-                else R.drawable.category_white_box
+                else R.drawable.custom_coupon_rounded_background1
+            )
+
+            categoryName.setTextColor(
+                if (isSelected) ContextCompat.getColor(context, R.color.gnt_blue)
+                else ContextCompat.getColor(context, R.color.black)
             )
 
             layout.setOnClickListener {
@@ -118,20 +127,27 @@ class EventCategoryAdapter(
 
         private val categoryName: TextView = itemView.findViewById(R.id.category_name)
         private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
-        private val layout: LinearLayout = itemView.findViewById(R.id.linear_layout_categorychild)
+        private val layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
+
 
         fun bind(
-            isSelected: Boolean, adapter: EventCategoryAdapter
+            isSelected: Boolean,
+            adapter: EventCategoryAdapter
         ) {
             categoryName.text = context.getString(R.string.all)
             categoryImage.setImageResource(R.drawable.allimage)
 
-            layout.setBackgroundResource(
+            categoryImage.setBackgroundResource(
                 if (isSelected) R.drawable.custom_coupon_rounded_background_click
-                else R.drawable.category_white_box
+                else R.drawable.custom_coupon_rounded_background1
             )
 
-            itemView.setOnClickListener {
+            categoryName.setTextColor(
+                if (isSelected) ContextCompat.getColor(context, R.color.gnt_blue)
+                else ContextCompat.getColor(context, R.color.black)
+            )
+
+        itemView.setOnClickListener {
                 adapter.onCategorySelected(adapterPosition)
                 adapter.listener.onCategoryClicked(Category(0, Constant.All_, ""))
             }
