@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -35,7 +36,10 @@ import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.GridView
+import android.widget.ListPopupWindow
 import android.widget.ScrollView
+import android.widget.Spinner
+import android.widget.SpinnerAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.biometric.BiometricManager
@@ -1503,6 +1507,12 @@ object Constant {
             retriever.release()
         }
     }
+
+
+
+
+
+
 
     fun getDeviceDetails(context: Activity): JsonObject {
         val json = JsonObject()

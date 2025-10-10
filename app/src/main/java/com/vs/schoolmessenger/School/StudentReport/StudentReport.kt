@@ -351,6 +351,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
     private fun isLoadStandard(isStandard: List<Standard>?) {
         val adapter = StandardDropDownListAdapter(this, isStandard)
+
         binding.isSpinnerStandard.adapter = adapter
         binding.isSpinnerStandard.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
