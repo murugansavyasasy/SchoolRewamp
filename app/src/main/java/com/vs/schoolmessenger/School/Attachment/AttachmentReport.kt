@@ -32,6 +32,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -68,12 +69,13 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
-
+    private var completeAttachmentList: List<AttachmentDataReport> = emptyList()
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
     override fun setupViews() {
+        //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
         super.setupViews()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
@@ -108,20 +110,27 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
         if (isUserDetails?.staff_role.equals(Constant.isStaffRole)){
-            binding.schoollistfilter.visibility=View.GONE
+            binding.rytSpinner.visibility=View.GONE
             isAccessToken = isStaffDetails!!.access_token
+            isGetAttachmentReport()
+            binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         }
         else{
             if (isUserDetails?.staff_details?.size!! > 1) {
-                binding.schoollistfilter.visibility = View.VISIBLE
+                binding.rytSpinner.visibility = View.VISIBLE
+                //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
                 isUserDetails?.let { setupSchoolSpinner(it.staff_details) }
             }
             else{
                 isAccessToken = isUserDetails!!.staff_details.get(0).access_token
-                binding.schoollistfilter.visibility=View.GONE
+                binding.rytSpinner.visibility=View.GONE
+                isGetAttachmentReport()
+                binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+                binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
             }
         }
-        isGetAttachmentReport()
+
 
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
@@ -153,8 +162,8 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
                     binding.rcyAttachment.visibility= View.VISIBLE
                     binding.txtNoData.visibility= View.GONE
                     binding.nomessage.visibility= View.GONE
-                    val isHomeAttachmentReport = response.data
-                    isLoadAttachmentReportList(isHomeAttachmentReport)
+                    completeAttachmentList=response.data
+                    isLoadAttachmentReportList(response.data)
                 }else{
                     binding.rcyAttachment.visibility= View.GONE
                     binding.txtNoData.visibility= View.VISIBLE
@@ -229,36 +238,82 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         )
     }
 
+//    private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
+//        val schoolNames = staffList.map { it.school_name }
+//        Log.d("schoolNames", schoolNames.size.toString())
+//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        binding.schoollistfilter.adapter = adapter
+//
+//        binding.schoollistfilter.onItemSelectedListener =
+//            object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+//                ) {
+//                    val selectedStaff = staffList[position]
+//                    isAccessToken = selectedStaff.access_token
+//                    isStaffDetails = selectedStaff
+//                    SharedPreference.putStaffDetails(this@AttachmentReport,isStaffDetails!!)
+//                    Log.d(
+//                        "SpinnerSelection",
+//                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
+//                    )
+//                    isGetAttachmentReport()
+//                }
+//
+//                override fun onNothingSelected(parent: AdapterView<*>) {}
+//            }
+//
+//        if (staffList.isNotEmpty()) {
+//            isAccessToken = staffList[0].access_token
+//            isStaffDetails = staffList[0]
+//            Log.d("DefaultSelection", "Default token: $isAccessToken")
+//        }
+//    }
+
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-        val schoolNames = staffList.map { it.school_name }
-        Log.d("schoolNames", schoolNames.size.toString())
+        val schoolNames = listOf("All") + staffList.map { it.school_name }
+
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.schoollistfilter.adapter = adapter
 
+        binding.schoollistfilter.setSelection(0)
         binding.schoollistfilter.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
+                private var lastSelectedPosition: Int = -1
                 override fun onItemSelected(
                     parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
-                    val selectedStaff = staffList[position]
-                    isAccessToken = selectedStaff.access_token
-                    isStaffDetails = selectedStaff
-                    SharedPreference.putStaffDetails(this@AttachmentReport,isStaffDetails!!)
-                    Log.d(
-                        "SpinnerSelection",
-                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
-                    )
-                    isGetAttachmentReport()
+                    if (position != lastSelectedPosition) {
+                        lastSelectedPosition = position
+                        if (position == 0) {
+                            isLoadAttachmentReportList(completeAttachmentList)
+                            binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+                            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+                        } else {
+                            val selectedStaff = staffList[position - 1]
+                            isAccessToken = selectedStaff.access_token
+                            isStaffDetails = selectedStaff
+                            val selectedSchoolId = selectedStaff.school_id
+                            val filteredList = completeAttachmentList.filter { it.school_id == selectedSchoolId }
+                            Log.d("SpinnerSelection", "Selected school: ${selectedStaff.school_name}, Selected school id: ${selectedStaff.school_id}, Data: ${filteredList}, Token: $isAccessToken")
+                            isLoadAttachmentReportList(filteredList)
+                            binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+                            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+                        }
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-
+        //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
+        // Initial fetch for all schools
         if (staffList.isNotEmpty()) {
             isAccessToken = staffList[0].access_token
             isStaffDetails = staffList[0]
             Log.d("DefaultSelection", "Default token: $isAccessToken")
+            isGetAttachmentReport()
         }
     }
 

@@ -33,23 +33,31 @@
         android:layout_below="@+id/toolbarLayout"
         android:visibility="visible">
 
-        <Spinner
-            android:id="@+id/schoollistfilter"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/rytSpinner"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/spinner_bg"
-            android:padding="@dimen/twele"
-            android:spinnerMode="dropdown"
-            android:visibility="visible" />
+            android:visibility="gone"
+            android:background="@drawable/bg_white_light_radious"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/schoollistfilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_spinner_background"                android:padding="@dimen/twele"
+                android:spinnerMode="dropdown"
+                 />
+        </RelativeLayout>
+
+
 
 
         <LinearLayout
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/schoollistfilter"
+            android:layout_below="@+id/rytSpinner"
             android:layout_margin="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/gray_bg_radius"
@@ -88,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/search"
+            android:layout_marginTop="@dimen/five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten">
 
