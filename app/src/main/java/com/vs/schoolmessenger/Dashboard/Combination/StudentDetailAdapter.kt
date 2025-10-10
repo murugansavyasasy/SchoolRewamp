@@ -38,46 +38,55 @@ class StudentDetailAdapter(
         val item = itemList!![position]
 
 
-//        when (position) {
-//
-//            0 -> {
-//
-//
-//                holder.binding.rlaSchoolName.setBackgroundColor(
-//                    ContextCompat.getColor(
-//                        context, R.color.dark_bg_blue
-//                    )
-//                )
-//            }
-//
-//            1 -> {
-//
-//
-//                holder.binding.rlaSchoolName.setBackgroundColor(
-//                    ContextCompat.getColor(
-//                        context, R.color.dark_bg_purple
-//                    )
-//                )
-//            }
-//
-//            2 -> {
-//
-//
-//                holder.binding.rlaSchoolName.setBackgroundColor(
-//                    ContextCompat.getColor(
-//                        context, R.color.dark_bg_orange
-//                    )
-//                )
-//            }
-//
-//            3 -> {
-//                holder.binding.rlaSchoolName.setBackgroundColor(
-//                    ContextCompat.getColor(
-//                        context, R.color.dark_bg_green
-//                    )
-//                )
-//            }
-//        }
+        when (position) {
+
+            0 -> {
+
+                holder.binding.rlaStudent.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.bg_gradient_student_one
+                    )
+                )
+
+                holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
+            }
+
+            1 -> {
+
+                holder.binding.rlaStudent.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.bg_gradient_student_two
+                    )
+                )
+
+                holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
+            }
+
+            2 -> {
+
+                holder.binding.rlaStudent.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.bg_gradient_student_three
+                    )
+                )
+
+                holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
+            }
+
+            3 -> {
+
+                holder.binding.rlaStudent.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.bg_gradient_student_one
+                    )
+                )
+                holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
+            }
+        }
 
         holder.binding.rlaStudent.setOnClickListener {
             isParentDashBoardData = null
@@ -99,32 +108,32 @@ class StudentDetailAdapter(
         holder.binding.lblacademicyear.text = "Academic Year : " + item.academic_year_name
 
 
-        Glide.with(context)
-            .load(item.school_logo_url)
-            .placeholder(R.drawable.school_sample) // Temporary image while loading
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Drawable?>,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    // Log the error if needed
-                    Log.e("GlideError", "Image load failed", e)
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable,
-                    model: Any,
-                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
-                    dataSource: DataSource,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-            })
-            .into(holder.binding.imgSchool)
+//        Glide.with(context)
+//            .load(item.school_logo_url)
+//            .placeholder(R.drawable.school_sample) // Temporary image while loading
+//            .listener(object : RequestListener<Drawable> {
+//                override fun onLoadFailed(
+//                    e: GlideException?,
+//                    model: Any?,
+//                    target: com.bumptech.glide.request.target.Target<Drawable?>,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//                    // Log the error if needed
+//                    Log.e("GlideError", "Image load failed", e)
+//                    return false
+//                }
+//
+//                override fun onResourceReady(
+//                    resource: Drawable,
+//                    model: Any,
+//                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+//                    dataSource: DataSource,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//                    return false
+//                }
+//            })
+//            .into(holder.binding.imgSchool)
 
         Glide.with(context)
             .load(item.profile)

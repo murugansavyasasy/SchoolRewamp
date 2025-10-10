@@ -6,19 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventCategoryAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
+import com.vs.schoolmessenger.School.Event.Model.EventCategory
+import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SchoolEventCategoryAdapter (
-    private var itemList: List<Category>?,
+    private var itemList: List<EventCategory>?,
     val listener: SchoolEventClickListener,
     private val context: Context,
     private var isLoading: Boolean
@@ -90,27 +95,28 @@ class SchoolEventCategoryAdapter (
         notifyItemChanged(newPosition)
     }
 
-    fun updateList(newData: List<Category>?) {
-        itemList = newData
-        notifyDataSetChanged()
-    }
-
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
         private val categoryName: TextView = itemView.findViewById(R.id.category_name)
         private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
-        private val layout: LinearLayout = itemView.findViewById(R.id.linear_layout_categorychild)
+        private val layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
+
 
         fun bind(
-            data: Category, position: Int, isSelected: Boolean, adapter: SchoolEventCategoryAdapter
+            data: EventCategory, position: Int, isSelected: Boolean, adapter: SchoolEventCategoryAdapter
         ) {
             categoryName.text = data.name
             Glide.with(context).load(data.url).placeholder(R.drawable.allimage).into(categoryImage)
 
-            layout.setBackgroundResource(
+            categoryImage.setBackgroundResource(
                 if (isSelected) R.drawable.custom_coupon_rounded_background_click
-                else R.drawable.category_white_box
+                else R.drawable.custom_coupon_rounded_background1
+            )
+
+            categoryName.setTextColor(
+                if (isSelected) ContextCompat.getColor(context, R.color.gnt_blue)
+                else ContextCompat.getColor(context, R.color.black)
             )
 
             layout.setOnClickListener {
@@ -125,22 +131,29 @@ class SchoolEventCategoryAdapter (
 
         private val categoryName: TextView = itemView.findViewById(R.id.category_name)
         private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
-        private val layout: LinearLayout = itemView.findViewById(R.id.linear_layout_categorychild)
+        private val layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
+
 
         fun bind(
-            isSelected: Boolean, adapter: SchoolEventCategoryAdapter
+            isSelected: Boolean,
+            adapter: SchoolEventCategoryAdapter
         ) {
             categoryName.text = context.getString(R.string.all)
             categoryImage.setImageResource(R.drawable.allimage)
 
-            layout.setBackgroundResource(
+            categoryImage.setBackgroundResource(
                 if (isSelected) R.drawable.custom_coupon_rounded_background_click
-                else R.drawable.category_white_box
+                else R.drawable.custom_coupon_rounded_background1
+            )
+
+            categoryName.setTextColor(
+                if (isSelected) ContextCompat.getColor(context, R.color.gnt_blue)
+                else ContextCompat.getColor(context, R.color.black)
             )
 
             itemView.setOnClickListener {
                 adapter.onCategorySelected(adapterPosition)
-                adapter.listener.onCategoryClicked(Category(0, Constant.All_, ""))
+                adapter.listener.onCategoryClicked(EventCategory(0, Constant.All_, ""))
             }
         }
     }

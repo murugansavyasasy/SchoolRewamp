@@ -1,235 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:shadowColor="@color/black"
-    android:shadowDx="0"
-    android:layout_marginStart="@dimen/twenty"
-    android:shadowDy="30"
-    android:layout_marginTop="@dimen/thirty"
-    android:layout_marginBottom="@dimen/twenty"
-    android:layout_marginEnd="@dimen/twenty"
-    android:shadowRadius="100"
-    app:cardCornerRadius="@dimen/ten"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/ten"
+    android:shadowColor="@color/black">
+
+
+    <!-- Profile Image -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileContainer"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false">
+
+        <ImageView
+            android:id="@+id/imgStudentProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_profile" />
+
+
+    </androidx.cardview.widget.CardView>
+
 
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/rlaStudent"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-30dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/profileContainer"
+        android:background="@drawable/bg_gradient_student_one"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp">
+
 
         <RelativeLayout
-            android:id="@+id/overallCard"
+            android:id="@+id/rlaSchoolName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
-            <RelativeLayout
-                android:id="@+id/rlaSchoolName"
+            android:layout_marginStart="@dimen/twenty">
+
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_primary_colour"
-                >
-                <ImageView
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/white_circle_with_stoke_bg"
-                    android:id="@+id/imgSchool"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:padding="@dimen/five"
-                    android:src="@drawable/splash_icon2">
+                android:orientation="vertical">
 
-                </ImageView>
-
-                <RelativeLayout
-                    android:layout_marginEnd="@dimen/five"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/sampleicon"
-                    android:layout_toEndOf="@+id/imgSchool"
-                    android:id="@+id/rlaSchoolDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <TextView
-                        android:id="@+id/lblSchoolName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/five"
-                        android:text=""
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textColor="@color/white"
-
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-
-                    <TextView
-                        android:id="@+id/lblSchoolRegionalName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/five"
-                        android:layout_below="@+id/lblSchoolName"
-                        android:gravity="end"
-                        android:visibility="gone"
-                        android:text="iascisacscanniascnioscnia"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/lblSchoolPlace"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/lblSchoolRegionalName"
-                        android:layout_marginEnd="@dimen/five"
-                        android:text=""
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textColor="@color/white"
-                        style="@style/CustomTextStylePoppinsRegular">
-                    </TextView>
-
-                </RelativeLayout>
-                <TextView
-                    android:id="@+id/sampleicon"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="@dimen/seventy_five"
-                    android:paddingBottom="@dimen/ten"
-                    android:background="@drawable/curve_bottom_top_radius"
-                    android:layout_height="@dimen/thirty">
-
-                </TextView>
-
-
-            </RelativeLayout>
-            <LinearLayout
-                android:layout_below="@+id/rlaSchoolName"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:background="@color/light_primary_colour"
-                android:layout_height="wrap_content">
                 <LinearLayout
-                    android:paddingBottom="@dimen/twenty_five"
-                    android:background="@drawable/corner_lright_curve_radius"
                     android:id="@+id/rlaStudentDetails"
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/imgStudentProfile"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_width="@dimen/seventy"
-                        android:layout_height="@dimen/ninety"
-                        android:scaleType="centerCrop"
-                        android:layout_gravity="center"
-                        android:src="@drawable/default_profile_fill_icon"
-                        app:strokeColor="@color/violet"
-                        app:strokeWidth="1dp"
-                        app:shapeAppearanceOverlay="@style/RoundedRectangle">
-
-                    </com.google.android.material.imageview.ShapeableImageView>
 
                     <LinearLayout
-                        android:layout_marginStart="@dimen/ten"
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lblSchoolName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/five"
+                            android:text="xxxxxxxx"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/lblSchoolRegionalName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_below="@+id/lblSchoolName"
+                            android:gravity="end"
+                            android:visibility="gone"
+                            android:text="iascisacscanniascnioscnia"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
+
+
+                        <TextView
+                            android:id="@+id/lblSchoolPlace"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblSchoolRegionalName"
+                            android:layout_marginEnd="@dimen/five"
+                            android:text="xxxxxxxx"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textColor="@color/white"
+                            style="@style/CustomTextStylePoppinsRegular">
+                        </TextView>
 
                         <TextView
                             android:id="@+id/lblName"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/eight"
+                            android:layout_marginEnd="@dimen/ten"
                             android:text="Chandru "
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/thirteen_sp"></TextView>
 
-                            android:layout_marginEnd="@dimen/ten"
-                            android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:textSize="@dimen/sixteen">
-                        </TextView>
-
-
-
-
-                        <TextView
-                            android:layout_weight="0.9"
-                            android:layout_marginTop="@dimen/ten"
-                            android:id="@+id/lblRegisterNumber"
-                            android:layout_width="match_parent"
-                            android:layout_marginEnd="@dimen/ten"
-                            android:layout_height="wrap_content"
-                            android:text="Roll No : SS-16"
-                            android:textSize="@dimen/thirteen_sp"
-                            style="@style/CustomTextStylePoppinsBold">
-                        </TextView>
 
 
                         <TextView
                             android:id="@+id/lblClass"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/five"
-                            android:text="IX - A2/EM"
                             android:layout_marginEnd="@dimen/ten"
-                            android:layout_marginBottom="@dimen/five"
-                            android:textSize="@dimen/thirteen_sp"
-                            style="@style/CustomTextStylePoppinsBold">
+                            android:textColor="@color/white"
+                            android:text="IX - A2/EM"
+                            android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
+                        <TextView
+                            android:id="@+id/lblRegisterNumber"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/five"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_weight="0.9"
+                            android:text="Roll No : SS-16"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/thirteen_sp"></TextView>
+
+
 
                         <TextView
                             android:id="@+id/lblacademicyear"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Academic year : 2025 - 2026"
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_marginBottom="@dimen/ten"
-                            android:textSize="@dimen/thirteen_sp"
-                            style="@style/CustomTextStylePoppinsBold">
+                            android:textColor="@color/white"
+                            android:visibility="gone"
+                            android:text="Academic year : 2025 - 2026"
+                            android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/lblClassTeacher"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lblClass"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/eight"
+                            android:layout_marginBottom="@dimen/ten"
                             android:gravity="center"
                             android:text="Sathish"
-                            android:layout_marginBottom="@dimen/ten"
-                            style="@style/CustomTextStylePoppinsRegular"
-                            android:textSize="@dimen/thirteen_sp">
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:visibility="gone">
 
                         </TextView>
 
                     </LinearLayout>
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/eight">
-                </View>
+                    android:layout_height="@dimen/eight"></View>
 
             </LinearLayout>
 
-        </RelativeLayout>
-        <TextView
-            android:layout_alignBottom="@+id/overallCard"
-            android:layout_width="@dimen/seventy_five"
-            android:background="@drawable/right_bottom_corner_curve_radius"
-            android:layout_height="@dimen/thirty">
 
-        </TextView>
+        </RelativeLayout>
+
+
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+
+</RelativeLayout>
