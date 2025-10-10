@@ -257,6 +257,19 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
             }
         }
 
+        appViewModel!!.isEventDelete?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@EventReport)
+                    eventupcomingadapter.removeItemAt(isEventPosition)
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
+
     }
 
     private fun <T> updateVisibility(
