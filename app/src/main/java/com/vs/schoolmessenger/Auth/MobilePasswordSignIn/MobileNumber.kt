@@ -43,7 +43,6 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
                 Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
                 isValidateUser()
             } else {
-//                Toast.makeText(this, resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(R.string.digit_mobile_number), Toast.LENGTH_SHORT).show()
                 Toast.makeText(this, resources.getString(R.string.enter_a_valid_mobile_number), Toast.LENGTH_SHORT).show()
             }
         }

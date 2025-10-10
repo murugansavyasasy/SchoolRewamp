@@ -87,7 +87,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
     private var cameraPermissionDeniedCount = 0
     private val CAMERA_IMAGE_REQUEST = 1001
-    var isFirstLoad = false
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
@@ -99,19 +98,11 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
     private var isStaffDetails: StaffDetails? = null
-    var isSection: List<Section>? = null
-    var isGetStandard: List<Standard>? = null
-    private var isHomeWorkReportDataData: List<HomeWorkReportData>? = null
-    var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
-    private var fullHomeworkList: List<HomeWorkReportData> = listOf()
-    var isSectionId = -1
-    var isAcademicServerLoad = false
     var isSelectedDate = ""
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isHomeWorkId = ""
-    var isHomeWorkPosition = 0
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -129,11 +120,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytHistory.setOnClickListener(this)
-//        binding.lnrTabOneName.setOnClickListener(this)
-//        binding.lnrTabTwoName.setOnClickListener(this)
-//        binding.AcademicYear.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
-//        binding.Calendar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
@@ -153,60 +140,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
-//        isSelectedDate = Constant.getCurrentDate()
-//        binding.selectdate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
-
-
-      //  isAcademicYear = Constant.isAcademicYearList
-     //   isLoadAcademicYear(isAcademicYear)
-//        isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
-//        isAcademicYearId = isAcademicYear!![0].id
-//        isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-//        isGetStandardSection()
-
-//        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-//        binding.edtDescription.filters =
-//            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-//        Constant.editTextCounter(
-//            this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount
-//        )
-//        Constant.editTextCounter(
-//            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
-//        )
-
-//        appViewModel!!.isDeleteHomeWork?.observe(this) { response ->
-//            if (response != null) {
-//                if (response.status) {
-//                    Constant.hideLoading(this@HomeWorkCreate)
-//                    mHomeWorkReportAdapter!!.removeItemAt(isHomeWorkPosition)
-//                } else {
-//                    Constant.showDataValidation(
-//                        resources.getString(R.string.fail), response.message, this
-//                    )
-//                }
-//            }
-//        }
-
-//
-//        appViewModel!!.isStandardSectionList?.observe(this) { response ->
-//            if (response != null) {
-//                isGetStandard = response.data
-//                isGetStandard?.size?.let {
-//                    if (it > 0) {
-//                        binding.rytStandardDropDown.visibility = View.VISIBLE
-//                        binding.rytSectionDropDown.visibility = View.VISIBLE
-//                        isSectionId = isGetStandard!![0].sections[0].id
-//                        if (isGetStandard!!.get(0).sections.size > 0) {
-//                            isLoadStandard(isGetStandard)
-//                            isSection = isGetStandard!!.get(0).sections
-//                        }
-//                    } else {
-//                        binding.rytStandardDropDown.visibility = View.GONE
-//                        binding.rytSectionDropDown.visibility = View.GONE
-//                    }
-//                }
-//            }
-//        }
 
         appViewModel!!.isEditHomeWork?.observe(this) { response ->
             Constant.hideLoading(this@HomeWorkCreate)
@@ -215,31 +148,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 Constant.showTopAlertPopup(response.message, this)
             }
         }
-
-//        appViewModel!!.isGetHomeWorkReport?.observe(this) { response ->
-//            if (response != null) {
-//                isFirstLoad = true
-//                if (response.status) {
-//                    binding.rcyHomeWorkReport.visibility = View.VISIBLE
-//                    binding.lytNoDataFound.visibility = View.GONE
-//                    binding.line1.visibility = View.VISIBLE
-//                    binding.line2.visibility = View.VISIBLE
-//                    val isHomeWorkReport = response.data
-//                    isHomeWorkReportData = isHomeWorkReport
-//                    loadHomeWorkReportData(isHomeWorkReportData!!)
-//                } else {
-//                    binding.line1.visibility = View.GONE
-//                    binding.line2.visibility = View.GONE
-//                    binding.rcyHomeWorkReport.visibility = View.GONE
-//                    binding.lytNoDataFound.visibility = View.VISIBLE
-//                    binding.noDataFound.text = response.message
-//                }
-//            }
-//        }
-//
-//        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-//            binding.search.visibility = View.VISIBLE
-//        }
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -291,118 +199,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 }
             }
 
-//        binding.edtSearch.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                val query = s.toString().trim().lowercase(Locale.ROOT)
-//                filterHomeWorkReport(query)
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {}
-//        })
     }
-
-//    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
-//        val adapter = AcademicYearAdapter(this, isAcademicYear)
-//        binding.isSpinner.adapter = adapter
-//        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>, view: View?, position: Int, id: Long
-//            ) {
-//                adapter.selectedPosition = position
-//                if (isFirstLoad) {
-//                    val selectedOption = isAcademicYear!![position]
-//                    isAcademicYearId = selectedOption.id
-//                    isCurrentAcademicYear = selectedOption.current_academic_year
-//                    Log.d(
-//                        "DropdownMenu",
-//                        "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
-//                    )
-//                    fetchHomeWorkReportData()
-//                }
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {}
-//        }
-//    }
-//
-//    private fun isLoadStandard(isStandard: List<Standard>?) {
-//        val adapter = StandardDropDownListAdapter(this, isStandard)
-//        binding.isSpinnerStandard.adapter = adapter
-//        binding.isSpinnerStandard.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
-//                ) {
-//                    adapter.selectedPosition = position
-//                    adapter.notifyDataSetChanged()
-//                    isStandard!![position]
-//                    Log.d(
-//                        "DropdownMenu",
-//                        "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
-//                    )
-//
-//                    isSectionId = isStandard[position].id
-//                    isSection = isStandard[position].sections
-//                    isLoadSection(isSection)
-//                }
-//
-//                override fun onNothingSelected(parent: AdapterView<*>) {}
-//            }
-//    }
-//
-//    private fun isLoadSection(isSection: List<Section>?) {
-//        val adapter = SectionDropDownListAdapter(this, isSection)
-//        binding.isSpinnerSection.adapter = adapter
-//        binding.isSpinnerSection.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
-//                ) {
-//                    adapter.selectedPosition = position
-//                    adapter.notifyDataSetChanged()
-//                    val selectedOption = isSection!![position]
-//                    Log.d(
-//                        "DropdownMenu",
-//                        "Clicked Standard Year: ID = ${isSection[position].id}, Year = ${isSection[position].name}"
-//                    )
-//                    isSectionId = selectedOption.id
-//                    fetchHomeWorkReportData()
-//                }
-//
-//                override fun onNothingSelected(parent: AdapterView<*>) {}
-//            }
-//    }
-//
-//    private fun filterHomeWorkReport(query: String) {
-//        val lowerQuery = query.lowercase(Locale.getDefault())
-//
-//        val filteredList = if (query.isEmpty()) {
-//            fullHomeworkList
-//        } else {
-//            fullHomeworkList.filter {
-//                it.title.lowercase(Locale.getDefault())
-//                    .contains(lowerQuery) || it.description.lowercase(Locale.getDefault())
-//                    .contains(lowerQuery) || it.subject_name.lowercase(Locale.getDefault())
-//                    .contains(lowerQuery)
-//            }
-//        }
-//
-//        mHomeWorkReportAdapter = HomeWorkReportAdapter(this, filteredList, this, false)
-//        binding.rcyHomeWorkReport.layoutManager =
-//            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-//        binding.rcyHomeWorkReport.setHasFixedSize(true)
-//        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
-//
-//        if (filteredList.isEmpty()) {
-//            binding.rcyHomeWorkReport.visibility = View.GONE
-//            binding.lytNoDataFound.visibility = View.VISIBLE
-//            binding.noDataFound.text = getString(R.string.no_matching_homework_found)
-//        } else {
-//            binding.rcyHomeWorkReport.visibility = View.VISIBLE
-//            binding.lytNoDataFound.visibility = View.GONE
-//        }
-//    }
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
@@ -477,64 +274,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 onBackPressed()
             }
 
-//            R.id.Calendar -> {
-//                showDatePickerDialogSelectedDate(this, isSelectedDate, this)
-//
-//            }
-
-//            R.id.lnrTabOneName -> {
-//                binding.lnrTabTwoName.isEnabled = true
-//                binding.lnrTabOneName.isEnabled = false
-//                binding.edtTitle.setText("")
-//                binding.edtDescription.setText("")
-//                Constant.selectedFiles.clear()
-//                Constant.isAwsUploadedFiles.clear()
-//
-//                saveDrawableToCache(R.drawable.add_image)?.let {
-//                    Constant.selectedFiles.add(
-//                        FileItem(
-//                            it, FileType.IMAGE
-//                        )
-//                    )
-//                }
-//
-//                binding.rcyImages.visibility = View.VISIBLE
-//                mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
-//                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-//                binding.rcyImages.adapter = mAdapter
-//
-//
-//                binding.line3.setBackgroundResource(R.color.iconBlue)
-//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//                binding.line4.setBackgroundResource(R.color.white)
-//
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//                binding.btnChooseRecipient.text = getString(R.string.TOSTANDARDORSECTION)
-////                isBackRoundChange(binding.lnrTabOneName)
-//                binding.rlaHomeWorkReport.visibility = View.GONE
-//                binding.rlaHomework.visibility = View.VISIBLE
-//                isAcademicServerLoad = true
-//            }
-
-//            R.id.lnrTabTwoName -> {
-//                binding.lnrTabTwoName.isEnabled = false
-//                binding.lnrTabOneName.isEnabled = true
-//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//                binding.line4.setBackgroundResource(R.color.iconBlue)
-//                binding.line3.setBackgroundResource(R.color.white)
-//
-//                binding.btnChooseRecipient.text = getString(R.string.update_homework)
-////                isBackRoundChange(binding.lnrTabTwoName)
-//                binding.rlaHomeWorkReport.visibility = View.VISIBLE
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-//                binding.rlaHomework.visibility = View.GONE
-//                if (isAcademicServerLoad) {
-//                    fetchHomeWorkReportData()
-//                }
-//            }
-
             R.id.btnChooseRecipient -> {
                 if (binding.btnChooseRecipient.text.toString() == getString(R.string.update_homework)) {
                     showSendConfirmationDialog(true)
@@ -547,35 +286,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         }
     }
 
-//    private fun fetchHomeWorkReportData() {
-//        binding.rcyHomeWorkReport.visibility = View.VISIBLE
-//        mHomeWorkReportAdapter =
-//            HomeWorkReportAdapter(this, emptyList(), this, Constant.isShimmerViewShow)
-//        binding.rcyHomeWorkReport.layoutManager =
-//            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-//        binding.rcyHomeWorkReport.setHasFixedSize(true)
-//        binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
-//        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
-//        appViewModel?.isGetHomeWorkReport(
-//            isAccessToken!!, isSectionId, isAcademicYearId, isSelectedDate, this
-//        )
-//    }
-//
-//    private fun loadHomeWorkReportData(isHomeWorkReportDetails: List<HomeWorkReport>) {
-//        binding.rcyHomeWorkReport.visibility = View.VISIBLE
-//        mHomeWorkReportAdapter = HomeWorkReportAdapter(
-//            this, isHomeWorkReportDetails, this, Constant.isShimmerViewDisable
-//        )
-//        binding.rcyHomeWorkReport.layoutManager =
-//            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-//        binding.rcyHomeWorkReport.setHasFixedSize(true)
-//        binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
-//        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
-//    }
-
-//    private fun isGetStandardSection() {
-//        appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
-//    }
 
     override fun onImageClick(position: Int) {
         if (position == 0) {
@@ -844,24 +554,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
     }
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    override fun onDateSelected(date: String) {
-//        isSelectedDate = date
-//        if (Constant.getCurrentDate() == isSelectedDate) {
-//            binding.lblDateFormat.text = getString(R.string.today)
-//        } else {
-//            binding.lblDateFormat.text = getString(R.string.past_date)
-//        }
-//        binding.selectdate.text = Constant.convertToReadableDate(date)
-//        fetchHomeWorkReportData()
-//    }
-
-//    override fun onClickListener(data: HomeWorkReport, anchorView: View, isPosition: Int) {
-//        isHomeWorkId = data.id
-//        isHomeWorkPosition = isPosition
-//        showEditDeletePopup(data, anchorView)
-//    }
 
     // Edit Update code
     fun isUploadFilesInServer(isFileType: String?) {
@@ -1143,13 +835,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             )
         }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//        binding.line3.setBackgroundResource(R.color.iconBlue)
-//        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//        binding.line4.setBackgroundResource(R.color.white)
-
-//        binding.rlaHomeWorkReport.visibility = View.GONE
-//        binding.rlaHomework.visibility = View.VISIBLE
         binding.edtTitle.setText(data!!.title)
         binding.edtDescription.setText(data.description)
 

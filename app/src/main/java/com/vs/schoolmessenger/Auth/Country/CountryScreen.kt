@@ -36,7 +36,6 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         super.setupViews()
         binding.rytBack.setOnClickListener(this)
         binding.btnContinue.setOnClickListener(this)
-//        setupToolbar()
         isToolBarPrimaryTheme1(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -63,10 +62,6 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                 response.message
                 if (status) {
                     val isCountryList = response.data
-
-
-//                    isLoadCountry(isCountryList)
-
                     loadCountry(isCountryList)
 
                 }
@@ -90,8 +85,6 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         mAdapter = CountryListAdapter(this, updatedList) { selectedCountry ->
             isCountrySelected = true
             Constant.country_details = selectedCountry
-
-//            Toast.makeText(this, "Selected: ${selectedCountry.name}", Toast.LENGTH_SHORT).show()
         }
         binding.recycleCountry.layoutManager = LinearLayoutManager(this)
         binding.recycleCountry.adapter = mAdapter
@@ -103,40 +96,6 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         authViewModel!!.isCountryList()
     }
 
-
-//    private fun isLoadCountry(countryList: List<Country>) {
-//
-//        val isCountryList =
-//            listOf(Country(-0, "Select Your Country", -0, -0, "", "", "", "")) + countryList
-//        val adapter = CountrySpinnerAdapter(this@CountryScreen, isCountryList)
-//        binding.isSpinner.adapter = adapter
-//
-//        if (isCountryList.isNotEmpty()) {
-//            Constant.country_details = isCountryList[0]
-//        }
-//
-//        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//                if (position != 0) {
-//                    isCountrySelected = true
-//                    Constant.country_details = isCountryList[position]
-//                    Log.d(
-//                        "SelectedCountry",
-//                        "ID: ${Constant.country_details!!.id}, Name: ${Constant.country_details!!.name}"
-//                    )
-//                } else {
-//                    isCountrySelected = false
-//                }
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {}
-//        }
-//    }
 
 
     override fun onClick(v: View?) {

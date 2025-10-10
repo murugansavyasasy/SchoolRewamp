@@ -32,9 +32,6 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
     }
 
     var authViewModel: Auth? = null
-    private lateinit var biometricPrompt: BiometricPrompt
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
-
     var Mobile_Number: String? = ""
     var Password: String? = ""
     private var appViewModel: App? = null

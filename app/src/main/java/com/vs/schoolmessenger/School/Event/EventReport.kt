@@ -476,15 +476,10 @@ class EventReport : BaseActivity<EventReportBinding>(),
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-//            if (isEventUpdate) {
-//                ProgressDialogHelper.show(this)
-//                ProgressDialogHelper.updateProgress(10)
-//             //   isUploadFilesInServer(Constant.file_)
-//            } else {
             val jsonObject = JsonObject()
             jsonObject.addProperty(APIKeyNames.id, isEventId)
             appViewModel?.isEventDelete(isAccessToken!!, jsonObject, this)
-            //  }
+
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }

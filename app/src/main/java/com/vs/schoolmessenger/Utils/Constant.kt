@@ -798,34 +798,6 @@ object Constant {
         })
     }
 
-    fun editTitleTextCounter(
-        context: Context, editText: EditText, maxLength: Int, counterLabel: TextView
-    ) {
-
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                charSequence: CharSequence?, start: Int, count: Int, after: Int
-            ) {
-                // You can add logic here if needed
-            }
-
-            override fun onTextChanged(
-                charSequence: CharSequence?, start: Int, before: Int, count: Int
-            ) {
-                // You can add logic here if needed
-            }
-
-            override fun afterTextChanged(editable: Editable?) {
-                counterLabel.text = editable!!.length.toString() + " of " + maxLength.toString()
-                if (editable != null && editable.length > maxLength) {
-                    // Restrict to the max length by trimming the input
-                    editable.delete(maxLength, editable.length)
-                    // Optionally, show a Toast or error message
-                }
-            }
-        })
-    }
-
     fun executeAfterDelay(task: () -> Unit) {
         handler.postDelayed({
             task()
