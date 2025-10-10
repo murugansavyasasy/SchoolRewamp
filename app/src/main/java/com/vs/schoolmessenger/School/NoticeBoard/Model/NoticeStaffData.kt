@@ -9,6 +9,7 @@ data class NoticeStaffData(
     val id: String,
     val title: String,
     val description: String,
+    val school_id: String,
     val created_on: String,
     val day: String,
     val visible_from: String,

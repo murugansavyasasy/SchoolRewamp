@@ -12,28 +12,6 @@
         android:layout_marginTop="-25dp"
         android:visibility="gone"
         android:background="@drawable/new_icon1"/>
-
-    <ImageView
-        android:id="@+id/imgDate"
-        android:layout_width="@dimen/twenty_five"
-        android:layout_height="@dimen/twenty_five"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/imgReadUnRead"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="@dimen/ten"
-        android:src="@drawable/calendar_black"/>
-
-    <TextView
-        android:id="@+id/lblDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/imgDate"
-        android:layout_alignTop="@id/imgDate"
-        android:layout_marginStart="@dimen/ten"
-        style="@style/CustomTextStylePoppinsBold"
-        android:textColor="@color/grey"
-        android:text=""/>
-
     <ImageView
         android:id="@+id/imgEditAndDelete"
         android:layout_width="@dimen/twenty_five"
@@ -48,8 +26,9 @@
         android:id="@+id/lblTitle"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgDate"
+        android:layout_toStartOf="@+id/imgEditAndDelete"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:text=""/>
@@ -90,15 +69,32 @@
         android:visibility="gone"/>
 
     <TextView
+        android:id="@+id/lblDate"
+        android:layout_below="@+id/rcyFile"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_width="match_parent"
+        android:layout_marginEnd="@dimen/twenty"
+        android:gravity="end"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:textColor="@color/mild_grey_dark"
+        android:text="12 Oct 2923 Saturaday">
+
+    </TextView>
+
+    <TextView
         android:id="@+id/lblPostedBy"
         android:layout_width="match_parent"
         android:textSize="@dimen/thirteen_sp"
+        android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/three"
         android:textColor="@color/mild_grey_dark"
         android:gravity="end"
+        style="@style/CustomTextStylePoppinsMedium"
         android:text="Posted By : "
-        android:layout_below="@+id/rcyFile"
+        android:layout_below="@+id/lblDate"
         android:layout_height="wrap_content"/>
 
     <!-- Divider -->

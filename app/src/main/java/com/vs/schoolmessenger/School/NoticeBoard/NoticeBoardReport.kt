@@ -62,11 +62,13 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
     var isNoticeBoardId = ""
     var isNoticeBoardPosition = 0
     private var noticeList: List<NoticeStaffData> = emptyList()
+    private var completeNoticeList: List<NoticeStaffData> = emptyList()
     private var isUpdatingSearchText = false
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
+        //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
         super.setupViews()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
@@ -78,31 +80,13 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         userDetails = SharedPreference.getUserDetails(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
-        if (userDetails?.staff_role.equals(Constant.isStaffRole)){
-            binding.schoollistfilter.visibility=View.GONE
-            isAccessToken = isStaffDetails!!.access_token
-        }
-        else{
-            if (userDetails?.staff_details?.size!! > 1) {
-                binding.schoollistfilter.visibility = View.VISIBLE
-                userDetails?.let { setupSchoolSpinner(it.staff_details) }
-            }
-            else{
-                isAccessToken = userDetails!!.staff_details.get(0).access_token
-                binding.schoollistfilter.visibility=View.GONE
-            }
-        }
-
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails!!.access_token
+//        isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblSchoolName.visibility = View.GONE
-        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch323.visibility == View.VISIBLE) {
@@ -145,6 +129,28 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
             override fun afterTextChanged(s: Editable?) {}
         })
 
+        if (userDetails?.staff_role.equals(Constant.isStaffRole)){
+            binding.rytSpinner.visibility=View.GONE
+            isAccessToken = isStaffDetails!!.access_token
+            isGetNoticeBoardList()
+            binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+        }
+        else{
+            if (userDetails?.staff_details?.size!! > 1) {
+                binding.rytSpinner.visibility = View.VISIBLE
+                //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
+                userDetails?.let { setupSchoolSpinner(it.staff_details) }
+            }
+            else{
+                isAccessToken = userDetails!!.staff_details.get(0).access_token
+                binding.rytSpinner.visibility=View.GONE
+                isGetNoticeBoardList()
+                binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+                binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+            }
+        }
+
 
         appViewModel!!.isnoticeboarddelete?.observe(this) { response ->
             if (response != null) {
@@ -159,7 +165,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
             }
         }
 
-        isGetNoticeBoardList()
 
 
         appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
@@ -169,6 +174,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
+                completeNoticeList=response.data
                 binding.edtSearch.text.clear()
 
             } else {
@@ -200,35 +206,81 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         binding.txtNoData.visibility = View.GONE
     }
 
+//    private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
+//        val schoolNames = staffList.map { it.school_name }
+//
+//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        binding.schoollistfilter.adapter = adapter
+//
+//        binding.schoollistfilter.onItemSelectedListener =
+//            object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+//                ) {
+//                    val selectedStaff = staffList[position]
+//                    isAccessToken = selectedStaff.access_token
+//                    isStaffDetails = selectedStaff
+//                    Log.d(
+//                        "SpinnerSelection",
+//                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
+//                    )
+//                    isGetNoticeBoardList()
+//                }
+//
+//                override fun onNothingSelected(parent: AdapterView<*>) {}
+//            }
+//
+//        if (staffList.isNotEmpty()) {
+//            isAccessToken = staffList[0].access_token
+//            isStaffDetails = staffList[0]
+//            Log.d("DefaultSelection", "Default token: $isAccessToken")
+//        }
+//    }
+
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-        val schoolNames = staffList.map { it.school_name }
+        val schoolNames = listOf("All") + staffList.map { it.school_name }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.schoollistfilter.adapter = adapter
 
+        binding.schoollistfilter.setSelection(0)
         binding.schoollistfilter.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
+                private var lastSelectedPosition: Int = -1
                 override fun onItemSelected(
                     parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
-                    val selectedStaff = staffList[position]
-                    isAccessToken = selectedStaff.access_token
-                    isStaffDetails = selectedStaff
-                    Log.d(
-                        "SpinnerSelection",
-                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
-                    )
-                    isGetNoticeBoardList()
+                    if (position != lastSelectedPosition) {
+                        lastSelectedPosition = position
+                        if (position == 0) {
+                            isloadhomeworkData(completeNoticeList)
+                            binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+                            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+                        } else {
+                            val selectedStaff = staffList[position - 1]
+                            isAccessToken = selectedStaff.access_token
+                            isStaffDetails = selectedStaff
+                            val selectedSchoolId = selectedStaff.school_id
+                            val filteredList = completeNoticeList.filter { it.school_id == selectedSchoolId }
+                            Log.d("SpinnerSelection", "Selected school: ${selectedStaff.school_name}, Selected school id: ${selectedStaff.school_id}, Data: ${filteredList}, Token: $isAccessToken")
+                            isloadhomeworkData(filteredList)
+                            binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+                            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+                        }
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-
+        //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
+        // Initial fetch for all schools
         if (staffList.isNotEmpty()) {
             isAccessToken = staffList[0].access_token
             isStaffDetails = staffList[0]
             Log.d("DefaultSelection", "Default token: $isAccessToken")
+            isGetNoticeBoardList()
         }
     }
 

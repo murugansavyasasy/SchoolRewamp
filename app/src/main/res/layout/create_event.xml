@@ -324,8 +324,8 @@
                             android:text="@string/mandatory"
                             android:textColor="@color/red" />
 
-
                         <RelativeLayout
+                            android:background="@color/white"
                             android:id="@+id/rytStart"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -334,94 +334,76 @@
                             android:layout_marginEnd="@dimen/ten">
 
                             <RelativeLayout
+                                android:layout_alignParentStart="true"
                                 android:id="@+id/rytStartDate"
+                                android:layout_toStartOf="@+id/rytStartTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
 
-
-                                <androidx.cardview.widget.CardView
-                                    android:id="@+id/cardStart"
-                                    android:layout_width="@dimen/sixty"
-                                    android:layout_height="@dimen/sixty"
-                                    app:cardCornerRadius="@dimen/ten">
-
-                                    <LinearLayout
-                                        android:id="@+id/lnrStartCalendar"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/bg_stroke_rect_black"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/lblDay"
-                                            style="@style/CustomTextStylePoppinsBold"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center_horizontal"
-                                            android:layout_marginTop="@dimen/five"
-                                            android:text="Fri"
-                                            android:textSize="@dimen/fifteen_sp" />
-
-                                        <TextView
-                                            android:id="@+id/lblDate"
-                                            style="@style/CustomTextStylePoppinsBold"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@color/primary_light"
-                                            android:gravity="center"
-                                            android:text="12"
-                                            android:textSize="@dimen/fifteen_sp" />
-
-                                    </LinearLayout>
-                                </androidx.cardview.widget.CardView>
-
-
                                 <ImageView
-                                    android:id="@+id/imgDateDown"
-                                    android:layout_width="@dimen/twenty"
-                                    android:layout_height="@dimen/twenty"
                                     android:layout_centerVertical="true"
-                                    android:layout_toEndOf="@+id/cardStart"
-                                    android:src="@drawable/ic_down_arrow" />
+                                    android:id="@+id/imgCalendar"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_width="@dimen/fifty"
+                                    android:layout_toStartOf="@+id/lnrDateDetails"
+                                    android:background="@drawable/rect_purple_rounded"
+                                    android:padding="@dimen/ten"
+                                    android:src="@drawable/white_calendar_icon"
+                                    android:layout_height="@dimen/fifty">
 
-
-                                <TextView
-                                    android:id="@+id/txtStartDate"
-                                    style="@style/CustomTextStylePoppinsRegular"
+                                </ImageView>
+                                <LinearLayout
+                                    android:layout_alignParentEnd="true"
+                                    android:id="@+id/lnrDateDetails"
+                                    android:layout_centerVertical="true"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
+                                    android:orientation="vertical"
                                     android:layout_marginStart="@dimen/five"
-                                    android:layout_marginTop="@dimen/ten"
-                                    android:layout_toEndOf="@+id/imgDateDown"
-                                    android:text=""
-                                    android:textSize="@dimen/thirteen_sp" />
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:id="@+id/lblDay"
+                                        android:layout_width="wrap_content"
+                                        android:text="Friday"
+                                        style="@style/CustomTextStylePoppinsRegular"
+                                        android:textColor="@color/mild_grey_dark"
+                                        android:layout_height="wrap_content">
+                                    </TextView>
+                                    <TextView
+                                        android:layout_marginTop="@dimen/five"
+                                        android:id="@+id/txtStartDate"
+                                        android:layout_width="wrap_content"
+                                        android:text="10 May 2022"
+                                        style="@style/CustomTextStylePoppinsBold"
+                                        android:layout_height="wrap_content">
+                                    </TextView>
+                                </LinearLayout>
 
                             </RelativeLayout>
 
                             <RelativeLayout
+                                android:layout_alignParentEnd="true"
                                 android:id="@+id/rytStartTime"
+                                android:background="@drawable/rect_black_stoke_bg"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_toEndOf="@id/rytStartDate">
+                                >
 
                                 <ImageView
                                     android:id="@+id/imgTimeDown"
                                     android:layout_width="@dimen/twenty"
                                     android:layout_height="@dimen/twenty"
                                     android:layout_centerVertical="true"
-                                    android:layout_toStartOf="@+id/txtStartTime"
-                                    android:src="@drawable/ic_down_arrow" />
+                                    android:src="@drawable/clock" />
 
                                 <TextView
+                                    android:layout_marginStart="@dimen/five"
                                     android:id="@+id/txtStartTime"
                                     style="@style/CustomTextStylePoppinsMedium"
                                     android:layout_width="wrap_content"
+                                    android:layout_toEndOf="@+id/imgTimeDown"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:text=""
+                                    android:text="sassas"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
@@ -436,6 +418,8 @@
                                 android:background="@color/grey" />
 
                         </RelativeLayout>
+
+
 
                         <RelativeLayout
                             android:id="@+id/rlaFilePicking"
