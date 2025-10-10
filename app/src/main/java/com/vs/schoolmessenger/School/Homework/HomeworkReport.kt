@@ -60,7 +60,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
     private var fullHomeworkList: List<HomeWorkReportData> = listOf()
     var isSectionId = -1
-    var isAcademicServerLoad = false
     var isSelectedDate = ""
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
@@ -81,11 +80,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         appViewModel!!.init()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-//        binding.lnrTabOneName.setOnClickListener(this)
-//        binding.lnrTabTwoName.setOnClickListener(this)
-//        binding.AcademicYear.setOnClickListener(this)
-//        binding.btnChooseRecipient.setOnClickListener(this)
-
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.search.visibility == View.VISIBLE) {
                 binding.search.visibility = View.GONE
@@ -401,25 +395,18 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-//        if (isHomeWorkUpdate) {
-//            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_homework)
-//        } else {
-            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-   //     }
+
+        alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
+
 
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-//            if (isHomeWorkUpdate) {
-//                ProgressDialogHelper.show(this)
-//                ProgressDialogHelper.updateProgress(10)
-//                isUploadFilesInServer(Constant.file_)
-//            } else {
                 val jsonObject = JsonObject()
                 jsonObject.addProperty(APIKeyNames.id, isHomeWorkId)
                 appViewModel?.isHomeWorkDelete(isAccessToken!!, jsonObject, this)
-           // }
+
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }

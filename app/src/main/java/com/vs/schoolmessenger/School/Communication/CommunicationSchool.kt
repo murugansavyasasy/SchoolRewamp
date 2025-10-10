@@ -275,54 +275,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val isCurrentTime = Constant.getCurrentTime()
         binding.lblTime.text = isCurrentTime
 
-//        binding.edtContentTextMessage.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                val length = s?.length ?: 0
-//                binding.lblCountOfDescription.text = "$length/500"
-//            }
-//
-//            override fun afterTextChanged(p0: Editable?) {
-//            }
-//        })
-
-//        binding.edtTitleTextMessage.filters =
-//            arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-//        binding.lblCountOfTitleVoice.filters =
-//            arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-//        binding.edtContentTextMessage.filters =
-//            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-//        Constant.editTextCounter(
-//            this,
-//            binding.edtContentTextMessage,
-//            Constant.isDescriptionLength,
-//            binding.lblCountOfDescription
-//        )
-//        Constant.editTextCounter(
-//            this, binding.edtTitleTextMessage, Constant.isTitleLength, binding.lblCountOfTitle
-//        )
-//        Constant.editTextCounter(
-//            this, binding.edtTitle, Constant.isTitleLength, binding.lblCountOfTitleVoice
-//        )
-
-//        binding.edtContentTextMessage.setOnFocusChangeListener { v, hasFocus ->
-//            if (hasFocus) { v.postDelayed({ binding.scrollRoot.smoothScrollTo(0, v.bottom) }, 250) } }
-//
-//        binding.edtContentTextMessage.addTextChangedListener { binding.scrollRoot.postDelayed({
-//                binding.scrollRoot.smoothScrollTo(0, binding.edtContentTextMessage.bottom + 100)
-//            }, 150)
-//        }
-//
-//        binding.edtContentTextMessage.apply { inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or InputType.TYPE_TEXT_FLAG_MULTI_LINE
-//            imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
-//            setSingleLine(false)
-//            isVerticalScrollBarEnabled = true
-//            overScrollMode = View.OVER_SCROLL_ALWAYS
-//            requestFocus()
-//            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-//        }
 
         Constant.setupEditTextWithScroll(
             this,
@@ -456,7 +408,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.lottieAnimationView.loop(true)
                     binding.lottieAnimationView.playAnimation()
                     binding.lblDurationOfVoice.visibility = View.VISIBLE
-//                    binding.lblDurationOfVoice.text = "Recording: $fileName"
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -611,10 +562,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val adjustedDuration = ceil(durationInMillis / 1000.0).toInt() // more accurate
         val minutes = adjustedDuration / 60
         val seconds = adjustedDuration % 60
-//        val adjustedDuration =
-//            durationInMillis + 1000 // Add 1 second to account for rounding issues
-//        val minutes = (adjustedDuration / 1000) / 60
-//        val seconds = (adjustedDuration / 1000) % 60
         return String.format(Constant.dateForMate, minutes, seconds)
     }
 
@@ -911,7 +858,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.rlaSendVoice -> {
                 KeyboardUtils.hideKeyboard(this)
                 if (Constant.isVoiceType == 3) {
-//                    if (Constant.isAwsUploadedFiles.isNotEmpty()) {
                     if (Constant.selectedFiles.isNotEmpty()) {
                         if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
@@ -977,7 +923,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         ContextCompat.getDrawable(this, R.drawable.video_play)
                     )
                 } else {
-                    Log.d("AudioDebug", "Play button clicked, isPrepared=$isPrepared")
                     Log.d("AudioDebug", "audioFilePath = $audioFilePath")
 
                     val normalizedPower = max(1f, (1f + 160) / 160)
@@ -1162,7 +1107,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaAddLocalFile.visibility = View.VISIBLE
         binding.rytVoiceRecord.visibility = View.VISIBLE
         binding.lblDurationOfVoice.visibility = View.VISIBLE
-//        binding.imgVoiceRecord.visibility = View.VISIBLE  // Uncommented and ensured visible
         binding.imgVoiceRecord.setImageDrawable(
             ContextCompat.getDrawable(this, R.drawable.record_icon)
         )
@@ -1443,9 +1387,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         isRecording = false
         recordingHandler.removeCallbacks(recordingRunnable)
         Log.d("RecordingFilePath", "Recording stopped. File Path: $audioFilePath")
-//        Constant.isAwsUploadedFiles.add(
-//            AwsUploadedFiles(isFileUrl = data.url, isFileType = FileType.AUDIO.toString())
-//        )
         Constant.selectedFiles.add(
             FileItem(path = data.url, type = FileType.AUDIO)
         )
@@ -1529,7 +1470,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     // Store local path for upload/use
                     audioFilePath = outputFile.absolutePath
                     Constant.isVoiceType = 2
-//                    Constant.isVoiceFile = audioFilePath
                     Constant.selectedFiles!!.add(FileItem(audioFilePath.toString(), FileType.AUDIO))
 
                     // Update UI

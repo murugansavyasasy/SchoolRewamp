@@ -35,7 +35,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         return SchoolStrengthBinding.inflate(layoutInflater)
     }
 
-    private var isAcademicYear: List<AcademicYear>? = null
     private var isValidAcademicYear = false
     private var isAcademicYearId = 0
     private var isCurrentAcademicYear = true
@@ -45,7 +44,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
     var isFirstLoad = false
 
     private lateinit var schoolstrengthadapter: SchoolStrengthAdapter
-    private lateinit var schoolstrengthdetailadapter: SchoolStrengthDetailAdapter
 
     override fun setupViews() {
         super.setupViews()

@@ -687,7 +687,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             isSelectedDate,
             ""
         )
-//        Constant.selectedFiles.removeAt(0)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.assignment_data, isAssignmentSendingData)
         startActivity(intent)
@@ -773,12 +772,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-//        if (isEventUpdate) {
         alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_assignment)
-//        } else {
-//            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-//        }
-
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
@@ -787,11 +781,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             ProgressDialogHelper.show(this)
             ProgressDialogHelper.updateProgress(10)
             isUploadFilesInServer(Constant.file_)
-//            } else {
-//                val jsonObject = JsonObject()
-//                jsonObject.addProperty(APIKeyNames.id, isAssignmentId)
-//                appViewModel?.isAssignmentDelete(isAccessToken!!, jsonObject, this)
-//            }
+
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }

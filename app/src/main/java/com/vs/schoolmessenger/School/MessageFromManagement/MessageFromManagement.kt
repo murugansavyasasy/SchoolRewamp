@@ -16,6 +16,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -28,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentFilePathAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -54,7 +57,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var mediaPlayer: MediaPlayer? = null
 
     private var isMsgStaff: List<GetMessagesStaffData>? = emptyList()
-
+    private var userDetails: UserDetails? = null
     private var updateRunnable: Runnable? = null
     var isMenuCount=-1
 
@@ -73,6 +76,27 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
+
+        userDetails = SharedPreference.getUserDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+
+        if (userDetails?.staff_role.equals(Constant.isStaffRole)){
+            binding.schoollistfilter.visibility=View.GONE
+            isAccessToken = isStaffDetails!!.access_token
+        }
+        else{
+            if (userDetails?.staff_details?.size!! > 1) {
+                binding.schoollistfilter.visibility = View.VISIBLE
+                userDetails?.let { setupSchoolSpinner(it.staff_details) }
+            }
+            else{
+                isAccessToken = userDetails!!.staff_details.get(0).access_token
+                binding.schoollistfilter.visibility=View.GONE
+            }
+        }
+
+
+
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -85,7 +109,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 //        setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
 
 
-        isGetMessageFromStaff()
+//        isGetMessageFromStaff()
 
         appViewModel?.isGetMessageStaff?.observe(this) { response ->
             if (response != null) {
@@ -140,6 +164,38 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             }
         })
 
+    }
+
+    private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
+        val schoolNames = staffList.map { it.school_name }
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.schoollistfilter.adapter = adapter
+
+        binding.schoollistfilter.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    val selectedStaff = staffList[position]
+                    isAccessToken = selectedStaff.access_token
+                    isStaffDetails = selectedStaff
+                    Log.d(
+                        "SpinnerSelection",
+                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
+                    )
+                    isGetMessageFromStaff()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+
+//        if (staffList.isNotEmpty()) {
+//            isAccessToken = staffList[0].access_token
+//            isStaffDetails = staffList[0]
+//            Log.d("DefaultSelection", "Default token: $isAccessToken")
+//        }
     }
 
     private fun filter(text: String) {

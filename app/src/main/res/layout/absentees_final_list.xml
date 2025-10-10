@@ -26,7 +26,7 @@
                 android:background="@drawable/rect_black_stoke_bg"
                 android:padding="@dimen/ten"
                 android:text="@string/note_the_following_students_are_marked_as_absent_their_parents_will_receive_an_automatic_call_please_double_check_before_confirming_attendance"
-                android:textColor="@color/red">
+                android:textColor="@color/mild_red">
 
             </TextView>
 
@@ -62,7 +62,7 @@
                     android:layout_width="@dimen/two_fifty"
                     android:layout_height="@dimen/two_fifty"
                     android:layout_marginTop="@dimen/twenty_five"
-                    android:src="@drawable/no_takeattendence_message">
+                    android:src="@drawable/no_mark_attendance_2">
 
                 </ImageView>
 

@@ -287,16 +287,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
             else -> allVoiceData
         }
-
-//        if (currentSearchQuery.isNotEmpty()) {
-//            filteredList = filteredList.filter {
-//                it.content?.contains(
-//                    currentSearchQuery,
-//                    ignoreCase = true
-//                ) == true || it.content?.contains(currentSearchQuery, ignoreCase = true) == true
-//            }
-//        }
-
         if (currentSearchQuery.isNotEmpty()) {
             filteredList = filteredList.filter { item ->
                 val contentMatch = item.content.orEmpty().contains(currentSearchQuery, ignoreCase = true)
@@ -412,11 +402,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         val listToCheck = filteredList ?: allVoiceData
         val isEmpty = listToCheck.isEmpty()
         binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
-
-        //Old Code to hide seemore
-//        if (!isFilterClick) {
-//            binding.seeMoreLabel.visibility = if (isEmpty && isSeeMoreClick) View.VISIBLE else View.GONE
-//        }
 
         if (!isFilterClick) {
             binding.seeMoreLabel.visibility = if (isEmpty && isSeeMoreClick) View.VISIBLE else View.GONE

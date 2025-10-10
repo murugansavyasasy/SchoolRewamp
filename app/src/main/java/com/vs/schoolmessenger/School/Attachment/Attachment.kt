@@ -80,7 +80,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
-//        private const val MAX_FILES = 10
         private const val CAMERA_IMAGE_REQUEST = 1004
     }
     private var attachmentDataList: List<AttachmentDataReport>? = null
@@ -91,7 +90,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
 
     var isAccessToken = ""
-    var isAttachmentId = ""
     var isAttachmentPosition = 0
     private var isStaffDetails: StaffDetails? = null
     private var cameraImageFilePath: String? = null
@@ -225,36 +223,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             Constant.isTitleLength,
             binding.lblTitleTextCount
         )
-
-
-//        binding.edtSearch.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                mAttachmentReportAdapter?.filter?.filter(s)
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {}
-//        })
-
     }
-
-//    fun isLoadAttachmentReportList(isHomeAttachmentReport: List<AttachmentReportData>) {
-//
-//        mAttachmentReportAdapter = AttachmentReportAdapter(
-//            isHomeAttachmentReport,
-//            this,
-//            this,
-//            Constant.isShimmerViewDisable,
-//            binding.nomessage,
-//            binding.txtNoData
-//        )
-//
-//
-//        binding.rcyAttachment.layoutManager = LinearLayoutManager(this)
-//        binding.rcyAttachment.isNestedScrollingEnabled = false
-//        binding.rcyAttachment.adapter = mAttachmentReportAdapter
-//    }
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
@@ -596,107 +565,10 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 }
             }
 
-//            R.id.lnrTabOneName -> {
-//
-//                binding.edtTitle.setText("")
-//                binding.edtDescription.setText("")
-//                Constant.selectedFiles.clear()
-//                Constant.isAwsUploadedFiles.clear()
-//
-//                saveDrawableToCache(R.drawable.add_image)?.let {
-//                    Constant.selectedFiles.add(
-//                        FileItem(
-//                            it, FileType.IMAGE
-//                        )
-//                    )
-//                }
-//
-//                binding.rcyImages.visibility = View.VISIBLE
-//                mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
-//                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-//                binding.rcyImages.adapter = mAdapter
-//                binding.btnChooseRecipient.text = getString(R.string.NEXT)
-//                binding.rytAttachment.visibility = View.VISIBLE
-//                binding.line3.setBackgroundResource(R.color.iconBlue)
-//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//                binding.line4.setBackgroundResource(R.color.white)
-//                binding.rytAttachmentReport.visibility = View.GONE
-//                binding.schoollistfilter.visibility = View.GONE
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//            }
-
-//            R.id.lnrTabTwoName -> {
-//                binding.btnChooseRecipient.text = getString(R.string.update_attachment)
-//                binding.rytAttachment.visibility = View.GONE
-//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//                binding.line4.setBackgroundResource(R.color.iconBlue)
-//                binding.line3.setBackgroundResource(R.color.white)
-//                binding.rytAttachmentReport.visibility = View.VISIBLE
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-//                binding.schoollistfilter.visibility = View.VISIBLE
-//                isLoadSchoolList()
-//            }
-
-//            R.id.imgSearchToolBar -> {
-//                if (binding.search.isVisible) {
-//                    binding.search.visibility = View.GONE
-//                } else {
-//                    binding.search.visibility = View.VISIBLE
-//                }
-//            }
         }
     }
 
-//    fun isLoadSchoolList() {
-//        isUserDetails?.let {
-//            setupSchoolSpinner(it.staff_details)
-//        }
-//    }
 
-//    fun isGetAttachmentReport() {
-//        mAttachmentReportAdapter =
-//            AttachmentReportAdapter(null, this, this, Constant.isShimmerViewShow)
-//        binding.rcyAttachment.layoutManager = LinearLayoutManager(this)
-//        binding.rcyAttachment.isNestedScrollingEnabled = false
-//        binding.rcyAttachment.adapter = mAttachmentReportAdapter
-//        appViewModel!!.getAttachmentListReport(
-//            isAccessToken, this
-//        )
-//    }
-
-//    private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-//        val schoolNames = staffList.map { it.school_name }
-//
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.schoollistfilter.adapter = adapter
-//
-//        binding.schoollistfilter.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
-//                ) {
-//                    val selectedStaff = staffList[position]
-//                    isAccessToken = selectedStaff.access_token
-//                    isStaffDetails = selectedStaff
-//                    Log.d(
-//                        "SpinnerSelection",
-//                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
-//                    )
-//                    isGetAttachmentReport()
-//                }
-//
-//                override fun onNothingSelected(parent: AdapterView<*>) {}
-//            }
-//
-//        if (staffList.isNotEmpty()) {
-//            isAccessToken = staffList[0].access_token
-//            isStaffDetails = staffList[0]
-//            Log.d("DefaultSelection", "Default token: $isAccessToken")
-//        }
-//    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun isGoToRecipient() {
@@ -745,46 +617,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
     }
 
-//    override fun onItemClick(
-//        isAttachmentData: List<AttachmentReportData>,
-//        view: View,
-//        isPosition: Int
-//    ) {
-//        isAttachmentId = isAttachmentData[isPosition].id
-//        isAttachmentPosition = isPosition
-//        showEditDeletePopup(isAttachmentData, view)
-//    }
-
-//    override fun onReadStatusClick(
-//        isData: List<AttachmentReportData>,
-//        isPosition: Int
-//    ) {
-//    }
-
-//    fun showEditDeletePopup(data: List<AttachmentReportData>, anchor: View) {
-//        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
-//        val popupWindow = PopupWindow(
-//            popupView,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            true
-//        )
-//        popupWindow.elevation = 10f
-//
-//        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
-//        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
-//
-//        layoutEdit.setOnClickListener {
-//            isEditProcess(data)
-//            popupWindow.dismiss()
-//        }
-//
-//        layoutDelete.setOnClickListener {
-//            showSendConfirmationDialog(false)
-//            popupWindow.dismiss()
-//        }
-//        popupWindow.showAsDropDown(anchor, 0, 10)
-//    }
 
     fun showSendConfirmationDialog(isHomeWorkUpdate: Boolean) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
@@ -796,25 +628,16 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-        //  if (isHomeWorkUpdate) {
             alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_attachment)
-//        } else {
-//            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-//        }
+
 
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            //     if (isHomeWorkUpdate) {
                 ProgressDialogHelper.show(this)
                 ProgressDialogHelper.updateProgress(10)
                 isUploadFilesInServer(Constant.file_)
-//            } else {
-//                val jsonObject = JsonObject()
-//                jsonObject.addProperty(APIKeyNames.id, isAttachmentId)
-//                appViewModel?.isAttachmentDelete(isAccessToken!!, jsonObject, this)
-//            }
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
@@ -1018,12 +841,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             )
         }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//        binding.line3.setBackgroundResource(R.color.iconBlue)
-//        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//        binding.line4.setBackgroundResource(R.color.white)
-//
-//        binding.rytAttachmentReport.visibility = View.GONE
         binding.rytAttachment.visibility = View.VISIBLE
         binding.edtTitle.setText(data!!.get(isAttachmentPosition).title)
         binding.edtDescription.setText(data.get(isAttachmentPosition).description)
@@ -1061,7 +878,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         jsonObject.addProperty(APIKeyNames.description, binding.edtDescription.text.toString())
         jsonObject.addProperty(APIKeyNames.iframe, "")
         jsonObject.addProperty(APIKeyNames.file_size, "")
-//        jsonObject.addProperty(APIKeyNames.thumbnail, "")
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
             isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)

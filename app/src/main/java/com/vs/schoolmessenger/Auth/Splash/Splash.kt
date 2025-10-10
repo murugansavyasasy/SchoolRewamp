@@ -80,14 +80,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         super.attachBaseContext(context)
     }
     private lateinit var appUpdateManager: AppUpdateManager
-
-//    private lateinit var animationHelper: AnimationHelper
-//    private lateinit var bellImageView: ImageView
-//    private lateinit var galaxyContainer: FrameLayout
-//    private lateinit var dot1: View
-//    private lateinit var dot2: View
-//    private lateinit var dot3: View
-
     private lateinit var notificationPermissionLauncher: ActivityResultLauncher<String>
 
     private val updateLauncher = registerForActivityResult(
@@ -134,18 +126,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 ////            goToNextScreen()
 //        }
 
-//        bellImageView = findViewById(R.id.bellImageView)
-//        galaxyContainer = findViewById(R.id.galaxyContainer)
-//        dot1 = findViewById(R.id.dot1)
-//        dot2 = findViewById(R.id.dot2)
-//        dot3 = findViewById(R.id.dot3)
-//
-//        animationHelper = AnimationHelper(this)
-//
-//        // Start animations
-//        animationHelper.startLogoRingAnimation(bellImageView)
-//        animationHelper.addGalaxyAnimation(galaxyContainer)
-//        animationHelper.startLoadingDotsAnimation(listOf(dot1, dot2, dot3))
 
         val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
         Log.d("fromNotification",fromNotification.toString())

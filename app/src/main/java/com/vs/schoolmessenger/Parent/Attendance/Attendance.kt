@@ -90,7 +90,6 @@ class Attendance : BaseActivity<AttendanceBinding>() {
                     binding.lblHeading.visibility=View.VISIBLE
                 }
                 else {
-//                    Constant.showDataValidationNoDashboardRedirect(getString(R.string.Oops), response.message, this)
                     binding.lblErrorMessage.visibility=View.VISIBLE
                     binding.lblErrorMessage.text=response.message
                     binding.lblHeading.visibility=View.GONE
@@ -166,19 +165,6 @@ class Attendance : BaseActivity<AttendanceBinding>() {
     }
 
 
-//    fun animateProgress(progressBar: ProgressBar, current: Int, max: Int, duration: Long = 1000) {
-//        val safeMax = if (max <= 0) 1 else max           // Avoid divide by zero
-//        val safeCurrent = current.coerceIn(0, safeMax)   // Clamp current within valid range
-//
-//        val percentage = ((safeCurrent.toFloat() / safeMax) * 100).toInt()
-//
-//        progressBar.max = 100
-//        val animator = ObjectAnimator.ofInt(progressBar, Constant.progress, 0, percentage)
-//        animator.duration = duration
-//        animator.interpolator = DecelerateInterpolator()
-//        animator.start()
-//    }
-
     fun animateProgress(
         progressBar: ProgressBar,
         current: Int,
@@ -201,9 +187,6 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         animator.interpolator = DecelerateInterpolator()
         animator.start()
     }
-
-
-
 
     private fun loadStudentStats() {
         appViewModel!!.isStudentStats(isAccessToken!!)

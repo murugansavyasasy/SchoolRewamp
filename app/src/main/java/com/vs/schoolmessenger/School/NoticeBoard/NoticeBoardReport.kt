@@ -49,23 +49,11 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         return NoticeboardReportBinding.inflate(layoutInflater)
     }
 
-    private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
-    private var cameraPermissionDeniedCount = 0
 
-    companion object {
-        private const val PICK_DOCUMENT_REQUEST = 1003
-        private const val MAX_FILES = 10
-    }
-
-    private var cameraImageFilePath: String? = null
-    private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
-    private var selectedDateField: Int = 0
-    private var txtStartDate: String? = null
-    private var txtEndDate: String? = null
     lateinit var noticeboardadapter: SchoolNoticeBoardAdapter
     private var userDetails: UserDetails? = null
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
@@ -88,10 +76,23 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         appViewModel!!.init()
 
         userDetails = SharedPreference.getUserDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
 
-        userDetails?.let {
-            setupSchoolSpinner(it.staff_details)
+        if (userDetails?.staff_role.equals(Constant.isStaffRole)){
+            binding.schoollistfilter.visibility=View.GONE
+            isAccessToken = isStaffDetails!!.access_token
         }
+        else{
+            if (userDetails?.staff_details?.size!! > 1) {
+                binding.schoollistfilter.visibility = View.VISIBLE
+                userDetails?.let { setupSchoolSpinner(it.staff_details) }
+            }
+            else{
+                isAccessToken = userDetails!!.staff_details.get(0).access_token
+                binding.schoollistfilter.visibility=View.GONE
+            }
+        }
+
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -348,25 +349,17 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-        // if (isNoticeBoardUpdate) {
         alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_noticeboard)
-//        } else {
-//            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-//        }
+
 
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            // if (isNoticeBoardUpdate) {
-//            ProgressDialogHelper.show(this)
-//            ProgressDialogHelper.updateProgress(10)
-//            isUploadFilesInServer(Constant.file_)
-//            } else {
-                val jsonObject = JsonObject()
+            val jsonObject = JsonObject()
                 jsonObject.addProperty(APIKeyNames.id, isNoticeBoardId)
                 appViewModel?.isnoticeboarddelete(isAccessToken!!, jsonObject, this)
-//            }
+
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }

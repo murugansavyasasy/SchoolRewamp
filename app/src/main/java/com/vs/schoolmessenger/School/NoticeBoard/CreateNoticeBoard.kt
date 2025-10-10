@@ -110,10 +110,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isTotalSelectedItem = 0
-    var isNoticeBoardId = ""
-    var isNoticeBoardPosition = 0
-    private var noticeList: List<NoticeStaffData> = emptyList()
-    private var isUpdatingSearchText = false
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -129,25 +126,18 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         appViewModel!!.init()
 
         userDetails = SharedPreference.getUserDetails(this)
-//        userDetails?.let {
-//            setupSchoolSpinner(it.staff_details)
-//        }
-
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
-//        binding.rytHistory.setOnClickListener(this)
+        binding.rytHistory.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
-//        binding.rytEnd.setOnClickListener(this)
         binding.rytEndDate.setOnClickListener(this)
         binding.txtStartDate.setOnClickListener(this)
         binding.txtEndDate.setOnClickListener(this)
         binding.lnrStartCalendar.setOnClickListener(this)
         binding.lnrEndCalendar.setOnClickListener(this)
-//        binding.lnrTabOneName.setOnClickListener(this)
-//        binding.lnrTabTwoName.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.btnNext.text = getString(R.string.NEXT)
         val (dayOnly, _, fullDate, _, _) = Constant.getCurrentDateInfo()
@@ -179,27 +169,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
-
-//        noticeboardadapter = SchoolNoticeBoardAdapter(
-//            emptyList(), this, this, false,
-//            binding.nomessage,
-//            binding.txtNoData
-//        )
-//        binding.rcyNoticeBoard.adapter = noticeboardadapter
-//        binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
-//        binding.rcyNoticeBoard.adapter = noticeboardadapter
-
-//        binding.edtSearch.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                if (::noticeboardadapter.isInitialized) {
-//                    noticeboardadapter.filter.filter(s)
-//                }
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {}
-//        })
-
 
 
         albumResultLauncher =
@@ -265,130 +234,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             }
         }
 
-//        appViewModel!!.isnoticeboarddelete?.observe(this) { response ->
-//            if (response != null) {
-//                if (response.status) {
-//                    Constant.hideLoading(this@CreateNoticeBoard)
-//                    noticeboardadapter!!.removeItemAt(isNoticeBoardPosition)
-//                } else {
-//                    Constant.showDataValidation(
-//                        resources.getString(R.string.fail), response.message, this
-//                    )
-//                }
-//            }
-//        }
-
-//
-//        binding.txtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-//        binding.txtDesc.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-//        Constant.editTextCounter(
-//            this, binding.txtDesc, Constant.isDescriptionLength, binding.lbTextCount
-//        )
-//        Constant.editTextCounter(
-//            this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount
-//        )
-
-//        appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
-//            if (response?.status == true && !response.data.isNullOrEmpty()) {
-//                binding.rcyNoticeBoard.visibility = View.VISIBLE
-//                binding.nomessage.visibility = View.GONE
-//                binding.txtNoData.visibility = View.GONE
-//                isloadhomeworkData(response.data)
-//            } else {
-//                isloadhomeworkData(emptyList())
-//                binding.rcyNoticeBoard.visibility = View.GONE
-//                binding.nomessage.visibility = View.VISIBLE
-//                binding.txtNoData.visibility = View.VISIBLE
-//            }
-//        }
-//
-//        val channel = NotificationChannel(
-//            "reminder_channel", "Reminders", NotificationManager.IMPORTANCE_HIGH
-//        )
-//        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-//        manager.createNotificationChannel(channel)
         initializeDefaultDates()
     }
 
-//    private fun loadNoticeData(newData: List<NoticeStaffData>) {
-//        Log.d("AdapterUpdate", "New data size: ${newData.size}")
-//
-//        noticeboardadapter.updateList(newData)
-//        binding.rcyNoticeBoard.visibility = View.VISIBLE
-//        binding.nomessage.visibility = View.GONE
-//        binding.txtNoData.visibility = View.GONE
-//    }
-
-//    private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-//        val schoolNames = staffList.map { it.school_name }
-//
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.schoollistfilter.adapter = adapter
-//
-//        binding.schoollistfilter.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
-//                ) {
-//                    val selectedStaff = staffList[position]
-//                    isAccessToken = selectedStaff.access_token
-//                    isStaffDetails = selectedStaff
-//                    Log.d(
-//                        "SpinnerSelection",
-//                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
-//                    )
-//                    isGetNoticeBoardList()
-//                }
-//
-//                override fun onNothingSelected(parent: AdapterView<*>) {}
-//            }
-//
-//        if (staffList.isNotEmpty()) {
-//            isAccessToken = staffList[0].access_token
-//            isStaffDetails = staffList[0]
-//            Log.d("DefaultSelection", "Default token: $isAccessToken")
-//        }
-//    }
-
-//    private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
-//        Log.d("SearchDebug", "isloadhomeworkData called with ${newData?.size ?: 0} items")
-//
-//        if (newData != null && newData.isNotEmpty()) {
-//            noticeList = newData
-//            noticeboardadapter.isLoading = false
-//            noticeboardadapter.updateList(newData, true)
-//
-//            isUpdatingSearchText = true
-//            binding.edtSearch.setText("")
-//            isUpdatingSearchText = false
-//
-//            Log.d(
-//                "SearchDebug",
-//                "Data loaded successfully, adapter item count: ${noticeboardadapter.itemCount}"
-//            )
-//        } else {
-//            noticeList = emptyList()
-//            noticeboardadapter.isLoading = false
-//            noticeboardadapter.updateList(emptyList(), true)
-//
-//            isUpdatingSearchText = true
-//            binding.edtSearch.setText("")
-//            isUpdatingSearchText = false
-//
-//            Log.d("SearchDebug", "Empty data loaded")
-//        }
-//    }
-
-
-//    private fun isGetNoticeBoardList() {
-//        binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
-//        binding.rcyNoticeBoard.isNestedScrollingEnabled = false
-//        noticeboardadapter.isLoading = true
-//        noticeboardadapter.notifyDataSetChanged()
-//
-//        appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
-//    }
 
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -540,97 +388,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 onBackPressed()
             }
 
-//            R.id.lnrTabOneName -> {
-//
-//                binding.txtDesc.setText("")
-//                binding.txtTitle.setText("")
-//                Constant.selectedFiles.clear()
-//                Constant.isAwsUploadedFiles.clear()
-//
-//                saveDrawableToCache(R.drawable.add_image)?.let {
-//                    Constant.selectedFiles.add(
-//                        FileItem(
-//                            it, FileType.IMAGE
-//                        )
-//                    )
-//                }
-//
-//                binding.rcyImages.visibility = View.VISIBLE
-//                mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
-//                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-//                binding.rcyImages.adapter = mAdapter
-//
-//
-//                binding.btnNext.text = getString(R.string.NEXT)
-//                binding.noticeboardCreate.visibility = View.VISIBLE
-//                binding.line1.setBackgroundResource(R.color.iconBlue)
-//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//                binding.line2.setBackgroundResource(R.color.white)
-//                binding.rcyNoticeBoard.visibility = View.GONE
-//                binding.rytSearch323.visibility = View.GONE
-//                binding.schoollistfilter.visibility = View.GONE
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//            }
-
-//            R.id.lnrTabTwoName -> {
-//                binding.btnNext.text = getString(R.string.update_noticeboard)
-//                binding.noticeboardCreate.visibility = View.GONE
-//                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//                binding.line2.setBackgroundResource(R.color.iconBlue)
-//                binding.line1.setBackgroundResource(R.color.white)
-//                binding.rcyNoticeBoard.visibility = View.VISIBLE
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-//                binding.schoollistfilter.visibility = View.VISIBLE
-//                isGetNoticeBoardList()
-//            }
-
-//            R.id.imgSearchToolBar -> {
-//                if (binding.rytSearch323.isVisible) {
-//                    binding.rytSearch323.visibility = View.GONE
-//                    binding.edtSearch.setText("")
-//                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-//                    imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
-//                } else {
-//                    binding.rytSearch323.visibility = View.VISIBLE
-//                    binding.edtSearch.setText("")
-//                    binding.edtSearch.requestFocus()
-//                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-//                    imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
-//                }
-//            }
-
-//
-//                R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
-//                    selectedDateField = 1
-//                    Constant.DatePicker(this, false) { selectedDate ->
-//                        Log.d("selectedDate", selectedDate)
-//                        txtStartDate = Constant.covertDate(selectedDate)
-//                        val parts = txtStartDate!!.split(" ")
-//                        val day = parts[0]
-//                        val Month = parts[1]
-//                        val Year = parts[2]
-//                        binding.txtStartDate.text = Month + " " + Year
-//                        binding.lblDay.text = day
-//    //                    binding.lblDate.text = Date
-//                    }
-//                }
-
-            //            R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
-            //                selectedDateField = 2
-            //                Constant.showDatePicker12(this, false) { selectedDate ->
-            //                    Log.d("selectedDate", selectedDate)
-            //                    txtEndDate = Constant.covertDateFormate(selectedDate)
-            //                    val parts = txtEndDate!!.split(" ")
-            //                    val day = parts[0]
-            //                    val Month = parts[1]
-            //                    val Year = parts[2]
-            //                    binding.txtEndDate.text = Month + " " + Year
-            //                    binding.lblEndDay.text = day
-            ////                    binding.lblEndDate.text = Date
-            //                }
-            //            }
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
@@ -987,30 +744,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         startActivity(intent)
     }
 
-//    fun showEditDeletePopup(data: NoticeStaffData, anchor: View) {
-//        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
-//        val popupWindow = PopupWindow(
-//            popupView,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            true
-//        )
-//        popupWindow.elevation = 10f
-//
-//        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
-//        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
-//
-//        layoutEdit.setOnClickListener {
-//            isEditProcess(data)
-//            popupWindow.dismiss()
-//        }
-//
-//        layoutDelete.setOnClickListener {
-//            showSendConfirmationDialog(false)
-//            popupWindow.dismiss()
-//        }
-//        popupWindow.showAsDropDown(anchor, 0, 10)
-//    }
+
 
     fun showSendConfirmationDialog(isNoticeBoardUpdate: Boolean) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
@@ -1022,25 +756,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-        // if (isNoticeBoardUpdate) {
         alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_noticeboard)
-//        } else {
-//            alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-//        }
-
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            // if (isNoticeBoardUpdate) {
             ProgressDialogHelper.show(this)
             ProgressDialogHelper.updateProgress(10)
             isUploadFilesInServer(Constant.file_)
-//            } else {
-//                val jsonObject = JsonObject()
-//                jsonObject.addProperty(APIKeyNames.id, isNoticeBoardId)
-//                appViewModel?.isnoticeboarddelete(isAccessToken!!, jsonObject, this)
-//            }
+
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
@@ -1235,28 +959,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
     }
 
-//    override fun onClickListener(
-//        data: NoticeStaffData,
-//        anchorView: View,
-//        adapterPosition: Int
-//    ) {
-//        isNoticeBoardId = data.id
-//        isNoticeBoardPosition = adapterPosition
-//       // showEditDeletePopup(data, anchorView)
-//    }
 
-//    override fun onSearchResultEmpty(isEmpty: Boolean) {
-//        Log.d("SearchResult", "Search result empty? $isEmpty for query '${binding.edtSearch.text}'")
-//        if (isEmpty) {
-//            binding.rcyNoticeBoard.visibility = View.GONE
-//            binding.nomessage.visibility = View.VISIBLE
-//            binding.txtNoData.visibility = View.VISIBLE
-//        } else {
-//            binding.rcyNoticeBoard.visibility = View.VISIBLE
-//            binding.nomessage.visibility = View.GONE
-//            binding.txtNoData.visibility = View.GONE
-//        }
-//    }
 
     fun isEditProcess(data: NoticeStaffData?) {
         Constant.isAwsUploadedFiles.clear()
@@ -1269,15 +972,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             )
         }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//        binding.line1.setBackgroundResource(R.color.iconBlue)
-//        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//        binding.line2.setBackgroundResource(R.color.white)
-
         binding.noticeboardCreate.visibility = View.VISIBLE
-        //   binding.rcyNoticeBoard.visibility = View.GONE
-//        binding.rytSearch323.visibility = View.GONE
-        //    binding.schoollistfilter.visibility = View.GONE
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.txtTitle.setText(data!!.title)
         binding.txtDesc.setText(data.description)

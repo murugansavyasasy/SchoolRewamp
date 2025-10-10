@@ -99,11 +99,29 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
             }
         }
 
+
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+
         isUserDetails = SharedPreference.getUserDetails(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
-        isLoadSchoolList()
+
+        if (isUserDetails?.staff_role.equals(Constant.isStaffRole)){
+            binding.schoollistfilter.visibility=View.GONE
+            isAccessToken = isStaffDetails!!.access_token
+        }
+        else{
+            if (isUserDetails?.staff_details?.size!! > 1) {
+                binding.schoollistfilter.visibility = View.VISIBLE
+                isUserDetails?.let { setupSchoolSpinner(it.staff_details) }
+            }
+            else{
+                isAccessToken = isUserDetails!!.staff_details.get(0).access_token
+                binding.schoollistfilter.visibility=View.GONE
+            }
+        }
+        isGetAttachmentReport()
 
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
@@ -199,12 +217,6 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         }
     }
 
-
-    fun isLoadSchoolList() {
-        isUserDetails?.let {
-            setupSchoolSpinner(it.staff_details)
-        }
-    }
 
     fun isGetAttachmentReport() {
         mAttachmentReportAdapter =
@@ -312,25 +324,14 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-        //  if (isHomeWorkUpdate) {
-//        alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_attachment)
-//        } else {
         alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-//        }
-
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            //     if (isHomeWorkUpdate) {
-//            ProgressDialogHelper.show(this)
-//            ProgressDialogHelper.updateProgress(10)
-//            isUploadFilesInServer(Constant.file_)
-//            } else {
             val jsonObject = JsonObject()
             jsonObject.addProperty(APIKeyNames.id, isAttachmentId)
             appViewModel?.isAttachmentDelete(isAccessToken!!, jsonObject, this)
-//            }
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }

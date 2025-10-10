@@ -283,10 +283,8 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         }
 
         rlaLogout.setOnClickListener {
-//            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
             SharedPreference.putLogout(this, true)
             SharedPreference.setLoggedIn(this, false)
-//            SharedPreference.setFingerprintEnabled(requireActivity(), false)
             startActivity(Intent(this, Login::class.java))
         }
 

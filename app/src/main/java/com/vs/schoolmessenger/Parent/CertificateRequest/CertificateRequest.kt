@@ -48,16 +48,9 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         urgency_level=getString(R.string.not_urgent)
 
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
-//        binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
-//        binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
         binding.btnSendCertificateRequest.setOnClickListener(this)
 
         binding.headerText3.text=Constant.isParentMenuName
-//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-//        binding.toolbarLayout.rytSearch.visibility = View.GONE
-//        binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
-//        binding.toolbarLayout.lblLeftSideBar.text = "Certificates"
-//        binding.toolbarLayout.lblRightSideBar.text = "Request"
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text  =
@@ -69,8 +62,6 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         loadCertificateTypes()
         binding.ivradio.setImageResource(R.drawable.selected_radio_button)
         binding.ivradio1.setImageResource(R.drawable.unselected_radio_button)
-
-
 
         appViewModel!!.isCertificateRequestList?.observe(this) { response ->
             if (response != null && response.status) {
@@ -208,20 +199,6 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.recyclerView.adapter = adapter
     }
 
-    private fun showShimmer() {
-        adapter = CertificateRequestAdapter(null, object : CertificateListener {
-            override fun onItemClick(
-                data: CertificateListData, holder: CertificateRequestAdapter.DataViewHolder
-            ) {
-
-            }
-        }, this, Constant.isShimmerViewShow)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
-
-        loadCertificateRequestData()
-
-    }
 
     private fun loadCertificateRequestData() {
         //  showShimmer()
@@ -243,18 +220,12 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         when (v.id) {
 
             R.id.lblLeftSideBar -> {
-//                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
-//                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-//                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.white_radious)
                 binding.rytRequestTap.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
                 loadCertificateRequestData()
             }
 
             R.id.lblRightSideBar -> {
-//                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
-//                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-//                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
                 binding.rytRequestTap.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
                 binding.lnrNoRecords.visibility = View.GONE

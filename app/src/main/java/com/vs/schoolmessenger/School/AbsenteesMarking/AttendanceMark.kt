@@ -337,8 +337,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             isStandardName = null
             isSectionName = null
 
-//            binding.lblStandard.text = "-"
-//            binding.lblSection.text = "-"
             binding.rlaSection.isEnabled = false
             binding.rlaSection.isClickable = false
             //Checking Whether to enable the Select All as present and Mark Absentees button
@@ -349,13 +347,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         isStandardId = standard.id
         isSection = standard.sections
 
-//        binding.lblStandard.text = standard.name
         isStandardName = standard.name
         val sections = standard.sections
         if (!sections.isNullOrEmpty()) {
             val defaultSection = sections[0]
             SectionID = defaultSection.id
-//            binding.lblSection.text = defaultSection.name
             isSectionName = defaultSection.name
             if (sections.size == 1) {
                 // Only one section -> disable dropdown
@@ -372,7 +368,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             SectionID = null
             isSection = null
             isSectionName = null
-//            binding.lblSection.text = "-"
             binding.rlaSection.isEnabled = false
             binding.rlaSection.isClickable = false
             //Checking Whether to enable the Select All as present and Mark Absentees button
@@ -646,17 +641,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
     private fun updateActionButtonsState() {
         if (isStandardId != null && SectionID != null) {
-
-//            binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_green)
             binding.btnAbsent.setBackgroundResource(R.drawable.bg_btn_blue)
             binding.btnAbsent.background.setTint(ContextCompat.getColor(this, R.color.PrimaryColor))
-//            binding.btnSelectPresent.isEnabled = true
             binding.btnAbsent.isEnabled = true
         } else {
-//            binding.btnSelectPresent.isEnabled = false
             binding.btnAbsent.isEnabled = false
             binding.btnAbsent.setBackgroundResource(R.drawable.bg_btn_blue)
-//            binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_gray)
 
         }
     }
@@ -678,7 +668,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 val studentArray = JsonArray().apply {
                     isSelectedIds?.forEach { id ->
                         add(JsonObject().apply {
-                            addProperty(APIKeyNames.id_, id)
+                            addProperty(APIKeyNames.id_, id.toString())
                         })
                     }
                 }

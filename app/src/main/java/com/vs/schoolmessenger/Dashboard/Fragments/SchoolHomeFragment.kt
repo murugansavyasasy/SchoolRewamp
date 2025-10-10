@@ -84,7 +84,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     //    private lateinit var items: List<ScrollItem>
     lateinit var isMenuAdapter: SchoolMenuAdapter
-    private var isSearchVisible = false
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
     var staffDetails: StaffDetails? = null
@@ -98,12 +97,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private lateinit var adapter: AutoScrollAdapterWithDots
     private lateinit var layoutManager: LinearLayoutManager
     private val snapHelper = PagerSnapHelper()
-    private var autoScrollHandler: Handler? = null
-    private var autoScrollRunnable: Runnable? = null
     private var currentPosition = 0
-    private var isUserScrolling = false
-    private var isAutoScrollEnabled = true
-    private var currentDotPosition = 0
     private var mobile_number = ""
 
 
@@ -117,8 +111,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = SchoolHomeFragmentBinding.inflate(inflater)
-
-
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -290,21 +282,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun filter(text: String) {
-        val query = text.lowercase(Locale.ROOT)
-        val filtered = if (query.isEmpty()) {
-            allMenuItems
-        } else {
-            allMenuItems.filter {
-                it.name.lowercase(Locale.ROOT).contains(query) == true
-            }
-        }
-        isMenuItems.clear()
-        isMenuItems.addAll(filtered)
-        isMenuAdapter.updateList(isMenuItems.toList())
-
-    }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -467,15 +444,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
             Constant.M_MESSAGES_FROM_MANAGEMENT -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    MessageFromManagement::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        MessageFromManagement::class.java
-                    }
-                }
+                MessageFromManagement::class.java
             }
 
             Constant.M_INTERACTION_WITH_STUDENT -> {
