@@ -145,7 +145,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.rcyImages.adapter = mAdapter
 
         val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo()
-        binding.lblDate.text = dayOnly
+//        binding.lblDate.text = dayOnly
         binding.lblDay.text = dayOfWeek
 
         binding.txtStartDate.text = fullDate
@@ -372,7 +372,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         Constant.covertDateFormate(selectedDate) // 13 may 2222
                     val (day, formattedDate) = Constant.getDayAndDateOnly(binding.txtStartDate.text.toString())// 13 Mon
                     binding.lblDay.text = formattedDate
-                    binding.lblDate.text = day
+//                    binding.lblDate.text = day
                 }
             }
 

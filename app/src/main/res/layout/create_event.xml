@@ -324,100 +324,99 @@
                             android:text="@string/mandatory"
                             android:textColor="@color/red" />
 
-                        <RelativeLayout
+                        <LinearLayout
+                            android:weightSum="1"
                             android:background="@color/white"
                             android:id="@+id/rytStart"
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_below="@+id/lblStart"
                             android:layout_marginTop="@dimen/ten"
                             android:layout_marginEnd="@dimen/ten">
 
                             <RelativeLayout
-                                android:layout_alignParentStart="true"
-                                android:id="@+id/rytStartDate"
-                                android:layout_toStartOf="@+id/rytStartTime"
-                                android:layout_width="wrap_content"
+                                android:layout_weight="0.65"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:layout_centerVertical="true"
-                                    android:id="@+id/imgCalendar"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_width="@dimen/fifty"
-                                    android:layout_toStartOf="@+id/lnrDateDetails"
-                                    android:background="@drawable/rect_purple_rounded"
-                                    android:padding="@dimen/ten"
-                                    android:src="@drawable/white_calendar_icon"
-                                    android:layout_height="@dimen/fifty">
-
-                                </ImageView>
-                                <LinearLayout
-                                    android:layout_alignParentEnd="true"
-                                    android:id="@+id/lnrDateDetails"
-                                    android:layout_centerVertical="true"
+                                <RelativeLayout
+                                    android:id="@+id/rytStartDate"
                                     android:layout_width="wrap_content"
-                                    android:orientation="vertical"
-                                    android:layout_marginStart="@dimen/five"
                                     android:layout_height="wrap_content">
-                                    <TextView
-                                        android:id="@+id/lblDay"
-                                        android:layout_width="wrap_content"
-                                        android:text="Friday"
-                                        style="@style/CustomTextStylePoppinsRegular"
-                                        android:textColor="@color/mild_grey_dark"
-                                        android:layout_height="wrap_content">
-                                    </TextView>
-                                    <TextView
-                                        android:layout_marginTop="@dimen/five"
-                                        android:id="@+id/txtStartDate"
-                                        android:layout_width="wrap_content"
-                                        android:text="10 May 2022"
-                                        style="@style/CustomTextStylePoppinsBold"
-                                        android:layout_height="wrap_content">
-                                    </TextView>
-                                </LinearLayout>
+                                    <ImageView
+                                        android:layout_centerVertical="true"
+                                        android:id="@+id/imgCalendar"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_width="@dimen/fifty"
+                                        android:background="@drawable/rect_purple_rounded"
+                                        android:padding="@dimen/ten"
+                                        android:src="@drawable/white_calendar_icon"
+                                        android:layout_height="@dimen/fifty">
 
+                                    </ImageView>
+                                    <LinearLayout
+                                        android:layout_toEndOf="@+id/imgCalendar"
+                                        android:id="@+id/lnrDateDetails"
+                                        android:layout_centerVertical="true"
+                                        android:layout_width="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_marginStart="@dimen/five"
+                                        android:layout_height="wrap_content">
+                                        <TextView
+                                            android:id="@+id/lblDay"
+                                            android:layout_width="wrap_content"
+                                            android:text="Friday"
+                                            style="@style/CustomTextStylePoppinsRegular"
+                                            android:textColor="@color/mild_grey_dark"
+                                            android:layout_height="wrap_content">
+                                        </TextView>
+                                        <TextView
+                                            android:layout_marginTop="@dimen/five"
+                                            android:id="@+id/txtStartDate"
+                                            android:layout_width="wrap_content"
+                                            android:text="10 May 2022"
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_height="wrap_content">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                </RelativeLayout>
                             </RelativeLayout>
 
                             <RelativeLayout
-                                android:layout_alignParentEnd="true"
-                                android:id="@+id/rytStartTime"
-                                android:background="@drawable/rect_black_stoke_bg"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                >
-
-                                <ImageView
-                                    android:id="@+id/imgTimeDown"
-                                    android:layout_width="@dimen/twenty"
-                                    android:layout_height="@dimen/twenty"
-                                    android:layout_centerVertical="true"
-                                    android:src="@drawable/clock" />
-
-                                <TextView
-                                    android:layout_marginStart="@dimen/five"
-                                    android:id="@+id/txtStartTime"
-                                    style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_weight="0.35"
+                                android:layout_width="0dp"
+                                android:gravity="center_vertical"
+                                android:layout_height="match_parent">
+                                <RelativeLayout
+                                    android:id="@+id/rytStartTime"
+                                    android:background="@drawable/rect_black_stoke_bg"
                                     android:layout_width="wrap_content"
-                                    android:layout_toEndOf="@+id/imgTimeDown"
                                     android:layout_height="wrap_content"
-                                    android:text="sassas"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/thirteen_sp" />
+                                    >
 
+                                    <ImageView
+                                        android:id="@+id/imgTimeDown"
+                                        android:layout_width="@dimen/twenty"
+                                        android:layout_height="@dimen/twenty"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/clock" />
+
+                                    <TextView
+                                        android:layout_marginStart="@dimen/five"
+                                        android:id="@+id/txtStartTime"
+                                        style="@style/CustomTextStylePoppinsMedium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_toEndOf="@+id/imgTimeDown"
+                                        android:layout_height="wrap_content"
+                                        android:text="sassas"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/thirteen_sp" />
+
+                                </RelativeLayout>
                             </RelativeLayout>
 
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/one"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginStart="@dimen/sixty"
-                                android:background="@color/grey" />
-
-                        </RelativeLayout>
+                        </LinearLayout>
 
 
 
