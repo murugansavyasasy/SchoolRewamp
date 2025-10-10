@@ -195,8 +195,8 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:id="@+id/imgArrow"
                 android:layout_alignParentEnd="true"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_circle_arrow_right"/>
 
