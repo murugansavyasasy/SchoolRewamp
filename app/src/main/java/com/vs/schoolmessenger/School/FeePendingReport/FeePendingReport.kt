@@ -56,7 +56,6 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-//        binding.AcademicYear.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
         binding.lnrTabOneName.setOnClickListener(this)
 
