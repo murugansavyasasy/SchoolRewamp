@@ -116,16 +116,23 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             if (response != null) {
-                if (response.status) {
+                if (response.status && response.data.isNotEmpty()) {
                     binding.rcySectionAndStandardList.visibility = View.VISIBLE
                     loadSectionStandard(response.data)
                 } else {
                     binding.rcySectionAndStandardList.visibility = View.GONE
+                    selectedDates.clear() // optional: clear any previously selected dates
+                    selectedSlots = emptyList() // clear selected slots if needed
+                    isSelectedList.clear() // clear selected sections
+
+                    // Show alert to the user
+                    Constant.showTopAlertPopup("No standards found for selected academic year", this)
                 }
             }
         }
 
-            appViewModel!!.isPtmSlotCreate?.observe(this) { response ->
+
+        appViewModel!!.isPtmSlotCreate?.observe(this) { response ->
                 Constant.hideLoading(this)
 
                 if (response != null) {
@@ -436,7 +443,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             isAccessToken!!, jsonArray
         )
     }
-
 
     private fun isShowAvailableSlot(data: List<ValidatedSlot>) {
         val availableSlotsOnly = data.map { slot ->

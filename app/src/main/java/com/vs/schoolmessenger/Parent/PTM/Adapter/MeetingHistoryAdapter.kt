@@ -176,7 +176,7 @@ class MeetingHistoryAdapter(
 
             callButton.setOnClickListener {
                 val context = itemView.context
-                val phoneNumber = meeting.staff_phone?.trim()?.takeIf { it.isNotEmpty() } ?: ""
+                val phoneNumber = meeting.staff_mobile_no?.trim()?.takeIf { it.isNotEmpty() } ?: ""
 
                 if (phoneNumber.isNotEmpty()) {
                     try {
@@ -192,6 +192,7 @@ class MeetingHistoryAdapter(
                     Toast.makeText(context, "Phone number not available", Toast.LENGTH_SHORT).show()
                 }
             }
+
 
         }
     }
@@ -288,7 +289,6 @@ class MeetingHistoryAdapter(
                 val hasItem = items.any { it is MeetingListItem.Item }
                 onEmptyList(!hasItem)
             }
-
         }
     }
 }

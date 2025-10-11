@@ -265,33 +265,34 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
     }
 
     fun isLoadSubjectList(data: List<SubjectData>) {
-        val adapter = SubjectListWithClassTeacherAdapter(this, data)
+        val mutableList = mutableListOf<SubjectData>()
+        // Add All Subjects option at position 0
+        mutableList.add(SubjectData(id = "0", name = "All Subjects"))
+        mutableList.addAll(data)
+
+        val adapter = SubjectListWithClassTeacherAdapter(this, mutableList)
         binding.spinnerType.adapter = adapter
 
-        binding.spinnerType.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>, view: View?, position: Int, id: Long
-                ) {
-                    adapter.selectedPosition = position
-                    adapter.notifyDataSetChanged()
+        binding.spinnerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                adapter.selectedPosition = position
+                adapter.notifyDataSetChanged()
 
-                    val selectedSubject = data[position]
-                    println("Selected Subject -> ID: ${selectedSubject.id}, Name: ${selectedSubject.name}")
-                    if (position == 0) {
-                        isSubjectId = "0"
-                        isClassTeacherId = selectedSubject.id
-                    } else {
-                        isSubjectId = selectedSubject.id
-                        isClassTeacherId = "0"
-                    }
-
-                    isScheduleCallList()
+                val selectedSubject = mutableList[position]
+                if (position == 0) {
+                    isSubjectId = "0"
+                    isClassTeacherId = "0"
+                } else {
+                    isSubjectId = selectedSubject.id
+                    isClassTeacherId = "0"
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>) {}
+                isScheduleCallList()
             }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
+
 
     fun isLoadMeetingData(data: List<MeetingDataWrapper>) {
         if (data.isNullOrEmpty()){

@@ -11,7 +11,6 @@ import android.widget.GridView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.compose.ui.graphics.vector.PathNode
 import com.vs.schoolmessenger.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,19 +23,22 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
     private val gridWeekdays: GridView
     private val btnPrevMonth: ImageView
     private val btnNextMonth: ImageView
-
     private val btnCancel: Button
+
     private val calendar = Calendar.getInstance()
+    private val today = Calendar.getInstance()
     private val selectedDates = ArrayList<String>()
     private var adapter: CalendarAdapter? = null
 
     private var onCancelListener: (() -> Unit)? = null
+
     fun setOnCancelListener(listener: () -> Unit) {
         onCancelListener = listener
     }
 
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_calendar, this, true)
+
         tvMonthYear = findViewById(R.id.tvMonthYear)
         gridCalendar = findViewById(R.id.gridCalendar)
         gridWeekdays = findViewById(R.id.gridWeekdays)
@@ -53,18 +55,30 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
             weekdays
         ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getView(position, convertView, parent) as TextView
-                return view
+                return super.getView(position, convertView, parent)
             }
         }
 
         setupCalendar()
 
-        // Month navigation
+        // ✅ Prevent going to previous months before current
         btnPrevMonth.setOnClickListener {
-            calendar.add(Calendar.MONTH, -1)
-            setupCalendar()
+            val temp = calendar.clone() as Calendar
+            temp.add(Calendar.MONTH, -1)
+
+            // If previous month is before current month (same year check)
+            if (temp.get(Calendar.YEAR) < today.get(Calendar.YEAR) ||
+                (temp.get(Calendar.YEAR) == today.get(Calendar.YEAR)
+                        && temp.get(Calendar.MONTH) < today.get(Calendar.MONTH))
+            ) {
+                // Do nothing (block navigation)
+            } else {
+                calendar.add(Calendar.MONTH, -1)
+                setupCalendar()
+            }
         }
+
+        // Allow next month freely
         btnNextMonth.setOnClickListener {
             calendar.add(Calendar.MONTH, 1)
             setupCalendar()
@@ -75,23 +89,18 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
             adapter?.notifyDataSetChanged()
             onCancelListener?.invoke()
         }
-
     }
-
 
     private fun setupCalendar() {
         val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         tvMonthYear.text = monthYear.format(calendar.time)
 
         val daysInMonth = ArrayList<Pair<String, Int>>()
-
         val tempCal = calendar.clone() as Calendar
         tempCal.set(Calendar.DAY_OF_MONTH, 1)
 
-        // Find which day of week 1st starts (1=Sunday, 7=Saturday)
         val firstDayOfWeek = tempCal.get(Calendar.DAY_OF_WEEK)
 
-        // Add empty slots before the 1st date
         for (i in 1 until firstDayOfWeek) {
             daysInMonth.add(Pair("", -1))
         }
@@ -103,7 +112,14 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
             daysInMonth.add(Pair(i.toString(), dayOfWeek))
         }
 
-        adapter = CalendarAdapter(context, daysInMonth, selectedDates, calendar)
+        val minDateMillis = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+
+        adapter = CalendarAdapter(context, daysInMonth, selectedDates, calendar, minDateMillis)
         gridCalendar.adapter = adapter
 
         gridCalendar.setOnItemClickListener { _, _, pos, _ ->
@@ -111,16 +127,29 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
             if (day.isNotEmpty()) {
                 val tempCal2 = calendar.clone() as Calendar
                 tempCal2.set(Calendar.DAY_OF_MONTH, day.toInt())
-                val fullDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(tempCal2.time)
 
+                //  Disable past date selection
+                if (isPastDate(tempCal2)) return@setOnItemClickListener
+
+                val fullDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(tempCal2.time)
                 if (selectedDates.contains(fullDate)) {
-                    selectedDates.remove(fullDate) // unselect
+                    selectedDates.remove(fullDate)
                 } else {
                     selectedDates.add(fullDate)
                 }
                 adapter?.notifyDataSetChanged()
             }
         }
+    }
+
+    // Helper to check if date is before today
+    private fun isPastDate(cal: Calendar): Boolean {
+        val currentDate = today.clone() as Calendar
+        currentDate.set(Calendar.HOUR_OF_DAY, 0)
+        currentDate.set(Calendar.MINUTE, 0)
+        currentDate.set(Calendar.SECOND, 0)
+        currentDate.set(Calendar.MILLISECOND, 0)
+        return cal.before(currentDate)
     }
 
     fun getSelectedDates(): ArrayList<String> = selectedDates
