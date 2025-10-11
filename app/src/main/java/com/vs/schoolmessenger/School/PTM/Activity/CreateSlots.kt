@@ -113,7 +113,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isGetStandardSection()
-
         binding.imgBack.setOnClickListener {
             onBackPressed()
         }
@@ -126,11 +125,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     loadSectionStandard(response.data)
                 } else {
                     binding.rcySectionAndStandardList.visibility = View.GONE
-                    selectedDates.clear() // optional: clear any previously selected dates
-                    selectedSlots = emptyList() // clear selected slots if needed
-                    isSelectedList.clear() // clear selected sections
-
-                    // Show alert to the user
+                    selectedDates.clear()
+                    selectedSlots = emptyList()
+                    isSelectedList.clear()
                     Constant.showTopAlertPopup("No standards found for selected academic year", this)
                 }
             }
@@ -148,7 +145,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                         Constant.showTopAlertPopup("Slot creation failed!", this)
                     }
                 }
-
         }
 
         appViewModel!!.isSlotValidation?.observe(this) { response ->
@@ -193,8 +189,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             isSelectedList = selectedList.toMutableList()
         }
 
-
-
         val flexboxLayoutManager = FlexboxLayoutManager(this).apply {
             flexDirection = FlexDirection.ROW
             flexWrap = FlexWrap.WRAP
@@ -219,14 +213,10 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 val selectedOption = isAcademicYear!![position]
                 isAcademicYearId = selectedOption.id
                 isCurrentAcademicYear = selectedOption.current_academic_year
-                Log.d(
-                    "DropdownMenu",
-                    "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
-                )
+                Log.d("DropdownMenu", "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}")
                 isSelectedList.clear()
                 isGetStandardSection()
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
@@ -501,10 +491,10 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 slot.slot_availablity.equals("Available", true)
             }
 
-            if (availableSlots.isEmpty()) {
-                Toast.makeText(this, "Please select at least one available slot", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+//            if (availableSlots.isEmpty()) {
+//                Toast.makeText(this, "Please select at least one available slot", Toast.LENGTH_SHORT).show()
+//                return@setOnClickListener
+//            }
             val dialogBuilder = android.app.AlertDialog.Builder(this)
             dialogBuilder.setTitle("Confirm Slot Creation")
             dialogBuilder.setMessage("Are you sure you want to create slots for the selected dates?")

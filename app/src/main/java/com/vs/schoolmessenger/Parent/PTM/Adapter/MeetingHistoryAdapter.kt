@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.PTM.Adapter
 import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -235,10 +233,6 @@ class MeetingHistoryAdapter(
         notifyDataSetChanged()
     }
 
-
-
-
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -282,7 +276,6 @@ class MeetingHistoryAdapter(
                 filterResults.values = filteredList
                 return filterResults
             }
-
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 items = (results?.values as? MutableList<MeetingListItem>) ?: mutableListOf()

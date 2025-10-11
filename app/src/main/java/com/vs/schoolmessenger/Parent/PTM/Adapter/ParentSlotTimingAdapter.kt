@@ -78,7 +78,7 @@ class ParentSlotTimingAdapter(
             isOverlappingWithSelected -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.card.isEnabled = false
-                holder.tvSlotStatus.text = "Not Available"
+                holder.tvSlotStatus.text = "Time conflict"
                 holder.tvSlotStatus.setTextColor(Color.RED)
             }
 
@@ -126,9 +126,7 @@ class ParentSlotTimingAdapter(
         val to1 = format.parse(slot1.slot_to.trim())
         val from2 = format.parse(slot2.slot_from.trim())
         val to2 = format.parse(slot2.slot_to.trim())
-
         if (from1 == null || to1 == null || from2 == null || to2 == null) return false
-
         return from1 < to2 && from2 < to1
     }
 }

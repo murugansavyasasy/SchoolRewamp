@@ -56,7 +56,6 @@ class CheckAvailableSlotsDate(
                     (dates as MutableList).removeAt(position)
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, dates.size)
-
                     if (dates.isEmpty()) {
                         onAllRemoved()
                     }
