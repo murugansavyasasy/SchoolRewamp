@@ -5,11 +5,11 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -570,6 +570,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = AcademicYearAdapter(this, isAcademicYear)
         binding.isSpinner.adapter = adapter
+
         binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>, view: View?, position: Int, id: Long

@@ -132,7 +132,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         isMultipleSchool = isUserDetails!!.staff_details.size > 1
 
-
+        binding.btnNoticeBoardReport.text=getString(R.string.History)+" "+">>"
 
         appViewModel!!.isEditAttachment?.observe(this) { response ->
             Constant.hideLoading(this@Attachment)

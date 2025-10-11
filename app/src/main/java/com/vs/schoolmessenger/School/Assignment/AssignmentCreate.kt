@@ -166,6 +166,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+        binding.btnNoticeBoardReport.text=getString(R.string.History)+" "+">>"
 
 
         saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
@@ -181,6 +182,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
+
 
 
         isSelectedDate = Constant.getCurrentDate()
