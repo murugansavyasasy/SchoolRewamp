@@ -211,7 +211,6 @@
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never">
             </androidx.recyclerview.widget.RecyclerView>
-
             <ImageView
             android:id="@+id/imgNoData"
             android:layout_width="200dp"
@@ -220,7 +219,6 @@
             android:layout_marginTop="20dp"
             android:src="@drawable/nomessages"
             android:visibility="gone"/>
-
             <TextView
                 android:id="@+id/tvNoData"
                 android:layout_width="match_parent"
@@ -233,7 +231,6 @@
                 android:textSize="@dimen/sixteen_sp"
                 style="@style/CustomTextStylePoppinsBold"
                 android:visibility="gone"/>
-
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.PTM.Adapter
 import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -176,7 +174,7 @@ class MeetingHistoryAdapter(
 
             callButton.setOnClickListener {
                 val context = itemView.context
-                val phoneNumber = meeting.staff_phone?.trim()?.takeIf { it.isNotEmpty() } ?: ""
+                val phoneNumber = meeting.staff_mobile_no?.trim()?.takeIf { it.isNotEmpty() } ?: ""
 
                 if (phoneNumber.isNotEmpty()) {
                     try {
@@ -192,6 +190,7 @@ class MeetingHistoryAdapter(
                     Toast.makeText(context, "Phone number not available", Toast.LENGTH_SHORT).show()
                 }
             }
+
 
         }
     }
@@ -234,10 +233,6 @@ class MeetingHistoryAdapter(
         notifyDataSetChanged()
     }
 
-
-
-
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -261,8 +256,10 @@ class MeetingHistoryAdapter(
                                     meeting.purpose.lowercase().contains(query) ||
                                     meeting.staff_name.lowercase().contains(query) ||
                                     meeting.subject_name.lowercase().contains(query) ||
-                                    meeting.status.lowercase().contains(query)
-                                ) {
+                                    meeting.status.lowercase().contains(query)  ||
+                                    meeting.date.lowercase().contains(query) ||
+                                    meeting.time.lowercase().contains(query)
+                                        ) {
                                     currentHeader?.let {
                                         if (!tempList.contains(it)) tempList.add(it)
                                     }
@@ -280,7 +277,6 @@ class MeetingHistoryAdapter(
                 return filterResults
             }
 
-
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 items = (results?.values as? MutableList<MeetingListItem>) ?: mutableListOf()
                 notifyDataSetChanged()
@@ -288,7 +284,6 @@ class MeetingHistoryAdapter(
                 val hasItem = items.any { it is MeetingListItem.Item }
                 onEmptyList(!hasItem)
             }
-
         }
     }
 }
