@@ -18,14 +18,14 @@
         app:cardElevation="10dp"
         app:cardPreventCornerOverlap="false">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgStudentProfile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="3dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_profile" />
-
+            android:padding="@dimen/three"
+            android:src="@drawable/profile"
+            app:shapeAppearanceOverlay="@style/CircleImageShape" />
 
     </androidx.cardview.widget.CardView>
 
