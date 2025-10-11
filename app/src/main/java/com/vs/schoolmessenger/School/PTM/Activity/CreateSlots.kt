@@ -18,6 +18,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import android.view.inputmethod.InputMethodManager
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
@@ -180,8 +185,19 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         ) { selectedList ->
             isSelectedList = selectedList.toMutableList()
         }
-        binding.rcySectionAndStandardList.layoutManager = GridLayoutManager(this, 4)
+
+
+
+        val flexboxLayoutManager = FlexboxLayoutManager(this).apply {
+            flexDirection = FlexDirection.ROW
+            flexWrap = FlexWrap.WRAP
+            justifyContent = JustifyContent.FLEX_START
+            alignItems = AlignItems.FLEX_START
+        }
+
+        binding.rcySectionAndStandardList.layoutManager = flexboxLayoutManager
         binding.rcySectionAndStandardList.adapter = adapter
+
     }
 
 
