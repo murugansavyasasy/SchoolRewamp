@@ -296,14 +296,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/crdSpinner"
                     android:layout_alignStart="@+id/rytDesc"
-                    android:layout_marginTop="@dimen/fifteen">
+                    android:layout_marginTop="@dimen/ten">
 
 
                     <RelativeLayout
                         android:id="@+id/rytEventDateTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ten">
+                       >
 
 
                         <TextView
@@ -325,15 +325,18 @@
                             android:textColor="@color/red" />
 
                         <LinearLayout
+                            android:paddingVertical="@dimen/eight"
                             android:weightSum="1"
-                            android:background="@color/white"
+                            android:paddingHorizontal="@dimen/ten"
+                            android:layout_marginEnd="@dimen/five"
+                            android:background="@drawable/field_background"
                             android:id="@+id/rytStart"
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lblStart"
                             android:layout_marginTop="@dimen/ten"
-                            android:layout_marginEnd="@dimen/ten">
+                            >
 
                             <RelativeLayout
                                 android:layout_weight="0.65"
@@ -347,11 +350,11 @@
                                         android:layout_centerVertical="true"
                                         android:id="@+id/imgCalendar"
                                         android:layout_alignParentStart="true"
-                                        android:layout_width="@dimen/fifty"
+                                        android:layout_width="@dimen/fourty"
                                         android:background="@drawable/rect_purple_rounded"
                                         android:padding="@dimen/ten"
                                         android:src="@drawable/white_calendar_icon"
-                                        android:layout_height="@dimen/fifty">
+                                        android:layout_height="@dimen/fourty">
 
                                     </ImageView>
                                     <LinearLayout
@@ -365,16 +368,16 @@
                                         <TextView
                                             android:id="@+id/lblDay"
                                             android:layout_width="wrap_content"
-                                            android:text="Friday"
+                                            android:text=""
                                             style="@style/CustomTextStylePoppinsRegular"
                                             android:textColor="@color/mild_grey_dark"
                                             android:layout_height="wrap_content">
                                         </TextView>
                                         <TextView
-                                            android:layout_marginTop="@dimen/five"
+                                            android:layout_marginTop="@dimen/three"
                                             android:id="@+id/txtStartDate"
                                             android:layout_width="wrap_content"
-                                            android:text="10 May 2022"
+                                            android:text=""
                                             style="@style/CustomTextStylePoppinsBold"
                                             android:layout_height="wrap_content">
                                         </TextView>
@@ -386,9 +389,11 @@
                             <RelativeLayout
                                 android:layout_weight="0.35"
                                 android:layout_width="0dp"
-                                android:gravity="center_vertical"
+                                android:gravity="center|end"
                                 android:layout_height="match_parent">
                                 <RelativeLayout
+                                    android:paddingVertical="@dimen/five"
+                                    android:paddingHorizontal="@dimen/five"
                                     android:id="@+id/rytStartTime"
                                     android:background="@drawable/rect_black_stoke_bg"
                                     android:layout_width="wrap_content"
@@ -409,7 +414,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_toEndOf="@+id/imgTimeDown"
                                         android:layout_height="wrap_content"
-                                        android:text="sassas"
+                                        android:text=""
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/thirteen_sp" />
 

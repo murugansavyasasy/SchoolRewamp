@@ -148,7 +148,6 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/date"
                     android:textSize="@dimen/thirteen_sp" />
-
             </LinearLayout>
 
             <TextView

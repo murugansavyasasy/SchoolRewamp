@@ -144,7 +144,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
-        val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo()
+        val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
 //        binding.lblDate.text = dayOnly
         binding.lblDay.text = dayOfWeek
 
@@ -370,7 +370,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     Log.d("selectedDate", selectedDate)
                     binding.txtStartDate.text =
                         Constant.covertDateFormate(selectedDate) // 13 may 2222
-                    val (day, formattedDate) = Constant.getDayAndDateOnly(binding.txtStartDate.text.toString())// 13 Mon
+                    val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
                     binding.lblDay.text = formattedDate
 //                    binding.lblDate.text = day
                 }

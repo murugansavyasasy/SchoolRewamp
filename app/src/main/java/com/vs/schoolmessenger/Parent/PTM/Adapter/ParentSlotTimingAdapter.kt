@@ -65,7 +65,6 @@ class ParentSlotTimingAdapter(
             myBookedSlot != null -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.card.isEnabled = false
-                holder.tvSlotStatus.text = "Not Available"
                 holder.tvSlotStatus.setTextColor(Color.RED)
             }
 

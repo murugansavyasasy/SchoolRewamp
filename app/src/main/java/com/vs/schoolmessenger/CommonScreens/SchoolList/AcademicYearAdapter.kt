@@ -26,7 +26,7 @@ class AcademicYearAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = LayoutInflater.from(context).inflate(R.layout.simple_spinner_item, parent, false)
         val textView = view.findViewById<TextView>(R.id.lblTextItem)
-        textView.text = items?.get(position)?.year ?: "" // Make sure this is the correct field
+        textView.text = items?.get(position)?.year ?: ""
         return view
     }
 

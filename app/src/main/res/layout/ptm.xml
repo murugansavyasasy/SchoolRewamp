@@ -69,9 +69,7 @@
                     android:padding="@dimen/ten"
                     android:text="Your Meetings"
                     android:textColor="@color/black">
-
                 </TextView>
-
             </LinearLayout>
 
         </RelativeLayout>
@@ -125,13 +123,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytSubjectList"
+                android:layout_marginTop="@dimen/fifty"
                 android:orientation="vertical"
                 android:visibility="gone">
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/two_hundred"
-                    android:src="@drawable/nodataimage">
+                    android:layout_height="@dimen/three_hundred"
+                    android:src="@drawable/nomessages">
                 </ImageView>
 
 
@@ -238,7 +237,7 @@
                     android:id="@+id/txtNoData"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/no_data_found"
+                    android:text="No meeting found."
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />

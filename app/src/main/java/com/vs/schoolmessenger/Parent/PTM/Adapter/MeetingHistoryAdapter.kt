@@ -262,8 +262,10 @@ class MeetingHistoryAdapter(
                                     meeting.purpose.lowercase().contains(query) ||
                                     meeting.staff_name.lowercase().contains(query) ||
                                     meeting.subject_name.lowercase().contains(query) ||
-                                    meeting.status.lowercase().contains(query)
-                                ) {
+                                    meeting.status.lowercase().contains(query)  ||
+                                    meeting.date.lowercase().contains(query) ||
+                                    meeting.time.lowercase().contains(query)
+                                        ) {
                                     currentHeader?.let {
                                         if (!tempList.contains(it)) tempList.add(it)
                                     }

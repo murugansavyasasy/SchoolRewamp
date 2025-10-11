@@ -151,7 +151,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
-        binding.lblDatePick.setOnClickListener(this)
+        binding.rytStartDate.setOnClickListener(this)
         binding.lnrTabOneName.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
         binding.rytHistory.setOnClickListener(this)
@@ -185,7 +185,9 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
         isSelectedDate = Constant.getCurrentDate()
 
-        binding.lblDatePick.text = Constant.convertToReadableDate(isSelectedDate)
+        binding.txtStartDate.text = Constant.convertToReadableDate(isSelectedDate)
+        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        binding.lblDay.text = formattedDate
         binding.lblTimePick.text = Constant.getCurrentTime()
 
         albumResultLauncher =
@@ -300,7 +302,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                 showTimePickerDialog(this, this)
             }
 
-            R.id.lblDatePick -> {
+            R.id.rytStartDate -> {
                 CustomshowDatePickerDialog(this, this)
             }
 
@@ -485,7 +487,9 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
     override fun onDateSelected(date: String) {
         isSelectedDate = date
-        binding.lblDatePick.text = Constant.convertToReadableDate(date)
+        binding.txtStartDate.text = Constant.convertToReadableDate(date)
+        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        binding.lblDay.text = formattedDate
         Log.d("isSelectedDate", date)
     }
 
@@ -1030,7 +1034,9 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
         }
 
-        binding.lblDatePick.text = Constant.covertDateFormate(data.created_date)
+        binding.txtStartDate.text = Constant.covertDateFormate(data.created_date)
+        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        binding.lblDay.text = formattedDate
         binding.lblTimePick.text = data.created_time
 
 
@@ -1044,7 +1050,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         val currentTitle = binding.edtTitle.text.toString().trim()
         val currentDescription = binding.edtDescription.text.toString().trim()
         val currentCategory = binding.spinnerType.selectedItem?.toString()
-        val currentDate = binding.lblDatePick.text.toString().trim()
+        val currentDate = binding.txtStartDate.text.toString().trim()
         val currentTime = binding.lblTimePick.text.toString().trim()
         val currentFiles = Constant.selectedFiles.filter { it.type != FileType.IMAGE }
 

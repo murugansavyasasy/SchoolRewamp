@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import com.vs.schoolmessenger.R
 
@@ -29,6 +30,7 @@ class StandardDropDownListAdapter(
         return view
     }
 
+
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view =
             LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick, parent, false)
@@ -40,5 +42,7 @@ class StandardDropDownListAdapter(
 
         return view
     }
+
+
 }
 

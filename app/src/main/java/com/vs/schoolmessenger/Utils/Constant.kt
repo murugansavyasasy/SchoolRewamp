@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -35,7 +36,10 @@ import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.GridView
+import android.widget.ListPopupWindow
 import android.widget.ScrollView
+import android.widget.Spinner
+import android.widget.SpinnerAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.biometric.BiometricManager
@@ -211,10 +215,9 @@ object Constant {
     var isAcademicYearList: List<AcademicYear>? = null
     var isParentMenuName = ""
     var isSchoolMenuName = ""
-    var isSchoolMenuCount =-1
+    var isSchoolMenuCount = -1
 
     var isCompletedHomeworkId: String? = null
-
 
 
 //    var isForward = false
@@ -242,7 +245,6 @@ object Constant {
     var isSchoolMenuCountDetails: ArrayList<MenuCountDetail>? = null
     var FrequentSchoollyUsedMenuItems: List<MenuDetail>? = null
     var isSchoolAdItem: List<AdItem>? = null
-
 
 
     var menuNameList: MutableList<String> = mutableListOf()
@@ -471,9 +473,10 @@ object Constant {
     var exam_title = "exam_title"
     var exam_id = "exam_id"
     var google_g_view_embedded = "https://docs.google.com/gview?embedded=true&url="
-    var online_fee_payment_link = "https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063/app"
-    var isStudentID =":student_id"
-    var isSchoolID =":school_id"
+    var online_fee_payment_link =
+        "https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063/app"
+    var isStudentID = ":student_id"
+    var isSchoolID = ":school_id"
     var TOTAL = "TOTAL"
     var Listening = "Listening"
     var Speaking = "Speaking"
@@ -566,31 +569,30 @@ object Constant {
     var To_Date = "To Date"
     var Assesment = "Assesment"
     var Active_Tasks = "Active Tasks"
-    var Avg_Performance= "Avg. Performance"
-    var Completed_Tasks= "Completed Tasks"
-    var TASK_LIST= "TASK_LIST"
-    var COMPLETED_TASK_LIST= "COMPLETED_TASK_LIST"
-    var Today_Submitted= "Today Submitted"
-    var Week= "Week"
-    var Class= "Class"
-    var double_iffin= "--"
-    var geo_= "geo:"
-    var camma= ","
-    var questionQEqual= "?q="
-    var leftBracket= "("
-    var rightBracket= ")"
-    var yyyyMMdd= "yyyyMMdd"
-    var quiz_Id= "quiz_Id"
-    var quiz_Title= "quiz_Title"
-    var limitQuestion= "limitQuestion"
-    var submittedCount= "submittedCount"
-    var subjectID= "subjectID"
+    var Avg_Performance = "Avg. Performance"
+    var Completed_Tasks = "Completed Tasks"
+    var TASK_LIST = "TASK_LIST"
+    var COMPLETED_TASK_LIST = "COMPLETED_TASK_LIST"
+    var Today_Submitted = "Today Submitted"
+    var Week = "Week"
+    var Class = "Class"
+    var double_iffin = "--"
+    var geo_ = "geo:"
+    var camma = ","
+    var questionQEqual = "?q="
+    var leftBracket = "("
+    var rightBracket = ")"
+    var yyyyMMdd = "yyyyMMdd"
+    var quiz_Id = "quiz_Id"
+    var quiz_Title = "quiz_Title"
+    var limitQuestion = "limitQuestion"
+    var submittedCount = "submittedCount"
+    var subjectID = "subjectID"
 
 
-
-     var category_name = "category_name"
-     var discount = "discount"
-     var address = "address"
+    var category_name = "category_name"
+    var discount = "discount"
+    var address = "address"
     var merchant_name = "merchant_name"
     var source_link = "source_link"
     var coupon_status = "coupon_status"
@@ -701,8 +703,6 @@ object Constant {
     var add_points_send_ptm = "SEND_PTM"
     var user_type_as_parent = "1"
     var user_type_as_staff = "2"
-
-
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
@@ -887,7 +887,7 @@ object Constant {
         val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
         messageText.text = content + " Please try again "
         titleText.text = if (!title.isNullOrBlank()) title else "Oops! Wrong Password"
-        Log.d("titleText",titleText.text.toString())
+        Log.d("titleText", titleText.text.toString())
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
@@ -1017,6 +1017,7 @@ object Constant {
                 // Only one word → just first letter
                 parts[0].first().uppercaseChar().toString()
             }
+
             else -> {
                 val first = parts.first().first().uppercaseChar()
                 val last = parts.last().last().uppercaseChar()
@@ -1024,8 +1025,6 @@ object Constant {
             }
         }
     }
-
-
 
 
     private fun isSameDay(calendar: Calendar, date: Date): Boolean {
@@ -1117,7 +1116,6 @@ object Constant {
     }
 
 
-
     fun showDatePicker12(
         context: Context,
         dateFormatType: Boolean,
@@ -1202,8 +1200,6 @@ object Constant {
             input
         }
     }
-
-
 
 
     fun handleRestrictDatePicker(
@@ -1504,6 +1500,7 @@ object Constant {
         }
     }
 
+
     fun getDeviceDetails(context: Activity): JsonObject {
         val json = JsonObject()
         json.addProperty("manufacturer", Build.MANUFACTURER)
@@ -1547,6 +1544,24 @@ object Constant {
         return try {
             val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             val dayNameFormat = SimpleDateFormat("EEE", Locale.getDefault()) // e.g., Fri
+            val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
+
+            val date = inputFormat.parse(inputDateStr)!!
+            val dayName = dayNameFormat.format(date)     // "Fri"
+            val dayNumber = dayNumberFormat.format(date) // "13"
+
+            Pair(dayNumber, dayName)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Pair("", "") // fallback
+        }
+    }
+
+    //We use this to convert the Date Format 12 May 2025 to 12 Monday(we get Date And Day)
+    fun getDayAndDateOnly2(inputDateStr: String): Pair<String, String> {
+        return try {
+            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val dayNameFormat = SimpleDateFormat("EEEE", Locale.getDefault()) // e.g., Fri
             val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
 
             val date = inputFormat.parse(inputDateStr)!!
@@ -1604,7 +1619,6 @@ object Constant {
     }
 
 
-
     //Convert dd-MM-yyyy hh:mm a to dd MMM yyyy (12-02-2025 10:58 AM to 12 Feb 2025)
     fun convertToReadableDateformat(inputDate: String): String {
         return try {
@@ -1623,6 +1637,19 @@ object Constant {
 
         val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
         val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
+        val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
+        val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+        val customFormat =
+            SimpleDateFormat("EEE, MMM yyyy", Locale.getDefault()).format(calendar.time)
+
+        return listOf(dayOnly, dayOfWeek, fullDate, slashDate, customFormat)
+    }
+
+    fun getCurrentDateInfo2(): List<String> {
+        val calendar = android.icu.util.Calendar.getInstance()
+
+        val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
+        val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)
         val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
         val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
         val customFormat =
@@ -1655,7 +1682,6 @@ object Constant {
         }
 
     }
-
 
 
     fun formatChatDate(createdOn: String): String {
@@ -1764,7 +1790,8 @@ object Constant {
         if (dateStr.isNullOrBlank()) return "--"
         return try {
             val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
-            val outputFormatter = DateTimeFormatter.ofPattern("EEE, MMM dd yyyy", Locale.getDefault())
+            val outputFormatter =
+                DateTimeFormatter.ofPattern("EEE, MMM dd yyyy", Locale.getDefault())
             val localDate = LocalDate.parse(dateStr, inputFormatter)
             localDate.format(outputFormatter)
         } catch (e: Exception) {
@@ -1789,7 +1816,6 @@ object Constant {
             "--"
         }
     }
-
 
 
     fun convertDateTimeFormat(input: String): String {
@@ -1977,36 +2003,36 @@ object Constant {
         Thread {
 
 //            for (fileItem in files.toList()) {
-                try {
-                    val uri = Uri.parse(files)
-                    onEachProcessed(files, true)
+            try {
+                val uri = Uri.parse(files)
+                onEachProcessed(files, true)
 
-                    val inputStream = context.contentResolver.openInputStream(uri)
-                    val bitmap = inputStream?.use { BitmapFactory.decodeStream(it) }
+                val inputStream = context.contentResolver.openInputStream(uri)
+                val bitmap = inputStream?.use { BitmapFactory.decodeStream(it) }
 
-                    if (bitmap != null) {
-                        val scaledBitmap = resizeBitmap(bitmap, maxWidth, maxHeight)
+                if (bitmap != null) {
+                    val scaledBitmap = resizeBitmap(bitmap, maxWidth, maxHeight)
 
-                        val compressedFile = File(
-                            outputDir,
-                            "IMG_${System.currentTimeMillis()}.jpg"
-                        )
-                        FileOutputStream(compressedFile).use { out ->
-                            scaledBitmap.compress(format, quality, out)
-                            out.flush()
-                        }
-
-                        onEachProcessed(compressedFile.absolutePath, true)
-//                        newList.add(fileItem)
-                    } else {
-//                        Log.e("Compressor", "❌ Failed to decode: ${fileItem.isUrl}")
-                        onEachProcessed(null, false)
+                    val compressedFile = File(
+                        outputDir,
+                        "IMG_${System.currentTimeMillis()}.jpg"
+                    )
+                    FileOutputStream(compressedFile).use { out ->
+                        scaledBitmap.compress(format, quality, out)
+                        out.flush()
                     }
-                } catch (e: Exception) {
-//                    Log.e("Compressor", "❌ Exception compressing ${fileItem.isUrl}", e)
+
+                    onEachProcessed(compressedFile.absolutePath, true)
+//                        newList.add(fileItem)
+                } else {
+//                        Log.e("Compressor", "❌ Failed to decode: ${fileItem.isUrl}")
                     onEachProcessed(null, false)
                 }
-          //  }
+            } catch (e: Exception) {
+//                    Log.e("Compressor", "❌ Exception compressing ${fileItem.isUrl}", e)
+                onEachProcessed(null, false)
+            }
+            //  }
 
             Handler(Looper.getMainLooper()).post {
                 onComplete()
@@ -2036,7 +2062,6 @@ object Constant {
     }
 
 
-
     fun showNotificationPermissionDialog(
         packageName: String, activity: Activity, isTitle: String, isContent: String
     ) {
@@ -2057,7 +2082,7 @@ object Constant {
         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 val fingerPrintEnabled = SharedPreference.isFingerprintEnabled(activity)
-                Log.d("fingerPrintEnabled",fingerPrintEnabled.toString())
+                Log.d("fingerPrintEnabled", fingerPrintEnabled.toString())
                 if (!fingerPrintEnabled) {
 
                     val fingerPrintSkipped = SharedPreference.isFingerPrintSkipped(activity)
@@ -2210,6 +2235,7 @@ object Constant {
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
     }
+
     fun showDatePickerNormal(
         context: Context,
         onDateSelected: (String) -> Unit

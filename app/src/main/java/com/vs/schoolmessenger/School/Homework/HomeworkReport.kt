@@ -91,7 +91,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
             }
         }
 
-        binding.Calendar.setOnClickListener(this)
+        binding.rytStartDate.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
@@ -109,7 +109,9 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         }
 
         isSelectedDate = Constant.getCurrentDate()
-        binding.selectdate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
+        binding.txtStartDate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
+        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        binding.lblDay.text = formattedDate
 
 
           isAcademicYear = Constant.isAcademicYearList
@@ -341,12 +343,9 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSelected(date: String) {
         isSelectedDate = date
-        if (Constant.getCurrentDate() == isSelectedDate) {
-            binding.lblDateFormat.text = getString(R.string.today)
-        } else {
-            binding.lblDateFormat.text = getString(R.string.past_date)
-        }
-        binding.selectdate.text = Constant.convertToReadableDate(date)
+        binding.txtStartDate.text = Constant.convertToReadableDate(date)
+            val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+            binding.lblDay.text = formattedDate
         fetchHomeWorkReportData()
     }
 
@@ -414,7 +413,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.Calendar -> {
+            R.id.rytStartDate -> {
                 showDatePickerDialogSelectedDate(this, isSelectedDate, this)
             }
         }

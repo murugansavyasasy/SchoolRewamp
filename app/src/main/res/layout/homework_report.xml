@@ -35,114 +35,94 @@
         android:layout_marginEnd="@dimen/fifteen">
 
         <LinearLayout
-            android:id="@+id/AcademicYear"
+            android:paddingVertical="@dimen/eight"
+            android:weightSum="1"
+            android:paddingHorizontal="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
+            android:background="@drawable/field_background"
+            android:id="@+id/rytStart"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gray_bg_radius"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:text="@string/academic_year"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
+            android:layout_marginTop="@dimen/ten"
+            >
 
             <RelativeLayout
-                android:id="@+id/rytAcademicYearDropDown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:gravity="center">
+                android:layout_weight="0.6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/rytStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgCalendar"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="@dimen/fourty"
+                        android:background="@drawable/rect_purple_rounded"
+                        android:padding="@dimen/ten"
+                        android:src="@drawable/white_calendar_icon"
+                        android:layout_height="@dimen/fourty">
 
-                <Spinner
-                    android:id="@+id/isSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_spinner_background" />
+                    </ImageView>
+                    <LinearLayout
+                        android:layout_toEndOf="@+id/imgCalendar"
+                        android:id="@+id/lnrDateDetails"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/lblDay"
+                            android:layout_width="wrap_content"
+                            android:text=""
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:textColor="@color/mild_grey_dark"
+                            android:layout_height="wrap_content">
+                        </TextView>
+                        <TextView
+                            android:layout_marginTop="@dimen/three"
+                            android:id="@+id/txtStartDate"
+                            android:layout_width="wrap_content"
+                            android:text=""
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_height="wrap_content">
+                        </TextView>
+                    </LinearLayout>
 
+                </RelativeLayout>
             </RelativeLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/Calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/AcademicYear"
-            android:layout_marginTop="@dimen/fifteen"
-
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/lnrDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/lblDateFormat"
-                    style="@style/CustomTextStylePoppinsBold"
+            <RelativeLayout
+                android:layout_weight="0.4"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/rytAcademicYearDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:alpha="0.5"
-                    android:text="@string/today"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/ten_sp"></TextView>
+                    android:background="@drawable/black_stroke_bg_radius"
+                    >
+                    <Spinner
+                        android:id="@+id/isSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_spinner_background" />
 
-                <TextView
-                    android:id="@+id/selectdate"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen"
-                    android:textStyle="bold"></TextView>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/twenty_five"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imgCalendar"
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:src="@drawable/calendar_black" />
-
-                <TextView
-                    android:id="@+id/lblDatePick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/eight"
-                    android:text="@string/select_date"
-                    android:visibility="gone" />
-            </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
 
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/lnrClasses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Calendar"
+            android:layout_below="@+id/rytStart"
             android:layout_marginTop="@dimen/fifteen"
             android:gravity="center"
             android:weightSum="1">

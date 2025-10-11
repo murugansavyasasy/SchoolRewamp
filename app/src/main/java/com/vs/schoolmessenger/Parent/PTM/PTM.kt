@@ -66,6 +66,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         binding.lblBookSlots.setOnClickListener(this)
         binding.lblYourMeeting.setOnClickListener(this)
 
+
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
@@ -128,6 +129,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                             isMeetingHistoryAdapter.removeItem(lastCancelledPosition)
                             lastCancelledPosition = -1
                             isMeetingHistoryList()
+                            isScheduleCallList()
 
                             if (isMeetingHistoryAdapter.itemCount == 0) {
                                 binding.rytNoDataFound.visibility = View.VISIBLE
@@ -138,7 +140,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                                 binding.rcyMeetingHistory.visibility = View.VISIBLE
                                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                             }
-
                         }
                     }
                     .show()
@@ -216,22 +217,25 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
 
 
         appViewModel?.isSlotDetailsHistory?.observe(this) { response ->
-            if (response!!.status) {
+            if (response != null && response.status) {
                 if (response.data.isNotEmpty()) {
-                    binding.rytNoDataFound.visibility = View.GONE
-                    binding.recyclerViewSlots.visibility = View.VISIBLE
+                    binding.lytList.visibility = View.GONE
+                    binding.rcyMeetingHistory.visibility = View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+
                     isLoadMeetingData(response.data)
                 } else {
+                    binding.lytList.visibility = View.VISIBLE
+                    binding.rcyMeetingHistory.visibility = View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                    binding.rytNoDataFound.visibility = View.VISIBLE
-                    binding.recyclerViewSlots.visibility = View.GONE
                 }
             } else {
+                binding.lytList.visibility = View.VISIBLE
+                binding.rcyMeetingHistory.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                binding.rytNoDataFound.visibility = View.VISIBLE
-                binding.recyclerViewSlots.visibility = View.GONE
             }
-        }
+
+    }
     }
 
     fun isLoadData(data: List<MeetingData>) {
@@ -444,6 +448,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
 
         return list
     }
+
+
 
     override fun onCancelClick(meeting: MeetingItem, position: Int, reason: String) {
         lastCancelledPosition = position
