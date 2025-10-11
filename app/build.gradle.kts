@@ -293,6 +293,7 @@ dependencies {
 
     implementation("com.kizitonwose.calendar:view:2.5.0")
 
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
 
 //    // Smallest version (no audio/video codecs)
 //    implementation("com.arthenica:ffmpeg-kit-min:4.5.LTS")

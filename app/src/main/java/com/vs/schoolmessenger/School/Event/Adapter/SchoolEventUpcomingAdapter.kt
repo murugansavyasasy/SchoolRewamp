@@ -235,7 +235,7 @@ class SchoolEventUpcomingAdapter(
             }
 
             val isHomeWorkData = FilePreview(
-                id = "",
+                id = data.id,
                 title = data.title,
                 description = data.description,
                 subjectName = "",

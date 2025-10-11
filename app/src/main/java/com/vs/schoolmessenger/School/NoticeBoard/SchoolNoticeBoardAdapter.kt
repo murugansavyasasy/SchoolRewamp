@@ -256,13 +256,15 @@ class SchoolNoticeBoardAdapter(
             } ?: emptyList()
 
             val preview = FilePreview(
-                id = "",
+                id = noticeData.id,
                 title = noticeData.title,
                 description = noticeData.description,
                 subjectName = "",
                 sentBy =noticeData.sent_by,
                 thumbnail = "",
                 isUnread = true,
+                intended_for = noticeData.intended_for,
+                school_name = noticeData.school_name,
                 created_date=noticeData.created_on,
                 isCompleted = true,
                 isMenuType = Constant.M_NOTICEBOARD,
