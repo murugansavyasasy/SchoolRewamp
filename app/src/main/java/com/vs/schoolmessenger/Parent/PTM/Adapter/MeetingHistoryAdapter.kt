@@ -67,7 +67,6 @@ class MeetingHistoryAdapter(
         }
     }
 
-
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val tvPurpose: TextView = view.findViewById(R.id.tvPurpose)
         private val tvStaff: TextView = view.findViewById(R.id.tvStaff)
@@ -80,7 +79,6 @@ class MeetingHistoryAdapter(
         private val cancelButton: TextView = view.findViewById(R.id.cancelButton)
         private val callButton: TextView = view.findViewById(R.id.callButton)
 
-
         fun bind(item: MeetingListItem.Item) {
             val meeting = item.meeting
             tvPurpose.text = meeting.purpose
@@ -88,14 +86,14 @@ class MeetingHistoryAdapter(
             tvSubject.text = meeting.subject_name
             tvMode.text = meeting.mode
             tvDuration.text = "15 min"
-            tvDate.text = meeting.date
+            tvDate.text = formatDate(meeting.date)
             tvTime.text = meeting.time
             tvStatus.text = meeting.status
 
             val modeDrawable = when (meeting.mode.lowercase()) {
-                "in person" -> R.drawable.person_2_fill
+                "in person" -> R.drawable.person_2_black_bg
                 "phone call" -> R.drawable.phone_icon_black
-                "virtual" -> R.drawable.close_icon
+                "virtual" -> R.drawable.network_black_bg
                 else -> 0
             }
 
@@ -107,7 +105,6 @@ class MeetingHistoryAdapter(
             } else {
                 tvMode.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
             }
-
 
 
 //            tvStatus.setBackgroundColor(
@@ -160,7 +157,6 @@ class MeetingHistoryAdapter(
                 }
             }
 
-
             cancelButton.setOnClickListener {
                 val context = itemView.context
                 val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_cancel_meeting, null)
@@ -168,9 +164,7 @@ class MeetingHistoryAdapter(
                 val btnCancelMeeting = dialogView.findViewById<Button>(R.id.btnCancelMeeting)
                 val ivClose = dialogView.findViewById<ImageView>(R.id.ivClose)
                 val alertDialog = AlertDialog.Builder(context).setView(dialogView).create()
-
                 ivClose.setOnClickListener { alertDialog.dismiss() }
-
                 btnCancelMeeting.setOnClickListener {
                     val reason = etReason.text.toString().trim()
                     if (reason.isEmpty()) {
@@ -180,10 +174,8 @@ class MeetingHistoryAdapter(
                         listener.onCancelClick(meeting, adapterPosition, reason)
                     }
                 }
-
                 alertDialog.show()
             }
-
 
             callButton.setOnClickListener {
                 val context = itemView.context
@@ -315,6 +307,18 @@ class MeetingHistoryAdapter(
             }
         }
     }
+    private fun formatDate(dateString: String?): String {
+        if (dateString.isNullOrEmpty()) return ""
+        return try {
+            val inputFormat = java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault())
+            val outputFormat = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+            val date = inputFormat.parse(dateString)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            dateString
+        }
+    }
+
 }
 
 sealed class MeetingListItem {
