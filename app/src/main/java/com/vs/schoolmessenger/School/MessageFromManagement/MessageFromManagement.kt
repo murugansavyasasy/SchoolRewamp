@@ -42,6 +42,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaf
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.RoundedBackgroundSpan
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.MessageFromManagementBinding
 import me.relex.circleindicator.CircleIndicator2
 
@@ -63,6 +64,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     var isMenuCount=-1
 
     var TYPE: String? = ""
+    var selectedSchoolId=""
 
 
     override fun getViewBinding(): MessageFromManagementBinding {
@@ -77,8 +79,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
-
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.lblArchiveMsg.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
@@ -141,6 +143,64 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             }
         }
 
+        appViewModel?.isGetMessageStaffArchive?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                   if(response.data.isNotEmpty()){
+                       val updatedList = completeAttachmentList.toMutableList()
+                       updatedList.addAll(response.data)
+                       completeAttachmentList = updatedList
+
+                       if (selectedSchoolId==Constant.All_){
+                           adapter.AppendData(response.data)
+                       }
+                       else{
+                           val filteredList = completeAttachmentList.filter { it.school_id == selectedSchoolId }
+                           Log.d("SpinnerSelection", "Selected school id: ${selectedSchoolId}, " +"Data: $filteredList, Token: $isAccessToken")
+                           adapter.AppendData(filteredList)
+                       }
+                       binding.txtSearch1.text.clear()
+                       binding.isArchiveErrorMsg.visibility=View.GONE
+                   }
+                    else{
+                       binding.isArchiveErrorMsg.visibility=View.VISIBLE
+                       binding.isArchiveErrorMsg.text=response.message
+                       if(adapter.getCurrentListSize()==0){
+                           binding.txtNoData.visibility=View.GONE
+                           binding.rytSearch1.visibility = View.GONE
+                           binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                           binding.txtSearch1.text.clear()
+                       }else{
+                           binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                       }
+                   }
+                }
+                else {
+                    binding.isArchiveErrorMsg.visibility=View.VISIBLE
+                    binding.isArchiveErrorMsg.text=response.message
+                    if(adapter.getCurrentListSize()==0){
+                        binding.txtNoData.visibility=View.GONE
+                        binding.rytSearch1.visibility = View.GONE
+                        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                        binding.txtSearch1.text.clear()
+                    }else{
+                        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                    }
+                }
+            } else {
+                binding.isArchiveErrorMsg.visibility=View.VISIBLE
+                binding.isArchiveErrorMsg.text=getString(R.string.something_went_wrong_please_try_again_later)
+                if(adapter.getCurrentListSize()==0){
+                    binding.txtNoData.visibility=View.GONE
+                    binding.rytSearch1.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.txtSearch1.text.clear()
+                }else{
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                }
+            }
+        }
+
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
@@ -173,32 +233,51 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     }
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-        val schoolNames = listOf("All") + staffList.map { it.school_name }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val schoolNames = mutableListOf<String>()
+        schoolNames.add("All")
+        schoolNames.addAll(staffList.map { it.school_name })
+
+        val adapter = SpinnerLoadingAdapter(this, schoolNames)
         binding.schoollistfilter.adapter = adapter
-
         binding.schoollistfilter.setSelection(0)
+
         binding.schoollistfilter.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 private var lastSelectedPosition: Int = -1
+
                 override fun onItemSelected(
                     parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
+                    // update adapter UI selection
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+
                     if (position != lastSelectedPosition) {
                         lastSelectedPosition = position
+
                         if (position == 0) {
+                            // “All” selected
                             isLoadMsgStaff(completeAttachmentList)
                             binding.toolbarLayout.lblSchoolName.visibility = View.GONE
                             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+                            selectedSchoolId = Constant.All_
+
                         } else {
+                            // Specific school selected
                             val selectedStaff = staffList[position - 1]
                             isAccessToken = selectedStaff.access_token
                             isStaffDetails = selectedStaff
-                            val selectedSchoolId = selectedStaff.school_id
+                            selectedSchoolId = selectedStaff.school_id
+
                             val filteredList = completeAttachmentList.filter { it.school_id == selectedSchoolId }
-                            Log.d("SpinnerSelection", "Selected school: ${selectedStaff.school_name}, Selected school id: ${selectedStaff.school_id}, Data: ${filteredList}, Token: $isAccessToken")
+                            Log.d(
+                                "SpinnerSelection",
+                                "Selected school: ${selectedStaff.school_name}, " +
+                                        "Selected school id: ${selectedStaff.school_id}, " +
+                                        "Data: $filteredList, Token: $isAccessToken"
+                            )
+
                             isLoadMsgStaff(filteredList)
                             binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
                             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -208,6 +287,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
+
         //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
         // Initial fetch for all schools
         if (staffList.isNotEmpty()) {
@@ -217,6 +297,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             isGetMessageFromStaff()
         }
     }
+
 
     private fun filter(text: String) {
         val searchWords = text.trim().lowercase().split("\\s+".toRegex())
@@ -317,6 +398,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         appViewModel?.isGetMessageStaff(isAccessToken ?: "")
     }
 
+    fun isGetMessageFromStaffArchive(){
+        appViewModel?.isGetMessageStaffArchive(isAccessToken ?: "")
+    }
 
     fun ErrorMessage(errorMessage: String) {
         binding.lytList.visibility = View.VISIBLE
@@ -350,6 +434,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         val rlaAudioDetails = dialogView.findViewById<RelativeLayout>(R.id.rlaAudioDetails)
         val rytDescription = dialogView.findViewById<RelativeLayout>(R.id.rytDescription)
         val lblEmergency = dialogView.findViewById<TextView>(R.id.lblEmergency)
+        val imgEmergency = dialogView.findViewById<ImageView>(R.id.imgEmergency)
         val tvPostOn = dialogView.findViewById<TextView>(R.id.tvPostOn)
 
         // FIX: use dialogView.findViewById instead of findViewById
@@ -386,9 +471,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 }
                 if (data.is_emergency){
                     lblEmergency.text=getString(R.string.emergency_voice)
+                    imgEmergency.visibility=View.VISIBLE
                 }
                 else{
                     lblEmergency.text=getString(R.string.voice)
+                    imgEmergency.visibility=View.GONE
                 }
                 tvDescription.text = data.description
                 rlaAudioDetails.visibility=View.VISIBLE
@@ -462,7 +549,10 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
-
+            R.id.lblArchiveMsg->{
+                isGetMessageFromStaffArchive()
+                binding.lblArchiveMsg.visibility=View.GONE
+            }
         }
     }
 
@@ -470,10 +560,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         Log.d("SelectedData",data.toString())
         showResumeListDialog(this,data)
         if (data.is_unread){
-
-//            isMenuCount-=1
-//            setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
-
+            //            isMenuCount-=1
+            //            setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
             if(data.type.equals(Constant.TET2)){
                 TYPE = Constant.MGMT_MSG_TEXT
             }
@@ -488,7 +576,13 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 addProperty(APIKeyNames.type, TYPE)
                 addProperty(APIKeyNames.detail_id, data.id)
             }
-            appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+
+            if (data.is_archive){
+                appViewModel?.isUpdateStatusArchive(isAccessToken!!, jsonObject, this)
+            }
+            else{
+                appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+            }
         }
     }
 

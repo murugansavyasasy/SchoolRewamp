@@ -181,6 +181,7 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:background="@null"
+                android:paddingVertical="@dimen/five"
                 android:layout_marginStart="@dimen/three"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@+id/spinnerStaffListimg"

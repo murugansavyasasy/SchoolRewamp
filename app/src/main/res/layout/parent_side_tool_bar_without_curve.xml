@@ -11,6 +11,7 @@
         android:paddingVertical="20dp">
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
@@ -33,6 +34,8 @@
         </TextView>
 
         <LinearLayout
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/imgSearchToolBar"
             android:id="@+id/rlaStudentName"
             android:layout_width="wrap_content"
@@ -42,18 +45,19 @@
 
             <TextView
                 android:id="@+id/lblStudentName1"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp">
+                android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
             <TextView
                 android:id="@+id/lblStudentSection"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/eleven_sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
