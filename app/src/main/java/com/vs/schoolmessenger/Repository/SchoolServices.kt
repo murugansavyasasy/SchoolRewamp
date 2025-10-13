@@ -41,6 +41,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardResponse
 import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
@@ -202,6 +203,7 @@ class SchoolServices {
     var isAddQuestion: MutableLiveData<AddQuestionResponse?>
     var isGetMessageFromStaff: MutableLiveData<GetMessagesStaff?>
     var isSchoolprofilelist: MutableLiveData<ProfileListResponse?>
+    var getchildhomeworkstandard: MutableLiveData<ChildStandardResponse?>
 
 
     init {
@@ -305,6 +307,7 @@ class SchoolServices {
         isAddQuestion= MutableLiveData()
         isGetMessageFromStaff= MutableLiveData()
         isSchoolprofilelist= MutableLiveData()
+        getchildhomeworkstandard= MutableLiveData()
 
     }
 
@@ -3891,4 +3894,44 @@ class SchoolServices {
 
     val isSchoolprofilelistLiveData: LiveData<ProfileListResponse?>
         get() = isSchoolprofilelist
+
+
+    fun getchildhomeworkstandard(
+        isToken: String,
+        id: Int
+    ) {
+        RestClient.apiInterfaces.getchildhomeworkstandard(isToken,id)
+            ?.enqueue(object : Callback<ChildStandardResponse?> {
+                override fun onResponse(
+                    call: Call<ChildStandardResponse?>, response: Response<ChildStandardResponse?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getchildhomeworkstandard.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getchildhomeworkstandard.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ChildStandardResponse?>, t: Throwable
+                ) {
+                    getchildhomeworkstandard.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getchildhomeworkstandardLiveData: LiveData<ChildStandardResponse?>
+        get() = getchildhomeworkstandard
 }

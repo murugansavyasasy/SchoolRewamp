@@ -185,6 +185,7 @@ object APIMethods {
     const val ispresubmission = "admin/api/student-profile/pre-submission"
     const val fee_student_invoice = "fee/api/fee-details/student-invoice"
     const val fee_student_invoice_details = "fee/api/fee-details-invoice-details"
+    const val childhomework_standard = "admin/api/school-event/target-details"
 
     const val getmysubmissionedit = "comm/api/assignment/update-submission"
     const val ismysubmissiondelete = "comm/api/assignment/delete-submission"

@@ -133,12 +133,10 @@ class StaffSlotStatusAdapter(
                     lblBookedName.visibility = View.VISIBLE
                     rltBookedBy.visibility = View.VISIBLE
                     lblBookedName.text = data.booked_by
-
                     // Show dot only if slot can be canceled
                     imgDot.visibility = if (data.can_cancel && shouldShowImgDot(data.date, data.to_time) == View.VISIBLE)
                         View.VISIBLE else View.GONE
 
-                    // Only Cancel action, not Reopen
                     imgDot.setOnClickListener {
                         listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
                     }

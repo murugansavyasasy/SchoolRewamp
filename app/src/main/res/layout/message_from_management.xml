@@ -81,60 +81,53 @@
         </RelativeLayout>
 
 
-    <ScrollView
-        android:layout_below="@+id/rytSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-
-            android:id="@+id/rlaMessageFFromStaff"
+        <ScrollView
+            android:layout_below="@+id/rytSpinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/five"
-            android:paddingBottom="@dimen/twenty"
-            android:layout_marginEnd="@dimen/five">
+            android:fillViewport="true">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcMessageStaff"
-                android:nestedScrollingEnabled="false"
+            <RelativeLayout
+                android:id="@+id/rlaMessageFFromStaff"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/twenty"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/five">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcMessageStaff"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- Center layout -->
+                <LinearLayout
+                    android:id="@+id/lytList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/noDataImage"
+                        android:layout_width="@dimen/two_hundred"
+                        android:layout_height="@dimen/two_hundred"
+                        android:src="@drawable/no_data_found" />
+
+                    <TextView
+                        android:id="@+id/txtNoData"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_data"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:layout_marginTop="@dimen/ten"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
 
 
-            <LinearLayout
-                android:id="@+id/lytList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rcMessageStaff"
-                android:layout_centerInParent="true"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/ten"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/noDataImage"
-                    android:layout_width="@dimen/two_hundred"
-                    android:layout_height="@dimen/two_hundred"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/no_data_found">
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/txtNoData"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="No Data"
-                    android:textSize="@dimen/fifteen_sp">
-
-                </TextView>
-            </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
-
-</RelativeLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

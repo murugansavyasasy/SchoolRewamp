@@ -82,9 +82,27 @@
 
                 <Spinner
                     android:id="@+id/isSpinner"
-                    android:layout_width="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:paddingVertical="@dimen/five"
+                    android:layout_marginStart="@dimen/three"
+                    android:background="@null"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/isSpinnerimg"
+                    android:drawSelectorOnTop="true"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_spinner_background" />
+                    />
+                <ImageView
+                    android:id="@+id/isSpinnerimg"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_drop_down"
+                    android:layout_marginEnd="@dimen/three"
+                    android:tint="@color/black"
+                    android:layout_height="wrap_content">
+
+                </ImageView>
 
             </RelativeLayout>
         </RelativeLayout>
@@ -186,9 +204,27 @@
 
             <Spinner
                 android:id="@+id/isSpinnerSection"
-                android:layout_width="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:background="@null"
+                android:paddingVertical="@dimen/five"
+                android:layout_marginStart="@dimen/three"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/isSpinnerSectionimg"
+                android:drawSelectorOnTop="true"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_spinner_background" />
+                />
+            <ImageView
+                android:id="@+id/isSpinnerSectionimg"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_drop_down"
+                android:layout_marginEnd="@dimen/three"
+                android:tint="@color/black"
+                android:layout_height="wrap_content">
+
+            </ImageView>
 
         </RelativeLayout>
 
@@ -234,6 +270,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
+                android:paddingVertical="@dimen/five"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
@@ -268,9 +305,26 @@
 
                 <Spinner
                     android:id="@+id/isSpinnerSubject"
-                    android:layout_width="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:background="@null"
+                    android:paddingVertical="@dimen/five"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/isSpinnerSubjectimg"
+                    android:drawSelectorOnTop="true"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_spinner_background" />
+                    />
+                <ImageView
+                    android:id="@+id/isSpinnerSubjectimg"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_drop_down"
+                    android:layout_marginEnd="@dimen/three"
+                    android:tint="@color/black"
+                    android:layout_height="wrap_content">
+
+                </ImageView>
 
             </RelativeLayout>
         </RelativeLayout>

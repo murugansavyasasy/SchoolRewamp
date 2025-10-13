@@ -89,6 +89,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardResponse
 import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
@@ -1105,6 +1106,13 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.invoice_id) invoiceId: String
     ): Call<InvoiceDetailsResponse>
+
+
+    @GET(APIMethods.childhomework_standard)
+    fun getchildhomeworkstandard(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: Int
+    ): Call<ChildStandardResponse>
 
 
     @PUT(APIMethods.getmysubmissionedit)

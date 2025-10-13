@@ -81,6 +81,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardResponse
 import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
@@ -384,6 +385,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var islsrwmysubmission: LiveData<ActivityResponse?>? = null
     var getmysubmissionedit: LiveData<MySubmissionEditResponse?>? = null
     var ismysubmissiondelete: LiveData<MySubmissionDeleteResponse?>? = null
+    var getchildhomeworkstandard: LiveData<ChildStandardResponse?>? = null
     var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
         private set
 
@@ -545,6 +547,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isFeeInvoices = apiParentRepositories.isFeeInvoices
         getmysubmissionedit = apiParentRepositories.getmysubmissioneditLiveData
         ismysubmissiondelete = apiParentRepositories.ismysubmissiondeleteLiveData
+        getchildhomeworkstandard = apiSchoolRepositories.getchildhomeworkstandardLiveData
 
 
     }
@@ -1391,6 +1394,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun ismysubmissiondelete(isToken: String, request: JsonObject, activity: Activity) {
         apiParentRepositories.ismysubmissiondelete(isToken, request, activity)
+    }
+
+
+    fun getchildhomeworkstandard(isToken: String, id: Int) {
+        apiSchoolRepositories.getchildhomeworkstandard(isToken, id)
     }
 }
 
