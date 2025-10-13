@@ -183,6 +183,15 @@ class AssignmentAdapter(
 
             rytList2.setOnClickListener {
 
+             val targetType = when (data.recipient_type.trim()) {
+                 "SCHOOL" -> 1
+                 "STANDARD" -> 2
+                 "SECTION" -> 3
+                 "GROUP" -> 4
+                 "STUDENT" -> 5
+                 "STAFF" -> 6
+                 else -> 0
+             }
 
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
@@ -191,7 +200,7 @@ class AssignmentAdapter(
                     )
                 }
                 val isHomeWorkData = FilePreview(
-                    id = "",
+                    id = data.id,
                     title = data.title,
                     description = data.description,
                     subjectName = "",
@@ -203,6 +212,7 @@ class AssignmentAdapter(
                     fileList = convertedList,
                     submittedCount = data.submitted_count,
                     totalCount = data.total_count,
+                    target_type = targetType,
                     assignmentid = data.id,
                     created_date = data.created_date,
                     category = data.category,
@@ -217,7 +227,15 @@ class AssignmentAdapter(
             }
 
             headerrelative_layout.setOnClickListener {
-
+                val targetType = when (data.recipient_type.trim()) {
+                    "SCHOOL" -> 1
+                    "STANDARD" -> 2
+                    "SECTION" -> 3
+                    "GROUP" -> 4
+                    "STUDENT" -> 5
+                    "STAFF" -> 6
+                    else -> 0
+                }
 
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
@@ -226,7 +244,7 @@ class AssignmentAdapter(
                     )
                 }
                 val isHomeWorkData = FilePreview(
-                    id = "",
+                    id = data.id,
                     title = data.title,
                     description = data.description,
                     subjectName = "",
@@ -238,6 +256,7 @@ class AssignmentAdapter(
                     fileList = convertedList,
                     submittedCount = data.submitted_count,
                     totalCount = data.total_count,
+                    target_type = targetType,
                     assignmentid = data.id,
                     created_date = data.created_date,
                     category = data.category,
@@ -264,8 +283,18 @@ class AssignmentAdapter(
                                 )
                             }
 
+                            val targetType = when (data.recipient_type.trim()) {
+                                "SCHOOL" -> 1
+                                "STANDARD" -> 2
+                                "SECTION" -> 3
+                                "GROUP" -> 4
+                                "STUDENT" -> 5
+                                "STAFF" -> 6
+                                else -> 0
+                            }
+
                             val isHomeWorkData = FilePreview(
-                                id = "",
+                                id = data.id,
                                 title = data.title,
                                 description = data.description,
                                 subjectName = "",
@@ -277,6 +306,7 @@ class AssignmentAdapter(
                                 fileList = convertedList,
                                 submittedCount = data.submitted_count,
                                 totalCount = data.total_count,
+                                target_type = targetType,
                                 assignmentid = data.id,
                                 created_date = data.created_date,
                                 category = data.category,

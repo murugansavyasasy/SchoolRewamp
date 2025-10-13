@@ -74,6 +74,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Send
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetailsResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
@@ -386,6 +387,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getmysubmissionedit: LiveData<MySubmissionEditResponse?>? = null
     var ismysubmissiondelete: LiveData<MySubmissionDeleteResponse?>? = null
     var getchildhomeworkstandard: LiveData<ChildStandardResponse?>? = null
+    var getassignmentchildhomework: LiveData<AssignmentTargetDetailsResponse?>? = null
     var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
         private set
 
@@ -548,6 +550,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getmysubmissionedit = apiParentRepositories.getmysubmissioneditLiveData
         ismysubmissiondelete = apiParentRepositories.ismysubmissiondeleteLiveData
         getchildhomeworkstandard = apiSchoolRepositories.getchildhomeworkstandardLiveData
+        getassignmentchildhomework = apiSchoolRepositories.getassignmentchildhomeworkLiveData
 
 
     }
@@ -1399,6 +1402,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getchildhomeworkstandard(isToken: String, id: Int) {
         apiSchoolRepositories.getchildhomeworkstandard(isToken, id)
+    }
+
+
+    fun getassignmentchildhomework(isToken: String, id: Int, target_type : Int) {
+        apiSchoolRepositories.getassignmentchildhomework(isToken, id, target_type)
     }
 }
 

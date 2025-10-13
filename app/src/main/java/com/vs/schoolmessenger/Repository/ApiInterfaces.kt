@@ -82,6 +82,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Send
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetailsResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
@@ -1113,6 +1114,14 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.id) id: Int
     ): Call<ChildStandardResponse>
+
+
+    @GET(APIMethods.assignment_childhomework)
+    fun getassignmentchildhomework(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: Int,
+        @Query(APIKeyNames.target_type ) target_type : Int
+    ): Call<AssignmentTargetDetailsResponse>
 
 
     @PUT(APIMethods.getmysubmissionedit)

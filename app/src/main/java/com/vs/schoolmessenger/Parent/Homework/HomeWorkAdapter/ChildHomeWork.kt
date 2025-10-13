@@ -67,6 +67,8 @@ import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.ApiCallRequest.islsrwSkillSubmit
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
+import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentChildStandardAdapter
+import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetail
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventAdapter
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardAdapter
@@ -118,6 +120,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     private var mAdapter: ImagePickingAdapter? = null
 
     lateinit var childstandardadapter: ChildStandardAdapter
+    lateinit var assignmentchildstandardAdapter: AssignmentChildStandardAdapter
 
 
     companion object {
@@ -180,6 +183,15 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if(SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS ) {
             binding.sendtostandardLabel.visibility = View.VISIBLE
             loadEventChildHomewordStandard()
+        } else {
+            binding.sendtostandardLabel.visibility = View.GONE
+            Log.d("","")
+        }
+
+
+        if(SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT && data!!.isParentAssignment == false) {
+            binding.sendtostandardLabel.visibility = View.VISIBLE
+            loadAssignemntChildHomewordStandard()
         } else {
             binding.sendtostandardLabel.visibility = View.GONE
             Log.d("","")
@@ -576,7 +588,34 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         }
                     }
                 } else {
-                    Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                   binding.sendtostandardLabel.visibility = View.GONE
+                }
+            }
+        }
+
+
+        appViewModel!!.getassignmentchildhomework?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    response.data?.let { dataList ->
+                        Constant.isShimmerViewDisable = false
+                        val newData = mutableListOf<AssignmentTargetDetail>()
+                        newData.addAll(dataList)
+                        assignmentchildstandardAdapter = AssignmentChildStandardAdapter(newData, this, Constant.isShimmerViewDisable)
+                        binding.rcystandard.adapter = assignmentchildstandardAdapter
+                            val targetType = when (data!!.target_type) {
+                                1 -> "SCHOOL"
+                                2 -> "STANDARD"
+                                3 -> "SECTION"
+                                4 -> "GROUP"
+                                5 -> "STUDENT"
+                                6 -> "STAFF"
+                                else -> 0
+                            }
+                            binding.standardValue.text = "\uD83C\uDF93 Sent To " + targetType
+                        }
+                }  else {
+                    binding.sendtostandardLabel.visibility = View.GONE
                 }
             }
         }
@@ -932,6 +971,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
         appViewModel!!.getchildhomeworkstandard(isAccessToken!!, data!!.id.toInt())
+    }
+
+
+    private fun loadAssignemntChildHomewordStandard() {
+        val flexboxLayoutManager = FlexboxLayoutManager(this).apply {
+            flexDirection = FlexDirection.ROW
+            flexWrap = FlexWrap.WRAP
+            justifyContent = JustifyContent.FLEX_START
+            alignItems = AlignItems.FLEX_START
+        }
+        binding.rcystandard.layoutManager = flexboxLayoutManager
+        assignmentchildstandardAdapter = AssignmentChildStandardAdapter(emptyList(), this, true)
+        binding.rcystandard.adapter = assignmentchildstandardAdapter
+        appViewModel!!.getassignmentchildhomework(isAccessToken!!, data!!.id.toInt(),data!!.target_type!!)
     }
 
 

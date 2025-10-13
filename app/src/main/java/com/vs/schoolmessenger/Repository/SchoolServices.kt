@@ -34,6 +34,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Send
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetailsResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
@@ -204,6 +205,7 @@ class SchoolServices {
     var isGetMessageFromStaff: MutableLiveData<GetMessagesStaff?>
     var isSchoolprofilelist: MutableLiveData<ProfileListResponse?>
     var getchildhomeworkstandard: MutableLiveData<ChildStandardResponse?>
+    var getassignmentchildhomework: MutableLiveData<AssignmentTargetDetailsResponse?>
 
 
     init {
@@ -308,6 +310,7 @@ class SchoolServices {
         isGetMessageFromStaff= MutableLiveData()
         isSchoolprofilelist= MutableLiveData()
         getchildhomeworkstandard= MutableLiveData()
+        getassignmentchildhomework= MutableLiveData()
 
     }
 
@@ -3934,4 +3937,47 @@ class SchoolServices {
 
     val getchildhomeworkstandardLiveData: LiveData<ChildStandardResponse?>
         get() = getchildhomeworkstandard
+
+
+
+
+    fun getassignmentchildhomework(
+        isToken: String,
+        id: Int,
+        target_type: Int
+    ) {
+        RestClient.apiInterfaces.getassignmentchildhomework(isToken,id,target_type)
+            ?.enqueue(object : Callback<AssignmentTargetDetailsResponse?> {
+                override fun onResponse(
+                    call: Call<AssignmentTargetDetailsResponse?>, response: Response<AssignmentTargetDetailsResponse?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getassignmentchildhomework.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getassignmentchildhomework.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<AssignmentTargetDetailsResponse?>, t: Throwable
+                ) {
+                    getassignmentchildhomework.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getassignmentchildhomeworkLiveData: LiveData<AssignmentTargetDetailsResponse?>
+        get() = getassignmentchildhomework
 }
