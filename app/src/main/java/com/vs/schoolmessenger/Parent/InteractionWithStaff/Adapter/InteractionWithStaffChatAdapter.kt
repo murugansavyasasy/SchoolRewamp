@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerData
@@ -52,15 +53,23 @@ class InteractionWithStaffChatAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val questionText: TextView = itemView.findViewById(R.id.questionText)
         private val answerText: TextView = itemView.findViewById(R.id.answerText)
+        private val user_name: TextView = itemView.findViewById(R.id.user_name)
+        private val time_value: TextView = itemView.findViewById(R.id.time_value)
+        private val time: TextView = itemView.findViewById(R.id.time)
+        private val linear_layo212ut: LinearLayout = itemView.findViewById(R.id.linear_layo212ut)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(chat: AnswerData, position: Int) {
             questionText.text = chat.question
             answerText.text = chat.answer
+            user_name.text = chat.student_name
+            time_value.text = Constant.formatChatDate(chat.asked_on)
+            time.text = Constant.formatChatDate(chat.answered_on)
+
             if (chat.answer == Constant.Not_answered_yet) {
-                answerText.visibility = View.GONE
+                linear_layo212ut.visibility = View.GONE
             } else {
-                answerText.visibility = View.VISIBLE
+                linear_layo212ut.visibility = View.VISIBLE
             }
         }
     }

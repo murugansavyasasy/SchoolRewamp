@@ -103,9 +103,27 @@
 
                 <Spinner
                     android:id="@+id/spinnerType"
-                    android:layout_width="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:background="@null"
+                    android:paddingVertical="@dimen/five"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/spinnerTypeimg"
+                    android:drawSelectorOnTop="true"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_spinner_background" />
+                    />
+                <ImageView
+                    android:id="@+id/spinnerTypeimg"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_drop_down"
+                    android:layout_marginEnd="@dimen/three"
+                    android:tint="@color/black"
+                    android:layout_height="wrap_content">
+
+                </ImageView>
+
 
             </RelativeLayout>
 
@@ -121,6 +139,7 @@
             <LinearLayout
                 android:id="@+id/rytNoDataFound"
                 android:layout_width="match_parent"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytSubjectList"
                 android:layout_marginTop="@dimen/fifty"
@@ -128,9 +147,9 @@
                 android:visibility="gone">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three_hundred"
-                    android:src="@drawable/nomessages">
+                    android:layout_width="@dimen/two_fifty"
+                    android:layout_height="@dimen/two_fifty"
+                    android:src="@drawable/no_ptm_parent_message">
                 </ImageView>
 
 

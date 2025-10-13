@@ -37,6 +37,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetailsResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
+import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -61,6 +62,8 @@ import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubm
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreateModel.LessonPlanCreateResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreateModel.LessonPlanTemplateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanDeleteModel.LPDeleteResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
@@ -169,7 +172,9 @@ class SchoolServices {
     var getlpStaffReport: MutableLiveData<AllClassResponse?>
     var getlpViewReport: MutableLiveData<LessonPlanViewSummaryResponse?>
     var getlpeditReport: MutableLiveData<LessonPlanEditResponse?>
+    var getlpcreateReport: MutableLiveData<LessonPlanTemplateResponse?>
     var isupdatelessonplan: MutableLiveData<LessonPlanUpdateResponse?>
+    var iscreatelessonplan: MutableLiveData<LessonPlanCreateResponse?>
     var islessonplandelete: MutableLiveData<LPDeleteResponse?>
     var getcouponmenu: MutableLiveData<CouponMenuResponse?>
     var getCouponsSummary: MutableLiveData<CampaignResponse?>
@@ -206,6 +211,7 @@ class SchoolServices {
     var isSchoolprofilelist: MutableLiveData<ProfileListResponse?>
     var getchildhomeworkstandard: MutableLiveData<ChildStandardResponse?>
     var getassignmentchildhomework: MutableLiveData<AssignmentTargetDetailsResponse?>
+    var getattachmentchildhomework: MutableLiveData<AttachmentTargetDetailResponse?>
 
 
     init {
@@ -273,7 +279,9 @@ class SchoolServices {
         getlpStaffReport = MutableLiveData()
         getlpViewReport = MutableLiveData()
         getlpeditReport = MutableLiveData()
+        getlpcreateReport = MutableLiveData()
         isupdatelessonplan = MutableLiveData()
+        iscreatelessonplan = MutableLiveData()
         islessonplandelete = MutableLiveData()
         getcouponmenu = MutableLiveData()
         getCouponsSummary = MutableLiveData()
@@ -312,6 +320,7 @@ class SchoolServices {
         getchildhomeworkstandard= MutableLiveData()
         getassignmentchildhomework= MutableLiveData()
 
+        getattachmentchildhomework= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -2621,6 +2630,43 @@ class SchoolServices {
         get() = getlpeditReport
 
 
+    fun getlpcreateReport(
+        isToken: String, request_type: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.getlpcreateReport(isToken, request_type)
+            ?.enqueue(object : Callback<LessonPlanTemplateResponse?> {
+                override fun onResponse(
+                    call: Call<LessonPlanTemplateResponse?>, response: Response<LessonPlanTemplateResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                getlpcreateReport.postValue(response.body())
+                            } else {
+                                getlpcreateReport.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        getlpcreateReport.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LessonPlanTemplateResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isgetlpcreateReportLiveData: LiveData<LessonPlanTemplateResponse?>
+        get() = getlpcreateReport
+
+
+
     fun isupdatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
         RestClient.apiInterfaces.isupdatelessonplan(isToken, requestBody)
             ?.enqueue(object : Callback<LessonPlanUpdateResponse?> {
@@ -2646,6 +2692,33 @@ class SchoolServices {
 
     val isupdatelessonplanLiveData: LiveData<LessonPlanUpdateResponse?>
         get() = isupdatelessonplan
+
+
+    fun iscreatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
+        RestClient.apiInterfaces.iscreatelessonplan(isToken, requestBody)
+            ?.enqueue(object : Callback<LessonPlanCreateResponse?> {
+                override fun onResponse(
+                    call: Call<LessonPlanCreateResponse?>,
+                    response: Response<LessonPlanCreateResponse?>
+                ) {
+                    Log.d("isGetCountryList", "${response.code()} - $response")
+                    if (response.code() == 200 && response.body() != null) {
+                        iscreatelessonplan.postValue(response.body())
+                    } else {
+                        iscreatelessonplan.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LessonPlanCreateResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val iscreatelessonplanLiveData: LiveData<LessonPlanCreateResponse?>
+        get() = iscreatelessonplan
 
 
     fun islessonplandelete(isToken: String, requestBody: RequestBody, activity: Activity) {
@@ -3980,4 +4053,46 @@ class SchoolServices {
 
     val getassignmentchildhomeworkLiveData: LiveData<AssignmentTargetDetailsResponse?>
         get() = getassignmentchildhomework
+
+
+
+    fun getattachmentchildhomework(
+        isToken: String,
+        id: Int,
+        target_type: Int
+    ) {
+        RestClient.apiInterfaces.getattachmentchildhomework(isToken,id,target_type)
+            ?.enqueue(object : Callback<AttachmentTargetDetailResponse?> {
+                override fun onResponse(
+                    call: Call<AttachmentTargetDetailResponse?>, response: Response<AttachmentTargetDetailResponse?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getattachmentchildhomework.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getattachmentchildhomework.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<AttachmentTargetDetailResponse?>, t: Throwable
+                ) {
+                    getattachmentchildhomework.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getattachmentchildhomeworkLiveData: LiveData<AttachmentTargetDetailResponse?>
+        get() = getattachmentchildhomework
 }

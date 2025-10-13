@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyLessonPlanEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/five"
+            android:layout_above="@+id/linear_layout"
+            android:layout_below="@+id/toolbarLayout">
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingTop="@dimen/eight"
+            android:paddingBottom="@dimen/eight">
+
+            <TextView
+                android:id="@+id/cancelbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Cancel"
+                android:textSize="@dimen/thirteen_sp"
+                android:textColor="@color/white"
+                android:padding="@dimen/ten"
+                android:paddingStart="@dimen/eighteen_sp"
+                android:paddingEnd="@dimen/eighteen_sp"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/bg_red_radious__all_side_same"
+                style="@style/CustomTextStylePoppinsMedium" />
+
+            <TextView
+                android:id="@+id/createbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textSize="@dimen/thirteen_sp"
+                android:textColor="@color/white"
+                android:padding="@dimen/ten"
+                android:paddingStart="@dimen/eighteen_sp"
+                android:paddingEnd="@dimen/eighteen_sp"
+                android:layout_marginStart="@dimen/thirty"
+                android:background="@drawable/bg_green_radious"
+                style="@style/CustomTextStylePoppinsMedium" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/no_lessonplan_message"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen_sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="@string/no_list_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen_sp"
+            android:layout_below="@+id/nomessage"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

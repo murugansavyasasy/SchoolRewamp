@@ -237,13 +237,16 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             // Remove old selected slot for this meeting if exists
             selectedSlotIds.removeAll { existingId ->
                 // Find the slot with same meetingKey
-                data.any { meetingItem ->
-                    val key =
-                        "${meetingItem.staff_id}_${meetingItem.start_time}_${meetingItem.event_name}"
-                    key == meetingKey && meetingItem.slots.any { it.id == existingId }
+                selectedSlotIds.removeAll { existingId ->
+                    data.any { meetingItem ->
+                        val key = "${meetingItem.staff_id}_${meetingItem.start_time}_${meetingItem.event_name}"
+                        key == meetingKey && meetingItem.slots.any { it.id == existingId }
+                    }
                 }
             }
             selectedSlotIds.add(slot.id)
+            binding.lblBookSlots.visibility = if (selectedSlotIds.isNotEmpty()) View.VISIBLE else View.GONE
+            println("Selected Slot IDs: $selectedSlotIds")
             if (selectedSlotIds.isNotEmpty()) {
                 binding.lblBookSlots.visibility = View.VISIBLE
             } else {

@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanClickListener
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreate.LessonPlanCreateActivity
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEdit.LessonPlanEditActivity
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryItem
 import com.vs.schoolmessenger.Utils.Constant
@@ -77,6 +78,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         binding.ytsbutton1.setOnClickListener(this)
         binding.inprogressbutton1.setOnClickListener(this)
         binding.completedbutton1.setOnClickListener(this)
+
+        binding.createlp.setOnClickListener(this)
 
         sectionSubjectId = intent.getStringExtra(Constant.section_subject_id)
         request_type = intent.getStringExtra(Constant.request_type)
@@ -236,6 +239,10 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
                 highlightSelectedTab(binding.completedbutton1)
                 filterAndShowData(currentStatus)
             }
+
+            R.id.createlp -> {
+                RedirectToCreateLp()
+            }
         }
     }
 
@@ -250,6 +257,16 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 //        selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
 //        selectedView.isEnabled = false
 //    }
+
+
+    private fun RedirectToCreateLp() {
+        val intent = Intent(this@LessonPlanViewDetails, LessonPlanCreateActivity::class.java)
+        intent.putExtra(Constant.section_subject_id, sectionSubjectId)
+        Log.d("section_subject_id", sectionSubjectId.toString())
+        intent.putExtra(Constant.request_type, request_type)
+        Log.d("request_type", request_type.toString())
+        startActivity(intent)
+    }
 
     private fun highlightSelectedTab(selectedView: View) {
         // Each tab = container, imageView, textView

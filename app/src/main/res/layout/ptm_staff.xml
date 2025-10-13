@@ -213,11 +213,11 @@
             </androidx.recyclerview.widget.RecyclerView>
             <ImageView
             android:id="@+id/imgNoData"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:src="@drawable/nomessages"
+            android:src="@drawable/no_ptm_school_message"
             android:visibility="gone"/>
             <TextView
                 android:id="@+id/tvNoData"

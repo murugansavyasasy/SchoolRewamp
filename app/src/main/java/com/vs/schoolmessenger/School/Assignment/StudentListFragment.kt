@@ -78,11 +78,8 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             addTab(newTab().setText("${getString(R.string.pending)} (0)"))
         }
 
-
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                binding.nomessage.visibility = View.GONE
-                binding.txtNoData.visibility = View.GONE
                 binding.txtSearch.setText("")
                 when (tab.position) {
                     0 -> showAllStudents()
@@ -95,7 +92,6 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
-
         binding.txtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -103,46 +99,62 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
                     assignmentstudentlistadapter.filter.filter(s)
                 }
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
-
-
 
         appViewModel?.getassignmentlist?.observe(viewLifecycleOwner) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 allStudentsList = response.data
                 updateTabTitles()
-                binding.rcystudentlist.visibility = View.VISIBLE
-                binding.nomessage.visibility = View.GONE
-                binding.txtNoData.visibility = View.GONE
                 showAllStudents()
             } else {
-                binding.rcystudentlist.visibility = View.GONE
-                binding.nomessage.visibility = View.VISIBLE
-                binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
+                showNoDataView(true, response?.message ?: getString(R.string.no_data_found))
             }
         }
-
 
         isGetAssignmentStudentList()
     }
 
+    // 👇 Utility function to toggle the No Data View
+    private fun showNoDataView(show: Boolean, message: String = getString(R.string.no_data_found)) {
+        binding.nomessage.visibility = if (show) View.VISIBLE else View.GONE
+        binding.txtNoData.visibility = if (show) View.VISIBLE else View.GONE
+        binding.txtNoData.text = if (show) message else ""
+        binding.rcystudentlist.visibility = if (show) View.GONE else View.VISIBLE
+    }
+
     private fun showAllStudents() {
-        isloadassignmentdata(allStudentsList)
+        val list = allStudentsList
+        if (list.isEmpty()) {
+            showNoDataView(true)
+        } else {
+            showNoDataView(false)
+            isloadassignmentdata(list)
+        }
     }
 
     private fun showSubmitted() {
-        val filteredList =
-            allStudentsList.filter { it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true) }
-        isloadassignmentdata(filteredList)
+        val filteredList = allStudentsList.filter {
+            it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true)
+        }
+        if (filteredList.isEmpty()) {
+            showNoDataView(true, getString(R.string.no_data_found))
+        } else {
+            showNoDataView(false)
+            isloadassignmentdata(filteredList)
+        }
     }
 
     private fun showPending() {
-        val filteredList =
-            allStudentsList.filter { it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true) }
-        isloadassignmentdata(filteredList)
+        val filteredList = allStudentsList.filter {
+            it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true)
+        }
+        if (filteredList.isEmpty()) {
+            showNoDataView(true, getString(R.string.no_data_found))
+        } else {
+            showNoDataView(false)
+            isloadassignmentdata(filteredList)
+        }
     }
 
     private fun isloadassignmentdata(newData: List<StudentSubmission>?) {
@@ -158,23 +170,30 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         binding.rcystudentlist.adapter = assignmentstudentlistadapter
     }
 
-
     private fun updateTabTitles() {
         val allCount = allStudentsList.size
-        val submittedCount =
-            allStudentsList.count { it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true) }
-        val pendingCount =
-            allStudentsList.count { it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true) }
+        val submittedCount = allStudentsList.count {
+            it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true)
+        }
+        val pendingCount = allStudentsList.count {
+            it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true)
+        }
 
         binding.tabLayout.getTabAt(0)?.text = "${getString(R.string.All_Students)} ($allCount)"
         binding.tabLayout.getTabAt(1)?.text = "${getString(R.string.submitted)} ($submittedCount)"
         binding.tabLayout.getTabAt(2)?.text = "${getString(R.string.pending)} ($pendingCount)"
     }
 
-
     private fun isGetAssignmentStudentList() {
-        assignmentstudentlistadapter =
-            AssignmentStudentListAdapter(null, this, requireContext(), Constant.isShimmerViewShow,null,null,created_date)
+        assignmentstudentlistadapter = AssignmentStudentListAdapter(
+            null,
+            this,
+            requireContext(),
+            Constant.isShimmerViewShow,
+            null,
+            null,
+            created_date
+        )
 
         binding.rcystudentlist.layoutManager = LinearLayoutManager(requireContext())
         binding.rcystudentlist.isNestedScrollingEnabled = false
@@ -185,10 +204,9 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.icon_search -> if (binding.rytSearch.isVisible) {
-                binding.rytSearch.visibility = View.GONE
-            } else {
-                binding.rytSearch.visibility = View.VISIBLE
+            R.id.icon_search -> {
+                binding.rytSearch.visibility =
+                    if (binding.rytSearch.isVisible) View.GONE else View.VISIBLE
             }
         }
     }
