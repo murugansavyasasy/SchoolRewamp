@@ -386,6 +386,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isAddQuestion: LiveData<AddQuestionResponse?>? = null
     var ispresubmission: LiveData<ProfileUpdateResponse?>? = null
     var isGetMessageStaff: LiveData<GetMessagesStaff?>? = null
+    var isGetMessageStaffArchive: LiveData<GetMessagesStaff?>? = null
     var isParentprofilelist: LiveData<ProfileListResponse?>? = null
     var isSchoolprofilelist: LiveData<ProfileListResponse?>? = null
     var islsrwmysubmission: LiveData<ActivityResponse?>? = null
@@ -548,6 +549,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isAddQuestion = apiSchoolRepositories.isAddQuestionLiveData
         ispresubmission = apiParentRepositories.ispresubmissionLiveData
         isGetMessageStaff = apiSchoolRepositories.isGetMessageStaffLiveData
+        isGetMessageStaffArchive = apiSchoolRepositories.isGetMessageStaffArchiveLiveData
         isGetPauketPoints = apiParentRepositories.isGetPauketPointsLiveData
         isSpentPoints = apiParentRepositories.isSpentPointsLiveData
         isAddRewardPoints = apiParentRepositories.isAddRewardPointsLiveData
@@ -1353,6 +1355,14 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String
     ) {
         apiSchoolRepositories.isGetMessageFromStaff(
+            isToken
+        )
+    }
+
+    fun isGetMessageStaffArchive(
+        isToken: String
+    ) {
+        apiSchoolRepositories.isGetMessageFromStaffArchive(
             isToken
         )
     }

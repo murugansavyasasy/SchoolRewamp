@@ -162,6 +162,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
             if (response != null) {
                 response.status
                 response.message
+                Constant.isGlobalVariableData=response.data[0]
 
             }
         }

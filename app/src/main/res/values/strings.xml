@@ -949,6 +949,7 @@
     <string name="Oops">Oops!</string>
     <string name="enter_a_valid_mobile_number">Enter a valid mobile Number</string>
     <string name="see_archived_messages">See Archived Messages</string>
+    <string name="underline_see_archived_messages"><u>See Archived Messages</u></string>
     <string name="all_student">ALL STUDENT</string>
     <string name="class_and_section">CLASS AND SECTION</string>
     <string name="remove">Remove</string>

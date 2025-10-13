@@ -1067,6 +1067,11 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetMessagesStaff?>?
 
+    @GET(APIMethods.isGetMessageFromStaffArchive)
+    fun isGetMessageFromStaffArchive(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<GetMessagesStaff?>?
+
 //    Pauket Api
 
     @GET(APIMethods.isGetPauketPoints)

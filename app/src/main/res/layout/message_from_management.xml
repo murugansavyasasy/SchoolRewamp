@@ -120,9 +120,10 @@
 
                 <!-- Center layout -->
                 <LinearLayout
+                    android:layout_below="@id/rcMessageStaff"
                     android:id="@+id/lytList"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center"
                     android:visibility="gone">
@@ -142,6 +143,29 @@
                         android:textSize="@dimen/fifteen_sp"
                         android:layout_marginTop="@dimen/ten"/>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/lblArchiveMsg"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_below="@+id/lytList"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/PrimaryColor"
+                    android:text="@string/underline_see_archived_messages"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    android:id="@+id/isArchiveErrorMsg"
+                    android:layout_below="@+id/lblArchiveMsg"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TextView>
             </RelativeLayout>
         </ScrollView>
 

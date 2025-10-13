@@ -91,7 +91,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isAdsDisplayOptions: AdsDisplayOptions? = null
     var access_token = ""
     private lateinit var allMenuItems: List<MenuDetail>
-    private val isMenuItems = mutableListOf<MenuDetail>()
 
 
     private lateinit var adapter: AutoScrollAdapterWithDots
@@ -100,10 +99,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var currentPosition = 0
     private var mobile_number = ""
 
-
-    companion object {
-        private const val SCROLL_DELAY = 3000L
-    }
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -119,7 +114,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
         userDetails = SharedPreference.getUserDetails(requireActivity())
         staffDetails = SharedPreference.getStaffDetails(requireActivity())
-        Log.d("school_logo", staffDetails!!.school_logo)
 
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
             access_token = staffDetails!!.access_token
