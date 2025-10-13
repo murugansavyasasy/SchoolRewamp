@@ -40,6 +40,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.NoticeboardReportBinding
 
 class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardClickListener,
@@ -239,32 +240,53 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
 //    }
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-        val schoolNames = listOf("All") + staffList.map { it.school_name }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Prepare list for spinner ("All" + school names)
+        val schoolNames = mutableListOf<String>()
+        schoolNames.add("All")
+        schoolNames.addAll(staffList.map { it.school_name })
+
+        // Use your custom spinner adapter instead of ArrayAdapter
+        val adapter = SpinnerLoadingAdapter(this, schoolNames)
         binding.schoollistfilter.adapter = adapter
-
         binding.schoollistfilter.setSelection(0)
+
         binding.schoollistfilter.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 private var lastSelectedPosition: Int = -1
+
                 override fun onItemSelected(
                     parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
+                    // Update UI highlight in custom adapter
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+
                     if (position != lastSelectedPosition) {
                         lastSelectedPosition = position
+
                         if (position == 0) {
+                            // "All" option selected
                             isloadhomeworkData(completeNoticeList)
                             binding.toolbarLayout.lblSchoolName.visibility = View.GONE
                             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
                         } else {
+                            // Specific school selected
                             val selectedStaff = staffList[position - 1]
                             isAccessToken = selectedStaff.access_token
                             isStaffDetails = selectedStaff
                             val selectedSchoolId = selectedStaff.school_id
+
+                            // Filter list by school ID
                             val filteredList = completeNoticeList.filter { it.school_id == selectedSchoolId }
-                            Log.d("SpinnerSelection", "Selected school: ${selectedStaff.school_name}, Selected school id: ${selectedStaff.school_id}, Data: ${filteredList}, Token: $isAccessToken")
+
+                            Log.d(
+                                "SpinnerSelection",
+                                "Selected school: ${selectedStaff.school_name}, " +
+                                        "Selected school id: ${selectedStaff.school_id}, " +
+                                        "Data: $filteredList, Token: $isAccessToken"
+                            )
+
                             isloadhomeworkData(filteredList)
                             binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
                             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -275,7 +297,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
         //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
-        // Initial fetch for all schools
+        // Initial load (default "All")
         if (staffList.isNotEmpty()) {
             isAccessToken = staffList[0].access_token
             isStaffDetails = staffList[0]
@@ -283,6 +305,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
             isGetNoticeBoardList()
         }
     }
+
 
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
         Log.d("SearchDebug", "isloadhomeworkData called with ${newData?.size ?: 0} items")

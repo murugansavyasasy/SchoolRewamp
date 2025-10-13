@@ -6,9 +6,9 @@
     android:clipToPadding="false"
     android:clipChildren="false"
     android:paddingTop="@dimen/fifteen"
-    android:paddingStart="@dimen/ten"
+    android:paddingStart="@dimen/five"
     android:paddingBottom="@dimen/five"
-    android:paddingEnd="@dimen/ten"
+    android:paddingEnd="@dimen/five"
     android:layout_height="wrap_content">
 
     <RelativeLayout

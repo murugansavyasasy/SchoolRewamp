@@ -42,6 +42,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaf
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.RoundedBackgroundSpan
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.MessageFromManagementBinding
 import me.relex.circleindicator.CircleIndicator2
 
@@ -173,32 +174,49 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     }
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-        val schoolNames = listOf("All") + staffList.map { it.school_name }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val schoolNames = mutableListOf<String>()
+        schoolNames.add("All")
+        schoolNames.addAll(staffList.map { it.school_name })
+
+        val adapter = SpinnerLoadingAdapter(this, schoolNames)
         binding.schoollistfilter.adapter = adapter
-
         binding.schoollistfilter.setSelection(0)
+
         binding.schoollistfilter.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 private var lastSelectedPosition: Int = -1
+
                 override fun onItemSelected(
                     parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
+                    // update adapter UI selection
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+
                     if (position != lastSelectedPosition) {
                         lastSelectedPosition = position
+
                         if (position == 0) {
+                            // “All” selected
                             isLoadMsgStaff(completeAttachmentList)
                             binding.toolbarLayout.lblSchoolName.visibility = View.GONE
                             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
                         } else {
+                            // Specific school selected
                             val selectedStaff = staffList[position - 1]
                             isAccessToken = selectedStaff.access_token
                             isStaffDetails = selectedStaff
                             val selectedSchoolId = selectedStaff.school_id
+
                             val filteredList = completeAttachmentList.filter { it.school_id == selectedSchoolId }
-                            Log.d("SpinnerSelection", "Selected school: ${selectedStaff.school_name}, Selected school id: ${selectedStaff.school_id}, Data: ${filteredList}, Token: $isAccessToken")
+                            Log.d(
+                                "SpinnerSelection",
+                                "Selected school: ${selectedStaff.school_name}, " +
+                                        "Selected school id: ${selectedStaff.school_id}, " +
+                                        "Data: $filteredList, Token: $isAccessToken"
+                            )
+
                             isLoadMsgStaff(filteredList)
                             binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
                             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -208,6 +226,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
+
         //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
         // Initial fetch for all schools
         if (staffList.isNotEmpty()) {
@@ -217,6 +236,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             isGetMessageFromStaff()
         }
     }
+
 
     private fun filter(text: String) {
         val searchWords = text.trim().lowercase().split("\\s+".toRegex())
