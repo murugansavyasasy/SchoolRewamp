@@ -101,11 +101,21 @@ class ParentSlotTimingAdapter(
             }
         }
 
+//        holder.itemView.setOnClickListener {
+//            if (!slot.is_booked && !slot.my_booking && holder.card.isEnabled) {
+//                onSlotClick(slot)
+//            }
+//        }
+
         holder.itemView.setOnClickListener {
-            if (!slot.is_booked && !slot.my_booking && holder.card.isEnabled) {
-                onSlotClick(slot)
+            if (!slot.is_booked && !slot.my_booking && !isOverlappingWithAnyBooked && holder.card.isEnabled) {
+                selectedSlot = if (selectedSlot == slot) null else slot
+                selectedSlot?.let { onSlotClick(it) } // callback for selection
+                notifyDataSetChanged()
             }
         }
+
+
     }
 
     override fun getItemCount() = slots.size
@@ -114,6 +124,7 @@ class ParentSlotTimingAdapter(
         selectedSlot = slot
         notifyDataSetChanged()
     }
+
 
     fun setMyBookedSlot(slot: SlotData?) {
         myBookedSlot = slot

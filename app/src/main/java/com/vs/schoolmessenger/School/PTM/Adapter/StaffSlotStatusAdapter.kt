@@ -124,6 +124,7 @@ class StaffSlotStatusAdapter(
                     rltBookedBy.visibility = View.VISIBLE
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
                     imgDot.visibility = View.GONE
+
                 }
                 "Upcoming" -> {
                     rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
@@ -132,12 +133,10 @@ class StaffSlotStatusAdapter(
                     lblBookedName.visibility = View.VISIBLE
                     rltBookedBy.visibility = View.VISIBLE
                     lblBookedName.text = data.booked_by
-
                     // Show dot only if slot can be canceled
                     imgDot.visibility = if (data.can_cancel && shouldShowImgDot(data.date, data.to_time) == View.VISIBLE)
                         View.VISIBLE else View.GONE
 
-                    // Only Cancel action, not Reopen
                     imgDot.setOnClickListener {
                         listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
                     }

@@ -3,8 +3,8 @@
     android:id="@+id/meetingCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/five"
     android:layout_marginHorizontal="@dimen/ten"
+    android:layout_marginVertical="@dimen/five"
     android:background="@drawable/bg_gradient"
     android:orientation="vertical"
     android:padding="@dimen/ten">
@@ -207,9 +207,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/five"
         android:layout_marginTop="@dimen/twenty"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/five">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cancelButton"
@@ -219,13 +219,13 @@
             android:background="@drawable/bg_red"
             android:drawableStart="@drawable/close_icon"
             android:gravity="center_vertical"
-            android:text="@string/cancel"
             android:paddingHorizontal="@dimen/six"
             android:paddingVertical="@dimen/eight"
+            android:text="@string/cancel"
             android:textColor="@color/white"
             android:textSize="@dimen/ten_sp"
             app:iconGravity="textStart"
-            app:iconTint="@color/white"/>
+            app:iconTint="@color/white" />
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -235,15 +235,32 @@
             android:layout_marginStart="@dimen/eight"
             android:background="@drawable/bg_orange"
             android:drawableStart="@drawable/phone_icon_bg"
-            android:gravity="center_vertical"
-            android:text="Call"
             android:drawablePadding="@dimen/five"
+            android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/fifteen"
             android:paddingVertical="@dimen/ten"
+            android:text="Call"
             android:textColor="@color/white"
             android:textSize="@dimen/ten_sp"
             app:iconGravity="textStart"
-            app:iconTint="@color/white"/>
+            app:iconTint="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/joinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/eight"
+            android:background="@drawable/bg_orange"
+            android:drawableStart="@drawable/close_icon"
+            android:drawablePadding="@dimen/five"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/fifteen"
+            android:paddingVertical="@dimen/ten"
+            android:text="Join"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ten_sp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white" />
 
 
     </LinearLayout>
