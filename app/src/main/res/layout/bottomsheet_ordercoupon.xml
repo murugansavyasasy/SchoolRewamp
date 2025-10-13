@@ -201,11 +201,11 @@
             <Button
                 android:id="@+id/btn_activate_coupon2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/fourty"
                 android:text="GO TO HOME"
                 android:textAllCaps="true"
                 style="@style/CustomTextStylePoppinsBold"
-                android:textSize="@dimen/seventeen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:gravity="center"
                 android:background="@drawable/bg_background_white_coupon"
                 android:layout_marginBottom="@dimen/thirteen"

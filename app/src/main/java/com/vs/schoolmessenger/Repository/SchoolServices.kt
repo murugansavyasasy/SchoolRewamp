@@ -513,7 +513,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<NameAndIdsResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    isGetStaffList.postValue(null)
                     t.printStackTrace()
                 }
             })
