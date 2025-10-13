@@ -57,10 +57,27 @@
                 android:background="@drawable/bg_white_light_radious">
 
                 <Spinner
+                    android:paddingVertical="@dimen/five"
                     android:id="@+id/isSpinner"
-                    android:layout_width="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:background="@null"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/isSpinnerimg"
+                    android:drawSelectorOnTop="true"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_spinner_background" />
+                    />
+                <ImageView
+                    android:id="@+id/isSpinnerimg"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_drop_down"
+                    android:layout_marginEnd="@dimen/three"
+                    android:tint="@color/black"
+                    android:layout_height="wrap_content">
+
+                </ImageView>
 
             </RelativeLayout>
         </RelativeLayout>
