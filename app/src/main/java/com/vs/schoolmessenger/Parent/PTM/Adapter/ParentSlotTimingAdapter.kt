@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotData
 import com.vs.schoolmessenger.R
@@ -65,7 +66,7 @@ class ParentSlotTimingAdapter(
             myBookedSlot != null -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.card.isEnabled = false
-                holder.tvSlotStatus.setTextColor(Color.RED)
+                holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.green))
             }
 
             isOverlappingWithAnyBooked -> {
@@ -90,7 +91,6 @@ class ParentSlotTimingAdapter(
             }
 
             selectedSlot != null && isOverlapping(slot, selectedSlot!!) -> {
-
                 holder.card.isEnabled = false
             }
 
@@ -114,8 +114,6 @@ class ParentSlotTimingAdapter(
                 notifyDataSetChanged()
             }
         }
-
-
     }
 
     override fun getItemCount() = slots.size

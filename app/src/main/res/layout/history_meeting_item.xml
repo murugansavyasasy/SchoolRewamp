@@ -251,7 +251,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eight"
             android:background="@drawable/bg_orange"
-            android:drawableStart="@drawable/close_icon"
+            android:drawableStart="@drawable/network"
             android:drawablePadding="@dimen/five"
             android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/fifteen"
@@ -261,7 +261,6 @@
             android:textSize="@dimen/ten_sp"
             app:iconGravity="textStart"
             app:iconTint="@color/white" />
-
 
     </LinearLayout>
 
