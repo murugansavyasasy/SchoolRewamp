@@ -83,15 +83,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     </TextView>
-                    <TextView
-                        android:id="@+id/lblEmergency"
-                        style="@style/CustomTextStylePoppinsMedium"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:text="@string/voice"
-                        android:textSize="@dimen/sixteen_sp"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:id="@+id/imgEmergency"
+                            android:visibility="gone"
+                            android:layout_alignParentStart="true"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_marginEnd="@dimen/five"
+                            android:src="@drawable/emergencyvoice_indicator"
+                            android:layout_height="@dimen/twenty">
 
-                    </TextView>
+                        </ImageView>
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/imgEmergency"
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/lblEmergency"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="match_parent"
+                            android:text="@string/voice"
+                            android:textSize="@dimen/sixteen_sp"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/recentSeekbarlayout"
@@ -183,7 +201,7 @@
                         android:layout_height="@dimen/twenty">
                     </ImageView>
                     <TextView
-                        android:text="@string/post_on"
+                        android:text="@string/posted_on"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginEnd="@dimen/five"

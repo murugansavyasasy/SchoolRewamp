@@ -202,6 +202,7 @@ class SchoolServices {
     var isGetPickFromQBank: MutableLiveData<GetPickFromQBank?>
     var isAddQuestion: MutableLiveData<AddQuestionResponse?>
     var isGetMessageFromStaff: MutableLiveData<GetMessagesStaff?>
+    var isGetMessageFromStaffArchive: MutableLiveData<GetMessagesStaff?>
     var isSchoolprofilelist: MutableLiveData<ProfileListResponse?>
     var getchildhomeworkstandard: MutableLiveData<ChildStandardResponse?>
 
@@ -308,6 +309,7 @@ class SchoolServices {
         isGetMessageFromStaff= MutableLiveData()
         isSchoolprofilelist= MutableLiveData()
         getchildhomeworkstandard= MutableLiveData()
+        isGetMessageFromStaffArchive= MutableLiveData()
 
     }
 
@@ -3854,6 +3856,47 @@ class SchoolServices {
 
     val isGetMessageStaffLiveData: LiveData<GetMessagesStaff?>
         get() = isGetMessageFromStaff
+
+
+    fun isGetMessageFromStaffArchive(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isGetMessageFromStaffArchive(isToken)
+            ?.enqueue(object : Callback<GetMessagesStaff?> {
+                override fun onResponse(
+                    call: Call<GetMessagesStaff?>, response: Response<GetMessagesStaff?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isGetMessageFromStaffArchive.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                isGetMessageFromStaffArchive.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetMessagesStaff?>, t: Throwable
+                ) {
+                    isGetMessageFromStaffArchive.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetMessageStaffArchiveLiveData: LiveData<GetMessagesStaff?>
+        get() = isGetMessageFromStaffArchive
+
+
 
 
 

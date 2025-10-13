@@ -176,6 +176,7 @@ object APIMethods {
 
 
     const val isGetMessageFromStaff = "comm/api/msg-from-management/get-messages-staff"
+    const val isGetMessageFromStaffArchive = "comm/api/msg-from-management/get-messages-staff-archive"
     const val isGetPauketPoints = "dashboard/api/pauket/get-points"
     const val isSpentPoints = "dashboard/api/pauket/spent-points"
     const val isAddRewardPoints = "dashboard/api/pauket/add-points"
