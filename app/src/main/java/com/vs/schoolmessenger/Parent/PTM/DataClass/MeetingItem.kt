@@ -10,4 +10,5 @@ data class MeetingItem(val id: String,
                        val staff_id: String,
                        val staff_name: String,
                        val subject_name: String,
-                       val staff_mobile_no: String?)
+                       val staff_mobile_no: String?,
+                       val meeting_url: String?)

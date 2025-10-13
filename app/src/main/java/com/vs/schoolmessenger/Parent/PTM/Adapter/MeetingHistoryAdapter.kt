@@ -20,12 +20,12 @@ import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
 import com.vs.schoolmessenger.R
 
 class MeetingHistoryAdapter(
-    private var items: MutableList<MeetingListItem>, // current displayed list
+    private var items: MutableList<MeetingListItem>,
     private val listener: OnCancelClickListener,
     private val onEmptyList: (Boolean) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private var fullList: MutableList<MeetingListItem> = ArrayList(items) // backup copy
+    private var fullList: MutableList<MeetingListItem> = ArrayList(items)
 
     companion object {
         private const val TYPE_HEADER = 0
@@ -132,29 +132,42 @@ class MeetingHistoryAdapter(
                 meeting.status.equals("Completed", true) -> {
                     cancelButton.visibility = View.GONE
                     callButton.visibility = View.GONE
+                    itemView.findViewById<View>(R.id.joinButton).visibility = View.GONE
                 }
+
                 meeting.mode.equals("In Person", true) -> {
                     cancelButton.visibility = View.VISIBLE
                     callButton.visibility = View.GONE
+                    itemView.findViewById<View>(R.id.joinButton).visibility = View.GONE
                 }
+
+                meeting.mode.equals("Phone Call", true) -> {
+                    cancelButton.visibility = View.VISIBLE
+                    callButton.visibility = View.VISIBLE
+                    itemView.findViewById<View>(R.id.joinButton).visibility = View.GONE
+                }
+
+                meeting.mode.equals("Virtual", true) -> {
+                    cancelButton.visibility = View.VISIBLE
+                    callButton.visibility = View.GONE
+                    itemView.findViewById<View>(R.id.joinButton).visibility = View.VISIBLE
+                }
+
                 else -> {
                     cancelButton.visibility = View.VISIBLE
                     callButton.visibility = View.VISIBLE
+                    itemView.findViewById<View>(R.id.joinButton).visibility = View.GONE
                 }
             }
 
+
             cancelButton.setOnClickListener {
                 val context = itemView.context
-                val dialogView = LayoutInflater.from(context)
-                    .inflate(R.layout.dialog_cancel_meeting, null)
-
+                val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_cancel_meeting, null)
                 val etReason = dialogView.findViewById<EditText>(R.id.etReason)
                 val btnCancelMeeting = dialogView.findViewById<Button>(R.id.btnCancelMeeting)
                 val ivClose = dialogView.findViewById<ImageView>(R.id.ivClose)
-
-                val alertDialog = AlertDialog.Builder(context)
-                    .setView(dialogView)
-                    .create()
+                val alertDialog = AlertDialog.Builder(context).setView(dialogView).create()
 
                 ivClose.setOnClickListener { alertDialog.dismiss() }
 
@@ -175,7 +188,6 @@ class MeetingHistoryAdapter(
             callButton.setOnClickListener {
                 val context = itemView.context
                 val phoneNumber = meeting.staff_mobile_no?.trim()?.takeIf { it.isNotEmpty() } ?: ""
-
                 if (phoneNumber.isNotEmpty()) {
                     try {
                         val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
@@ -191,8 +203,25 @@ class MeetingHistoryAdapter(
                 }
             }
 
-
+            val joinButton: Button = itemView.findViewById(R.id.joinButton)
+            joinButton.setOnClickListener {
+                val context = itemView.context
+                val url = meeting.meeting_url?.trim()
+                if (!url.isNullOrEmpty()) {
+                    try {
+                        val intent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
+                            data = android.net.Uri.parse(url)
+                        }
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "Unable to open meeting link", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "Meeting URL not available", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+
     }
 
     fun removeItem(position: Int) {

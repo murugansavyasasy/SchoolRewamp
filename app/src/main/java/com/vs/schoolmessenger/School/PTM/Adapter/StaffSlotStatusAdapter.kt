@@ -124,6 +124,7 @@ class StaffSlotStatusAdapter(
                     rltBookedBy.visibility = View.VISIBLE
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
                     imgDot.visibility = View.GONE
+
                 }
                 "Upcoming" -> {
                     rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
