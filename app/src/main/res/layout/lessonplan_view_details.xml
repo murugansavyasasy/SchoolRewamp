@@ -256,4 +256,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.0"/>
 
+
+    <ImageView
+        android:id="@+id/createlp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/addiconsvgformat"
+        android:contentDescription="@string/add"
+        android:padding="@dimen/ten"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/sixteen" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

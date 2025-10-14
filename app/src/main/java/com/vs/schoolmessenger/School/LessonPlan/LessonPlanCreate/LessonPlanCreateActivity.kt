@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.LessonPlan.LessonPlanEdit
+package com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreate
 
 import android.app.Activity
 import android.content.Intent
@@ -21,23 +21,22 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.EditClassData
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditClickListener
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreateModel.LessonPlanCreateClickListener
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreateModel.LessonPlanTemplate
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.LessonPlanEditBinding
+import com.vs.schoolmessenger.databinding.LessonPlanCreateBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 
-class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnClickListener,
-    LessonPlanEditClickListener {
+class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.OnClickListener, LessonPlanCreateClickListener {
 
-    override fun getViewBinding(): LessonPlanEditBinding {
-        return LessonPlanEditBinding.inflate(layoutInflater)
+    override fun getViewBinding(): LessonPlanCreateBinding {
+        return LessonPlanCreateBinding.inflate(layoutInflater)
     }
 
     private var appViewModel: App? = null
@@ -46,8 +45,8 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
     private var particularId: String = ""
     private var requestType: String = ""
     private var sectionSubjectId: String = ""
+    private lateinit var lessonplancreateAdapter: LessonPlanCreateAdapter
 
-    private lateinit var lessonplaneditAdapter: LessonPlanEditAdapter
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -56,25 +55,27 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.edit_lesson_plan)
+        binding.toolbarLayout.lblParentToolBar.text = "Create Lesson Plan"
         binding.toolbarLayout.lblSchoolName.apply {
             visibility = View.VISIBLE
             text = isStaffDetails?.school_name
         }
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.updatebutton.setOnClickListener(this)
-        binding.cancelbutton.setOnClickListener(this)
+
+
+
         sectionSubjectId = intent.getStringExtra(Constant.section_subject_id) ?: ""
         particularId = intent.getStringExtra(Constant.particular_id) ?: ""
         requestType = intent.getStringExtra(Constant.request_type) ?: ""
-        Log.d("particular_id", particularId)
-        Log.d("request_type", requestType)
-        appViewModel?.getlpeditReport?.observe(this) { response ->
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.createbutton.setOnClickListener(this)
+        binding.cancelbutton.setOnClickListener(this)
+
+
+        appViewModel?.getlpcreateReport?.observe(this) { response ->
             if (response?.status == true) {
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
@@ -88,8 +89,9 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
         }
         loadLessonPlanData()
 
-        appViewModel!!.isupdatelessonplan?.observe(this) { response ->
-            Constant.hideLoading(this@LessonPlanEditActivity)
+
+        appViewModel!!.iscreatelessonplan?.observe(this) { response ->
+            Constant.hideLoading(this@LessonPlanCreateActivity)
 
             if (response != null) {
                 if (response.status) {
@@ -109,23 +111,25 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
 
     }
 
-    private fun bindLessonPlanData(data: List<EditClassData>?) {
-        lessonplaneditAdapter = LessonPlanEditAdapter(
+
+    private fun bindLessonPlanData(data: List<LessonPlanTemplate>?) {
+        lessonplancreateAdapter = LessonPlanCreateAdapter(
             data ?: emptyList(), this, this, false, particularId, requestType
         )
-        binding.rcyLessonPlanEdit.adapter = lessonplaneditAdapter
+        binding.rcyLessonPlanEdit.adapter = lessonplancreateAdapter
     }
 
+
     private fun loadLessonPlanData() {
-        lessonplaneditAdapter = LessonPlanEditAdapter(
+        lessonplancreateAdapter = LessonPlanCreateAdapter(
             emptyList(), this, this, true, particularId, requestType
         )
         binding.rcyLessonPlanEdit.apply {
-            layoutManager = LinearLayoutManager(this@LessonPlanEditActivity)
+            layoutManager = LinearLayoutManager(this@LessonPlanCreateActivity)
             isNestedScrollingEnabled = false
-            adapter = lessonplaneditAdapter
+            adapter = lessonplancreateAdapter
         }
-        appViewModel?.getlpeditReport(isAccessToken ?: "", particularId, requestType, this)
+        appViewModel?.getlpcreateReport(isAccessToken ?: "", requestType, this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -133,7 +137,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
 
-            R.id.updatebutton -> {
+            R.id.createbutton -> {
                 showTopEditAlertPopup()
             }
             R.id.cancelbutton -> {
@@ -141,30 +145,6 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
             }
         }
     }
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun lessonplaneditupdate() {
-        val keyValueData = lessonplaneditAdapter.getUpdatedFieldsForApi()
-        if (keyValueData.length() == 0) {
-            Toast.makeText(this, getString(R.string.no_editable_data_to_update), Toast.LENGTH_SHORT).show()
-            return
-        }
-        val requestJson = JSONObject().apply {
-            put(APIKeyNames.particular_id, particularId)
-            put(APIKeyNames.key_value_data, keyValueData)
-        }
-        Log.d("LessonPlanUpdateRequest", requestJson.toString())
-        val requestBody = requestJson.toString()
-            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        appViewModel?.isupdatelessonplan(isAccessToken ?: "", requestBody, this)
-        Constant.showLoading(this@LessonPlanEditActivity)
-    }
-
-    fun lessonplaneditcancel() {
-        onBackPressed()
-    }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showTopEditAlertPopup() {
@@ -209,6 +189,35 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
             closePopup()
         }
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun lessonplaneditupdate() {
+        val keyValueData = lessonplancreateAdapter.getUpdatedFieldsForApi()
+
+        if (keyValueData.length() == 0) {
+            Toast.makeText(
+                this,
+                getString(R.string.no_editable_data_to_update),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val requestJson = JSONObject().apply {
+            put(APIKeyNames.section_subject_id, sectionSubjectId)
+            put(APIKeyNames.key_value_data, keyValueData)
+        }
+
+        Log.d("LessonPlanUpdateRequest", requestJson.toString())
+
+        val requestBody = requestJson.toString()
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+
+        appViewModel?.iscreatelessonplan(isAccessToken ?: "", requestBody, this)
+        Constant.showLoading(this@LessonPlanCreateActivity)
+    }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -269,6 +278,11 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
         }
         dimView.isFocusable = true
         dimView.isFocusableInTouchMode = true
+    }
+
+
+    fun lessonplaneditcancel() {
+        onBackPressed()
     }
 
 }

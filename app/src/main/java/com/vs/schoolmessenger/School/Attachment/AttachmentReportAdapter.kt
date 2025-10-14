@@ -123,6 +123,10 @@ class AttachmentReportAdapter(
         notifyItemRangeInserted(oldSize, newList.size)
     }
 
+    fun getCurrentListSize(): Int {
+        return filteredList!!.size
+    }
+
     fun getCurrentList(): List<AttachmentDataReport> {
         return filteredList
     }

@@ -78,6 +78,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSe
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import java.io.File
 import java.io.FileOutputStream
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -1685,8 +1686,16 @@ object Constant {
 
 
     fun formatChatDate(createdOn: String): String {
+        if (createdOn.isBlank()) {
+            return ""
+        }
+
         val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
-        val date = inputFormat.parse(createdOn) ?: return createdOn
+        val date: Date? = try {
+            inputFormat.parse(createdOn)
+        } catch (e: ParseException) {
+            return createdOn
+        } ?: return createdOn
 
         val now = Calendar.getInstance()
         val messageCal = Calendar.getInstance().apply { time = date }
@@ -1695,7 +1704,6 @@ object Constant {
         val daysDiff = TimeUnit.MILLISECONDS.toDays(diffMillis)
 
         return when {
-
             now.get(Calendar.YEAR) == messageCal.get(Calendar.YEAR) &&
                     now.get(Calendar.DAY_OF_YEAR) == messageCal.get(Calendar.DAY_OF_YEAR) -> {
                 SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
@@ -1704,7 +1712,6 @@ object Constant {
             daysDiff == 1L -> {
                 "1 day ago"
             }
-
 
             else -> {
                 SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)

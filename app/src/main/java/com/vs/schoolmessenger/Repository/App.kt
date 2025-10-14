@@ -74,8 +74,10 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Send
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetailsResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
+import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -101,6 +103,8 @@ import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubm
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreateModel.LessonPlanCreateResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreateModel.LessonPlanTemplateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanDeleteModel.LPDeleteResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
@@ -307,8 +311,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var getlpStaffReport: LiveData<AllClassResponse?>? = null
     var getlpViewReport: LiveData<LessonPlanViewSummaryResponse?>? = null
     var getlpeditReport: LiveData<LessonPlanEditResponse?>? = null
+    var getlpcreateReport: LiveData<LessonPlanTemplateResponse?>? = null
 
     var isupdatelessonplan: LiveData<LessonPlanUpdateResponse?>? = null
+    var iscreatelessonplan: LiveData<LessonPlanCreateResponse?>? = null
 
     var islessonplandelete: LiveData<LPDeleteResponse?>? = null
 
@@ -387,6 +393,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var getmysubmissionedit: LiveData<MySubmissionEditResponse?>? = null
     var ismysubmissiondelete: LiveData<MySubmissionDeleteResponse?>? = null
     var getchildhomeworkstandard: LiveData<ChildStandardResponse?>? = null
+    var getassignmentchildhomework: LiveData<AssignmentTargetDetailsResponse?>? = null
+    var getattachmentchildhomework: LiveData<AttachmentTargetDetailResponse?>? = null
     var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
         private set
 
@@ -470,10 +478,12 @@ class App(application: Application) : AndroidViewModel(application) {
         getleaverequest = apiSchoolRepositories.leaverequestLiveData
         isleaverequestapprove = apiSchoolRepositories.isleaverequestapproveLiveData
         isupdatelessonplan = apiSchoolRepositories.isupdatelessonplanLiveData
+        iscreatelessonplan = apiSchoolRepositories.iscreatelessonplanLiveData
 
         getlpStaffReport = apiSchoolRepositories.isgetlpStaffReportLiveData
         getlpViewReport = apiSchoolRepositories.isgetlpViewReportLiveData
         getlpeditReport = apiSchoolRepositories.isgetlpeditReportLiveData
+        getlpcreateReport = apiSchoolRepositories.isgetlpcreateReportLiveData
 
         islessonplandelete = apiSchoolRepositories.islessonplandeleteLiveData
 
@@ -550,6 +560,8 @@ class App(application: Application) : AndroidViewModel(application) {
         getmysubmissionedit = apiParentRepositories.getmysubmissioneditLiveData
         ismysubmissiondelete = apiParentRepositories.ismysubmissiondeleteLiveData
         getchildhomeworkstandard = apiSchoolRepositories.getchildhomeworkstandardLiveData
+        getassignmentchildhomework = apiSchoolRepositories.getassignmentchildhomeworkLiveData
+        getattachmentchildhomework = apiSchoolRepositories.getattachmentchildhomeworkLiveData
 
 
     }
@@ -904,12 +916,24 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getlpeditReport(isToken, particular_id, request_type, activity)
     }
 
+    fun getlpcreateReport(
+        isToken: String,request_type: String, activity: Activity
+    ) {
+
+        apiSchoolRepositories.getlpcreateReport(isToken, request_type, activity)
+    }
+
     fun isleaverequestapprove(isToken: String, request: LeaveApproveRequest, activity: Activity) {
         apiSchoolRepositories.isleaverequestapprove(isToken, request, activity)
     }
 
     fun isupdatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
         apiSchoolRepositories.isupdatelessonplan(isToken, requestBody, activity)
+    }
+
+
+    fun iscreatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
+        apiSchoolRepositories.iscreatelessonplan(isToken, requestBody, activity)
     }
 
     fun islessonplandelete(isToken: String, requestBody: RequestBody, activity: Activity) {
@@ -1409,6 +1433,16 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getchildhomeworkstandard(isToken: String, id: Int) {
         apiSchoolRepositories.getchildhomeworkstandard(isToken, id)
+    }
+
+
+    fun getassignmentchildhomework(isToken: String, id: Int, target_type : Int) {
+        apiSchoolRepositories.getassignmentchildhomework(isToken, id, target_type)
+    }
+
+
+    fun getattachmentchildhomework(isToken: String, id: Int, target_type : Int) {
+        apiSchoolRepositories.getattachmentchildhomework(isToken, id, target_type)
     }
 }
 

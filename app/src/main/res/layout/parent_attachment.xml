@@ -229,8 +229,28 @@
                     android:textSize="@dimen/fifteen_sp"
                     android:visibility="gone" />
 
-
             </LinearLayout>
+            <TextView
+                android:id="@+id/lblArchiveMsg"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/ten"
+                android:textColor="@color/PrimaryColor"
+                android:text="@string/underline_see_archived_messages"
+                android:layout_height="wrap_content">
+            </TextView>
+            <TextView
+                android:id="@+id/isArchiveErrorMsg"
+                android:gravity="center"
+                android:visibility="gone"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/fifteen_sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
         </LinearLayout>
     </ScrollView>
 

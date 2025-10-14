@@ -25,7 +25,6 @@ class ParentMeetingAdapter(
         val btnMeetingType: TextView = itemView.findViewById(R.id.btnMeetingType)
         val rvSlots: RecyclerView = itemView.findViewById(R.id.rvSlots)
         val tvProfileIcon: TextView = itemView.findViewById(R.id.tvProfileIcon)
-
         val imgMeetingType: ImageView = itemView.findViewById(R.id.imgMeetingType)
     }
 
@@ -37,21 +36,18 @@ class ParentMeetingAdapter(
 
     override fun onBindViewHolder(holder: ParentMeetingViewHolder, position: Int) {
         val meeting = meetings[position]
-
         holder.tvMeetingTitle.text = meeting.event_name
         holder.tvParentName.text = meeting.staff_name
         holder.tvSubject.text = meeting.subject_name
-
         val mode = meeting.slots.firstOrNull()?.event_mode ?: "Meeting"
         holder.btnMeetingType.text = mode
-
         val firstLetter = meeting.staff_name?.trim()?.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
         holder.tvProfileIcon.text = firstLetter
 
         val modeIconRes = when (mode.lowercase()) {
             "in person" -> R.drawable.person_white_bg
             "phone call" -> R.drawable.phone_icon_bg
-            "virtual" -> R.drawable.close_icon
+            "virtual" -> R.drawable.network
             else -> R.drawable.phone_icon_bg
         }
         holder.imgMeetingType.setImageResource(modeIconRes)
@@ -76,6 +72,5 @@ class ParentMeetingAdapter(
         slotAdapter.setSelectedSlot(meetingSelectedSlot)
         slotAdapter.setMyBookedSlot(myBookedSlot)
     }
-
     override fun getItemCount(): Int = meetings.size
 }

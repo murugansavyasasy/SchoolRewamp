@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class SelectedDatesAdapter(
-    private val dates: ArrayList<String>, // stored as "dd-MM-yyyy"
+    private val dates: ArrayList<String>,
     private val onRemove: (String) -> Unit
 ) : RecyclerView.Adapter<SelectedDatesAdapter.ViewHolder>() {
 
@@ -43,7 +43,7 @@ class SelectedDatesAdapter(
         holder.tvDate.text = formattedDate
 
         holder.btnRemove.setOnClickListener {
-            onRemove(rawDate) // pass original string back
+            onRemove(rawDate)
         }
     }
 

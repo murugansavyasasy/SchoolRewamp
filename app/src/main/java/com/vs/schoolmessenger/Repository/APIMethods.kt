@@ -104,7 +104,9 @@ object APIMethods {
     const val getlpStaffReport = "lms/api/lesson-plan/staff-report"
     const val getlpViewReport = "lms/api/lesson-plan/view"
     const val getlpeditReport = "lms/api/lesson-plan/get-data-for-edit"
+    const val getlpcreateReport = "lms/api/lesson-plan/get-data-for-add"
     const val isupdatelessonplan = "lms/api/lesson-plan/update"
+    const val iscreatelessonplan = "lms/api/lesson-plan/add"
     const val islessonplandelete = "lms/api/lesson-plan/delete"
     const val get_campaigns = "get_campaigns"
 
@@ -187,6 +189,8 @@ object APIMethods {
     const val fee_student_invoice = "fee/api/fee-details/student-invoice"
     const val fee_student_invoice_details = "fee/api/fee-details-invoice-details"
     const val childhomework_standard = "admin/api/school-event/target-details"
+    const val assignment_childhomework = "admin/api/school-event/target-details"
+    const val attachment_childhomework = "admin/api/attachment/target-details"
 
     const val getmysubmissionedit = "comm/api/assignment/update-submission"
     const val ismysubmissiondelete = "comm/api/assignment/delete-submission"
