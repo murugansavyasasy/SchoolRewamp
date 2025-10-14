@@ -616,7 +616,7 @@ interface ApiInterfaces {
     @GET(APIMethods.attachmentListArchive)
     fun attachmentListArchive(
         @Header(APIKeyNames.Authorization) token: String
-    ): Call<AttachmentResponse?>
+    ): Call<AttachmentReportResponse?>
 
     @POST(APIMethods.leave_request_apply)
     fun LeaveRequestApply(
