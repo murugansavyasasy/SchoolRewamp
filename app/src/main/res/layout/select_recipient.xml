@@ -450,16 +450,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/nomessage"
-            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/no_data_found"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nomessage" />
+         />
 
 
         <ImageView

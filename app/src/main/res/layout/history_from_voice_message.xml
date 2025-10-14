@@ -14,18 +14,7 @@
             android:layout_height="wrap_content"
             android:visibility="visible">
 
-            <ImageView
-                android:id="@+id/lblnewiconVoice"
-                android:layout_width="@dimen/eighty"
-                android:layout_height="@dimen/eighty"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/minus_twenty_two"
-                android:layout_marginEnd="@dimen/twenty_five"
-                android:elevation="@dimen/ten"
-                android:src="@drawable/new_icon"
-                android:visibility="gone">
 
-            </ImageView>
 
             <RelativeLayout
                 android:id="@+id/crla"
@@ -36,6 +25,18 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/rect_shadow_white"
                 android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/lblnewiconVoice"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_alignParentEnd="true"
+                    android:elevation="@dimen/ten"
+                    android:src="@drawable/new_icon1"
+                    android:visibility="gone">
+
+                </ImageView>
 
 
                 <RelativeLayout
@@ -237,17 +238,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/lblnewiconText"
-                android:layout_width="@dimen/seventy"
-                android:layout_height="@dimen/seventy"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/minus_fourteen"
-                android:layout_marginEnd="@dimen/twenty_five"
-                android:elevation="@dimen/ten"
-                android:src="@drawable/new_icon">
 
-            </ImageView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -256,6 +247,17 @@
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/rect_shadow_white">
+
+                <ImageView
+                    android:id="@+id/lblnewiconText"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_alignParentEnd="true"
+                    android:elevation="@dimen/ten"
+                    android:src="@drawable/new_icon1">
+
+                </ImageView>
 
                 <TextView
                     android:id="@+id/lblTitleText"

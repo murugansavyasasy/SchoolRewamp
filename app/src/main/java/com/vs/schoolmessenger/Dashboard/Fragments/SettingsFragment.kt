@@ -31,6 +31,7 @@ import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
 import com.vs.schoolmessenger.CommonScreens.WhatsNewActivity
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Faq
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
@@ -336,7 +337,13 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         rlaLogout.setOnClickListener {
             SharedPreference.putLogout(requireActivity(), true)
             SharedPreference.setLoggedIn(requireActivity(), false)
-            startActivity(Intent(requireActivity(), Login::class.java))
+
+            val intent = Intent(requireActivity(), Login::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            requireActivity().finish()
+
+//            startActivity(Intent(requireActivity(), Login::class.java))
         }
 
         val rootView = requireActivity().window.decorView.rootView

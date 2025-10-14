@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.QuizExam
 
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.QuizExam.Adapter.CompletedQuizAdapter
 import com.vs.schoolmessenger.Parent.QuizExam.Adapter.QuizUpcomingAdapter
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamListData
@@ -293,7 +295,13 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
         appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType)
     }
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 
     override fun onClick(v: View?) {
         if (v == null) return
