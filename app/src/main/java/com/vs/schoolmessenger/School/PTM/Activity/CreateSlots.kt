@@ -357,7 +357,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 jsonObject.addProperty("to_time", meetingData.toTime)
                 jsonObject.addProperty("duration", meetingData.slotDuration)
                 jsonObject.addProperty("event_link", meetingData.meetingLink)
-                jsonObject.addProperty("break_time", meetingData.breakDuration)
+                jsonObject.addProperty("break_time", meetingData.break_time)
                 jsonObject.addProperty("meeting_mode", meetingData.meetingMode)
 
 
@@ -405,7 +405,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
     fun isCreateSlots() {
         val jsonArray = JsonArray()
-        val meetingData = validateMeetingInputs() ?: return
+        val meetingData = validateMeetingInputs()
 
         for (i in isSlotCreateValues.indices) {
 
@@ -414,17 +414,17 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
             val jsonObject = JsonObject().apply {
                 addProperty("date", date)
-                addProperty("event_name", meetingData.purpose)
+                addProperty("event_name", meetingData!!.purpose)
                 addProperty("from_time", meetingData.fromTime)
                 addProperty("to_time", meetingData.toTime)
                 addProperty("duration", meetingData.slotDuration.toInt())
                 addProperty("event_link", meetingData.meetingLink)
-                addProperty("break_time", 0)
+                addProperty("break_time", isBreakDuration)
                 addProperty("meeting_mode", meetingData.meetingMode)
             }
 
             val isStdSecJsonArray = JsonArray()
-            for (section in meetingData.selectedSections) {
+            for (section in meetingData!!.selectedSections) {
                 val isStdSecJsonObject = JsonObject()
                 isStdSecJsonObject.addProperty("section_id", section.section_id)
                 isStdSecJsonObject.addProperty("class_id", section.class_id)
@@ -572,7 +572,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         if (isSlotDurationCustom) {
             isSlotDuration = binding.edtSlotCustomDuration.text.toString()
         }
-
         return MeetingCreationData(
             purpose = binding.edtPurPose.text.toString(),
             meetingMode = isMeetingMode,
@@ -583,7 +582,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             toTime = binding.lblToTime.text.toString(),
             slotDuration = isSlotDuration,
             slotsCount = binding.lblSlotsCount.text.toString(),
-            breakDuration = isBreakDuration
+            break_time = isBreakDuration
         )
     }
 
@@ -671,7 +670,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         binding.lblTwentyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         binding.lblThirtyMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
         isSelectedTextView.setBackgroundDrawable(this.getDrawable(R.drawable.green_bg_radius))
-        isBreakDuration = isSelectedTextView.text.toString()
+        val isBreak = isSelectedTextView.text.toString().split(" ")[0]
+        println(isBreak)
+        isBreakDuration = isBreak
     }
 
     private fun isChangeTheBackRound(isSelectedTextView: TextView) {

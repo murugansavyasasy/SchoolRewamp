@@ -475,7 +475,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                                 selectedIds,
                                 textData.isTitle,
                                 textData.isContent,
-                                Constant.isSchool
+                                isTargetType
                             )
                             appViewModel?.isSendText(isAccessToken!!, json, this)
                         }
