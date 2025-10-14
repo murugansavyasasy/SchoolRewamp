@@ -114,6 +114,8 @@
 
             <RelativeLayout
                 android:id="@+id/rytTitle"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -122,8 +124,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/ten"
+
                 android:text="@string/Catogory"
                 android:textSize="@dimen/fifteen_sp">
 
@@ -134,8 +135,6 @@
                     android:id="@+id/rytHistory"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/fifteen"
                     android:paddingHorizontal="@dimen/ten"
                     android:layout_width="wrap_content"
@@ -174,7 +173,7 @@
                 android:layout_below="@+id/rytTitle"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:background="@drawable/bg_white_light_radious"
+                android:background="@drawable/rect_shadow_white"
                 android:gravity="center">
 
 

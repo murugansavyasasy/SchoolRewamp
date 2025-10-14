@@ -158,8 +158,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
             R.id.lnrSaveContact -> {
                 checkContactPermission()
-//                val networkSpeedMonitor = NetworkSpeedMonitor(requireContext())
-//                networkSpeedMonitor.showNetworkSpeedPopup()
             }
         }
     }
@@ -232,9 +230,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
     private fun checkAndShowPopup() {
         val contacts = listOf(
-            Pair("New School Chimes", "9876543210"),
-            Pair("New School Chimes", "8765432109"),
-            Pair("New School Chimes", "7654321098")
+            Pair("New School Chimes", "0000000001"),
+            Pair("New School Chimes", "0000000002"),
+            Pair("New School Chimes", "0000000003"),
+            Pair("New School Chimes", "0000000004")
         )
 
         val missingContacts = contacts.filterNot { contactExists(it.second) }
