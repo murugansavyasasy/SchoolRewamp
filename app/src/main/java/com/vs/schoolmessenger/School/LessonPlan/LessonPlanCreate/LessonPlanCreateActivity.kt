@@ -95,12 +95,12 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
 
             if (response != null) {
                 if (response.status) {
-                    Log.d("UpdateSuccess", "Lesson plan updated successfully")
+                    Log.d("Created Successfully", "Lesson plan Created successfully")
                     showTopLessonPlanAlertPopup(response.message, this)
                 } else {
-                    Log.w("UpdateFailed", "Lesson plan update failed: ${response.message}")
+                    Log.w("Createfailed", "Lesson plan Create failed: ${response.message}")
                     showTopLessonPlanAlertPopup(
-                        response.message ?: "Update failed. Try again later.", this
+                        response.message ?: "Create failed. Try again later.", this
                     )
                 }
             } else {
@@ -197,8 +197,7 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
 
         if (keyValueData.length() == 0) {
             Toast.makeText(
-                this,
-                getString(R.string.no_editable_data_to_update),
+                this, "No data to update",
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -209,7 +208,7 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
             put(APIKeyNames.key_value_data, keyValueData)
         }
 
-        Log.d("LessonPlanUpdateRequest", requestJson.toString())
+        Log.d("LessonPlanCreateRequest", requestJson.toString())
 
         val requestBody = requestJson.toString()
             .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())

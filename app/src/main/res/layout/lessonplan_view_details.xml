@@ -221,23 +221,24 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rytSearch1"
         android:id="@+id/rcyLessonViewPlan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/sixteen"
+        app:layout_constraintTop_toBottomOf="@id/rytSearch1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/nomessage"
         android:layout_width="@dimen/two_fifty"
         android:layout_height="@dimen/two_fifty"
-        android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/no_lessonplan_message"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/rcyLessonViewPlan"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -252,10 +253,7 @@
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/nomessage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0"/>
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/createlp"

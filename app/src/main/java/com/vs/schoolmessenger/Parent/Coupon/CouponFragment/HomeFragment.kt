@@ -97,14 +97,16 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
 
 
         appViewModel.isGetPauketPoints?.observe(viewLifecycleOwner) { response ->
-            val remainingPoints = response?.data?.firstOrNull()?.remaining ?: 0
-            val spentPoints = response?.data?.firstOrNull()?.spent ?: 0
-            val earnedPoints = response?.data?.firstOrNull()?.earned ?: 0
-            val pointspercoupon = response?.data?.firstOrNull()?.per_coupon ?: 0
+            remainingPoints = response?.data?.firstOrNull()?.remaining ?: 0
+            spentPoints = response?.data?.firstOrNull()?.spent ?: 0
+            earnedPoints = response?.data?.firstOrNull()?.earned ?: 0
+            pointspercoupon = response?.data?.firstOrNull()?.per_coupon ?: 0
+
             binding.totalcoins.text = "$earnedPoints"
             binding.usedcoins.text = "${getString(R.string.Used)} : $spentPoints"
             binding.availablecoins.text = "${getString(R.string.Available)} : $remainingPoints"
         }
+
 
 
         binding.editSearch.addTextChangedListener(object : TextWatcher {
@@ -208,6 +210,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             remainingPoints,
             pointspercoupon
         )
+
         binding.recyclerView.adapter = summaryadapter
     }
 
