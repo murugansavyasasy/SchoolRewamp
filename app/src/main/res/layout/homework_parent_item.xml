@@ -19,12 +19,11 @@
 
     <View
         android:id="@+id/redDot"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
         android:layout_marginStart="@dimen/five"
         android:layout_alignParentEnd="true"
         android:visibility="gone"
-        android:layout_marginTop="-25dp"
         android:background="@drawable/new_icon1" />
 
     <TextView

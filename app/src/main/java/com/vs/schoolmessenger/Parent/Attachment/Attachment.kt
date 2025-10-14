@@ -59,7 +59,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
-        binding.lblArchiveMsg.setOnClickListener(this)
+//        binding.lblArchiveMsg.setOnClickListener(this)
         binding.lblHeaderTitle.text=Constant.isParentMenuName
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
             if (binding.rytSearch1.visibility == View.VISIBLE) {
@@ -257,7 +257,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
             R.id.lblArchiveMsg->{
                 isGetAttachmentArchive()
-                binding.lblArchiveMsg.visibility=View.GONE
+//                binding.lblArchiveMsg.visibility=View.GONE
             }
         }
     }

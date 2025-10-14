@@ -1005,10 +1005,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         }
 
         okButton.setOnClickListener {
-            val fragment = ParentProfileRewampFragment()
-            (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment).addToBackStack(null).commit()
-
             closePopup()
         }
 
@@ -1036,6 +1032,4 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
         }
     }
-
-
 }

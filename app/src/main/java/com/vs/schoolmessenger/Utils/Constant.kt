@@ -702,8 +702,8 @@ object Constant {
     var add_points_edit_lesson_plan = "EDIT_LESSONPLAN"
     var add_points_mark_attendance = "MARK_ATTENDANCE"
     var add_points_send_ptm = "SEND_PTM"
-    var user_type_as_parent = "1"
-    var user_type_as_staff = "2"
+    var user_type_as_parent = 1
+    var user_type_as_staff = 2
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
