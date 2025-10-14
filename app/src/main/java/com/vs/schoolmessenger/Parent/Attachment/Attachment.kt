@@ -59,6 +59,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
+//        binding.lblArchiveMsg.setOnClickListener(this)
         binding.lblHeaderTitle.text=Constant.isParentMenuName
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
             if (binding.rytSearch1.visibility == View.VISIBLE) {
@@ -99,6 +100,54 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 binding.txtSearchMenu1.clearFocus()
                 true
             } else false
+        }
+
+        appViewModel?.isAttachmentResponseArchive?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    if(response.data.isNotEmpty()){
+                        mAttachmentReportAdapter!!.AppendData(response.data)
+
+                        binding.txtSearchMenu1.text.clear()
+                        binding.isArchiveErrorMsg.visibility=View.GONE
+                    }
+                    else{
+                        binding.isArchiveErrorMsg.visibility=View.VISIBLE
+                        binding.isArchiveErrorMsg.text=response.message
+                        if(mAttachmentReportAdapter!!.getCurrentListSize()==0){
+                            binding.txtNoData.visibility=View.GONE
+                            binding.rytSearch1.visibility = View.GONE
+                            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                            binding.txtSearchMenu1.text.clear()
+                        }else{
+                            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                        }
+                    }
+                }
+                else {
+                    binding.isArchiveErrorMsg.visibility=View.VISIBLE
+                    binding.isArchiveErrorMsg.text=response.message
+                    if(mAttachmentReportAdapter!!.getCurrentListSize()==0){
+                        binding.txtNoData.visibility=View.GONE
+                        binding.rytSearch1.visibility = View.GONE
+                        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                        binding.txtSearchMenu1.text.clear()
+                    }else{
+                        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                    }
+                }
+            } else {
+                binding.isArchiveErrorMsg.visibility=View.VISIBLE
+                binding.isArchiveErrorMsg.text=getString(R.string.something_went_wrong_please_try_again_later)
+                if(mAttachmentReportAdapter!!.getCurrentListSize()==0){
+                    binding.txtNoData.visibility=View.GONE
+                    binding.rytSearch1.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.txtSearchMenu1.text.clear()
+                }else{
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                }
+            }
         }
 
         appViewModel?.isAttachmentResponse?.observe(this) { response ->
@@ -159,6 +208,10 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         appViewModel?.getAttachment(isAccessToken.orEmpty(), this)
     }
 
+    private fun isGetAttachmentArchive() {
+        appViewModel?.getAttachmentArchive(isAccessToken.orEmpty(), this)
+    }
+
     private fun showEmptyState(message: String) {
         binding.recycleracademic.visibility = View.GONE
         binding.nomessage.visibility = View.VISIBLE
@@ -201,6 +254,11 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun onClick(v: View?) {
         when (v?.id) {
+
+            R.id.lblArchiveMsg->{
+                isGetAttachmentArchive()
+//                binding.lblArchiveMsg.visibility=View.GONE
+            }
         }
     }
 
@@ -229,6 +287,13 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             addProperty(APIKeyNames.type, Constant.ATTACHMENT)
             addProperty(APIKeyNames.detail_id, isData[isPosition].id)
         }
-        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+
+        if (isData[isPosition].is_archive){
+            appViewModel?.isUpdateStatusArchive(isAccessToken!!, jsonObject, this)
+        }
+        else{
+            appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
+
+        }
     }
 }

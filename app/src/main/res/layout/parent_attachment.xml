@@ -185,9 +185,9 @@
         android:id="@+id/recycleracademic"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-    android:layout_marginStart="@dimen/five"
-    android:layout_marginTop="@dimen/ten"
-    android:layout_marginEnd="@dimen/five" />
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/five" />
 
 
     <LinearLayout
@@ -223,6 +223,17 @@
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/isArchiveErrorMsg"
+            android:gravity="center"
+            android:visibility="gone"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textSize="@dimen/fifteen_sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
 
 
     </LinearLayout>

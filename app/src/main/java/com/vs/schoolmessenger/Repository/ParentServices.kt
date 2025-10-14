@@ -63,7 +63,7 @@ class ParentServices {
     var client_auth: RestClient
     var isChildAttendanceReport: MutableLiveData<ChildAttendanceResponse?>
     var isAttachmentResponse: MutableLiveData<AttachmentReportResponse?>
-    var isAttachmentResponseArchive: MutableLiveData<AttachmentResponse?>
+    var isAttachmentResponseArchive: MutableLiveData<AttachmentReportResponse?>
     var isLeaveRequestApplyResponse: MutableLiveData<LeaveRequestApplyResponse?>
     var isCertificatetypes: MutableLiveData<CertificatesTypesResponse?>
     var isNotificationResponse: MutableLiveData<NotificationResponse?>
@@ -245,10 +245,10 @@ class ParentServices {
         activity: Activity
     ) {
         RestClient.apiInterfaces.attachmentListArchive(isToken)
-            ?.enqueue(object : Callback<AttachmentResponse?> {
+            ?.enqueue(object : Callback<AttachmentReportResponse?> {
                 override fun onResponse(
-                    call: Call<AttachmentResponse?>,
-                    response: Response<AttachmentResponse?>
+                    call: Call<AttachmentReportResponse?>,
+                    response: Response<AttachmentReportResponse?>
                 ) {
                     Log.d(
                         "GetChildAttendanceReportData Response",
@@ -269,7 +269,7 @@ class ParentServices {
                 }
 
                 override fun onFailure(
-                    call: Call<AttachmentResponse?>,
+                    call: Call<AttachmentReportResponse?>,
                     t: Throwable
                 ) {
                     isAttachmentResponseArchive.postValue(null)
@@ -278,7 +278,7 @@ class ParentServices {
             })
     }
 
-    val isAttachmentResponseArchiveLiveData: LiveData<AttachmentResponse?>
+    val isAttachmentResponseArchiveLiveData: LiveData<AttachmentReportResponse?>
         get() = isAttachmentResponseArchive
 
 

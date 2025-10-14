@@ -120,51 +120,59 @@
 
                 <!-- Center layout -->
                 <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/lytList2"
                     android:layout_below="@id/rcMessageStaff"
-                    android:id="@+id/lytList"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:visibility="gone">
+                    >
 
-                    <ImageView
-                        android:id="@+id/noDataImage"
-                        android:layout_width="@dimen/two_hundred"
-                        android:layout_height="@dimen/two_hundred"
-                        android:src="@drawable/no_data_found" />
+                    <LinearLayout
+                        android:id="@+id/lytList"
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/noDataImage"
+                            android:layout_width="@dimen/two_hundred"
+                            android:layout_height="@dimen/two_hundred"
+                            android:src="@drawable/no_data_found" />
 
+                        <TextView
+                            android:id="@+id/txtNoData"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_data"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:layout_marginTop="@dimen/ten"/>
+                    </LinearLayout>
                     <TextView
-                        android:id="@+id/txtNoData"
+                        android:id="@+id/isArchiveErrorMsg"
+                        android:layout_below="@+id/lblArchiveMsg"
+                        android:gravity="center"
+                        android:visibility="gone"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_data"
                         android:textSize="@dimen/fifteen_sp"
-                        android:layout_marginTop="@dimen/ten"/>
-                </LinearLayout>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
+                    </TextView>
+                </LinearLayout>
                 <TextView
                     android:id="@+id/lblArchiveMsg"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_below="@+id/lytList"
+                    android:layout_below="@+id/lytList2"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/five"
                     android:layout_alignParentEnd="true"
                     android:textColor="@color/PrimaryColor"
                     android:text="@string/underline_see_archived_messages"
                     android:layout_height="wrap_content">
-                </TextView>
-                <TextView
-                    android:id="@+id/isArchiveErrorMsg"
-                    android:layout_below="@+id/lblArchiveMsg"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/fifteen_sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
                 </TextView>
             </RelativeLayout>
         </ScrollView>

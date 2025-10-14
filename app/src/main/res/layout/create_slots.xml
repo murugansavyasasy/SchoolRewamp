@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/cltDateSelection"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/one_thirty"
+        android:layout_height="@dimen/hundred"
         android:background="@drawable/bottom_right_left_radious">
 
         <ImageView
@@ -40,19 +40,9 @@
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textSize="@dimen/thirteen_sp">
+        </TextView>
 
-        <TextView
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblSchoolName"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text="Create Meeting"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sixteen"></TextView>
     </RelativeLayout>
 
     <ScrollView

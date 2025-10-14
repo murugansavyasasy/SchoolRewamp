@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
+import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Locale
@@ -115,6 +116,15 @@ class AttachmentReportAdapter(
                 }
             }
         }
+    }
+    fun AppendData(newList: List<AttachmentDataReport>) {
+        val oldSize = filteredList!!.size
+        filteredList = filteredList!!.toMutableList().apply { addAll(newList) }
+        notifyItemRangeInserted(oldSize, newList.size)
+    }
+
+    fun getCurrentListSize(): Int {
+        return filteredList!!.size
     }
 
     fun getCurrentList(): List<AttachmentDataReport> {
@@ -241,6 +251,8 @@ class AttachmentReportAdapter(
             )
         }
     }
+
+
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
