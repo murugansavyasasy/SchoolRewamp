@@ -112,10 +112,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         isMenuCount=Constant.isSchoolMenuCount
-//        setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
-
-
-//        isGetMessageFromStaff()
 
         appViewModel?.isGetMessageStaff?.observe(this) { response ->
             if (response != null) {
