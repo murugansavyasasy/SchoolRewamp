@@ -113,7 +113,7 @@
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/fifteen"
                         android:text="10 minutes"
-                        android:textSize="@dimen/fifteen_sp">
+                        android:textSize="@dimen/fourteen_sp">
                     </TextView>
                 </RelativeLayout>
                 <RelativeLayout
@@ -141,20 +141,20 @@
                     <TextView
                         android:id="@+id/lblTime"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imgTime"
                         android:layout_marginTop="@dimen/fifteen"
-                        android:layout_marginEnd="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/ten"
                         android:text="03:00 PM to 05:00 PM"
-                        android:textSize="@dimen/fifteen_sp">
+                        android:textSize="@dimen/fourteen_sp">
                     </TextView>
                     <ImageView
                         android:id="@+id/imgMode"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_below="@id/lblTime"
-                        android:layout_marginTop="@dimen/twenty_five"
+                        android:layout_marginTop="@dimen/twenty_seven"
                         android:adjustViewBounds="true"
                         android:src="@drawable/person_2_fill" />
                     <TextView
