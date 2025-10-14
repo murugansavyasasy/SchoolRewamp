@@ -212,4 +212,21 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         Log.d("request_type", requestType)
         startActivity(intent)
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (Constant.user_details!!.staff_role == "p3") {
+            binding.lnrTabOneName.visibility = View.GONE
+            binding.line1.visibility = View.GONE
+            binding.line2.visibility = View.GONE
+            binding.tabTwoName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+            binding.tabTwoName.gravity = Gravity.START
+            loadlpAllClassdata(Constant.myclass)
+        } else {
+            binding.lnrTabOneName.visibility = View.VISIBLE
+            binding.line1.visibility = View.VISIBLE
+            loadlpAllClassdata(Constant.allclass)
+        }
+
+    }
 }

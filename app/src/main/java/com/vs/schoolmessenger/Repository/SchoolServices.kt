@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearRes
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
+import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
@@ -213,6 +214,7 @@ class SchoolServices {
     var getchildhomeworkstandard: MutableLiveData<ChildStandardResponse?>
     var getassignmentchildhomework: MutableLiveData<AssignmentTargetDetailsResponse?>
     var getattachmentchildhomework: MutableLiveData<AttachmentTargetDetailResponse?>
+    var getdashboardnewupdates: MutableLiveData<WhatsNewUpdateResponse?>
 
 
     init {
@@ -323,6 +325,7 @@ class SchoolServices {
         isGetMessageFromStaffArchive= MutableLiveData()
 
         getattachmentchildhomework= MutableLiveData()
+        getdashboardnewupdates= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4138,4 +4141,45 @@ class SchoolServices {
 
     val getattachmentchildhomeworkLiveData: LiveData<AttachmentTargetDetailResponse?>
         get() = getattachmentchildhomework
+
+
+
+    fun getdashboardnewupdates(
+        isToken: String,
+        role_type: String
+    ) {
+        RestClient.apiInterfaces.getdashboardnewupdates(isToken,role_type)
+            ?.enqueue(object : Callback<WhatsNewUpdateResponse?> {
+                override fun onResponse(
+                    call: Call<WhatsNewUpdateResponse?>, response: Response<WhatsNewUpdateResponse?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getdashboardnewupdates.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getdashboardnewupdates.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<WhatsNewUpdateResponse?>, t: Throwable
+                ) {
+                    getdashboardnewupdates.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getdashboardnewupdatesLiveData: LiveData<WhatsNewUpdateResponse?>
+        get() = getdashboardnewupdates
 }

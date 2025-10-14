@@ -88,6 +88,7 @@ object APIKeyNames {
     const val file_name = "file_name"
     const val is_schedule = "is_schedule"
     const val target_type = "target_type"
+    const val role_type = "role_type"
     const val target_code = "target_code"
     const val intended_for = "intended_for"
     const val visible_from = "visible_from"

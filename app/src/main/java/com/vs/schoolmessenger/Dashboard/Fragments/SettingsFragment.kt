@@ -30,7 +30,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
-import com.vs.schoolmessenger.CommonScreens.WhatsNewActivity
+import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewActivity
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Faq
