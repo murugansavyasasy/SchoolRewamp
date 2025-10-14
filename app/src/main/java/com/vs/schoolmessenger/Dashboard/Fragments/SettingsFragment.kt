@@ -342,7 +342,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             startActivity(intent)
             requireActivity().finish()
 
-//            startActivity(Intent(requireActivity(), Login::class.java))
         }
 
         val rootView = requireActivity().window.decorView.rootView
