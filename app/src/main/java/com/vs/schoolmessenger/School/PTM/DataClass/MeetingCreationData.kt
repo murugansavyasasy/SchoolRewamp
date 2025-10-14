@@ -15,5 +15,5 @@ data class MeetingCreationData(
     val toTime: String,
     val slotDuration: String,
     val slotsCount: String?,
-    val breakDuration: String?
+    val break_time: String?
 ) : Parcelable
