@@ -5,6 +5,7 @@ import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,10 +70,11 @@ class LessonPlanCreateAdapter(
         val jsonArray = JSONArray()
         itemList?.forEach { data ->
             val obj = JSONObject()
-            obj.put(Constant.field_id, data.field_id)
+            obj.put(Constant.field_id, data.id)
             obj.put(Constant.value, data.value ?: "")
             jsonArray.put(obj)
         }
+        Log.d("LessonPlanAdapter", "Payload JSON: $jsonArray")
         return jsonArray
     }
 

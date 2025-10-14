@@ -291,7 +291,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isTimeTabletList: LiveData<TimeTableResponse?>? = null
 
     var isAttachmentResponse: LiveData<AttachmentReportResponse?>? = null
-    var isAttachmentResponseArchive: LiveData<AttachmentResponse?>? = null
+    var isAttachmentResponseArchive: LiveData<AttachmentReportResponse?>? = null
 
     var getabsenteescountbydate: LiveData<AbsenteesResponse?>? = null
 

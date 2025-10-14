@@ -16,6 +16,7 @@ data class AttachmentDataReport(
     val sent_by: String,
     val thumbnail: String,
     var is_unread: Boolean,
+    var is_archive: Boolean,
     val can_edit: Boolean,
     val can_delete: Boolean,
     val file_path: List<AttachmentFilePath>

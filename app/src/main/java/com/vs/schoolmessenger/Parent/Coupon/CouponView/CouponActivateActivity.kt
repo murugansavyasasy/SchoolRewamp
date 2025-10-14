@@ -94,6 +94,9 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         remainingPoints = intent.getIntExtra(Constant.remainingPoints, 0)
         pointspercoupon = intent.getIntExtra(Constant.pointspercoupon, 0)
 
+        Log.d("pointspercoupon",pointspercoupon.toString())
+        Log.d("remainingPoints",remainingPoints.toString())
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
 
@@ -154,6 +157,7 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
 
 
         binding.btnActivateCoupon.setOnClickListener {
+
             if (remainingPoints < pointspercoupon || remainingPoints == 0) {
                 Toast.makeText(
                     this@CouponActivateActivity,

@@ -97,7 +97,7 @@
                         android:id="@+id/totalcoins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="54800"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/sixteen_sp"
                         android:textStyle="bold" />
@@ -111,7 +111,7 @@
                             android:id="@+id/usedcoins"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Used : 17000"
+                            android:text="Used : "
                             android:textColor="@color/light_gray_6"
                             android:textSize="@dimen/fourteen_sp"
                             android:textStyle="normal" />
@@ -121,7 +121,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Available : 37800"
+                            android:text="Available : "
                             android:textColor="@color/light_gray_6"
                             android:textSize="@dimen/fourteen_sp"
                             android:textStyle="normal" />

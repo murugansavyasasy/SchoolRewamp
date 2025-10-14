@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_header_rounded"
         android:paddingTop="@dimen/twenty"
-        android:paddingBottom="@dimen/twenty"
+        android:paddingBottom="@dimen/fifteen"
         >
 
         <ImageView

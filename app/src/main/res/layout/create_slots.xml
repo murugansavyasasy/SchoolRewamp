@@ -40,24 +40,9 @@
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
             android:textColor="@color/white"
-<<<<<<< HEAD
             android:textSize="@dimen/thirteen_sp">
         </TextView>
-=======
-            android:textSize="@dimen/thirteen_sp"></TextView>
 
-        <TextView
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblSchoolName"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text="Create Meeting"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sixteen"></TextView>
->>>>>>> 6825bde3c63fbeaef5944ec7580ddf379ebc7dc3
     </RelativeLayout>
 
     <ScrollView
