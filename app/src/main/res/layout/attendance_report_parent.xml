@@ -130,7 +130,6 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-
         android:id="@+id/rcyAttendanceReport"
         android:layout_below="@+id/rytSearch"
         android:layout_marginStart="@dimen/ten"
@@ -143,10 +142,11 @@
 
 
     <LinearLayout
+        android:gravity="center"
         android:id="@+id/lytList"
         android:layout_marginTop="@dimen/ten"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/rytSearch"
         android:orientation="vertical"
         android:visibility="gone">

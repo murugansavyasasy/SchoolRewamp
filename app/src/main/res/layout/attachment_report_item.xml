@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/rytHeader"
-    android:layout_margin="@dimen/five"
+    android:layout_marginHorizontal="@dimen/five"
+    android:layout_marginBottom="@dimen/five"
     android:background="@color/white"
     android:layout_height="wrap_content">
 

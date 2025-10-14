@@ -120,6 +120,9 @@ class AttachmentReportAdapter(
     fun AppendData(newList: List<AttachmentDataReport>) {
         val oldSize = filteredList!!.size
         filteredList = filteredList!!.toMutableList().apply { addAll(newList) }
+        originalList=ArrayList(filteredList)
+        Log.d("FinalList",originalList.size.toString())
+        Log.d("FinalList",filteredList.size.toString())
         notifyItemRangeInserted(oldSize, newList.size)
     }
 

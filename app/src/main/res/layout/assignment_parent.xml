@@ -70,9 +70,10 @@
         <LinearLayout
             android:id="@+id/lytList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/rcyAssignment"
             android:orientation="vertical"
+            android:gravity="center"
             android:visibility="gone">
 
             <ImageView
@@ -80,7 +81,6 @@
                 android:layout_width="@dimen/two_fifty"
                 android:layout_height="@dimen/two_fifty"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/twenty"
                 android:src="@drawable/no_assignment_message"
                 />
 
@@ -90,7 +90,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/twenty"
                 android:text="@string/no_list_found"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp" />

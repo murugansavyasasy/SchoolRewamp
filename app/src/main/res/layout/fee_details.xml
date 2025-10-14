@@ -149,10 +149,11 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:layout_below="@+id/rytSearch1"
             android:id="@+id/lytList"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ImageView
@@ -161,7 +162,6 @@
                 android:layout_height="@dimen/two_fifty"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/twenty"
                 android:src="@drawable/no_fee_pending_message"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"

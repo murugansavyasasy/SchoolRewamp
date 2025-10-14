@@ -64,6 +64,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var userDetails: UserDetails? = null
     private var updateRunnable: Runnable? = null
     var isMenuCount=-1
+    private var isDialogShowing = false
+
 
     var TYPE: String? = ""
     var selectedSchoolId=""
@@ -123,7 +125,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             if (response != null) {
                 if (response.status) {
                     binding.rcMessageStaff.visibility = View.VISIBLE
-                    binding.lytList2.visibility = View.GONE
+//                    binding.lytList2.visibility = View.GONE
                     binding.lytList.visibility = View.GONE
                     isLoadMsgStaff(response.data)
                     completeAttachmentList=response.data
@@ -134,7 +136,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.rytSearch1.visibility = View.GONE
                     binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                     binding.rcMessageStaff.visibility = View.GONE
-                    binding.lytList2.visibility = View.VISIBLE
+//                    binding.lytList2.visibility = View.VISIBLE
                     ErrorMessage(response.message)
                 }
             } else {
@@ -143,7 +145,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 binding.rytSearch1.visibility = View.GONE
                 binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                 binding.rcMessageStaff.visibility = View.GONE
-                binding.lytList2.visibility = View.VISIBLE
+//                binding.lytList2.visibility = View.VISIBLE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
             }
         }
@@ -156,6 +158,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                        updatedList.addAll(response.data)
                        completeAttachmentList = updatedList
                        isMsgStaff=completeAttachmentList
+
                        // Reinitialize adapter if shimmer was active
                        if (!::adapter.isInitialized || adapter.getItemViewType(0) == 0) {
                            adapter = MessageFromStaffAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
@@ -179,8 +182,19 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                            adapter.AppendData(response.data)
                        }
 
+                       if(adapter!!.getCurrentListSize()>0){
+                           binding.rytSearch1.visibility = View.GONE
+                           binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                           binding.txtSearch1.text.clear()
+                       }
+                       else{
+                           binding.rytSearch1.visibility = View.GONE
+                           binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                           binding.txtSearch1.text.clear()
+                       }
+
                        ShowData()
-                       binding.lytList2.visibility = View.GONE
+//                       binding.lytList2.visibility = View.GONE
                        binding.txtSearch1.text.clear()
                        binding.isArchiveErrorMsg.visibility=View.GONE
                    }
@@ -188,7 +202,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                        binding.isArchiveErrorMsg.visibility=View.VISIBLE
                        binding.isArchiveErrorMsg.text=response.message
                        if(adapter.getCurrentListSize()==0){
-                           binding.lytList2.visibility = View.VISIBLE
+//                           binding.lytList2.visibility = View.VISIBLE
                            binding.lytList.visibility = View.VISIBLE
                            binding.txtNoData.visibility=View.GONE
                            binding.rytSearch1.visibility = View.GONE
@@ -196,7 +210,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                            binding.txtSearch1.text.clear()
 
                        }else{
-                           binding.lytList2.visibility = View.VISIBLE
+//                           binding.lytList2.visibility = View.VISIBLE
                            binding.lytList.visibility = View.GONE
                            // Set top margin to 15dp dynamically
                            val layoutParams = binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
@@ -215,7 +229,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.isArchiveErrorMsg.visibility=View.VISIBLE
                     binding.isArchiveErrorMsg.text=response.message
                     if(adapter.getCurrentListSize()==0){
-                        binding.lytList2.visibility = View.VISIBLE
+//                        binding.lytList2.visibility = View.VISIBLE
                         binding.lytList.visibility = View.VISIBLE
                         binding.txtNoData.visibility=View.GONE
                         binding.rytSearch1.visibility = View.GONE
@@ -223,7 +237,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         binding.txtSearch1.text.clear()
 
                     }else{
-                        binding.lytList2.visibility = View.VISIBLE
+//                        binding.lytList2.visibility = View.VISIBLE
                         binding.lytList.visibility = View.GONE
                         // Set top margin to 15dp dynamically
                         val layoutParams = binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
@@ -241,14 +255,14 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 binding.isArchiveErrorMsg.visibility=View.VISIBLE
                 binding.isArchiveErrorMsg.text=getString(R.string.something_went_wrong_please_try_again_later)
                 if(adapter.getCurrentListSize()==0){
-                    binding.lytList2.visibility = View.VISIBLE
+//                    binding.lytList2.visibility = View.VISIBLE
                     binding.lytList.visibility = View.VISIBLE
                     binding.txtNoData.visibility=View.GONE
                     binding.rytSearch1.visibility = View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.txtSearch1.text.clear()
                 }else{
-                    binding.lytList2.visibility = View.VISIBLE
+//                    binding.lytList2.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                 }
@@ -390,13 +404,13 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         // 🔹 Update UI
         if (filteredList.isNotEmpty()) {
-            binding.lytList2.visibility = View.GONE
+//            binding.lytList2.visibility = View.GONE
             ShowData()
             adapter.updateData(filteredList)
         } else {
             binding.rlaMessageFFromStaff.visibility = View.VISIBLE
             binding.rcMessageStaff.visibility = View.GONE
-            binding.lytList2.visibility = View.VISIBLE
+//            binding.lytList2.visibility = View.VISIBLE
             ErrorMessage(getString(R.string.no_data_found))
         }
     }
@@ -476,7 +490,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         activity: Activity,
         data: GetMessagesStaffData
     ) {
-        if (activity.isFinishing || activity.isDestroyed) return
+        if (isDialogShowing ||activity.isFinishing || activity.isDestroyed) return
+        isDialogShowing = true
+
 
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.msg_from_staff_preview, null)
         val builder = AlertDialog.Builder(activity).setView(dialogView)
@@ -584,6 +600,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         imgBack.setOnClickListener {
             releaseMediaPlayer()
+            isDialogShowing = false
             alertDialog.dismiss()
         }
     }
@@ -615,6 +632,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 onBackPressed()
             }
             R.id.lblArchiveMsg->{
+                binding.txtSearch1.text.clear()
                 isGetMessageFromStaffArchive()
                 binding.lblArchiveMsg.visibility=View.GONE
             }

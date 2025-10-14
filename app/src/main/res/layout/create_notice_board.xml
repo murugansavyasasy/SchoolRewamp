@@ -257,8 +257,8 @@
 
                                 <androidx.cardview.widget.CardView
                                     android:id="@+id/cardStart"
-                                    android:layout_width="@dimen/hundred"
-                                    android:layout_height="@dimen/hundred"
+                                    android:layout_width="@dimen/eighty"
+                                    android:layout_height="@dimen/eighty"
                                     app:cardCornerRadius="@dimen/ten">
 
                                     <LinearLayout
@@ -286,7 +286,7 @@
                                                 android:layout_marginBottom="@dimen/three"
                                                 android:text="@string/from"
                                                 android:textColor="@color/white"
-                                                android:textSize="@dimen/fifteen_sp" />
+                                                android:textSize="@dimen/thirteen_sp" />
 
                                         </LinearLayout>
 
@@ -303,7 +303,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:text="12"
-                                                android:textSize="@dimen/fifteen_sp" />
+                                                android:textSize="@dimen/thirteen_sp" />
 
                                             <TextView
                                                 android:id="@+id/txtStartDate"
@@ -313,7 +313,7 @@
                                                 android:layout_marginTop="@dimen/three"
                                                 android:text="Fri, Jun 2025"
                                                 android:textColor="@color/grey"
-                                                android:textSize="12sp" />
+                                                android:textSize="@dimen/ten_sp" />
                                         </LinearLayout>
 
                                     </LinearLayout>
@@ -337,8 +337,8 @@
 
                                 <androidx.cardview.widget.CardView
                                     android:id="@+id/cardEnd"
-                                    android:layout_width="@dimen/hundred"
-                                    android:layout_height="@dimen/hundred"
+                                    android:layout_width="@dimen/eighty"
+                                    android:layout_height="@dimen/eighty"
                                     app:cardCornerRadius="@dimen/ten">
 
                                     <LinearLayout
@@ -366,7 +366,7 @@
                                                 android:layout_marginBottom="@dimen/three"
                                                 android:text="@string/to"
                                                 android:textColor="@color/white"
-                                                android:textSize="@dimen/fifteen_sp" />
+                                                android:textSize="@dimen/thirteen_sp" />
 
                                         </LinearLayout>
 
@@ -385,7 +385,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:text="28"
                                                 android:textColor="@color/black"
-                                                android:textSize="@dimen/fifteen_sp" />
+                                                android:textSize="@dimen/thirteen_sp" />
 
                                             <TextView
                                                 android:id="@+id/txtEndDate"
@@ -395,7 +395,7 @@
                                                 android:layout_marginTop="@dimen/three"
                                                 android:text="Fri, Jun 2025"
                                                 android:textColor="@color/grey"
-                                                android:textSize="@dimen/twele_sp" />
+                                                android:textSize="@dimen/ten_sp" />
 
                                         </LinearLayout>
                                     </LinearLayout>
