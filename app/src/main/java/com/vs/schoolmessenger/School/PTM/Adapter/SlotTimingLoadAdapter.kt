@@ -14,8 +14,7 @@ import com.vs.schoolmessenger.School.PTM.DataClass.SlotAvailability
 class SlotTimingLoadAdapter(
     private var slotTimes: MutableList<SlotAvailability>,
     private val context: Context,
-    private val onDayUpdate: (List<SlotAvailability>) -> Unit,
-    private val onAllRemoved: (() -> Unit)? = null
+    private val onDayUpdate: (List<SlotAvailability>) -> Unit
 ) : RecyclerView.Adapter<SlotTimingLoadAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -47,9 +46,6 @@ class SlotTimingLoadAdapter(
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, slotTimes.size)
             onDayUpdate(slotTimes)
-        }
-        if (slotTimes.isEmpty()) {
-            onAllRemoved?.invoke()
         }
     }
     override fun getItemCount(): Int = slotTimes.size

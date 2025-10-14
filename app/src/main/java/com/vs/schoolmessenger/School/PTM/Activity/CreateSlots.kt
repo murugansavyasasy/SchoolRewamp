@@ -135,16 +135,16 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
 
         appViewModel!!.isPtmSlotCreate?.observe(this) { response ->
-                Constant.hideLoading(this)
+            Constant.hideLoading(this)
 
-                if (response != null) {
-                    bottomSheetDialog?.dismiss()
-                    if (response.status) {
-                        Constant.showTopAlertPopup(response.message, this)
-                    } else {
-                        Constant.showTopAlertPopup("Slot creation failed!", this)
-                    }
+            if (response != null) {
+                bottomSheetDialog?.dismiss()
+                if (response.status) {
+                    Constant.showTopAlertPopup(response.message, this)
+                } else {
+                    Constant.showTopAlertPopup("Slot creation failed!", this)
                 }
+            }
         }
 
         appViewModel!!.isSlotValidation?.observe(this) { response ->
@@ -340,7 +340,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
 
             R.id.lblCheckAvailability -> {
-                    isCheckAvailableSlots()
+                isCheckAvailableSlots()
             }
         }
     }
@@ -471,16 +471,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             AvailableSlotGroup(slot.date, slot.slots.toMutableList())
         }
 
-        val adapter = CheckAvailableSlotsDate(
-            context = this,
-            dates = groupedData,
-            onUpdate = { updatedList ->
-                selectedSlots = updatedList
-            },
-            onAllRemoved = {
-                bottomSheetDialog?.dismiss()
-            }
-        )
+        val adapter = CheckAvailableSlotsDate(this, groupedData) { updatedList ->
+            selectedSlots = updatedList
+        }
 
 
         isRcySlotDate.layoutManager = GridLayoutManager(this, 1)
@@ -491,10 +484,10 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 slot.slot_availablity.equals("Available", true)
             }
 
-//            if (availableSlots.isEmpty()) {
-//                Toast.makeText(this, "Please select at least one available slot", Toast.LENGTH_SHORT).show()
-//                return@setOnClickListener
-//            }
+            if (availableSlots.isEmpty()) {
+                Toast.makeText(this, "Please select at least one available slot", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val dialogBuilder = android.app.AlertDialog.Builder(this)
             dialogBuilder.setTitle("Confirm Slot Creation")
             dialogBuilder.setMessage("Are you sure you want to create slots for the selected dates?")
@@ -720,5 +713,5 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
 
     }
-    }
+}
 

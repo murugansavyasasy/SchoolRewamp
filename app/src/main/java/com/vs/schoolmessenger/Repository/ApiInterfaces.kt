@@ -82,8 +82,10 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Send
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetailsResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
+import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -109,6 +111,8 @@ import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubm
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreateModel.LessonPlanCreateResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreateModel.LessonPlanTemplateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanDeleteModel.LPDeleteResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
@@ -659,11 +663,26 @@ interface ApiInterfaces {
     ): Call<LessonPlanEditResponse?>
 
 
+    @GET(APIMethods.getlpcreateReport)
+    fun getlpcreateReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.request_type) request_type: String?
+    ): Call<LessonPlanTemplateResponse?>
+
+
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isupdatelessonplan)
     fun isupdatelessonplan(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
     ): Call<LessonPlanUpdateResponse?>
+
+
+
+    @Headers("Content-Type: application/json")
+    @POST(APIMethods.iscreatelessonplan)
+    fun iscreatelessonplan(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
+    ): Call<LessonPlanCreateResponse?>
 
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.islessonplandelete)
@@ -1048,6 +1067,11 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetMessagesStaff?>?
 
+    @GET(APIMethods.isGetMessageFromStaffArchive)
+    fun isGetMessageFromStaffArchive(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<GetMessagesStaff?>?
+
 //    Pauket Api
 
     @GET(APIMethods.isGetPauketPoints)
@@ -1113,6 +1137,22 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.id) id: Int
     ): Call<ChildStandardResponse>
+
+
+    @GET(APIMethods.assignment_childhomework)
+    fun getassignmentchildhomework(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: Int,
+        @Query(APIKeyNames.target_type ) target_type : Int
+    ): Call<AssignmentTargetDetailsResponse>
+
+
+    @GET(APIMethods.attachment_childhomework)
+    fun getattachmentchildhomework(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: Int,
+        @Query(APIKeyNames.target_type ) target_type : Int
+    ): Call<AttachmentTargetDetailResponse>
 
 
     @PUT(APIMethods.getmysubmissionedit)

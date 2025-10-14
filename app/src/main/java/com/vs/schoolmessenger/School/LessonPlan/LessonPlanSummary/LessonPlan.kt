@@ -181,6 +181,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     }
 
 
+
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
 
@@ -199,7 +200,6 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
     override fun onClick(view: View?) {
         when (view?.id) {
-
             R.id.imgBack -> onBackPressed()
         }
     }

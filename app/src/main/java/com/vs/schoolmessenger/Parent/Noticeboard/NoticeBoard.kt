@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.Noticeboard
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.text.Editable
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -144,9 +146,19 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
+
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.imgBack -> onBackPressed()
+            R.id.imgBack ->{
+                onBackPressed()
+            }
 
             R.id.imgSearchToolBar -> {
                 if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {

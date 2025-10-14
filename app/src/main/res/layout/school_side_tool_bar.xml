@@ -80,8 +80,8 @@
 
                 <ImageView
                     android:id="@+id/imgMonthIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
                     android:layout_marginEnd="10dp"
                     android:layout_gravity="center"
                     android:src="@drawable/arrow_down_whitesvg" />

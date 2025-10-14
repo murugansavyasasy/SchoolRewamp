@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:id="@+id/main">
+    android:background="@color/white">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/lnrParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,13 +33,16 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <LinearLayout
-            android:layout_marginEnd="@dimen/five"
             android:id="@+id/lnrTabOneName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/five"
             android:layout_weight="0.5"
             android:orientation="vertical">
 
@@ -72,8 +71,8 @@
             android:id="@+id/lnrTabTwoName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:layout_marginStart="@dimen/five"
+            android:layout_weight="0.5"
             android:orientation="vertical">
 
             <TextView
@@ -91,64 +90,14 @@
                 android:layout_height="@dimen/three"
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
-                android:background="@color/athens_gray"
-                >
+                android:background="@color/athens_gray">
             </View>
         </LinearLayout>
 
     </LinearLayout>
 
 
-
-
-
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/lnrParent"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/toolbarLayout"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_marginHorizontal="@dimen/ten"-->
-<!--        android:layout_marginStart="@dimen/fifteen"-->
-<!--        android:layout_marginTop="@dimen/fifteen"-->
-<!--        android:layout_marginEnd="@dimen/fifteen"-->
-<!--        android:background="@drawable/bg_light_blue"-->
-<!--        android:padding="@dimen/one">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/btnCreate"-->
-<!--            style="@style/CustomTextStylePoppinsMedium"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@drawable/white_bg_radius"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="@dimen/eight"-->
-<!--            android:text="@string/AllClasses"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="@dimen/thirteen_sp"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/btnHistory"-->
-<!--            style="@style/CustomTextStylePoppinsMedium"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:fontFamily="@font/poppins_medium"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="@dimen/eight"-->
-<!--            android:text="@string/MyClasses"-->
-<!--            android:textColor="@color/dark_blue"-->
-<!--            android:textSize="@dimen/thirteen_sp" />-->
-
-<!--    </LinearLayout>-->
-
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@+id/lnrParent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/rlaFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -156,18 +105,20 @@
         android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/five"
-        android:gravity="center">
-
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lnrParent">
 
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/rytSearch1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
             android:layout_margin="@dimen/ten"
             android:layout_marginStart="@dimen/ten"
-            android:background="@drawable/rect_grey">
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
 
 
             <ImageView
@@ -180,16 +131,16 @@
 
             <EditText
                 android:id="@+id/txtSearchMenu1"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@+id/imgSearch"
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
-                android:maxLines="1"
                 android:imeOptions="actionDone"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:scrollHorizontally="true"
-               style="@style/CustomTextStylePoppinsRegular"
+                android:singleLine="true"
                 android:textSize="@dimen/thirteen_sp" />
 
         </RelativeLayout>
@@ -198,19 +149,16 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/rlaFilter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/rcyLessonPlan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlaFilter">
+        android:layout_below="@+id/rlaFilter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlaFilter">
     </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
-        app:layout_constraintTop_toBottomOf="@+id/rcyLessonPlan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/nomessage"
         android:layout_width="@dimen/two_fifty"
         android:layout_height="@dimen/two_fifty"
@@ -220,22 +168,28 @@
         android:src="@drawable/no_lessonplan_message"
         android:textColor="@color/black"
         android:textSize="@dimen/eighteen_sp"
-        android:visibility="gone" />
-
-    <TextView
-        app:layout_constraintTop_toBottomOf="@+id/nomessage"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcyLessonPlan" />
+
+    <TextView
         android:id="@+id/txtNoData"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/nomessage"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/no_list_found"
         android:textColor="@color/black"
         android:textSize="@dimen/eighteen_sp"
-        android:layout_below="@+id/nomessage"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomessage" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,7 @@ data class FilePreview(
     val submittedCount: Int? = null,
     val totalCount: Int? = null,
     val assignmentid: String? = null,
+    val target_type: Int? = null,
     val created_date: String? = null,
     val subject_name: String? = null,
     val category: String? = null,

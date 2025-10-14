@@ -210,6 +210,11 @@
             android:name=".School.LessonPlan.LessonPlanSummary.LessonPlan"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".School.LessonPlan.LessonPlanCreate.LessonPlanCreateActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Homework.HomeWorkCreate"
             android:theme="@style/AppTheme"

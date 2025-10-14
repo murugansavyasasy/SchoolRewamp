@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
@@ -56,8 +57,6 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-
-
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token

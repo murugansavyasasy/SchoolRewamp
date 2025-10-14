@@ -21,9 +21,7 @@
             layout="@layout/parent_side_tool_bar_without_curve"
             app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <RelativeLayout
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,13 +33,11 @@
             android:background="@drawable/bottom_right_left_radious"
             android:paddingBottom="@dimen/thirty">
 
-
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/ten"
                 android:orientation="horizontal"
                 android:weightSum="2">
@@ -81,8 +77,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/rytScheduleMeeting"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            >
+            android:layout_height="0dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewDates"
@@ -110,8 +105,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_toStartOf="@+id/spinnerTypeimg"
                     android:drawSelectorOnTop="true"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
                 <ImageView
                     android:id="@+id/spinnerTypeimg"
                     android:layout_centerVertical="true"
@@ -121,7 +115,6 @@
                     android:layout_marginEnd="@dimen/three"
                     android:tint="@color/black"
                     android:layout_height="wrap_content">
-
                 </ImageView>
 
 
@@ -151,7 +144,6 @@
                     android:layout_height="@dimen/two_fifty"
                     android:src="@drawable/no_ptm_parent_message">
                 </ImageView>
-
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold1"

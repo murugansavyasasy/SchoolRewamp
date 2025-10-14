@@ -57,6 +57,16 @@ class MessageFromStaffAdapter(
         notifyDataSetChanged()
     }
 
+    fun getCurrentListSize(): Int {
+        return itemList!!.size
+    }
+
+    fun AppendData(newList: List<GetMessagesStaffData>) {
+        val oldSize = itemList!!.size
+        itemList = itemList!!.toMutableList().apply { addAll(newList) }
+        notifyItemRangeInserted(oldSize, newList.size)
+    }
+
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)

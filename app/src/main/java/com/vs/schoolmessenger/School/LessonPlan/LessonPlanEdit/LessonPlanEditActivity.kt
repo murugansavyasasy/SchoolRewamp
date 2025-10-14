@@ -136,7 +136,6 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
             R.id.updatebutton -> {
                 showTopEditAlertPopup()
             }
-
             R.id.cancelbutton -> {
                 lessonplaneditcancel()
             }
@@ -268,10 +267,8 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
                 closePopup()
             }
         }
-
         dimView.isFocusable = true
         dimView.isFocusableInTouchMode = true
-
     }
 
 }

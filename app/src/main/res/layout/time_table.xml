@@ -16,15 +16,14 @@
 
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
             android:layout_marginStart="@dimen/five"
-            android:src="@drawable/ic_arrow_back" />
+            android:src="@drawable/arrow_left_white" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twele"
             android:orientation="vertical">
 
             <TextView
@@ -33,8 +32,8 @@
                 android:layout_height="wrap_content"
                 android:text="SARANRAJ SHANMUGAM"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/fourteen_sp"
-                style="@style/CustomTextStylePoppinsMedium"/>
+                android:textSize="@dimen/fifteen_sp"
+                style="@style/CustomTextStylePoppinsBold"/>
 
             <TextView
                 android:id="@+id/tvClass"
@@ -43,8 +42,9 @@
                 android:layout_marginTop="@dimen/seven"
                 android:text="I - B"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/fourteen_sp"
-                style="@style/CustomTextStylePoppinsMedium"/>
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/eleven_sp"
+                />
 
         </LinearLayout>
     </LinearLayout>

@@ -242,7 +242,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             // Show popup only if one or more contacts are missing
             AlertDialog.Builder(requireActivity())
                 .setTitle("Save Contacts")
-                .setMessage("Some contacts are not saved. Do you want to save them now?")
+                .setMessage("Please save the contacts to avoid the spam calls. Do you want to save now?")
                 .setPositiveButton("Yes") { _, _ ->
                     for (c in missingContacts) {
                         addContact(c.first, c.second)
