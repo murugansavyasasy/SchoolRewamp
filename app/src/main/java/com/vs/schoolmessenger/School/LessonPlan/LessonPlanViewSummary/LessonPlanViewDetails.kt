@@ -430,5 +430,10 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
     }
 
     override fun onDateSelected(date: String) {}
+
+    override fun onResume() {
+        super.onResume()
+        fetchLessonPlanData(sectionSubjectId)
+    }
 }
 

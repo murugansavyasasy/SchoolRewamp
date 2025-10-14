@@ -101,7 +101,7 @@ class StaffSlotStatusAdapter(
                     imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
                 "Expired" -> {
-                    rltStatus.background = context.getDrawable(R.drawable.gray_bg_radius)
+                    rltStatus.background = context.getDrawable(R.drawable.bg_gray_radious_light)
                     lblWaitingBooking.visibility = View.VISIBLE
                     lblWaitingBooking.text = "Slot Expired"
                     lblWaitingBooking.setTextColor(context.getColor(R.color.black))
@@ -110,7 +110,7 @@ class StaffSlotStatusAdapter(
                     imgDot.visibility = View.GONE
                 }
                 "Completed" -> {
-                    rltStatus.background = context.getDrawable(R.drawable.bg_light_green)
+                    rltStatus.background = context.getDrawable(R.drawable.bg_lightgreen_radious)
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
                     imgDot.visibility = View.GONE
                     rltBookedBy.visibility = View.VISIBLE
@@ -119,7 +119,7 @@ class StaffSlotStatusAdapter(
                 }
                 "Booked" -> {
                     rltStatus.background =
-                        context.getDrawable(R.drawable.rect_bg_light_green_present)
+                        context.getDrawable(R.drawable.bg_lightgreen_radious)
                     lblBookedName.visibility = View.VISIBLE
                     rltBookedBy.visibility = View.VISIBLE
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
@@ -127,7 +127,7 @@ class StaffSlotStatusAdapter(
 
                 }
                 "Upcoming" -> {
-                    rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_present)
+                    rltStatus.background = context.getDrawable(R.drawable.bg_lightgreen_radious)
                     lblStatus.text = "Booked"
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
                     lblBookedName.visibility = View.VISIBLE

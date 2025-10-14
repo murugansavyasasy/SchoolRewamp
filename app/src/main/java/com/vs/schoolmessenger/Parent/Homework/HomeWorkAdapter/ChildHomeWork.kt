@@ -50,27 +50,18 @@ import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
-import com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission.MyAssignmentSubmit
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
-
 import com.vs.schoolmessenger.Parent.LSRW.MySubmissionView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.APIMethods.islsrwSkillSubmit
-import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.ApiCallRequest.islsrwSkillSubmit
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Assignment.AssignmentStudentList
 import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentChildStandardAdapter
 import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetail
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
-import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventAdapter
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardAdapter
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetData
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -79,7 +70,6 @@ import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
-import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant.isCommunicationType

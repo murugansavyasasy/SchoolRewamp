@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
+import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionDeleteResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionEditResponse
@@ -1167,4 +1168,11 @@ interface ApiInterfaces {
     fun ismysubmissiondelete(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<MySubmissionDeleteResponse?>
+
+
+    @GET(APIMethods.dashboard_newupdates)
+    fun getdashboardnewupdates(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.role_type ) role_type : String
+    ): Call<WhatsNewUpdateResponse>
 }

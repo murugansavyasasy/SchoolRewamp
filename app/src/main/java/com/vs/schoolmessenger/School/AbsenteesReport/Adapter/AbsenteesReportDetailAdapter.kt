@@ -69,6 +69,7 @@ class AbsenteesReportDetailAdapter(
             }
 
             itemView.setOnClickListener {
+                if (bindingAdapterPosition == selectedPosition) return@setOnClickListener
                 val previousPosition = selectedPosition
                 selectedPosition = bindingAdapterPosition
                 notifyItemChanged(previousPosition)
