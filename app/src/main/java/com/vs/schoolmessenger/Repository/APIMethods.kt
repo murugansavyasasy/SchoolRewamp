@@ -62,8 +62,6 @@ object APIMethods {
     const val send_attachments = "comm/api/attachment/send-attachment"
     const val attachments_list = "comm/api/communication/attachment-list"
     const val attachments_list_archive = "comm/api/communication/attachment-list-archive"
-
-
     const val punch_giometric_attendance = "staff-attd/api/geometric/entry-using-app"
     const val add_giometric_location = "staff-attd/api/geometric/set-geometric-location"
     const val giometric_location_history = "staff-attd/api/geometric/get-geometric-location-history"
@@ -88,9 +86,7 @@ object APIMethods {
     const val get_time_table = "lms/api/time-table/get-schedule"
     const val IsGetHolidayReport = "admin/api/school-event/view-holidays"
     const val getabsenteescountbydate = "stud-attd/api/attendance/get-absentees-count-by-date"
-
     const val getabsenteesstudentbydate = "stud-attd/api/attendance/get-absentees-students-by-date"
-
     const val sendnotice = "admin/api/notice-board/send-notice"
     const val sendevent = "admin/api/school-event/send-event"
     const val sendAttachment = "comm/api/attachment/send-attachment"
@@ -109,12 +105,9 @@ object APIMethods {
     const val iscreatelessonplan = "lms/api/lesson-plan/add"
     const val islessonplandelete = "lms/api/lesson-plan/delete"
     const val get_campaigns = "get_campaigns"
-
     const val my_coupons = "my_coupons"
-
     const val get_campaign_details = "get_campaign_details"
     const val activate_coupon = "activate_coupon"
-
     const val staff_details_for_chat = "/comm/api/interaction/staff-details-for-chat"
     const val student_details_for_chat = "/comm/api/interaction/classes-for-chat"
 

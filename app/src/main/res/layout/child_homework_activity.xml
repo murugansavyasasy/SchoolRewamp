@@ -98,7 +98,7 @@
                 android:layout_marginTop="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty"
                 android:text="Mahatma Gandhi: The Peaceful Revolutionary Who Freed a Nation"
-                android:textSize="@dimen/twenty_three"
+                android:textSize="@dimen/twenty_three_sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
