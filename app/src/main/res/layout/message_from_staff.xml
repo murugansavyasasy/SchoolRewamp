@@ -17,13 +17,12 @@
 
         <ImageView
             android:id="@+id/imgReadStatus"
-            android:layout_width="@dimen/eighty"
-            android:layout_height="@dimen/eighty"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/five"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/minus_thirty_four"
-            android:layout_marginEnd="@dimen/fifteen"
             android:elevation="@dimen/ten"
-            android:src="@drawable/new_icon"
+            android:src="@drawable/new_icon1"
             android:visibility="gone">
 
         </ImageView>

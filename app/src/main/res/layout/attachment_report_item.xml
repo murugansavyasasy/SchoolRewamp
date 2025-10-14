@@ -1,15 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/rytHeader"
+    android:layout_margin="@dimen/five"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imgReadUnRead"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
         android:layout_marginStart="@dimen/five"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="-25dp"
         android:visibility="gone"
         android:background="@drawable/new_icon1"/>
     <ImageView
@@ -105,5 +106,6 @@
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
+        android:visibility="gone"
         android:background="@color/grey"/>
 </RelativeLayout>

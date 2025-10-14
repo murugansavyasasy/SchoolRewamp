@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    android:background="@color/AthensGray">
 
     <View
         android:id="@+id/statusBarBackground"
@@ -185,9 +185,9 @@
         android:id="@+id/recycleracademic"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-    android:layout_marginStart="@dimen/ten"
+    android:layout_marginStart="@dimen/five"
     android:layout_marginTop="@dimen/ten"
-    android:layout_marginEnd="@dimen/ten" />
+    android:layout_marginEnd="@dimen/five" />
 
 
     <LinearLayout
