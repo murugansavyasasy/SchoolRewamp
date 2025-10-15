@@ -86,6 +86,7 @@ class AutoScrollAdapterWithDots(
                 Constant.M_ASSIGNMENT -> itemImage.setImageResource(R.drawable.assignment_icon_school)
                 Constant.M_HOMEWORK -> itemImage.setImageResource(R.drawable.home_work_icon_school)
                 Constant.M_ATTENDANCE_MARKING -> itemImage.setImageResource(R.drawable.attendance_marking)
+                Constant.M_ATTENDANCE_REPORT -> itemImage.setImageResource(R.drawable.attendance_report_icon)
                 Constant.M_ABSENTEES_REPORT -> itemImage.setImageResource(R.drawable.absentees_report)
                 Constant.M_SCHOOL_STRENGTH -> itemImage.setImageResource(R.drawable.school_strength)
                 Constant.M_NOTICEBOARD -> itemImage.setImageResource(R.drawable.noticeboard_icon)

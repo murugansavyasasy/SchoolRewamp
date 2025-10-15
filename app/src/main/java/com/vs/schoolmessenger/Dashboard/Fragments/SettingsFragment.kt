@@ -3,9 +3,12 @@ package com.vs.schoolmessenger.Dashboard.Fragments
 import android.Manifest
 import android.app.AlertDialog
 import android.content.ContentProviderOperation
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -42,6 +45,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.NetworkSpeedMonitor
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
+import java.io.ByteArrayOutputStream
 
 class SettingsFragment : Fragment(), View.OnClickListener {
 
@@ -168,59 +172,13 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         startActivity(intent)
     }
 
-    private fun addContact(name: String, phone: String) {
-        val ops = ArrayList<ContentProviderOperation>()
-
-        ops.add(
-            ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
-                .build()
-        )
-
-        // Name
-        ops.add(
-            ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                .withValue(
-                    ContactsContract.Data.MIMETYPE,
-                    ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE
-                )
-                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name)
-                .build()
-        )
-
-        // Phone number
-        ops.add(
-            ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                .withValue(
-                    ContactsContract.Data.MIMETYPE,
-                    ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
-                )
-                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
-                .withValue(
-                    ContactsContract.CommonDataKinds.Phone.TYPE,
-                    ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
-                )
-                .build()
-        )
-
-        try {
-            val resolver = requireActivity().contentResolver
-            resolver.applyBatch(ContactsContract.AUTHORITY, ops)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     private fun checkContactPermission() {
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_CONTACTS)
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_CONTACTS)
             != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(Manifest.permission.WRITE_CONTACTS),
+                arrayOf(Manifest.permission.READ_CONTACTS),
                 REQUEST_CONTACT_PERMISSION
             )
         } else {
@@ -244,16 +202,71 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 .setTitle("Save Contacts")
                 .setMessage("Please save the contacts to avoid the spam calls. Do you want to save now?")
                 .setPositiveButton("Yes") { _, _ ->
-                    for (c in missingContacts) {
-                        addContact(c.first, c.second)
-                    }
-                    Toast.makeText(requireActivity(), "Contacts saved successfully!", Toast.LENGTH_SHORT).show()
+                    saveContacts(missingContacts)
                 }
                 .setNegativeButton("No", null)
                 .show()
         } else {
             Toast.makeText(requireActivity(), "All contacts are already saved", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun saveContacts(missingContacts: List<Pair<String, String>>) {
+
+        val newContacts = Array(missingContacts.size) { "" }
+
+        // Loop through and check which contacts are missing
+        for (i in missingContacts.indices) {
+            val contact = missingContacts[i]
+            if (!contactExists(contact.second)) {
+                Log.d("Index", "Current index = $i")
+                newContacts[i] = contact.second
+            }
+        }
+
+        // Convert image to byte array (for contact photo)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.school_chimes_logo)
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val byteArray = stream.toByteArray()
+
+        val data = ArrayList<ContentValues>()
+
+        // Add contact photo
+        val rowPhoto = ContentValues().apply {
+            put(
+                ContactsContract.Data.MIMETYPE,
+                ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE
+            )
+            put(ContactsContract.CommonDataKinds.Photo.PHOTO, byteArray)
+        }
+        data.add(rowPhoto)
+
+        // Add all phone numbers
+        for (i in newContacts.indices) {
+            val number = newContacts[i]
+            if (number.isNotEmpty()) {
+                val rowNumber = ContentValues().apply {
+                    put(
+                        ContactsContract.RawContacts.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
+                    )
+                    put(ContactsContract.CommonDataKinds.Phone.NUMBER, number)
+                    put(
+                        ContactsContract.CommonDataKinds.Phone.TYPE,
+                        ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
+                    )
+                }
+                data.add(rowNumber)
+            }
+        }
+
+        // Prepare Intent to insert contact (user will confirm)
+        val intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
+        intent.putExtra(ContactsContract.Intents.Insert.NAME, "School Chimes") // set contact name
+        intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, data)
+
+        startActivityForResult(intent, 100)
     }
 
     private fun contactExists(phoneNumber: String): Boolean {

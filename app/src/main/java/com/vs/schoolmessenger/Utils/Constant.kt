@@ -50,10 +50,12 @@ import androidx.fragment.app.FragmentActivity
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
+import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableData
@@ -2069,6 +2071,14 @@ object Constant {
     }
 
 
+    fun isDeveloperModeEnabled(context: Context): Boolean {
+        return Settings.Secure.getInt(
+            context.contentResolver,
+            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
+        ) == 1
+    }
+
+
     fun showNotificationPermissionDialog(
         packageName: String, activity: Activity, isTitle: String, isContent: String
     ) {
@@ -2153,7 +2163,8 @@ object Constant {
 
     fun setupBiometricPrompt(
         activity: FragmentActivity,
-        listener: fingerPrintAunthenticateListener
+        listener: fingerPrintAunthenticateListener,
+        isSplash : Boolean
     ) {
         val executor = ContextCompat.getMainExecutor(activity)
         biometricPrompt = BiometricPrompt(
@@ -2175,13 +2186,31 @@ object Constant {
                         }
 
                         BiometricPrompt.ERROR_USER_CANCELED -> {
-                            AlertDialog.Builder(activity)
+                            val builder = AlertDialog.Builder(activity)
                                 .setTitle("School Chimes is locked")
                                 .setMessage("Authentication is required to access the School Chimes")
-                                .setPositiveButton("Unlock now") { _, _ ->
+                                .setCancelable(false) // optional, prevents closing by tapping outside
+
+                            val dialog = builder.create()
+                            dialog.setOnShowListener {
+                                // "Unlock now" button
+                                dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setOnClickListener {
                                     authenticate(activity)
                                 }
-                                .show()
+                                dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+                                    if (isSplash) {
+                                        val intent = Intent(activity, Login::class.java)
+                                        activity.startActivity(intent)
+                                        activity.finish()
+                                    } else {
+                                        dialog.cancel() // ✅ safely cancels here
+                                    }
+                                }
+                            }
+                            dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Unlock now") { _, _ -> }
+                            dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Proceed with credentials") { _, _ -> }
+
+                            dialog.show()
                         }
 
                         else -> {
