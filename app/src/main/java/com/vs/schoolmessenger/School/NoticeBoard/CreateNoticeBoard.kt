@@ -140,17 +140,24 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.lnrEndCalendar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.btnNext.text = getString(R.string.NEXT)
-        val (dayOnly, _, fullDate, _, _) = Constant.getCurrentDateInfo()
-        binding.lblDay.text = dayOnly
-        binding.lblEndDay.text = dayOnly
+        val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
+        //        binding.lblDay.text = dayOnly
+//        binding.lblEndDay.text = dayOnly
+        binding.lblDay.text = dayOfWeek
+        binding.lblEndDay.text = dayOfWeek
 
         txtStartDate = fullDate
         txtEndDate = fullDate
-        val parts = txtStartDate!!.split(" ")
-        val Month = parts[1]
-        val Year = parts[2]
-        binding.txtStartDate.text = Month + " " + Year
-        binding.txtEndDate.text = Month + " " + Year
+
+        binding.txtStartDate.text =txtStartDate
+        binding.txtEndDate.text = txtEndDate
+
+
+//        val parts = txtStartDate!!.split(" ")
+//        val Month = parts[1]
+//        val Year = parts[2]
+//        binding.txtStartDate.text = Month + " " + Year
+//        binding.txtEndDate.text = Month + " " + Year
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -395,12 +402,16 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 selectedDateField = 1
                 Constant.DatePicker(this, false) { selectedDate ->
                     txtStartDate = Constant.covertDateFormate(selectedDate)
-                    val parts = txtStartDate!!.split(" ")
-                    val day = parts[0]
-                    val month = parts[1]
-                    val year = parts[2]
-                    binding.lblDay.text = day
-                    binding.txtStartDate.text = "$month $year"
+                    val (day, formattedDate) = Constant.getDayAndDateOnly2(txtStartDate.toString())// 13 Monday
+                    binding.lblDay.text = formattedDate
+                    binding.txtStartDate.text =txtStartDate
+
+//                    val parts = txtStartDate!!.split(" ")
+//                    val day = parts[0]
+//                    val month = parts[1]
+//                    val year = parts[2]
+//                    binding.lblDay.text = day
+//                    binding.txtStartDate.text = "$month $year"
 
                     val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                     val startDate = sdf.parse(txtStartDate!!) ?: Date()
@@ -409,9 +420,14 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     cal.add(Calendar.DAY_OF_MONTH, 30)
                     val endDate = cal.time
                     txtEndDate = sdf.format(endDate)
-                    val endParts = txtEndDate!!.split(" ")
-                    binding.lblEndDay.text = endParts[0]
-                    binding.txtEndDate.text = "${endParts[1]} ${endParts[2]}"
+                    val (endday, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())// 13 Monday
+
+
+                    binding.lblEndDay.text = endformattedDate
+                    binding.txtEndDate.text = txtEndDate
+//                    val endParts = txtEndDate!!.split(" ")
+//                    binding.lblEndDay.text = endParts[0]
+//                    binding.txtEndDate.text = "${endParts[1]} ${endParts[2]}"
                 }
             }
 
@@ -447,12 +463,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     maxDate = maxDate
                 ) { selectedDate ->
                     txtEndDate = Constant.covertDateFormate(selectedDate)
-                    val parts = txtEndDate!!.split(" ")
-                    val day = parts[0]
-                    val month = parts[1]
-                    val year = parts[2]
-                    binding.lblEndDay.text = day
-                    binding.txtEndDate.text = "$month $year"
+                    val (endday, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())// 13 Monday
+                    binding.lblEndDay.text = endformattedDate
+                    binding.txtEndDate.text = txtEndDate
+//                    val parts = txtEndDate!!.split(" ")
+//                    val day = parts[0]
+//                    val month = parts[1]
+//                    val year = parts[2]
+//                    binding.lblEndDay.text = day
+//                    binding.txtEndDate.text = "$month $year"
                 }
             }
 
@@ -471,18 +490,25 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         val today = Calendar.getInstance().time
         txtStartDate = sdf.format(today)
-        val startParts = txtStartDate!!.split(" ")
-        binding.lblDay.text = startParts[0]
-        binding.txtStartDate.text = "${startParts[1]} ${startParts[2]}"
+        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        binding.lblDay.text = formattedDate
+        binding.txtStartDate.text = txtStartDate
+//        val startParts = txtStartDate!!.split(" ")
+//        binding.lblDay.text = startParts[0]
+//        binding.txtStartDate.text = "${startParts[1]} ${startParts[2]}"
         val cal = Calendar.getInstance()
         cal.time = today
         cal.add(Calendar.DAY_OF_MONTH, 30)
         val endDate = cal.time
 
         txtEndDate = sdf.format(endDate)
-        val endParts = txtEndDate!!.split(" ")
-        binding.lblEndDay.text = endParts[0]
-        binding.txtEndDate.text = "${endParts[1]} ${endParts[2]}"
+        val (endday, endformattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+
+        binding.lblEndDay.text = endformattedDate
+        binding.txtEndDate.text = txtEndDate
+//        val endParts = txtEndDate!!.split(" ")
+//        binding.lblEndDay.text = endParts[0]
+//        binding.txtEndDate.text = "${endParts[1]} ${endParts[2]}"
     }
 
 

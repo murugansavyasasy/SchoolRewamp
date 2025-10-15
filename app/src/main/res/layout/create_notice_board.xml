@@ -243,7 +243,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@+id/lblStart"
-                            android:layout_marginTop="@dimen/twenty"
+                            android:layout_marginTop="@dimen/ten"
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:weightSum="3">
@@ -254,70 +254,62 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center">
+                                <TextView
+                                    android:id="@+id/lblFrom"
+                                    android:layout_width="wrap_content"
+                                    style="@style/CustomTextStylePoppinsBold"
+                                    android:text="@string/from"
+                                    android:layout_height="wrap_content">
+                                </TextView>
 
-                                <androidx.cardview.widget.CardView
-                                    android:id="@+id/cardStart"
-                                    android:layout_width="@dimen/eighty"
-                                    android:layout_height="@dimen/eighty"
-                                    app:cardCornerRadius="@dimen/ten">
+                                <RelativeLayout
+                                    android:layout_marginTop="@dimen/five"
+                                    android:layout_below="@+id/lblFrom"
+                                    android:id="@+id/lnrStartCalendar"
+                                    android:paddingHorizontal="@dimen/five"
+                                    android:paddingVertical="@dimen/three"
+                                    android:background="@drawable/black_stroke_bg_radius"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:layout_centerVertical="true"
+                                        android:id="@+id/imgCalendar"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_width="@dimen/twenty_five"
+                                        android:src="@drawable/calender_icon2"
+                                        android:layout_height="@dimen/twenty_five">
 
+                                    </ImageView>
                                     <LinearLayout
-                                        android:id="@+id/lnrStartCalendar"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/bg_stroke_rect_black"
-                                        android:orientation="vertical">
-
-                                        <LinearLayout
-                                            android:id="@+id/bottomdaylinear"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:background="@color/very_light_gray_2"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:id="@+id/lblDaylabel"
-                                                style="@style/CustomTextStylePoppinsBold"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center_horizontal"
-                                                android:layout_marginTop="@dimen/five"
-                                                android:layout_marginBottom="@dimen/three"
-                                                android:text="@string/from"
-                                                android:textColor="@color/white"
-                                                android:textSize="@dimen/thirteen_sp" />
-
-                                        </LinearLayout>
-
-                                        <LinearLayout
-                                            android:id="@+id/bottomlineardate"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:id="@+id/lblDay"
-                                                style="@style/CustomTextStylePoppinsBold"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="12"
-                                                android:textSize="@dimen/thirteen_sp" />
-
-                                            <TextView
-                                                android:id="@+id/txtStartDate"
-                                                style="@style/CustomTextStylePoppinsBold"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="@dimen/three"
-                                                android:text="Fri, Jun 2025"
-                                                android:textColor="@color/grey"
-                                                android:textSize="@dimen/ten_sp" />
-                                        </LinearLayout>
-
+                                        android:layout_toEndOf="@+id/imgCalendar"
+                                        android:id="@+id/lnrDateDetails"
+                                        android:layout_centerVertical="true"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginEnd="@dimen/five"
+                                        android:orientation="vertical"
+                                        android:layout_marginStart="@dimen/five"
+                                        android:layout_height="wrap_content">
+                                        <TextView
+                                            android:id="@+id/lblDay"
+                                            android:layout_width="wrap_content"
+                                            android:text=""
+                                            style="@style/CustomTextStylePoppinsRegular"
+                                            android:textSize="@dimen/eleven_sp"
+                                            android:textColor="@color/mild_grey_dark"
+                                            android:layout_height="wrap_content">
+                                        </TextView>
+                                        <TextView
+                                            android:id="@+id/txtStartDate"
+                                            android:layout_width="wrap_content"
+                                            android:text=""
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_height="wrap_content">
+                                        </TextView>
                                     </LinearLayout>
-                                </androidx.cardview.widget.CardView>
+
+                                </RelativeLayout>
+
+
                             </RelativeLayout>
 
                             <ImageView
@@ -335,71 +327,59 @@
                                 android:layout_weight="1"
                                 android:gravity="center">
 
-                                <androidx.cardview.widget.CardView
-                                    android:id="@+id/cardEnd"
-                                    android:layout_width="@dimen/eighty"
-                                    android:layout_height="@dimen/eighty"
-                                    app:cardCornerRadius="@dimen/ten">
-
-                                    <LinearLayout
+                                <TextView
+                                    android:id="@+id/lblTo"
+                                    android:layout_width="wrap_content"
+                                    style="@style/CustomTextStylePoppinsBold"
+                                    android:text="@string/to"
+                                    android:layout_height="wrap_content">
+                                </TextView>
+                                <RelativeLayout
+                                    android:layout_below="@+id/lblTo"
+                                    android:layout_marginTop="@dimen/five"
+                                    android:paddingHorizontal="@dimen/five"
+                                    android:paddingVertical="@dimen/three"
+                                    android:background="@drawable/black_stroke_bg_radius"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:layout_centerVertical="true"
                                         android:id="@+id/lnrEndCalendar"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/bg_stroke_rect_black"
-                                        android:orientation="vertical">
+                                        android:layout_alignParentStart="true"
+                                        android:layout_width="@dimen/twenty_five"
+                                        android:src="@drawable/calender_icon2"
+                                        android:layout_height="@dimen/twenty_five">
 
-                                        <LinearLayout
-                                            android:id="@+id/bottomdaylinear1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:background="@color/very_light_gray_2"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:id="@+id/lblDay1"
-                                                style="@style/CustomTextStylePoppinsBold"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center_horizontal"
-                                                android:layout_marginTop="@dimen/five"
-                                                android:layout_marginBottom="@dimen/three"
-                                                android:text="@string/to"
-                                                android:textColor="@color/white"
-                                                android:textSize="@dimen/thirteen_sp" />
-
-                                        </LinearLayout>
-
-                                        <LinearLayout
-                                            android:id="@+id/bottomlineardate1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-
-                                            <TextView
-                                                android:id="@+id/lblEndDay"
-                                                style="@style/CustomTextStylePoppinsBold"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="28"
-                                                android:textColor="@color/black"
-                                                android:textSize="@dimen/thirteen_sp" />
-
-                                            <TextView
-                                                android:id="@+id/txtEndDate"
-                                                style="@style/CustomTextStylePoppinsBold"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="@dimen/three"
-                                                android:text="Fri, Jun 2025"
-                                                android:textColor="@color/grey"
-                                                android:textSize="@dimen/ten_sp" />
-
-                                        </LinearLayout>
+                                    </ImageView>
+                                    <LinearLayout
+                                        android:layout_marginEnd="@dimen/five"
+                                        android:layout_toEndOf="@+id/lnrEndCalendar"
+                                        android:id="@+id/bottomdaylinear1"
+                                        android:layout_centerVertical="true"
+                                        android:layout_width="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_marginStart="@dimen/five"
+                                        android:layout_height="wrap_content">
+                                        <TextView
+                                            android:id="@+id/lblEndDay"
+                                            android:layout_width="wrap_content"
+                                            android:text=""
+                                            style="@style/CustomTextStylePoppinsRegular"
+                                            android:textSize="@dimen/eleven_sp"
+                                            android:textColor="@color/mild_grey_dark"
+                                            android:layout_height="wrap_content">
+                                        </TextView>
+                                        <TextView
+                                            android:id="@+id/txtEndDate"
+                                            android:layout_width="wrap_content"
+                                            android:text=""
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_height="wrap_content">
+                                        </TextView>
                                     </LinearLayout>
-                                </androidx.cardview.widget.CardView>
+
+                                </RelativeLayout>
+
                             </RelativeLayout>
                         </LinearLayout>
 

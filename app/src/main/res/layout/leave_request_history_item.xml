@@ -177,7 +177,7 @@
                 android:layout_margin="@dimen/three"
                 android:padding="@dimen/three"
                 android:id="@+id/deletebutton"
-                android:layout_width="@dimen/eighty"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -202,7 +202,7 @@
                 android:layout_marginBottom="@dimen/three"
                 android:padding="@dimen/three"
                 android:id="@+id/editbutton"
-                android:layout_width="@dimen/eighty"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/deletebutton"
                 android:gravity="center_vertical"

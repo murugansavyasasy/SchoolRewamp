@@ -148,6 +148,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         Log.d("isParentMenuName", Constant.isParentMenuName)
 
         binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblStudentSection.visibility = View.GONE
         if (!Constant.isSchoolMenuName.isNullOrBlank()) {
             binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
         } else {
@@ -193,6 +194,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
+            binding.toolbarLayout.lblStudentSection.visibility = View.GONE
             if (!Constant.isSchoolMenuName.isNullOrBlank()) {
                 binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
             } else {
@@ -503,6 +505,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.lblClickComplete.visibility = View.GONE
 //            binding.lblPostedDate.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
+            binding.toolbarLayout.lblStudentSection.visibility = View.GONE
+
 
             if (!Constant.isSchoolMenuName.isNullOrBlank()) {
                 binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName

@@ -372,7 +372,6 @@
                             style="@style/CustomTextStylePoppinsBold"
                             android:textColor="@color/red"
                             android:gravity="center"
-                            android:textSize="@dimen/ten_sp"
                             android:layout_marginStart="@dimen/twenty"
                             android:layout_marginEnd="@dimen/twenty"
                             android:layout_height="wrap_content">
