@@ -220,6 +220,7 @@ class AssignmentAdapter(
                     isParentAssignment = false
                 )
 
+
                 val intent = Intent(context, ChildHomeWork::class.java)
                 intent.putExtra(Constant.isPreViewData, isHomeWorkData)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
