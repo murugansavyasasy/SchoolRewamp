@@ -50,6 +50,8 @@ import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
@@ -124,6 +126,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     private var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     private var isChildDetails: ChildDetails? = null
+    private var isStaffDetails: StaffDetails? = null
+    var userDetails: UserDetails? = null
+
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
     private var dummyPath: String? = null
@@ -162,9 +167,18 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lblClickComplete.setOnClickListener(this)
         data = intent.getParcelableExtra("isPreViewData")
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
-        val childDetails = SharedPreference.getChildDetails(this)
-        isAccessToken = childDetails?.access_token
-        isChildDetails = childDetails
+        isChildDetails = SharedPreference.getChildDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        userDetails = SharedPreference.getUserDetails(this)
+
+
+        isAccessToken = if (Constant.isParentChoose) {
+            isChildDetails?.access_token
+        } else {
+            isStaffDetails?.access_token
+        }
+
+        Log.d("isAccessToken",isAccessToken!!)
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         binding.lbltitle.text = data!!.title
@@ -182,7 +196,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         if (SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.sendtostandardLabel.visibility = View.VISIBLE
-            loadAssignemntChildHomewordStandard()
+           loadAssignemntChildHomewordStandard()
         } else {
             binding.sendtostandardLabel.visibility = View.GONE
             Log.d("", "")
@@ -1014,6 +1028,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.rcystandard.layoutManager = flexboxLayoutManager
         assignmentchildstandardAdapter = AssignmentChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = assignmentchildstandardAdapter
+
         appViewModel!!.getassignmentchildhomework(
             isAccessToken!!,
             data!!.id.toInt(),

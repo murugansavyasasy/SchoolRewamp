@@ -28,10 +28,10 @@
         android:text="@string/no_internet_connection"
         android:textSize="@dimen/fifteen_sp" />
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:id="@+id/btnCreate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fourty"
         android:layout_below="@+id/rytPassword"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/thirty"
@@ -51,5 +51,5 @@
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
 
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </LinearLayout>

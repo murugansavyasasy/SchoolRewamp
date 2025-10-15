@@ -9,6 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class SubmittedAssignment(
     val id: String,
+    val title: String,
     val description: String,
     val submitted_on: String,
     val iframe: String,
