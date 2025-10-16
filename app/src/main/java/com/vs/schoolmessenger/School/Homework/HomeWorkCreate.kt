@@ -867,6 +867,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
     override fun onResume() {
         super.onResume()
         if (Constant.isClickEdit) {
+            binding.rytHistory.visibility = View.GONE
             binding.btnChooseRecipient.text = getString(R.string.update_homework)
             Constant.isClickEdit = false
             homeworkData = intent.getParcelableExtra<HomeWorkReportData>(Constant.homework_data)

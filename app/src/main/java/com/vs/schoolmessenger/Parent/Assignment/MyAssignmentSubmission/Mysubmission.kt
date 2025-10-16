@@ -235,4 +235,10 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        fetchAssignmentReportData()
+    }
+
 }

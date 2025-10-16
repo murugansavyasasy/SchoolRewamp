@@ -172,7 +172,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                     showStudentShimmer()
                     binding.absenteecount.text = "Absentees : $absent"
                     binding.totalstudentscount.text = "Total students : $student_counts"
-                    binding.classDetailname.text = "Class : $classname. Section : $sectionname"
+                    binding.classDetailname.text = "$classname - $sectionname"
 
                     binding.progressAbsent.max = total.toIntOrNull() ?: 1
                     binding.progressAbsent.progress = absent.toIntOrNull() ?: 0

@@ -5,7 +5,9 @@ import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
@@ -59,7 +61,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
-//        binding.lblArchiveMsg.setOnClickListener(this)
+        binding.lblArchiveMsg.setOnClickListener(this)
         binding.lblHeaderTitle.text=Constant.isParentMenuName
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
             if (binding.rytSearch1.visibility == View.VISIBLE) {
@@ -86,6 +88,15 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mAttachmentReportAdapter?.filter?.filter(s)
+                if (s!!.isNotEmpty()) {
+                    if (binding.isArchiveErrorMsg.visibility == View.VISIBLE) {
+                        binding.isArchiveErrorMsg.visibility = View.GONE
+                    }
+                } else {
+                    if (binding.isArchiveErrorMsg.visibility == View.GONE) {
+                        binding.isArchiveErrorMsg.visibility = View.VISIBLE
+                    }
+                }
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -107,9 +118,23 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 if (response.status) {
                     if(response.data.isNotEmpty()){
                         mAttachmentReportAdapter!!.AppendData(response.data)
-
                         binding.txtSearchMenu1.text.clear()
                         binding.isArchiveErrorMsg.visibility=View.GONE
+                        binding.recycleracademic.visibility = View.VISIBLE
+                        binding.nomessage.visibility = View.GONE
+                        binding.txtNoData.visibility = View.GONE
+
+                        if(mAttachmentReportAdapter!!.getCurrentListSize()>0){
+                            binding.rytSearch1.visibility = View.GONE
+                            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                            binding.txtSearchMenu1.text.clear()
+                        }
+                        else{
+                            binding.rytSearch1.visibility = View.GONE
+                            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                            binding.txtSearchMenu1.text.clear()
+                        }
+
                     }
                     else{
                         binding.isArchiveErrorMsg.visibility=View.VISIBLE
@@ -120,6 +145,15 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                             binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                             binding.txtSearchMenu1.text.clear()
                         }else{
+                            // Set top margin to 15dp dynamically
+                            val layoutParams = binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
+                            val topMarginInDp = TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP,
+                                15f,
+                                resources.displayMetrics
+                            ).toInt()
+                            layoutParams.topMargin = topMarginInDp
+                            binding.isArchiveErrorMsg.layoutParams = layoutParams
                             binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                         }
                     }
@@ -133,6 +167,15 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                         binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                         binding.txtSearchMenu1.text.clear()
                     }else{
+                        // Set top margin to 15dp dynamically
+                        val layoutParams = binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
+                        val topMarginInDp = TypedValue.applyDimension(
+                            TypedValue.COMPLEX_UNIT_DIP,
+                            15f,
+                            resources.displayMetrics
+                        ).toInt()
+                        layoutParams.topMargin = topMarginInDp
+                        binding.isArchiveErrorMsg.layoutParams = layoutParams
                         binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                     }
                 }
@@ -256,8 +299,9 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         when (v?.id) {
 
             R.id.lblArchiveMsg->{
+                binding.txtSearchMenu1.text.clear()
                 isGetAttachmentArchive()
-//                binding.lblArchiveMsg.visibility=View.GONE
+                binding.lblArchiveMsg.visibility=View.GONE
             }
         }
     }

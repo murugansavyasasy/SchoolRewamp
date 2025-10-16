@@ -162,9 +162,10 @@
 
         <LinearLayout
             android:visibility="gone"
+            android:gravity="center"
             android:id="@+id/lytList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/rcyLeaveRequestHistory"
             android:orientation="vertical">
 
@@ -174,7 +175,6 @@
                 android:layout_height="@dimen/two_fifty"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/twenty"
                 android:src="@drawable/nomessages"
                 android:textColor="@color/black"
                 android:textSize="@dimen/eighteen"
@@ -187,7 +187,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/twenty"
                 android:text="@string/no_list_found"
                 android:textSize="18sp"
                 />

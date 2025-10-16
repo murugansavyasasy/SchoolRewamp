@@ -271,6 +271,11 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
         super.onPause()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
+
     override fun onResume() {
         super.onResume()
     }

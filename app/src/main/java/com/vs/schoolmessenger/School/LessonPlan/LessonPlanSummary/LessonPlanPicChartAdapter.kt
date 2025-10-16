@@ -136,18 +136,8 @@ class LessonPlanPicChartAdapter(
             lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.pale_white_3))
 
 
-            imgPunchHistory.visibility = if (itemscompleted == Constant._0_0) {
-                View.INVISIBLE
-            } else {
-                View.VISIBLE
-            }
-
             totalrelative_layout.setOnClickListener {
-                if (itemscompleted == Constant._0_0) {
-                    Log.d("Listener Status", "The percentage value is zero")
-                } else {
                     listener.onItem(data, requestType)
-                }
             }
 
         }

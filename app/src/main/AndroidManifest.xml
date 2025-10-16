@@ -121,7 +121,7 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".CommonScreens.WhatsNewActivity"
+            android:name=".Dashboard.Settings.WhatsNew.WhatsNewActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 

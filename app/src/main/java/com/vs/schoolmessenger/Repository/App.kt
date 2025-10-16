@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
+import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionDeleteResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionEditResponse
@@ -395,6 +396,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getchildhomeworkstandard: LiveData<ChildStandardResponse?>? = null
     var getassignmentchildhomework: LiveData<AssignmentTargetDetailsResponse?>? = null
     var getattachmentchildhomework: LiveData<AttachmentTargetDetailResponse?>? = null
+    var getdashboardnewupdates: LiveData<WhatsNewUpdateResponse?>? = null
     var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
         private set
 
@@ -562,6 +564,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getchildhomeworkstandard = apiSchoolRepositories.getchildhomeworkstandardLiveData
         getassignmentchildhomework = apiSchoolRepositories.getassignmentchildhomeworkLiveData
         getattachmentchildhomework = apiSchoolRepositories.getattachmentchildhomeworkLiveData
+        getdashboardnewupdates = apiSchoolRepositories.getdashboardnewupdatesLiveData
 
 
     }
@@ -1443,6 +1446,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getattachmentchildhomework(isToken: String, id: Int, target_type : Int) {
         apiSchoolRepositories.getattachmentchildhomework(isToken, id, target_type)
+    }
+
+
+    fun getdashboardnewupdates(isToken: String, role_type: String) {
+        apiSchoolRepositories.getdashboardnewupdates(isToken, role_type)
     }
 }
 
