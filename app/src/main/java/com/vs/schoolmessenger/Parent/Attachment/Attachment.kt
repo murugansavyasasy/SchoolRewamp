@@ -125,7 +125,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                         binding.txtNoData.visibility = View.GONE
 
                         if(mAttachmentReportAdapter!!.getCurrentListSize()>0){
-                            binding.rytSearch1.visibility = View.GONE
+//                            binding.rytSearch1.visibility = View.GONE
                             binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                             binding.txtSearchMenu1.text.clear()
                         }
@@ -338,6 +338,20 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         else{
             appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
 
+        }
+    }
+
+    override fun onFilterEmpty(showNoData: Boolean) {
+        if (showNoData) {
+            Log.d("NoDta","No data")
+            binding.recycleracademic.visibility = View.GONE
+            binding.nomessage.visibility=View.VISIBLE
+            binding.txtNoData.visibility=View.VISIBLE
+        } else {
+            Log.d("NoDta","data")
+            binding.recycleracademic.visibility = View.VISIBLE
+            binding.nomessage.visibility=View.GONE
+            binding.txtNoData.visibility=View.GONE
         }
     }
 }

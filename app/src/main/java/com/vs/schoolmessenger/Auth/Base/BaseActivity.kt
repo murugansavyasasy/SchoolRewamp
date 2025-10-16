@@ -29,6 +29,7 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.TimePicker
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -703,6 +704,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
+
+
+
+
+
     fun showDatePickerDialog(
         context: Context,
         listener: OnDateSelectedListener
@@ -788,8 +794,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             year, month, day
         )
 
+
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+
         datePickerDialog.show()
     }
+
 
 
 

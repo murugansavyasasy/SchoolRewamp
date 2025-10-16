@@ -709,6 +709,8 @@ object Constant {
     var user_type_as_staff = 2
 
 
+
+
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
             activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -1118,6 +1120,9 @@ object Constant {
         }
         datePickerDialog.show()
     }
+
+
+
 
 
     fun showDatePicker12(

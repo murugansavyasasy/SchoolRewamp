@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -12,6 +13,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -36,6 +38,7 @@ import com.vs.schoolmessenger.databinding.LessonplanViewDetailsBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import androidx.core.view.isVisible
 
 class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View.OnClickListener,
     LessonPlanClickListener, OnDateSelectedListener {
@@ -94,8 +97,10 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         fetchLessonPlanData(sectionSubjectId)
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.rytSearch1.visibility == View.VISIBLE) {
+            if (binding.rytSearch1.isVisible) {
+                binding.txtSearchMenu1.text.clear()
                 binding.rytSearch1.visibility = View.GONE
+                binding.root.hideKeyboard()
             } else {
                 binding.txtSearchMenu1.text.clear()
                 binding.rytSearch1.visibility = View.VISIBLE
@@ -106,11 +111,16 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             if (response != null && response.status) {
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.rcyLessonViewPlan.visibility = View.VISIBLE
+                binding.tabLayout1.visibility = View.VISIBLE
+
                 islpViewData(response.data)
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                binding.tabLayout1.visibility = View.GONE
                 binding.rcyLessonViewPlan.visibility = View.GONE
             }
         }
@@ -154,7 +164,10 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         }
     }
 
-
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
     private fun setupRecycler() {
         lessonplanViewAdapter = LessonPlanAdapter(
             null, this, this, Constant.isShimmerViewShow, request_type ?: ""

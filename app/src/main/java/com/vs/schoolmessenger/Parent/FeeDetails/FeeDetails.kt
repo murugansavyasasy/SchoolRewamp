@@ -49,7 +49,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
     lateinit var mAdapter: FeeReceiptAdapter
 
-    //    private lateinit var invoiceList: List<InvoiceDetails>
     private var appViewModel: App? = null
     var isChildId = ""
     var isSchoolID = ""
@@ -57,9 +56,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     private val popupWebViewStack = Stack<WebView>()
     var alertDialogView: AlertDialog? = null
 
-
     private var msg_id: Int = -1
-
     private var fromNotification: Boolean = false
 
     override fun setupViews() {
@@ -153,50 +150,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             }
         }
 
-
-//        isAccessToken?.let { token ->
-//            appViewModel!!.getStudentInvoices(token, this)
-//            Log.d("FeeDetails_isAccessToken", "Access token: $token")
-//        }
-
-//        invoiceList = listOf(
-//            InvoiceDetails(
-//                1,
-//                "Invoice No: INV001",
-//                "Invoice Date : 01-05-2025",
-//                "Invoice Amount : 1200",
-//                "10:45 AM 234 KB"
-//            ),
-//            InvoiceDetails(
-//                2,
-//                "Invoice No: INV001",
-//                "Invoice Date : 01-05-2025",
-//                "Invoice Amount : 1200",
-//                "10:45 AM 234 KB"
-//
-//            ),
-//            InvoiceDetails(
-//                3,
-//                "Invoice No: INV001",
-//                "Invoice Date : 01-05-2025",
-//                "Invoice Amount : 1200",
-//                "10:45 AM 234 KB"
-//            ),
-//            InvoiceDetails(
-//                4,
-//                "Invoice No: INV001",
-//                "Invoice Date : 01-05-2025",
-//                "Invoice Amount : 1200",
-//                "10:45 AM 234 KB"
-//            ),
-//            InvoiceDetails(
-//                5,
-//                "Invoice No: INV001",
-//                "Invoice Date : 01-05-2025",
-//                "Invoice Amount : 1200",
-//                "10:45 AM 234 KB"
-//            )
-//        )
     }
 
     override fun onClick(v: View?) {
@@ -229,7 +182,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 loadFeeReceipts()
 
                 Constant.showLoading(this)
-//                isAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGlsZF9pZCI6Ijk2NzQ2ODYiLCJzY2hvb2xfaWQiOiI3MDQzIiwiY2xhc3NfaWQiOjMyNTgyLCJzZWN0aW9uX2lkIjo5MDgxMywiaWF0IjoxNzU4MTcyNTUyfQ.juXR6Fk_DXQvPCX0RTV_iWNg36gWvLwu5XQI8piZ2CA"
                 appViewModel?.getStudentInvoices(isAccessToken!!, this)
                 Log.d("FeeDetails_Token", "Fetching invoices with token: $isAccessToken")
 
@@ -349,7 +301,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         appViewModel?.apiParentRepositories?.isInvoiceDetails?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null && response.status && response.data.isNotEmpty()) {
-//                val pdfUrl = response.data[0]
                 val pdfUrl =
                     "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
                 val intent = Intent(this, FeeReceiptViewActivity::class.java)

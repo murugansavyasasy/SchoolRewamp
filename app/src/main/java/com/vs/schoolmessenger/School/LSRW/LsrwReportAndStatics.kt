@@ -69,42 +69,45 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
 
-                val headerItems = mutableListOf<LsrwHeaderItem>()
-                headerItems.add(
-                    LsrwHeaderItem(
-                        Constant.Today_Submitted,
-                        "",
-                        "${data.today_submitted?.size ?: 0} ${getString(R.string.Students)}"
+
+                val headerItems = mutableListOf<LsrwHeaderItem>().apply {
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Today_Submitted,
+                            "",
+                            "${data.today_submitted?.size ?: 0} ${getString(R.string.Students)}"
+                        )
                     )
-                )
-                headerItems.add(
-                    LsrwHeaderItem(
-                        Constant.Listening,
-                        data.listening?.over_all_percentage ?: "0%",
-                        "${data.listening?.student_count ?: "0"} ${getString(R.string.Students)}"
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Listening,
+                            data.listening?.over_all_percentage ?: "0%",
+                            "${data.listening?.student_count ?: "0"} ${getString(R.string.Students)}"
+                        )
                     )
-                )
-                headerItems.add(
-                    LsrwHeaderItem(
-                        Constant.Speaking,
-                        data.speaking?.over_all_percentage ?: "0%",
-                        "${data.speaking?.student_count ?: "0"} ${getString(R.string.Students)}"
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Speaking,
+                            data.speaking?.over_all_percentage ?: "0%",
+                            "${data.speaking?.student_count ?: "0"} ${getString(R.string.Students)}"
+                        )
                     )
-                )
-                headerItems.add(
-                    LsrwHeaderItem(
-                        Constant.Reading,
-                        data.reading?.over_all_percentage ?: "0%",
-                        "${data.reading?.student_count ?: "0"} ${getString(R.string.Students)}"
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Reading,
+                            data.reading?.over_all_percentage ?: "0%",
+                            "${data.reading?.student_count ?: "0"} ${getString(R.string.Students)}"
+                        )
                     )
-                )
-                headerItems.add(
-                    LsrwHeaderItem(
-                        Constant.Writing,
-                        data.writing?.over_all_percentage ?: "0%",
-                        "${data.writing?.student_count ?: "0"} ${getString(R.string.Students)}"
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Writing,
+                            data.writing?.over_all_percentage ?: "0%",
+                            "${data.writing?.student_count ?: "0"} ${getString(R.string.Students)}"
+                        )
                     )
-                )
+                }
+
 
                 binding.rclsrwheader.layoutManager =
                     LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -113,55 +116,66 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 }
                 binding.rclsrwheader.adapter = headerAdapter
 
-                val allDetails = mutableListOf<AvgStudentSubmission>()
-                allDetails.addAll(data.listening?.details ?: emptyList())
-                allDetails.addAll(data.reading?.details ?: emptyList())
-                allDetails.addAll(data.speaking?.details ?: emptyList())
-                allDetails.addAll(data.writing?.details ?: emptyList())
+
+                val allDetails = mutableListOf<AvgStudentSubmission>().apply {
+                    addAll(data.listening?.details ?: emptyList())
+                    addAll(data.reading?.details ?: emptyList())
+                    addAll(data.speaking?.details ?: emptyList())
+                    addAll(data.writing?.details ?: emptyList())
+                }
+
 
                 val weeklyReport = calculateWeeklyReport(allDetails)
                 binding.rvWeekly.layoutManager = LinearLayoutManager(this)
                 binding.rvWeekly.adapter = WeeklyReportAdapter(weeklyReport)
 
+
                 val topPerformers = calculateTopPerformers(allDetails)
                 if (topPerformers.isNotEmpty()) {
                     binding.rvTopPerformance.visibility = View.VISIBLE
                     binding.topperformanceLabel.visibility = View.VISIBLE
+                    binding.rvTopPerformance.layoutManager = LinearLayoutManager(this)
                     binding.rvTopPerformance.adapter = TopPerformanceAdapter(topPerformers)
                 } else {
                     binding.rvTopPerformance.visibility = View.GONE
                     binding.topperformanceLabel.visibility = View.GONE
                 }
-                binding.rvTopPerformance.layoutManager = LinearLayoutManager(this)
-                binding.rvTopPerformance.adapter = TopPerformanceAdapter(topPerformers)
 
 
-                binding.rclsrwheader.visibility = View.VISIBLE
-                binding.rvWeekly.visibility = View.VISIBLE
-                binding.weeklyreportLabel.visibility = View.VISIBLE
-                binding.monthlyLabel.visibility = View.VISIBLE
-                binding.rvTopPerformance.visibility = View.VISIBLE
-                binding.topperformanceLabel.visibility = View.VISIBLE
-                binding.lytNoDataFound.visibility = View.GONE
-                binding.noDataFound.visibility = View.GONE
+                binding.apply {
+                    rclsrwheader.visibility = View.VISIBLE
+                    topperformanceCardview.visibility = View.VISIBLE
+                    monthlyReportcardview.visibility = View.VISIBLE
+                    rvWeekly.visibility = View.VISIBLE
+                    weeklyreportLabel.visibility = View.VISIBLE
+                    monthlyLabel.visibility = View.VISIBLE
+                    lytNoDataFound.visibility = View.GONE
+                }
+
 
                 if (headerItems.isNotEmpty()) {
                     filterByHeader(headerItems[0], data)
                 }
-            } else {
 
-                binding.rclsrwheader.visibility = View.GONE
-                binding.rvWeekly.visibility = View.GONE
-                binding.weeklyreportLabel.visibility = View.GONE
-                binding.monthlyLabel.visibility = View.GONE
-                binding.studentsLabel.visibility = View.GONE
-                binding.rvTopPerformance.visibility = View.GONE
-                binding.topperformanceLabel.visibility = View.GONE
-                binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.noDataFound.text = response?.message
-                binding.noDataImage.visibility = View.VISIBLE
+            } else {
+                binding.apply {
+                    rclsrwheader.visibility = View.GONE
+                    rvWeekly.visibility = View.GONE
+                    weeklyreportLabel.visibility = View.GONE
+                    monthlyLabel.visibility = View.GONE
+                    studentsLabel.visibility = View.GONE
+                    rvTopPerformance.visibility = View.GONE
+                    topperformanceCardview.visibility = View.GONE
+                    monthlyReportcardview.visibility = View.GONE
+                    topperformanceLabel.visibility = View.GONE
+
+
+                    lytNoDataFound.visibility = View.VISIBLE
+                    noDataFound.text = response?.message ?: getString(R.string.no_data_found)
+                }
             }
         }
+
 
     }
 

@@ -560,6 +560,20 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
     // Edit Update code
     fun isUploadFilesInServer(isFileType: String?) {
 
+        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any { !it.path.contains("player.vimeo.com") }
+        if (needsProcessing) {
+            ProgressDialogHelper.show(this)
+        }
+        Log.d("UploadDebug", "isUploadFilesInServer called with type: $isFileType")
+
+        ProgressDialogHelper.show(this)
+        Log.d("UploadDebug", "ProgressDialogHelper.show() called")
+
+        ProgressDialogHelper.updateProgress(0)
+        Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(0) called")
+
+
+
         if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
@@ -578,6 +592,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         when {
             Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+
         }
         ProgressDialogHelper.updateProgress(80)
     }
@@ -596,6 +611,10 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                         isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
                 )
+                val progress =
+                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+                        .coerceAtMost(100)
+                ProgressDialogHelper.updateProgress(progress)
                 iterator.remove()
             }
         }
@@ -603,12 +622,15 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         val isCountryId = SharedPreference.getCountryId(this)
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
+                ProgressDialogHelper.updateProgress(100)
+                ProgressDialogHelper.dismiss()
                 ProgressDialogHelper.dismiss()
                 isUpdateHomeWork()
             } else {
                 videoUploading()
             }
         } else {
+            val numToCompress = Constant.selectedFiles.size
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             outputDir.mkdirs()
@@ -642,6 +664,10 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                         )
 
                         newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                        val compressedCount = newSelectedFiles.size
+                        val progress =
+                            10 + ((compressedCount.toFloat() / numToCompress) * 40).toInt()
+                        ProgressDialogHelper.updateProgress(progress.coerceAtMost(50))
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
                     }
@@ -649,6 +675,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 onComplete = {
                     Constant.selectedFiles.clear()
                     Constant.selectedFiles.addAll(newSelectedFiles)
+                    ProgressDialogHelper.updateProgress(50)
                     val isAwsUploadingFile = ArrayList<String>()
 
                     val isSelectedFileCount = Constant.selectedFiles.size
@@ -673,6 +700,11 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                                             isFileType = Constant.selectedFiles[i].type.name
                                         )
                                     )
+                                    val progress =
+                                        (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+                                            .coerceAtMost(100)
+                                    ProgressDialogHelper.updateProgress(progress)
+
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
@@ -705,10 +737,16 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                         isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
                 )
+                val progress =
+                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+                        .coerceAtMost(100)
+                ProgressDialogHelper.updateProgress(progress)
                 iterator.remove()
             }
         }
         if (isVideoSelectedArrayList.isNotEmpty()) {
+            ProgressDialogHelper.updateProgress(100)
+            ProgressDialogHelper.dismiss()
             for (i in isVideoSelectedArrayList.indices) {
                 VimeoVideoUpload.uploadVideo(
                     this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].path, this
@@ -742,10 +780,14 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+            ProgressDialogHelper.dismiss()
         }
+
     }
 
     fun isUpdateHomeWork() {
+        ProgressDialogHelper.updateProgress(100)
+        ProgressDialogHelper.dismiss()
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(this).toString())
         val jsonObject = JsonObject()
         val filePathArray = JsonArray()

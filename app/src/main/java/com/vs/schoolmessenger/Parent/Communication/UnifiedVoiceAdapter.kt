@@ -256,6 +256,7 @@ class UnifiedVoiceAdapter(
 
 
                 lblSeeMore.setOnClickListener {
+                    lblnewiconText.visibility=View.GONE
                     isExpanded = !isExpanded
                     lblSeeMore.visibility = View.GONE
                     if (isExpanded) {
@@ -273,7 +274,7 @@ class UnifiedVoiceAdapter(
                             listener.onUpdateCommunicationStatus(data.type, data.id)
                         }
                         data.is_unread = false
-                        lblnewiconText.visibility=View.GONE
+//                        lblnewiconText.visibility=View.GONE
                     }
                     listener.onItemClick(data, this@DataViewHolder)
                 }

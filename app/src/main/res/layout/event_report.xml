@@ -92,6 +92,7 @@
                     android:layout_below="@+id/rcyongoingevent"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/twenty"
+                    android:visibility="gone"
                     android:src="@drawable/dotindicator" />
 
 

@@ -17,7 +17,6 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
 
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
-    private var appViewModel: App? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -31,8 +30,8 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
-        val pdfUrl =
-            "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf"
+        val pdfUrl = intent.getStringExtra("pdf_url") ?:"https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf"
+
         val googleDocsUrl = "${Constant.google_g_view_embedded}$pdfUrl"
         Constant.loadWebView(
             this,

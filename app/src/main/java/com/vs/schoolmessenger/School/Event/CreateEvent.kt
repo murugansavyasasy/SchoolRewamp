@@ -3,7 +3,10 @@ package com.vs.schoolmessenger.School.Event
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -24,6 +27,7 @@ import android.view.Window
 import android.widget.AdapterView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -73,6 +77,7 @@ import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -100,6 +105,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     private var isAccessToken: String? = null
     var isFromTime = true
     private var isStaffDetails: StaffDetails? = null
+
+    var selectedDate: Calendar? = null
     private var selectedDateField: Int = 0
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
@@ -149,6 +156,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.lblDay.text = dayOfWeek
 
         binding.txtStartDate.text = fullDate
+
+        selectedDate = Calendar.getInstance()
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -366,7 +375,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             R.id.rytStartDate -> {
 
                 selectedDateField = 1
-                Constant.showDatePicker(this, false) { selectedDate ->
+                showDatePicker11(this, false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     binding.txtStartDate.text =
                         Constant.covertDateFormate(selectedDate) // 13 may 2222
@@ -379,7 +388,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
             R.id.txtStartTime -> {
                 isFromTime = true
-                showTimePickerDialog(this, this)
+                showTimePickerDialog1(this, this)
 
             }
 
@@ -422,6 +431,89 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     }
 
 
+    fun showTimePickerDialog1(context: Context, listener: TimeSelectedListener) {
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            context,
+            { _, selectedHour, selectedMinute ->
+                // FIXED: Validate AFTER selection (reliable enforcement)
+                val today = Calendar.getInstance()
+                val effectiveSelectedDate = selectedDate ?: today  // Fallback to today if not set
+                val isSameDay = effectiveSelectedDate.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+                        effectiveSelectedDate.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
+
+                if (isSameDay) {
+                    val selectedCal = Calendar.getInstance().apply {
+                        set(Calendar.HOUR_OF_DAY, selectedHour)
+                        set(Calendar.MINUTE, selectedMinute)
+                        set(Calendar.SECOND, 0)
+                        set(Calendar.MILLISECOND, 0)
+                    }
+                    val currentCal = Calendar.getInstance().apply {
+                        set(Calendar.SECOND, 0)
+                        set(Calendar.MILLISECOND, 0)
+                    }
+
+                    if (selectedCal.before(currentCal)) {
+                        // Enforce: Reset to current time and notify
+                        val resetHour12 = if (currentCal.get(Calendar.HOUR_OF_DAY) == 0) 12
+                        else if (currentCal.get(Calendar.HOUR_OF_DAY) > 12) currentCal.get(Calendar.HOUR_OF_DAY) - 12
+                        else currentCal.get(Calendar.HOUR_OF_DAY)
+                        val resetAmPm = if (currentCal.get(Calendar.HOUR_OF_DAY) < 12) Constant.AM else Constant.PM
+                        listener.onTimeSelected(resetHour12, currentCal.get(Calendar.MINUTE), resetAmPm)
+                        Toast.makeText(context, "Time cannot be past", Toast.LENGTH_SHORT).show()  // Add this string to strings.xml: "Time cannot be in the past"
+                        return@TimePickerDialog
+                    }
+                }
+
+                // Valid: Proceed with 12-hour format
+                val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
+                val hourIn12Format = if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
+                listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
+            },
+            currentHour,
+            currentMinute,
+            false  // 12-hour format
+        )
+
+        // REMOVED: Hacky OnTimeChangedListener (no longer needed with post-selection validation)
+
+        timePickerDialog.show()
+    }
+    fun showDatePicker11(
+        context: Context,
+        dateFormatType: Boolean,  // Unused now, but kept for compatibility
+        onDateSelected: (String) -> Unit
+    ) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedCalendar = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+                selectedDate = selectedCalendar  // Store for time restrictions
+
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(selectedCalendar.time)
+                onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        // FIXED: Always set minDate to now (no past dates). Ignore dateFormatType for maxDate unless needed.
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        // If you want a maxDate (e.g., 1 year future), add: datePickerDialog.datePicker.maxDate = calendar.timeInMillis + (365L * 24 * 60 * 60 * 1000)
+
+        datePickerDialog.show()
+    }
     private fun showBottomDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -932,7 +1024,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             )
         }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-        binding.rytRecyclewview.visibility = View.VISIBLE
+        binding.rytRecyclewview.visibility = View.VISIBLE  // Typo? Assuming rytRecycleView
 
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.txtTitle.setText(data!!.title)
@@ -941,6 +1033,16 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         isSelectedCategory = data.category
         binding.txtStartDate.text = Constant.covertDateFormate(data.date)
         binding.txtStartTime.text = data.time
+
+
+        try {
+            val sdfInput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())  // Adjust if data.date format differs
+            val parsedDate = sdfInput.parse(binding.txtStartDate.text.toString())
+            selectedDate = Calendar.getInstance().apply { time = parsedDate!! }
+        } catch (e: Exception) {
+            Log.e("EditProcess", "Failed to parse date: ${e.message}")
+            selectedDate = Calendar.getInstance()  // Fallback to today
+        }
 
         if (data.file_path.isNotEmpty()) {
             val mappedList = data.file_path.map { filePath ->
