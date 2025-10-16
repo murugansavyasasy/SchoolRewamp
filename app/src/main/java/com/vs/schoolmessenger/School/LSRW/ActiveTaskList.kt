@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.LSRW
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -13,8 +14,10 @@ import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import androidx.core.view.isVisible
 
 
 class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickListener {
@@ -39,9 +42,10 @@ class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickList
         )
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.rytSearchbox.visibility == View.VISIBLE) {
-                binding.rytSearchbox.visibility = View.GONE
+            if (binding.rytSearchbox.isVisible) {
                 binding.txtSearchBox.text.clear()
+                binding.rytSearchbox.visibility = View.GONE
+                binding.root.hideKeyboard()
 
             } else {
                 binding.rytSearchbox.visibility = View.VISIBLE
@@ -86,6 +90,11 @@ class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickList
             }
         })
 
+    }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
     private fun filter(text: String) {

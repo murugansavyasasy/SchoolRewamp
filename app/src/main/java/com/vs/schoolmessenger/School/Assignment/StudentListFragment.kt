@@ -58,8 +58,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = AssignmentStudentListReportBinding.inflate(inflater, container, false)
         return binding.root
@@ -116,7 +115,10 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
                 updateTabTitles()
                 showAllStudents()
             } else {
-                showNoDataView(true, response?.message ?: getString(R.string.no_data_found))
+                binding.nomessage.visibility = View.VISIBLE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.rcystudentlist.visibility = View.GONE
+                binding.txtNoData.text = response!!.message ?: getString(R.string.no_data_found)
             }
         }
 
@@ -124,22 +126,16 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
     }
 
 
-    private fun showNoDataView(show: Boolean, message: String = getString(R.string.no_data_found)) {
-        binding.nomessage.visibility = if (show) View.VISIBLE else View.GONE
-        binding.txtNoData.visibility = if (show) View.VISIBLE else View.GONE
-        binding.txtNoData.text = if (show) message else ""
-        binding.rcystudentlist.visibility = if (show) View.GONE else View.VISIBLE
-    }
-
-
-
-
     private fun showAllStudents() {
         val list = allStudentsList
         if (list.isEmpty()) {
-            showNoDataView(true)
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.rcystudentlist.visibility = View.GONE
         } else {
-            showNoDataView(false)
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcystudentlist.visibility = View.VISIBLE
             isloadassignmentdata(list)
         }
     }
@@ -151,11 +147,13 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         }
 
         if (filteredList.isEmpty()) {
-            showNoDataView(true)
-            binding.layoutNoData.visibility = View.VISIBLE
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.rcystudentlist.visibility = View.GONE
         } else {
-            showNoDataView(false)
-            binding.layoutNoData.visibility = View.GONE
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcystudentlist.visibility = View.VISIBLE
             isloadassignmentdata(filteredList)
         }
     }
@@ -166,9 +164,13 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         }
 
         if (filteredList.isEmpty()) {
-            showNoDataView(true)
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.rcystudentlist.visibility = View.GONE
         } else {
-            showNoDataView(false)
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcystudentlist.visibility = View.VISIBLE
             isloadassignmentdata(filteredList)
         }
     }
@@ -176,11 +178,15 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     private fun isloadassignmentdata(newData: List<StudentSubmission>?) {
         if (newData.isNullOrEmpty()) {
-            showNoDataView(true)
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.rcystudentlist.visibility = View.GONE
             return
         }
 
-        showNoDataView(false)
+        binding.nomessage.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
+        binding.rcystudentlist.visibility = View.VISIBLE
 
         if (!::assignmentstudentlistadapter.isInitialized) {
             assignmentstudentlistadapter = AssignmentStudentListAdapter(
@@ -216,13 +222,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     private fun isGetAssignmentStudentList() {
         assignmentstudentlistadapter = AssignmentStudentListAdapter(
-            null,
-            this,
-            requireContext(),
-            Constant.isShimmerViewShow,
-            null,
-            null,
-            created_date
+            null, this, requireContext(), Constant.isShimmerViewShow, null, null, created_date
         )
 
         binding.rcystudentlist.layoutManager = LinearLayoutManager(requireContext())
@@ -237,7 +237,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             R.id.icon_search -> {
                 if (binding.rytSearch.isVisible) {
                     binding.rytSearch.visibility = View.GONE
-                    binding.txtSearch.setText("")
+                    binding.txtSearch.text.clear()
                     binding.root.hideKeyboard()
                 } else {
                     binding.rytSearch.visibility = View.VISIBLE

@@ -171,12 +171,15 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
 
                     binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
+                    binding.dotindicator.visibility =
+                        if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
+
                     binding.rcyongoingevent.visibility =
                         if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
                     binding.headerview.visibility =
                         if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
                     binding.dotindicator.visibility =
-                        if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                        if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE  // Updated: Use > 1 here (not > 0)
 
                     binding.rcyupcomingevent.visibility =
                         if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
@@ -207,12 +210,9 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
                 allUpcomingEvents = data.up_coming
                 allCompletedEvents = data.completed
 
-                binding.dotindicator.visibility =
-                    if (!allOngoingEvents.isNullOrEmpty() && allOngoingEvents!!.size > 1) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
+                mAdapter.updateList(allOngoingEvents)
+                updateDotIndicator()
+
 
                 val isAllEmpty = allOngoingEvents.isNullOrEmpty() &&
                         allUpcomingEvents.isNullOrEmpty() &&
@@ -390,8 +390,8 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
 
 
     private fun updateDotIndicator() {
-        binding.dotindicator.visibility =
-            if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
+        val ongoingCount = mAdapter.itemCount
+        binding.dotindicator.visibility = if (ongoingCount > 1) View.VISIBLE else View.GONE
     }
 
 
@@ -435,8 +435,7 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
                 mAdapter.updateList(ongoingFiltered)
                 binding.rcyongoingevent.visibility = View.VISIBLE
                 binding.headerview.visibility = View.VISIBLE
-                binding.dotindicator.visibility =
-                    if (ongoingFiltered.size > 1) View.VISIBLE else View.GONE
+                updateDotIndicator()
             } else {
                 binding.rcyongoingevent.visibility = View.GONE
                 binding.headerview.visibility = View.GONE

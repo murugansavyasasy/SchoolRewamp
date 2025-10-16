@@ -3,15 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    >
+
+
 
     <LinearLayout
         android:id="@+id/bottom_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/eight">
+        android:padding="@dimen/eight"
+        android:visibility="visible">
+
 
         <TextView
             android:id="@+id/headerstudentsubmission"
@@ -19,6 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="start"
             android:text="🧑‍🎓 Student Submissions"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -28,7 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_search" />
+
     </LinearLayout>
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -44,12 +54,16 @@
         app:tabTextAppearance="@style/CustomTabTextAppearance"
         app:tabTextColor="@color/black" />
 
+
+
     <RelativeLayout
         android:id="@+id/rytSearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
         android:layout_below="@id/tabLayout"
         android:layout_margin="@dimen/ten"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
         android:background="@drawable/rect_grey"
         android:visibility="gone">
 
@@ -73,45 +87,35 @@
     </RelativeLayout>
 
 
-    <FrameLayout
-        android:id="@+id/listContainer"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcystudentlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/rytSearch"
-        android:layout_marginTop="@dimen/five">
+        android:layout_marginTop="@dimen/five"
+        android:visibility="visible" />
 
+    <ImageView
+        android:id="@+id/nomessage"
+        android:layout_width="@dimen/two_fifty"
+        android:layout_height="@dimen/two_fifty"
+        android:layout_below="@+id/rytSearch"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/twenty"
+        android:src="@drawable/nomessages"
+        android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcystudentlist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
+    <TextView
+        android:id="@+id/txtNoData"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nomessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/twenty"
+        android:gravity="center"
+        android:text="@string/no_list_found"
+        android:textSize="@dimen/eighteen_sp"
+        android:visibility="gone" />
 
-
-        <LinearLayout
-            android:id="@+id/layoutNoData"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/nomessage"
-                android:layout_width="@dimen/two_fifty"
-                android:layout_height="@dimen/two_fifty"
-                android:src="@drawable/nomessages" />
-
-            <TextView
-                android:id="@+id/txtNoData"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/twenty"
-                android:gravity="center"
-                android:text="@string/no_list_found"
-                android:textColor="@color/black"
-                android:textSize="@dimen/eighteen_sp" />
-        </LinearLayout>
-    </FrameLayout>
 </RelativeLayout>
