@@ -54,6 +54,7 @@
             android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
+
             android:layout_marginEnd="@dimen/fifteen"
             android:background="@drawable/field_background"
             android:gravity="center_vertical"
@@ -66,6 +67,8 @@
             android:background="@android:color/transparent"
             style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="match_parent"
+            android:focusable="false"
+            android:clickable="false"
             android:layout_height="wrap_content">
 
         </EditText>

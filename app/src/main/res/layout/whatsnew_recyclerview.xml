@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_weight="1"
-                android:text="Swipe for more"
+                android:text="&lt;&lt; Swipe for more"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />
 
@@ -107,19 +107,11 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Swipe for more"
+                android:text="Swipe for more &gt;&gt;"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />
 
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/dotindicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/dotindicator" />
 
     </LinearLayout>
 

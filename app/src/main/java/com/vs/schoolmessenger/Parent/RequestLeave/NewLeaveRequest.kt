@@ -102,11 +102,11 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                 if (response.status) {
                     Constant.hideLoading(this@NewLeaveRequest)
                     Log.d("isleaverequestupdate", response.message)
-                    Constant.showDataValidation(
+                    Constant.showParentDataValidation(
                         resources.getString(R.string.success), response.message, this
                     )
                 } else {
-                    Constant.showDataValidation(
+                    Constant.showParentDataValidation(
                         resources.getString(R.string.fail), response.message, this
                     )
                 }
@@ -117,11 +117,11 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this@NewLeaveRequest)
-                    Constant.showDataValidation(
+                    Constant.showParentDataValidation(
                         resources.getString(R.string.success), response.message, this
                     )
                 } else {
-                    Constant.showDataValidation(
+                    Constant.showParentDataValidation(
                         resources.getString(R.string.fail), response.message, this
                     )
                 }
@@ -137,7 +137,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                     isLeaveCategorySpinner()
                     getIntentValuesIfEditing()
                 } else {
-                    Constant.showDataValidation(
+                    Constant.showParentDataValidation(
                         response.status.toString(), response.message, this
                     )
                 }

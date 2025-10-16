@@ -75,6 +75,9 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
     }
 
     private fun fetchticketsummary(couponstatus: String) {
+        binding.nomessage.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
+        binding.lblNoRecord.visibility = View.GONE
         showProgressBar()
         appViewModel.getmycouponsSummary(
             couponstatus,
@@ -85,14 +88,19 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
     }
 
     private fun isLoadCouponSummaryData(data: List<TicketSummary>) {
+        // Hide “no data” message
+        binding.nomessage.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
         binding.lblNoRecord.visibility = View.GONE
+
         binding.recyclerView.visibility = View.VISIBLE
         ticketcouponadapter = TicketCouponAdapter(data, this, requireContext(), false)
         binding.recyclerView.adapter = ticketcouponadapter
     }
 
     private fun showMyCouponSummaryErrorUI(message: String) {
-        binding.lblNoRecord.visibility = View.VISIBLE
+        binding.nomessage.visibility = View.VISIBLE
+        binding.txtNoData.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
     }
 
@@ -111,6 +119,18 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
             previouslySelectedView?.setBackgroundResource(0)
             v.setBackgroundResource(R.drawable.green_radious)
             previouslySelectedView = v
+
+            binding.editSearch.setText("")
+
+            // Hide “no data” before switching tabs
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.lblNoRecord.visibility = View.GONE
+
+            // Reset the adapter
+            if (::ticketcouponadapter.isInitialized) {
+                ticketcouponadapter.filter.filter("")
+            }
 
             // Show progress bar when changing tabs (new fetch begins)
             when (v.id) {

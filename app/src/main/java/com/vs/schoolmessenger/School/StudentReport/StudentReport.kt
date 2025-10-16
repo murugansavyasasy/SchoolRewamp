@@ -91,9 +91,13 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             if (binding.rytSearchBar.isVisible) {
                 binding.rytSearchBar.visibility = View.GONE
                 binding.txtSearchMenu.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
             } else {
                 binding.rytSearchBar.visibility = View.VISIBLE
                 binding.txtSearchMenu.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
 
             }
         }

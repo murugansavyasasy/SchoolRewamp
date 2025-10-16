@@ -185,12 +185,15 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
         layoutEdit.setOnClickListener {
-            Constant.isClickEdit=true
+            Log.d("PopupClick", "Edit clicked ✅")
+            Log.d("My Submission Data String", "Assignment data: $data")
+            Constant.isClickEdit = true
             val intent = Intent(this, MyAssignmentSubmit::class.java)
             intent.putExtra(Constant.mysubmission_data, data)
             startActivity(intent)
             popupWindow.dismiss()
         }
+
 
         layoutDelete.setOnClickListener {
             showSendConfirmationDialog(false)

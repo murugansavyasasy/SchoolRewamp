@@ -36,8 +36,7 @@
         </TextView>
 
         <LinearLayout
-            android:layout_marginTop="@dimen/fifteen"
-
+            android:layout_marginTop="@dimen/twenty"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/imgSearchToolBar"
             android:id="@+id/rlaStudentName"

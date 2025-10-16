@@ -36,16 +36,17 @@
         android:layout_margin="@dimen/ten"
         android:layout_marginTop="@dimen/twenty"
         android:padding="@dimen/ten"
+        android:lineSpacingExtra="@dimen/five"
         android:text="The app encountered as error. If you have enabled Developer Mode on your device. please try disabling it and relaunching the app. If the issue presists. please contact customer support. Please follow the path: Device Settings > search for Developer options > toggle the switch to off."
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
         android:textStyle="normal"></TextView>
 
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:id="@+id/btnClose"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty_five"
+        android:layout_height="@dimen/fourty"
         android:layout_below="@+id/lblForgetPassword"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/thirty"
@@ -64,7 +65,7 @@
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
 
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 </LinearLayout>
 

@@ -50,7 +50,7 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
         if (SharedPreference.isFingerprintEnabled(this)) {
             if (!mobile_number.equals("") && !password.equals("")) {
                 binding.rytFingerPrint.visibility = View.VISIBLE
-                Constant.setupBiometricPrompt(this, this)
+                Constant.setupBiometricPrompt(this, this,false)
                 Constant.authenticate(this)
             } else {
                 binding.rytFingerPrint.visibility = View.GONE
@@ -246,7 +246,7 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
             }
 
             R.id.rytFingerPrint -> {
-                Constant.setupBiometricPrompt(this, this)
+                Constant.setupBiometricPrompt(this, this,false)
                 Constant.authenticate(this)
             }
         }

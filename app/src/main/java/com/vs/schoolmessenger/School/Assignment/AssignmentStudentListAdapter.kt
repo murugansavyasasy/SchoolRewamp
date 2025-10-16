@@ -78,6 +78,15 @@ class AssignmentStudentListAdapter(
         toggleNoDataUI()
     }
 
+    fun updateData(newData: List<StudentSubmission>) {
+        originalList = newData
+        filteredList = newData
+        isLoading = false
+        notifyDataSetChanged()
+    }
+
+
+
     private fun toggleNoDataUI() {
         if (filteredList.isEmpty()) {
             noDataImage?.visibility = View.VISIBLE

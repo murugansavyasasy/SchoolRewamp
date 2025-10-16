@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.School.Assignment
 
+import android.content.Context
+import android.content.Context.*
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -7,7 +9,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -43,7 +47,6 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             assignmentId = it.getString(Constant.assignment_id)
             type = it.getString(Constant.type)
@@ -72,11 +75,13 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
         binding.iconSearch.setOnClickListener(this)
 
+
         binding.tabLayout.apply {
             addTab(newTab().setText("${getString(R.string.All_Students)} (0)"))
             addTab(newTab().setText("${getString(R.string.submitted)} (0)"))
             addTab(newTab().setText("${getString(R.string.pending)} (0)"))
         }
+
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -92,6 +97,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
+
         binding.txtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -99,8 +105,10 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
                     assignmentstudentlistadapter.filter.filter(s)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
+
 
         appViewModel?.getassignmentlist?.observe(viewLifecycleOwner) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
@@ -115,13 +123,16 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         isGetAssignmentStudentList()
     }
 
-    // 👇 Utility function to toggle the No Data View
+
     private fun showNoDataView(show: Boolean, message: String = getString(R.string.no_data_found)) {
         binding.nomessage.visibility = if (show) View.VISIBLE else View.GONE
         binding.txtNoData.visibility = if (show) View.VISIBLE else View.GONE
         binding.txtNoData.text = if (show) message else ""
         binding.rcystudentlist.visibility = if (show) View.GONE else View.VISIBLE
     }
+
+
+
 
     private fun showAllStudents() {
         val list = allStudentsList
@@ -133,14 +144,18 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         }
     }
 
+
     private fun showSubmitted() {
         val filteredList = allStudentsList.filter {
             it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true)
         }
+
         if (filteredList.isEmpty()) {
-            showNoDataView(true, getString(R.string.no_data_found))
+            showNoDataView(true)
+            binding.layoutNoData.visibility = View.VISIBLE
         } else {
             showNoDataView(false)
+            binding.layoutNoData.visibility = View.GONE
             isloadassignmentdata(filteredList)
         }
     }
@@ -149,26 +164,41 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         val filteredList = allStudentsList.filter {
             it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true)
         }
+
         if (filteredList.isEmpty()) {
-            showNoDataView(true, getString(R.string.no_data_found))
+            showNoDataView(true)
         } else {
             showNoDataView(false)
             isloadassignmentdata(filteredList)
         }
     }
 
+
     private fun isloadassignmentdata(newData: List<StudentSubmission>?) {
-        assignmentstudentlistadapter = AssignmentStudentListAdapter(
-            newData,
-            this,
-            requireContext(),
-            Constant.isShimmerViewDisable,
-            binding.nomessage,
-            binding.txtNoData,
-            created_date
-        )
-        binding.rcystudentlist.adapter = assignmentstudentlistadapter
+        if (newData.isNullOrEmpty()) {
+            showNoDataView(true)
+            return
+        }
+
+        showNoDataView(false)
+
+        if (!::assignmentstudentlistadapter.isInitialized) {
+            assignmentstudentlistadapter = AssignmentStudentListAdapter(
+                newData,
+                this,
+                requireContext(),
+                Constant.isShimmerViewDisable,
+                binding.nomessage,
+                binding.txtNoData,
+                created_date
+            )
+            binding.rcystudentlist.layoutManager = LinearLayoutManager(requireContext())
+            binding.rcystudentlist.adapter = assignmentstudentlistadapter
+        } else {
+            assignmentstudentlistadapter.updateData(newData)
+        }
     }
+
 
     private fun updateTabTitles() {
         val allCount = allStudentsList.size
@@ -205,8 +235,14 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.icon_search -> {
-                binding.rytSearch.visibility =
-                    if (binding.rytSearch.isVisible) View.GONE else View.VISIBLE
+                if (binding.rytSearch.isVisible) {
+                    binding.rytSearch.visibility = View.GONE
+                    binding.txtSearch.setText("")
+                    binding.root.hideKeyboard()
+                } else {
+                    binding.rytSearch.visibility = View.VISIBLE
+                }
+
             }
         }
     }
@@ -233,4 +269,10 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             }
         }
     }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
 }

@@ -50,10 +50,12 @@ import androidx.fragment.app.FragmentActivity
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
+import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableData
@@ -64,6 +66,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListData
 import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
@@ -1323,6 +1326,57 @@ object Constant {
         }
     }
 
+    fun showParentDataValidation(title: String, message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        titleText.text = title
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            val intent = Intent(activity, ParentDashboard::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
+            activity.finish()
+            closePopup()
+        }
+    }
+
+
+
+
     fun showDataValidationNoDashboardRedirect(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -2069,6 +2123,14 @@ object Constant {
     }
 
 
+    fun isDeveloperModeEnabled(context: Context): Boolean {
+        return Settings.Secure.getInt(
+            context.contentResolver,
+            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
+        ) == 1
+    }
+
+
     fun showNotificationPermissionDialog(
         packageName: String, activity: Activity, isTitle: String, isContent: String
     ) {
@@ -2153,7 +2215,8 @@ object Constant {
 
     fun setupBiometricPrompt(
         activity: FragmentActivity,
-        listener: fingerPrintAunthenticateListener
+        listener: fingerPrintAunthenticateListener,
+        isSplash : Boolean
     ) {
         val executor = ContextCompat.getMainExecutor(activity)
         biometricPrompt = BiometricPrompt(
@@ -2175,13 +2238,31 @@ object Constant {
                         }
 
                         BiometricPrompt.ERROR_USER_CANCELED -> {
-                            AlertDialog.Builder(activity)
+                            val builder = AlertDialog.Builder(activity)
                                 .setTitle("School Chimes is locked")
                                 .setMessage("Authentication is required to access the School Chimes")
-                                .setPositiveButton("Unlock now") { _, _ ->
+                                .setCancelable(false) // optional, prevents closing by tapping outside
+
+                            val dialog = builder.create()
+                            dialog.setOnShowListener {
+                                // "Unlock now" button
+                                dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setOnClickListener {
                                     authenticate(activity)
                                 }
-                                .show()
+                                dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+                                    if (isSplash) {
+                                        val intent = Intent(activity, Login::class.java)
+                                        activity.startActivity(intent)
+                                        activity.finish()
+                                    } else {
+                                        dialog.cancel() // ✅ safely cancels here
+                                    }
+                                }
+                            }
+                            dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Unlock now") { _, _ -> }
+                            dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Proceed with credentials") { _, _ -> }
+
+                            dialog.show()
                         }
 
                         else -> {

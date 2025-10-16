@@ -25,7 +25,7 @@
             </ImageView>
 
             <LinearLayout
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginTop="@dimen/twenty"
                 android:id="@+id/lytTitleAndName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

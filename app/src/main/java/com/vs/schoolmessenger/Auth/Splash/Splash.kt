@@ -7,6 +7,9 @@ import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -18,7 +21,9 @@ import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
@@ -62,6 +67,7 @@ import com.vs.schoolmessenger.Utils.AppDataCleaner
 import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isDeveloperModeEnabled
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.fingerPrintAunthenticateListener
 import com.vs.schoolmessenger.databinding.SplashBinding
@@ -79,6 +85,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         val context = ChangeLanguage.setLocale(newBase, savedLanguage)
         super.attachBaseContext(context)
     }
+
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var notificationPermissionLauncher: ActivityResultLauncher<String>
 
@@ -101,7 +108,10 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 
     private var authViewModel: Auth? = null
     private var appViewModel: App? = null
+    private lateinit var connectivityManager: ConnectivityManager
+    private lateinit var networkCallback: ConnectivityManager.NetworkCallback
 
+    var noInternetalertDialog: AlertDialog? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -111,7 +121,23 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         authViewModel!!.init()
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+        connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        // Define the callback
+        networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                runOnUiThread {
+                    if(noInternetalertDialog != null && noInternetalertDialog!!.isShowing) {
+                        noInternetalertDialog!!.dismiss()
+                    }
+                    goToNext()
+                }
+            }
 
+            override fun onLost(network: Network) {
+                runOnUiThread {
+                }
+            }
+        }
 
         // Run cleanup
 //        val cleaned = AppDataCleaner.clearOldDataIfNeeded(this)
@@ -128,13 +154,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 
 
         val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
-        Log.d("fromNotification",fromNotification.toString())
+        Log.d("fromNotification", fromNotification.toString())
 
         if (fromNotification) {
             handleNotificationIntent(intent)
-        }
-        else{
-         //  normal process
+        } else {
+            //  normal process
         }
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
@@ -148,10 +173,10 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
-                isInterNetChecking()
+                goToNext()
                 Log.d("PermissionResult", "✅ User clicked ALLOW for notification permission")
             } else {
-                isInterNetChecking()
+                goToNext()
                 Log.d(
                     "PermissionResult",
                     "❌ User clicked DENY or DISMISSED the notification permission dialog"
@@ -173,7 +198,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_login)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
-                        addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_SCHOOL_MENU)
                     }
                     appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
 
@@ -205,21 +230,21 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                             } else if (Constant.user_data!![0].user_details.is_staff) {
 
 
-                                    if (Constant.user_data!![0].user_details.staff_details.size > 1) {
-                                        val intent =
-                                            Intent(this@Splash, PrioritySelection::class.java)
-                                        startActivity(intent)
-                                    } else {
-                                        val intent = Intent(
-                                            this@Splash,
-                                            SchoolDashboard::class.java
-                                        )
-                                        SharedPreference.putStaffDetails(
-                                            this,
-                                            Constant.user_data!![0].user_details.staff_details[0]
-                                        )
-                                        startActivity(intent)
-                                    }
+                                if (Constant.user_data!![0].user_details.staff_details.size > 1) {
+                                    val intent =
+                                        Intent(this@Splash, PrioritySelection::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    val intent = Intent(
+                                        this@Splash,
+                                        SchoolDashboard::class.java
+                                    )
+                                    SharedPreference.putStaffDetails(
+                                        this,
+                                        Constant.user_data!![0].user_details.staff_details[0]
+                                    )
+                                    startActivity(intent)
+                                }
 
                             } else if (Constant.user_data!![0].user_details.is_parent) {
                                 Constant.isParentChoose = true
@@ -278,16 +303,17 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             handleNotificationIntent(intent)
         }
     }
+
     private fun handleNotificationIntent(intent: Intent?) {
         intent ?: return
         val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
-        var menu_name : String? = null
-        var menu_id : Int? = 0
-        var msg_id : Int? = 0
-        if(fromNotification){
-             menu_name = intent.getStringExtra(Constant.menu_name)
-             menu_id = intent.getIntExtra(Constant.menu_id,0)
-             msg_id = intent.getIntExtra(Constant.msg_id,0)
+        var menu_name: String? = null
+        var menu_id: Int? = 0
+        var msg_id: Int? = 0
+        if (fromNotification) {
+            menu_name = intent.getStringExtra(Constant.menu_name)
+            menu_id = intent.getIntExtra(Constant.menu_id, 0)
+            msg_id = intent.getIntExtra(Constant.msg_id, 0)
         }
 
         if (!SharedPreference.isLoggedIn(this)) {
@@ -314,12 +340,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(CommunicationParent::class.java)
                         addNextIntent(detailIntent)
-                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
 
                     pendingIntent?.send()
                 }
 
-                Constant.M_HOMEWORK  -> {
+                Constant.M_HOMEWORK -> {
                     val detailIntent = Intent(this, HomeWork::class.java)
                     detailIntent.putExtra(Constant.menu_name, menu_name)
                     detailIntent.putExtra(Constant.menu_id, menu_id)
@@ -329,12 +358,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(CommunicationParent::class.java)
                         addNextIntent(detailIntent)
-                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
 
                     pendingIntent?.send()
                 }
 
-                Constant.M_NOTICEBOARD  -> {
+                Constant.M_NOTICEBOARD -> {
                     val detailIntent = Intent(this, NoticeBoard::class.java)
                     detailIntent.putExtra(Constant.menu_name, menu_name)
                     detailIntent.putExtra(Constant.menu_id, menu_id)
@@ -344,12 +376,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(NoticeBoard::class.java)
                         addNextIntent(detailIntent)
-                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
 
                     pendingIntent?.send()
                 }
 
-                Constant.M_ASSIGNMENT  -> {
+                Constant.M_ASSIGNMENT -> {
                     val detailIntent = Intent(this, Assignment::class.java)
                     detailIntent.putExtra(Constant.menu_name, menu_name)
                     detailIntent.putExtra(Constant.menu_id, menu_id)
@@ -359,12 +394,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(Assignment::class.java)
                         addNextIntent(detailIntent)
-                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
 
                     pendingIntent?.send()
                 }
 
-                Constant.M_ATTACHMENTS  -> {
+                Constant.M_ATTACHMENTS -> {
                     val detailIntent = Intent(this, Attachment::class.java)
                     detailIntent.putExtra(Constant.menu_name, menu_name)
                     detailIntent.putExtra(Constant.menu_id, menu_id)
@@ -374,12 +412,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(Attachment::class.java)
                         addNextIntent(detailIntent)
-                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
 
                     pendingIntent?.send()
                 }
 
-                Constant.M_SCHOOL_CLASS_EVENTS  -> {
+                Constant.M_SCHOOL_CLASS_EVENTS -> {
                     val detailIntent = Intent(this, Event::class.java)
                     detailIntent.putExtra(Constant.menu_name, menu_name)
                     detailIntent.putExtra(Constant.menu_id, menu_id)
@@ -389,12 +430,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(EventReport::class.java)
                         addNextIntent(detailIntent)
-                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
 
                     pendingIntent?.send()
                 }
 
-                Constant.M_PARENT_CLASS_EVENTS  -> {
+                Constant.M_PARENT_CLASS_EVENTS -> {
                     val detailIntent = Intent(this, Event::class.java)
                     detailIntent.putExtra(Constant.menu_name, menu_name)
                     detailIntent.putExtra(Constant.menu_id, menu_id)
@@ -404,12 +448,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(Event::class.java)
                         addNextIntent(detailIntent)
-                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
 
                     pendingIntent?.send()
                 }
 
-                Constant.M_PTM  -> {
+                Constant.M_PTM -> {
                     val detailIntent = Intent(this, PTM::class.java)
                     detailIntent.putExtra(Constant.menu_name, menu_name)
                     detailIntent.putExtra(Constant.menu_id, menu_id)
@@ -419,12 +466,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(CommunicationParent::class.java)
                         addNextIntent(detailIntent)
-                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
 
                     pendingIntent?.send()
                 }
 
-                Constant.M_FEE_DETAILS  -> {
+                Constant.M_FEE_DETAILS -> {
                     val detailIntent = Intent(this, PTM::class.java)
                     detailIntent.putExtra(Constant.menu_name, menu_name)
                     detailIntent.putExtra(Constant.menu_id, menu_id)
@@ -434,7 +484,10 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(FeeDetails::class.java)
                         addNextIntent(detailIntent)
-                    }.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
 
                     pendingIntent?.send()
                 }
@@ -443,8 +496,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     // default behavior
                 }
             }
-        }
-        else {
+        } else {
             //usual process
         }
     }
@@ -456,10 +508,10 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             ) {
                 notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             } else {
-                isInterNetChecking()
+                goToNext()
             }
         } else {
-            isInterNetChecking()
+            goToNext()
         }
     }
 
@@ -491,10 +543,9 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         Log.d("mobile_number", mobile_number.toString())
         Log.d("password", password.toString())
         if (!mobile_number.equals("") && !password.equals("")) {
-            // isValidateUser()
             if (SharedPreference.isFingerprintEnabled(this)) {
                 if (SharedPreference.isLoggedIn(this)) {
-                    Constant.setupBiometricPrompt(this, this)
+                    Constant.setupBiometricPrompt(this, this, true)
                     Constant.authenticate(this)
                 } else {
                     val intent = Intent(this@Splash, Login::class.java)
@@ -503,8 +554,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             } else {
                 if (SharedPreference.isLoggedIn(this)) {
                     isValidateUser()
-                }
-                else{
+                } else {
                     val intent = Intent(this@Splash, Login::class.java)
                     startActivity(intent)
                 }
@@ -521,11 +571,11 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         }
     }
 
-    fun showBottomPopup(context: Context) {
+    fun showSecurityAlert(context: Context) {
         val dialog = BottomSheetDialog(context)
         val view = LayoutInflater.from(context).inflate(R.layout.layout_bottom_sheet, null)
         dialog.setContentView(view)
-        val btnClose = view.findViewById<CardView>(R.id.btnClose)
+        val btnClose = view.findViewById<RelativeLayout>(R.id.btnClose)
         btnClose.setOnClickListener {
             finish()
         }
@@ -625,6 +675,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 
     override fun onResume() {
         super.onResume()
+        // Register the callback
+        val request = android.net.NetworkRequest.Builder()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
+        connectivityManager.registerNetworkCallback(request, networkCallback)
+
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                 appUpdateManager.startUpdateFlowForResult(
@@ -637,25 +693,40 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
     }
 
 
+    override fun onPause() {
+        super.onPause()
+        // Unregister callback to avoid memory leaks
+        connectivityManager.unregisterNetworkCallback(networkCallback)
+    }
+
+    fun goToNext() {
+//        if (isDeveloperModeEnabled(this)) {
+//            showSecurityAlert(this)
+//        } else {
+        isInterNetChecking()
+        // }
+
+    }
+
+
     fun isNoInterNet() {
         val dialogView =
             LayoutInflater.from(this).inflate(R.layout.no_internet_connection, null)
         dialogView.findViewById<LottieAnimationView>(R.id.lottieAnimationView)
         dialogView.findViewById<TextView>(R.id.tvMessage)
-        val btnCreate = dialogView.findViewById<CardView>(R.id.btnCreate)
+        val btnCreate = dialogView.findViewById<RelativeLayout>(R.id.btnCreate)
 
-        val alertDialog = AlertDialog.Builder(this)
+        noInternetalertDialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .setCancelable(false)
             .create()
 
         btnCreate.setOnClickListener {
-            val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
-            this.startActivity(intent)
-            alertDialog.dismiss()
+            noInternetalertDialog!!.dismiss()
+            finish()
         }
-        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        alertDialog.show()
+        noInternetalertDialog!!.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        noInternetalertDialog!!.show()
     }
 
     override fun onAuthenticate(message: String, status: Boolean) {

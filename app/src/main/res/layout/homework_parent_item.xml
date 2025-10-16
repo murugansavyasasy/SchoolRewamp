@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardRoot"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/two_fourty"
+    android:layout_height="@dimen/two_fifty"
     android:background="@drawable/rect_shadow_white"
     android:padding="@dimen/ten">
 
@@ -33,8 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/five"
-        android:layout_marginTop="10dp"
-        android:text="Science sujdfsjkfsjfskfahkfjhafdskhdasfj hsfhjdsfjdf"
+        android:layout_marginTop="@dimen/five"
+        android:text="Science"
         android:textColor="@android:color/black"
         android:textSize="@dimen/fifteen_sp"
         android:textStyle="bold" />
@@ -105,9 +105,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/ten"
-        android:text="Tomorrow Exkj vdvnwsvnsk;jvnsjvbsjvnsovnsodvnspijvbsjvnsjvnsjdvnamsdoi........"
+        android:text="Tomorrow Exam on Science Chapter 5......"
         android:textColor="@android:color/black"
         android:textSize="@dimen/thirteen_sp"
         android:maxLines="2"
@@ -121,10 +121,12 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/one_fifty"
         android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
         android:scaleType="fitCenter"
         android:src="@drawable/teaching"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblTitle" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblTitle"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

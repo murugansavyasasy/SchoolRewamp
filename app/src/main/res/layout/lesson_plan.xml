@@ -165,7 +165,7 @@
         android:layout_height="@dimen/two_fifty"
         android:src="@drawable/no_lessonplan_message"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rlaFilter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

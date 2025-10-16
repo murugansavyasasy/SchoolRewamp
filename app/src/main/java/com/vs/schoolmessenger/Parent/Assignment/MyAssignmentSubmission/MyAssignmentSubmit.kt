@@ -145,6 +145,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             )
         }
         if (submissionData != null) {
+            binding.edtTitle.setText(submissionData!!.title)
             binding.edtDescription.setText(submissionData!!.description)
             for (file in submissionData!!.file_path) {
                 val type = when (file.type) {
@@ -358,6 +359,13 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
 
     fun showSendConfirmationDialog() {
+        // Validate description first
+        val descriptionText = binding.edtDescription.text.toString().trim()
+        if (descriptionText.isEmpty()) {
+            binding.edtDescription.error = getString(R.string.This_field_required)
+            binding.edtDescription.requestFocus()
+            return
+        }
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -386,8 +394,21 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     }
 
     fun isUploadFilesInServer(isFileType: String?) {
+
+        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any { !it.path.contains("player.vimeo.com") }
+        if (needsProcessing) {
+            ProgressDialogHelper.show(this)
+        }
+        Log.d("UploadDebug", "isUploadFilesInServer called with type: $isFileType")
+
+        ProgressDialogHelper.show(this)
+        Log.d("UploadDebug", "ProgressDialogHelper.show() called")
+
+        ProgressDialogHelper.updateProgress(0)
+        Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(0) called")
+
+
         Constant.selectedFiles.removeAt(0)
-        ProgressDialogHelper.updateProgress(50)
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
         Constant.isAwsUploadedFiles.clear()
@@ -414,16 +435,23 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     private fun isFileUploadInAws(
         isFileType: String?
     ) {
-        Constant.isAwsUploadedFiles.clear()
+        // Do not clear here if already cleared in isUploadFilesInServer; assuming it's cleared once
+        // Constant.isAwsUploadedFiles.clear()  // Commented out to avoid double clear
+
         val iterator = Constant.selectedFiles.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("amazonaws.")) {
                 Constant.isAwsUploadedFiles.add(
                     AwsUploadedFiles(
-                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                        isFileUrl = fileItem.path,
+                        isFileType = fileItem.type.name
                     )
                 )
+                val progress =
+                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+                        .coerceAtMost(100)
+                ProgressDialogHelper.updateProgress(progress)
                 iterator.remove()
             }
         }
@@ -431,12 +459,15 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         val isCountryId = SharedPreference.getCountryId(this)
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
+                ProgressDialogHelper.updateProgress(100)
+                ProgressDialogHelper.dismiss()
                 ProgressDialogHelper.dismiss()
                 isAssignmentSend()
             } else {
                 videoUploading()
             }
         } else {
+            val numToCompress = Constant.selectedFiles.size
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             outputDir.mkdirs()
@@ -470,6 +501,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                         )
 
                         newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                        val compressedCount = newSelectedFiles.size
+                        val progress =
+                            10 + ((compressedCount.toFloat() / numToCompress) * 40).toInt()
+                        ProgressDialogHelper.updateProgress(progress.coerceAtMost(50))
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
                     }
@@ -477,6 +512,8 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 onComplete = {
                     Constant.selectedFiles.clear()
                     Constant.selectedFiles.addAll(newSelectedFiles)
+                    // Progress after compression (50%)
+                    ProgressDialogHelper.updateProgress(50)
                     val isAwsUploadingFile = ArrayList<String>()
 
                     val isSelectedFileCount = Constant.selectedFiles.size
@@ -485,22 +522,29 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                             Constant.selectedFiles[i].path,
                             isChildDetails!!.school_id,
                             isFileType!!,
-                            this,
+                            this@MyAssignmentSubmit,
                             isCountryId!!,
                             true,
                             false,
                             object : UploadCallback {
 
                                 override fun onUploadSuccess(
-                                    response: String?, isFileUploaded: String?
+                                    response: String?,
+                                    isFileUploaded: String?
                                 ) {
                                     isAwsUploadingFile.add(isFileUploaded!!)
                                     Constant.isAwsUploadedFiles.add(
                                         AwsUploadedFiles(
                                             isFileUrl = isFileUploaded,
-                                            isFileType = Constant.selectedFiles[i].type.name
+                                            isFileType = Constant.selectedFiles.getOrNull(i)?.type?.name
+                                                ?: "UNKNOWN"
                                         )
                                     )
+                                    // Incremental progress during upload
+                                    val progress =
+                                        (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+                                            .coerceAtMost(100)
+                                    ProgressDialogHelper.updateProgress(progress)
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
@@ -530,14 +574,22 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             if (fileItem.path.contains("player.vimeo.com")) {
                 Constant.isAwsUploadedFiles.add(
                     AwsUploadedFiles(
-                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                        isFileUrl = fileItem.path,
+                        isFileType = fileItem.type.name
                     )
                 )
+                // Incremental progress update for pre-processed videos
+                val progress =
+                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+                        .coerceAtMost(100)
+                ProgressDialogHelper.updateProgress(progress)
                 iterator.remove()
             }
         }
         Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
+            ProgressDialogHelper.updateProgress(100)
+            ProgressDialogHelper.dismiss()
             for (i in isVideoSelectedArrayList.indices) {
                 VimeoVideoUpload.uploadVideo(
                     this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].path, this
@@ -571,6 +623,8 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+
+            ProgressDialogHelper.dismiss()
         }
     }
 
@@ -853,6 +907,9 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     }
 
     fun isAssignmentSend() {
+
+        ProgressDialogHelper.updateProgress(100)
+        ProgressDialogHelper.dismiss()
 
         val id = if (submissionData != null) submissionData!!.id else assignmentId!!
         val jsonObject = JsonObject()

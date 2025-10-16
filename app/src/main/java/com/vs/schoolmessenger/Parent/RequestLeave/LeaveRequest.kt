@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -114,9 +115,14 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.imgSearchBtn.setOnClickListener {
             if (binding.rytSearch.visibility == View.VISIBLE) {
                 binding.rytSearch.visibility = View.GONE
+                binding.txtVideoMenu.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
             } else {
                 binding.rytSearch.visibility = View.VISIBLE
                 binding.txtVideoMenu.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
             }
         }
 

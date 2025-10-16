@@ -54,17 +54,22 @@ class LeaveRequestAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
-
             val isExpanded = position == expandedPosition
-            holder.bind(filteredList[position], listener, isExpanded,context)
-            holder.itemView.findViewById<ImageView>(R.id.options).setOnClickListener {
-                if (expandedPosition != position) {
+            holder.bind(filteredList[position], listener, isExpanded, context)
+
+            holder.options.setOnClickListener {
+                if (expandedPosition == position) {
+                    val prevPosition = expandedPosition
+                    expandedPosition = RecyclerView.NO_POSITION
+                    notifyItemChanged(prevPosition)
+                } else {
                     val prevPosition = expandedPosition
                     expandedPosition = position
                     notifyItemChanged(prevPosition)
                     notifyItemChanged(position)
                 }
             }
+
         }
     }
 
@@ -84,7 +89,7 @@ class LeaveRequestAdapter(
         private val textFirstLetter: TextView = itemView.findViewById(R.id.textFirstLetter)
         private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
         private val textLeaveType: TextView = itemView.findViewById(R.id.textLeaveType)
-        private val options: ImageView = itemView.findViewById(R.id.options)
+        val options: ImageView = itemView.findViewById(R.id.options)
         private val relbuttons: RelativeLayout = itemView.findViewById(R.id.relbuttons)
         private val deleteButton: LinearLayout = itemView.findViewById(R.id.deletebutton)
         private val editButton: LinearLayout = itemView.findViewById(R.id.editbutton)
@@ -164,8 +169,9 @@ class LeaveRequestAdapter(
                     }
                 }
             }
-
             relbuttons.visibility = if (isExpanded) View.VISIBLE else View.GONE
+
+
 
             deleteButton.setOnClickListener {
                 listener.onItemDeleteClick(data)
