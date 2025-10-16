@@ -165,7 +165,6 @@
                 android:visibility="visible" />
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/linear_layout1"
             android:layout_width="match_parent"

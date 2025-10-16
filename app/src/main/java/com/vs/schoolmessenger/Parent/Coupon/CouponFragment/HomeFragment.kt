@@ -119,9 +119,9 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
 
             override fun afterTextChanged(s: Editable?) {}
         })
-
         return binding.root
     }
+
 
 
     private fun showProgressBar() {
@@ -135,9 +135,20 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         binding.recyclerView.visibility = View.VISIBLE
     }
 
+    private fun updateNoDataView(hasData: Boolean) {
+        if (hasData) {
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+        } else {
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.recyclerView.visibility = View.GONE
+        }
+    }
     private fun showCouponSummaryErrorUI(message: String) {
+        updateNoDataView(false)
         binding.lblNoRecord.visibility = View.VISIBLE
-        binding.recyclerView.visibility = View.GONE
     }
 
     private fun showCategorySummaryErrorUI(message: String) {
@@ -196,10 +207,9 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
     }
 
     private fun isLoadCouponSummaryData(data: List<CampaignItem>) {
-        binding.nomessage.visibility = View.GONE
+        updateNoDataView(data.isNotEmpty())
         binding.lblNoRecord.visibility = View.GONE
         binding.recyclerview1.visibility = View.VISIBLE
-        binding.recyclerView.visibility = View.VISIBLE
         summaryadapter = CouponSummaryAdapter(
             data,
             this,
@@ -224,6 +234,13 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             fetchCouponSummary()
             binding.textView.text = getString(R.string.all_coupons)
         }
+        //  Clear search box
+        binding.editSearch.text?.clear()
+        if (::summaryadapter.isInitialized) {
+            summaryadapter.filter.filter("")
+        }
+
+        updateNoDataView(true)
     }
 
     override fun onSummaryClick(campaignItem: CampaignItem?) {

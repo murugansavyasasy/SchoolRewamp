@@ -359,6 +359,13 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
 
     fun showSendConfirmationDialog() {
+        // Validate description first
+        val descriptionText = binding.edtDescription.text.toString().trim()
+        if (descriptionText.isEmpty()) {
+            binding.edtDescription.error = getString(R.string.This_field_required)
+            binding.edtDescription.requestFocus()
+            return
+        }
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

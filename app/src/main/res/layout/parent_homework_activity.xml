@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:background="@color/white">
 
@@ -18,7 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cltDateSelection"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/two_hundred_thirty"
+        android:layout_height="@dimen/two_hundred_fifty"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
         android:background="@drawable/bottom_right_left_radious"
@@ -131,7 +132,7 @@
         <ImageView
             android:id="@+id/imgNoDataFound"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred"
+            android:layout_height="@dimen/two_hundred_thirty"
             android:src="@drawable/no_data_found"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -145,6 +146,8 @@
             android:gravity="center"
             android:text="@string/no_homework_found"
             android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintEnd_toEndOf="@+id/imgNoDataFound"
+            app:layout_constraintStart_toStartOf="@+id/imgNoDataFound"
             app:layout_constraintTop_toBottomOf="@id/imgNoDataFound" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
