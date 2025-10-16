@@ -18,6 +18,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -274,9 +275,13 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
                 binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
             } else {
                 binding.rytSearch1.visibility = View.VISIBLE
                 binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
 
             }
         }

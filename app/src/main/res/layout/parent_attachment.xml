@@ -193,6 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
+                android:visibility="gone"
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/five" />

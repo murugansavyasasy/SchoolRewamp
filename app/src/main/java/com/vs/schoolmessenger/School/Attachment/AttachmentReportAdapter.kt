@@ -1,3 +1,4 @@
+
 package com.vs.schoolmessenger.School.Attachment
 
 import android.annotation.SuppressLint
@@ -30,7 +31,7 @@ class AttachmentReportAdapter(
     private val context: Context,
     var isLoading: Boolean,
     private val noDataImage: ImageView? = null,
-    private val noDataText: TextView? = null
+    private val noDataText: TextView? = null,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
 
@@ -107,13 +108,14 @@ class AttachmentReportAdapter(
                 filteredList = results?.values as? List<AttachmentDataReport> ?: emptyList()
                 notifyDataSetChanged()
 
-                if (filteredList.isEmpty()) {
-                    noDataImage?.visibility = View.VISIBLE
-                    noDataText?.visibility = View.VISIBLE
-                } else {
-                    noDataImage?.visibility = View.GONE
-                    noDataText?.visibility = View.GONE
-                }
+                val isEmpty = filteredList.isEmpty()
+                Log.d("NoData", if (isEmpty) "No data" else "Data")
+
+                noDataImage?.visibility = if (isEmpty) View.VISIBLE else View.GONE
+                noDataText?.visibility = if (isEmpty) View.VISIBLE else View.GONE
+
+                // Notify activity/fragment about filter state change
+                childClickListener.onFilterEmpty(isEmpty)
             }
         }
     }

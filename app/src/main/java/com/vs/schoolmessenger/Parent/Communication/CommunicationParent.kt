@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -92,11 +93,15 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 binding.linearlayout1.visibility = View.GONE
                 binding.rytFilter.visibility = View.GONE
                 binding.txtSearchMenu.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
 
             } else {
                 binding.linearlayout1.visibility = View.VISIBLE
                 binding.rytFilter.visibility = View.GONE
                 binding.txtSearchMenu.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
 
             }
         }
@@ -352,6 +357,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                     isSeeMoreClick = false
                     binding.seeMoreLabel.visibility = View.GONE
                     Log.d("seeMoreVisbilityAfter",binding.seeMoreLabel.isVisible.toString())
+                    binding.txtSearchMenu.text.clear()
                     fetchMoreData()
                 }
             }
