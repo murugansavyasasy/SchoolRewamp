@@ -461,6 +461,7 @@
                                 android:layout_height="@dimen/twenty_five"
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginTop="@dimen/ten"
+                                android:visibility="invisible"
                                 android:src="@drawable/ic_attach_file">
 
                             </ImageView>

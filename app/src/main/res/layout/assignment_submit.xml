@@ -177,7 +177,6 @@
                 android:text="@string/Optional"
                 android:textColor="@color/mild_grey1"
                 android:textSize="@dimen/thirteen_sp">
-
             </TextView>
 
             <ImageView
@@ -186,6 +185,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/twenty"
+                android:visibility="invisible"
                 android:src="@drawable/ic_attach_file">
 
             </ImageView>

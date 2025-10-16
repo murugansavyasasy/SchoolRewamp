@@ -600,7 +600,7 @@
                             <EditText
                                 android:id="@+id/edtContentTextMessage"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="@dimen/two_hundred"
                                 android:minHeight="@dimen/two_hundred"
                                 android:layout_below="@id/txtDescriptionLabel"
                                 android:layout_marginTop="@dimen/ten"
