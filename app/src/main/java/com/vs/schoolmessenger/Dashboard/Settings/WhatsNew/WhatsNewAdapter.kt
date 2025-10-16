@@ -20,7 +20,8 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 class WhatsNewAdapter(
     private var itemList: List<WhatsNewUpdateData>?,
     private val context: Context,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
+    private val recyclerView: RecyclerView // ✅ we'll need this to scroll on click
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -37,7 +38,7 @@ class WhatsNewAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.whatsnew_recyclerview, parent, false)
-            DataViewHolder(view)
+            DataViewHolder(view, recyclerView)
         }
     }
 
@@ -54,7 +55,9 @@ class WhatsNewAdapter(
         return if (isLoading) 3 else itemList?.size ?: 0
     }
 
-    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class DataViewHolder(itemView: View, private val recyclerView: RecyclerView) :
+        RecyclerView.ViewHolder(itemView) {
+
         private val titleText = itemView.findViewById<TextView>(R.id.menu_name)
         private val descText = itemView.findViewById<TextView>(R.id.description_value)
         private val bannerImage = itemView.findViewById<ImageView>(R.id.banner_image)
@@ -71,25 +74,58 @@ class WhatsNewAdapter(
                 .load(data.downloadable_image)
                 .into(bannerImage)
 
+            if(data.app_redirect_link.isNullOrEmpty()) {
+                btnLearnMore.visibility = View.GONE
+            } else {
+                btnLearnMore.visibility = View.VISIBLE
+            }
+
             swipeMoreLayout.visibility = if (totalCount > 1) View.VISIBLE else View.GONE
 
             if (totalCount > 1) {
                 when {
                     position == 0 -> {
-
                         swipeMoreLeft.visibility = View.GONE
                         swipeMoreRight.visibility = View.VISIBLE
                     }
-                    position == totalCount - 1 -> {
 
+                    position == 1 -> { // second item special case
+                        swipeMoreLeft.visibility = View.VISIBLE
+                        if (totalCount > 2) {
+                            swipeMoreRight.visibility = View.VISIBLE
+                        } else {
+                            swipeMoreRight.visibility = View.GONE
+                        }
+                    }
+
+                    position == totalCount - 1 -> { // last item
                         swipeMoreLeft.visibility = View.VISIBLE
                         swipeMoreRight.visibility = View.GONE
                     }
-                    else -> {
 
-                        swipeMoreLeft.visibility = View.GONE
-                        swipeMoreRight.visibility = View.GONE
+                    else -> { // middle items (like 3rd, 4th)
+                        swipeMoreLeft.visibility = View.VISIBLE
+                        swipeMoreRight.visibility = View.VISIBLE
                     }
+                }
+            }
+
+
+            swipeMoreRight.setOnClickListener {
+                val nextPos = adapterPosition + 1
+                if (nextPos < totalCount) {
+                    recyclerView.smoothScrollToPosition(nextPos)
+                } else {
+                    Toast.makeText(itemView.context, "No more updates →", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            swipeMoreLeft.setOnClickListener {
+                val prevPos = adapterPosition - 1
+                if (prevPos >= 0) {
+                    recyclerView.smoothScrollToPosition(prevPos)
+                } else {
+                    Toast.makeText(itemView.context, "You're at the start ←", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -112,10 +148,6 @@ class WhatsNewAdapter(
                     ).show()
                 }
             }
-        }
-
-        fun bind(data: WhatsNewUpdateData) {
-            bind(data, 0, 0)
         }
     }
 

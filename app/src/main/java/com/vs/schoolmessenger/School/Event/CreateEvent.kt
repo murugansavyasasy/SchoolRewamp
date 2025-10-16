@@ -1034,7 +1034,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.txtStartDate.text = Constant.covertDateFormate(data.date)
         binding.txtStartTime.text = data.time
 
-        // NEW: Parse and set selectedDate for time restrictions in edit mode
+
         try {
             val sdfInput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())  // Adjust if data.date format differs
             val parsedDate = sdfInput.parse(binding.txtStartDate.text.toString())

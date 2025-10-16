@@ -11,7 +11,7 @@
         android:id="@+id/alertTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="sdsd"
+        android:text="Payment Done!!"
         android:layout_gravity="center"
         android:gravity="center"
         android:visibility="visible"
@@ -35,11 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="sdsdsd"
+        android:text=""
         android:textSize="@dimen/sixteen_sp"
         android:layout_marginTop="@dimen/twenty"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:textColor="@color/light_gray_4"/>
+        style="@style/CustomTextStylePoppinsRegular"
+        android:textColor="@color/black"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -56,10 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/permission_ok"
-            android:paddingStart="@dimen/thirty"
-            android:paddingEnd="@dimen/thirty"
-            android:paddingTop="@dimen/twele"
-            android:paddingBottom="@dimen/twele"
+          android:paddingHorizontal="@dimen/twenty_five"
+            android:paddingVertical="@dimen/five"
             android:textColor="@color/white"
             android:textSize="@dimen/fourteen_sp"
             style="@style/CustomTextStylePoppinsBold"/>

@@ -422,4 +422,7 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
     ) {
 
     }
+
+    override fun onFilterEmpty(showNoData: Boolean) {
+    }
 }

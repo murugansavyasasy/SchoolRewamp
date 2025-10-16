@@ -68,19 +68,31 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
     }
 
     private fun loadwhatsnewdata() {
-        whatsnewAdapter = WhatsNewAdapter(null, this, Constant.isShimmerViewShow)
+        whatsnewAdapter = WhatsNewAdapter(
+            null,
+            this,
+            Constant.isShimmerViewShow,
+            binding.rcywhatsnew
+        )
+
         binding.rcywhatsnew.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcywhatsnew.adapter = whatsnewAdapter
+
         appViewModel!!.getdashboardnewupdates(isAccessToken!!, Constant.user_details!!.staff_role)
     }
 
     private fun getWhatsNewData(data: List<WhatsNewUpdateData>?) {
-        whatsnewAdapter = WhatsNewAdapter(data, this, isLoading = false)
-        binding.rcywhatsnew.adapter = whatsnewAdapter
-
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcywhatsnew.layoutManager = layoutManager
+
+        whatsnewAdapter = WhatsNewAdapter(
+            data,
+            this,
+            isLoading = false,
+            binding.rcywhatsnew // 👈 added recyclerView parameter
+        )
+        binding.rcywhatsnew.adapter = whatsnewAdapter
 
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rcywhatsnew)
@@ -108,6 +120,7 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
             }
         }
     }
+
 
     private fun setupDots(count: Int) {
         binding.dotIndicatorContainer.removeAllViews()

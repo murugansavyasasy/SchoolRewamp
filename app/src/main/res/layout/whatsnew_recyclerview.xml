@@ -73,11 +73,11 @@
                 android:layout_width="@dimen/hundred"
                 android:layout_height="@dimen/fourty"
                 android:background="@drawable/background_orange_radius_button"
-                android:paddingStart="@dimen/twenty_four"
-                android:paddingEnd="@dimen/twenty_four"
+                android:backgroundTint="@null"
                 android:text="Explore"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_weight="1"
-                android:text="&lt;&lt; Swipe for more"
+                android:text="&lt;&lt; Previous"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />
 
@@ -107,7 +107,7 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Swipe for more &gt;&gt;"
+                android:text="Next &gt;&gt;"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />
 

@@ -62,12 +62,12 @@
                             android:id="@+id/lblParentToolBar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/white_bg_radius"
+                            android:background="@drawable/white_bg_radius1"
                             android:padding="8dp"
                             android:text="PRODUCT UPDATE"
                             android:textColor="@color/black"
                             android:textSize="@dimen/twele_sp"
-                            android:textStyle="italic" />
+                          style="@style/CustomTextStylePoppinsBold"/>
 
                         <TextView
                             android:id="@+id/lblSchoolName"
@@ -78,7 +78,7 @@
                             android:layout_marginTop="10dp"
                             android:textColor="@color/white"
                             android:textSize="@dimen/twenty_sp"
-                            android:textStyle="italic"
+                           style="@style/CustomTextStylePoppinsBold"
                             android:visibility="visible" />
 
                     </LinearLayout>
