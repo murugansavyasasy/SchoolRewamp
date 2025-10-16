@@ -17,8 +17,7 @@
         <ImageView
             android:id="@+id/banner_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/imagebanner" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/menu_name"
@@ -29,7 +28,7 @@
             android:layout_marginTop="@dimen/twenty"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Lesson Plan Tracker"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp" />
 
@@ -42,7 +41,7 @@
             android:layout_marginTop="@dimen/ten"
             android:ellipsize="end"
             android:maxLines="4"
-            android:text="Precision in Pedahdgogy : Craft , Monitor , and Enchance Lesson Plans with Ease , Elevating the quality of class room instructions"
+            android:text=" "
             android:textColor="@color/black"
             android:textSize="@dimen/fourteen_sp" />
 
