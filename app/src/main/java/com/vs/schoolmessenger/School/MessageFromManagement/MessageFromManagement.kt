@@ -153,6 +153,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         appViewModel?.isGetMessageStaffArchive?.observe(this) { response ->
             if (response != null) {
+                Constant.hideLoading(this)
                 if (response.status) {
                    if(response.data.isNotEmpty()){
                        val updatedList = completeAttachmentList.toMutableList()
@@ -483,6 +484,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     }
 
     fun isGetMessageFromStaffArchive(){
+        Constant.showLoading(this)
         appViewModel?.isGetMessageStaffArchive(isAccessToken ?: "")
     }
 

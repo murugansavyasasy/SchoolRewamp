@@ -119,7 +119,7 @@ class MessageFromStaffAdapter(
             when (data.type) {
                 Constant.TEXT -> {
                     lblDescription.visibility = View.VISIBLE
-                    lblDescription.text = data.content
+                    lblDescription.text = data.description
                 }
                 Constant.VOICE -> lblDescription.visibility = View.GONE
                 Constant.ATTACHMENT_ -> {
