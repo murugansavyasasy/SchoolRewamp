@@ -65,7 +65,11 @@ class SchoolStrengthAdapter(
         private val header1: TextView = itemView.findViewById(R.id.header1)
         private val btnViewDetails: TextView = itemView.findViewById(R.id.btnViewDetails)
         private val viewBoys: View = itemView.findViewById(R.id.viewBoys)
-        private val boysl1abel1: ImageView = itemView.findViewById(R.id.boysl1abel1)
+
+        private val boyslabel1: ImageView = itemView.findViewById(R.id.boyslabel1)
+        private val boyslabel2: ImageView = itemView.findViewById(R.id.boyslabel2)
+        private val girlslabel2: ImageView = itemView.findViewById(R.id.girlslabel2)
+        private val girlslabel1: ImageView = itemView.findViewById(R.id.girlslabel1)
         private val viewGirls: View = itemView.findViewById(R.id.viewGirls)
 
 
@@ -78,13 +82,38 @@ class SchoolStrengthAdapter(
             boyslabel.text = "Boys : ${data.boys_count}"
             girlslabel.text = "Girls : ${data.girls_count}"
             totallabel.text = "Total Students : ${data.total_students}"
-            header1.text = "Standard" + " " + data.name
+            header1.text = "Standard" + " - " + data.name
 
-            if (data.girls_count == "0") {
-                boysl1abel1.visibility = View.GONE
+
+            if (data.girls_count == "0" && data.boys_count == "0") {
+                // Both are zero → hide all
+                boyslabel1.visibility = View.GONE
+                boyslabel2.visibility = View.GONE
+                girlslabel1.visibility = View.GONE
+                girlslabel2.visibility = View.GONE
+
+            } else if (data.girls_count == "0") {
+                // Only girls count is zero → hide girls, show boys
+                girlslabel1.visibility = View.GONE
+                girlslabel2.visibility = View.GONE
+                boyslabel1.visibility = View.VISIBLE
+                boyslabel2.visibility = View.VISIBLE
+
+            } else if (data.boys_count == "0") {
+                // Only boys count is zero → hide boys, show girls
+                boyslabel1.visibility = View.GONE
+                boyslabel2.visibility = View.GONE
+                girlslabel1.visibility = View.VISIBLE
+                girlslabel2.visibility = View.VISIBLE
+
             } else {
-                boysl1abel1.visibility = View.VISIBLE
+                // Both have non-zero counts → show first labels only
+                boyslabel1.visibility = View.VISIBLE
+                girlslabel1.visibility = View.VISIBLE
+                boyslabel2.visibility = View.GONE
+                girlslabel2.visibility = View.GONE
             }
+
 
             val boysCount = data.boys_count.toIntOrNull() ?: 0
             val girlsCount = data.girls_count.toIntOrNull() ?: 0

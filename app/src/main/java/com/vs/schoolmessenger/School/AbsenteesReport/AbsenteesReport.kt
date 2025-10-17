@@ -91,6 +91,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         }
 
         appViewModel?.getabsenteesstudentbydate?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response == null) {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
                 return@observe
@@ -107,6 +108,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     private fun fetchAbsenteeData() {
+        Constant.showLoading(this)
         appViewModel?.getabsenteescountbydate(
             isAccessToken ?: "", this
         )
