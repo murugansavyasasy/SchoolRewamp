@@ -21,7 +21,7 @@ class WhatsNewAdapter(
     private var itemList: List<WhatsNewUpdateData>?,
     private val context: Context,
     private var isLoading: Boolean,
-    private val recyclerView: RecyclerView // ✅ we'll need this to scroll on click
+    private val recyclerView: RecyclerView //  we'll need this to scroll on click
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -73,6 +73,7 @@ class WhatsNewAdapter(
 
             Glide.with(itemView.context)
                 .load(data.downloadable_image)
+                .fitCenter()
                 .into(bannerImage)
 
             if(data.app_redirect_link.isNullOrEmpty()) {

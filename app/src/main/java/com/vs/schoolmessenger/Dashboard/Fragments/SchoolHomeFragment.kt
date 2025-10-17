@@ -238,11 +238,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         return binding.root
     }
     private fun setupRecyclerView() {
+        val safeActivity = activity ?: return
+
         if (!FrequentSchoollyUsedMenuItems.isNullOrEmpty()) {
             binding.autoScrollRecyclerView.visibility = View.VISIBLE
 
             layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(safeActivity, LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
             adapter = AutoScrollAdapterWithDots(FrequentSchoollyUsedMenuItems!!,isSchoolMenuCountDetails, this)
@@ -269,7 +271,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             isSchoolMenuCountDetails,
             Constant.isShimmerViewDisable
         )
-        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+        val gridLayoutManager = GridLayoutManager(safeActivity, 2)
 
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
@@ -309,7 +311,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             access_token, Constant.staff_, mobile_number, requireActivity()
         )
     }
-
 
     private fun isGetAds() {
         activity?.let { safeActivity ->
@@ -435,7 +436,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
-
 
             Constant.M_MESSAGES_FROM_MANAGEMENT -> {
                 MessageFromManagement::class.java

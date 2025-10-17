@@ -720,29 +720,34 @@ object Constant {
 
 
     fun setGridViewHeight(gridView: GridView, columns: Int) {
-        val adapter = gridView.adapter ?: return  // Check if adapter is not null
+        val adapter = gridView.adapter ?: return
+        if (columns <= 0) return
 
-        var totalHeight = 0
-        val items = adapter.count
-        val rows = (items + columns - 1) / columns  // Calculate the number of rows
-
-        // Loop through each item to get its height
-        for (i in 0 until items) {
-            val listItem = adapter.getView(i, null, gridView)
-            listItem.measure(
-                View.MeasureSpec.makeMeasureSpec(gridView.width, View.MeasureSpec.AT_MOST),
-                View.MeasureSpec.UNSPECIFIED
-            )
-            totalHeight += listItem.measuredHeight
+        val totalItems = adapter.count
+        if (totalItems == 0) {
+            gridView.layoutParams.height = 0
+            gridView.requestLayout()
+            return
         }
 
-        // Calculate total height by adding row heights and spacing between rows
-        totalHeight += (gridView.verticalSpacing * (rows - 1))
+        // Calculate number of rows
+        val rows = (totalItems + columns - 1) / columns
+
+        // Measure the first item height (assuming all are same height)
+        val listItem = adapter.getView(0, null, gridView)
+        listItem.measure(
+            View.MeasureSpec.makeMeasureSpec(gridView.width, View.MeasureSpec.AT_MOST),
+            View.MeasureSpec.UNSPECIFIED
+        )
+        val itemHeight = listItem.measuredHeight
+
+        // Correct total height (height per row × number of rows)
+        val totalHeight = (itemHeight * rows) + (gridView.verticalSpacing * (rows - 1))
 
         val params = gridView.layoutParams
         params.height = totalHeight
         gridView.layoutParams = params
-        gridView.requestLayout()  // Request layout update
+        gridView.requestLayout()
     }
 
     fun redirectToDialPad(context: Context, contactNo: String) {

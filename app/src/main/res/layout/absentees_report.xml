@@ -119,7 +119,7 @@
                         android:progress="80"
                         android:max="100"
                         android:layout_marginStart="10dp"
-                        android:progressDrawable="@drawable/custom_progress"
+                        android:progressDrawable="@drawable/absentees_custom_progress"
                         android:layout_marginEnd="10dp"
                         android:layout_marginTop="@dimen/eight" />
 
@@ -130,7 +130,7 @@
                         android:id="@+id/totalstudentscount"
                         android:text="Total Students : 5"
                         style="@style/CustomTextStylePoppinsMedium"
-                        android:textColor="@color/green"
+                        android:textColor="@color/light_gray"
                         android:layout_gravity="end"
                         android:layout_marginEnd="10dp"
                         android:layout_marginTop="10dp"

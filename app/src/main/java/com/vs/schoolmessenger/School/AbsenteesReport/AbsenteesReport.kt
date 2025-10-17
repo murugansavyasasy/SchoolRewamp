@@ -192,7 +192,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             // Set initial UI values for the first item
             binding.absenteecount.text = "Absentees : $absent"
             binding.totalstudentscount.text = "Total students : $sectiontotal"
-            binding.classDetailname.text = "Class : ${classWise.class_name}. Section : ${sectionWise.section_name}"
+            binding.classDetailname.text = "${classWise.class_name} - ${sectionWise.section_name}"
+
             binding.progressAbsent.max = total
             binding.progressAbsent.progress = absent
 
