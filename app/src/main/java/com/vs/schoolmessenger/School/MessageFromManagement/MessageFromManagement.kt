@@ -545,7 +545,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 rlaAudioDetails.visibility=View.GONE
                 recyclerView.visibility = View.GONE
                 indicator.visibility = View.GONE
-                tvDescription.text = data.content
+                tvDescription.text = data.description
             }
 
             Constant.VOICE ->{
