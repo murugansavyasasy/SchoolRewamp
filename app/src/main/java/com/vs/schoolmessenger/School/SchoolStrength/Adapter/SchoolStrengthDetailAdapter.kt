@@ -67,21 +67,21 @@ class SchoolStrengthDetailAdapter(
             position: Int,
             adapter: SchoolStrengthDetailAdapter
         ) {
-            sectionname.text = data.name
+            sectionname.text = "Section " + data.name
             val studentCount = data.total_students.toIntOrNull() ?: 0
 
-            totalcount.text = "$studentCount " +
-                    if (studentCount <= 1) "student" else "students"
+            totalcount.text =    if (studentCount <= 1) "Total student" else "Total students" +"$studentCount "
+
 
 
 
             boyscount.text = HtmlCompat.fromHtml(
-                "<font color='#808080'>\uD83D\uDC66 Boys :</font> ${data.boys_count}",
+                "<font color='#808080'> Boys :</font> ${data.boys_count}",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
 
             girlscount.text = HtmlCompat.fromHtml(
-                "<font color='#808080'>\uD83D\uDC67 Girls :</font> ${data.girls_count}",
+                "<font color='#808080'> Girls :</font> ${data.girls_count}",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
 
