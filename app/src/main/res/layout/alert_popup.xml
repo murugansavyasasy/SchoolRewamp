@@ -17,7 +17,7 @@
         android:gravity="center"
         style="@style/CustomTextStylePoppinsBold"
         android:text="@string/confirmation"
-        android:textSize="@dimen/eighteen_sp"
+        android:textSize="@dimen/sixteen_sp"
          />
 
     <TextView
@@ -27,8 +27,9 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/ten"
         android:text="@string/selected_target_1"
+        style="@style/CustomTextStylePoppinsRegular"
         android:textColor="@color/light_gray_4"
-        android:textSize="@dimen/sixteen_sp" />
+        android:textSize="@dimen/fourteen_sp" />
 
     <TextView
         android:id="@+id/alertMessage"
@@ -37,11 +38,12 @@
         android:layout_marginStart="@dimen/fifteen_sp"
         android:gravity="center"
         android:layout_height="wrap_content"
+        style="@style/CustomTextStylePoppinsRegular"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/ten"
         android:text="@string/are_you_sure_want_to_send_this_message"
         android:textColor="@color/light_gray_4"
-        android:textSize="@dimen/fifteen_sp" />
+        android:textSize="@dimen/fourteen_sp" />
 
     <View
         android:layout_width="match_parent"

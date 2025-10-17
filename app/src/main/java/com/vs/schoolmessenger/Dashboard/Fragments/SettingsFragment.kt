@@ -2,22 +2,24 @@ package com.vs.schoolmessenger.Dashboard.Fragments
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.ContentProviderOperation
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
@@ -33,8 +35,8 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewActivity
-import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Faq
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
@@ -42,7 +44,9 @@ import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.NetworkSpeedMonitor
+import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
+import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
+import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
 import java.io.ByteArrayOutputStream
@@ -182,38 +186,79 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 REQUEST_CONTACT_PERMISSION
             )
         } else {
-            checkAndShowPopup()
+            if(!Constant.isGlobalVariableData!!.v_card_numbers.equals("")) {
+
+                val contacts = mutableListOf<Pair<String, String>>()
+
+                val numbers =  Constant.isGlobalVariableData!!.v_card_numbers.split(",")
+                for (item in numbers) {
+                    contacts.add(Pair(Constant.isGlobalVariableData!!.contact_display_name, item.trim()))
+                }
+                val missingContacts = contacts.filterNot { contactExists(it.second) }
+                if (missingContacts.isNotEmpty()) {
+                    saveContactsPopup(missingContacts)
+                }
+                else{
+                    Toast.makeText(requireActivity(), "All contacts are already saved", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
-    private fun checkAndShowPopup() {
-        val contacts = mutableListOf<Pair<String, String>>()
+    private fun saveContactsPopup(missingContacts: List<Pair<String, String>>)   {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.save_contact_popup, null)
 
-        val numbers =  Constant.isGlobalVariableData!!.v_card_numbers.split(",")
-        for (item in numbers) {
-            contacts.add(Pair(Constant.isGlobalVariableData!!.contact_display_name, item.trim()))
-        }
-        val missingContacts = contacts.filterNot { contactExists(it.second) }
+        val alertTitle: TextView = view.findViewById(R.id.alertTitle)
+        val alertMessage: TextView = view.findViewById(R.id.alertMessage)
+        alertTitle.setText(Constant.isGlobalVariableData!!.contact_alert_title)
+        alertMessage.setText(Constant.isGlobalVariableData!!.contact_alert_content)
 
-        if (missingContacts.isNotEmpty()) {
-            // Show popup only if one or more contacts are missing
-            AlertDialog.Builder(requireActivity())
-                .setTitle(Constant.isGlobalVariableData!!.contact_alert_title)
-                .setMessage(Constant.isGlobalVariableData!!.contact_alert_content)
-                .setPositiveButton("Yes") { _, _ ->
-                    saveContacts(missingContacts)
-                }
-                .setNegativeButton("No", null)
-                .show()
-        } else {
-            Toast.makeText(requireActivity(), "All contacts are already saved", Toast.LENGTH_SHORT).show()
+        val btnSave: TextView = view.findViewById(R.id.lblSave)
+        val btnNo: TextView = view.findViewById(R.id.lblNo)
+
+        val rootView = requireActivity().findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true // prevent clicks on background
         }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, requireActivity().resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        btnSave.setOnClickListener {
+            closePopup()
+            saveContacts(missingContacts)
+        }
+        btnNo.setOnClickListener {
+            closePopup()
+        }
+        dimView.isFocusable = true
+        dimView.isFocusableInTouchMode = true
     }
 
     private fun saveContacts(missingContacts: List<Pair<String, String>>) {
-
         val newContacts = Array(missingContacts.size) { "" }
-
         // Loop through and check which contacts are missing
         for (i in missingContacts.indices) {
             val contact = missingContacts[i]
@@ -325,6 +370,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             context.startActivity(intent)
         }
     }
+
+
 
     private fun isShowLogoutPopup() {
         val inflater = LayoutInflater.from(requireContext())
