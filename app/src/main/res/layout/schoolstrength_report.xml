@@ -2,103 +2,155 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    android:layout_margin="8dp"
+    android:background="@drawable/bg_card_white"
+    android:elevation="4dp"
+    android:padding="12dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardview"
+
+    <LinearLayout
+        android:id="@+id/linear_layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/eighteen"
-        android:layout_marginEnd="@dimen/eighteen"
-        android:layout_marginTop="@dimen/eight"
-        card_view:cardCornerRadius="@dimen/eight"
-        android:layout_marginBottom="@dimen/five"
-        card_view:cardElevation="@dimen/four">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/linear_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/eight"
             android:gravity="center_vertical"
-            android:background="@color/light_blue1">
-
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/header1"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
-                android:gravity="center"
-                android:text="I"
-                android:textColor="@android:color/white"
-                android:background="@drawable/bg_purple_circle"
-                android:textSize="@dimen/sixteen_sp"
-                android:layout_marginEnd="@dimen/eight"
-                style="@style/CustomTextStylePoppinsBold"/>
-
-
-            <LinearLayout
-                android:layout_width="@dimen/zero"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="2">
-
-                <TextView
-                    android:id="@+id/boyslabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Boys : 0"
-                    style="@style/CustomTextStylePoppinsMedium" />
-
-                <TextView
-                    android:id="@+id/girlslabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Girls : 0"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:layout_marginTop="@dimen/five"
-                    style="@style/CustomTextStylePoppinsMedium"/>
-            </LinearLayout>
-
+                android:layout_weight="1"
+                android:text="Standard  I"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                style="@style/CustomTextStylePoppinsBold" />
 
             <TextView
-                android:id="@+id/totallabel"
+                android:id="@+id/btnViewDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total: 0"
+                android:layout_gravity="end"
+                android:background="@drawable/bg_green_button"
+                android:gravity="center"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:text="View Details"
                 style="@style/CustomTextStylePoppinsBold"
-                android:background="@drawable/bg_cyan_pill"
-                android:paddingLeft="@dimen/twenty"
-                android:paddingRight="@dimen/twenty"
-                android:paddingTop="@dimen/nine"
-                android:paddingBottom="@dimen/nine"
-                android:layout_marginStart="@dimen/eight"
-                android:layout_marginEnd="@dimen/eight" />
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
 
+        <!-- Total Students -->
+        <TextView
+            android:id="@+id/totallabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Total Students: 7"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_layout90"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/boyslabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="2"
+                android:text="Boys : 6"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
             <ImageView
-                android:id="@+id/header2"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-                android:src="@drawable/downarrow"
-                android:layout_marginEnd="@dimen/eight"
-                android:layout_gravity="center_vertical" />
+                android:id="@+id/boysl1abel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:tint="@color/color_blue_primary"
+                android:src="@drawable/schoolstrengthmale"
+                android:gravity="end" />
+
+            <ImageView
+                android:id="@+id/boysl1abel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/schoolstrengthfemale"
+                android:tint="@color/pinkcolorcustom"
+                android:gravity="end" />
+
         </LinearLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rlaabsenteesreport3"
+        <LinearLayout
+            android:id="@+id/linear_layoutprogress"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/pink_color"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/viewBoys"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:background="@color/PrimaryColor" />
+
+            <View
+                android:id="@+id/viewGirls"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/pink" />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linear_layout2"
-            android:layout_marginTop="@dimen/sixty_five"
-            android:visibility="gone"
-            android:layout_marginBottom="@dimen/ten">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginTop="6dp"
+            android:gravity="end"
+            android:orientation="horizontal">
 
-    </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/girlslabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Girls : 1"
+                android:textColor="@color/pink"
+                android:layout_marginEnd="40dp"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textSize="12sp" />
+        </LinearLayout>
 
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlaabsenteesreport3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_layout2"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="@dimen/ten"
+        android:visibility="gone">
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </RelativeLayout>

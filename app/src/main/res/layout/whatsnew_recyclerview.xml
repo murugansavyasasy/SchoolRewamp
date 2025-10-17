@@ -1,52 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/top_content"
+    <ScrollView
+        android:id="@+id/scroll_area"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/twenty"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/banner_image"
+        <LinearLayout
+            android:id="@+id/top_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/imagebanner" />
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/twenty">
 
-        <TextView
-            android:id="@+id/menu_name"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/twenty"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Lesson Plan Tracker"
-            android:textColor="@color/black"
-            android:textSize="@dimen/eighteen_sp" />
+            <ImageView
+                android:id="@+id/banner_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+               />
 
-        <TextView
-            android:id="@+id/description_value"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:ellipsize="end"
-            android:maxLines="4"
-            android:text="Precision in Pedahdgogy : Craft , Monitor , and Enchance Lesson Plans with Ease , Elevating the quality of class room instructions"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fourteen_sp" />
+            <TextView
+                android:id="@+id/menu_name"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/twenty"
+                android:textColor="@color/black"
+                android:textSize="@dimen/eighteen_sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/description_value"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:paddingBottom="@dimen/ten"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp"
+                android:text="" />
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/bottom_container"
@@ -62,22 +72,21 @@
 
         <LinearLayout
             android:id="@+id/explore_linearlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/hundred"
+            android:layout_height="@dimen/fourty"
+            android:background="@drawable/background_orange_radius_button"
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
+            <TextView
                 android:id="@+id/btnLearnMore"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="@dimen/hundred"
-                android:layout_height="@dimen/fourty"
-                android:background="@drawable/background_orange_radius_button"
-                android:backgroundTint="@null"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="Explore"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -110,9 +119,7 @@
                 android:text="Next &gt;&gt;"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />
-
         </LinearLayout>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

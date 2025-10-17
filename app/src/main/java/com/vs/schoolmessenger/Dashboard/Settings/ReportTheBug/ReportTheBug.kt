@@ -300,14 +300,16 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
                         // Refresh adapter and height
                         binding.imgPreview.adapter = this@ReportTheBug.let { courseAdapter }
-                        Constant.setGridViewHeight(binding.imgPreview, isImageSelected.size)
+                        Constant.setGridViewHeight(binding.imgPreview, 2)
+
                     }
                 }
             }
         )
 
         binding.imgPreview.adapter = courseAdapter
-        Constant.setGridViewHeight(binding.imgPreview, isImageSelected.size)
+        Constant.setGridViewHeight(binding.imgPreview, 2)
+
     }
 
 

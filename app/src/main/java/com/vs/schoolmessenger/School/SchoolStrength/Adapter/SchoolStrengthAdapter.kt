@@ -5,8 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -61,6 +63,10 @@ class SchoolStrengthAdapter(
         private val girlslabel: TextView = itemView.findViewById(R.id.girlslabel)
         private val totallabel: TextView = itemView.findViewById(R.id.totallabel)
         private val header1: TextView = itemView.findViewById(R.id.header1)
+        private val btnViewDetails: TextView = itemView.findViewById(R.id.btnViewDetails)
+        private val viewBoys: View = itemView.findViewById(R.id.viewBoys)
+        private val boysl1abel1: ImageView = itemView.findViewById(R.id.boysl1abel1)
+        private val viewGirls: View = itemView.findViewById(R.id.viewGirls)
 
 
         @SuppressLint("SetTextI18n")
@@ -71,22 +77,54 @@ class SchoolStrengthAdapter(
         ) {
             boyslabel.text = "Boys : ${data.boys_count}"
             girlslabel.text = "Girls : ${data.girls_count}"
-            totallabel.text = "Total : ${data.total_students}"
-            header1.text = data.name
+            totallabel.text = "Total Students : ${data.total_students}"
+            header1.text = "Standard" + " " + data.name
+
+            if (data.girls_count == "0") {
+                boysl1abel1.visibility = View.GONE
+            } else {
+                boysl1abel1.visibility = View.VISIBLE
+            }
+
+            val boysCount = data.boys_count.toIntOrNull() ?: 0
+            val girlsCount = data.girls_count.toIntOrNull() ?: 0
+            val totalStudents = data.total_students.toIntOrNull() ?: 0
+
+            if (totalStudents > 0) {
+                val boysWeight = boysCount.toFloat() / totalStudents
+                val girlsWeight = girlsCount.toFloat() / totalStudents
+
+                val layoutBoys = viewBoys.layoutParams as LinearLayout.LayoutParams
+                val layoutGirls = viewGirls.layoutParams as LinearLayout.LayoutParams
+
+                layoutBoys.weight = boysWeight
+                layoutGirls.weight = girlsWeight
+
+                viewBoys.layoutParams = layoutBoys
+                viewGirls.layoutParams = layoutGirls
+            } else {
+                viewBoys.layoutParams.width = 0
+                viewGirls.layoutParams.width = 0
+            }
 
             val detailRecyclerView: RecyclerView = itemView.findViewById(R.id.rlaabsenteesreport3)
             val expandableLayout: LinearLayout = itemView.findViewById(R.id.linear_layout2)
 
             detailRecyclerView.layoutManager = LinearLayoutManager(context)
+
+
+            val dividerItemDecoration =
+                DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+            detailRecyclerView.addItemDecoration(dividerItemDecoration)
+
             val detailAdapter = SchoolStrengthDetailAdapter(data.sections, context, false)
             detailRecyclerView.adapter = detailAdapter
 
             detailRecyclerView.visibility =
                 if (adapter.expandedPosition == position) View.VISIBLE else View.GONE
 
-            expandableLayout.setOnClickListener {
+            btnViewDetails.setOnClickListener {
                 val previousExpandedPosition = adapter.expandedPosition
-
 
                 if (adapter.expandedPosition == position) {
                     adapter.expandedPosition = -1

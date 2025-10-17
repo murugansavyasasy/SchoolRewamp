@@ -58,7 +58,8 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = AssignmentStudentListReportBinding.inflate(inflater, container, false)
         return binding.root
@@ -118,7 +119,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.rcystudentlist.visibility = View.GONE
-                binding.txtNoData.text = response!!.message ?: getString(R.string.no_data_found)
+                binding.txtNoData.text = response!!.message?: getString(R.string.no_data_found)
             }
         }
 
@@ -222,7 +223,13 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
     private fun isGetAssignmentStudentList() {
         assignmentstudentlistadapter = AssignmentStudentListAdapter(
-            null, this, requireContext(), Constant.isShimmerViewShow, null, null, created_date
+            null,
+            this,
+            requireContext(),
+            Constant.isShimmerViewShow,
+            null,
+            null,
+            created_date
         )
 
         binding.rcystudentlist.layoutManager = LinearLayoutManager(requireContext())

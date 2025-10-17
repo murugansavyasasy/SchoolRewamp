@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="@dimen/twele"
-    android:background="@drawable/bg_card"
+
     android:layout_margin="@dimen/eight">
 
     <RelativeLayout
@@ -17,7 +17,7 @@
             android:id="@+id/sectionname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A"
+            android:text="Section A"
             style="@style/CustomTextStylePoppinsBold"
            />
 
@@ -35,35 +35,84 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/boyscount"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="👦 Boys : 0"
-        android:layout_marginTop="@dimen/eight"
-        style="@style/CustomTextStylePoppinsMedium"
-        />
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:id="@+id/gender_linearlayout">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/eight">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/schoolstrengthmale"
+                android:tint="@color/color_blue_primary"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/boyscount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Boys : 0"
+                style="@style/CustomTextStylePoppinsMedium" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/ten">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/pinkcolorcustom"
+                android:src="@drawable/schoolstrengthfemale"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/girlscount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Girls: 0"
+                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsMedium" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/ten">
 
 
-    <TextView
-        android:id="@+id/girlscount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="👧 Girls: 0"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/ten"
-        style="@style/CustomTextStylePoppinsMedium"
-        />
+
+            <TextView
+                android:id="@+id/otherscount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Unspecified: 0"
+                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsMedium" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/otherscount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🧑 Others: 0"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/ten"
-        style="@style/CustomTextStylePoppinsMedium"
-        />
 
 </LinearLayout>

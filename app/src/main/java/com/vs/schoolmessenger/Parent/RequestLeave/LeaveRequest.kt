@@ -227,6 +227,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 binding.txtVideoMenu.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
                 val selectedTitle = tab.text.toString()
                 selectedStatus = tabStatusMap[selectedTitle] ?: Constant.All_
 

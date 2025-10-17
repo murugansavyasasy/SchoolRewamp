@@ -1,19 +1,12 @@
 package com.vs.schoolmessenger.School.SchoolStrength
 
 
-import android.graphics.Color
-import android.graphics.Typeface
+
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.utils.MPPointF
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
@@ -21,12 +14,13 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthAdapter
-import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthDetailAdapter
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolData
+import com.vs.schoolmessenger.School.SchoolStrength.Model.SummaryItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolStrengthBinding
+
 
 
 class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListener {
@@ -48,6 +42,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
     override fun setupViews() {
         super.setupViews()
 
+
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -55,25 +50,32 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.AcademicYear.setOnClickListener(this)
 
+        binding.AcademicYear.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
 
-        // Setup LayoutManager only
-        binding.rlaabsenteesreport2.layoutManager = LinearLayoutManager(this)
+
+
+        binding.rlaabsenteesreport2.layoutManager =
+            LinearLayoutManager(this)
 
 
         isLoadAcademicYear(isAcademicYearList)
+
         isValidAcademicYear =
             isAcademicYearList?.any { it.current_academic_year == true } == true
         isAcademicYearId = isAcademicYearList!![0].id
         isCurrentAcademicYear = isAcademicYearList!![0].current_academic_year
+
+
         isGetSchoolStrength()
+
 
         appViewModel?.isGetSchoolStrengthReport?.observe(this) { response ->
             Constant.hideLoading(this)
@@ -82,22 +84,33 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
                     isFirstLoad = true
                     binding.nomessage.visibility = View.GONE
                     binding.txtNoData.visibility = View.GONE
-                    binding.rlaPieChartCount.visibility = View.VISIBLE
                     binding.rlaabsenteesreport2.visibility = View.VISIBLE
-                    //isLoadSchoolStrengthData(response.data)
+                    binding.summaryStatics.visibility = View.VISIBLE
+                    binding.summaryStaticscardview.summarystaticsReport.visibility = View.VISIBLE
+                    binding.genderdistributionlabel.visibility = View.VISIBLE
+                    binding.progressBarGender.genderProgressLayout.visibility = View.VISIBLE
+                    binding.genderdistribu1tionlabel.visibility = View.VISIBLE
                     setupPieChart(response.data)
                 } else {
                     binding.txtNoData.text = response.message
                     binding.nomessage.visibility = View.VISIBLE
                     binding.txtNoData.visibility = View.VISIBLE
-                    binding.rlaPieChartCount.visibility = View.GONE
                     binding.rlaabsenteesreport2.visibility = View.GONE
+                    binding.summaryStatics.visibility = View.GONE
+                    binding.summaryStaticscardview.summarystaticsReport.visibility = View.GONE
+                    binding.genderdistributionlabel.visibility = View.GONE
+                    binding.progressBarGender.genderProgressLayout.visibility = View.GONE
+                    binding.genderdistribu1tionlabel.visibility = View.GONE
                 }
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.rlaPieChartCount.visibility = View.GONE
                 binding.rlaabsenteesreport2.visibility = View.GONE
+                binding.summaryStatics.visibility = View.GONE
+                binding.summaryStaticscardview.summarystaticsReport.visibility = View.GONE
+                binding.genderdistributionlabel.visibility = View.GONE
+                binding.progressBarGender.genderProgressLayout.visibility = View.GONE
+                binding.genderdistribu1tionlabel.visibility = View.GONE
             }
         }
     }
@@ -133,122 +146,93 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         }
     }
 
+    private fun setupPieChart(data: List<SchoolData>?) {
+        if (data.isNullOrEmpty()) return
+
+        val standardList = data.flatMap { it.standards ?: emptyList() }
+        Log.d("StandardList", "Size: ${standardList.size} | Data: $standardList")
+
+        schoolstrengthadapter = SchoolStrengthAdapter(standardList, this, false)
+        binding.rlaabsenteesreport2.adapter = schoolstrengthadapter
+        binding.rlaabsenteesreport2.isNestedScrollingEnabled = false
+
+        val firstItem = data.first()
+        val staffCount = firstItem.totalStaffStrength.toFloatOrNull() ?: 0f
+        val studentCount = firstItem.totalStudentStrength.toFloatOrNull() ?: 0f
+        val total = staffCount + studentCount
+
+        if (total == 0f) return
+
+        val staffPercentage = (staffCount / total) * 100
+        val studentPercentage = (studentCount / total) * 100
+
+
+        binding.progressBarGender.staffPercentage.text =
+            "${firstItem.totalStaffStrength} Staffs (${String.format("%.1f", staffPercentage)}%)"
+        binding.progressBarGender.studentPercentage.text =
+            "${firstItem.totalStudentStrength} Students (${String.format("%.1f", studentPercentage)}%)"
+
+        binding.progressBarGender.frameLayout.post {
+            val frameWidth = binding.progressBarGender.frameLayout.width
+            val staffWidth = (frameWidth * (staffPercentage / 100)).toInt()
+
+            val params = binding.progressBarGender.viewBoyProgress.layoutParams
+            params.width = staffWidth
+            binding.progressBarGender.viewBoyProgress.layoutParams = params
+        }
+
+
+
+        val boysStrength = firstItem.totalBoysStrength.toIntOrNull() ?: 0
+        val girlsStrength = firstItem.totalGirlsStrength.toIntOrNull() ?: 0
+        val totalStrength = boysStrength + girlsStrength
+
+        val boysPercentage = if (totalStrength > 0) {
+            (boysStrength * 100) / totalStrength
+        } else {
+            0
+        }
+
+        binding.summaryStaticscardview.progressbar1.progress = boysPercentage
+
+
+        val staffStrength1 = firstItem.totalStaffStrength.toIntOrNull() ?: 0
+        val studentStrength = firstItem.totalStudentStrength.toIntOrNull() ?: 0
+        val totalStaffStudentStrength = staffStrength1 + studentStrength
+
+        val staffStrength12 = if (totalStaffStudentStrength > 0) {
+            (staffStrength1 * 100) / totalStaffStudentStrength
+        } else {
+            0
+        }
+
+        binding.summaryStaticscardview.progressbar3.progress = staffStrength12
+
+
+
+
+
+
+
+        binding.summaryStaticscardview.studentCount.text = firstItem.totalStudentStrength
+        binding.summaryStaticscardview.staffCount.text = firstItem.totalStaffStrength
+        binding.progressBarGender.othersCount.text = "unspecified " + (firstItem.totalOthersStrength)
+        binding.summaryStaticscardview.totalMale.text = "Staffs " + firstItem.totalStaffStrength
+        binding.summaryStaticscardview.totalFemale.text = "Students " + firstItem.totalStudentStrength
+        binding.summaryStaticscardview.othersCount.text = firstItem.totalOthersStrength
+        binding.summaryStaticscardview.boyscount1.text = "boys" + " " + firstItem.totalBoysStrength
+        binding.summaryStaticscardview.girlscount1.text = "girls" + " " +firstItem.totalGirlsStrength
+        binding.summaryStaticscardview.othersCount.text = (
+                (firstItem.totalStaffStrength?.toIntOrNull() ?: 0) +
+                        (firstItem.totalStudentStrength?.toIntOrNull() ?: 0) +
+                        (firstItem.totalOthersStrength?.toIntOrNull() ?: 0)
+                ).toString()
+
+    }
+
 
     private fun isGetSchoolStrength() {
         Constant.showLoading(this)
         appViewModel?.isGetSchoolStrengthReport(isAccessToken ?: "", isAcademicYearId, this)
-    }
-
-
-    private fun setupPieChart(data: List<SchoolData>?) {
-        if (data.isNullOrEmpty()) return
-
-        val totalStudentStrength = data[0].totalStudentStrength.toFloatOrNull() ?: 0f
-        val totalStaffStrength = data[0].totalStaffStrength.toFloatOrNull() ?: 0f
-        val totalBoysStrength = data[0].totalBoysStrength.toFloatOrNull() ?: 0f
-        val totalGirlsStrength = data[0].totalGirlsStrength.toFloatOrNull() ?: 0f
-        val totalothersStrength = data[0].totalOthersStrength.toFloatOrNull() ?: 0f
-
-        val total =
-            totalBoysStrength + totalGirlsStrength + totalStaffStrength + totalothersStrength // 22
-        binding.customPieChart.setUsePercentValues(true)
-        binding.customPieChart.description.isEnabled = false
-        binding.customPieChart.setExtraOffsets(5f, 10f, 5f, 5f)
-
-        // on below line we are setting drag for our pie chart
-        binding.customPieChart.setDragDecelerationFrictionCoef(0.95f)
-        // on below line we are setting hole
-        // and hole color for pie chart
-        binding.customPieChart.isDrawHoleEnabled = true
-        binding.customPieChart.setHoleColor(Color.WHITE)
-        // on below line we are setting circle color and alpha
-        binding.customPieChart.setTransparentCircleColor(Color.WHITE)
-        binding.customPieChart.setTransparentCircleAlpha(110)
-        // on  below line we are setting hole radius
-        binding.customPieChart.holeRadius = 58f
-        binding.customPieChart.transparentCircleRadius = 61f
-        // on below line we are setting center text
-        binding.customPieChart.setDrawCenterText(true)
-        binding.customPieChart.centerText = "${total.toInt()}\nTotal"
-        binding.customPieChart.setCenterTextSize(12f)
-        // on below line we are setting
-        // rotation for our pie chart
-        binding.customPieChart.setRotationAngle(0f)
-        // enable rotation of the pieChart by touch
-        binding.customPieChart.isRotationEnabled = true
-        binding.customPieChart.isHighlightPerTapEnabled = true
-        // on below line we are setting animation for our pie chart
-        binding.customPieChart.animateY(1400, Easing.EaseInOutQuad)
-        // on below line we are disabling our legend for pie chart
-        binding.customPieChart.legend.isEnabled = false
-        binding.customPieChart.setEntryLabelColor(Color.WHITE)
-        binding.customPieChart.setEntryLabelTextSize(12f)
-        binding.customPieChart.setUsePercentValues(false)
-        // on below line we are creating array list and
-        // adding data to it to display in pie chart
-        val entries: ArrayList<PieEntry> = ArrayList()
-        if (!data[0].totalStaffStrength.equals("0")) {
-            entries.add(PieEntry(totalStaffStrength))
-        }
-        if (!data[0].totalBoysStrength.equals("0")) {
-            entries.add(PieEntry(totalBoysStrength))
-        }
-        if (!data[0].totalGirlsStrength.equals("0")) {
-            entries.add(PieEntry(totalGirlsStrength))
-        }
-        if (!data[0].totalOthersStrength.equals("0")) {
-            entries.add(PieEntry(totalothersStrength))
-        }
-        // on below line we are setting pie data set
-        val dataSet = PieDataSet(entries, "")
-        // on below line we are setting icons.
-        dataSet.setDrawIcons(false)
-        // on below line we are setting slice for pie
-        dataSet.sliceSpace = 3f
-        dataSet.iconsOffset = MPPointF(0f, 40f)
-        dataSet.selectionShift = 5f
-        // add a lot of colors to list
-        val colors: ArrayList<Int> = ArrayList()
-        if (!data[0].totalStaffStrength.equals("0")) {
-            colors.add(resources.getColor(R.color.yellow))
-        }
-        if (!data[0].totalBoysStrength.equals("0")) {
-            colors.add(resources.getColor(R.color.teal))
-        }
-        if (!data[0].totalGirlsStrength.equals("0")) {
-            colors.add(resources.getColor(R.color.pink))
-        }
-        if (!data[0].totalOthersStrength.equals("0")) {
-            colors.add(resources.getColor(R.color.grey))
-        }
-        // on below line we are setting colors.
-        dataSet.colors = colors
-        // on below line we are setting pie data set
-        val chart_data = PieData(dataSet)
-//        chart_data.setValueFormatter(PercentFormatter())
-        dataSet.valueFormatter = object : ValueFormatter() {
-            override fun getFormattedValue(value: Float): String {
-                return value.toInt().toString()  // removes decimal points
-            }
-        }
-        chart_data.setValueTextSize(10f)
-        chart_data.setValueTypeface(Typeface.DEFAULT_BOLD)
-        chart_data.setValueTextColor(Color.WHITE)
-        binding.customPieChart.setData(chart_data)
-        // undo all highlights
-        binding.customPieChart.highlightValues(null)
-        // loading chart
-        binding.customPieChart.invalidate()
-        binding.staffCount.text = "Staff - ${totalStaffStrength.toInt()}"
-        binding.totalStudentCount.text = "  Students - ${totalStudentStrength.toInt()}"
-        binding.girlsCount.text = "Girls - ${totalGirlsStrength.toInt()}"
-        binding.boysCount.text = "Boys - ${totalBoysStrength.toInt()}"
-        binding.othersCount.text = "Others - ${totalothersStrength.toInt()}"
-
-        val standardList = data.flatMap { it.standards ?: emptyList() }
-        Log.d("StandardList", "Size: ${standardList.size} | Data: $standardList")
-        schoolstrengthadapter = SchoolStrengthAdapter(standardList, this, false)
-        binding.rlaabsenteesreport2.adapter = schoolstrengthadapter
-        binding.rlaabsenteesreport2.isNestedScrollingEnabled=false
     }
 }

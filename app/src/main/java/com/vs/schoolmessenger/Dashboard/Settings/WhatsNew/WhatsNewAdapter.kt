@@ -21,7 +21,7 @@ class WhatsNewAdapter(
     private var itemList: List<WhatsNewUpdateData>?,
     private val context: Context,
     private var isLoading: Boolean,
-    private val recyclerView: RecyclerView // ✅ we'll need this to scroll on click
+    private val recyclerView: RecyclerView //  we'll need this to scroll on click
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -61,7 +61,8 @@ class WhatsNewAdapter(
         private val titleText = itemView.findViewById<TextView>(R.id.menu_name)
         private val descText = itemView.findViewById<TextView>(R.id.description_value)
         private val bannerImage = itemView.findViewById<ImageView>(R.id.banner_image)
-        private val btnLearnMore = itemView.findViewById<Button>(R.id.btnLearnMore)
+        private val btnLearnMore = itemView.findViewById<TextView>(R.id.btnLearnMore)
+        private val explore_linearlayout = itemView.findViewById<LinearLayout>(R.id.explore_linearlayout)
         private val swipeMoreLayout = itemView.findViewById<LinearLayout>(R.id.swipeeformore)
         private val swipeMoreLeft = itemView.findViewById<TextView>(R.id.swipemore)
         private val swipeMoreRight = itemView.findViewById<TextView>(R.id.swipemoredata)
@@ -72,12 +73,13 @@ class WhatsNewAdapter(
 
             Glide.with(itemView.context)
                 .load(data.downloadable_image)
+                .fitCenter()
                 .into(bannerImage)
 
             if(data.app_redirect_link.isNullOrEmpty()) {
-                btnLearnMore.visibility = View.GONE
+                explore_linearlayout.visibility = View.GONE
             } else {
-                btnLearnMore.visibility = View.VISIBLE
+                explore_linearlayout.visibility = View.VISIBLE
             }
 
             swipeMoreLayout.visibility = if (totalCount > 1) View.VISIBLE else View.GONE
