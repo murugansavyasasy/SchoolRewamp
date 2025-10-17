@@ -27,8 +27,8 @@
                 android:layout_weight="1"
                 android:text="Standard  I"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="16sp"
+                style="@style/CustomTextStylePoppinsBold" />
 
             <TextView
                 android:id="@+id/btnViewDetails"
@@ -40,6 +40,7 @@
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
                 android:text="View Details"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -51,25 +52,56 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="Total Students: 7"
+            style="@style/CustomTextStylePoppinsMedium"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
-        <!-- Boys count -->
-        <TextView
-            android:id="@+id/boyslabel"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Boys : 6"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:id="@+id/linear_layout90"
+            android:weightSum="2"
+            android:orientation="horizontal">
 
-        <!-- Progress Bar -->
+            <TextView
+                android:id="@+id/boyslabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="2"
+                android:text="Boys : 6"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/boysl1abel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:tint="@color/color_blue_primary"
+                android:src="@drawable/schoolstrengthmale"
+                android:gravity="end" />
+
+            <ImageView
+                android:id="@+id/boysl1abel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/schoolstrengthfemale"
+                android:tint="@color/pinkcolorcustom"
+                android:gravity="end" />
+
+        </LinearLayout>
+
+
         <LinearLayout
             android:id="@+id/linear_layoutprogress"
             android:layout_width="match_parent"
             android:layout_height="6dp"
             android:layout_marginTop="6dp"
+            android:layout_marginEnd="40dp"
             android:background="@color/pink_color"
             android:orientation="horizontal">
 
@@ -101,9 +133,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Girls : 1"
-
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textColor="@color/pink"
+                android:layout_marginEnd="40dp"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -114,7 +147,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear_layout2"
-        android:layout_marginTop="@dimen/sixty_five"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="@dimen/ten"
         android:visibility="gone">
     </androidx.recyclerview.widget.RecyclerView>

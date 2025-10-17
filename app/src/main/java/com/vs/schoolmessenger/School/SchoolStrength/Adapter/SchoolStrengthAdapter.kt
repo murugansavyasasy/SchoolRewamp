@@ -5,8 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -63,6 +65,7 @@ class SchoolStrengthAdapter(
         private val header1: TextView = itemView.findViewById(R.id.header1)
         private val btnViewDetails: TextView = itemView.findViewById(R.id.btnViewDetails)
         private val viewBoys: View = itemView.findViewById(R.id.viewBoys)
+        private val boysl1abel1: ImageView = itemView.findViewById(R.id.boysl1abel1)
         private val viewGirls: View = itemView.findViewById(R.id.viewGirls)
 
 
@@ -77,6 +80,11 @@ class SchoolStrengthAdapter(
             totallabel.text = "Total Students : ${data.total_students}"
             header1.text = "Standard" + " " + data.name
 
+            if (data.girls_count == "0") {
+                boysl1abel1.visibility = View.GONE
+            } else {
+                boysl1abel1.visibility = View.VISIBLE
+            }
 
             val boysCount = data.boys_count.toIntOrNull() ?: 0
             val girlsCount = data.girls_count.toIntOrNull() ?: 0
@@ -99,11 +107,16 @@ class SchoolStrengthAdapter(
                 viewGirls.layoutParams.width = 0
             }
 
-
             val detailRecyclerView: RecyclerView = itemView.findViewById(R.id.rlaabsenteesreport3)
             val expandableLayout: LinearLayout = itemView.findViewById(R.id.linear_layout2)
 
             detailRecyclerView.layoutManager = LinearLayoutManager(context)
+
+
+            val dividerItemDecoration =
+                DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+            detailRecyclerView.addItemDecoration(dividerItemDecoration)
+
             val detailAdapter = SchoolStrengthDetailAdapter(data.sections, context, false)
             detailRecyclerView.adapter = detailAdapter
 
@@ -112,7 +125,6 @@ class SchoolStrengthAdapter(
 
             btnViewDetails.setOnClickListener {
                 val previousExpandedPosition = adapter.expandedPosition
-
 
                 if (adapter.expandedPosition == position) {
                     adapter.expandedPosition = -1
