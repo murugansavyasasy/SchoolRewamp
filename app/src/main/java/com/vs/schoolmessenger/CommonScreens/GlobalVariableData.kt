@@ -30,5 +30,9 @@ class GlobalVariableData(
     val video_vimeo_token: String,
     val ebooks_url: String,
     val market_place_url: String,
-    val fees_url: String
+    val fees_url: String,
+    val v_card_numbers: String,
+    val contact_alert_title: String,
+    val contact_alert_content: String,
+    val contact_display_name: String
 )

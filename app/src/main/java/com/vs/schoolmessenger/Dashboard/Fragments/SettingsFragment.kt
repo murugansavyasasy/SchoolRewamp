@@ -187,20 +187,19 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun checkAndShowPopup() {
-        val contacts = listOf(
-            Pair("New School Chimes", "0000000001"),
-            Pair("New School Chimes", "0000000002"),
-            Pair("New School Chimes", "0000000003"),
-            Pair("New School Chimes", "0000000004")
-        )
+        val contacts = mutableListOf<Pair<String, String>>()
 
+        val numbers =  Constant.isGlobalVariableData!!.v_card_numbers.split(",")
+        for (item in numbers) {
+            contacts.add(Pair(Constant.isGlobalVariableData!!.contact_display_name, item.trim()))
+        }
         val missingContacts = contacts.filterNot { contactExists(it.second) }
 
         if (missingContacts.isNotEmpty()) {
             // Show popup only if one or more contacts are missing
             AlertDialog.Builder(requireActivity())
-                .setTitle("Save Contacts")
-                .setMessage("Please save the contacts to avoid the spam calls. Do you want to save now?")
+                .setTitle(Constant.isGlobalVariableData!!.contact_alert_title)
+                .setMessage(Constant.isGlobalVariableData!!.contact_alert_content)
                 .setPositiveButton("Yes") { _, _ ->
                     saveContacts(missingContacts)
                 }
@@ -263,7 +262,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
         // Prepare Intent to insert contact (user will confirm)
         val intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-        intent.putExtra(ContactsContract.Intents.Insert.NAME, "School Chimes") // set contact name
+        intent.putExtra(ContactsContract.Intents.Insert.NAME, Constant.isGlobalVariableData!!.contact_display_name) // set contact name
         intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, data)
 
         startActivityForResult(intent, 100)
