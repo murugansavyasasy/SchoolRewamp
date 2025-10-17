@@ -45,7 +45,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_height="wrap_content"
                 android:text="@string/choose_academic_year"
-                style="@style/CustomTextStylePoppinsBold"></TextView>
+                style="@style/CustomTextStylePoppinsMedium">
+
+            </TextView>
 
             <RelativeLayout
                 android:layout_toEndOf="@+id/lblAcademicYearPick"
@@ -75,7 +77,7 @@
                     android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_drop_down"
                     android:layout_marginEnd="@dimen/three"
-                    android:tint="@color/black"
+
                     android:layout_height="wrap_content">
 
                 </ImageView>
@@ -94,159 +96,41 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:id="@+id/rlaPieChartCount"
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/summary_statics"
+                    android:text="SUMMARY STATICS"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="10dp"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textSize="18sp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcysummarystatics"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:padding="@dimen/ten"
-                    android:background="@drawable/rect_shadow_white">
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginBottom="@dimen/ten">
+                </androidx.recyclerview.widget.RecyclerView>
 
 
 
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/customPieChart"
-                        android:layout_alignParentStart="true"
-                        android:layout_width="@dimen/one_seventy"
-                        android:layout_height="@dimen/one_seventy"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                    <LinearLayout
-                        android:layout_toEndOf="@+id/customPieChart"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/data_card"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/five"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_marginTop="@dimen/five"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="@dimen/ten"
-                                android:layout_height="@dimen/ten"
-                                app:cardCornerRadius="@dimen/five"
-                                app:cardBackgroundColor="@color/yellow"
-                                android:layout_marginEnd="@dimen/eight"/>
-
-                            <TextView
-                                android:id="@+id/staffCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/staff"
-                                style="@style/CustomTextStylePoppinsBold"
-                                android:textSize="@dimen/twele_sp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_marginTop="@dimen/five"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="@dimen/ten"
-                                android:layout_height="@dimen/ten"
-                                app:cardCornerRadius="@dimen/five"
-                                android:visibility="gone"
-                                app:cardBackgroundColor="@color/navi_blue2"
-                                android:layout_marginEnd="@dimen/eight"/>
-
-                            <TextView
-                                android:id="@+id/totalStudentCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/total_students"
-                                style="@style/CustomTextStylePoppinsBold"
-                                android:textSize="@dimen/twele_sp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_marginTop="@dimen/five"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="@dimen/ten"
-                                android:layout_height="@dimen/ten"
-                                app:cardCornerRadius="@dimen/five"
-                                app:cardBackgroundColor="@color/pink"
-                                android:layout_marginEnd="@dimen/eight"/>
-
-                            <TextView
-                                android:id="@+id/girlsCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/girls"
-                                style="@style/CustomTextStylePoppinsBold"
-                                android:textSize="@dimen/twele_sp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_marginTop="@dimen/five"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="@dimen/ten"
-                                android:layout_height="@dimen/ten"
-                                app:cardCornerRadius="@dimen/five"
-                                app:cardBackgroundColor="@color/teal"
-                                android:layout_marginEnd="@dimen/eight"/>
-
-                            <TextView
-                                android:id="@+id/boysCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/boys"
-                                style="@style/CustomTextStylePoppinsBold"
-                                android:textSize="@dimen/twele_sp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_marginTop="@dimen/five"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="@dimen/ten"
-                                android:layout_height="@dimen/ten"
-                                app:cardCornerRadius="@dimen/five"
-                                app:cardBackgroundColor="@color/grey"
-                                android:layout_marginEnd="@dimen/eight"/>
-
-                            <TextView
-                                android:id="@+id/othersCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/others"
-                                style="@style/CustomTextStylePoppinsBold"
-                                android:textSize="@dimen/twele_sp"/>
-                        </LinearLayout>
-
-
-
-                    </LinearLayout>
-
-
-                </RelativeLayout>
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/genderdistributionlabel"
+                    android:text="GENDER DISTRIBUTION VISUALIZATION"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="10dp"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textSize="18sp"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -260,6 +144,8 @@
                     android:nestedScrollingEnabled="false"
                     android:layout_marginBottom="@dimen/ten">
                 </androidx.recyclerview.widget.RecyclerView>
+
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

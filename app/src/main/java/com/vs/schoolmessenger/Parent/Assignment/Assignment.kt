@@ -252,4 +252,9 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        fetchAssignmentReportData()
+    }
 }

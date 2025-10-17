@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -29,6 +31,9 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
     private var appViewModel: App? = null
     private var whatsnewAdapter: WhatsNewAdapter? = null
     private var currentPosition = 0
+    private var isChildDetails: ChildDetails? = null
+    private var isStaffDetails: StaffDetails? = null
+    var userDetails: UserDetails? = null
 
     override fun getViewBinding(): ActivityWhatsNewBinding {
         return ActivityWhatsNewBinding.inflate(layoutInflater)
@@ -44,13 +49,15 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
         )
 
         binding.imgBack.setOnClickListener(this)
-        val isStaffDetails = SharedPreference.getStaffDetails(this)
-        val childDetails = SharedPreference.getChildDetails(this)
+        isChildDetails = SharedPreference.getChildDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        userDetails = SharedPreference.getUserDetails(this)
 
-        isAccessToken = when {
-            !isStaffDetails?.access_token.isNullOrEmpty() -> isStaffDetails?.access_token
-            !childDetails?.access_token.isNullOrEmpty() -> childDetails?.access_token
-            else -> null
+
+        isAccessToken = if (Constant.isParentChoose) {
+            isChildDetails?.access_token
+        } else {
+            isStaffDetails?.access_token
         }
 
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -90,7 +97,7 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
             data,
             this,
             isLoading = false,
-            binding.rcywhatsnew // 👈 added recyclerView parameter
+            binding.rcywhatsnew
         )
         binding.rcywhatsnew.adapter = whatsnewAdapter
 
