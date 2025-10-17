@@ -181,6 +181,39 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             binding.progressBarGender.viewBoyProgress.layoutParams = params
         }
 
+
+
+        val boysStrength = firstItem.totalBoysStrength.toIntOrNull() ?: 0
+        val girlsStrength = firstItem.totalGirlsStrength.toIntOrNull() ?: 0
+        val totalStrength = boysStrength + girlsStrength
+
+        val boysPercentage = if (totalStrength > 0) {
+            (boysStrength * 100) / totalStrength
+        } else {
+            0
+        }
+
+        binding.summaryStaticscardview.progressbar1.progress = boysPercentage
+
+
+        val staffStrength1 = firstItem.totalStaffStrength.toIntOrNull() ?: 0
+        val studentStrength = firstItem.totalStudentStrength.toIntOrNull() ?: 0
+        val totalStaffStudentStrength = staffStrength1 + studentStrength
+
+        val staffStrength12 = if (totalStaffStudentStrength > 0) {
+            (staffStrength1 * 100) / totalStaffStudentStrength
+        } else {
+            0
+        }
+
+        binding.summaryStaticscardview.progressbar3.progress = staffStrength12
+
+
+
+
+
+
+
         binding.summaryStaticscardview.studentCount.text = firstItem.totalStudentStrength
         binding.summaryStaticscardview.staffCount.text = firstItem.totalStaffStrength
         binding.progressBarGender.othersCount.text = "unspecified " + (firstItem.totalOthersStrength)
