@@ -36,6 +36,8 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesFinalListAdapter.AbsenteesFinalListAdapter
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter.AbsenteesMarkAdapter
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentList
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentListData
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.AttachmentMediaAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
@@ -48,15 +50,15 @@ import com.vs.schoolmessenger.databinding.AbsenteesStudentMarkingBinding
 import me.relex.circleindicator.CircleIndicator2
 
 class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
-    SpecificStudentSelectClickListener,
     AbsenteesSelectionListener,
     View.OnClickListener {
 
     lateinit var mAdapter: AbsenteesMarkAdapter
     private var appViewModel: App? = null
-    val isSpecificStudent = mutableListOf<NameAndIds>()
-    private var studentsList: List<NameAndIds>? = null
-    private var isSelectedIds: List<NameAndIds>? = null
+//    val isSpecificStudent = mutableListOf<GetAttendanceStudentListData>()
+    private var studentsList: List<GetAttendanceStudentListData>? = null
+    private var originalAttendanceList: List<GetAttendanceStudentListData>? = null
+//    private var isSelectedIds: List<GetAttendanceStudentListData>? = null
     private lateinit var isStandardName: String
     private lateinit var isSectionName: String
     private var AllPresent: String? = null
@@ -119,17 +121,22 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             getString(R.string.rolldsc)
         )
 
+//        binding.cbSelect.setOnClickListener {
+//            if (binding.cbSelect.isChecked) {
+//                isSpecificStudent.clear()
+//                studentsList?.forEach {
+//                    isSpecificStudent.add(it)
+//                }
+//                mAdapter.setAllAbsent(true)
+//            } else {
+//                isSpecificStudent.clear()
+//                mAdapter.setAllAbsent(false)
+//            }
+//            isCountAttendance()
+//        }
+
         binding.cbSelect.setOnClickListener {
-            if (binding.cbSelect.isChecked) {
-                isSpecificStudent.clear()
-                studentsList?.forEach {
-                    isSpecificStudent.add(it)
-                }
-                mAdapter.setAllAbsent(true)
-            } else {
-                isSpecificStudent.clear()
-                mAdapter.setAllAbsent(false)
-            }
+            mAdapter.setAllAbsent(binding.cbSelect.isChecked)
             isCountAttendance()
         }
 
@@ -156,7 +163,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         }
 
 
-        appViewModel!!.isStudentList!!.observe(this) { response ->
+        appViewModel!!.getAttendanceStudentList!!.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     binding.rytSearchBar.visibility=View.VISIBLE
@@ -166,6 +173,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     binding.cbSelect.visibility = View.VISIBLE
                     binding.rytSend.visibility = View.VISIBLE
                     studentsList = response.data
+                    originalAttendanceList=response.data
                     loadStudentAbsenteesList(studentsList!!)
 
                 } else {
@@ -315,18 +323,18 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     override fun onResume() {
         super.onResume()
 
-        mAdapter = AbsenteesMarkAdapter(null, this, Constant.isShimmerViewShow, this, this)
+        mAdapter = AbsenteesMarkAdapter(null, this, Constant.isShimmerViewShow, this)
         binding.recycleStudents.layoutManager = LinearLayoutManager(this)
         binding.recycleStudents.adapter = mAdapter
 
-        appViewModel!!.isGetStudentList(
+        appViewModel!!.getAttendanceStudentList(
             isAccessToken!!,
-            isSectionId!!.toString(), isAcademicYearId!!, this
+            isSectionId!!.toString(),Constant.isMarkAttendanceDataSending?.attendance_date!!
         )
 
     }
 
-    fun loadStudentAbsenteesList(studentsList: List<NameAndIds>) {
+    fun loadStudentAbsenteesList(studentsList: List<GetAttendanceStudentListData>) {
         if(studentsList.isNotEmpty()){
             ShowData()
             binding.rytSearchBar.visibility=View.VISIBLE
@@ -334,7 +342,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             binding.toolbarLayout.imgSearch.visibility=View.VISIBLE
             mAdapter =
                 AbsenteesMarkAdapter(
-                    studentsList, this, Constant.isShimmerViewDisable, this, this
+                    studentsList.toMutableList(), this, Constant.isShimmerViewDisable, this
                 )
             binding.recycleStudents.adapter = mAdapter
         }
@@ -349,7 +357,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     fun showResumeListDialog(
         activity: Activity,
-        selectedFinalList: List<NameAndIds>,
+        selectedFinalList: List<GetAttendanceStudentListData>,
     ) {
         if (activity.isFinishing || activity.isDestroyed) return
 
@@ -372,7 +380,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         val lblAbsenteesListCount = dialogView.findViewById<TextView>(R.id.lblAbsenteesListCount)
         val lytNoDataFound = dialogView.findViewById<LinearLayout>(R.id.lytNoDataFound)
 
-        val removedStudents = mutableListOf<NameAndIds>()
+        val removedStudents = mutableListOf<GetAttendanceStudentListData>()
 
         if (selectedFinalList.isEmpty()) {
             rcFinalList.visibility = View.GONE
@@ -434,9 +442,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             }
 
             R.id.rytSend -> {
-                if (!isSelectedIds.isNullOrEmpty()){
-                    Log.d("FinalList",isSelectedIds.toString())
-                    showResumeListDialog(this, isSelectedIds!!)
+                if (!studentsList.isNullOrEmpty()){
+                    Log.d("FinalList",studentsList.toString())
+                    showResumeListDialog(this, studentsList!!)
                 }
                 else {
                     Constant.showSendConfirmationDialog(
@@ -459,8 +467,8 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
 
     private fun isMarkAttendance() {
-        AllPresent = if (isSelectedIds.isNullOrEmpty()) Constant.allPresent else Constant.fullDay
-        Log.d("isSelectedIds",isSelectedIds.toString())
+        AllPresent = if (studentsList.isNullOrEmpty()) Constant.allPresent else Constant.fullDay
+        Log.d("isSelectedIds",studentsList.toString())
         Log.d("AllPresent",AllPresent.toString())
         if (Constant.isMarkAttendanceDataSending?.class_id != "" && Constant.isMarkAttendanceDataSending?.section_id != ""
             && Constant.isMarkAttendanceDataSending?.attendance_date != null
@@ -496,7 +504,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 Constant.isMarkAttendanceDataSending?.attendance_date
             )
             val studentArray = JsonArray().apply {
-                isSelectedIds?.forEach { student ->
+                studentsList?.forEach { student ->
                     add(JsonObject().apply {
                         addProperty(APIKeyNames.id_, student.id.toString())
                     })
@@ -504,40 +512,65 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             }
             add(APIKeyNames.student_id, studentArray)
             Log.d("AbsenteesStudentID", studentArray.toString())
-            Log.d("AttendanceList", isSelectedIds.toString())
+            Log.d("AttendanceList", studentsList.toString())
         }
         appViewModel?.isUpdateSendAbsenteeSMS(isAccessToken!!, jsonObject, this)
 
     }
 
 
-    override fun onSelectionChanged(selectedIds: List<NameAndIds>) {
-        Log.d("ActivitySelectedIDs", selectedIds.toString())
-        isSelectedIds = selectedIds
-    }
-
-    override fun onIdCheck(data: NameAndIds) {
-        if (!isSpecificStudent.any { it.id == data.id }) {
-            isSpecificStudent.add(data)
-        }
-        binding.cbSelect.isChecked = isSpecificStudent.size == studentsList?.size
+    override fun onSelectionChanged(selectedIds: List<GetAttendanceStudentListData>) {
+//        Log.d("ActivitySelectedIDs", selectedIds.toString())
+        studentsList = selectedIds
         isCountAttendance()
+        Log.d("ActivitySelectedIDs", studentsList.toString())
+        binding.cbSelect.isChecked = studentsList?.all { it.att_type == "ABSENT" } == true
+
+
+
     }
 
-    fun isCountAttendance() {
-        val presentCount = studentsList?.size?.minus(isSpecificStudent.size) ?: 0
-        val absentCount = isSpecificStudent.size
-        binding.toolbarLayout.tvPresentCount.text =
-            if (presentCount > 0) String.format(Constant.time02d, presentCount) else Constant.zero
-        binding.toolbarLayout.tvAbsentCount.text =
-            if (absentCount > 0) String.format(Constant.time02d, absentCount) else Constant.zero
+    override fun onIdCheck(data: GetAttendanceStudentListData) {
+//        if (!isSpecificStudent.any { it.id == data.id }) {
+//            isSpecificStudent.add(data)
+//        }
+//        binding.cbSelect.isChecked = isSpecificStudent.size == studentsList?.size
+//        isCountAttendance()
     }
 
+//    fun isCountAttendance() {
+//        val presentCount = studentsList?.size?.minus(isSpecificStudent.size) ?: 0
+//        val absentCount = isSpecificStudent.size
+//        binding.toolbarLayout.tvPresentCount.text =
+//            if (presentCount > 0) String.format(Constant.time02d, presentCount) else Constant.zero
+//        binding.toolbarLayout.tvAbsentCount.text =
+//            if (absentCount > 0) String.format(Constant.time02d, absentCount) else Constant.zero
+//    }
 
-    override fun onIdUnchecked(data: NameAndIds) {
-        isSpecificStudent.removeAll { it.id == data.id }
-        binding.cbSelect.isChecked = false
-        isCountAttendance()
+fun isCountAttendance() {
+    val currentList = studentsList
+    val presentCount = currentList!!.count { it.att_type == "PRESENT" }
+    val absentCount = currentList!!.count { it.att_type == "ABSENT" }
+    val odCount = currentList!!.count { it.att_type == "OD" }
+    val lateComerCount = currentList!!.count { it.att_type == "LATECOMER" }
+
+    binding.toolbarLayout.tvPresentCount.text =
+        if (presentCount > 0) String.format(Constant.time02d, presentCount) else Constant.zero
+    binding.toolbarLayout.tvAbsentCount.text =
+        if (absentCount > 0) String.format(Constant.time02d, absentCount) else Constant.zero
+    binding.toolbarLayout.tvodCount.text =
+        if (odCount > 0) String.format(Constant.time02d, odCount) else Constant.zero
+
+//    binding.toolbarLayout.tvLateCount.text =
+//        if (lateComerCount > 0) String.format(Constant.time02d, lateComerCount) else Constant.zero
+}
+
+
+
+    override fun onIdUnchecked(data: GetAttendanceStudentListData) {
+//        isSpecificStudent.removeAll { it.id == data.id }
+//        binding.cbSelect.isChecked = false
+//        isCountAttendance()
 
     }
 }

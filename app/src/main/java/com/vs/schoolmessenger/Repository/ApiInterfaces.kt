@@ -79,6 +79,7 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentList
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
@@ -1175,4 +1176,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.role_type ) role_type : String
     ): Call<WhatsNewUpdateResponse>
+
+
+    @GET(APIMethods.getAttendanceStudentList)
+    fun getAttendanceStudentList(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.section_id ) section_id: String,
+        @Query(APIKeyNames.date ) date : String
+    ): Call<GetAttendanceStudentList>
 }

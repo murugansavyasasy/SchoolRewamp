@@ -268,7 +268,7 @@
                                     android:id="@+id/lnrStartCalendar"
                                     android:paddingHorizontal="@dimen/five"
                                     android:paddingVertical="@dimen/three"
-                                    android:background="@drawable/black_stroke_bg_radius"
+                                    android:background="@drawable/field_background"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
                                     <ImageView
@@ -339,7 +339,7 @@
                                     android:layout_marginTop="@dimen/five"
                                     android:paddingHorizontal="@dimen/five"
                                     android:paddingVertical="@dimen/three"
-                                    android:background="@drawable/black_stroke_bg_radius"
+                                    android:background="@drawable/field_background"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
                                     <ImageView
