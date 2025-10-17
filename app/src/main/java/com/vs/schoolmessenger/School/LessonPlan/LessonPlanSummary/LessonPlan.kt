@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -40,6 +41,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
     private lateinit var lessonplanAdapter: LessonPlanPicChartAdapter
 
+    @SuppressLint("UseKtx")
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -73,8 +75,10 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.rytSearch1.visibility == View.VISIBLE) {
+            if (binding.rytSearch1.isVisible) {
                 binding.rytSearch1.visibility = View.GONE
+                binding.txtSearchMenu1.text.clear()
+                binding.root.hideKeyboard()
             } else {
                 binding.txtSearchMenu1.text.clear()
                 binding.rytSearch1.visibility = View.VISIBLE
@@ -152,7 +156,10 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         }
     }
 
-
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
     private fun islpStaffData(data: List<AllClassData>?, requestType: String) {
         if (data.isNullOrEmpty()) {
             binding.rytSearch1.visibility = View.GONE

@@ -61,6 +61,9 @@ class SchoolStrengthAdapter(
         private val girlslabel: TextView = itemView.findViewById(R.id.girlslabel)
         private val totallabel: TextView = itemView.findViewById(R.id.totallabel)
         private val header1: TextView = itemView.findViewById(R.id.header1)
+        private val btnViewDetails: TextView = itemView.findViewById(R.id.btnViewDetails)
+        private val viewBoys: View = itemView.findViewById(R.id.viewBoys)
+        private val viewGirls: View = itemView.findViewById(R.id.viewGirls)
 
 
         @SuppressLint("SetTextI18n")
@@ -71,8 +74,31 @@ class SchoolStrengthAdapter(
         ) {
             boyslabel.text = "Boys : ${data.boys_count}"
             girlslabel.text = "Girls : ${data.girls_count}"
-            totallabel.text = "Total : ${data.total_students}"
-            header1.text = data.name
+            totallabel.text = "Total Students : ${data.total_students}"
+            header1.text = "Standard" + " " + data.name
+
+
+            val boysCount = data.boys_count.toIntOrNull() ?: 0
+            val girlsCount = data.girls_count.toIntOrNull() ?: 0
+            val totalStudents = data.total_students.toIntOrNull() ?: 0
+
+            if (totalStudents > 0) {
+                val boysWeight = boysCount.toFloat() / totalStudents
+                val girlsWeight = girlsCount.toFloat() / totalStudents
+
+                val layoutBoys = viewBoys.layoutParams as LinearLayout.LayoutParams
+                val layoutGirls = viewGirls.layoutParams as LinearLayout.LayoutParams
+
+                layoutBoys.weight = boysWeight
+                layoutGirls.weight = girlsWeight
+
+                viewBoys.layoutParams = layoutBoys
+                viewGirls.layoutParams = layoutGirls
+            } else {
+                viewBoys.layoutParams.width = 0
+                viewGirls.layoutParams.width = 0
+            }
+
 
             val detailRecyclerView: RecyclerView = itemView.findViewById(R.id.rlaabsenteesreport3)
             val expandableLayout: LinearLayout = itemView.findViewById(R.id.linear_layout2)
@@ -84,7 +110,7 @@ class SchoolStrengthAdapter(
             detailRecyclerView.visibility =
                 if (adapter.expandedPosition == position) View.VISIBLE else View.GONE
 
-            expandableLayout.setOnClickListener {
+            btnViewDetails.setOnClickListener {
                 val previousExpandedPosition = adapter.expandedPosition
 
 

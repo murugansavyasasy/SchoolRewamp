@@ -36,9 +36,10 @@ class AssignmentStudentListAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var originalList: List<StudentSubmission> = itemList ?: emptyList()
+    private var originalList: MutableList<StudentSubmission> = (itemList ?: emptyList()).toMutableList()
+    private var filteredList: MutableList<StudentSubmission> = originalList.toMutableList()
 
-    private var filteredList: List<StudentSubmission> = itemList ?: emptyList()
+    var onDataChange: ((Boolean) -> Unit)? = null
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -79,10 +80,13 @@ class AssignmentStudentListAdapter(
     }
 
     fun updateData(newData: List<StudentSubmission>) {
-        originalList = newData
-        filteredList = newData
+        originalList.clear()
+        originalList.addAll(newData)
+        filteredList.clear()
+        filteredList.addAll(newData)
         isLoading = false
         notifyDataSetChanged()
+        onDataChange?.invoke(filteredList.isNotEmpty())
     }
 
 
@@ -126,20 +130,14 @@ class AssignmentStudentListAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = ArrayList(results?.values as? List<StudentSubmission> ?: emptyList())
+                filteredList.clear()
+                filteredList.addAll(results?.values as? List<StudentSubmission> ?: emptyList())
                 notifyDataSetChanged()
-                toggleNoDataUI()
-
-                if (filteredList.isEmpty()) {
-                    noDataImage?.visibility = View.VISIBLE
-                    noDataText?.visibility = View.VISIBLE
-                } else {
-                    noDataImage?.visibility = View.GONE
-                    noDataText?.visibility = View.GONE
-                }
+                onDataChange?.invoke(filteredList.isNotEmpty())
             }
         }
     }
+
 
     class DataViewHolder(
         itemView: View,

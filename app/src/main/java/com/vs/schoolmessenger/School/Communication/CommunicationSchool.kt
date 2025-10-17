@@ -281,12 +281,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.scrollRoot,
             binding.edtContentTextMessage
         )
-//        Constant.setupEditTextWithScroll(
-//            this,
-//            binding.scrollRoot,
-//            binding.edtTitle
-//        )
-
+        Constant.setupEditTextWithScroll(
+            this,
+            binding.scrollRoot,
+            binding.edtTitle
+        )
     }
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
