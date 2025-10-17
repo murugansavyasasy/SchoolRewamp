@@ -407,7 +407,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        android:text="@string/whats_new_updates"
+                        android:text="@string/what_s_new"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 

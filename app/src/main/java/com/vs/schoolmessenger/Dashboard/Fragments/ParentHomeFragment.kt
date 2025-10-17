@@ -208,11 +208,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun setupRecyclerView() {
 
+        val safeActivity = activity ?: return
+
         if (!FrequentParentlyUsedMenuItems.isNullOrEmpty()) {
             binding.autoScrollRecyclerView.visibility = View.VISIBLE
 
             layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(safeActivity, LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
             adapter = AutoScrollAdapterWithDots(FrequentParentlyUsedMenuItems!!,isParentMenuCountDetails, this)
@@ -241,7 +243,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
         val safeActivity = activity ?: return
-        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+        val gridLayoutManager = GridLayoutManager(safeActivity, 2)
         isMenuAdapter = ChildMenuAdapter(
             safeActivity,
             this,

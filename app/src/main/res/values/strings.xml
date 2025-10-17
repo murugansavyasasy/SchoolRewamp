@@ -956,6 +956,9 @@
     <string name="note_the_following_students_are_marked_as_absent_their_parents_will_receive_an_automatic_call_please_double_check_before_confirming_attendance">📢 Note: The following students are marked as absent. 📞 Their parents will receive an automatic call. Please double-check before confirming attendance</string>
     <string name="submission_report">Submission Report</string>
     <string name="absentees_students_list">👨🏻‍🎓 Absentees Students</string>
+    <string name="on_duty">On Duty</string>
+    <string name="late">Late</string>
+    <string name="what_s_new">What\'s New</string>
 
 
 </resources>

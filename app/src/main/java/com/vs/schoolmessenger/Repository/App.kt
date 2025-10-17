@@ -71,6 +71,7 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentList
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
@@ -398,6 +399,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var getattachmentchildhomework: LiveData<AttachmentTargetDetailResponse?>? = null
     var getdashboardnewupdates: LiveData<WhatsNewUpdateResponse?>? = null
     var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
+    var getAttendanceStudentList: LiveData<GetAttendanceStudentList?>? = null
+
         private set
 
 
@@ -565,6 +568,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getassignmentchildhomework = apiSchoolRepositories.getassignmentchildhomeworkLiveData
         getattachmentchildhomework = apiSchoolRepositories.getattachmentchildhomeworkLiveData
         getdashboardnewupdates = apiSchoolRepositories.getdashboardnewupdatesLiveData
+        getAttendanceStudentList = apiSchoolRepositories.getAttendanceStudentListLiveData
 
 
     }
@@ -1451,6 +1455,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getdashboardnewupdates(isToken: String, role_type: String) {
         apiSchoolRepositories.getdashboardnewupdates(isToken, role_type)
+    }
+
+    fun getAttendanceStudentList(isToken: String, section_id: String,date:String) {
+        apiSchoolRepositories.isGetAttendanceStudentList(isToken, section_id,date)
     }
 }
 

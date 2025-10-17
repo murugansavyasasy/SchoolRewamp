@@ -3,9 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/ten"
->
+    >
 
     <LinearLayout
+        android:weightSum="1"
         android:gravity="center"
         android:id="@+id/lnrHeader"
         android:layout_width="match_parent"
@@ -14,9 +15,9 @@
 
 
         <LinearLayout
-            android:layout_width="@dimen/zero"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:padding="@dimen/ten">
@@ -38,18 +39,7 @@
                 android:text="123456"
                 android:textColor="@color/light_gray"
                 android:textSize="@dimen/ten_sp"
-                 />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lnrRollNo"
-            android:layout_width="@dimen/zero"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/five"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:padding="@dimen/five">
+                />
 
             <TextView
                 android:id="@+id/lblRollNo"
@@ -58,84 +48,148 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="111"
-                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp" />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginEnd="@dimen/five"
-            android:id="@+id/lnrRightColumn"
+        <RelativeLayout
             android:layout_width="0dp"
+            android:layout_weight="0.4"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity=""
-            android:orientation="vertical">
+            >
 
-            <!-- Present -->
+            <!-- Left: Switch + Label -->
             <LinearLayout
-                android:id="@+id/lnrPresent"
+                android:layout_centerVertical="true"
+                android:id="@+id/lnrSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginBottom="@dimen/five"
-                android:layout_gravity="center"
-                android:background="@drawable/rect_green_stroke"
+                android:orientation="vertical"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/ten"
-                android:paddingVertical="@dimen/five">
+                android:layout_alignParentStart="true">
 
+                <com.vs.schoolmessenger.School.AbsenteesMarking.ODCustomSwitch
+                    android:id="@+id/switchOD"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/thirty"
+                    />
 
                 <TextView
+                    android:layout_gravity="center"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/three"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/five"
-                    android:text="@string/present"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/twele_sp" />
-
-                <View
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:background="@drawable/circle_bg_green" />
-
+                    android:text="@string/on_duty"
+                    android:gravity="center"
+                    />
             </LinearLayout>
 
-            <!-- Absent (Initially hidden) -->
+            <!-- Divider between columns -->
+            <View
+                android:layout_centerVertical="true"
+                android:id="@+id/divider"
+                android:layout_width="@dimen/two"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_toEndOf="@id/lnrSwitch"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@color/grey_mild" />
+
+            <!-- Right: Present / Absent / OD -->
             <LinearLayout
-                android:id="@+id/lnrAbsent"
+                android:layout_centerVertical="true"
+                android:id="@+id/lnrRightColumn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:layout_gravity="end"
-                android:background="@drawable/rect_red_stroke"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/ten"
-                android:paddingVertical="@dimen/five"
-                android:visibility="gone">
+                android:layout_toEndOf="@id/divider"
+                android:layout_alignParentEnd="true"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
-                <View
-                    android:id="@+id/imgAbsent"
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:background="@drawable/circle_bg_red" />
+                <!-- Present -->
+                <LinearLayout
+                    android:id="@+id/lnrEntirePresent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/lnrPresent"
+                        android:gravity="center"
+                        android:layout_width="@dimen/fourty"
+                        android:background="@drawable/present_green_circle_bg"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginVertical="@dimen/five">
 
-                <TextView
-                    android:id="@+id/lblAbsent"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/five"
-                    android:text="@string/absent"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/twele_sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="P"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:textSize="@dimen/seventeen_sp"
+                            android:textColor="@color/white"
+                             />
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:id="@+id/cbLaterComer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/twenty"
+                        android:text="@string/late"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:button="@drawable/ch_square"
+                        />
+
+                </LinearLayout>
+
+                <!-- Absent -->
+                <LinearLayout
+                    android:id="@+id/lnrAbsent"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:gravity="center"
+                    android:background="@drawable/absent_red_circle_bg"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="A"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/seventeen_sp"
+                        android:textColor="@color/white"
+                        />
+                </LinearLayout>
+
+                <!-- OD -->
+                <LinearLayout
+                    android:id="@+id/lnrOD"
+                    android:layout_width="@dimen/fourty"
+                    android:background="@drawable/onduty_yellow_circle_bg"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_marginVertical="@dimen/five"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OD"
+                        android:textSize="@dimen/seventeen_sp"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textColor="@color/white"
+
+                        />
+                </LinearLayout>
             </LinearLayout>
 
-            <!-- Admission Info -->
-        </LinearLayout>
+        </RelativeLayout>
+
+
+
+
 
 
     </LinearLayout>
@@ -145,6 +199,158 @@
         android:layout_height="@dimen/point_five"
         android:layout_below="@id/lnrHeader"
         android:layout_marginHorizontal="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
         android:background="@color/grey" />
 </RelativeLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginTop="@dimen/ten"-->
+<!--&gt;-->
+
+<!--    <LinearLayout-->
+<!--        android:gravity="center"-->
+<!--        android:id="@+id/lnrHeader"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="@dimen/zero"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:orientation="vertical"-->
+<!--            android:padding="@dimen/ten">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblName"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Murugan"-->
+<!--                android:textSize="@dimen/twele_sp" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblAdmissionNoValue"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/five"-->
+<!--                android:text="123456"-->
+<!--                android:textColor="@color/light_gray"-->
+<!--                android:textSize="@dimen/ten_sp"-->
+<!--                 />-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/lnrRollNo"-->
+<!--            android:layout_width="@dimen/zero"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="@dimen/five"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="@dimen/five">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblRollNo"-->
+<!--                style="@style/CustomTextStylePoppinsMedium"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:text="111"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/twele_sp" />-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_marginEnd="@dimen/five"-->
+<!--            android:id="@+id/lnrRightColumn"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity=""-->
+<!--            android:orientation="vertical">-->
+
+<!--            &lt;!&ndash; Present &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/lnrPresent"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/five"-->
+<!--                android:layout_marginBottom="@dimen/five"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:background="@drawable/rect_green_stroke"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingHorizontal="@dimen/ten"-->
+<!--                android:paddingVertical="@dimen/five">-->
+
+
+<!--                <TextView-->
+<!--                    style="@style/CustomTextStylePoppinsMedium"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="@dimen/five"-->
+<!--                    android:text="@string/present"-->
+<!--                    android:textColor="@color/green"-->
+<!--                    android:textSize="@dimen/twele_sp" />-->
+
+<!--                <View-->
+<!--                    android:layout_width="@dimen/twenty"-->
+<!--                    android:layout_height="@dimen/twenty"-->
+<!--                    android:background="@drawable/circle_bg_green" />-->
+
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash; Absent (Initially hidden) &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/lnrAbsent"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/five"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:background="@drawable/rect_red_stroke"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingHorizontal="@dimen/ten"-->
+<!--                android:paddingVertical="@dimen/five"-->
+<!--                android:visibility="gone">-->
+
+<!--                <View-->
+<!--                    android:id="@+id/imgAbsent"-->
+<!--                    android:layout_width="@dimen/twenty"-->
+<!--                    android:layout_height="@dimen/twenty"-->
+<!--                    android:background="@drawable/circle_bg_red" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/lblAbsent"-->
+<!--                    style="@style/CustomTextStylePoppinsMedium"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/five"-->
+<!--                    android:text="@string/absent"-->
+<!--                    android:textColor="@color/red"-->
+<!--                    android:textSize="@dimen/twele_sp" />-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash; Admission Info &ndash;&gt;-->
+<!--        </LinearLayout>-->
+
+
+<!--    </LinearLayout>-->
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/point_five"-->
+<!--        android:layout_below="@id/lnrHeader"-->
+<!--        android:layout_marginHorizontal="@dimen/ten"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:background="@color/grey" />-->
+<!--</RelativeLayout>-->
