@@ -61,19 +61,19 @@
 
         <LinearLayout
             android:id="@+id/explore_linearlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/hundred"
+            android:layout_height="@dimen/fourty"
+            android:background="@drawable/background_orange_radius_button"
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
+            <TextView
                 android:id="@+id/btnLearnMore"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="@dimen/hundred"
-                android:layout_height="@dimen/fourty"
-                android:background="@drawable/background_orange_radius_button"
-                android:backgroundTint="@null"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="Explore"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />
 
