@@ -39,6 +39,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     private var isStaffDetails: StaffDetails? = null
     private var absenteeList: List<AbsenteeData> = emptyList()
     private var studentAdapter: AbsenteesStudentListDetailAdapter? = null
+    private var errorMessage: String? = ""
+
 
     override fun getViewBinding(): AbsenteesReportBinding {
         return AbsenteesReportBinding.inflate(layoutInflater)
@@ -77,6 +79,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         fetchAbsenteeData()
 
         appViewModel?.getabsenteescountbydate?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response == null) {
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
@@ -100,6 +103,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                 val studentList = response.data ?: emptyList()
                 bindStudentList(studentList)
             } else {
+                errorMessage = response.message
                 Toast.makeText(this, response.message ?: "No students found", Toast.LENGTH_SHORT)
                     .show()
                 bindStudentList(emptyList())
@@ -178,6 +182,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
                     binding.progressAbsent.max = total.toIntOrNull() ?: 1
                     binding.progressAbsent.progress = absent.toIntOrNull() ?: 0
+                    Constant.showLoading(this@AbsenteesReport)
 
                     appViewModel?.getabsenteesstudentbydate(
                         isAccessToken ?: "", absentOn, sectionId, this@AbsenteesReport
@@ -243,6 +248,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         binding.linearLayoutcontainer.visibility = View.GONE
         binding.rlaabsenteesreport2.visibility = View.GONE
         binding.lytNoDataFound.visibility = View.VISIBLE
+        binding.noDataFound.setText(message)
         binding.selectedDateText.visibility = View.GONE
         binding.linearLayoutcontainer.visibility = View.GONE
         binding.absentListTitle.visibility = View.GONE

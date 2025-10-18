@@ -331,6 +331,9 @@ class ParentServices {
                             isNotificationResponse.postValue(it)
                         }
                     }
+                    else{
+                        isNotificationResponse.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<NotificationResponse?>, t: Throwable) {
