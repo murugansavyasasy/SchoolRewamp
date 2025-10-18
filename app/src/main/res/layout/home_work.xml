@@ -182,8 +182,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/fourty_five"
                         android:layout_below="@+id/rytTitle"
-                        android:layout_marginStart="@dimen/fifteen"
-                        android:layout_marginEnd="@dimen/fifteen"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/twenty"
                         android:background="@drawable/field_background"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -249,9 +249,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/hundred"
                         android:layout_below="@+id/lblDescription"
-                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/fifteen"
+                        android:layout_marginEnd="@dimen/twenty"
                         android:background="@drawable/field_background"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -307,7 +307,7 @@
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
                         android:text="@string/add_attachment">
 

@@ -113,7 +113,7 @@
                 <LinearLayout
                     android:id="@+id/lytNoDataFound"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_below="@id/upcomingevent_headerview"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -131,7 +131,6 @@
                         android:id="@+id/txtNoDataFound"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/eight"
                         android:text="@string/no_data_found"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fourteen_sp"
