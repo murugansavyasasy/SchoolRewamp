@@ -82,7 +82,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     private fun loadCountry(countryList: List<Country>) {
         val updatedList = countryList.toMutableList()
         updatedList.add(3, Country(0, "", 0, 0, "", "", "", ""))
-        mAdapter = CountryListAdapter(this, updatedList) { selectedCountry ->
+        mAdapter = CountryListAdapter(this,updatedList,this) { selectedCountry ->
             isCountrySelected = true
             Constant.country_details = selectedCountry
         }
@@ -131,5 +131,18 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
 
     override fun onItemClick(data: Country) {
 
+    }
+
+    override fun onEmptyStateChanged(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.lytList.visibility = View.VISIBLE
+            binding.recycleCountry.visibility = View.GONE
+            binding.lblPopular.visibility = View.GONE
+            binding.txtNoData.text=getString(R.string.no_country_found)
+        } else {
+            binding.recycleCountry.visibility = View.VISIBLE
+            binding.lblPopular.visibility = View.VISIBLE
+            binding.lytList.visibility = View.GONE
+        }
     }
 }

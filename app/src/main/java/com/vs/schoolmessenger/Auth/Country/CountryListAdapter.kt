@@ -22,7 +22,9 @@ import de.hdodenhof.circleimageview.CircleImageView
 class CountryListAdapter(
     private val context: Context,
     private val countryList: List<Country>,
-    private val onItemSelected: (Country) -> Unit
+    private val listener: CountryClickListener,
+    private val onItemSelected: (Country) -> Unit,
+
 ) : RecyclerView.Adapter<CountryListAdapter.CountryViewHolder>() {
 
     private var selectedPosition = -1
@@ -127,5 +129,7 @@ class CountryListAdapter(
         // Reset selection on filter
         selectedPosition = -1
         notifyDataSetChanged()
+        listener.onEmptyStateChanged(filteredList.isEmpty())
+
     }
 }

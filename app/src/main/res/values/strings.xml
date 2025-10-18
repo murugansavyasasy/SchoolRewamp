@@ -959,6 +959,8 @@
     <string name="on_duty">On Duty</string>
     <string name="late">Late</string>
     <string name="what_s_new">What\'s New</string>
+    <string name="no_country_found">No country found</string>
+
 
 
 </resources>

@@ -4172,6 +4172,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        getdashboardnewupdates.postValue(null)
+                    }
                 }
 
                 override fun onFailure(

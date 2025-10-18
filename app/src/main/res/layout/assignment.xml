@@ -281,7 +281,6 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/twenty"
                 android:background="@drawable/field_background"
-                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
 
