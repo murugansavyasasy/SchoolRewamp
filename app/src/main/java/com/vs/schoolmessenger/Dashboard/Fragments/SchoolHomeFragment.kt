@@ -150,7 +150,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         .error(R.drawable.school_sample)
                         .into(binding.profileImage)
                 }
-
             }
         }
 
