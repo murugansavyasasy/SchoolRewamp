@@ -67,9 +67,13 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
         appViewModel?.getdashboardnewupdates?.observe(this) { response ->
             if (response != null && response.status) {
                 binding.rcywhatsnew.visibility = View.VISIBLE
+                binding.lytList.visibility=View.GONE
                 getWhatsNewData(response.data)
+
             } else {
                 binding.rcywhatsnew.visibility = View.GONE
+                binding.lytList.visibility=View.VISIBLE
+                binding.txtNoData.text=getString(R.string.something_went_wrong_please_try_again_later)
             }
         }
     }

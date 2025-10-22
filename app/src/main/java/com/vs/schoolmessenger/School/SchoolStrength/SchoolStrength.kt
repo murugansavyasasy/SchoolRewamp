@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.SchoolStrength
 
 
-
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -15,12 +14,10 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthAdapter
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolData
-import com.vs.schoolmessenger.School.SchoolStrength.Model.SummaryItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolStrengthBinding
-
 
 
 class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListener {
@@ -44,8 +41,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
 
         isToolBarPrimarySchool(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
 
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -62,14 +58,12 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
 
 
-        binding.rlaabsenteesreport2.layoutManager =
-            LinearLayoutManager(this)
+        binding.rlaabsenteesreport2.layoutManager = LinearLayoutManager(this)
 
 
         isLoadAcademicYear(isAcademicYearList)
 
-        isValidAcademicYear =
-            isAcademicYearList?.any { it.current_academic_year == true } == true
+        isValidAcademicYear = isAcademicYearList?.any { it.current_academic_year == true } == true
         isAcademicYearId = isAcademicYearList!![0].id
         isCurrentAcademicYear = isAcademicYearList!![0].current_academic_year
 
@@ -170,7 +164,11 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         binding.progressBarGender.staffPercentage.text =
             "${firstItem.totalStaffStrength} Staffs (${String.format("%.1f", staffPercentage)}%)"
         binding.progressBarGender.studentPercentage.text =
-            "${firstItem.totalStudentStrength} Students (${String.format("%.1f", studentPercentage)}%)"
+            "${firstItem.totalStudentStrength} Students (${
+                String.format(
+                    "%.1f", studentPercentage
+                )
+            }%)"
 
         binding.progressBarGender.frameLayout.post {
             val frameWidth = binding.progressBarGender.frameLayout.width
@@ -180,7 +178,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             params.width = staffWidth
             binding.progressBarGender.viewBoyProgress.layoutParams = params
         }
-
 
 
         val boysStrength = firstItem.totalBoysStrength.toIntOrNull() ?: 0
@@ -216,17 +213,19 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
         binding.summaryStaticscardview.studentCount.text = firstItem.totalStudentStrength
         binding.summaryStaticscardview.staffCount.text = firstItem.totalStaffStrength
-        binding.progressBarGender.othersCount.text = "unspecified " + (firstItem.totalOthersStrength)
+        binding.progressBarGender.othersCount.text =
+            "unspecified " + (firstItem.totalOthersStrength)
         binding.summaryStaticscardview.totalMale.text = "Staffs " + firstItem.totalStaffStrength
-        binding.summaryStaticscardview.totalFemale.text = "Students " + firstItem.totalStudentStrength
+        binding.summaryStaticscardview.totalFemale.text =
+            "Students " + firstItem.totalStudentStrength
         binding.summaryStaticscardview.othersCount.text = firstItem.totalOthersStrength
         binding.summaryStaticscardview.boyscount1.text = "boys" + " " + firstItem.totalBoysStrength
-        binding.summaryStaticscardview.girlscount1.text = "girls" + " " +firstItem.totalGirlsStrength
-        binding.summaryStaticscardview.othersCount.text = (
-                (firstItem.totalStaffStrength?.toIntOrNull() ?: 0) +
-                        (firstItem.totalStudentStrength?.toIntOrNull() ?: 0) +
-                        (firstItem.totalOthersStrength?.toIntOrNull() ?: 0)
-                ).toString()
+        binding.summaryStaticscardview.girlscount1.text =
+            "girls" + " " + firstItem.totalGirlsStrength
+        binding.summaryStaticscardview.othersCount.text =
+            ((firstItem.totalStaffStrength?.toIntOrNull()
+                ?: 0) + (firstItem.totalStudentStrength?.toIntOrNull()
+                ?: 0) + (firstItem.totalOthersStrength?.toIntOrNull() ?: 0)).toString()
 
     }
 

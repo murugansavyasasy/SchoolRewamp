@@ -76,7 +76,7 @@
                 android:textSize="12sp" />
 
             <ImageView
-                android:id="@+id/boysl1abel"
+                android:id="@+id/boyslabel1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -85,10 +85,31 @@
                 android:gravity="end" />
 
             <ImageView
-                android:id="@+id/boysl1abel1"
+                android:id="@+id/boyslabel2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+
+                android:tint="@color/color_blue_primary"
+                android:src="@drawable/schoolstrengthmale"
+                android:gravity="end" />
+
+            <ImageView
+                android:id="@+id/girlslabel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+
+                android:src="@drawable/schoolstrengthfemale"
+                android:tint="@color/pinkcolorcustom"
+                android:gravity="end" />
+
+            <ImageView
+                android:id="@+id/girlslabel2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+
                 android:src="@drawable/schoolstrengthfemale"
                 android:tint="@color/pinkcolorcustom"
                 android:gravity="end" />

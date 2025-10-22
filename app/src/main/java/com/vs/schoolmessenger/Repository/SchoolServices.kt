@@ -31,6 +31,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEven
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentList
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
@@ -215,6 +216,7 @@ class SchoolServices {
     var getassignmentchildhomework: MutableLiveData<AssignmentTargetDetailsResponse?>
     var getattachmentchildhomework: MutableLiveData<AttachmentTargetDetailResponse?>
     var getdashboardnewupdates: MutableLiveData<WhatsNewUpdateResponse?>
+    var getattendanceStudentList: MutableLiveData<GetAttendanceStudentList?>
 
 
     init {
@@ -326,6 +328,7 @@ class SchoolServices {
 
         getattachmentchildhomework= MutableLiveData()
         getdashboardnewupdates= MutableLiveData()
+        getattendanceStudentList= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4169,6 +4172,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        getdashboardnewupdates.postValue(null)
+                    }
                 }
 
                 override fun onFailure(
@@ -4182,4 +4188,48 @@ class SchoolServices {
 
     val getdashboardnewupdatesLiveData: LiveData<WhatsNewUpdateResponse?>
         get() = getdashboardnewupdates
+
+
+    fun isGetAttendanceStudentList(
+        isToken: String,
+        section_id: String,
+        date: String,
+    ) {
+        RestClient.apiInterfaces.getAttendanceStudentList(isToken,section_id,date)
+            ?.enqueue(object : Callback<GetAttendanceStudentList?> {
+                override fun onResponse(
+                    call: Call<GetAttendanceStudentList?>, response: Response<GetAttendanceStudentList?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getattendanceStudentList.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getattendanceStudentList.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetAttendanceStudentList?>, t: Throwable
+                ) {
+                    getattendanceStudentList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getAttendanceStudentListLiveData: LiveData<GetAttendanceStudentList?>
+        get() = getattendanceStudentList
+
+
+
 }

@@ -188,6 +188,7 @@ object APIMethods {
     const val getmysubmissionedit = "comm/api/assignment/update-submission"
     const val ismysubmissiondelete = "comm/api/assignment/delete-submission"
     const val dashboard_newupdates = "dashboard/api/dashboard/new-updates"
+    const val getAttendanceStudentList = "stud-attd/api/attendance/student-list"
 
 }
 

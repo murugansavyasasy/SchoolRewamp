@@ -153,6 +153,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         appViewModel?.isGetMessageStaffArchive?.observe(this) { response ->
             if (response != null) {
+                Constant.hideLoading(this)
                 if (response.status) {
                    if(response.data.isNotEmpty()){
                        val updatedList = completeAttachmentList.toMutableList()
@@ -483,6 +484,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     }
 
     fun isGetMessageFromStaffArchive(){
+        Constant.showLoading(this)
         appViewModel?.isGetMessageStaffArchive(isAccessToken ?: "")
     }
 
@@ -543,7 +545,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 rlaAudioDetails.visibility=View.GONE
                 recyclerView.visibility = View.GONE
                 indicator.visibility = View.GONE
-                tvDescription.text = data.content
+                tvDescription.text = data.description
             }
 
             Constant.VOICE ->{

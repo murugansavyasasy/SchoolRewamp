@@ -268,7 +268,7 @@
                                     android:id="@+id/lnrStartCalendar"
                                     android:paddingHorizontal="@dimen/five"
                                     android:paddingVertical="@dimen/three"
-                                    android:background="@drawable/black_stroke_bg_radius"
+                                    android:background="@drawable/field_background"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
                                     <ImageView
@@ -312,13 +312,28 @@
 
                             </RelativeLayout>
 
-                            <ImageView
-                                android:id="@+id/imagearrow_view"
-                                android:layout_width="@dimen/eighteen"
-                                android:layout_height="@dimen/eighteen"
+                            <LinearLayout
                                 android:layout_weight="1"
-                                android:src="@drawable/exchangearrow">
-                            </ImageView>
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:text=""
+                                    android:visibility="invisible"
+                                    style="@style/CustomTextStylePoppinsBold"
+                                    android:layout_height="wrap_content">
+                                </TextView>
+
+                                <ImageView
+                                    android:layout_marginTop="@dimen/five"
+                                    android:id="@+id/imagearrow_view"
+                                    android:layout_width="@dimen/eighteen"
+                                    android:layout_height="@dimen/eighteen"
+                                    android:src="@drawable/exchange_icon">
+                                </ImageView>
+                            </LinearLayout>
 
                             <RelativeLayout
                                 android:id="@+id/rytEndDate"
@@ -339,7 +354,7 @@
                                     android:layout_marginTop="@dimen/five"
                                     android:paddingHorizontal="@dimen/five"
                                     android:paddingVertical="@dimen/three"
-                                    android:background="@drawable/black_stroke_bg_radius"
+                                    android:background="@drawable/field_background"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
                                     <ImageView

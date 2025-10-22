@@ -318,8 +318,9 @@
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginEnd="@dimen/five"
                         android:layout_toEndOf="@+id/imgSendBy"
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:id="@+id/lblSendBy"
+                        android:textColor="@color/gnt_gray"
                         android:textSize="@dimen/fifteen_sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">

@@ -104,10 +104,14 @@ class MessageFromStaffAdapter(
             lblRole.text = data.role
             lblTimeDate.text = "${Constant.isFormatDate(data.date.toString())} ${data.time}"
 
-            lblDescription.apply {
-                isSingleLine = true
+            lblTitle.apply {
                 ellipsize = TextUtils.TruncateAt.END
-                maxLines = 1
+                maxLines = 2
+            }
+
+            lblDescription.apply {
+                ellipsize = TextUtils.TruncateAt.END
+                maxLines = 3
             }
 
             imgReadStatus.visibility = if (data.is_unread) View.VISIBLE else View.GONE
@@ -115,7 +119,7 @@ class MessageFromStaffAdapter(
             when (data.type) {
                 Constant.TEXT -> {
                     lblDescription.visibility = View.VISIBLE
-                    lblDescription.text = data.content
+                    lblDescription.text = data.description
                 }
                 Constant.VOICE -> lblDescription.visibility = View.GONE
                 Constant.ATTACHMENT_ -> {

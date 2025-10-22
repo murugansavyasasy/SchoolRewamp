@@ -404,10 +404,12 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         Log.d("SearchResult", "Search result empty? $isEmpty for query '${binding.edtSearch.text}'")
         if (isEmpty) {
+            Log.d("NOData","NoData")
             binding.rcyNoticeBoard.visibility = View.GONE
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
         } else {
+            Log.d("NOData","Data")
             binding.rcyNoticeBoard.visibility = View.VISIBLE
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE

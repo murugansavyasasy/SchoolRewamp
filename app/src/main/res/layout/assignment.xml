@@ -124,9 +124,8 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="@string/Catogory"
-                android:textSize="@dimen/fifteen_sp">
+                >
 
             </TextView>
 
@@ -171,8 +170,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytTitle"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/rect_shadow_white"
                 android:gravity="center">
 
@@ -213,7 +212,7 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/Title"
-                android:textSize="@dimen/fifteen_sp">
+                >
 
             </TextView>
 
@@ -222,9 +221,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fourty_five"
                 android:layout_below="@+id/lblTitle"
-                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/twenty"
                 android:background="@drawable/field_background"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -269,7 +268,7 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/Description"
-                android:textSize="@dimen/fifteen_sp">
+                >
 
             </TextView>
 
@@ -278,11 +277,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/hundred"
                 android:layout_below="@+id/lblDescription"
-                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
                 android:background="@drawable/field_background"
-                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
 
@@ -331,13 +329,13 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:text="@string/SubmissionDate"
-                android:textSize="@dimen/fifteen_sp">
+              >
 
             </TextView>
 
             <LinearLayout
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
                 android:paddingVertical="@dimen/eight"
                 android:weightSum="1"
                 android:paddingHorizontal="@dimen/ten"
@@ -448,7 +446,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/add_attachment"
                     android:textColor="@color/black">

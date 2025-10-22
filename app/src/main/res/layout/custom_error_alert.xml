@@ -46,10 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/permission_ok"
-            android:paddingStart="@dimen/thirty"
-            android:paddingEnd="@dimen/thirty"
-            android:paddingTop="@dimen/twele"
-            android:paddingBottom="@dimen/twele"
+            android:paddingVertical="@dimen/five"
+            android:paddingHorizontal="@dimen/twenty"
             android:textColor="@color/white"
             android:textSize="@dimen/fourteen_sp"
             style="@style/CustomTextStylePoppinsBold"/>

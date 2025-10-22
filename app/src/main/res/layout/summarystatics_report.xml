@@ -79,7 +79,7 @@
                 android:layout_height="8dp"
                 android:progress="30"
                 android:max="100"
-                android:progressDrawable="@drawable/progress_custom"
+                android:progressDrawable="@drawable/progress_custom21"
                 android:layout_marginTop="6dp" />
 
             <TextView
@@ -185,7 +185,7 @@
                 android:layout_height="8dp"
                 android:progress="30"
                 android:max="100"
-                android:progressDrawable="@drawable/progress_custom"
+                android:progressDrawable="@drawable/progress_custom21"
                 android:layout_marginTop="6dp" />
 
             <TextView

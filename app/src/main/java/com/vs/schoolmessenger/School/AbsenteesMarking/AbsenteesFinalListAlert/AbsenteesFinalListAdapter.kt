@@ -9,13 +9,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentListData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AbsenteesFinalListAdapter(
-    private var itemList: MutableList<NameAndIds>,
+    private var itemList: MutableList<GetAttendanceStudentListData>,
     private var context: Context,
     private var isLoading: Boolean,
-    private val onRemove: (NameAndIds) -> Unit,
+    private val onRemove: (GetAttendanceStudentListData) -> Unit,
     private val onListCountChange: (Int) -> Unit)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -61,7 +62,7 @@ class AbsenteesFinalListAdapter(
         private val lblRegNo: TextView = itemView.findViewById(R.id.lblRegNo)
         private val btnRemove: TextView = itemView.findViewById(R.id.btnRemove)
 
-        fun bind(data: NameAndIds) {
+        fun bind(data: GetAttendanceStudentListData) {
             lblName.text = data.name
             if (data.admission_no.isNullOrEmpty()) {
                 lblAdmissionNo.visibility = View.GONE
