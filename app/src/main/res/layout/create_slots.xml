@@ -106,6 +106,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten"
                     android:orientation="horizontal"
                     android:weightSum="3">
 
@@ -119,7 +120,7 @@
                         android:background="@drawable/gray_bg_radius"
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/ten"
-                        android:paddingVertical="@dimen/five"
+                        android:paddingVertical="@dimen/seven"
                         android:text="In Person"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"></TextView>
@@ -134,7 +135,7 @@
                         android:background="@drawable/gray_bg_radius"
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/ten"
-                        android:paddingVertical="@dimen/five"
+                        android:paddingVertical="@dimen/seven"
                         android:text="Phone call"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"></TextView>
@@ -149,7 +150,7 @@
                         android:background="@drawable/gray_bg_radius"
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/ten"
-                        android:paddingVertical="@dimen/five"
+                        android:paddingVertical="@dimen/seven"
                         android:text="Virtual"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"></TextView>

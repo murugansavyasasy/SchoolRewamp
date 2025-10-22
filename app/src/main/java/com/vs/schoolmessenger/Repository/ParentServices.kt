@@ -1975,7 +1975,6 @@ class ParentServices {
 
 
 
-
     fun getmysubmissionedit(isToken: String, jsonObject: JsonObject,  activity: Activity ) {
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.getmysubmissionedit(isToken, jsonObject)

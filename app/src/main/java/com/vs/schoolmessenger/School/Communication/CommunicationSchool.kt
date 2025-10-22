@@ -650,6 +650,70 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         setupViews()
     }
 
+    fun isClearData() {
+        if (isRecording) {
+            stopRecording()
+        }
+        binding.SwitchEmergencyVoice.setChecked(false)
+        isEmergency = false
+        MAX_RECORDING_TIME = 180
+        binding.lblDurationOfVoice.text = Constant._00_00_03_00
+
+        binding.rlaSeekBarAndTitle.visibility = View.GONE
+        binding.rlaTitle.visibility = View.GONE
+        binding.lblStartDuration.text = Constant.time_zero
+        binding.lblEndDuration.text = ""
+        binding.waveformSeekBar.updateWithLevel(0f)
+        binding.edtTitle.setText("")
+
+
+        binding.rlaAddLocalFile.visibility = View.VISIBLE
+        binding.rytVoiceRecord.visibility = View.VISIBLE
+        binding.lblDurationOfVoice.visibility = View.VISIBLE
+        binding.imgVoiceRecord.setImageDrawable(
+            ContextCompat.getDrawable(this, R.drawable.record_icon)
+        )
+
+        isRecording = false
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+            }
+            it.reset()
+            it.release()
+        }
+        mediaPlayer = null
+        isPrepared = false
+        isPlayingVoice = false
+        lastPosition = 0
+        recordingTime = 0
+
+
+        audioFilePath = null
+        isFileName = null
+        Constant.isVoiceType = 0
+        Constant.selectedFiles.clear()
+
+
+        handler.removeCallbacks(progressUpdater)
+        recordingHandler.removeCallbacks(recordingRunnable)
+    }
+
+    private fun infosymbolload(): PopupWindow {
+        val popupView = layoutInflater.inflate(R.layout.custom_tooltip, null)
+
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupWindow.elevation = 10f
+        popupWindow.showAsDropDown(binding.infosymbol, -20, 10)
+        return popupWindow
+    }
+
     override fun onPause() {
         super.onPause()
         if (mAdapter != null) {
@@ -1085,66 +1149,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
-    fun isClearData() {
-        if (isRecording) {
-            stopRecording()
-        }
-        binding.SwitchEmergencyVoice.setChecked(false)
-        isEmergency = false
-        MAX_RECORDING_TIME = 180
-        binding.lblDurationOfVoice.text = Constant._00_00_03_00
-
-        binding.rlaSeekBarAndTitle.visibility = View.GONE
-        binding.rlaTitle.visibility = View.GONE
-        binding.lblStartDuration.text = Constant.time_zero
-        binding.lblEndDuration.text = ""
-        binding.waveformSeekBar.updateWithLevel(0f)
-        binding.edtTitle.setText("")
-
-
-        binding.rlaAddLocalFile.visibility = View.VISIBLE
-        binding.rytVoiceRecord.visibility = View.VISIBLE
-        binding.lblDurationOfVoice.visibility = View.VISIBLE
-        binding.imgVoiceRecord.setImageDrawable(
-            ContextCompat.getDrawable(this, R.drawable.record_icon)
-        )
-
-        mediaPlayer?.let {
-            if (it.isPlaying) {
-                it.stop()
-            }
-            it.reset()
-            it.release()
-        }
-        mediaPlayer = null
-        isPrepared = false
-        isPlayingVoice = false
-        lastPosition = 0
-        recordingTime = 0
-        audioFilePath = null
-        isFileName = null
-        Constant.isVoiceType = 0
-        Constant.selectedFiles.clear()
-
-
-        handler.removeCallbacks(progressUpdater)
-        recordingHandler.removeCallbacks(recordingRunnable)
-    }
-    private fun infosymbolload(): PopupWindow {
-        val popupView = layoutInflater.inflate(R.layout.custom_tooltip, null)
-
-        val popupWindow = PopupWindow(
-            popupView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            true
-        )
-
-        popupWindow.elevation = 10f
-        popupWindow.showAsDropDown(binding.infosymbol, -20, 10)
-        return popupWindow
-    }
-
     private fun isGoToRecipient() {
         val isStaffRole = isUserDetails!!.staff_role
         if (isMultipleSchool) {
@@ -1315,6 +1319,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun onItemClick(
         data: VoiceHistoryDetails, holder: VoiceHistoryAdapter.DataViewHolder
     ) {
+        removeSelectedVoice()
         // UI setup
         if (Constant.isCommunicationType == 2) {
             binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
@@ -1364,6 +1369,46 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             mediaPlayer.release()
         }
     }
+
+    fun removeSelectedVoice() {
+        mediaPlayer?.let {
+            if (it.isPlaying) it.stop()
+            it.reset()
+            it.release()
+        }
+        mediaPlayer = null
+
+        if (isRecording) stopRecording()
+        isRecording = false
+        mediaRecorder?.let {
+            try { it.stop() } catch (_: Exception) {}
+            it.reset()
+            it.release()
+        }
+        mediaRecorder = null
+
+        binding.lottieAnimationView.cancelAnimation()
+        binding.lottieAnimationView.progress = 0f
+        binding.imgVoiceRecord.setImageDrawable(
+            ContextCompat.getDrawable(this, R.drawable.record_icon)
+        )
+        binding.rytVoiceRecord.visibility = View.VISIBLE
+        binding.rlaAddLocalFile.visibility = View.VISIBLE
+        binding.lblDurationOfVoice.visibility = View.VISIBLE
+        binding.rlaSeekBarAndTitle.visibility = View.GONE
+        binding.rlaTitle.visibility = View.GONE
+        binding.edtTitle.setText("")
+        binding.lblStartDuration.text = Constant.time_zero
+        binding.lblEndDuration.text = ""
+
+        audioFilePath = null
+        isFileName = null
+        Constant.isVoiceType = 0
+        Constant.selectedFiles.clear()
+        recordingTime = 0
+        lastPosition = 0
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setHistoryData(data: VoiceHistoryDetails) {

@@ -43,7 +43,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         super.setupViews()
         setupToolbarBlueWhite()
 
-        binding.lblDatePicking.setOnClickListener(this)
         binding.layoutDatePicking.setOnClickListener(this)
         binding.imgDelete.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)

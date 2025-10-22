@@ -400,7 +400,20 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
-                Constant.DatePicker(this, false) { selectedDate ->
+
+                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val defaultCal = Calendar.getInstance()
+
+                // Use previously selected date if available
+                if (!txtStartDate.isNullOrEmpty()) {
+                    try {
+                        defaultCal.time = sdf.parse(txtStartDate!!) ?: Date()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                Constant.DatePicker(this, false,  defaultDate = defaultCal) { selectedDate ->
                     txtStartDate = Constant.covertDateFormate(selectedDate)
                     val (day, formattedDate) = Constant.getDayAndDateOnly2(txtStartDate.toString())// 13 Monday
                     binding.lblDay.text = formattedDate
