@@ -9,6 +9,7 @@ data class GetMessagesStaffData (
     val school_id: String,
     val header_id: String,
     val title: String?,
+    val school_name: String?,
     val role: String?,
     val description: String?,
     val content: String?,
