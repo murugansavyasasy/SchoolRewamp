@@ -2,19 +2,26 @@ package com.vs.schoolmessenger.School.InteractionWithStudent
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.InteractionWithStudent.Listener.ReplyClickListener
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import com.vs.schoolmessenger.databinding.DialogBlockStudentBinding
 
 class InteractionWithQuestionAdapter(
     private var itemList: List<QuestionData> = listOf(),
@@ -69,7 +76,7 @@ class InteractionWithQuestionAdapter(
             questionText.text = chat.question
             answerText.text = chat.answer
             student_name.text = chat.student_name
-            if(chat.reply_type == "1") {
+            if (chat.reply_type == "1") {
                 reply_type.text = "Public Reply"
             } else if (chat.reply_type == "2") {
                 reply_type.text = "Private Reply"
@@ -122,12 +129,45 @@ class InteractionWithQuestionAdapter(
                         true
                     }
 
+                    R.id.block_student -> {
+                        showBlockStudentDialog(chat)
+                        true
+                    }
+
                     else -> false
                 }
             }
-
             popup.show()
         }
+    }
+
+
+    private fun showBlockStudentDialog(chat: QuestionData) {
+
+        val dialogBinding = DialogBlockStudentBinding.inflate(LayoutInflater.from(context))
+        val dialog = MaterialAlertDialogBuilder(context)
+            .setView(dialogBinding.root)
+            .setCancelable(false)
+            .create()
+
+        with(dialogBinding) {
+
+            headerLabel.text = "Block" + " " + chat.student_name
+
+            btnCancel.setOnClickListener { dialog.dismiss() }
+            btnBlock.setOnClickListener {
+                val reason = etReason.text.toString().trim()
+                if (reason.isEmpty()) {
+                    etReason.error = context.getString(R.string.enter_reason)
+                } else {
+                    listener.onBlockStudent(chat, reason)
+                    dialog.dismiss()
+                }
+            }
+        }
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

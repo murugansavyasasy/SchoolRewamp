@@ -9,7 +9,9 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
+import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.School.PTM.DataClass.Slot
 import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotCancelReOpenClickListener
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -66,7 +68,12 @@ class StaffSlotStatusAdapter(
         private val rltBookedBy: RelativeLayout = itemView.findViewById(R.id.rltBookedBy)
         private val imgStatus: ImageView = itemView.findViewById(R.id.imgStatus)
         private val imgDot: ImageView = itemView.findViewById(R.id.imgDot)
+
         private val rytSlots: RelativeLayout = itemView.findViewById(R.id.rytSlots)
+
+        private val imgUser: ShapeableImageView = itemView.findViewById(R.id.imgUser)
+
+
         private val lblStandardAndSection: TextView =
             itemView.findViewById(R.id.lblStandardAndSection)
 
@@ -77,6 +84,18 @@ class StaffSlotStatusAdapter(
             lblDuration.text = "Duration - ${data.meeting_duration} Minutes"
             lblTime.text = data.from_time + " - " + data.to_time
             lblStandardAndSection.text = "${data.my_class} - ${data.my_section}"
+
+            val profileUrl = data.profile_url
+            if (!profileUrl.isNullOrEmpty() && profileUrl != "null") {
+                Glide.with(context)
+                    .load(profileUrl)
+                    .placeholder(R.drawable.user_sample)
+                    .error(R.drawable.user_sample)
+                    .into(imgUser)
+            } else {
+                imgUser.setImageResource(R.drawable.user_sample)
+            }
+
 
             when (data.status) {
                 "Available" -> {

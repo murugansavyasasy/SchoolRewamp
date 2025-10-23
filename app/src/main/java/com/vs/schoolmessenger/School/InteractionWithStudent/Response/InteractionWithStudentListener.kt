@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent.Response
 
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockedStudent
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
 
 interface InteractionWithStudentListener {
@@ -10,5 +11,6 @@ interface InteractionWithStudentListener {
     fun onClickItem(data: StudentChatData)
 
     fun onReadStatusClick(data: StudentChatData, isPosition: Int)
+    fun onBlockedSearchResultEmpty(isEmpty: Boolean)
 
 }

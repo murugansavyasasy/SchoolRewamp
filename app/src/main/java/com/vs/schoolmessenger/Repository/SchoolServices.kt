@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockApiResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.BlockedStudentsResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
@@ -219,6 +220,7 @@ class SchoolServices {
     var getdashboardnewupdates: MutableLiveData<WhatsNewUpdateResponse?>
     var getattendanceStudentList: MutableLiveData<GetAttendanceStudentList?>
     var isblockstudent: MutableLiveData<BlockApiResponse?>
+    var isblockstudentlist: MutableLiveData<BlockedStudentsResponse?>
 
 
     init {
@@ -331,6 +333,7 @@ class SchoolServices {
         getdashboardnewupdates= MutableLiveData()
         getattendanceStudentList= MutableLiveData()
         isblockstudent= MutableLiveData()
+        isblockstudentlist= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4272,6 +4275,45 @@ class SchoolServices {
 
     val isblockstudentLiveData: LiveData<BlockApiResponse?>
         get() = isblockstudent
+
+
+    fun isblockstudentlist(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isblockstudentlist(isToken)
+            ?.enqueue(object : Callback<BlockedStudentsResponse?> {
+                override fun onResponse(
+                    call: Call<BlockedStudentsResponse?>, response: Response<BlockedStudentsResponse?>
+                ) {
+                    Log.d(
+                        "isAddQuestion Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                isblockstudentlist.postValue(response.body())
+                            } else {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                isblockstudentlist.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BlockedStudentsResponse?>, t: Throwable
+                ) {
+                    isblockstudentlist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isblockstudentlistLiveData: LiveData<BlockedStudentsResponse?>
+        get() = isblockstudentlist
 
 
 }

@@ -960,7 +960,12 @@
     <string name="late">Late</string>
     <string name="what_s_new">What\'s New</string>
     <string name="no_country_found">No country found</string>
-
+    <string name="ptm">PTM</string>
+    <string name="purpose_of_meeting">Purpose of meeting</string>
+    <string name="select_meeting_mode">Select meeting mode</string>
+    <string name="select_your_classes">Select Your Classes</string>
+    <string name="check_slot_availability">Check slot availability</string>
+    <string name="need_break_between_slots">Need break between slots?</string>
 
 
 </resources>

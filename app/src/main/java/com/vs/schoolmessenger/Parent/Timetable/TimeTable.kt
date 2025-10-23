@@ -33,6 +33,8 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
     private lateinit var recyclerViewDays: RecyclerView
     private lateinit var recyclerViewSchedule: RecyclerView
     private lateinit var dayHeader: TextView
+    private var selectedDayId: Int = -1
+
 
 
     private val allDays =
@@ -72,6 +74,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         if (todayIndex != -1) {
             adapter2.setSelectedPosition(todayIndex)
             day_id = todayIndex + 1
+            selectedDayId = day_id
             loadTimeTable(day_id)
         }
 
@@ -112,6 +115,10 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
     private fun setupRecyclerViewDays() {
         adapter2 = TimeTableDayAdapter(timetabledayList, object : TimeTableDayListener {
             override fun onItemClick(data: TimeTableDayData) {
+                if (data.day_id == selectedDayId) {
+                    return
+                }
+                selectedDayId = data.day_id
                 day_id = data.day_id
                 loadTimeTable(day_id)
                 val position = timetabledayList.indexOfFirst { it.day_id == day_id }
