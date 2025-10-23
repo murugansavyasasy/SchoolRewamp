@@ -88,8 +88,8 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
 
         binding.lblTotalObtainaed.text = data.get(0).assessments.get(0).total_obtained
         binding.lblTotalMark.text = "${getString(R.string.Out_of)} ${data.get(0).assessments.get(0).total_mark}"
-        binding.lblRemark.text = data.get(0).assessments.get(0).Remarks
-        binding.lblGrade.text = "${getString(R.string.Overall_Grade)} ${data.get(0).assessments.get(0).Rank}"
+        binding.lblRemark.text = data.get(0).assessments.get(0).message
+        binding.lblGrade.text = "${getString(R.string.Overall_Grade)} ${data.get(0).assessments.get(0).grade}"
 
 
         binding.nomessage.visibility = View.GONE

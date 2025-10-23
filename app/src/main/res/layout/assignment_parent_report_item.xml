@@ -390,6 +390,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_green_radoius_10dp"
             android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/dark_green_9"
             android:layout_marginEnd="10dp"
             android:paddingVertical="@dimen/five"
             android:paddingHorizontal="@dimen/fifteen"

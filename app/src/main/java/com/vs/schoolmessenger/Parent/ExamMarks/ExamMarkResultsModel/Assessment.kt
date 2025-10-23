@@ -12,4 +12,6 @@ data class Assessment(
     val Percentage: String,
     val total_mark: String,
     val total_obtained: String,
-)
+    val grade: String,
+    val message: String
+    )
