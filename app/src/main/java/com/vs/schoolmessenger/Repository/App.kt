@@ -94,7 +94,9 @@ import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeeP
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockApiResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.BlockedStudentsResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
@@ -399,6 +401,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var getattachmentchildhomework: LiveData<AttachmentTargetDetailResponse?>? = null
     var getdashboardnewupdates: LiveData<WhatsNewUpdateResponse?>? = null
     var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
+    var isblockstudent: LiveData<BlockApiResponse?>? = null
+    var isblockstudentlist: LiveData<BlockedStudentsResponse?>? = null
     var getAttendanceStudentList: LiveData<GetAttendanceStudentList?>? = null
 
         private set
@@ -562,6 +566,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isSchoolprofilelist = apiSchoolRepositories.isSchoolprofilelistLiveData
         islsrwmysubmission = apiParentRepositories.islsrwmysubmissionLiveData
         isFeeInvoices = apiParentRepositories.isFeeInvoices
+        isblockstudent = apiSchoolRepositories.isblockstudentLiveData
+        isblockstudentlist = apiSchoolRepositories.isblockstudentlistLiveData
         getmysubmissionedit = apiParentRepositories.getmysubmissioneditLiveData
         ismysubmissiondelete = apiParentRepositories.ismysubmissiondeleteLiveData
         getchildhomeworkstandard = apiSchoolRepositories.getchildhomeworkstandardLiveData
@@ -1459,6 +1465,16 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getAttendanceStudentList(isToken: String, section_id: String,date:String) {
         apiSchoolRepositories.isGetAttendanceStudentList(isToken, section_id,date)
+    }
+
+
+    fun isblockstudent(isToken: String, jsonObject: JsonObject) {
+        apiSchoolRepositories.isblockstudent(isToken, jsonObject)
+    }
+
+
+    fun isblockstudentlist(isToken: String) {
+        apiSchoolRepositories.isblockstudentlist(isToken)
     }
 }
 

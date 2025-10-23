@@ -232,7 +232,7 @@ class AuthServices {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
-                        Constant.errorAlert(activity, "", errorModel.message)
+                        Constant.errorAlert(activity, activity.getString(R.string.Oops), errorModel.message)
 
                     }
                 }

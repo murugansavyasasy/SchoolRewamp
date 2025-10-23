@@ -43,8 +43,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Annual Day"
+                android:singleLine="true"
                 android:textColor="@color/white"
-                android:textSize="@dimen/eighteen_sp" />
+                android:textSize="@dimen/sixteen_sp" />
 
             <View
                 android:layout_width="0dp"
@@ -64,7 +65,7 @@
 
         <TextView
             android:id="@+id/eventdesc"
-            style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
@@ -73,7 +74,7 @@
             android:maxLines="3"
             android:text="Festival 10:00 AM -17/07"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp" />
+            android:textSize="@dimen/thirteen_sp" />
 
 
         <LinearLayout

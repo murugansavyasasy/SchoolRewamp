@@ -11,28 +11,30 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockedStudent
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.IntrectionWithStudentBinding
+import com.vs.schoolmessenger.databinding.BlockListstudentBinding
 
-class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), View.OnClickListener,
+class BlockListStudentActivity : BaseActivity<BlockListstudentBinding>(), View.OnClickListener,
     InteractionWithStudentListener {
 
     private var isStaffDetails: StaffDetails? = null
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    private lateinit var mAdapter: InteractionWithStudentAdapter
+
+    private lateinit var mAdapter: BlockListStudentAdapter
 
 
-    override fun getViewBinding(): IntrectionWithStudentBinding {
-        return IntrectionWithStudentBinding.inflate(layoutInflater)
+
+    override fun getViewBinding(): BlockListstudentBinding {
+        return BlockListstudentBinding.inflate(layoutInflater)
     }
 
     override fun setupViews() {
@@ -43,7 +45,6 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         )
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-        binding.blocklistLabel.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
@@ -64,7 +65,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
             }
         }
-        appViewModel?.getstudentdetailsforchat?.observe(this) { response ->
+        appViewModel?.isblockstudentlist?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null) {
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
@@ -99,8 +100,8 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
 
     private fun fetchStudentData() {
-        appViewModel?.getstudentdetailsforchat(
-            isAccessToken ?: "", this
+        appViewModel?.isblockstudentlist(
+            isAccessToken ?: ""
         )
     }
 
@@ -111,7 +112,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         binding.rcystudentdata.visibility = View.GONE
     }
 
-    private fun isLoadStaffData(data: List<StudentChatData>?) {
+    private fun isLoadStaffData(data: List<BlockedStudent>?) {
         if (data.isNullOrEmpty()) {
             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rytsearch1.visibility = View.GONE
@@ -125,20 +126,32 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         binding.rcystudentdata.visibility = View.VISIBLE
         binding.rcystudentdata.layoutManager = LinearLayoutManager(this)
 
-        mAdapter = InteractionWithStudentAdapter(data, this, this, false)
+        mAdapter = BlockListStudentAdapter(data, this, this, false)
         binding.rcystudentdata.adapter = mAdapter
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.blocklist_label -> {
-                val intent = Intent(this, BlockListStudentActivity::class.java)
-                startActivity(intent)
-            }
+
         }
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
+
+    }
+
+    override fun onClickItem(data: StudentChatData) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onReadStatusClick(
+        data: StudentChatData,
+        isPosition: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBlockedSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
@@ -151,37 +164,6 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         }
     }
 
-    override fun onClickItem(data: StudentChatData) {
-        val intent =
-            Intent(this@InteractionWithStudent, InteractionWithStudentChatScreen::class.java)
-
-        val saveStaffQuestionData = QuestionDataSending(
-            id = data.id,
-            name = data.name,
-            section_id = data.section_id!!,
-            section_name = data.section_name!!,
-            subject_id = data.subject_id!!,
-            subject_name = data.subject_name!!,
-            is_class_teacher = data.is_class_teacher!!,
-        )
-        Constant.QuestionDataSending = saveStaffQuestionData
-        startActivity(intent)
-    }
-
-    override fun onReadStatusClick(
-        data: StudentChatData,
-        isPosition: Int
-    ) {
-        val jsonObject = JsonObject().apply {
-            addProperty(APIKeyNames.type, "STAFFCHAT")
-            addProperty(APIKeyNames.detail_id, data.section_id)
-        }
-        appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
-    }
-
-    override fun onBlockedSearchResultEmpty(isEmpty: Boolean) {
-        TODO("Not yet implemented")
-    }
 
     override fun onResume() {
         super.onResume()

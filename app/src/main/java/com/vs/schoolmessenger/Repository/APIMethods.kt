@@ -190,6 +190,10 @@ object APIMethods {
     const val dashboard_newupdates = "dashboard/api/dashboard/new-updates"
     const val getAttendanceStudentList = "stud-attd/api/attendance/student-list"
 
+
+    const val isblockstudent = "/comm/api/interaction/block-student"
+    const val isblockstudentlist = "/comm/api/interaction/blocked-students"
+
 }
 
 

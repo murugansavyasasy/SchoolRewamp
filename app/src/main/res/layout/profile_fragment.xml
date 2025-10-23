@@ -6,7 +6,7 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <ScrollView
+    <RelativeLayout
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -97,7 +97,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </RelativeLayout>
 
 
     <TextView

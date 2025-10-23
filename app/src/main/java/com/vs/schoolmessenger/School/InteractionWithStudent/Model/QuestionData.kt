@@ -9,6 +9,7 @@ data class QuestionData(
     val chat_count: Int,
     val ques_file_path: List<QuesFilePath>,
     val answer: String,
+    val is_blocked: Boolean,
     val answer_on: String,
     val change_answer: String,
     val ans_file_path: List<Any>,
