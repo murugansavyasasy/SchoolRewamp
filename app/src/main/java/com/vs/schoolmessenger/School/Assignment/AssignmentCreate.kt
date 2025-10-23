@@ -103,6 +103,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     private val itemsCategory = listOf(
         "General", "Class Work", "Research Paper", "Project"
     )
+
     var isAssignmentType = ""
     var isSelectedDate = ""
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
