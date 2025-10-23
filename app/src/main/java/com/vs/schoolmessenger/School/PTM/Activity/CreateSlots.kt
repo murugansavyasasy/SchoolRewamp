@@ -711,7 +711,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             binding.edtMobileOrLink.visibility = View.GONE
             isOnlineMeeting = false
         }
-
     }
 }
 

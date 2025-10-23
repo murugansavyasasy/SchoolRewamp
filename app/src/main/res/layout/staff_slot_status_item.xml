@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:id="@+id/rytSlots"
         android:layout_width="match_parent"
@@ -109,15 +110,28 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
             </TextView>
-            <ImageView
+<!--            <ImageView-->
+<!--                android:id="@+id/imgUser"-->
+<!--                android:layout_width="@dimen/thirty"-->
+<!--                android:layout_height="@dimen/thirty"-->
+<!--                android:layout_below="@+id/lblBookedBy"-->
+<!--                android:layout_marginStart="@dimen/thirty"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:src="@drawable/user_sample">-->
+<!--            </ImageView>-->
+
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgUser"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
+                android:layout_width="@dimen/thirty_five"
+                android:layout_height="@dimen/thirty_five"
                 android:layout_below="@+id/lblBookedBy"
                 android:layout_marginStart="@dimen/thirty"
-                android:layout_marginTop="@dimen/fifteen"
-                android:src="@drawable/user_sample">
-            </ImageView>
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_sample"
+                app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
             <TextView
                 android:id="@+id/lblBookedName"
                 style="@style/CustomTextStylePoppinsMedium"
