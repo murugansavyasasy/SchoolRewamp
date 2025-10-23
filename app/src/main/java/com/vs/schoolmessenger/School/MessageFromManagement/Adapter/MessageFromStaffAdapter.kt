@@ -92,6 +92,7 @@ class MessageFromStaffAdapter(
         private val lblName: TextView = itemView.findViewById(R.id.lblName)
         private val lblRole: TextView = itemView.findViewById(R.id.lblRole)
         private val lblTimeDate: TextView = itemView.findViewById(R.id.lblTimeDate)
+        private val lblSchoolName: TextView = itemView.findViewById(R.id.lblSchoolName)
         private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
         private val imgReadStatus: View = itemView.findViewById(R.id.imgReadStatus)
         private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
@@ -102,6 +103,9 @@ class MessageFromStaffAdapter(
             lblLogo.text = Constant.getNameInitials(name)
             lblName.text = name
             lblRole.text = data.role
+            lblSchoolName.text = data.school_name
+            lblSchoolName.visibility=View.GONE
+
             lblTimeDate.text = "${Constant.isFormatDate(data.date.toString())} ${data.time}"
 
             lblTitle.apply {

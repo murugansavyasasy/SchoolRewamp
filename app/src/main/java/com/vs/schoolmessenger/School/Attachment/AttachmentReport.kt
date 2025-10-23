@@ -296,6 +296,7 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
                     adapter.notifyDataSetChanged()
 
                     if (position != lastSelectedPosition) {
+                        binding.edtSearch.text.clear()
                         lastSelectedPosition = position
 
                         if (position == 0) {

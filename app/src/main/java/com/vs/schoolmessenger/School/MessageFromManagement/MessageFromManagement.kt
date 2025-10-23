@@ -170,16 +170,22 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                        }
 
                        if (isMultipleSchool){
+                           Log.d("IsComing","AAAAAAAAAAAAAAAAAA")
                            if (selectedSchoolId==Constant.All_){
+                               Log.d("IsComing","ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
+                               Log.d("IsComing",isMultipleSchool.toString())
                                adapter.AppendData(response.data)
                            }
                            else{
+                               Log.d("IsComing","BBBBBBBBBBBBBBBBBBBBBBBB")
+                               Log.d("IsComing",selectedSchoolId.toString())
                                val filteredList = completeAttachmentList.filter { it.school_id == selectedSchoolId }
                                Log.d("SpinnerSelection", "Selected school id: ${selectedSchoolId}, " +"Data: $filteredList, Token: $isAccessToken")
-                               adapter.AppendData(filteredList)
+                               adapter.updateData(filteredList)
                            }
                        }
                        else{
+                           Log.d("IsComing","CCCCCCCCCCCCCCCCCCCCCCCC")
                            //if role is staff or only handle one school means we are directly update the response direclty to adapter
                            adapter.AppendData(response.data)
                        }

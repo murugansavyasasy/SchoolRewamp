@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.Settings.WhatsNew
 
 import android.os.Build
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -90,7 +91,12 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcywhatsnew.adapter = whatsnewAdapter
 
-        appViewModel!!.getdashboardnewupdates(isAccessToken!!, Constant.user_details!!.staff_role)
+        if(Constant.isParentChoose){
+            appViewModel!!.getdashboardnewupdates(isAccessToken!!,Constant.parent)
+        }
+        else{
+            appViewModel!!.getdashboardnewupdates(isAccessToken!!, Constant.user_details!!.staff_role)
+        }
     }
 
     private fun getWhatsNewData(data: List<WhatsNewUpdateData>?) {
