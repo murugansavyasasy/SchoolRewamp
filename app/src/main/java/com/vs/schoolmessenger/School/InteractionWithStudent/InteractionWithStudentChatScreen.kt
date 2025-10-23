@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
@@ -83,7 +84,8 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             }
         }
 
-        binding.lblStudentName.text = "${QuestionDataSending?.name ?: ""} (${QuestionDataSending?.section_name ?: ""})"
+        binding.lblStudentName.text =
+            "${QuestionDataSending?.name ?: ""} (${QuestionDataSending?.section_name ?: ""})"
         binding.lblStudentSection.text = QuestionDataSending?.subject_name ?: ""
     }
 
@@ -143,8 +145,10 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         }
 
         if (selectedQuestionId.isNullOrEmpty()) {
-            Constant.showDataValidation(getString(R.string.error),
-                getString(R.string.invalid_question_id), this)
+            Constant.showDataValidation(
+                getString(R.string.error),
+                getString(R.string.invalid_question_id), this
+            )
             return
         }
 
@@ -195,7 +199,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     override fun onAnswerClick(chat: QuestionData, position: Int) {
         binding.replyLinearlayout.visibility = View.VISIBLE
         binding.txtReplyingTo.text = "${getString(R.string.Replying_To)} ${chat.student_name}"
-        Log.d("Student Name Reply Value",chat.student_name.toString())
+        Log.d("Student Name Reply Value", chat.student_name.toString())
         binding.btnAdd.visibility = View.GONE
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
@@ -209,7 +213,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     ) {
         binding.replyLinearlayout.visibility = View.VISIBLE
         binding.txtReplyingTo.text = "${getString(R.string.Replying_To)} ${chat.student_name}"
-        Log.d("Student Name Reply Value",chat.student_name.toString())
+        Log.d("Student Name Reply Value", chat.student_name.toString())
         binding.btnAdd.visibility = View.GONE
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
@@ -218,5 +222,24 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         Log.d("Selected Question ID", selectedQuestionId.toString())
     }
 
+
+    override fun onBlockStudent(chat: QuestionData, reason: String) {
+        if (chat.student_id.isNullOrEmpty()) {
+            Constant.showDataValidation(
+                getString(R.string.error),
+                "Invalid student id",
+                this
+            )
+            return
+        }
+
+        val jsonObject = JsonObject().apply {
+            addProperty("student_id", chat.student_id)
+            addProperty("is_block", !chat.is_blocked)
+            addProperty("reason", reason)
+        }
+
+        appViewModel?.isblockstudent(isAccessToken!!, jsonObject)
+    }
 
 }

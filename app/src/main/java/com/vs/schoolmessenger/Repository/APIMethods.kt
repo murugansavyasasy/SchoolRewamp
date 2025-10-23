@@ -192,6 +192,7 @@ object APIMethods {
 
 
     const val isblockstudent = "/comm/api/interaction/block-student"
+    const val isblockstudentlist = "/comm/api/interaction/blocked-students"
 
 }
 
