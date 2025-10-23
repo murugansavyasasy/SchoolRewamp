@@ -70,15 +70,6 @@ class AssignmentStudentListAdapter(
         return if (isLoading) 3 else filteredList.size
     }
 
-    fun updateList(newData: List<StudentSubmission>) {
-        originalList = ArrayList(newData)
-        filteredList = ArrayList(newData)
-        isLoading = false
-        notifyDataSetChanged()
-
-        toggleNoDataUI()
-    }
-
     fun updateData(newData: List<StudentSubmission>) {
         originalList.clear()
         originalList.addAll(newData)
@@ -87,18 +78,6 @@ class AssignmentStudentListAdapter(
         isLoading = false
         notifyDataSetChanged()
         onDataChange?.invoke(filteredList.isNotEmpty())
-    }
-
-
-
-    private fun toggleNoDataUI() {
-        if (filteredList.isEmpty()) {
-            noDataImage?.visibility = View.VISIBLE
-            noDataText?.visibility = View.VISIBLE
-        } else {
-            noDataImage?.visibility = View.GONE
-            noDataText?.visibility = View.GONE
-        }
     }
 
 
@@ -229,4 +208,3 @@ class AssignmentStudentListAdapter(
         }
     }
 }
-

@@ -126,5 +126,7 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
     override fun onClick(v: View?) {
         // Handle clicks if needed
     }
+
+
 }
 

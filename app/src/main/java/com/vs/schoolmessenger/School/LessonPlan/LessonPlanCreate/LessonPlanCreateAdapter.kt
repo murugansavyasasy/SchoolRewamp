@@ -96,15 +96,14 @@ class LessonPlanCreateAdapter(
                 Constant.dropdown -> {
                     val options = data.field_data ?: listOf()
                     val adapter = ArrayAdapter(
-                        itemView.context,
-                        android.R.layout.simple_spinner_item,
-                        options
+                        itemView.context, android.R.layout.simple_spinner_item, options
                     )
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     spinner.adapter = adapter
-
                     val selectedIndex = options.indexOf(data.value)
-                    if (selectedIndex != -1) spinner.setSelection(selectedIndex)
+                    if (selectedIndex != -1) {
+                        spinner.setSelection(selectedIndex)
+                    }
 
                     spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(
@@ -119,6 +118,7 @@ class LessonPlanCreateAdapter(
                     spinnerContainer.visibility = View.VISIBLE
                     headerDateLabel.visibility = View.GONE
                     valueTextView.visibility = View.GONE
+                    spinner.isEnabled = data.is_disable != true
                 }
 
                 Constant.text_ -> {
@@ -130,16 +130,22 @@ class LessonPlanCreateAdapter(
 
                         override fun beforeTextChanged(
                             s: CharSequence?, start: Int, count: Int, after: Int
-                        ) {}
+                        ) {
+                        }
 
                         override fun onTextChanged(
                             s: CharSequence?, start: Int, before: Int, count: Int
-                        ) {}
+                        ) {
+                        }
                     })
 
                     spinnerContainer.visibility = View.GONE
-                    headerDateLabel.visibility = View.GONE
+                    spinnerContainer.visibility = View.GONE
                     valueTextView.visibility = View.VISIBLE
+                    valueTextView.isEnabled = !data.is_disable
+                    if (!data.is_disable) {
+                        valueTextView.setBackgroundResource(R.drawable.gray_bg_radius_textview)
+                    }
                 }
 
                 Constant.datepicker -> {
@@ -147,28 +153,28 @@ class LessonPlanCreateAdapter(
                     spinnerContainer.visibility = View.GONE
                     valueTextView.visibility = View.GONE
                     headerDateLabel.visibility = View.VISIBLE
+                    headerDateLabel.isEnabled = !data.is_disable
 
-                    headerDateLabel.setBackgroundResource(R.drawable.gray_bg_radius_textview)
-                    headerDateLabel.setOnClickListener {
-                        val calendar = Calendar.getInstance()
-                        val year = calendar.get(Calendar.YEAR)
-                        val month = calendar.get(Calendar.MONTH)
-                        val day = calendar.get(Calendar.DAY_OF_MONTH)
+                    if (!data.is_disable) {
+                        headerDateLabel.setBackgroundResource(R.drawable.gray_bg_radius_textview)
+                        headerDateLabel.setOnClickListener {
+                            val calendar = Calendar.getInstance()
+                            val year = calendar.get(Calendar.YEAR)
+                            val month = calendar.get(Calendar.MONTH)
+                            val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-                        val datePickerDialog = DatePickerDialog(
-                            itemView.context, { _, selectedYear, selectedMonth, selectedDay ->
-                                val cal = Calendar.getInstance()
-                                cal.set(selectedYear, selectedMonth, selectedDay)
-                                val sdf = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
-                                val formattedDate = sdf.format(cal.time)
-                                headerDateLabel.text = formattedDate
-                                data.value = formattedDate
-                            },
-                            year,
-                            month,
-                            day
-                        )
-                        datePickerDialog.show()
+                            val datePickerDialog = DatePickerDialog(
+                                itemView.context, { _, selectedYear, selectedMonth, selectedDay ->
+                                    val cal = Calendar.getInstance()
+                                    cal.set(selectedYear, selectedMonth, selectedDay)
+                                    val sdf = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+                                    val formattedDate = sdf.format(cal.time)
+                                    headerDateLabel.text = formattedDate
+                                    data.value = formattedDate
+                                }, year, month, day
+                            )
+                            datePickerDialog.show()
+                        }
                     }
                 }
             }

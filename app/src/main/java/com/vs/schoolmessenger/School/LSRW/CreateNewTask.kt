@@ -124,7 +124,14 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.edtdate.setOnClickListener(this)
+        binding.edtdate.setOnClickListener {
+            if (isSelectedDate.isNotEmpty()) {
+                lsrwshowDatePickerDialog(this, this, isSelectedDate)
+            } else {
+                lsrwshowDatePickerDialog(this, this)
+            }
+        }
+
         binding.btnChooseRecipient.setOnClickListener(this)
 
         tabList = listOf(
@@ -218,13 +225,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 onBackPressed()
             }
 
-            R.id.edtdate -> {
-                if (isSelectedDate.isNotEmpty()) {
-                    lsrwshowDatePickerDialog(this, this, isSelectedDate)
-                } else {
-                    lsrwshowDatePickerDialog(this, this)
-                }
-            }
 
 
             R.id.btnChooseRecipient -> {
@@ -237,8 +237,8 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     override fun onDateSelected(date: String) {
         isSelectedDate = date
         binding.edtdate.text = Constant.convertToReadableDate(date)
-        Log.d("isSelectedDate", date)
     }
+
 
     private fun setSelectedTab(selected: LinearLayout) {
         tabList.forEach { it.setBackgroundResource(R.drawable.btn_unselected) }

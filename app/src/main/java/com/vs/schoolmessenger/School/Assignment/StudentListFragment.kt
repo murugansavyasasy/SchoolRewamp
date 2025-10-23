@@ -116,10 +116,12 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
                 updateTabTitles()
                 showAllStudents()
             } else {
+                allStudentsList = emptyList()
+                updateTabTitles()
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.rcystudentlist.visibility = View.GONE
-                binding.txtNoData.text = response!!.message?: getString(R.string.no_data_found)
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 
@@ -128,17 +130,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
 
 
     private fun showAllStudents() {
-        val list = allStudentsList
-        if (list.isEmpty()) {
-            binding.nomessage.visibility = View.VISIBLE
-            binding.txtNoData.visibility = View.VISIBLE
-            binding.rcystudentlist.visibility = View.GONE
-        } else {
-            binding.nomessage.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
-            binding.rcystudentlist.visibility = View.VISIBLE
-            isloadassignmentdata(list)
-        }
+        assignmentstudentlistadapter.updateData(allStudentsList)
     }
 
 
@@ -146,64 +138,14 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         val filteredList = allStudentsList.filter {
             it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true)
         }
-
-        if (filteredList.isEmpty()) {
-            binding.nomessage.visibility = View.VISIBLE
-            binding.txtNoData.visibility = View.VISIBLE
-            binding.rcystudentlist.visibility = View.GONE
-        } else {
-            binding.nomessage.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
-            binding.rcystudentlist.visibility = View.VISIBLE
-            isloadassignmentdata(filteredList)
-        }
+        assignmentstudentlistadapter.updateData(filteredList)
     }
 
     private fun showPending() {
         val filteredList = allStudentsList.filter {
             it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true)
         }
-
-        if (filteredList.isEmpty()) {
-            binding.nomessage.visibility = View.VISIBLE
-            binding.txtNoData.visibility = View.VISIBLE
-            binding.rcystudentlist.visibility = View.GONE
-        } else {
-            binding.nomessage.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
-            binding.rcystudentlist.visibility = View.VISIBLE
-            isloadassignmentdata(filteredList)
-        }
-    }
-
-
-    private fun isloadassignmentdata(newData: List<StudentSubmission>?) {
-        if (newData.isNullOrEmpty()) {
-            binding.nomessage.visibility = View.VISIBLE
-            binding.txtNoData.visibility = View.VISIBLE
-            binding.rcystudentlist.visibility = View.GONE
-            return
-        }
-
-        binding.nomessage.visibility = View.GONE
-        binding.txtNoData.visibility = View.GONE
-        binding.rcystudentlist.visibility = View.VISIBLE
-
-        if (!::assignmentstudentlistadapter.isInitialized) {
-            assignmentstudentlistadapter = AssignmentStudentListAdapter(
-                newData,
-                this,
-                requireContext(),
-                Constant.isShimmerViewDisable,
-                binding.nomessage,
-                binding.txtNoData,
-                created_date
-            )
-            binding.rcystudentlist.layoutManager = LinearLayoutManager(requireContext())
-            binding.rcystudentlist.adapter = assignmentstudentlistadapter
-        } else {
-            assignmentstudentlistadapter.updateData(newData)
-        }
+        assignmentstudentlistadapter.updateData(filteredList)
     }
 
 
@@ -227,14 +169,23 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             this,
             requireContext(),
             Constant.isShimmerViewShow,
-            null,
-            null,
+            binding.nomessage,
+            binding.txtNoData,
             created_date
         )
 
         binding.rcystudentlist.layoutManager = LinearLayoutManager(requireContext())
         binding.rcystudentlist.isNestedScrollingEnabled = false
         binding.rcystudentlist.adapter = assignmentstudentlistadapter
+
+        assignmentstudentlistadapter.onDataChange = { hasData ->
+            if (!hasData) {
+                binding.txtNoData.text = getString(R.string.no_data_found)
+            }
+            binding.rcystudentlist.visibility = if (hasData) View.VISIBLE else View.GONE
+            binding.nomessage.visibility = if (hasData) View.GONE else View.VISIBLE
+            binding.txtNoData.visibility = if (hasData) View.GONE else View.VISIBLE
+        }
 
         appViewModel?.getassignmentlist(isAccessToken!!, assignmentId!!, type!!)
     }

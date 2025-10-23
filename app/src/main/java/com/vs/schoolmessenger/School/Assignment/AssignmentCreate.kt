@@ -1099,4 +1099,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         }
         appViewModel!!.assignmentUpdate(isAccessToken!!, jsonObject, this)
     }
+
+
 }
