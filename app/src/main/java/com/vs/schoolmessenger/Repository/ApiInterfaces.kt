@@ -102,6 +102,7 @@ import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeeP
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockApiResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
@@ -1184,4 +1185,12 @@ interface ApiInterfaces {
         @Query(APIKeyNames.section_id ) section_id: String,
         @Query(APIKeyNames.date ) date : String
     ): Call<GetAttendanceStudentList>
+
+
+
+    @POST(APIMethods.isblockstudent)
+    fun isblockstudent(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<BlockApiResponse?>?
 }
