@@ -165,8 +165,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.lineReceipt.setBackgroundResource(R.color.athens_gray)
                 binding.btnPayment.setTextColor(Color.parseColor("#0D47A1"))
                 binding.btnReceipt.setTextColor(Color.BLACK)
-
                 loadPaymentPage(binding.payWebview)
+                reloadPaymentPage()
             }
 
             R.id.btnReceipt -> {
@@ -189,6 +189,18 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
         }
     }
+
+    private fun reloadPaymentPage() {
+        val feeUrl = Constant.isGlobalVariableData!!.fees_url
+        val isFinalFeeUrl = feeUrl
+            .replace(Constant.isStudentID, isChildId)
+            .replace(Constant.isSchoolID, isSchoolID)
+
+        Constant.showLoading(this)
+        binding.payWebview.loadUrl(isFinalFeeUrl)
+        Log.d("FeeDetails", "Payment WebView reloaded: $isFinalFeeUrl")
+    }
+
 
     private fun loadPaymentPage(webView: WebView) {
         val settings = webView.settings

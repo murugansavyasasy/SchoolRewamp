@@ -41,7 +41,7 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
             ContextCompat.getDrawable(this, R.drawable.downloadicon)
         )
         binding.imgDownload.visibility = View.VISIBLE
-        binding.imgDownload.setOnClickListener(this)
+        binding.lytDownload.setOnClickListener(this)
         binding.toolbarLayout.rytSearch.visibility = View.GONE
 
         isChildDetails = SharedPreference.getChildDetails(this)
@@ -61,7 +61,7 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
-            R.id.imgDownload -> {
+            R.id.lytDownload -> {
                 if (checkStoragePermission()) downloadFeeReceipt()
                 else requestStoragePermission()
             }
@@ -91,14 +91,20 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
 
     private fun downloadFeeReceipt() {
         pdfUrl?.let { url ->
+            val loaderMinTime = 1000L
+            val startTime = System.currentTimeMillis()
+            Constant.showLoading(this)
+
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     var fileName = url.substringAfterLast("/").substringBefore("?")
                     if (!fileName.endsWith(".pdf")) fileName += ".pdf"
 
                     val baseFolder = "SchoolChimes"
-                    val subFolder = "Documents"
-                    val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    val subFolder = "Fee Receipt"
+
+                    val downloadsDir =
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                     val targetDir = File(downloadsDir, "$baseFolder/$subFolder")
                     if (!targetDir.exists()) targetDir.mkdirs()
 
@@ -110,10 +116,16 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
                             }
                         }
                     }
+                    val elapsed = System.currentTimeMillis() - startTime
+                    val delayTime = if (elapsed < loaderMinTime) loaderMinTime - elapsed else 0L
 
                     withContext(Dispatchers.Main) {
+                        if (delayTime > 0) {
+                            kotlinx.coroutines.delay(delayTime)
+                        }
+                        Constant.hideLoading(this@FeeReceiptViewActivity)
                         Constant.showValidationAlertPopup(
-                            "Successfully Download...✅",
+                            "Successfully Downloaded ✅",
                             "File saved to Downloads/$baseFolder/$subFolder/$fileName",
                             this@FeeReceiptViewActivity
                         )
@@ -121,6 +133,7 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
 
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
+                        Constant.hideLoading(this@FeeReceiptViewActivity)
                         Toast.makeText(
                             this@FeeReceiptViewActivity,
                             "Download failed: ${e.message}",
@@ -131,5 +144,4 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
             }
         }
     }
-
 }

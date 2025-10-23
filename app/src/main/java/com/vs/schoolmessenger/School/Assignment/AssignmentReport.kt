@@ -175,7 +175,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                 imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                 binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.VISIBLE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
-                adapter.updateList(response.data)
+//                adapter.updateList(response.data)
                 binding.rcyAssignmentReport.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
             } else {
