@@ -29,8 +29,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Annual Day"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:textColor="@color/white"
-                android:textSize="@dimen/eighteen_sp" />
+                android:textSize="@dimen/sixteen_sp" />
 
             <View
                 android:layout_width="@dimen/zero"
@@ -59,7 +61,7 @@
             android:maxLines="3"
             android:text="Festival 10:00 AM -17/07"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp" />
+            android:textSize="@dimen/thirteen_sp" />
         <LinearLayout
             android:id="@+id/datelinear_layout1"
             android:layout_width="wrap_content"
