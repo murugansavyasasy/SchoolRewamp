@@ -81,7 +81,9 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
             PorterDuff.Mode.SRC_IN
         )
 
-        binding.toolbarLayout.lblParentToolBar.text=Constant.isCertificateData?.type.toString()
+
+        binding.toolbarLayout.lblStudentSection.visibility=View.GONE
+        binding.toolbarLayout.lblStudentName.text=Constant.isCertificateData?.type.toString()
 
 
         val requestedOn=Constant.formatDate(Constant.isCertificateData?.requested_on.toString())
@@ -143,6 +145,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
         }
         binding.lblCerticateTypeValue.text = Constant.isCertificateData?.type ?: ""
         binding.lblReasonValue.text = Constant.isCertificateData?.reason ?: ""
+
     }
 
     override fun onClick(p0: View?) {

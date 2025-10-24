@@ -223,7 +223,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    >
                     <ImageView
                         android:layout_centerVertical="true"
                         android:id="@+id/imgReason"
@@ -250,7 +250,6 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:id="@+id/lblReasonValue"
                     android:textSize="@dimen/fifteen_sp"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </TextView>
