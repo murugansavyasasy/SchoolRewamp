@@ -37,21 +37,21 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListener {
+class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListener {
 
     override fun getViewBinding(): PtmBinding {
         return PtmBinding.inflate(layoutInflater)
     }
+
     private var lastCancelledPosition: Int = -1
     var isSelectedDate = ""
     private val selectedSlotIds = mutableListOf<String>()
     lateinit var isMeetingHistoryAdapter: MeetingHistoryAdapter
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    var isClassTeacherId = ""
-    var isSubjectId = ""
-
-    private var progressDialog: AlertDialog? = null
+    var isClassTeacherId = "0"
+    var isSubjectId = "0"
+    var isManagement = false
 
     override fun setupViews() {
         super.setupViews()
@@ -227,8 +227,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                 binding.rcyMeetingHistory.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             }
-
-    }
+        }
     }
 
     fun isLoadData(data: List<MeetingData>) {
@@ -239,13 +238,15 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
                 // Find the slot with same meetingKey
                 selectedSlotIds.removeAll { existingId ->
                     data.any { meetingItem ->
-                        val key = "${meetingItem.staff_id}_${meetingItem.start_time}_${meetingItem.event_name}"
+                        val key =
+                            "${meetingItem.staff_id}_${meetingItem.start_time}_${meetingItem.event_name}"
                         key == meetingKey && meetingItem.slots.any { it.id == existingId }
                     }
                 }
             }
             selectedSlotIds.add(slot.id)
-            binding.lblBookSlots.visibility = if (selectedSlotIds.isNotEmpty()) View.VISIBLE else View.GONE
+            binding.lblBookSlots.visibility =
+                if (selectedSlotIds.isNotEmpty()) View.VISIBLE else View.GONE
             println("Selected Slot IDs: $selectedSlotIds")
             if (selectedSlotIds.isNotEmpty()) {
                 binding.lblBookSlots.visibility = View.VISIBLE
@@ -269,31 +270,52 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
         binding.spinnerType.adapter = adapter
 
         binding.spinnerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 adapter.selectedPosition = position
                 adapter.notifyDataSetChanged()
 
                 val selectedSubject = mutableList[position]
-                if (position == 0) {
-                    isSubjectId = "0"
-                    isClassTeacherId = "0"
-                } else {
-                    isSubjectId = selectedSubject.id
-                    isClassTeacherId = "0"
-                }
+                val isSelectedType = parent.getItemAtPosition(position).toString()
 
+                when (isSelectedType) {
+                    "All Subject" -> {
+                        isSubjectId = "0"
+                        isClassTeacherId = "0"
+                        isManagement = false
+                    }
+                    "Management" -> {
+                        isSubjectId = "0"
+                        isClassTeacherId = "0"
+                        isManagement = true
+                    }
+                    "Class Teacher" -> {
+                        isSubjectId = "0"
+                        isClassTeacherId = selectedSubject.id
+                        isManagement = false
+                    }
+                    else -> {
+                        isSubjectId = selectedSubject.id
+                        isClassTeacherId = "0"
+                        isManagement = false
+                    }
+                }
                 isScheduleCallList()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
 
     fun isLoadMeetingData(data: List<MeetingDataWrapper>) {
-        if (data.isNullOrEmpty()){
+        if (data.isNullOrEmpty()) {
             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-        }
-        else{
+        } else {
 
             binding.rcyMeetingHistory.layoutManager = LinearLayoutManager(this)
             val meetingItems = mutableListOf<MeetingListItem>()
@@ -330,7 +352,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener,OnCancelClickListen
             isAccessToken!!,
             isSelectedDate,
             isSubjectId,
-            isClassTeacherId
+            isClassTeacherId,
+            isManagement
         )
     }
 

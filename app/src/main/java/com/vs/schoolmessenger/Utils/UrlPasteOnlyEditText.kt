@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Utils
 
 import android.content.Context
-import android.net.Uri
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
@@ -9,17 +8,17 @@ import android.view.inputmethod.InputConnection
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 
-class UrlPasteOnlyEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(context, attrs) {
+class PasteOnlyEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(context, attrs) {
 
     init {
         isFocusable = true
         isCursorVisible = true
         isFocusableInTouchMode = true
-        showSoftInputOnFocus = false //  This prevents keyboard from opening
+        showSoftInputOnFocus = false // Prevent soft keyboard from showing
     }
 
     override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
-        // No soft keyboard
+        // Disable soft keyboard
         return null
     }
 
@@ -31,12 +30,12 @@ class UrlPasteOnlyEditText(context: Context, attrs: AttributeSet?) : AppCompatEd
             if (clipData != null && clipData.itemCount > 0) {
                 val pastedText = clipData.getItemAt(0).coerceToText(context).toString().trim()
 
-                if (isValidUrl(pastedText)) {
+                // ✅ Allow any text (no URL validation)
+                if (pastedText.isNotEmpty()) {
                     setText(pastedText)
                     setSelection(text?.length ?: 0)
                 } else {
-                    Toast.makeText(context, "Invalid URL", Toast.LENGTH_SHORT).show()
-                    setText("")
+                    Toast.makeText(context, "Clipboard is empty", Toast.LENGTH_SHORT).show()
                 }
             }
             return true
@@ -45,16 +44,7 @@ class UrlPasteOnlyEditText(context: Context, attrs: AttributeSet?) : AppCompatEd
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        // Block typing from hardware keyboard
+        // Block manual typing (if you still want this)
         return false
-    }
-
-    private fun isValidUrl(url: String): Boolean {
-        return try {
-            val uri = Uri.parse(url)
-            (uri.scheme == "http" || uri.scheme == "https") && uri.host != null
-        } catch (e: Exception) {
-            false
-        }
     }
 }

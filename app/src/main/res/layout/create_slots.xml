@@ -178,7 +178,7 @@
                     android:visibility="gone">
                 </TextView>
 
-                <com.vs.schoolmessenger.Utils.UrlPasteOnlyEditText
+                <com.vs.schoolmessenger.Utils.PasteOnlyEditText
                     android:id="@+id/edtMobileOrLink"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -192,7 +192,7 @@
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp"
                     android:visibility="gone">
-                </com.vs.schoolmessenger.Utils.UrlPasteOnlyEditText>
+                </com.vs.schoolmessenger.Utils.PasteOnlyEditText>
             </RelativeLayout>
 
             <RelativeLayout

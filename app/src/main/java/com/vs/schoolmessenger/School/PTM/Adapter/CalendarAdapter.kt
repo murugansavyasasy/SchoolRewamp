@@ -32,10 +32,9 @@ class CalendarAdapter(
             .inflate(R.layout.item_day, parent, false)
 
         val tvDay = view.findViewById<TextView>(R.id.btnDay)
-        val (day, _) = days[position]
+        val (day, dayOfWeek) = days[position]
 
         if (day.isEmpty()) {
-            // Empty cell before first day of month
             tvDay.text = ""
             tvDay.setBackgroundColor(Color.TRANSPARENT)
             tvDay.isEnabled = false
@@ -46,8 +45,7 @@ class CalendarAdapter(
 
         val cellCal = calendar.clone() as Calendar
         cellCal.set(Calendar.DAY_OF_MONTH, day.toInt())
-        val cellDateStr =
-            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(cellCal.time)
+        val cellDateStr = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(cellCal.time)
 
         // 🔹 Disable days before minDate
         if (cellCal.timeInMillis < minDate) {
@@ -57,10 +55,15 @@ class CalendarAdapter(
             return view
         }
 
-        // 🔹 Reset defaults
+        // 🔹 Default style
         tvDay.isEnabled = true
         tvDay.setBackgroundColor(Color.TRANSPARENT)
         tvDay.setTextColor(Color.BLACK)
+
+        // 🔹 Sunday = Red text color
+        if (dayOfWeek == Calendar.SUNDAY) {
+            tvDay.setTextColor(Color.RED)
+        }
 
         // 🔹 Apply styling
         when {
@@ -71,10 +74,6 @@ class CalendarAdapter(
             cellDateStr == todayStr -> {
                 tvDay.setBackgroundResource(R.drawable.circle_bg_primary)
                 tvDay.setTextColor(Color.WHITE)
-            }
-            else -> {
-                tvDay.setBackgroundResource(android.R.color.transparent)
-                tvDay.setTextColor(Color.BLACK)
             }
         }
 

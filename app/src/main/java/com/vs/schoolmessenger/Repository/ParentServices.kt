@@ -1212,12 +1212,14 @@ class ParentServices {
         event_date: String,
         subject_id: String,
         class_teacher_id: String,
+        isManagement: Boolean
     ) {
         RestClient.apiInterfaces.isSlotsAvailabilityForStudent(
             isToken,
             event_date,
             subject_id,
             class_teacher_id
+            ,isManagement
         )
             ?.enqueue(object : Callback<MeetingResponse?> {
                 override fun onResponse(

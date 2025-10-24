@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -201,6 +202,13 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 layout_reopen.visibility = View.GONE
                 layout_cancel.visibility = View.VISIBLE
             }
+
+            "Upcoming" -> {
+                layout_reopen.visibility = View.GONE
+                layout_cancel.visibility = View.VISIBLE
+            }
+
+
         }
 
         layout_reopen.setOnClickListener {
@@ -235,35 +243,25 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
         lblSelectTarget.visibility = View.GONE
 
-//        okButton.setOnClickListener {
-//            val jsonObject = JsonObject()
-//            jsonObject.addProperty("slot_id", data.slot_id)
-//            alertDialog.dismiss()
-//            Constant.showLoading(this)
-//            if (isSlotReOpen) {
-//                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, jsonObject)
-//            } else {
-//                appViewModel!!.isSlotCancelClose(isAccessToken!!, jsonObject)
-//            }
-//        }
         okButton.setOnClickListener {
-            val jsonObject = JsonObject()
-            jsonObject.addProperty("slot_id", data.slot_id)
-
+            val slotId = data.slot_id
+            val slotArray = JsonArray().apply {
+                add(slotId)
+            }
+            val mainObject = JsonObject().apply {
+                add("slot_ids", slotArray)
+            }
             if (isSlotReOpen) {
-                jsonObject.addProperty("action", "ReOpen")
-                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, jsonObject)
+//                jsonObject.addProperty("action", "ReOpen")
+                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, mainObject)
             } else {
-                jsonObject.addProperty("action", "Cancel")
-                appViewModel!!.isSlotCancelClose(isAccessToken!!, jsonObject)
+//                jsonObject.addProperty("action", "Cancel")
+                appViewModel!!.isSlotCancelClose(isAccessToken!!, mainObject)
             }
 
             alertDialog.dismiss()
             Constant.showLoading(this)
         }
-
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
-
-
 }
