@@ -1,17 +1,32 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.ContactsContract
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -22,6 +37,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -75,6 +92,7 @@ import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuCountDetails
 import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuDetails
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
+import java.io.ByteArrayOutputStream
 import java.util.Locale
 
 
@@ -98,7 +116,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private val snapHelper = PagerSnapHelper()
     private var currentPosition = 0
     private var mobile_number = ""
-
+    private val REQUEST_CONTACT_PERMISSION = 1001
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -150,6 +168,18 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         .error(R.drawable.school_sample)
                         .into(binding.profileImage)
                 }
+            }
+        }
+
+        getGlobalVariables(access_token)
+        appViewModel!!.isGlobalVariables?.observe(requireActivity()) { response ->
+            if (response != null) {
+                response.status
+                response.message
+                Constant.isGlobalVariableData=response.data[0]
+                checkContactPermission()
+
+
             }
         }
 
@@ -236,6 +266,169 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         return binding.root
     }
+
+    private fun getGlobalVariables(token: String) {
+        val jsonObject = JsonObject()
+        val jsonArray = JsonArray()
+        jsonObject.add("key_names", jsonArray)
+        appViewModel!!.isGetGlobalVariables(jsonObject, token, requireActivity())
+    }
+
+    private fun checkContactPermission() {
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_CONTACTS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.READ_CONTACTS),
+                REQUEST_CONTACT_PERMISSION
+            )
+        } else {
+            if(!Constant.isGlobalVariableData!!.v_card_numbers.equals("")) {
+
+                val contacts = mutableListOf<Pair<String, String>>()
+
+                val numbers =  Constant.isGlobalVariableData!!.v_card_numbers.split(",")
+                for (item in numbers) {
+                    contacts.add(Pair(Constant.isGlobalVariableData!!.contact_display_name, item.trim()))
+                }
+                val missingContacts = contacts.filterNot { contactExists(it.second) }
+                if (missingContacts.isNotEmpty()) {
+                    saveContactsPopup(missingContacts)
+                }
+//                else{
+//                    Toast.makeText(requireActivity(), "All contacts are already saved", Toast.LENGTH_SHORT).show()
+//                }
+            }
+        }
+    }
+
+    private fun contactExists(phoneNumber: String): Boolean {
+        val uri = Uri.withAppendedPath(
+            ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+            Uri.encode(phoneNumber)
+        )
+
+        val projection = arrayOf(ContactsContract.PhoneLookup._ID)
+        var exists = false
+        val resolver = requireActivity().contentResolver
+        val cursor = resolver.query(uri, projection, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                exists = true
+            }
+        }
+        return exists
+    }
+
+    private fun saveContactsPopup(missingContacts: List<Pair<String, String>>)   {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.save_contact_popup, null)
+
+        val alertTitle: TextView = view.findViewById(R.id.alertTitle)
+        val alertMessage: TextView = view.findViewById(R.id.alertMessage)
+        alertTitle.setText(Constant.isGlobalVariableData!!.contact_alert_title)
+        alertMessage.setText(Constant.isGlobalVariableData!!.contact_alert_content)
+
+        val btnSave: TextView = view.findViewById(R.id.lblSave)
+        val btnNo: TextView = view.findViewById(R.id.lblNo)
+
+        val rootView = requireActivity().findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true // prevent clicks on background
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, requireActivity().resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        btnSave.setOnClickListener {
+            closePopup()
+            saveContacts(missingContacts)
+        }
+        btnNo.setOnClickListener {
+            closePopup()
+        }
+        dimView.isFocusable = true
+        dimView.isFocusableInTouchMode = true
+    }
+
+    private fun saveContacts(missingContacts: List<Pair<String, String>>) {
+        val newContacts = Array(missingContacts.size) { "" }
+        // Loop through and check which contacts are missing
+        for (i in missingContacts.indices) {
+            val contact = missingContacts[i]
+            if (!contactExists(contact.second)) {
+                Log.d("Index", "Current index = $i")
+                newContacts[i] = contact.second
+            }
+        }
+
+        // Convert image to byte array (for contact photo)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.school_chimes_logo)
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val byteArray = stream.toByteArray()
+
+        val data = ArrayList<ContentValues>()
+
+        // Add contact photo
+        val rowPhoto = ContentValues().apply {
+            put(
+                ContactsContract.Data.MIMETYPE,
+                ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE
+            )
+            put(ContactsContract.CommonDataKinds.Photo.PHOTO, byteArray)
+        }
+        data.add(rowPhoto)
+
+        // Add all phone numbers
+        for (i in newContacts.indices) {
+            val number = newContacts[i]
+            if (number.isNotEmpty()) {
+                val rowNumber = ContentValues().apply {
+                    put(
+                        ContactsContract.RawContacts.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
+                    )
+                    put(ContactsContract.CommonDataKinds.Phone.NUMBER, number)
+                    put(
+                        ContactsContract.CommonDataKinds.Phone.TYPE,
+                        ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
+                    )
+                }
+                data.add(rowNumber)
+            }
+        }
+
+        // Prepare Intent to insert contact (user will confirm)
+        val intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
+        intent.putExtra(ContactsContract.Intents.Insert.NAME, Constant.isGlobalVariableData!!.contact_display_name) // set contact name
+        intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, data)
+
+        startActivityForResult(intent, 100)
+    }
+
     private fun setupRecyclerView() {
         val safeActivity = activity ?: return
 
