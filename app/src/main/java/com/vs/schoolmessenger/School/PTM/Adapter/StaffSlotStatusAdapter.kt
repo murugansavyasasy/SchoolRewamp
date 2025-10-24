@@ -70,12 +70,10 @@ class StaffSlotStatusAdapter(
         private val imgDot: ImageView = itemView.findViewById(R.id.imgDot)
 
         private val rytSlots: RelativeLayout = itemView.findViewById(R.id.rytSlots)
+        private val lblStandardAndSection: TextView = itemView.findViewById(R.id.lblStandardAndSection)
 
         private val imgUser: ShapeableImageView = itemView.findViewById(R.id.imgUser)
 
-
-        private val lblStandardAndSection: TextView =
-            itemView.findViewById(R.id.lblStandardAndSection)
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: Slot, position: Int, listener: StaffSlotCancelReOpenClickListener) {
@@ -84,18 +82,8 @@ class StaffSlotStatusAdapter(
             lblDuration.text = "Duration - ${data.meeting_duration} Minutes"
             lblTime.text = data.from_time + " - " + data.to_time
             lblStandardAndSection.text = "${data.my_class} - ${data.my_section}"
-
             val profileUrl = data.profile_url
-            if (!profileUrl.isNullOrEmpty() && profileUrl != "null") {
-                Glide.with(context)
-                    .load(profileUrl)
-                    .placeholder(R.drawable.user_sample)
-                    .error(R.drawable.user_sample)
-                    .into(imgUser)
-            } else {
-                imgUser.setImageResource(R.drawable.user_sample)
-            }
-
+            if (!profileUrl.isNullOrEmpty() && profileUrl != "null") { Glide.with(context).load(profileUrl).placeholder(R.drawable.user_sample).error(R.drawable.user_sample).into(imgUser) } else { imgUser.setImageResource(R.drawable.user_sample) }
 
             when (data.status) {
                 "Available" -> {
@@ -104,8 +92,7 @@ class StaffSlotStatusAdapter(
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.exclamationmark_circle))
                     imgDot.visibility = if (data.can_cancel && shouldShowImgDot(data.date, data.to_time) == View.VISIBLE)
                         View.VISIBLE else View.GONE
-                    imgDot.setOnClickListener {
-                        listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
+                    imgDot.setOnClickListener { listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
                     }
                 }
                 "Cancelled" -> {
@@ -137,8 +124,7 @@ class StaffSlotStatusAdapter(
                     lblBookedName.text = data.booked_by
                 }
                 "Booked" -> {
-                    rltStatus.background =
-                        context.getDrawable(R.drawable.bg_lightgreen_radious)
+                    rltStatus.background = context.getDrawable(R.drawable.bg_lightgreen_radious)
                     lblBookedName.visibility = View.VISIBLE
                     rltBookedBy.visibility = View.VISIBLE
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
@@ -147,20 +133,13 @@ class StaffSlotStatusAdapter(
                 }
                 "Upcoming" -> {
                     rltStatus.background = context.getDrawable(R.drawable.bg_lightgreen_radious)
-                    lblStatus.text = "Booked"
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
                     lblBookedName.visibility = View.VISIBLE
                     rltBookedBy.visibility = View.VISIBLE
                     lblBookedName.text = data.booked_by
-                    // Show dot only if slot can be canceled
-                    imgDot.visibility = if (data.can_cancel && shouldShowImgDot(data.date, data.to_time) == View.VISIBLE)
-                        View.VISIBLE else View.GONE
-
-                    imgDot.setOnClickListener {
-                        listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition)
-                    }
+                    imgDot.visibility = if (data.can_cancel && shouldShowImgDot(data.date, data.to_time) == View.VISIBLE) View.VISIBLE else View.GONE
+                    imgDot.setOnClickListener { listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition) }
                 }
-
             }
         }
 
