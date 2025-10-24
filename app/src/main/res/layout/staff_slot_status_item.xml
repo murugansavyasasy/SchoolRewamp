@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
+
     <RelativeLayout
         android:id="@+id/rytSlots"
         android:layout_width="match_parent"
@@ -10,14 +11,16 @@
         android:layout_margin="@dimen/ten"
         android:background="@drawable/outline_gray"
         android:padding="@dimen/ten">
+
         <RelativeLayout
             android:id="@+id/rltStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
             android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
             android:background="@drawable/bg_light_green"
             android:padding="@dimen/five">
+
             <ImageView
                 android:id="@+id/imgStatus"
                 android:layout_width="@dimen/twenty"
@@ -25,20 +28,24 @@
                 android:layout_marginStart="@dimen/five"
                 android:src="@drawable/checkmark_circle">
             </ImageView>
+
             <TextView
                 android:id="@+id/lblStatus"
                 style="@style/CustomTextStylePoppinsMedium1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginEnd="@dimen/ten"
-                android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/imgStatus"
                 android:text="Booked"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
+
             </TextView>
+
         </RelativeLayout>
+
         <ImageView
             android:id="@+id/imgDot"
             android:layout_width="@dimen/thirty_five"
@@ -49,57 +56,66 @@
             android:background="@drawable/rounded_bg"
             android:padding="@dimen/ten"
             android:src="@drawable/threedot">
+
         </ImageView>
+
         <TextView
             android:id="@+id/lblTime"
             style="@style/CustomTextStylePoppinsBold1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rltStatus"
+            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:text="12:00 PM - 03:00 PM"
-            android:layout_marginStart="@dimen/ten"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp">
+
         </TextView>
+
         <TextView
             android:id="@+id/lblDuration"
             style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
-            android:layout_marginStart="@dimen/ten"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblTime"
+            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:text="Duraction - 10 Minutes"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
+
         </TextView>
+
         <TextView
             android:id="@+id/lblWaitingBooking"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/lblDuration"
-            android:textColor="@color/dark_blue_2"
-            android:layout_marginTop="@dimen/fifteen"
-            android:text="Waiting for booking"
             style="@style/CustomTextStylePoppinsMedium1"
-            android:gravity="center"
-            android:padding="@dimen/ten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblDuration"
             android:layout_marginStart="@dimen/twenty_five"
+            android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/twenty_five"
             android:background="@drawable/bg_light_radious_blue"
-            android:layout_height="wrap_content">
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="Waiting for booking"
+            android:textColor="@color/dark_blue_2">
+
         </TextView>
+
         <RelativeLayout
             android:id="@+id/rltBookedBy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblDuration"
-            android:visibility="gone"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/bg_light_green"
-            android:padding="@dimen/ten">
+            android:padding="@dimen/ten"
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/lblBookedBy"
                 style="@style/CustomTextStylePoppinsBold"
@@ -109,16 +125,9 @@
                 android:text="Booked By : "
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
+
             </TextView>
-<!--            <ImageView-->
-<!--                android:id="@+id/imgUser"-->
-<!--                android:layout_width="@dimen/thirty"-->
-<!--                android:layout_height="@dimen/thirty"-->
-<!--                android:layout_below="@+id/lblBookedBy"-->
-<!--                android:layout_marginStart="@dimen/thirty"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:src="@drawable/user_sample">-->
-<!--            </ImageView>-->
+
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgUser"
@@ -144,7 +153,9 @@
                 android:text="Sathish G"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
+
             </TextView>
+
             <TextView
                 android:id="@+id/lblStandardAndSection"
                 style="@style/CustomTextStylePoppinsBold"
@@ -152,13 +163,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblBookedName"
                 android:layout_marginStart="@dimen/fifteen"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_toEndOf="@+id/imgUser"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+                android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone">
+
             </TextView>
+
         </RelativeLayout>
+
     </RelativeLayout>
+
 </RelativeLayout>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white">
 
     <View
@@ -12,24 +12,23 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cltDateSelection"
         android:layout_width="match_parent"
         android:layout_height="@dimen/two_hundred_fifty"
+        android:background="@drawable/bottom_right_left_radious"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        android:background="@drawable/bottom_right_left_radious"
         app:layout_constraintTop_toTopOf="parent">
 
         <include
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/toolbarLayout"
-            layout="@layout/parent_side_tool_bar" />
-
+            layout="@layout/parent_side_tool_bar"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -40,9 +39,9 @@
             android:overScrollMode="never"
             android:paddingHorizontal="@dimen/eight"
             android:paddingBottom="@dimen/eight"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbarLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -70,9 +69,9 @@
         android:background="@drawable/rect_grey"
         android:padding="@dimen/seven"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/lblHomeWork"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/lblHomeWork">
 
         <ImageView
             android:id="@+id/iconSearch"
@@ -80,28 +79,28 @@
             android:layout_height="@dimen/twenty_five"
             android:layout_marginStart="@dimen/ten"
             android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/edtSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:imeOptions="actionDone"
             android:inputType="text"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:scrollHorizontally="true"
-            app:layout_constraintStart_toEndOf="@id/iconSearch"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="@dimen/ten" />
+            app:layout_constraintStart_toEndOf="@id/iconSearch"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -114,10 +113,10 @@
         android:layout_marginEnd="@dimen/ten"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lytSearch"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lytSearch" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cytNoDataFound"
@@ -125,18 +124,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifty"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/lytSearch"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/lytSearch">
 
         <ImageView
             android:id="@+id/imgNoDataFound"
             android:layout_width="match_parent"
             android:layout_height="@dimen/two_hundred_thirty"
             android:src="@drawable/no_data_found"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             style="@style/CustomTextStylePoppinsBold"
