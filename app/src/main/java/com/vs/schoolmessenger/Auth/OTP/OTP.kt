@@ -24,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PassWord
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
@@ -74,7 +75,7 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
             Constant.hideLoading(this@OTP)
             if (response != null) {
                 val status = response.status
-                response.message
+                val message = response.message
                 if (status) {
                     if (Constant.isForgotPassword!!) {
                         val intent = Intent(this@OTP, PasswordGeneration::class.java)
@@ -134,6 +135,9 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                         Constant.isPasswordCreation = true
                         startActivity(intent)
                     }
+                }
+                else{
+                    Constant.errorAlert(this@OTP, "", message)
                 }
 
             }
