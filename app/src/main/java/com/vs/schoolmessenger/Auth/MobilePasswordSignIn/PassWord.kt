@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
@@ -55,7 +56,7 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
             Constant.hideLoading(this@PassWord)
             if (response != null) {
                 val status = response.status
-                response.message
+               val message = response.message
                 if (status) {
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
@@ -135,8 +136,9 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
                             }
                         }
                     }
-
-
+                }
+                else{
+                    Constant.errorAlert(this@PassWord, "", message)
                 }
             }
         }

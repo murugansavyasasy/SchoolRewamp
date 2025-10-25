@@ -189,7 +189,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             Constant.hideLoading(this@Splash)
             if (response != null) {
                 val status = response.status
-                response.message
+                val message = response.message
                 if (status) {
 
 
@@ -271,6 +271,9 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                         Constant.isPasswordCreation = true
                         startActivity(intent)
                     }
+                }
+                else{
+                    Constant.errorAlert(this@Splash, "", message)
                 }
             }
         }

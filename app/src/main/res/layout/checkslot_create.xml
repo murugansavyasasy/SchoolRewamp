@@ -7,8 +7,8 @@
         android:id="@+id/rcySlotDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/lblCreateSlot"/>
+        android:layout_above="@id/lblCreateSlot"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/lblCreateSlot"
@@ -20,9 +20,9 @@
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/twenty"
         android:background="@drawable/bg_orange"
-        android:padding="@dimen/ten"
         android:gravity="center"
+        android:padding="@dimen/ten"
         android:text="Open Above Slots"
         android:textColor="@color/white"
-        android:textSize="@dimen/fifteen_sp"/>
+        android:textSize="@dimen/fifteen_sp" />
 </RelativeLayout>

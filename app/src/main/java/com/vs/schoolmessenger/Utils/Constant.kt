@@ -897,7 +897,7 @@ object Constant {
         val messageText = dialogView.findViewById<TextView>(R.id.alertMessage)
         val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
         messageText.text = content + " Please try again "
-        titleText.text = if (!title.isNullOrBlank()) title else "Oops! Wrong Password"
+        titleText.text = if (!title.isNullOrBlank()) title else "Oops!"
         Log.d("titleText", titleText.text.toString())
 
         okButton.setOnClickListener {

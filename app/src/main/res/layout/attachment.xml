@@ -74,34 +74,34 @@
 
                         <RelativeLayout
                             android:id="@+id/rytHistory"
-                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/twenty"
                             android:layout_marginTop="@dimen/twenty"
                             android:layout_marginEnd="@dimen/fifteen"
-                            android:paddingHorizontal="@dimen/ten"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:paddingHorizontal="@dimen/ten">
 
                             <ImageView
-                                android:layout_centerVertical="true"
                                 android:id="@+id/imgHistory"
                                 android:layout_width="@dimen/twenty"
                                 android:layout_height="@dimen/twenty"
+                                android:layout_centerVertical="true"
                                 android:layout_marginTop="@dimen/ten"
-                                android:backgroundTint="@color/PrimaryColor"
                                 android:layout_marginEnd="@dimen/five"
+                                android:backgroundTint="@color/PrimaryColor"
                                 android:src="@drawable/ic_history">
 
                             </ImageView>
 
                             <TextView
-                                android:layout_centerVertical="true"
-                                android:layout_toEndOf="@+id/imgHistory"
                                 android:id="@+id/btnNoticeBoardReport"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@+id/imgHistory"
                                 android:text=""
                                 android:textColor="@color/PrimaryColor" />
 
@@ -159,7 +159,8 @@
                         android:layout_below="@+id/lblTitleTextCount"
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/eight"
-                        android:text="@string/Description"></TextView>
+                        android:text="@string/Description">
+                    </TextView>
 
 
                     <TextView
@@ -271,8 +272,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/twenty"
-                        android:visibility="invisible"
-                        android:src="@drawable/ic_attach_file">
+                        android:src="@drawable/ic_attach_file"
+                        android:visibility="invisible">
 
                     </ImageView>
 

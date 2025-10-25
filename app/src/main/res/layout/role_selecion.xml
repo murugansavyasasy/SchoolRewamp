@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
 
     <LinearLayout
@@ -26,12 +25,12 @@
 
 
         <TextView
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lblLogout"
-            android:textSize="@dimen/fifteen_sp"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textColor="@color/red">
+            android:textColor="@color/red"
+            android:textSize="@dimen/fifteen_sp">
 
         </TextView>
 
@@ -59,8 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgTeaching"
             android:gravity="center"
-            android:textSize="@dimen/fifteen_sp"
-            android:text="@string/lblChooseyourrole">
+            android:text="@string/lblChooseyourrole"
+            android:textSize="@dimen/fifteen_sp">
 
         </TextView>
 
@@ -144,13 +143,14 @@
         android:id="@+id/btnGo"
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="@dimen/two_hundred"
-        android:layout_height="@dimen/thirty_five"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginEnd="@dimen/twenty_five"
         android:layout_marginBottom="@dimen/thirty"
         android:background="@drawable/bg_blue"
         android:gravity="center"
+        android:padding="@dimen/ten"
         android:text="@string/proceed"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp" />

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <View
@@ -11,18 +11,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
 
         <include
@@ -34,9 +33,9 @@
             android:id="@+id/rcyLessonPlanEdit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/five"
             android:layout_above="@+id/linear_layout"
-            android:layout_below="@+id/toolbarLayout">
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_marginTop="@dimen/five">
         </androidx.recyclerview.widget.RecyclerView>
 
 
@@ -44,40 +43,40 @@
             android:id="@+id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/ten"
             android:gravity="center"
+            android:orientation="horizontal"
             android:paddingTop="@dimen/eight"
             android:paddingBottom="@dimen/eight">
 
             <TextView
                 android:id="@+id/cancelbutton"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Cancel"
-                android:textSize="@dimen/thirteen_sp"
-                android:textColor="@color/white"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/bg_red_radious__all_side_same"
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
                 android:paddingEnd="@dimen/eighteen_sp"
-                android:layout_marginEnd="@dimen/ten"
-                android:background="@drawable/bg_red_radious__all_side_same"
-                style="@style/CustomTextStylePoppinsMedium" />
+                android:text="@string/Cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp" />
 
             <TextView
                 android:id="@+id/createbutton"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit"
-                android:textSize="@dimen/thirteen_sp"
-                android:textColor="@color/white"
+                android:layout_marginStart="@dimen/thirty"
+                android:background="@drawable/bg_green_radious"
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
                 android:paddingEnd="@dimen/eighteen_sp"
-                android:layout_marginStart="@dimen/thirty"
-                android:background="@drawable/bg_green_radious"
-                style="@style/CustomTextStylePoppinsMedium" />
+                android:text="Submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp" />
 
         </LinearLayout>
 
@@ -99,13 +98,13 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/nomessage"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/no_list_found"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp"
-            android:layout_below="@+id/nomessage"
             android:visibility="gone" />
 
     </RelativeLayout>
