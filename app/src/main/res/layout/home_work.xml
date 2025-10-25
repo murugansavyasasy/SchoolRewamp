@@ -4,10 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/light_white"
-    android:id="@+id/main"
-    >
-
-
+    android:id="@+id/main">
 
     <View
         android:id="@+id/statusBarBackground"
@@ -17,7 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 <!--        <LinearLayout-->
 <!--            android:id="@+id/toolbarLayout1"-->
@@ -254,8 +250,7 @@
                         android:layout_marginEnd="@dimen/twenty"
                         android:background="@drawable/field_background"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
 
                         <EditText
                             android:id="@+id/edtDescription"
@@ -264,7 +259,6 @@
                             android:layout_height="match_parent"
                             android:layout_below="@+id/lblDescription"
                             android:background="@android:color/transparent"
-
                             android:editable="true"
                             android:focusable="true"
                             android:focusableInTouchMode="true"

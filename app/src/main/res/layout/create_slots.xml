@@ -704,7 +704,7 @@
                 android:layout_marginBottom="@dimen/fifteen"
                 android:background="@drawable/bg_orange"
                 android:gravity="center_horizontal"
-                android:padding="@dimen/five"
+                android:padding="@dimen/ten"
                 android:text="@string/check_slot_availability"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"

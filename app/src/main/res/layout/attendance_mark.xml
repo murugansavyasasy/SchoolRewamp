@@ -440,8 +440,9 @@
             <TextView
                 android:id="@+id/btnAbsent"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
+                android:layout_height="wrap_content"
                 android:gravity="center"
+                android:padding="@dimen/ten"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/bg_btn_blue"
