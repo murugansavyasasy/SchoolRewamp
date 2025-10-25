@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/AthensGray">
 
 
@@ -93,6 +95,80 @@
 
 
     </LinearLayout>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:visibility="gone"
+        android:layout_below="@+id/linear_layo212ut"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="2dp"
+        android:padding="0dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#F6F6F6"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/txtQuestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello Sir"
+                    android:textSize="13sp"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/txtAskedBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Asked by - Amir Khan"
+                    android:textSize="12sp"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textColor="#555555" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hellioo"
+                android:padding="16dp"
+                android:textColor="#000000"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtTimestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="end"
+                android:text="24 Oct 2025"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_gravity="end"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

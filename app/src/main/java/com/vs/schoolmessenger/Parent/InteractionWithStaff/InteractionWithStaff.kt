@@ -164,6 +164,9 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
             subject_name = data.subject_name,
             is_class_teacher = data.is_class_teacher,
             id = data.id,
+            is_blocked = data.is_blocked,
+            blocked_on = data.blocked_on,
+            reason = data.reason,
             is_assigned = data.is_assigned
         )
         Constant.StaffDataSending = saveStaffData

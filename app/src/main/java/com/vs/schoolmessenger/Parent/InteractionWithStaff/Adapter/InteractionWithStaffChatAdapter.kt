@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerData
 import com.vs.schoolmessenger.R
@@ -57,21 +59,39 @@ class InteractionWithStaffChatAdapter(
         private val time_value: TextView = itemView.findViewById(R.id.time_value)
         private val time: TextView = itemView.findViewById(R.id.time)
         private val linear_layo212ut: LinearLayout = itemView.findViewById(R.id.linear_layo212ut)
+        private val linear_layout: LinearLayout = itemView.findViewById(R.id.linear_layout)
+        private val header_relativelayout: RelativeLayout = itemView.findViewById(R.id.header_relativelayout)
+        private val card_view: CardView = itemView.findViewById(R.id.card_view)
+        private val txtQuestion: TextView = itemView.findViewById(R.id.txtQuestion)
+        private val txtAskedBy: TextView = itemView.findViewById(R.id.txtAskedBy)
+        private val txtAnswer: TextView = itemView.findViewById(R.id.txtAnswer)
+        private val txtTimestamp: TextView = itemView.findViewById(R.id.txtTimestamp)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(chat: AnswerData, position: Int) {
-            questionText.text = chat.question
-            answerText.text = chat.answer
-            user_name.text = chat.student_name
-            time_value.text = Constant.formatChatDate(chat.asked_on)
-            time.text = Constant.formatChatDate(chat.answered_on)
-
-            if (chat.answer == Constant.Not_answered_yet) {
-                linear_layo212ut.visibility = View.GONE
-            } else {
+            if (chat.my_question == true) {
+                card_view.visibility = View.GONE
                 linear_layo212ut.visibility = View.VISIBLE
+                questionText.text = chat.question
+                answerText.text = chat.answer
+                user_name.text = chat.student_name
+                time_value.text = Constant.formatChatDate(chat.asked_on)
+                time.text = Constant.formatChatDate(chat.answered_on)
+                linear_layo212ut.visibility =
+                    if (chat.answer == Constant.Not_answered_yet) View.GONE else View.VISIBLE
+            } else {
+                card_view.visibility = View.VISIBLE
+                linear_layo212ut.visibility = View.GONE
+                linear_layout.visibility = View.GONE
+                txtQuestion.text = chat.question
+                txtAskedBy.text = "Asked by ~ " + " " +chat.student_name
+                txtAnswer.text = chat.answer
+                txtTimestamp.text = Constant.formatChatDate(chat.asked_on)
+                card_view.visibility =
+                    if (chat.answer == Constant.Not_answered_yet) View.GONE else View.VISIBLE
             }
         }
+
     }
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

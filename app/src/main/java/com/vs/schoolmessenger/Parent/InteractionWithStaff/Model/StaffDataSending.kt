@@ -7,5 +7,8 @@ data class StaffDataSending(
     var subject_name: String,
     val is_assigned: Boolean,
     val is_class_teacher: Boolean,
+    val is_blocked: Boolean,
+    val blocked_on: String,
+    val reason: String,
     val unread_count: String
 )

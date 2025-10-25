@@ -53,6 +53,13 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         binding.toolbarLayout.lblParentToolBar.text = staffDetails!!.name
         binding.toolbarLayout.lblSchoolName.text = staffDetails!!.school_name
 
+        binding.toolbarLayout.blocktoolbar.visibility = View.VISIBLE
+
+        binding.toolbarLayout.blocktoolbar.setOnClickListener {
+            val intent = Intent(this, BlockListStudentActivity::class.java)
+            startActivity(intent)
+        }
+
         fetchStudentData()
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytsearch1.isVisible) {
@@ -131,10 +138,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.blocklist_label -> {
-                val intent = Intent(this, BlockListStudentActivity::class.java)
-                startActivity(intent)
-            }
+
         }
     }
 

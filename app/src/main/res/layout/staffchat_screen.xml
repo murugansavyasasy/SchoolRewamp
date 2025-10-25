@@ -33,7 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarLayout" />
 
-
     <LinearLayout
         android:id="@+id/bottomChatInput"
         android:layout_width="0dp"
@@ -42,6 +41,7 @@
         android:background="@color/AthensGray"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:padding="@dimen/ten"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,6 +82,50 @@
             android:layout_marginStart="@dimen/ten"
             android:contentDescription="@string/send_message"
             android:src="@drawable/sent_message" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/blockdetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:background="@color/AthensGray"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="@dimen/ten"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+
+        <TextView
+            android:id="@+id/reasontext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reason : Unwanted Talk"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/red"
+            android:textSize="14sp" />
+
+
+
+        <TextView
+            android:id="@+id/edtMes21sage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:text="You have been blocked by the staff"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+
+
     </LinearLayout>
 
 

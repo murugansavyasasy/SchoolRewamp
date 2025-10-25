@@ -48,8 +48,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         isToolBarPrimaryParentInteractionwithStaff(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -107,6 +106,15 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
+        if (staffData!!.is_blocked == true) {
+            binding.bottomChatInput.visibility = View.GONE
+            binding.blockdetails.visibility = View.VISIBLE
+            binding.reasontext.text = "Reason : " + staffData!!.reason
+        } else {
+            binding.bottomChatInput.visibility = View.VISIBLE
+            binding.blockdetails.visibility = View.GONE
+        }
+
     }
 
 
@@ -149,8 +157,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         binding.rcystaffchatdata.visibility = View.VISIBLE
         binding.rcystaffchatdata.layoutManager = LinearLayoutManager(this)
 
-        interactionWithStaffChatAdapter =
-            InteractionWithStaffChatAdapter(sortedData, this, false)
+        interactionWithStaffChatAdapter = InteractionWithStaffChatAdapter(sortedData, this, false)
         binding.rcystaffchatdata.adapter = interactionWithStaffChatAdapter
 
         binding.rcystaffchatdata.scrollToPosition(sortedData.size - 1)

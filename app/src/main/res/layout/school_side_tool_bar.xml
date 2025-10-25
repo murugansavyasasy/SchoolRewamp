@@ -164,15 +164,27 @@
 
 
             <ImageView
-                android:id="@+id/imgSearchToolBar"
+                android:id="@+id/blocktoolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten"
                 android:padding="@dimen/five"
+                android:src="@drawable/blocksvgformat"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imgSearchToolBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/blocktoolbar"
+                android:layout_marginEnd="@dimen/ten"
+                android:padding="@dimen/five"
                 android:src="@drawable/search_icon_white"
                 android:visibility="gone" />
+
         </RelativeLayout>
 
         <RelativeLayout

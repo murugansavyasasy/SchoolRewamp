@@ -10,5 +10,8 @@ data class Staff(
     val unread_count: String,
     val last_msg_time: String,
     val last_msg: String,
+    val is_blocked: Boolean,
+    val blocked_on: String,
+    val reason: String,
     val section_name: String
 )
