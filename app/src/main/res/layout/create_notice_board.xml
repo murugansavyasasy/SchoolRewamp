@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/light_white">
 
     <View
@@ -11,16 +11,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
         <include
             android:id="@+id/toolbarLayout"
@@ -60,47 +60,46 @@
 
                     <TextView
                         android:id="@+id/lblStar"
-                        android:layout_centerVertical="true"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/two"
                         android:layout_marginTop="@dimen/eighteen"
                         android:layout_toEndOf="@id/lblEventTitle"
                         android:text="@string/mandatory"
-                        android:textColor="@color/red"
-                        />
+                        android:textColor="@color/red" />
 
                     <RelativeLayout
                         android:id="@+id/rytHistory"
-                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
                         android:layout_marginEnd="@dimen/fifteen"
-                        android:paddingHorizontal="@dimen/ten"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:paddingHorizontal="@dimen/ten">
 
                         <ImageView
-                            android:layout_centerVertical="true"
                             android:id="@+id/imgHistory"
                             android:layout_width="@dimen/twenty"
                             android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
                             android:layout_marginTop="@dimen/ten"
-                            android:backgroundTint="@color/PrimaryColor"
                             android:layout_marginEnd="@dimen/five"
+                            android:backgroundTint="@color/PrimaryColor"
                             android:src="@drawable/ic_history">
 
                         </ImageView>
 
                         <TextView
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@+id/imgHistory"
                             android:id="@+id/btnNoticeBoardReport"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/imgHistory"
                             android:text="History >>"
                             android:textColor="@color/PrimaryColor" />
 
@@ -144,8 +143,8 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
                     android:text="0 / 50"
-                    android:visibility="gone"
-                    android:textSize="@dimen/thirteen_sp" />
+                    android:textSize="@dimen/thirteen_sp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/lblEventDesc"
@@ -155,8 +154,7 @@
                     android:layout_below="@+id/lbtitleTextCount"
                     android:layout_alignStart="@+id/lnrTitle"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="@string/Description"
-                    />
+                    android:text="@string/Description" />
 
                 <TextView
                     android:id="@+id/lblStar2"
@@ -202,8 +200,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
-                    android:visibility="gone"
-                    android:text="0 / 500" />
+                    android:text="0 / 500"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -224,8 +222,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
-                            android:text="@string/notice_active_period"
-                            />
+                            android:text="@string/notice_active_period" />
 
                         <TextView
                             android:id="@+id/lblStar3"
@@ -254,56 +251,61 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center">
+
                                 <TextView
                                     android:id="@+id/lblFrom"
-                                    android:layout_width="wrap_content"
                                     style="@style/CustomTextStylePoppinsBold"
-                                    android:text="@string/from"
-                                    android:layout_height="wrap_content">
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/from">
                                 </TextView>
 
                                 <RelativeLayout
-                                    android:layout_marginTop="@dimen/five"
-                                    android:layout_below="@+id/lblFrom"
                                     android:id="@+id/lnrStartCalendar"
-                                    android:paddingHorizontal="@dimen/five"
-                                    android:paddingVertical="@dimen/three"
-                                    android:background="@drawable/field_background"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/lblFrom"
+                                    android:layout_marginTop="@dimen/five"
+                                    android:background="@drawable/field_background"
+                                    android:paddingHorizontal="@dimen/five"
+                                    android:paddingVertical="@dimen/three">
+
                                     <ImageView
-                                        android:layout_centerVertical="true"
                                         android:id="@+id/imgCalendar"
-                                        android:layout_alignParentStart="true"
                                         android:layout_width="@dimen/twenty_five"
-                                        android:src="@drawable/calender_icon2"
-                                        android:layout_height="@dimen/twenty_five">
+                                        android:layout_height="@dimen/twenty_five"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/calender_icon2">
 
                                     </ImageView>
+
                                     <LinearLayout
-                                        android:layout_toEndOf="@+id/imgCalendar"
                                         android:id="@+id/lnrDateDetails"
-                                        android:layout_centerVertical="true"
                                         android:layout_width="wrap_content"
-                                        android:layout_marginEnd="@dimen/five"
-                                        android:orientation="vertical"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/five"
-                                        android:layout_height="wrap_content">
+                                        android:layout_marginEnd="@dimen/five"
+                                        android:layout_toEndOf="@+id/imgCalendar"
+                                        android:orientation="vertical">
+
                                         <TextView
                                             android:id="@+id/lblDay"
-                                            android:layout_width="wrap_content"
-                                            android:text=""
                                             style="@style/CustomTextStylePoppinsRegular"
-                                            android:textSize="@dimen/eleven_sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text=""
                                             android:textColor="@color/mild_grey_dark"
-                                            android:layout_height="wrap_content">
+                                            android:textSize="@dimen/eleven_sp">
                                         </TextView>
+
                                         <TextView
                                             android:id="@+id/txtStartDate"
-                                            android:layout_width="wrap_content"
-                                            android:text=""
                                             style="@style/CustomTextStylePoppinsBold"
-                                            android:layout_height="wrap_content">
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="">
                                         </TextView>
                                     </LinearLayout>
 
@@ -313,24 +315,25 @@
                             </RelativeLayout>
 
                             <LinearLayout
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:text=""
-                                    android:visibility="invisible"
                                     style="@style/CustomTextStylePoppinsBold"
-                                    android:layout_height="wrap_content">
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:visibility="invisible">
                                 </TextView>
 
                                 <ImageView
-                                    android:layout_marginTop="@dimen/five"
                                     android:id="@+id/imagearrow_view"
                                     android:layout_width="@dimen/eighteen"
                                     android:layout_height="@dimen/eighteen"
+                                    android:layout_marginTop="@dimen/five"
                                     android:src="@drawable/exchange_icon">
                                 </ImageView>
                             </LinearLayout>
@@ -344,52 +347,57 @@
 
                                 <TextView
                                     android:id="@+id/lblTo"
-                                    android:layout_width="wrap_content"
                                     style="@style/CustomTextStylePoppinsBold"
-                                    android:text="@string/to"
-                                    android:layout_height="wrap_content">
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/to">
                                 </TextView>
+
                                 <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_below="@+id/lblTo"
                                     android:layout_marginTop="@dimen/five"
-                                    android:paddingHorizontal="@dimen/five"
-                                    android:paddingVertical="@dimen/three"
                                     android:background="@drawable/field_background"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
+                                    android:paddingHorizontal="@dimen/five"
+                                    android:paddingVertical="@dimen/three">
+
                                     <ImageView
-                                        android:layout_centerVertical="true"
                                         android:id="@+id/lnrEndCalendar"
-                                        android:layout_alignParentStart="true"
                                         android:layout_width="@dimen/twenty_five"
-                                        android:src="@drawable/calender_icon2"
-                                        android:layout_height="@dimen/twenty_five">
+                                        android:layout_height="@dimen/twenty_five"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/calender_icon2">
 
                                     </ImageView>
+
                                     <LinearLayout
+                                        android:id="@+id/bottomdaylinear1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/five"
                                         android:layout_marginEnd="@dimen/five"
                                         android:layout_toEndOf="@+id/lnrEndCalendar"
-                                        android:id="@+id/bottomdaylinear1"
-                                        android:layout_centerVertical="true"
-                                        android:layout_width="wrap_content"
-                                        android:orientation="vertical"
-                                        android:layout_marginStart="@dimen/five"
-                                        android:layout_height="wrap_content">
+                                        android:orientation="vertical">
+
                                         <TextView
                                             android:id="@+id/lblEndDay"
-                                            android:layout_width="wrap_content"
-                                            android:text=""
                                             style="@style/CustomTextStylePoppinsRegular"
-                                            android:textSize="@dimen/eleven_sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text=""
                                             android:textColor="@color/mild_grey_dark"
-                                            android:layout_height="wrap_content">
+                                            android:textSize="@dimen/eleven_sp">
                                         </TextView>
+
                                         <TextView
                                             android:id="@+id/txtEndDate"
-                                            android:layout_width="wrap_content"
-                                            android:text=""
                                             style="@style/CustomTextStylePoppinsBold"
-                                            android:layout_height="wrap_content">
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="">
                                         </TextView>
                                     </LinearLayout>
 
@@ -416,13 +424,13 @@
 
                             <TextView
                                 android:id="@+id/lblOptional"
+                                style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/eight"
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_toEndOf="@+id/lblAddPhoto"
                                 android:text="@string/Optional"
-                                style="@style/CustomTextStylePoppinsBold"
                                 android:textColor="@color/mild_grey1"
                                 android:textSize="@dimen/thirteen_sp">
                             </TextView>
@@ -433,8 +441,8 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_marginEnd="@dimen/twenty"
-                                android:visibility="invisible"
-                                android:src="@drawable/ic_attach_file">
+                                android:src="@drawable/ic_attach_file"
+                                android:visibility="invisible">
 
                             </ImageView>
 

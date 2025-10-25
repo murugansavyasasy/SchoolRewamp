@@ -221,14 +221,14 @@
     <RelativeLayout
         android:id="@+id/rytSend"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/twenty_five"
         android:layout_marginBottom="@dimen/sixteen"
         android:background="@drawable/bg_btn_blue"
         android:gravity="center"
-        android:padding="@dimen/eight">
+        android:padding="@dimen/ten">
 
         <TextView
             android:id="@+id/lblSend"

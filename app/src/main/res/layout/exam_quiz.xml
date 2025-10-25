@@ -1,390 +1,382 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/athens_gray">
 
-        <View
-            android:id="@+id/statusBarBackground"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/PrimaryColor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-        <include
-            android:id="@+id/toolbarLayout"
-            layout="@layout/school_side_tool_bar"
-            app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+
+    <LinearLayout
+        android:id="@+id/toolbarLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
+        <LinearLayout
+            android:id="@+id/lnrTabOneName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tabOneName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/Create"
+                android:textColor="@color/iconBlue">
+            </TextView>
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/iconBlue">
+            </View>
+        </LinearLayout>
 
 
         <LinearLayout
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-            android:id="@+id/toolbarLayout1"
+            android:id="@+id/lnrTabTwoName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tabTwoName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/Reports">
+            </TextView>
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/athens_gray">
+            </View>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/svOverallCreateQE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout1">
+
+        <RelativeLayout
+            android:id="@+id/rytCreateQE"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:background="@drawable/rect_shadow_white"
+            android:visibility="visible">
 
-            <LinearLayout
-                android:layout_marginEnd="@dimen/five"
-                android:id="@+id/lnrTabOneName"
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/lblTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tabOneName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/Create"
-                    android:textColor="@color/iconBlue">
-                </TextView>
-
-                <View
-                    android:id="@+id/line1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three"
-                    android:layout_below="@+id/groupheading"
-                    android:layout_marginTop="@dimen/five"
-                    android:background="@color/iconBlue">
-                </View>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/lnrTabTwoName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_marginStart="@dimen/five"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tabTwoName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/Reports">
-                </TextView>
-
-                <View
-                    android:id="@+id/line2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three"
-                    android:layout_below="@+id/groupheading"
-                    android:layout_marginTop="@dimen/five"
-                    android:background="@color/athens_gray"
-                    >
-                </View>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <ScrollView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout1"
-            android:id="@+id/svOverallCreateQE"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RelativeLayout
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:background="@drawable/rect_shadow_white"
-                android:id="@+id/rytCreateQE"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
-                android:visibility="visible">
+                android:text="@string/Title"
+                android:textSize="@dimen/fifteen_sp">
 
+            </TextView>
 
-                <TextView
-                    android:id="@+id/lblTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginTop="@dimen/ten"
-                    android:text="@string/Title"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/fifteen_sp"
-                    >
-
-                </TextView>
-
-                <LinearLayout
-                    android:id="@+id/lnrTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/fourty_five"
-                    android:layout_below="@+id/lblTitle"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/fifteen"
-                    android:background="@drawable/field_background"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/lnrTitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_below="@+id/lblTitle"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:background="@drawable/field_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/edtTitle"
-                    android:hint="@string/Title"
-                    android:background="@android:color/transparent"
-                    android:paddingHorizontal="@dimen/ten"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblTitle"
-                    style="@style/CustomTextStylePoppinsMedium">
+                    android:background="@android:color/transparent"
+                    android:hint="@string/Title"
+                    android:paddingHorizontal="@dimen/ten">
 
                 </EditText>
-                </LinearLayout>
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/lblTitleTextCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lnrTitle"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_marginEnd="@dimen/fifteen"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:text="0 / 50"
-                    android:visibility="gone"
-                    android:textColor="@color/light_gray"
-                    >
+            <TextView
+                android:id="@+id/lblTitleTextCount"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnrTitle"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:text="0 / 50"
+                android:textColor="@color/light_gray"
+                android:visibility="gone">
 
-                </TextView>
+            </TextView>
 
-                <TextView
-                    android:id="@+id/lblDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblTitleTextCount"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginTop="@dimen/five"
-                    android:text="@string/Description"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/fifteen_sp">
+            <TextView
+                android:id="@+id/lblDescription"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitleTextCount"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/five"
+                android:text="@string/Description"
+                android:textSize="@dimen/fifteen_sp">
 
-                </TextView>
+            </TextView>
 
-                <LinearLayout
-                    android:id="@+id/lnrDesc"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/hundred"
-                    android:layout_below="@+id/lblDescription"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/fifteen"
-                    android:background="@drawable/field_background"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/lnrDesc"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hundred"
+                android:layout_below="@+id/lblDescription"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:background="@drawable/field_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/edtDescription"
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/lblDescription"
+                    android:background="@android:color/transparent"
                     android:editable="true"
                     android:focusable="true"
-                    android:background="@android:color/transparent"
                     android:focusableInTouchMode="true"
                     android:gravity="start"
                     android:hint="@string/Description"
                     android:padding="@dimen/ten"
-                    style="@style/CustomTextStylePoppinsRegular"
                     android:textSize="@dimen/thirteen_sp">
 
                 </EditText>
 
-                </LinearLayout>
+            </LinearLayout>
 
 
-                <TextView
-                    android:id="@+id/lblTextCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lnrDesc"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/fifteen"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:text="0 / 500"
-                    android:visibility="gone"
-                    android:textColor="@color/light_gray"
-                    >
-
-                </TextView>
-
-                <TextView
-                    android:layout_below="@+id/lblTextCount"
-                    android:id="@+id/lblNoQuestion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginTop="@dimen/five"
-                    android:text="@string/no_of_question"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/fifteen_sp"
-                    >
-
-                </TextView>
-
-                <EditText
-                    android:id="@+id/edtQuestion"
-                    android:hint="@string/no_of_question"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblNoQuestion"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:inputType="number"
-                    android:digits="0123456789"
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_marginEnd="@dimen/fifteen"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    >
-
-                </EditText>
-
-                <RadioButton
-                    android:layout_marginTop="@dimen/five"
-                    android:id="@+id/rbNextLvl"
-                    android:layout_below="@+id/edtQuestion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:buttonTint="@color/radio_button_colour"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:text="@string/check_the_box_to_continue_next_level">
-                </RadioButton>
-
-
-
-                <TextView
-                    android:id="@+id/btnChooseRecipient"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/twenty_five"
-                    android:layout_marginEnd="@dimen/twenty_five"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginBottom="@dimen/thirty"
-                    android:layout_below="@+id/rbNextLvl"
-                    android:background="@drawable/rect_btn_orange"
-                    android:gravity="center"
-                    android:padding="@dimen/ten"
-                    android:text="@string/NEXT"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/thirteen_sp">
-
-                </TextView>
-
-            </RelativeLayout>
-
-        </ScrollView>
-
-        <RelativeLayout
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/rlaQuizExamReport"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/five"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/five">
-
-            <RelativeLayout
-                android:id="@+id/rytSearch1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
+            <TextView
+                android:id="@+id/lblTextCount"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnrDesc"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
-                android:background="@drawable/rect_grey"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:text="0 / 500"
+                android:textColor="@color/light_gray"
                 android:visibility="gone">
 
-                <ImageView
-                    android:id="@+id/imgSearch1"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
-                    android:src="@drawable/ic_search" />
+            </TextView>
 
-                <EditText
-                    android:id="@+id/txtSearch1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@id/imgSearch1"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/lblSearch"
-                    android:maxLines="1"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"
-                    android:scrollHorizontally="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/lblNoQuestion"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTextCount"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/five"
+                android:text="@string/no_of_question"
+                android:textSize="@dimen/fifteen_sp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_below="@+id/rytSearch1"
-                android:id="@+id/rcQuizExamReport"
+            </TextView>
+
+            <EditText
+                android:id="@+id/edtQuestion"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/lblNoQuestion"
+                android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/five"
-                >
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginEnd="@dimen/fifteen"
+                android:digits="0123456789"
+                android:hint="@string/no_of_question"
+                android:inputType="number">
 
+            </EditText>
 
-            <LinearLayout
-                android:id="@+id/lytList"
+            <RadioButton
+                android:id="@+id/rbNextLvl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtQuestion"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/five"
+                android:buttonTint="@color/radio_button_colour"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
+                android:text="@string/check_the_box_to_continue_next_level">
+            </RadioButton>
+
+
+            <TextView
+                android:id="@+id/btnChooseRecipient"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rbNextLvl"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:layout_marginBottom="@dimen/thirty"
+                android:background="@drawable/rect_btn_orange"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="@string/NEXT"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rlaQuizExamReport"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/five"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout1">
+
+        <RelativeLayout
+            android:id="@+id/rytSearch1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgSearch1"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtSearch1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/rcQuizExamReport"
-                android:layout_centerInParent="true"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/noDataImage"
-                    android:layout_width="@dimen/two_hundred"
-                    android:layout_height="@dimen/two_hundred"
-                    android:layout_marginTop="@dimen/twenty_five"
-                    android:src="@drawable/no_school_quiz_message">
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/txtNoData"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:text=""
-                    android:textSize="@dimen/fifteen_sp">
-
-                </TextView>
-            </LinearLayout>
+                android:layout_toEndOf="@id/imgSearch1"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
         </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcQuizExamReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytSearch1"
+            android:layout_marginTop="@dimen/five">
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <LinearLayout
+            android:id="@+id/lytList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rcQuizExamReport"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/noDataImage"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:src="@drawable/no_school_quiz_message">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:text=""
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
+        </LinearLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
