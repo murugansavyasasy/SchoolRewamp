@@ -285,15 +285,29 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 TimePickerDialog(
                     this,
                     { _, hour, minute ->
-                        startCalendar = Calendar.getInstance().apply {
+                        val now = Calendar.getInstance()
+                        val chosenTime = Calendar.getInstance().apply {
                             set(Calendar.HOUR_OF_DAY, hour)
                             set(Calendar.MINUTE, minute)
                         }
+
+                        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                        val todayStr = sdf.format(now.time)
+
+                        // Case: multiple dates already selected, including today
+                        if (selectedDates.contains(todayStr) && chosenTime.before(now)) {
+                            Toast.makeText(
+                                this,
+                                "Cannot select past time when today is selected",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@TimePickerDialog // stop here — don’t update text
+                        }
+
+                        // Otherwise allow
+                        startCalendar = chosenTime
                         binding.lblFromTime.text =
-                            SimpleDateFormat(
-                                "hh:mm a",
-                                Locale.getDefault()
-                            ).format(startCalendar!!.time)
+                            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(startCalendar!!.time)
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
@@ -419,7 +433,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 addProperty("to_time", meetingData.toTime)
                 addProperty("duration", meetingData.slotDuration.toInt())
                 addProperty("event_link", meetingData.meetingLink)
-                addProperty("break_time", isBreakDuration)
+                addProperty("break_time", isBreakDuration.toInt())
                 addProperty("meeting_mode", meetingData.meetingMode)
             }
 
@@ -451,35 +465,38 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     }
 
     private fun isShowAvailableSlot(data: List<ValidatedSlot>) {
-        val availableSlotsOnly = data.map { slot ->
-            val filteredSlots = slot.slots.filter { it.slot_availablity.equals("Available", true) }
-            slot.copy(slots = filteredSlots)
-        }.filter { it.slots.isNotEmpty() }
-        if (availableSlotsOnly.isEmpty()) {
-            Toast.makeText(this, "No available slots for selected date(s)", Toast.LENGTH_SHORT).show()
+        // 1. Keep all slots (Available + Not Available) for display
+        val allSlotsList = data.filter { it.slots.isNotEmpty() }
+
+        if (allSlotsList.isEmpty()) {
+            Toast.makeText(this, "No slots found for selected date(s)", Toast.LENGTH_SHORT).show()
             return
         }
 
+        // 2. Setup bottom sheet
         bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view = layoutInflater.inflate(R.layout.checkslot_create, null)
         bottomSheetDialog!!.setContentView(view)
 
-        val isRcySlotDate = view.findViewById<RecyclerView>(R.id.rcySlotDate)
+        val rcySlotDate = view.findViewById<RecyclerView>(R.id.rcySlotDate)
         val lblCreateSlot = view.findViewById<TextView>(R.id.lblCreateSlot)
 
-        val groupedData = availableSlotsOnly.map { slot ->
+        // 3. Prepare grouped data (date → slots)
+        val groupedData = allSlotsList.map { slot ->
             AvailableSlotGroup(slot.date, slot.slots.toMutableList())
         }
 
+        // 4. Adapter handles selection; you’ll track only available slot selections
         val adapter = CheckAvailableSlotsDate(this, groupedData) { updatedList ->
             selectedSlots = updatedList
         }
 
+        rcySlotDate.layoutManager = GridLayoutManager(this, 1)
+        rcySlotDate.adapter = adapter
 
-        isRcySlotDate.layoutManager = GridLayoutManager(this, 1)
-        isRcySlotDate.adapter = adapter
-
+        // 5. Handle create slot click
         lblCreateSlot?.setOnClickListener {
+            // Filter only available slots before saving
             val availableSlots = selectedSlots.filter { (_, slot) ->
                 slot.slot_availablity.equals("Available", true)
             }
@@ -488,14 +505,17 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 Toast.makeText(this, "Please select at least one available slot", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
             val dialogBuilder = android.app.AlertDialog.Builder(this)
             dialogBuilder.setTitle("Confirm Slot Creation")
             dialogBuilder.setMessage("Are you sure you want to create slots for the selected dates?")
             dialogBuilder.setPositiveButton("Yes") { dialog, _ ->
+                // Group selected available slots by date
                 isSlotCreateValues = availableSlots
-                    .groupBy { it.first }
+                    .groupBy { it.first } // date
                     .map { (date, slots) -> date to slots.map { it.second } }
                     .toMutableList()
+
                 Constant.showLoading(this)
                 isCreateSlots()
                 dialog.dismiss()
@@ -506,9 +526,8 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             dialogBuilder.create().show()
         }
 
-
+        //6. Show bottom sheet full height
         bottomSheetDialog!!.show()
-
         val bottomSheet = bottomSheetDialog!!.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.let { sheet ->
             val behavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(sheet)
@@ -517,7 +536,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             behavior.skipCollapsed = true
         }
     }
-
 
     private fun validateMeetingInputs(): MeetingCreationData? {
         if (binding.edtPurPose.text.toString().isEmpty()) {
@@ -642,27 +660,68 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+
         val calendarView = dialog.findViewById<CustomCalendar>(R.id.customCalendar)
         val btnSave = dialog.findViewById<TextView>(R.id.btnSaveCalendar)
+
         calendarView.setOnCancelListener {
             dialog.dismiss()
         }
+
         calendarView.setSelectedDates(selectedDates)
+
         btnSave.setOnClickListener {
+            val selected = calendarView.getSelectedDates()
+            val validDates = ArrayList<String>()
+
+            val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val todayStr = sdf.format(Calendar.getInstance().time)
+            val now = Calendar.getInstance()
+
+            for (dateStr in selected) {
+                try {
+                    if (dateStr == todayStr) {
+                        // Check if From or To time already picked and in past
+                        if (startCalendar != null && startCalendar!!.before(now)) {
+                            Toast.makeText(
+                                this,
+                                "Cannot select today because From Time is already past",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            continue
+                        }
+                        if (endCalendar != null && endCalendar!!.before(now)) {
+                            Toast.makeText(
+                                this,
+                                "Cannot select today because To Time is already past",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            continue
+                        }
+                    }
+                    validDates.add(dateStr)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
             selectedDates.clear()
-            selectedDates.addAll(calendarView.getSelectedDates())
+            selectedDates.addAll(validDates)
+
             selectedDatesAdapter = SelectedDatesAdapter(selectedDates) { date ->
                 selectedDates.remove(date)
                 selectedDatesAdapter.notifyDataSetChanged()
-                calendarView.setSelectedDates(selectedDates) // keep sync with calendar
+                calendarView.setSelectedDates(selectedDates)
             }
+
             binding.rcySelectedDate.layoutManager = GridLayoutManager(this, 3)
             binding.rcySelectedDate.adapter = selectedDatesAdapter
+
             dialog.dismiss()
         }
+
         dialog.show()
     }
-
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun isChangeTheBackRoundBreakDuration(isSelectedTextView: TextView) {
         binding.lblFiveMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))
@@ -711,7 +770,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             binding.edtMobileOrLink.visibility = View.GONE
             isOnlineMeeting = false
         }
-
     }
 }
 

@@ -138,6 +138,7 @@
                 android:layout_below="@+id/scoreCircleContainer"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
+                android:textSize="@dimen/twenty_sp"
                 android:text="Overall Grade"></TextView>
 
             <TextView
@@ -147,9 +148,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblGrade"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginHorizontal="@dimen/twenty_five"
                 android:gravity="center"
                 android:text=""
+                android:textSize="@dimen/sixteen_sp"
                 android:textColor="@color/dark_blue_9"></TextView>
 
             <View

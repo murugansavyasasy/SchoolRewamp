@@ -16,7 +16,8 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/arrow_left_white"></ImageView>
+            android:src="@drawable/arrow_left_white">
+        </ImageView>
 
         <TextView
             android:id="@+id/lblMenuName"
@@ -26,7 +27,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="PTM"
+            android:text="@string/ptm"
             android:textColor="@color/white"
             android:textSize="@dimen/twenty"></TextView>
 
@@ -40,8 +41,7 @@
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp">
-        </TextView>
+            android:textSize="@dimen/thirteen_sp"></TextView>
 
     </RelativeLayout>
 
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/five"
-                    android:text="Purpose of meeting"
+                    android:text="@string/purpose_of_meeting"
                     android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <EditText
@@ -95,7 +95,7 @@
                     android:layout_below="@+id/edtPurPose"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="Select meeting mode"
+                    android:text="@string/select_meeting_mode"
                     android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <LinearLayout
@@ -243,7 +243,7 @@
                     android:layout_below="@+id/lnrAcademicYearView"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="Select Your Classes"
+                    android:text="@string/select_your_classes"
                     android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -528,7 +528,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/fifteen"
                     android:layout_marginBottom="@dimen/ten"
-                    android:text="Need break between slots?"
+                    android:text="@string/need_break_between_slots"
                     android:textColor="@color/black"></TextView>
 
                 <com.vs.schoolmessenger.Utils.CustomSwitch
@@ -705,7 +705,7 @@
                 android:background="@drawable/bg_orange"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/five"
-                android:text="Check slot availability"
+                android:text="@string/check_slot_availability"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="normal"></TextView>

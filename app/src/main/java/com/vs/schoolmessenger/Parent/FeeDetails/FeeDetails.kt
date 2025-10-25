@@ -157,6 +157,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             R.id.imgBack -> onBackPressed()
 
             R.id.btnPayment -> {
+                Constant.hideLoading(this)
                 binding.payWebview.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -170,6 +171,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             }
 
             R.id.btnReceipt -> {
+                Constant.hideLoading(this)
                 binding.payWebview.visibility = View.GONE
                 binding.rvReceipts.visibility = View.VISIBLE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE

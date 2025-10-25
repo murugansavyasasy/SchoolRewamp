@@ -492,7 +492,7 @@
                     android:id="@+id/isViewSignalCheck"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/point_one"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_below="@+id/lnrEnableFingerPrint"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginEnd="@dimen/thirty"
@@ -509,7 +509,7 @@
                     android:layout_marginBottom="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/thirty"
                     android:gravity="center"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:weightSum="1">
 

@@ -83,7 +83,7 @@ class MeetingHistoryAdapter(
             val meeting = item.meeting
             tvPurpose.text = meeting.purpose
             tvStaff.text = "with ${meeting.staff_name}"
-            tvSubject.text = meeting.subject_name
+            tvSubject.text = meeting.subject_name.joinToString(", ")
             tvMode.text = meeting.mode
             tvDuration.text = "15 min"
             tvDate.text = formatDate(meeting.date)
@@ -276,7 +276,6 @@ class MeetingHistoryAdapter(
                                 if (
                                     meeting.purpose.lowercase().contains(query) ||
                                     meeting.staff_name.lowercase().contains(query) ||
-                                    meeting.subject_name.lowercase().contains(query) ||
                                     meeting.status.lowercase().contains(query)  ||
                                     meeting.date.lowercase().contains(query) ||
                                     meeting.time.lowercase().contains(query)

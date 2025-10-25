@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rytCard"
-    android:layout_width="@dimen/sixty"
-    android:layout_height="@dimen/sixty"
-    android:layout_margin="@dimen/five"
+    android:layout_width="@dimen/fourty"
+    android:layout_height="@dimen/fourty"
     android:background="@drawable/day_unselected"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/btnDay"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/thirty_sp"
+        android:layout_height="@dimen/thirty_sp"
         android:gravity="center"
-        android:textSize="14sp"
+        android:textSize="@dimen/twele_sp"
         android:text="2"
         android:layout_centerInParent="true"
         android:textColor="@color/white"

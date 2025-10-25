@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/datevalue"
             android:text="12 Aug"
+            android:visibility="gone"
             android:layout_weight="1"
             android:layout_marginTop="@dimen/ten"
             android:gravity="end"

@@ -18,7 +18,7 @@
             android:id="@+id/tvMeetingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Parents Meeting"
+            android:text=""
             style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
@@ -51,7 +51,7 @@
                     android:id="@+id/tvParentName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nicholas"
+                    android:text=""
                     style="@style/CustomTextStylePoppinsMedium"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/fifteen_sp" />
@@ -61,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/two"
-                    android:text="TAMIL"
+                    android:text=""
                     style="@style/CustomTextStylePoppinsMedium"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/thirteen_sp" />
@@ -106,7 +106,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="In Person"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp" />
         </LinearLayout>

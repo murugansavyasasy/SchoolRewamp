@@ -90,7 +90,15 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         appViewModel!!.isSendCertificateRequest?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null) {
-                Constant.showTopAlertPopup(response!!.message, this)
+                if (response.status){
+                    Constant.showParentDataValidation(getString(R.string.success),response!!.message, this)
+                }
+                else{
+                    Constant.showParentDataValidation(getString(R.string.Oops),response!!.message, this)
+                }
+            }
+            else{
+                Constant.showParentDataValidation(getString(R.string.Oops),getString(R.string.something_went_wrong_please_try_again_later), this)
             }
         }
         loadCertificateRequestData()

@@ -34,13 +34,11 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
     private lateinit var recyclerViewSchedule: RecyclerView
     private lateinit var dayHeader: TextView
 
+    private var selectedDayId: Int = -1
 
-    private val allDays =
-        listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+    private val allDays = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
-    override fun getViewBinding(): TimeTableBinding {
-        return TimeTableBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): TimeTableBinding { return TimeTableBinding.inflate(layoutInflater) }
 
     override fun setupViews() {
         super.setupViews()
@@ -72,6 +70,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         if (todayIndex != -1) {
             adapter2.setSelectedPosition(todayIndex)
             day_id = todayIndex + 1
+            selectedDayId = day_id
             loadTimeTable(day_id)
         }
 
@@ -87,13 +86,13 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
                 listener = object : TimeTableListener {
                     override fun onItemClick(
                         data: TimeTableListData,
-                        holder: TimeTableAdapter.DataViewHolder
-                    ) {
+                        holder: TimeTableAdapter.DataViewHolder) {
                     }
                 },
                 context = this,
                 isLoading = false
             )
+
             recyclerViewSchedule.layoutManager = LinearLayoutManager(this)
             recyclerViewSchedule.adapter = scheduleAdapter
             recyclerViewSchedule.visibility = View.VISIBLE
@@ -109,9 +108,12 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         }
     }
 
+
     private fun setupRecyclerViewDays() {
         adapter2 = TimeTableDayAdapter(timetabledayList, object : TimeTableDayListener {
             override fun onItemClick(data: TimeTableDayData) {
+                if (data.day_id == selectedDayId) { return }
+                selectedDayId = data.day_id
                 day_id = data.day_id
                 loadTimeTable(day_id)
                 val position = timetabledayList.indexOfFirst { it.day_id == day_id }
@@ -235,8 +237,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
             listener = object : TimeTableListener {
                 override fun onItemClick(
                     data: TimeTableListData,
-                    holder: TimeTableAdapter.DataViewHolder
-                ) {
+                    holder: TimeTableAdapter.DataViewHolder) {
                 }
             },
             context = this,

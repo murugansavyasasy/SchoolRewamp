@@ -16,22 +16,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <include
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar" />
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/toolbarLayout"
-                layout="@layout/parent_side_tool_bar" />
 
             <RelativeLayout
 
@@ -211,7 +216,7 @@
                     android:id="@+id/txtReason"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/fourty_five"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/header_text5"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"

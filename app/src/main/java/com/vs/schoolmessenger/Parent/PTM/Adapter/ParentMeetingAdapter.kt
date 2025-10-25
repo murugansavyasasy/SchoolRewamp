@@ -38,7 +38,7 @@ class ParentMeetingAdapter(
         val meeting = meetings[position]
         holder.tvMeetingTitle.text = meeting.event_name
         holder.tvParentName.text = meeting.staff_name
-        holder.tvSubject.text = meeting.subject_name
+        holder.tvSubject.text = meeting.slots[0].subject_name.joinToString(", ")
         val mode = meeting.slots.firstOrNull()?.event_mode ?: "Meeting"
         holder.btnMeetingType.text = mode
         val firstLetter = meeting.staff_name?.trim()?.firstOrNull()?.uppercaseChar()?.toString() ?: "?"

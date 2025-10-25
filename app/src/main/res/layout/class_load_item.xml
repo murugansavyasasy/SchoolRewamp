@@ -9,10 +9,10 @@
         android:id="@+id/lblClasses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="6dp"
         android:background="@drawable/gray_bg_radius"
+        android:paddingHorizontal="@dimen/ten"
+        android:paddingVertical="@dimen/seven"
+        android:text="X - B"
         android:textColor="@color/black"
-        android:textSize="14sp"
-        android:text="X - B" />
+        android:textSize="@dimen/fourteen" />
 </LinearLayout>

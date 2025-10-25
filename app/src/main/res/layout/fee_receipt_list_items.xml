@@ -33,7 +33,7 @@
             <TextView
                 android:id="@+id/lblInvoiceNo"
                 style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Invoice No : INV001"
                 android:textColor="@color/black"
@@ -42,7 +42,7 @@
             <TextView
                 android:id="@+id/lblInvoiceDate"
                 style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
                 android:text="Invoice Date : 01-05-2025"
@@ -51,7 +51,7 @@
             <TextView
                 android:id="@+id/lblInvoiceAmount"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
                 android:text="Invoice Amount : 1200" />
@@ -59,7 +59,7 @@
             <TextView
                 android:id="@+id/lblInvoiceTime"
                 style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
                 android:text="10:45 AM 234KB"
@@ -98,8 +98,6 @@
                 android:textColor="@color/navi_blue6" />
 
         </RelativeLayout>
-
-
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

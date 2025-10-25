@@ -961,7 +961,8 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query("event_date") event_date: String,
         @Query("subject_id") subject_id: String,
-        @Query("class_teacher_id") class_teacher_id: String
+        @Query("class_teacher_id") class_teacher_id: String,
+        @Query("is_management") isManagement: Boolean
     ): Call<MeetingResponse?>?
 
     @GET(APIMethods.isAvailableSlotsCountForStudent)

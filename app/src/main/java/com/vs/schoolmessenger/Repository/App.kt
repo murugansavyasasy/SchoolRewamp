@@ -1238,9 +1238,10 @@ class App(application: Application) : AndroidViewModel(application) {
         isEventDate: String,
         isSubjectId: String,
         isClassTeacherId: String,
+        isManagement: Boolean
     ) {
         apiParentRepositories.isSlotAvailableForStudent(
-            isToken, isEventDate, isSubjectId, isClassTeacherId
+            isToken, isEventDate, isSubjectId, isClassTeacherId,isManagement
         )
     }
 

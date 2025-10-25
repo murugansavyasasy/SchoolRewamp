@@ -1,16 +1,12 @@
 package com.vs.schoolmessenger.School.PTM.Adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.GridView
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.vs.schoolmessenger.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -46,7 +42,7 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
         btnNextMonth = findViewById(R.id.btnNextMonth)
         btnCancel = findViewById(R.id.btnCancelCalendar)
 
-        // Weekdays row
+        // ✅ Weekdays row setup with Sunday in red
         val weekdays = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
         gridWeekdays.adapter = object : ArrayAdapter<String>(
             context,
@@ -55,7 +51,14 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
             weekdays
         ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                return super.getView(position, convertView, parent)
+                val view = super.getView(position, convertView, parent)
+                val textView = view.findViewById<TextView>(R.id.tvWeekday)
+                if (position == 0) {
+                    textView.setTextColor(Color.RED)
+                } else {
+                    textView.setTextColor(Color.BLACK)
+                }
+                return view
             }
         }
 
@@ -66,7 +69,6 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
             val temp = calendar.clone() as Calendar
             temp.add(Calendar.MONTH, -1)
 
-            // If previous month is before current month (same year check)
             if (temp.get(Calendar.YEAR) < today.get(Calendar.YEAR) ||
                 (temp.get(Calendar.YEAR) == today.get(Calendar.YEAR)
                         && temp.get(Calendar.MONTH) < today.get(Calendar.MONTH))
@@ -78,7 +80,7 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
             }
         }
 
-        // Allow next month freely
+        // ✅ Allow next month freely
         btnNextMonth.setOnClickListener {
             calendar.add(Calendar.MONTH, 1)
             setupCalendar()
@@ -128,7 +130,6 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
                 val tempCal2 = calendar.clone() as Calendar
                 tempCal2.set(Calendar.DAY_OF_MONTH, day.toInt())
 
-                //  Disable past date selection
                 if (isPastDate(tempCal2)) return@setOnItemClickListener
 
                 val fullDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(tempCal2.time)
@@ -142,7 +143,6 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
         }
     }
 
-    // Helper to check if date is before today
     private fun isPastDate(cal: Calendar): Boolean {
         val currentDate = today.clone() as Calendar
         currentDate.set(Calendar.HOUR_OF_DAY, 0)
