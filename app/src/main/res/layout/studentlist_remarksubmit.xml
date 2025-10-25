@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
-    android:background="@color/white"
->
-
+    android:background="@color/white">
 
     <View
         android:id="@+id/statusBarBackground"
@@ -165,14 +163,12 @@
                 android:src="@drawable/neutralemoji"/>
         </LinearLayout>
 
-
-
-
         <Button
             android:id="@+id/btnSubmitRemark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Submit Remark"
+            android:padding="@dimen/ten"
             android:backgroundTint="@color/PrimaryColor"
             android:textColor="@android:color/white"
             android:layout_marginTop="@dimen/twele"/>

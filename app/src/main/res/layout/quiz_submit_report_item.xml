@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/twele">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/twele">
+
     <RelativeLayout
         android:id="@+id/rlaDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <FrameLayout
 
+        <FrameLayout
             android:id="@+id/avatarContainer"
             android:layout_width="@dimen/fifty"
             android:layout_height="@dimen/fifty"
@@ -22,8 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerInside"
-                android:src="@drawable/default_profile"
-                />
+                android:src="@drawable/default_profile" />
         </FrameLayout>
 
         <!-- Name and class container -->
@@ -32,81 +31,76 @@
             android:id="@+id/textContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/avatarContainer"
-            android:layout_toStartOf="@+id/tvStatus"
-
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/twele"
+
             android:layout_marginEnd="@dimen/twele"
+            android:layout_toStartOf="@+id/tvStatus"
+            android:layout_toEndOf="@+id/avatarContainer"
             android:orientation="vertical">
 
             <TextView
-                style="@style/CustomTextStylePoppinsBold"
                 android:id="@+id/tvName"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lakshmanan"
-                android:textSize="@dimen/sixteen_sp"
-                />
+                android:textSize="@dimen/sixteen_sp" />
 
             <TextView
                 android:id="@+id/tvClass"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Class : 10 B"
-                android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsBold"
                 android:layout_marginTop="@dimen/six"
-                />
+                android:text="Class : 10 B"
+                android:textSize="@dimen/thirteen_sp" />
         </LinearLayout>
 
         <!-- Submitted pill -->
-
-
         <LinearLayout
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:background="@drawable/green_bg_radius"
+            android:orientation="vertical"
             android:paddingHorizontal="@dimen/ten"
             android:paddingVertical="@dimen/five"
-            android:orientation="vertical"
+            android:paddingBottom="@dimen/eight">
 
-            android:paddingBottom="@dimen/eight"
-            android:background="@drawable/green_bg_radius"
-            >
             <TextView
                 android:id="@+id/tvStatus1"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Submitted"
-                android:layout_gravity="center"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:textSize="@dimen/fourteen_sp"
                 android:textColor="@color/white"
-                />
+                android:textSize="@dimen/fourteen_sp" />
+
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tvSubmittedOn"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12/09/2002"
                 android:layout_gravity="center"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:textSize="@dimen/eleven_sp"
+                android:text="12/09/2002"
                 android:textColor="@color/white"
-                />
+                android:textSize="@dimen/eleven_sp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
-        android:background="@color/athens_gray"
+        android:layout_height="@dimen/two"
         android:layout_below="@+id/rlaDetails"
         android:layout_marginTop="@dimen/five"
-        android:layout_height="@dimen/two">
+        android:background="@color/athens_gray">
 
     </View>
 
-    </RelativeLayout>
+</RelativeLayout>
