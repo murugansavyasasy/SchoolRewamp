@@ -156,6 +156,9 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
                     }
                 }
+                else{
+                    Constant.errorAlert(this@Login, "", message)
+                }
             }
         }
         authViewModel!!.isForgetPassword?.observe(this) { response ->
@@ -176,8 +179,8 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
         }
     }
 
-    private fun isValidMobileNumber(mobileNumber: String): Boolean {
-        return mobileNumber.length == Constant.country_details!!.mobile_number_length.toInt() && mobileNumber.all { it.isDigit() }
+    private fun isValidMobileNumber(mobileNumber: String,password : String): Boolean {
+        return mobileNumber.length == Constant.country_details!!.mobile_number_length.toInt() && mobileNumber.all { it.isDigit() } && !password.equals("")
     }
 
     private fun isForgetPassword() {
@@ -254,13 +257,20 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
     private fun isUserNamePasswordValidation(): Boolean {
         var isValidation = false
-        if (isValidMobileNumber(binding.txtMobileNumber.text.toString())) {
+        if (isValidMobileNumber(binding.txtMobileNumber.text.toString(),binding.txtPassword.text.toString())) {
             isValidation = true
-        } else {
-            binding.txtMobileNumber.error =
-                resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(
-                    R.string.digit_mobile_number
-                )
+        }
+        else {
+            if(binding.txtMobileNumber.text.toString().length !=  Constant.country_details!!.mobile_number_length) {
+                binding.txtMobileNumber.error =
+                    resources.getString(R.string.Enter_the) + " " + Constant.country_details!!.mobile_number_length + " " + resources.getString(
+                        R.string.digit_mobile_number
+                    )
+            }
+            else if(binding.txtPassword.text.toString().equals("")) {
+//                binding.txtPassword.error = "Password is required"
+                Toast.makeText(this, "Password is required", Toast.LENGTH_SHORT).show()
+            }
             isValidation = false
         }
         return isValidation
