@@ -268,7 +268,8 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
                     )
             }
             else if(binding.txtPassword.text.toString().equals("")) {
-                binding.txtPassword.error = "Password is required"
+//                binding.txtPassword.error = "Password is required"
+                Toast.makeText(this, "Password is required", Toast.LENGTH_SHORT).show()
             }
             isValidation = false
         }
