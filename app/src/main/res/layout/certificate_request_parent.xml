@@ -121,7 +121,8 @@
                         android:id="@+id/spinner_text"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/fourty"
-                        android:layout_centerVertical="true"></Spinner>
+                        android:layout_centerVertical="true">
+                    </Spinner>
                 </RelativeLayout>
 
                 <TextView
@@ -238,7 +239,7 @@
                     android:gravity="center"
                     android:text="@string/request_certificate"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/eleven_sp" />
+                    android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
 
 

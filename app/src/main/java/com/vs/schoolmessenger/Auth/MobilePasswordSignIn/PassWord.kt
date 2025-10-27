@@ -34,7 +34,6 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        // Access a specific view using its ID
         binding.imgHide.setOnClickListener(this)
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)

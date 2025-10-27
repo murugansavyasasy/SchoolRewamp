@@ -108,6 +108,7 @@ class CertificateRequestAdapter(
                     requested_on = data.requested_on,
                     status = data.status,
                     issued_on = data.issued_on,
+                    message = data.message
                 )
                 Constant.isCertificateData = saveCertificateData
                 context.startActivity(myIntent)

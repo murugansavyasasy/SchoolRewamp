@@ -93,6 +93,7 @@
                     </ImageView>
 
                     <TextView
+                        android:id="@+id/lblWaitingMessage"
                         android:gravity="center"
                         android:layout_below="@+id/imgTimimg"
                         android:layout_width="match_parent"
@@ -100,7 +101,7 @@
                         style="@style/CustomTextStylePoppinsMedium"
                         android:textSize="@dimen/sixteen_sp"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="@string/the_management_has_recived_your_request_and_it_is_currently_being_process"
+                        android:text=""
                         android:layout_height="wrap_content">
 
                     </TextView>

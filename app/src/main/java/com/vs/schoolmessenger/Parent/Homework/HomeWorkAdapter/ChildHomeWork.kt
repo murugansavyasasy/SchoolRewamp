@@ -483,7 +483,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.toolbarLayout.rlaStudentName.layoutParams =
                 params // Apply the updated layout params
             binding.toolbarLayout.lblPostedOn.text =
-                "Posted On : ${Constant.convertToReadableDateformat(data!!.created_date.toString())}"
+                "Posted On : ${Constant.convertToReadableDate(data!!.created_date.toString())}"
 
             if (data!!.subjectName != "") {
 //                binding.lblSubjectName.visibility = View.VISIBLE

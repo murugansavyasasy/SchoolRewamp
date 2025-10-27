@@ -5,12 +5,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.vs.schoolmessenger.Utils.Constant.covertDateFormate
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
+import com.vs.schoolmessenger.Utils.Constant.isFormatDate
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class FeeReceiptAdapter(
@@ -22,7 +24,6 @@ class FeeReceiptAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), android.widget.Filterable {
 
     private var filteredList: List<FeeInvoiceResponse.InvoiceData>? = originalList
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
@@ -45,7 +46,7 @@ class FeeReceiptAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             filteredList?.get(position)?.let {
-                holder.bind(it, listener, position, this)
+                holder.bind(it, listener)
             }
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
@@ -53,24 +54,22 @@ class FeeReceiptAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 else filteredList?.size ?: 0
+        return if (isLoading) 6 else filteredList?.size ?: 0
     }
 
     override fun getFilter(): android.widget.Filter {
         return object : android.widget.Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val query = constraint?.toString()?.lowercase()?.trim() ?: ""
-
                 val results = if (query.isEmpty()) {
                     originalList ?: listOf()
                 } else {
                     originalList?.filter {
-                        (it.invoice_no?.lowercase()?.contains(query) == true) ||
-                                (it.invoice_date?.lowercase()?.contains(query) == true) ||
-                                (it.invoice_amount?.lowercase()?.contains(query) == true)
+                        it.invoice_no?.lowercase()?.contains(query) == true ||
+                                it.invoice_date?.lowercase()?.contains(query) == true ||
+                                it.invoice_amount?.lowercase()?.contains(query) == true
                     } ?: listOf()
                 }
-
                 return FilterResults().apply { values = results }
             }
 
@@ -83,9 +82,9 @@ class FeeReceiptAdapter(
         }
     }
 
-    fun getCurrentList(): List<FeeInvoiceResponse.InvoiceData> {
-        return filteredList!!
-    }
+
+
+    fun getCurrentList(): List<FeeInvoiceResponse.InvoiceData> = filteredList ?: listOf()
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
@@ -96,22 +95,23 @@ class FeeReceiptAdapter(
         private val lblInvoiceTime: TextView = itemView.findViewById(R.id.lblInvoiceTime)
         private val rytView: RelativeLayout = itemView.findViewById(R.id.rytView)
         private val rytViewInvoice: RelativeLayout = itemView.findViewById(R.id.rytViewInvoice)
+        private val imgPdf: ImageView = itemView.findViewById(R.id.imgPdf)
 
         @SuppressLint("SetTextI18n")
-        fun bind(
-            data: FeeInvoiceResponse.InvoiceData,
-            listener: InvoiceClickListener,
-            position: Int,
-            adapter: FeeReceiptAdapter
-        ) {
-            lblInvoiceNo.text = "Invoice No: ${data.invoice_no ?: "-"}"
-            lblInvoiceDate.text = "Date: ${data.invoice_date ?: "-"}"
-            lblInvoiceAmount.text = "Amount: ₹${data.invoice_amount ?: "-"}"
-            lblInvoiceTime.text = data.id ?: ""
+        fun bind(data: FeeInvoiceResponse.InvoiceData, listener: InvoiceClickListener) {
 
-            rytView.setOnClickListener {
-                listener.onItemClick(data, this@DataViewHolder)
-            }
+            lblInvoiceNo.text = "InvoiceNo: ${data.invoice_no ?: "-"}"
+            val dateTime = data.invoice_date?.split(" ") ?: listOf()
+            val rawDate = dateTime.getOrNull(0) ?: "-"
+            val time = dateTime.drop(1).joinToString(" ")
+
+            val formattedDate = isFormatDate(rawDate)
+            lblInvoiceDate.text = formattedDate
+            lblInvoiceTime.text = time
+            lblInvoiceAmount.text = "Invoice Amount: ${data.invoice_amount ?: "-"}"
+            imgPdf.setImageResource(R.drawable.pdf_icon)
+
+            rytView.setOnClickListener { listener.onItemClick(data, this@DataViewHolder) }
 
             rytViewInvoice.setOnClickListener {
                 val invoiceId = data.id ?: return@setOnClickListener
@@ -119,7 +119,6 @@ class FeeReceiptAdapter(
                     (context as FeeDetails).viewInvoice(invoiceId)
                 }
             }
-
         }
     }
 
@@ -128,7 +127,6 @@ class FeeReceiptAdapter(
             ShimmerUtil.startShimmer(itemView)
         }
     }
-
     fun setData(newList: List<FeeInvoiceResponse.InvoiceData>, loading: Boolean = false) {
         this.originalList = newList
         this.filteredList = newList

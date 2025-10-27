@@ -317,30 +317,6 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
         authViewModel!!.isOtpResponse(jsonObject, this)
     }
 
-    private fun setOtpInputListener(
-        currentEditText: EditText, nextEditText: EditText?, previousEditText: EditText?
-    ) {
-        currentEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-                if (s?.length == 1 && after == 0) {
-                    previousEditText?.requestFocus() // Move focus to the previous EditText
-                }
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("OnTextChanged", "OnTextChanged")
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (s?.length == 1) {
-                    nextEditText?.requestFocus() // Move focus to the next EditText
-                }
-            }
-        })
-    }
-
-
     private fun startOtpTimer() {
 
         object : CountDownTimer(otpTimeout, otpInterval) {

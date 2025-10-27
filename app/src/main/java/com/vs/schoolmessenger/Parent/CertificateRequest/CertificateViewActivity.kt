@@ -142,6 +142,16 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
             binding.loadingBar.visibility = View.GONE
             binding.rytWaitingProcess.visibility = View.VISIBLE
             binding.lblCertificateDate.visibility = View.GONE
+            val message = Constant.isCertificateData?.message
+            if (!message.isNullOrBlank()) {
+                binding.lblWaitingMessage.text = message
+                binding.lblWaitingMessage.visibility = View.VISIBLE
+            } else {
+                binding.lblWaitingMessage.text = getString(
+                    R.string.the_management_has_recived_your_request_and_it_is_currently_being_process
+                )
+                binding.lblWaitingMessage.visibility = View.VISIBLE
+            }
         }
         binding.lblCerticateTypeValue.text = Constant.isCertificateData?.type ?: ""
         binding.lblReasonValue.text = Constant.isCertificateData?.reason ?: ""

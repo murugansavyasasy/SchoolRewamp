@@ -1,23 +1,23 @@
 package com.vs.schoolmessenger.Parent.FeeDetails
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FeeReceiptViewActivityBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -37,11 +37,10 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
         isToolBarPrimaryTheme()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.imgDownload.setImageDrawable(
-            ContextCompat.getDrawable(this, R.drawable.downloadicon)
-        )
+        binding.imgDownload.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.downloadicon))
         binding.imgDownload.visibility = View.VISIBLE
         binding.lytDownload.setOnClickListener(this)
+        binding.lytShare.setOnClickListener(this)
         binding.toolbarLayout.rytSearch.visibility = View.GONE
 
         isChildDetails = SharedPreference.getChildDetails(this)
@@ -55,7 +54,38 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
             ?: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf"
 
         val googleDocsUrl = "${Constant.google_g_view_embedded}$pdfUrl"
-        Constant.loadWebView(this, binding.feeReceiptWebview, googleDocsUrl)
+
+        Constant.showLoading(this)
+
+        binding.feeReceiptWebview.apply {
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            alpha = 0f
+
+            webViewClient = object : android.webkit.WebViewClient() {
+                override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    view?.animate()?.alpha(1f)?.setDuration(300)?.start()
+                    Constant.hideLoading(this@FeeReceiptViewActivity)
+                }
+
+                override fun onReceivedError(
+                    view: android.webkit.WebView?,
+                    request: android.webkit.WebResourceRequest?,
+                    error: android.webkit.WebResourceError?
+                ) {
+                    Constant.hideLoading(this@FeeReceiptViewActivity)
+                    Toast.makeText(
+                        this@FeeReceiptViewActivity,
+                        "Failed to load receipt. Please try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            loadUrl(googleDocsUrl)
+        }
     }
 
     override fun onClick(v: View?) {
@@ -65,20 +95,20 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
                 if (checkStoragePermission()) downloadFeeReceipt()
                 else requestStoragePermission()
             }
+            R.id.lytShare -> {
+                if (checkStoragePermission()) shareFeeReceipt()
+                else requestStoragePermission()
+            }
         }
     }
 
     private fun checkStoragePermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_MEDIA_IMAGES
-            ) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) ==
+                    PackageManager.PERMISSION_GRANTED
         } else {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_GRANTED
         }
     }
 
@@ -97,40 +127,28 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
 
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    var fileName = url.substringAfterLast("/").substringBefore("?")
-                    if (!fileName.endsWith(".pdf")) fileName += ".pdf"
-
-                    val baseFolder = "SchoolChimes"
-                    val subFolder = "Fee Receipt"
-
-                    val downloadsDir =
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    val targetDir = File(downloadsDir, "$baseFolder/$subFolder")
-                    if (!targetDir.exists()) targetDir.mkdirs()
-
-                    val file = File(targetDir, fileName)
-                    if (!file.exists()) {
-                        URL(url).openStream().use { input ->
-                            FileOutputStream(file).use { output ->
-                                input.copyTo(output)
-                            }
-                        }
-                    }
+                    val (file, alreadyExists) = checkAndDownloadPdf(url)
                     val elapsed = System.currentTimeMillis() - startTime
                     val delayTime = if (elapsed < loaderMinTime) loaderMinTime - elapsed else 0L
 
                     withContext(Dispatchers.Main) {
-                        if (delayTime > 0) {
-                            kotlinx.coroutines.delay(delayTime)
-                        }
+                        if (delayTime > 0) delay(delayTime)
                         Constant.hideLoading(this@FeeReceiptViewActivity)
-                        Constant.showValidationAlertPopup(
-                            "Successfully Downloaded ✅",
-                            "File saved to Downloads/$baseFolder/$subFolder/$fileName",
-                            this@FeeReceiptViewActivity
-                        )
-                    }
 
+                        if (alreadyExists) {
+                            Constant.showValidationAlertPopup(
+                                "Already Downloaded",
+                                "This file already exists at:\n${file.absolutePath}",
+                                this@FeeReceiptViewActivity
+                            )
+                        } else {
+                            Constant.showValidationAlertPopup(
+                                "Successfully Downloaded ✅",
+                                "File saved to:\n${file.absolutePath}",
+                                this@FeeReceiptViewActivity
+                            )
+                        }
+                    }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
                         Constant.hideLoading(this@FeeReceiptViewActivity)
@@ -139,9 +157,90 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
                             "Download failed: ${e.message}",
                             Toast.LENGTH_LONG
                         ).show()
+                        binding.lytDownload.visibility = View.GONE
                     }
                 }
             }
         }
+    }
+
+    private fun checkAndDownloadPdf(url: String): Pair<File, Boolean> {
+        var fileName = url.substringAfterLast("/").substringBefore("?")
+        if (!fileName.endsWith(".pdf")) fileName += ".pdf"
+
+        val baseFolder = "SchoolChimes"
+        val subFolder = "Fee Receipt"
+        val downloadsDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val targetDir = File(downloadsDir, "$baseFolder/$subFolder")
+
+        if (!targetDir.exists()) targetDir.mkdirs()
+
+        val file = File(targetDir, fileName)
+
+        return if (file.exists()) {
+            Pair(file, true)
+        } else {
+            URL(url).openStream().use { input ->
+                FileOutputStream(file).use { output -> input.copyTo(output) }
+            }
+            Pair(file, false)
+        }
+    }
+
+
+    private fun shareFeeReceipt() {
+        pdfUrl?.let { url ->
+            Constant.showLoading(this)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val file = savePdfToDownloads(url)
+                    val uri = FileProvider.getUriForFile(
+                        this@FeeReceiptViewActivity,
+                        "${packageName}.fileprovider",
+                        file
+                    )
+
+                    withContext(Dispatchers.Main) {
+                        Constant.hideLoading(this@FeeReceiptViewActivity)
+                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "application/pdf"
+                            putExtra(Intent.EXTRA_STREAM, uri)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
+                        startActivity(Intent.createChooser(shareIntent, "Share Fee Receipt"))
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Constant.hideLoading(this@FeeReceiptViewActivity)
+                        Toast.makeText(
+                            this@FeeReceiptViewActivity,
+                            "Share failed: ${e.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun savePdfToDownloads(url: String): File {
+        var fileName = url.substringAfterLast("/").substringBefore("?")
+        if (!fileName.endsWith(".pdf")) fileName += ".pdf"
+
+        val baseFolder = "SchoolChimes"
+        val subFolder = "Fee Receipt"
+        val downloadsDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val targetDir = File(downloadsDir, "$baseFolder/$subFolder")
+        if (!targetDir.exists()) targetDir.mkdirs()
+
+        val file = File(targetDir, fileName)
+        if (!file.exists()) {
+            URL(url).openStream().use { input ->
+                FileOutputStream(file).use { output -> input.copyTo(output) }
+            }
+        }
+        return file
     }
 }
