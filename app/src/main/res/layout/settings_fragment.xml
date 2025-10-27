@@ -130,8 +130,8 @@
                     android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="@dimen/twenty_five"
-                        android:layout_height="@dimen/twenty_five"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
                         android:src="@drawable/faq_icon"></ImageView>
 
@@ -394,8 +394,8 @@
                     android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="@dimen/twenty_five"
-                        android:layout_height="@dimen/twenty_five"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
                         android:src="@drawable/whats_new">
 
@@ -466,8 +466,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Enable Fingerprint Login"
-                            style="@style/CustomTextStylePoppinsRegular"/>
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textColor="@color/black"
+                            android:text="Enable Fingerprint Login" />
 
                         <Switch
                             android:layout_weight="0.8"
