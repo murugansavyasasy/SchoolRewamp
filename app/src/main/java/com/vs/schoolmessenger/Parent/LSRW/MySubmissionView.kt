@@ -57,25 +57,36 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
         appViewModel?.islsrwmysubmission?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+
                 val submission = response.data[0]
+
                 val fileList = submission.file_path?.map {
                     GetFilePathDetails(url = it.url, type = it.type)
                 } ?: emptyList()
 
-                val adapter = MySubmissionAdapter(
-                    this,
-                    fileList,
-                    "English",
-                    SELECTED_SCHOOL_MENU,
-                    true
-                )
+                if (fileList.isNotEmpty()) {
+                    val adapter = MySubmissionAdapter(
+                        this,
+                        fileList,
+                        "English",
+                        SELECTED_SCHOOL_MENU,
+                        true
+                    )
 
-                binding.rcChildHW.layoutManager =
-                    GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-                binding.rcChildHW.adapter = adapter
+                    binding.rcChildHW.layoutManager =
+                        GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+                    binding.rcChildHW.adapter = adapter
 
-                binding.rcChildHW.visibility = View.VISIBLE
-                binding.lytNoDataFound.visibility = View.GONE
+                    binding.rcChildHW.visibility = View.VISIBLE
+                    binding.lytNoDataFound.visibility = View.GONE
+                    binding.imageslabel.visibility = View.VISIBLE
+
+                } else {
+                    binding.rcChildHW.visibility = View.GONE
+                    binding.lytNoDataFound.visibility = View.VISIBLE
+                    binding.imageslabel.visibility = View.GONE
+                    binding.noDataFound.text = "No attached image available"
+                }
 
             } else {
                 binding.rcChildHW.visibility = View.GONE
@@ -84,6 +95,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
                 binding.noDataFound.text = response?.message ?: Constant.NO_DATA_FOUND
             }
         }
+
     }
 
     private fun fetchMySubmissionList() {

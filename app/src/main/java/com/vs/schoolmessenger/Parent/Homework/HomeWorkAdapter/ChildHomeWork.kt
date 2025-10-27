@@ -65,7 +65,10 @@ import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.Assignme
 import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetail
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardAdapter
+import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.SchoolNameTarget
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetData
+import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetItem
+import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetName
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.LSRW.LsrwStudentListFragment
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
@@ -178,7 +181,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             isStaffDetails?.access_token
         }
 
-        Log.d("isAccessToken",isAccessToken!!)
+        Log.d("isAccessToken", isAccessToken!!)
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         binding.lbltitle.text = data!!.title
@@ -194,9 +197,19 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
+        if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS && data!!.isParentAssignment == false) {
+            binding.sendtostandardLabel.visibility = View.VISIBLE
+            Log.d("Visible Success", "visible Success")
+            loadattachmentsChildHomeWorkstandard()
+        } else {
+            binding.sendtostandardLabel.visibility = View.GONE
+            Log.d("", "")
+        }
+
+
         if (SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.sendtostandardLabel.visibility = View.VISIBLE
-           loadAssignemntChildHomewordStandard()
+            loadAssignemntChildHomewordStandard()
         } else {
             binding.sendtostandardLabel.visibility = View.GONE
             Log.d("", "")
@@ -494,7 +507,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.lblPostedBy.visibility = View.VISIBLE
                 binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
             }
-        } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS) {
+        } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS) {
 
             if (data!!.created_date.isNullOrBlank()) {
                 binding.toolbarLayout.lblPostedOn.visibility = View.GONE
@@ -593,30 +606,58 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
+
+
+
         appViewModel!!.getchildhomeworkstandard?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val newData = mutableListOf<TargetData>()
-                        newData.addAll(dataList)
+                        val schoolList = dataList.firstOrNull()?.name ?: emptyList()
                         childstandardadapter =
-                            ChildStandardAdapter(newData, this, Constant.isShimmerViewDisable)
+                            ChildStandardAdapter(schoolList, this, Constant.isShimmerViewDisable)
                         binding.rcystandard.adapter = childstandardadapter
 
-                        if (newData.isNotEmpty()) {
-                            binding.sendtostandardLabel.visibility = View.VISIBLE
-                            binding.standardValue.text = "\uD83C\uDF93 Sent To " + newData[0].type
-                        } else {
-                            binding.sendtostandardLabel.visibility = View.GONE
-                        }
+                        binding.sendtostandardLabel.visibility = View.VISIBLE
+
+                        binding.standardValue.text = "\uD83C\uDF93 Sent To ${dataList[0].type}"
                     }
+
                 } else {
                     Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
                     binding.sendtostandardLabel.visibility = View.GONE
                 }
             }
         }
+
+
+
+
+
+        appViewModel!!.getattachmentchildhomework?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    response.data?.let { dataList ->
+                        Constant.isShimmerViewDisable = false
+                        val schoolList = dataList.firstOrNull()?.name ?: emptyList()
+                        childstandardadapter =
+                            ChildStandardAdapter(schoolList, this, Constant.isShimmerViewDisable)
+                        binding.rcystandard.adapter = childstandardadapter
+
+                        binding.sendtostandardLabel.visibility = View.VISIBLE
+
+                        binding.standardValue.text = "\uD83C\uDF93 Sent To ${dataList[0].type}"
+                    }
+
+                } else {
+                    Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                    binding.sendtostandardLabel.visibility = View.GONE
+                }
+            }
+        }
+
+
 
 
 
@@ -707,6 +748,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
     }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -1015,6 +1057,24 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
         appViewModel!!.getchildhomeworkstandard(isAccessToken!!, data!!.id.toInt())
+    }
+
+
+    private fun loadattachmentsChildHomeWorkstandard() {
+        val flexboxLayoutManager = FlexboxLayoutManager(this).apply {
+            flexDirection = FlexDirection.ROW
+            flexWrap = FlexWrap.WRAP
+            justifyContent = JustifyContent.FLEX_START
+            alignItems = AlignItems.FLEX_START
+        }
+        binding.rcystandard.layoutManager = flexboxLayoutManager
+        childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
+        binding.rcystandard.adapter = childstandardadapter
+        appViewModel!!.getattachmentchildhomework(
+            isAccessToken!!,
+            data!!.id.toInt(),
+            data!!.target_type!!.toInt()
+        )
     }
 
 

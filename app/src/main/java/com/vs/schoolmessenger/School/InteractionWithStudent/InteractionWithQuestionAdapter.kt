@@ -67,8 +67,10 @@ class InteractionWithQuestionAdapter(
         private val more_options: ImageView = itemView.findViewById(R.id.more_options)
         private val student_name: TextView = itemView.findViewById(R.id.aboveText)
         private val created_date: TextView = itemView.findViewById(R.id.belowText)
+        private val reply_created_date: TextView = itemView.findViewById(R.id.belowanswertext)
         private val reply_type: TextView = itemView.findViewById(R.id.reply_type)
         private val linear_layout: LinearLayout = itemView.findViewById(R.id.linear_layout)
+        private val linear_121layout: LinearLayout = itemView.findViewById(R.id.linear_121layout)
 
 
         @SuppressLint("ClickableViewAccessibility")
@@ -84,8 +86,11 @@ class InteractionWithQuestionAdapter(
                 reply_type.visibility = View.GONE
             }
             created_date.text = Constant.formatChatDate(chat.created_on)
+            reply_created_date.text = Constant.formatChatDate(chat.answer_on)
 
-            answerText.visibility =
+
+
+            linear_121layout.visibility =
                 if (chat.answer == Constant.Not_answered_yet) View.GONE else View.VISIBLE
 
 
@@ -111,11 +116,16 @@ class InteractionWithQuestionAdapter(
             val popup = PopupMenu(view.context, view)
             popup.menuInflater.inflate(R.menu.question_popup_menu, popup.menu)
 
+            // Reply option handling
             if (chat.answer == Constant.Not_answered_yet) {
                 popup.menu.findItem(R.id.menu_reply_all)?.isVisible = false
             } else {
                 popup.menu.findItem(R.id.menu_reply)?.isVisible = false
             }
+
+            // ✅ Set correct menu title dynamically
+            val blockItem = popup.menu.findItem(R.id.block_student)
+            blockItem.title = if (chat.is_blocked == true) "Unblock" else "Block"
 
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
@@ -130,7 +140,11 @@ class InteractionWithQuestionAdapter(
                     }
 
                     R.id.block_student -> {
-                        showBlockStudentDialog(chat)
+                        if (chat.is_blocked == true) {
+                            listener.onBlockStudent(chat, "")
+                        } else {
+                            showBlockStudentDialog(chat)
+                        }
                         true
                     }
 
@@ -139,6 +153,7 @@ class InteractionWithQuestionAdapter(
             }
             popup.show()
         }
+
     }
 
 
@@ -169,6 +184,11 @@ class InteractionWithQuestionAdapter(
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
+
+
+
+
+
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

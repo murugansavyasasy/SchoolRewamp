@@ -1190,7 +1190,7 @@ interface ApiInterfaces {
 
 
 
-    @POST(APIMethods.isblockstudent)
+    @PUT(APIMethods.isblockstudent)
     fun isblockstudent(
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,

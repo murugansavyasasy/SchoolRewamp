@@ -54,44 +54,36 @@
                 android:layout_marginTop="@dimen/eight"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="TAMIL"
-                android:textColor="@color/PrimaryColor" />
+                android:visibility="gone"
+                android:text=" I - B "
+                android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/lblDesc"
+                android:id="@+id/blocked_on"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/eight"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="A common messages"
+                android:text="Blocked on : 25-10-2025 11.07 PM"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lytUnread"
+            android:id="@+id/lytunblock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end|center_vertical"
-            android:orientation="vertical">
+            android:background="@drawable/bg_gradient_student_one_primary"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
-                android:id="@+id/yesterdayheader"
-                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/unblocktextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Yesterday"
-                android:textColor="@color/Emerald1" />
-
-            <TextView
-                android:id="@+id/unreadcount"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
-                android:layout_marginTop="@dimen/ten"
-                android:background="@drawable/circle_bg_red"
-                android:gravity="center"
-                android:text="1"
+                android:gravity="center_vertical"
+                android:text="Unblock"
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>

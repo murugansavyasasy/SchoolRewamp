@@ -160,6 +160,34 @@ class AssignmentParentAdapter(
 
             headerrelative_layout.setOnClickListener {
                 markAsRead()
+                val convertedList = data.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
+                }
+                val isHomeWorkData = FilePreview(
+                    id = "",
+                    title = data.title,
+                    description = data.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = data.thumbnail,
+                    created_date = data.created_date,
+                    isUnread = true,
+                    isCompleted = true,
+                    isMenuType = Constant.M_ASSIGNMENT,
+                    fileList = convertedList,
+                    submittedCount = data.submitted_count,
+                    assignmentid = data.id,
+                    category = data.category,
+                    assignmentsubject = data.subject
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
             }
 
             val hasFiles = !data.file_path.isNullOrEmpty()

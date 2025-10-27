@@ -205,16 +205,30 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
         binding.summaryStaticscardview.progressbar3.progress = staffStrength12
 
-
-
-
-
-
-
         binding.summaryStaticscardview.studentCount.text = firstItem.totalStudentStrength
         binding.summaryStaticscardview.staffCount.text = firstItem.totalStaffStrength
+
+        binding.summaryStaticscardview.malestaffCount.text = "male" + " "+ firstItem.totalmalestaffsstrength
+        binding.summaryStaticscardview.femaleStaffcount.text ="female" + " "+  firstItem.totalfemalestaffsstrength
+
+
+
+        val malestaffStrength = firstItem.totalmalestaffsstrength.toIntOrNull() ?: 0
+        val femalestaffStrength = firstItem.totalfemalestaffsstrength.toIntOrNull() ?: 0
+        val totalStaffStrength = malestaffStrength + femalestaffStrength
+
+        val totalstaffpercentage = if (totalStaffStrength > 0) {
+            (malestaffStrength * 100) / totalStaffStrength
+        } else {
+            0
+        }
+
+        binding.summaryStaticscardview.progressbar2.progress = totalstaffpercentage
+
+
+
         binding.progressBarGender.othersCount.text =
-            "unspecified " + (firstItem.totalOthersStrength)
+            "others " + (firstItem.totalOthersStrength)
         binding.summaryStaticscardview.totalMale.text = "Staffs " + firstItem.totalStaffStrength
         binding.summaryStaticscardview.totalFemale.text =
             "Students " + firstItem.totalStudentStrength
