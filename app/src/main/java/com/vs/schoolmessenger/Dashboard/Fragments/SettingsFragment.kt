@@ -29,8 +29,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.airbnb.lottie.BuildConfig
 import com.google.android.gms.tasks.Task
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.review.testing.FakeReviewManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
@@ -152,6 +156,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.lnrLogout -> {
+//                testInAppReviewUI()
                 isShowLogoutPopup()
             }
 
@@ -161,6 +166,30 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
             R.id.lnrSaveContact -> {
                 //checkContactPermission()
+            }
+        }
+    }
+
+    fun testInAppReviewUI() {
+        val manager: ReviewManager = if (BuildConfig.DEBUG) {
+            // Use fake manager in debug builds
+            FakeReviewManager(requireActivity())
+        } else {
+            // Use real manager in release builds
+            ReviewManagerFactory.create(requireActivity())
+        }
+
+        val request = manager.requestReviewFlow()
+
+        request.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val reviewInfo: ReviewInfo = task.result
+                val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
+                flow.addOnCompleteListener {
+                    Toast.makeText(requireActivity(), "Review flow completed (debug simulation)", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(requireActivity(), "Failed to start review flow", Toast.LENGTH_SHORT).show()
             }
         }
     }
