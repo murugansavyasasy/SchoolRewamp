@@ -735,10 +735,9 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
     override fun onAuthenticate(message: String, status: Boolean) {
         Log.d("athentication_status", message)
         if (status) {
-            //go to dashboard
             isValidateUser()
         } else {
-//            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }
 }

@@ -161,7 +161,7 @@ class AttachmentReportAdapter(
             adapter: AttachmentReportAdapter,
         ) {
             val data = item[position]
-            lblDate.text = "${context.getString(R.string.posted_on)} : ${Constant.convertDateAndTimeFormat(data.date)}"
+            lblDate.text = "${context.getString(R.string.posted_on)} : ${Constant.convertToReadableDate(data.date)}"
             lblTitle.text = data.title
             lblPostedBy.text = "${context.getString(R.string.posted_by)} : ${data.sent_by}"
             lblDescription.text = data.description
