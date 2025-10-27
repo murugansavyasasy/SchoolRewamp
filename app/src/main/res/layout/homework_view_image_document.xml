@@ -36,8 +36,8 @@
 
     <ImageView
         android:id="@+id/imgMoreOptions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/twenty"
         android:layout_marginEnd="@dimen/ten"

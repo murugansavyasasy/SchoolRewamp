@@ -8,4 +8,5 @@ data class CertificateListData(
     val requested_on: String,
     val status: String,
     val issued_on: String,
+    val message: String
 )

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/five"
         android:background="@drawable/rect_shadow_white_2"
-        android:padding="@dimen/fifteen"
+        android:padding="@dimen/twenty"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/ten"
-            android:layout_toStartOf="@+id/rytViewInvoice"
+            android:layout_toStartOf="@+id/lnrViewContainer"
             android:layout_toEndOf="@+id/imgPdf"
             android:orientation="vertical">
 
@@ -40,15 +40,6 @@
                 android:textSize="@dimen/thirteen" />
 
             <TextView
-                android:id="@+id/lblInvoiceDate"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="Invoice Date : 01-05-2025"
-                android:textSize="@dimen/thirteen" />
-
-            <TextView
                 android:id="@+id/lblInvoiceAmount"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
@@ -56,48 +47,69 @@
                 android:layout_marginTop="@dimen/five"
                 android:text="Invoice Amount : 1200" />
 
-            <TextView
-                android:id="@+id/lblInvoiceTime"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="10:45 AM 234KB"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/thirteen" />
-
         </LinearLayout>
 
-
-        <RelativeLayout
-            android:id="@+id/rytViewInvoice"
+        <LinearLayout
+            android:id="@+id/lnrViewContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/white_bg_primary_stoke"
-            android:paddingHorizontal="@dimen/thirteen"
-            android:paddingVertical="@dimen/four">
+            android:orientation="vertical"
+            android:gravity="center">
 
-
-            <ImageView
-                android:id="@+id/imgView"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-                android:layout_centerVertical="true"
-                android:src="@drawable/eye_icon_blue" />
-
-            <TextView
-
-                android:id="@+id/lblViewReceipt"
+            <RelativeLayout
+                android:id="@+id/rytViewInvoice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/five"
-                android:layout_toEndOf="@+id/imgView"
-                android:text="View"
-                android:textColor="@color/navi_blue6" />
+                android:background="@drawable/white_bg_primary_stoke"
+                android:paddingHorizontal="@dimen/thirteen"
+                android:paddingVertical="@dimen/four">
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/imgView"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/eye_icon_blue" />
+
+                <TextView
+                    android:id="@+id/lblViewReceipt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgView"
+                    android:text="View"
+                    android:textColor="@color/navi_blue6" />
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/lnrDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/five">
+
+                <TextView
+                    android:id="@+id/lblInvoiceDate"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="01-05-2025"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/ten" />
+
+                <TextView
+                    android:id="@+id/lblInvoiceTime"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:text="10:45 AM"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/ten" />
+            </LinearLayout>
+        </LinearLayout>
+
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
