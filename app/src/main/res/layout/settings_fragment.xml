@@ -47,8 +47,8 @@
             android:layout_below="@+id/rlaLblSettings"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
-            android:text="@string/lblGENERAL"
-            style="@style/CustomTextStylePoppinsRegular"
+            android:text="@string/account_securityl"
+            style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/fifteen_sp">
 
         </TextView>
@@ -66,273 +66,11 @@
                 android:layout_marginHorizontal="@dimen/fifteen"
                 android:background="@drawable/rect_white">
 
-                <LinearLayout
-                    android:id="@+id/lnrNotification"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/notification_icon_gray">
-                    </ImageView>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/thirty"
-                        android:layout_weight="0.8"
-                        android:text="@string/lblNotifications"
-                        style="@style/CustomTextStylePoppinsRegular"
-                       >
-
-                    </TextView>
-
-                    <ImageView
-                        android:layout_width="@dimen/twenty_five_sp"
-                        android:layout_height="@dimen/twenty_five_sp"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/arrow_right_gray">
-
-                    </ImageView>
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/isViewNotification"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/point_one"
-                    android:layout_below="@+id/lnrNotification"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey">
-
-                </View>
-
-                <LinearLayout
-                    android:id="@+id/lnrFaq"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewNotification"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/faq_icon"></ImageView>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/thirty"
-                        android:layout_weight="0.8"
-                        android:text="@string/lblFAQ"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <ImageView
-                        android:layout_width="@dimen/twenty_five_sp"
-                        android:layout_height="@dimen/twenty_five_sp"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/arrow_right_gray">
-
-                    </ImageView>
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/isViewFaq"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/point_one"
-                    android:layout_below="@+id/lnrFaq"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey">
-
-                </View>
-
-                <LinearLayout
-                    android:id="@+id/lnrContactUs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewFaq"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/contact_us_icon">
-                    </ImageView>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/thirty"
-                        android:layout_weight="0.8"
-                        android:text="@string/lblContact"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <ImageView
-                        android:layout_width="@dimen/twenty_five_sp"
-                        android:layout_height="@dimen/twenty_five_sp"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/arrow_right_gray">
-
-                    </ImageView>
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/isViewContactUs"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/point_one"
-                    android:layout_below="@+id/lnrContactUs"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey">
-
-                </View>
-
-                <LinearLayout
-                    android:id="@+id/lnrTermsConditions"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewContactUs"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/terms_conditions_icon">
-                    </ImageView>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/thirty"
-                        android:layout_weight="0.8"
-                        android:text="@string/lblTermsCondition"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <ImageView
-                        android:layout_width="@dimen/twenty_five_sp"
-                        android:layout_height="@dimen/twenty_five_sp"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/arrow_right_gray">
-
-                    </ImageView>
-                </LinearLayout>
-
-
-
-                <View
-                    android:id="@+id/isViewTermsConditions"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/point_one"
-                    android:layout_below="@+id/lnrTermsConditions"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey">
-
-                </View>
-
-
-                <LinearLayout
-                    android:id="@+id/lnrLanguage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewTermsConditions"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/ic_language">
-                    </ImageView>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/thirty"
-                        android:layout_weight="0.8"
-                        android:text="@string/lblChangeLanguage"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <ImageView
-                        android:layout_width="@dimen/twenty_five_sp"
-                        android:layout_height="@dimen/twenty_five_sp"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/arrow_right_gray">
-
-                    </ImageView>
-
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/isViewAppLanguage"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/point_one"
-                    android:layout_below="@+id/lnrLanguage"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey"/>
-
 
                 <LinearLayout
                     android:id="@+id/lnrChangePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewAppLanguage"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/thirty"
@@ -371,7 +109,7 @@
 
 
                 <View
-                    android:id="@+id/isViewSaveContact"
+                    android:id="@+id/isViewChangePassword"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrChangePassword"
@@ -382,64 +120,10 @@
 
 
                 <LinearLayout
-                    android:id="@+id/lnrwhatsnew"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewSaveContact"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/whats_new">
-
-                    </ImageView>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/thirty"
-                        android:layout_weight="0.8"
-                        android:text="@string/what_s_new"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <ImageView
-                        android:layout_width="@dimen/twenty_five_sp"
-                        android:layout_height="@dimen/twenty_five_sp"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/arrow_right_gray">
-
-                    </ImageView>
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/isViewEnableFingerPrint"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/point_one"
-                    android:visibility="visible"
-                    android:layout_below="@+id/lnrwhatsnew"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey"/>
-
-
-
-                <LinearLayout
                     android:id="@+id/lnrEnableFingerPrint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewEnableFingerPrint"
+                    android:layout_below="@+id/isViewChangePassword"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginBottom="@dimen/fifteen"
@@ -488,29 +172,39 @@
                     </ImageView>
                 </LinearLayout>
 
-
-                <View
-                    android:id="@+id/isViewSignalCheck"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/point_one"
-                    android:visibility="gone"
-                    android:layout_below="@+id/lnrEnableFingerPrint"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey"/>
+            </RelativeLayout>
 
 
+            <TextView
+                android:id="@+id/lblFeedBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytGeneral"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                style="@style/CustomTextStylePoppinsBold"
+                android:text="Preferences"
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/rytPref"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblFeedBack"
+                android:layout_marginBottom="@dimen/fifteen"
+                android:layout_marginHorizontal="@dimen/fifteen"
+                android:background="@drawable/rect_white">
                 <LinearLayout
-                    android:id="@+id/lnrSaveContact"
+                    android:id="@+id/lnrNotification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewSignalCheck"
                     android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginBottom="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/thirty"
                     android:gravity="center"
-                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
@@ -518,8 +212,7 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/ic_contact">
-
+                        android:src="@drawable/notification_icon_gray">
                     </ImageView>
 
                     <TextView
@@ -528,7 +221,126 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        android:text="@string/save_contact_to_avoid"
+                        android:text="@string/lblNotifications"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        >
+
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five_sp"
+                        android:layout_height="@dimen/twenty_five_sp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/arrow_right_gray">
+
+                    </ImageView>
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/isViewNotifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/point_one"
+                    android:layout_below="@+id/lnrNotification"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:background="@color/grey"></View>
+
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/ten"
+                    android:id="@+id/lnrLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/isViewNotifi"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/ic_language">
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_weight="0.8"
+                        android:text="@string/lblChangeLanguage"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five_sp"
+                        android:layout_height="@dimen/twenty_five_sp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/arrow_right_gray">
+
+                    </ImageView>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/lblSupportInformation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytPref"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                style="@style/CustomTextStylePoppinsBold"
+                android:text="@string/support_information"
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/rytSupportInfo"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSupportInformation"
+                android:layout_marginBottom="@dimen/fifteen"
+                android:layout_marginHorizontal="@dimen/fifteen"
+                android:background="@drawable/rect_white">
+
+                <LinearLayout
+                    android:id="@+id/lnrFaq"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/faq_icon"></ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_weight="0.8"
+                        android:text="@string/lblFAQ"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -543,34 +355,236 @@
                     </ImageView>
                 </LinearLayout>
 
+                <View
+                    android:id="@+id/isViewFaq"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/point_one"
+                    android:layout_below="@+id/lnrFaq"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:background="@color/grey"></View>
 
+
+                <LinearLayout
+                    android:id="@+id/lnrContactUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/isViewFaq"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/contact_us_icon">
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_weight="0.8"
+                        android:text="@string/lblContact"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five_sp"
+                        android:layout_height="@dimen/twenty_five_sp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/arrow_right_gray">
+
+                    </ImageView>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/isViewContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/point_one"
+                    android:layout_below="@+id/lnrContactUs"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:background="@color/grey"></View>
+
+
+                <LinearLayout
+                    android:id="@+id/lnrTermsConditions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/isViewContact"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/terms_conditions_icon">
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_weight="0.8"
+                        android:text="@string/lblTermsCondition"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five_sp"
+                        android:layout_height="@dimen/twenty_five_sp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/arrow_right_gray">
+
+                    </ImageView>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/isViewTerms"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/point_one"
+                    android:layout_below="@+id/lnrTermsConditions"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:background="@color/grey"></View>
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/ten"
+                    android:id="@+id/lnrwhatsnew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/isViewTerms"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/whats_new">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_weight="0.8"
+                        android:text="@string/what_s_new"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five_sp"
+                        android:layout_height="@dimen/twenty_five_sp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/arrow_right_gray">
+
+                    </ImageView>
+                </LinearLayout>
 
             </RelativeLayout>
 
 
             <TextView
-                android:id="@+id/lblFeedBack"
+                android:id="@+id/lblFeedBacks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rytGeneral"
+                android:layout_below="@+id/rytSupportInfo"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/twenty"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:text="@string/lblFEEDBACK"
+                android:layout_marginTop="@dimen/ten"
+                style="@style/CustomTextStylePoppinsBold"
+                android:text="Feedback"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
+
             <RelativeLayout
                 android:layout_marginTop="@dimen/ten"
+                android:layout_below="@+id/lblFeedBacks"
+                android:id="@+id/rytFeedBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblFeedBack"
-                android:layout_marginBottom="@dimen/fifteen"
                 android:layout_marginHorizontal="@dimen/fifteen"
                 android:background="@drawable/rect_white">
 
                 <LinearLayout
+                    android:id="@+id/lnrFeedBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/send_feedback_icon"></ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_weight="0.8"
+                        android:text="@string/lblRateus"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five_sp"
+                        android:layout_height="@dimen/twenty_five_sp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/arrow_right_gray">
+
+                    </ImageView>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/isViewRateUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/point_one"
+                    android:layout_below="@+id/lnrFeedBack"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:background="@color/grey"/>
+
+                <LinearLayout
+                    android:layout_below="@+id/isViewRateUs"
                     android:id="@+id/lnrReportBug"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -608,6 +622,7 @@
                     </ImageView>
                 </LinearLayout>
 
+
                 <View
                     android:id="@+id/isViewReportBug"
                     android:layout_width="match_parent"
@@ -616,63 +631,14 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey"></View>
-
-                <LinearLayout
-                    android:id="@+id/lnrFeedBack"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewReportBug"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/send_feedback_icon"></ImageView>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/thirty"
-                        android:layout_weight="0.8"
-                        android:text="@string/lblRateus"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <ImageView
-                        android:layout_width="@dimen/twenty_five_sp"
-                        android:layout_height="@dimen/twenty_five_sp"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/arrow_right_gray">
-
-                    </ImageView>
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/isViewFeedBack"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/point_one"
-                    android:layout_below="@+id/lnrFeedBack"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey"></View>
+                    android:background="@color/grey"/>
 
 
                 <LinearLayout
                     android:id="@+id/lnrLogout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/isViewFeedBack"
+                    android:layout_below="@+id/isViewReportBug"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/thirty"
@@ -710,18 +676,10 @@
                     </ImageView>
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/isViewLogout"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/point_one"
-                    android:layout_below="@+id/lnrFeedBack"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/twenty"
-                    android:background="@color/grey">
-                </View>
 
             </RelativeLayout>
+
+
 
 
         </RelativeLayout>

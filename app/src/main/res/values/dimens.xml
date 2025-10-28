@@ -89,6 +89,7 @@
     <dimen name="two_hundred">200dp</dimen>
     <dimen name="two_hundred_thirty">230dp</dimen>
     <dimen name="two_hundred_fifty">250dp</dimen>
+    <dimen name="two_hundred_eighty">280dp</dimen>
     <dimen name="two_fourty">240dp</dimen>
     <dimen name="two_fifty">250dp</dimen>
     <dimen name="two_sixty">260dp</dimen>

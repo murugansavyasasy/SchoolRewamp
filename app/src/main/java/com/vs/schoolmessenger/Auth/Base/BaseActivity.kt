@@ -146,6 +146,18 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
+    fun isToolBarNoticeCallTheme() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this.resources.getColor(R.color.grey_color)
+            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+
+        }
+    }
+
     @SuppressLint("UseCompatLoadingForColorStateLists")
     fun isToolBarPrimaryTheme1(mainViewId: Int, statusBarBgView: View) {
         // Enables edge-to-edge rendering

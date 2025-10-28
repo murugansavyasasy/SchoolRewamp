@@ -966,6 +966,10 @@
     <string name="select_your_classes">Select Your Classes</string>
     <string name="check_slot_availability">Check slot availability</string>
     <string name="need_break_between_slots">Need break between slots?</string>
+    <string name="school_chimes">School Chimes</string>
+    <string name="incoming_call">Incoming Call</string>
+    <string name="account_securityl"><![CDATA[Account & Security]]></string>
+    <string name="support_information"><![CDATA[Support & Information]]></string>
 
 
 </resources>
