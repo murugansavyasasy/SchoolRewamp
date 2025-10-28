@@ -1,0 +1,22 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Outer White Circle -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#FFFFFF"/>
+            <size android:width="90dp" android:height="90dp"/>
+        </shape>
+    </item>
+
+    <!-- Inner Dark Green Circle -->
+    <item
+        android:left="8dp"
+        android:right="8dp"
+        android:top="8dp"
+        android:bottom="8dp">
+        <shape android:shape="oval">
+            <solid android:color="#0B3D02"/> <!-- Deep green center -->
+        </shape>
+    </item>
+
+</layer-list>

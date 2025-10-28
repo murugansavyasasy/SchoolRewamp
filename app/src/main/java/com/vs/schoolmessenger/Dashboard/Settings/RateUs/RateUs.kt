@@ -29,7 +29,6 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         setupToolbar()
 
 
-
         binding.lblAppUi.setOnClickListener(this)
         binding.lblWatchUi.setOnClickListener(this)
         binding.lbPricing.setOnClickListener(this)

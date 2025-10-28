@@ -31,6 +31,7 @@ import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Call.NotificationCall
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -41,6 +42,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.jvm.java
 
 class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
@@ -67,6 +69,8 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         super.setupViews()
         binding.rlaPickImage.setOnClickListener(this)
         binding.btnReportBug.setOnClickListener(this)
+        binding.imgAddNotification.setOnClickListener(this)
+
 
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
@@ -181,7 +185,13 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
             R.id.imgBack -> {
                 onBackPressed()
             }
+
+            R.id.imgAddNotification -> {
+                val intent = Intent(this@ReportTheBug, NotificationCall::class.java)
+                startActivity(intent)
+            }
         }
+
     }
 
     private fun sendMailWithAttachment() {
