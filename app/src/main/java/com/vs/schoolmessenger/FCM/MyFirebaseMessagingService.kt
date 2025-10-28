@@ -34,17 +34,39 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "onMessageReceived called")
+        if (remoteMessage.data.isNotEmpty()) {
+            Log.d("FCM_PAYLOAD", "FCM Payload: ${remoteMessage.data}")
+        }
+        // Example: Extract fields safely
+        val title = remoteMessage.data["title"] ?: "No Title"
+        val body = remoteMessage.data["body"] ?: "No Body"
+        val tone = remoteMessage.data["tone"] ?: "Default"
+        val type = remoteMessage.data["type"] ?: "Default"
+        val imageUrl = remoteMessage.data["image_url"] ?: "Default"
+        val msgInfo = remoteMessage.data["msg_info"] ?: ""
+        // Optional: Parse nested msg_info JSON if it’s in valid JSON format
+        try {
+            // Firebase may send it like: {"menu_id":"39", "menu_name":"Attachments", ...}
+            val json = JSONObject(msgInfo)
+            val menuId = json.optString("menu_id")
+            val menuName = json.optString("menu_name")
+            val receiverType = json.optString("receiver_type")
+            val receiverid = json.optString("receiverid")
+            val header_id = json.optString("header_id")
+            val institute_id = json.optString("institute_id")
 
-        val title = remoteMessage.data["title"] ?: remoteMessage.notification?.title ?: "Default Title"
-        val body = remoteMessage.data["body"] ?: remoteMessage.notification?.body ?: "Default Body"
-        val imageUrl = remoteMessage.data["imageUrl"]
-        val menuName = remoteMessage.data["menu_name"] ?: "Messages"
-        val menuId = remoteMessage.data["menu_id"]?.toIntOrNull() ?: 1
-        val msg_id = remoteMessage.data["msg_id"]?.toIntOrNull() ?: 1
+            if (type.equals("isCall")) {
 
-        Log.d(TAG, "Data received: title=$title, body=$body, imageUrl=$imageUrl, menu=$menuName, id=$menuId, msg=$msg_id")
-
-        sendNotification(title, body, imageUrl, menuName, menuId, msg_id)
+            } else {
+                sendNotification(title, body, imageUrl, menuName, menuId.toInt(), header_id.toInt())
+            }
+            Log.d(
+                "FCM_MSG_INFO",
+                "Parsed msg_info -> menu_id: $menuId, menu_name: $menuName, receiver_type: $receiverType"
+            )
+        } catch (e: Exception) {
+            Log.e("FCM", "Error parsing msg_info: ${e.message}")
+        }
     }
 
 
@@ -53,10 +75,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "New FCM Token: $token")
     }
 
-    private fun sendNotification(title: String?, messageBody: String?, imageUrl: String?, menuName: String, menuId: Int, msg_id: Int) {
+    private fun sendNotification(
+        title: String?,
+        messageBody: String?,
+        imageUrl: String?,
+        menuName: String,
+        menuId: Int,
+        msg_id: Int
+    ) {
         // Check for notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 Log.e(TAG, "Notification permission not granted")
                 return
             }

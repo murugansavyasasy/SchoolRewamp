@@ -88,7 +88,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrLogout.setOnClickListener(this)
         binding.lnrLanguage.setOnClickListener(this)
         binding.lnrChangePassword.setOnClickListener(this)
-        binding.lnrSaveContact.setOnClickListener(this)
+//        binding.lnrSaveContact.setOnClickListener(this)
         binding.lnrwhatsnew.setOnClickListener(this)
 
         if (Constant.checkBiometricSupport(requireActivity())) {
@@ -164,9 +164,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 RedirectToWhatsnew()
             }
 
-            R.id.lnrSaveContact -> {
-                //checkContactPermission()
-            }
+//            R.id.lnrSaveContact -> {
+//                //checkContactPermission()
+//            }
         }
     }
 
