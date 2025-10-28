@@ -54,7 +54,6 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
         isStaffDetails = SharedPreference.getStaffDetails(this)
         userDetails = SharedPreference.getUserDetails(this)
 
-
         isAccessToken = if (Constant.isParentChoose) {
             isChildDetails?.access_token
         } else {

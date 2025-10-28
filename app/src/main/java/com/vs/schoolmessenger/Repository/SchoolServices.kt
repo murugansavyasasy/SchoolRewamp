@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearRes
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
+import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
@@ -221,6 +222,7 @@ class SchoolServices {
     var getattendanceStudentList: MutableLiveData<GetAttendanceStudentList?>
     var isblockstudent: MutableLiveData<BlockApiResponse?>
     var isblockstudentlist: MutableLiveData<BlockedStudentsResponse?>
+    var isfrequentlyasked: MutableLiveData<FrequentlyModelResponse?>
 
 
     init {
@@ -334,6 +336,7 @@ class SchoolServices {
         getattendanceStudentList= MutableLiveData()
         isblockstudent= MutableLiveData()
         isblockstudentlist= MutableLiveData()
+        isfrequentlyasked= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4314,6 +4317,47 @@ class SchoolServices {
 
     val isblockstudentlistLiveData: LiveData<BlockedStudentsResponse?>
         get() = isblockstudentlist
+
+
+
+
+    fun isfrequentlyasked(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isfrequentlyasked(isToken)
+            ?.enqueue(object : Callback<FrequentlyModelResponse?> {
+                override fun onResponse(
+                    call: Call<FrequentlyModelResponse?>, response: Response<FrequentlyModelResponse?>
+                ) {
+                    Log.d(
+                        "isAddQuestion Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                isfrequentlyasked.postValue(response.body())
+                            } else {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                isfrequentlyasked.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<FrequentlyModelResponse?>, t: Throwable
+                ) {
+                    isfrequentlyasked.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isfrequentlyaskedLiveData: LiveData<FrequentlyModelResponse?>
+        get() = isfrequentlyasked
 
 
 }
