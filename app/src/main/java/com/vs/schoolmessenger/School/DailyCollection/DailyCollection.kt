@@ -248,15 +248,24 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
             R.id.linear_layout3 -> {
                 selectedDateTarget = R.id.linear_layout3
-                showDatePickerDialog(this, this)
-
-
+                dailycollectionshowDatePickerDialog(
+                    this,
+                    this,
+                    isFromDate = true,
+                    fromDateMillis = fromDateMillis
+                )
             }
 
             R.id.linear_layout5 -> {
                 selectedDateTarget = R.id.linear_layout5
-                showDatePickerDialog(this, this)
+                dailycollectionshowDatePickerDialog(
+                    this,
+                    this,
+                    isFromDate = false,
+                    fromDateMillis = fromDateMillis
+                )
             }
+
         }
     }
 
@@ -265,6 +274,10 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             R.id.linear_layout3 -> {
                 binding.fromDate2.text = Constant.convertToReadableDate(date)
                 from_Date = date
+
+                // update fromDateMillis
+                val parsed = dateFormat.parse(date)
+                fromDateMillis = parsed?.time ?: 0L
             }
 
             R.id.linear_layout5 -> {
@@ -274,4 +287,5 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         }
         isGetDailyCollection()
     }
+
 }

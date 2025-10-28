@@ -21,6 +21,8 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = "Contact Support"
+        binding.lblContactNo.text = Constant.isGlobalVariableData!!.support_contact
+        binding.lblContacttMail.text = Constant.isGlobalVariableData!!.support_email
 
         binding.rytPhone.setOnClickListener(this)
         binding.rytMail.setOnClickListener(this)

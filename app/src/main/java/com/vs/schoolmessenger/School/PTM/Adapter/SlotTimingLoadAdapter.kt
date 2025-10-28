@@ -14,7 +14,8 @@ import com.vs.schoolmessenger.School.PTM.DataClass.SlotAvailability
 class SlotTimingLoadAdapter(
     private var slotTimes: MutableList<SlotAvailability>,
     private val context: Context,
-    private val onDayUpdate: (List<SlotAvailability>) -> Unit
+    private val onDayUpdate: (List<SlotAvailability>) -> Unit,
+    private val onAllSlotsRemoved: () -> Unit
 ) : RecyclerView.Adapter<SlotTimingLoadAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,6 +34,7 @@ class SlotTimingLoadAdapter(
         val slot = slotTimes[position]
         holder.lblTiming.text = "${slot.slot_from} - ${slot.slot_to}"
         holder.lblSlotStatus.text = slot.slot_availablity
+
         if (slot.slot_availablity.equals("Available", true)) {
             holder.imgRemove.visibility = View.VISIBLE
             holder.lblSlotStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
@@ -46,8 +48,11 @@ class SlotTimingLoadAdapter(
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, slotTimes.size)
             onDayUpdate(slotTimes)
+            if (slotTimes.isEmpty()) {
+                onAllSlotsRemoved()
+            }
         }
     }
+
     override fun getItemCount(): Int = slotTimes.size
 }
-

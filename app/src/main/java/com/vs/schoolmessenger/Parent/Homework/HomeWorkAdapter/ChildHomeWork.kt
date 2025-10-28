@@ -614,14 +614,16 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val schoolList = dataList.firstOrNull()?.name ?: emptyList()
+                        val flattenedTargetList = response.data
+                            .flatMap { it.name }
+                        childstandardadapter.updateList(flattenedTargetList)
+
+                        val typelist = dataList.map { it.type }
                         childstandardadapter =
-                            ChildStandardAdapter(schoolList, this, Constant.isShimmerViewDisable)
+                            ChildStandardAdapter(flattenedTargetList, this, Constant.isShimmerViewDisable)
                         binding.rcystandard.adapter = childstandardadapter
-
                         binding.sendtostandardLabel.visibility = View.VISIBLE
-
-                        binding.standardValue.text = "\uD83C\uDF93 Sent To ${dataList[0].type}"
+                        binding.standardValue.text = "\uD83C\uDF93 ${typelist}"
                     }
 
                 } else {
@@ -630,6 +632,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 }
             }
         }
+
 
 
 
@@ -640,14 +643,16 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val schoolList = dataList.firstOrNull()?.name ?: emptyList()
+                        val flattenedTargetList = response.data
+                            .flatMap { it.name }
+                        childstandardadapter.updateList(flattenedTargetList)
+
+                        val typelist = dataList.map { it.type }
                         childstandardadapter =
-                            ChildStandardAdapter(schoolList, this, Constant.isShimmerViewDisable)
+                            ChildStandardAdapter(flattenedTargetList, this, Constant.isShimmerViewDisable)
                         binding.rcystandard.adapter = childstandardadapter
-
                         binding.sendtostandardLabel.visibility = View.VISIBLE
-
-                        binding.standardValue.text = "\uD83C\uDF93 Sent To ${dataList[0].type}"
+                        binding.standardValue.text = "\uD83C\uDF93 ${typelist}"
                     }
 
                 } else {
@@ -657,48 +662,27 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
 
-
-
-
-
         appViewModel!!.getassignmentchildhomework?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val newData = mutableListOf<AssignmentTargetDetail>()
-                        newData.addAll(dataList)
+                        val flattenedTargetList = response.data
+                            .flatMap { it.name }
+                        childstandardadapter.updateList(flattenedTargetList)
 
-                        assignmentchildstandardAdapter = AssignmentChildStandardAdapter(
-                            newData, this, Constant.isShimmerViewDisable
-                        )
-                        binding.rcystandard.adapter = assignmentchildstandardAdapter
-
-                        if (newData.isNotEmpty()) {
-                            binding.sendtostandardLabel.visibility = View.VISIBLE
-
-                            val targetType = when (data!!.target_type) {
-                                1 -> "SCHOOL"
-                                2 -> "STANDARD"
-                                3 -> "SECTION"
-                                4 -> "GROUP"
-                                5 -> "STUDENT"
-                                6 -> "STAFF"
-                                else -> "UNKNOWN"
-                            }
-                            binding.standardValue.text = "\uD83C\uDF93 Sent To $targetType"
-                        } else {
-                            binding.sendtostandardLabel.visibility = View.GONE
-                        }
-                    } ?: run {
-                        binding.sendtostandardLabel.visibility = View.GONE
+                        val typelist = dataList.map { it.type }
+                        childstandardadapter =
+                            ChildStandardAdapter(flattenedTargetList, this, Constant.isShimmerViewDisable)
+                        binding.rcystandard.adapter = childstandardadapter
+                        binding.sendtostandardLabel.visibility = View.VISIBLE
+                        binding.standardValue.text = "\uD83C\uDF93 ${typelist}"
                     }
+
                 } else {
                     Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
                     binding.sendtostandardLabel.visibility = View.GONE
                 }
-            } else {
-                binding.sendtostandardLabel.visibility = View.GONE
             }
         }
 

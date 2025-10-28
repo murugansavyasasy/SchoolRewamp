@@ -1,13 +1,29 @@
 package com.vs.schoolmessenger.Dashboard.Settings.Faq
 
+import android.os.Build
 import android.view.View
-import android.widget.ImageView
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FaqItem
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FaqBinding
 
 class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
+    private var isAccessToken: String? = null
+    private var appViewModel: App? = null
+    private var faqadapter: FaqAdapter? = null
+    private var currentPosition = 0
+    private var isChildDetails: ChildDetails? = null
+    private var isStaffDetails: StaffDetails? = null
+    var userDetails: UserDetails? = null
 
     override fun getViewBinding(): FaqBinding {
         return FaqBinding.inflate(layoutInflater)
@@ -20,75 +36,73 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
             statusBarBgView = binding.statusBarBackground
         )
 
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        isChildDetails = SharedPreference.getChildDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        userDetails = SharedPreference.getUserDetails(this)
+
         binding.toolbarLayout.lblParentToolBar.text = "FAQ"
 
-        binding.arrowIcon1.setOnClickListener(this)
-        binding.arrowIcon2.setOnClickListener(this)
-        binding.arrowIcon3.setOnClickListener(this)
-        binding.arrowIcon4.setOnClickListener(this)
-        binding.arrowIcon5.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        isAccessToken = if (Constant.isParentChoose) {
+            isChildDetails?.access_token
+        } else {
+            isStaffDetails?.access_token
+        }
+
+
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel?.init()
+
+
+        loadfaqdata()
+        appViewModel?.isfrequentlyasked?.observe(this) { response ->
+            if (response != null && response.status) {
+                binding.rcyfaq.visibility = View.VISIBLE
+                binding.lytList.visibility=View.GONE
+                getFaqData(response.data)
+
+            } else {
+                binding.rcyfaq.visibility = View.GONE
+                binding.lytList.visibility=View.VISIBLE
+                binding.txtNoData.text= response?.message
+            }
+        }
 
 
     }
 
-    override fun onClick(p0: View?) {
-        when (p0?.id) {
 
+    private fun loadfaqdata() {
+        appViewModel?.isfrequentlyasked(isAccessToken!!)
+
+    }
+
+
+    private fun getFaqData(data: List<FaqItem>?) {
+        if (data.isNullOrEmpty()) {
+            binding.rcyfaq.visibility = View.GONE
+            binding.lytList.visibility = View.VISIBLE
+            binding.txtNoData.text = getString(R.string.no_data_found)
+        } else {
+            binding.rcyfaq.visibility = View.VISIBLE
+            binding.lytList.visibility = View.GONE
+            binding.rcyfaq.layoutManager = LinearLayoutManager(this)
+            faqadapter = FaqAdapter(data, this, false)
+            binding.rcyfaq.adapter = faqadapter
+        }
+    }
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onClick(v: View?) {
+        when (v?.id) {
             R.id.imgBack -> {
                 onBackPressed()
             }
 
-            R.id.arrow_icon_1 -> {
-                isEnterYourAnswer(binding.arrowIcon1)
-            }
-
-            R.id.arrow_icon_2 -> {
-                isEnterYourAnswer(binding.arrowIcon2)
-            }
-
-            R.id.arrow_icon_3 -> {
-                isEnterYourAnswer(binding.arrowIcon3)
-            }
-
-            R.id.arrow_icon_4 -> {
-                isEnterYourAnswer(binding.arrowIcon4)
-            }
-
-            R.id.arrow_icon_5 -> {
-                isEnterYourAnswer(binding.arrowIcon5)
-            }
         }
     }
 
-    private fun isEnterYourAnswer(isDownArrows: ImageView?) {
-
-        binding.answer1.visibility = View.GONE
-        binding.answer2.visibility = View.GONE
-        binding.answer3.visibility = View.GONE
-        binding.answer4.visibility = View.GONE
-        binding.answer5.visibility = View.GONE
-
-        when (isDownArrows) {
-            binding.arrowIcon1 -> {
-                binding.answer1.visibility = View.VISIBLE
-            }
-
-            binding.arrowIcon2 -> {
-                binding.answer2.visibility = View.VISIBLE
-            }
-
-            binding.arrowIcon3 -> {
-                binding.answer3.visibility = View.VISIBLE
-            }
-
-            binding.arrowIcon4 -> {
-                binding.answer4.visibility = View.VISIBLE
-            }
-
-            binding.arrowIcon5 -> {
-                binding.answer5.visibility = View.VISIBLE
-            }
-        }
-    }
 }

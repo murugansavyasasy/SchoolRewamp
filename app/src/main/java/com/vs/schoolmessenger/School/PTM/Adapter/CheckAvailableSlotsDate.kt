@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.PTM.Adapter
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.PTM.Activity.CreateSlots
 import com.vs.schoolmessenger.School.PTM.DataClass.AvailableSlotGroup
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotAvailability
 import java.text.SimpleDateFormat
@@ -41,14 +43,20 @@ class CheckAvailableSlotsDate(
         val formattedDate = formatDateForDisplay(dayGroup.date)
         holder.tvDate.text = formattedDate
 
-        val adapter = SlotTimingLoadAdapter(dayGroup.slots, context) { updatedDaySlots ->
-            allDaySlots[position] = dayGroup.date to updatedDaySlots
-
-            val combined = allDaySlots.values.flatMap { (date, slots) ->
-                slots.map { slot -> date to slot }
+        val adapter = SlotTimingLoadAdapter(
+            dayGroup.slots,
+            context,
+            onDayUpdate = { updatedDaySlots ->
+                allDaySlots[position] = dayGroup.date to updatedDaySlots
+                val combined = allDaySlots.values.flatMap { (date, slots) ->
+                    slots.map { slot -> date to slot }
+                }
+                onUpdate(combined)
+            },
+            onAllSlotsRemoved = {
+                removeDateGroup(position)
             }
-            onUpdate(combined)
-        }
+        )
 
         holder.rcySlotTiming.layoutManager = GridLayoutManager(context, 2)
         holder.rcySlotTiming.adapter = adapter
@@ -62,6 +70,21 @@ class CheckAvailableSlotsDate(
             onUpdate(combined)
         }
     }
+
+    private fun removeDateGroup(position: Int) {
+        (dates as MutableList).removeAt(position)
+        notifyItemRemoved(position)
+
+        if (dates.isEmpty()) {
+            if (context is Activity) {
+                val activity = context as Activity
+                if (activity is CreateSlots) {
+                    activity.dismissBottomSheet()
+                }
+            }
+        }
+    }
+
 
     private fun formatDateForDisplay(input: String?): String {
         if (input.isNullOrBlank()) return ""

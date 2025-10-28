@@ -146,6 +146,18 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
+    fun isToolBarNoticeCallTheme() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this.resources.getColor(R.color.grey_color)
+            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+
+        }
+    }
+
     @SuppressLint("UseCompatLoadingForColorStateLists")
     fun isToolBarPrimaryTheme1(mainViewId: Int, statusBarBgView: View) {
         // Enables edge-to-edge rendering
@@ -731,6 +743,41 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         )
         datePickerDialog.show()
     }
+
+
+
+    fun dailycollectionshowDatePickerDialog(
+        context: Context,
+        listener: OnDateSelectedListener,
+        isFromDate: Boolean,
+        fromDateMillis: Long
+    ) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val cal = Calendar.getInstance()
+                cal.set(selectedYear, selectedMonth, selectedDay)
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(cal.time)
+                listener.onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        // 🚫 If TO-DATE picker open, don’t allow dates before FROM-DATE
+        if (!isFromDate) {
+            datePickerDialog.datePicker.minDate = fromDateMillis
+        }
+
+        datePickerDialog.show()
+    }
+
+
 
 
     fun CustomshowDatePickerDialog(
