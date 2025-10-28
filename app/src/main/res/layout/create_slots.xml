@@ -179,10 +179,12 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:layout_marginBottom="@dimen/ten"
                     android:background="@drawable/outline_gray"
-                    android:hint="Paste the meeting link"
+                    android:hint="Paste your text here"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp"
-                    android:visibility="gone"></com.vs.schoolmessenger.Utils.UrlPasteOnlyEditText>
+                    android:visibility="gone"/>
+
+
             </RelativeLayout>
 
             <RelativeLayout

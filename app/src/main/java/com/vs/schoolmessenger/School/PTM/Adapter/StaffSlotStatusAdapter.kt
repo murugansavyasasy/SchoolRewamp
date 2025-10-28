@@ -103,8 +103,9 @@ class StaffSlotStatusAdapter(
                     lblWaitingBooking.setTextColor(context.getColor(R.color.red))
                     lblWaitingBooking.background = context.getDrawable(R.drawable.bg_light_red_radious)
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.cancelled))
-                    imgDot.visibility = View.GONE
-                    imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
+                    imgDot.visibility = View.VISIBLE
+                    imgDot.setOnClickListener { listener.onStaffSlotCancelReOpenClickListener(data, it, adapterPosition) }
+//                    imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
                 "Expired" -> {
                     rltStatus.background = context.getDrawable(R.drawable.bg_gray_radious_light)
