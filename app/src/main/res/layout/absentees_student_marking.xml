@@ -84,7 +84,7 @@
             android:id="@+id/rytSearchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:layout_below="@+id/rlaSortSearch"
             android:orientation="horizontal">
 
@@ -138,40 +138,29 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/rytSearchBar"
             android:layout_marginTop="@dimen/ten"
+            android:weightSum="1"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/rect_light_blue"
             android:orientation="horizontal">
 
             <TextView
+                android:layout_marginStart="@dimen/five"
                 android:id="@+id/lblName"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="0.6"
                 android:padding="@dimen/ten"
                 android:text="@string/name"
                 android:textColor="@color/light_purple1" />
 
-            <TextView
-                android:id="@+id/lblRollNo"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/five"
-                android:paddingVertical="@dimen/five"
-                android:text="@string/roll_no"
-                android:textColor="@color/light_purple1" />
 
             <TextView
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_weight="1"
+                android:layout_weight="0.4"
                 android:gravity="center"
                 android:text="@string/status"
                 android:textColor="@color/light_purple1" />

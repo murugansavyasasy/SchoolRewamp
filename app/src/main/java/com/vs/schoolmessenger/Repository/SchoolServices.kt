@@ -4197,10 +4197,11 @@ class SchoolServices {
 
     fun isGetAttendanceStudentList(
         isToken: String,
+        class_id: String,
         section_id: String,
         date: String,
     ) {
-        RestClient.apiInterfaces.getAttendanceStudentList(isToken,section_id,date)
+        RestClient.apiInterfaces.getAttendanceStudentList(isToken,class_id,section_id,date)
             ?.enqueue(object : Callback<GetAttendanceStudentList?> {
                 override fun onResponse(
                     call: Call<GetAttendanceStudentList?>, response: Response<GetAttendanceStudentList?>

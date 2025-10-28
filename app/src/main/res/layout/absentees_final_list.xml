@@ -30,10 +30,104 @@
 
             </TextView>
 
+            <LinearLayout
+                android:id="@+id/toolbarLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:orientation="horizontal"
+                android:weightSum="3"
+              >
+
+                <LinearLayout
+                    android:id="@+id/lnrTabOneName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tabOneName"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/iconBlue">
+                    </TextView>
+
+                    <View
+                        android:id="@+id/line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/three"
+                        android:layout_below="@+id/groupheading"
+                        android:layout_marginTop="@dimen/five"
+                        android:background="@color/iconBlue">
+                    </View>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/lnrTabTwoName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tabTwoName"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        >
+                    </TextView>
+
+                    <View
+                        android:id="@+id/line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/three"
+                        android:layout_below="@+id/groupheading"
+                        android:layout_marginTop="@dimen/five"
+                        android:background="@color/athens_gray">
+                    </View>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrTabThreeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tabThreeName"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                      >
+                    </TextView>
+
+                    <View
+                        android:id="@+id/line3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/three"
+                        android:layout_marginTop="@dimen/five"
+                        android:background="@color/athens_gray">
+                    </View>
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/lblAbsenteesListCount"
                 android:layout_marginTop="@dimen/ten"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:text="@string/absentees_students_list"
                 android:textSize="@dimen/fifteen_sp"
@@ -73,6 +167,7 @@
                     android:layout_marginHorizontal="@dimen/ten"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_marginTop="@dimen/twenty"
                     android:textSize="@dimen/fifteen_sp"
                     android:text="">

@@ -1464,8 +1464,8 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getdashboardnewupdates(isToken, role_type)
     }
 
-    fun getAttendanceStudentList(isToken: String, section_id: String,date:String) {
-        apiSchoolRepositories.isGetAttendanceStudentList(isToken, section_id,date)
+    fun getAttendanceStudentList(isToken: String, class_id: String,section_id: String,date:String) {
+        apiSchoolRepositories.isGetAttendanceStudentList(isToken,class_id, section_id,date)
     }
 
 

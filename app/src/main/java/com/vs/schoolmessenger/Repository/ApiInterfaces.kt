@@ -1184,6 +1184,7 @@ interface ApiInterfaces {
     @GET(APIMethods.getAttendanceStudentList)
     fun getAttendanceStudentList(
         @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.class_id) class_id: String,
         @Query(APIKeyNames.section_id ) section_id: String,
         @Query(APIKeyNames.date ) date : String
     ): Call<GetAttendanceStudentList>
