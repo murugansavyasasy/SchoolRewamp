@@ -36,6 +36,7 @@ import com.vs.schoolmessenger.databinding.PtmBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import androidx.core.view.isVisible
 
 class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListener {
 
@@ -85,7 +86,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
         }
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.rytsearch.visibility == View.VISIBLE) {
+            if (binding.rytsearch.isVisible) {
                 binding.rytsearch.visibility = View.GONE
                 binding.txtSearchMeeting.setText("")
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -233,26 +234,22 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     fun isLoadData(data: List<MeetingData>) {
         val adapter = ParentMeetingAdapter(data) { meeting, slot ->
             val meetingKey = "${meeting.staff_id}_${meeting.start_time}_${meeting.event_name}"
-            // Remove old selected slot for this meeting if exists
-            selectedSlotIds.removeAll { existingId ->
-                // Find the slot with same meetingKey
-                selectedSlotIds.removeAll { existingId ->
-                    data.any { meetingItem ->
-                        val key =
-                            "${meetingItem.staff_id}_${meetingItem.start_time}_${meetingItem.event_name}"
-                        key == meetingKey && meetingItem.slots.any { it.id == existingId }
-                    }
-                }
+
+            // Safely remove only slots that belong to this meeting
+            val slotsToRemove = data.flatMap { meetingItem ->
+                val key = "${meetingItem.staff_id}_${meetingItem.start_time}_${meetingItem.event_name}"
+                if (key == meetingKey) meetingItem.slots.map { it.id } else emptyList()
             }
+
+            selectedSlotIds.removeAll(slotsToRemove.toSet())
+
+            // Add the newly selected slot
             selectedSlotIds.add(slot.id)
+
+            // Show/hide booking button
             binding.lblBookSlots.visibility =
                 if (selectedSlotIds.isNotEmpty()) View.VISIBLE else View.GONE
-            println("Selected Slot IDs: $selectedSlotIds")
-            if (selectedSlotIds.isNotEmpty()) {
-                binding.lblBookSlots.visibility = View.VISIBLE
-            } else {
-                binding.lblBookSlots.visibility = View.GONE
-            }
+
             println("Selected Slot IDs: $selectedSlotIds")
         }
 
@@ -261,6 +258,39 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
         binding.recyclerViewSlots.adapter = adapter
         binding.recyclerViewSlots.setHasFixedSize(true)
     }
+
+
+//    fun isLoadData(data: List<MeetingData>) {
+//        val adapter = ParentMeetingAdapter(data) { meeting, slot ->
+//            val meetingKey = "${meeting.staff_id}_${meeting.start_time}_${meeting.event_name}"
+//            // Remove old selected slot for this meeting if exists
+//            selectedSlotIds.removeAll { existingId ->
+//                // Find the slot with same meetingKey
+//                selectedSlotIds.removeAll { existingId ->
+//                    data.any { meetingItem ->
+//                        val key =
+//                            "${meetingItem.staff_id}_${meetingItem.start_time}_${meetingItem.event_name}"
+//                        key == meetingKey && meetingItem.slots.any { it.id == existingId }
+//                    }
+//                }
+//            }
+//            selectedSlotIds.add(slot.id)
+//            binding.lblBookSlots.visibility =
+//                if (selectedSlotIds.isNotEmpty()) View.VISIBLE else View.GONE
+//            println("Selected Slot IDs: $selectedSlotIds")
+//            if (selectedSlotIds.isNotEmpty()) {
+//                binding.lblBookSlots.visibility = View.VISIBLE
+//            } else {
+//                binding.lblBookSlots.visibility = View.GONE
+//            }
+//            println("Selected Slot IDs: $selectedSlotIds")
+//        }
+//
+//        binding.recyclerViewSlots.layoutManager =
+//            GridLayoutManager(this, 1, RecyclerView.VERTICAL, false)
+//        binding.recyclerViewSlots.adapter = adapter
+//        binding.recyclerViewSlots.setHasFixedSize(true)
+//    }
 
     fun isLoadSubjectList(data: List<SubjectData>) {
         val mutableList = mutableListOf<SubjectData>()

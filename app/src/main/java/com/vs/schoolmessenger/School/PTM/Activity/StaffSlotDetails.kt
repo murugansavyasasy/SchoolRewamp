@@ -77,9 +77,9 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             Constant.hideLoading(this)
             if (response != null) {
                 val message = response.message ?: "Failed to cancel slot"
-                Constant.showTopAlertPopup(message, this)
+                Constant.showTopAlertPopup1(message, this,true)
             } else {
-                Constant.showTopAlertPopup("No response from server", this)
+                Constant.showTopAlertPopup1("No response from server", this,true)
             }
         }
 
@@ -89,9 +89,9 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
             if (response != null) {
                 val message = response.message ?: "Failed to reopen slot"
-                Constant.showTopAlertPopup(message, this)
+                Constant.showTopAlertPopup1(message, this,true)
             } else {
-                Constant.showTopAlertPopup("No response from server", this)
+                Constant.showTopAlertPopup1("No response from server", this,true)
             }
 
         }

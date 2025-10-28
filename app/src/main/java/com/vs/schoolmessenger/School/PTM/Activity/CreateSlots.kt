@@ -128,7 +128,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     selectedDates.clear()
                     selectedSlots = emptyList()
                     isSelectedList.clear()
-                    Constant.showTopAlertPopup("No standards found for selected academic year", this)
+                    Constant.showTopAlertPopup1("No standards found for selected academic year", this,false)
                 }
             }
         }
@@ -363,6 +363,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         val meetingData = validateMeetingInputs()
         if (meetingData != null) {
             val jsonArray = JsonArray()
+
             for (i in meetingData.selectedDates.indices) {
                 val jsonObject = JsonObject()
                 jsonObject.addProperty("date", meetingData.selectedDates[i])
@@ -374,17 +375,16 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 jsonObject.addProperty("break_time", meetingData.break_time)
                 jsonObject.addProperty("meeting_mode", meetingData.meetingMode)
 
-
                 val isStdSecJsonArray = JsonArray()
                 for (i in meetingData.selectedSections.indices) {
                     val isStdSecJsonObject = JsonObject()
                     isStdSecJsonObject.addProperty(
                         "section_id",
-                        meetingData.selectedSections.get(i).section_id
+                        meetingData.selectedSections[i].section_id
                     )
                     isStdSecJsonObject.addProperty(
                         "class_id",
-                        meetingData.selectedSections.get(i).class_id
+                        meetingData.selectedSections[i].class_id
                     )
                     isStdSecJsonArray.add(isStdSecJsonObject)
                 }
@@ -392,17 +392,31 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 val slotsTiming = splitIntoSlots(
                     binding.lblFromTime.text.toString(),
                     binding.lblToTime.text.toString(),
-                    isSlotDuration.toInt()
+                    meetingData.slotDuration.toInt()
                 )
 
-
                 val isSlotsDateJsonArray = JsonArray()
+                val breakMinutes = if (!meetingData.break_time.isNullOrEmpty() && meetingData.break_time != "0") {
+                    meetingData.break_time.toInt()
+                } else 0
 
                 for (i in slotsTiming.indices) {
-                    val isSlotsDateJsonObject = JsonObject()
-                    isSlotsDateJsonObject.addProperty("from_time", slotsTiming.get(i).fromTime)
-                    isSlotsDateJsonObject.addProperty("to_time", slotsTiming.get(i).toTime)
-                    isSlotsDateJsonArray.add(isSlotsDateJsonObject)
+                    val slotObj = JsonObject()
+                    slotObj.addProperty("from_time", slotsTiming[i].fromTime)
+                    slotObj.addProperty("to_time", slotsTiming[i].toTime)
+                    isSlotsDateJsonArray.add(slotObj)
+
+                    if (breakMinutes > 0 && i != slotsTiming.lastIndex) {
+                        val breakObj = JsonObject()
+
+                        // Calculate break start = slot.toTime
+                        val breakStart = slotsTiming[i].toTime
+                        val breakEnd = addMinutesToTime(breakStart, breakMinutes)
+
+                        breakObj.addProperty("from_time", breakStart)
+                        breakObj.addProperty("to_time", breakEnd)
+                        isSlotsDateJsonArray.add(breakObj)
+                    }
                 }
 
                 jsonObject.add("slots", isSlotsDateJsonArray)
@@ -411,9 +425,20 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
 
             Log.d("jsonArray", jsonArray.toString())
-            appViewModel!!.isSlotValidationForStaff(
-                isAccessToken!!, jsonArray
-            )
+            appViewModel!!.isSlotValidationForStaff(isAccessToken!!, jsonArray)
+        }
+    }
+
+    private fun addMinutesToTime(time: String, minutes: Int): String {
+        return try {
+            val format = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val date = format.parse(time)
+            val cal = Calendar.getInstance()
+            cal.time = date!!
+            cal.add(Calendar.MINUTE, minutes)
+            format.format(cal.time)
+        } catch (e: Exception) {
+            time
         }
     }
 
@@ -536,6 +561,11 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             behavior.skipCollapsed = true
         }
     }
+
+    fun dismissBottomSheet() {
+        bottomSheetDialog?.dismiss()
+    }
+
 
     private fun validateMeetingInputs(): MeetingCreationData? {
         if (binding.edtPurPose.text.toString().isEmpty()) {
