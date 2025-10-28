@@ -1,18 +1,22 @@
-<!-- res/layout/class_load_item.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:orientation="horizontal">
+    android:layout_margin="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
 
     <TextView
         android:id="@+id/lblvalue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="6dp"
-        android:background="@drawable/custom_bg_radius"
-        android:textColor="@color/black"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Sample"
         android:textSize="14sp"
-        android:text="X - B" />
-</LinearLayout>
+        android:textColor="@android:color/black" />
+
+</androidx.cardview.widget.CardView>

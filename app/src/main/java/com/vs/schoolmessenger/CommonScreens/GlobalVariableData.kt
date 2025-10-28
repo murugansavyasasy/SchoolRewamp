@@ -34,5 +34,7 @@ class GlobalVariableData(
     val v_card_numbers: String,
     val contact_alert_title: String,
     val contact_alert_content: String,
-    val contact_display_name: String
+    val contact_display_name: String,
+    val support_email: String,
+    val support_contact: String
 )

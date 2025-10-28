@@ -366,6 +366,26 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             binding.edtDescription.requestFocus()
             return
         }
+
+        if (submissionData != null) {
+            val currentTitle = binding.edtTitle.text.toString().trim()
+            val currentDesc = descriptionText
+            val originalTitle = submissionData!!.title?.trim() ?: ""
+            val originalDesc = submissionData!!.description?.trim() ?: ""
+            if (currentTitle == originalTitle && currentDesc == originalDesc) {
+                val currentFileSet = Constant.selectedFiles.drop(1).map { it.path to it.type.name }.toSet()
+                val originalFileSet = submissionData!!.file_path.map { it.url to it.type }.toSet()
+                if (currentFileSet == originalFileSet) {
+                    AlertDialog.Builder(this)
+                        .setTitle("No Changes")
+                        .setMessage("No changes have been detected.")
+                        .setPositiveButton("OK", null)
+                        .show()
+                    return
+                }
+            }
+        }
+
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

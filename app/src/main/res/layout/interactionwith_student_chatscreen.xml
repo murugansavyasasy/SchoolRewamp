@@ -28,6 +28,7 @@
             android:layout_height="@dimen/fourty"
             android:src="@drawable/default_profile"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/three"
             app:shapeAppearanceOverlay="@style/CircleImageShape"
             android:layout_toEndOf="@+id/imgBack"/>

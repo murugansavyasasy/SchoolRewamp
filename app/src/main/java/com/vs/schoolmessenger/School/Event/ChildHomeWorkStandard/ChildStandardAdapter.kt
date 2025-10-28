@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.databinding.ChildStandardRecyclerviewBinding
 
 
 class ChildStandardAdapter(
-    private var itemList: List<TargetData>,
+    private var itemList: List<SchoolNameTarget>,
     private val context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -23,29 +24,34 @@ class ChildStandardAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.child_standard_recyclerview, parent, false)
-        return DataViewHolder(view, context)
+        val binding = ChildStandardRecyclerviewBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return DataViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
-            val flattenedList = itemList.flatMap { it.name.map { n -> Pair(it.type, n) } }
-            val item = flattenedList[position]
-            holder.bind(item.first, item.second)
+            val school = itemList[position]
+            holder.bind(school)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 3 else itemList.sumOf { it.name.size }
+        return if (isLoading) 3 else itemList.size
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
-        private val lblvalue: TextView = itemView.findViewById(R.id.lblvalue)
+    fun updateList(newList: List<SchoolNameTarget>) {
+        this.itemList = newList
+        this.isLoading = false
+        notifyDataSetChanged()
+    }
 
-        fun bind(type: String, name: String) {
-            lblvalue.text = "\uD83C\uDF93" +" "+ name
+    class DataViewHolder(private val binding: ChildStandardRecyclerviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(school: SchoolNameTarget) {
+            binding.lblvalue.text = "🏛 ${school.institudeName}"
         }
     }
 }

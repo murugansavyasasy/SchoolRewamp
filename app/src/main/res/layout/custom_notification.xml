@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="@dimen/sixteen_sp"
-        android:text="Coupon Features"
+        android:text="School Chimes"
         style="@style/CustomTextStylePoppinsBold"
         android:maxLines="2"
         android:ellipsize="end" />
@@ -25,7 +25,7 @@
         android:textSize="@dimen/fourteen_sp"
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_marginTop="@dimen/eight"
-        android:text="Coupon Features Has Been Enabled on your device kindly check and engoy the feature"
+        android:text="This is a new message from your school"
         android:maxLines="3"
         android:ellipsize="end" />
 

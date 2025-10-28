@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockedStudent
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentListener
@@ -50,15 +51,17 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         val staffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = staffDetails?.access_token
 
-        binding.toolbarLayout.lblParentToolBar.text = staffDetails!!.name
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = staffDetails!!.school_name
 
         binding.toolbarLayout.blocktoolbar.visibility = View.VISIBLE
 
         binding.toolbarLayout.blocktoolbar.setOnClickListener {
-            val intent = Intent(this, BlockListStudentActivity::class.java)
-            startActivity(intent)
+            val dialog = BlockedStudentsDialog()
+            dialog.show(supportFragmentManager, "BlockedStudentsDialog")
         }
+
 
         fetchStudentData()
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -184,6 +187,13 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
     }
 
     override fun onBlockedSearchResultEmpty(isEmpty: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUnblockClick(
+        data: BlockedStudent,
+        isPosition: Int
+    ) {
         TODO("Not yet implemented")
     }
 

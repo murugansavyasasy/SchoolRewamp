@@ -1,17 +1,27 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent
 
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.InteractionWithStudent.Listener.ReplyClickListener
@@ -84,11 +94,78 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             }
         }
 
+        appViewModel?.isblockstudent?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    showDataValidation(
+                        resources.getString(R.string.success),
+                        response.message ?: "Updated successfully", this
+                    )
+                    fetchQuestionData()
+                } else {
+                    showDataValidation(
+                        resources.getString(R.string.fail),
+                        response.message, this
+                    )
+                }
+            }
+        }
+
+
         binding.lblStudentName.text =
             "${QuestionDataSending?.name ?: ""} (${QuestionDataSending?.section_name ?: ""})"
         binding.lblStudentSection.text = QuestionDataSending?.subject_name ?: ""
     }
 
+
+
+    private fun showDataValidation(title: String, message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        titleText.text = title
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            val intent = Intent(activity, InteractionWithStudentChatScreen::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
+            activity.finish()
+            closePopup()
+        }
+    }
 
     private fun fetchQuestionData() {
         appViewModel?.getstaffquestions(
@@ -232,14 +309,14 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             )
             return
         }
-
         val jsonObject = JsonObject().apply {
             addProperty("student_id", chat.student_id)
             addProperty("is_block", !chat.is_blocked)
             addProperty("reason", reason)
         }
-
         appViewModel?.isblockstudent(isAccessToken!!, jsonObject)
     }
+
+
 
 }

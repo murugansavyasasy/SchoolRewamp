@@ -1,115 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/AthensGray">
+    android:background="@drawable/bg_popup_rounded"
+    android:padding="@dimen/twenty">
+
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_back_black"
+        android:padding="@dimen/ten"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blocked Students List"
+        android:textSize="18sp"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/ten" />
 
     <View
-        android:id="@+id/statusBarBackground"
+        android:id="@+id/headerDivider"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/PrimaryColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rytsearch1"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/ten"
-        android:background="@drawable/rect_grey"
-        android:visibility="gone"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        app:layout_constraintTop_toBottomOf="@id/txtHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+        android:layout_marginTop="@dimen/ten" />
 
-        <ImageView
-            android:id="@+id/imgSearch1"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/ten"
-            android:src="@drawable/ic_search_grey"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <EditText
-            android:id="@+id/txtVideoMenu1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/lblSearch"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:scrollHorizontally="true"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            app:layout_constraintStart_toEndOf="@id/imgSearch1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcystudentdata"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/five"
-        android:background="@color/gray_white"
-        android:nestedScrollingEnabled="false"
-        app:layout_constraintTop_toBottomOf="@+id/rytsearch1"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@+id/headerDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <LinearLayout
-        android:id="@+id/lytList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/gray_white"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/blocklist_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <ImageView
-            android:id="@+id/nomessage"
-            android:layout_width="@dimen/two_fifty"
-            android:layout_height="@dimen/two_fifty"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/nomessages"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp" />
-
-        <TextView
-            android:id="@+id/txtNoData"
-            style="@style/CustomTextStylePoppinsBold"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcystudentdata"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty"
-            android:gravity="center"
-            android:text="@string/no_list_found"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp" />
-    </LinearLayout>
+            android:nestedScrollingEnabled="false"/>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

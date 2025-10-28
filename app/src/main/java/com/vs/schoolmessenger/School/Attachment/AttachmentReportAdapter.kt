@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.Attachment
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
@@ -229,7 +233,42 @@ class AttachmentReportAdapter(
             }
 
             rcyFile.setOnClickListener { markAsRead() }
-            rytHeader.setOnClickListener { markAsRead() }
+            rytHeader.setOnClickListener {
+                markAsRead()
+
+                val convertedList = data.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
+                }
+                val isHomeWorkData = FilePreview(
+                    id = data.id,
+                    title = data.title,
+                    description = data.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = data.thumbnail,
+                    isUnread = true,
+                    created_date = data.date,
+                    target_type = data.target_type.toIntOrNull(),
+                    isCompleted = true,
+                    isMenuType = Constant.M_ATTACHMENTS,
+                    fileList = convertedList,
+                    submittedCount = 0,
+                    assignmentid = "",
+                    category = "",
+                    assignmentsubject = "",
+                    isParentAssignment = false
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
+
+
+            }
 
             val attachmentAdapter = AttachmentFileView(data.file_path, context, "")
             rcyFile.layoutManager = GridLayoutManager(context, 3)

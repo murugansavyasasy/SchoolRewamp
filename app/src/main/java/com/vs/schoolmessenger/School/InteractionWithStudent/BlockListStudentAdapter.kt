@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -42,11 +44,11 @@ class BlockListStudentAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.interaction_student_item)
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.block_interaction_student_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.interaction_student_item, parent, false)
+                .inflate(R.layout.block_interaction_student_item, parent, false)
             DataViewHolder(view, context)
         }
     }
@@ -92,20 +94,35 @@ class BlockListStudentAdapter(
         RecyclerView.ViewHolder(itemView) {
 
         private val nameheader: TextView = itemView.findViewById(R.id.nameheader)
-        private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
-        private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
+
+        private val blocked_on: TextView = itemView.findViewById(R.id.blocked_on)
+
         private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
-        private val lblDesc: TextView = itemView.findViewById(R.id.lblDesc)
-        private val yesterdayheader: TextView = itemView.findViewById(R.id.yesterdayheader)
-        private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
+        private val lytunblock: LinearLayout = itemView.findViewById(R.id.lytunblock)
+
+
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(student: BlockedStudent, position: Int, adapter: BlockListStudentAdapter) {
             nameheader.text = student.name
-            subjectheader.text = "Class - ${student.name} (${student.gender})"
+            blocked_on.text = "Blocked on : " + student.blocked_on
+            lblLogo.text = Constant.getNameInitials(student.name)
+
+            lytunblock.setOnClickListener {
+                AlertDialog.Builder(itemView.context)
+                    .setTitle("Unblock Student")
+                    .setMessage("Are you sure you want to unblock this student?")
+                    .setPositiveButton("Yes") { dialog, _ ->
+                        listener.onUnblockClick(student, adapterPosition)
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
 
         }
-
 
     }
 

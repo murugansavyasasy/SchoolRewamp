@@ -1,9 +1,6 @@
 package com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard
 
-
-
-data class TargetData(
+data class TargetDataRaw(
     val type: String,
-    val name: List<SchoolNameTarget>
+    val name: List<Map<String, Any>>
 )
-

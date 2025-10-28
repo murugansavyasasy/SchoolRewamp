@@ -10,6 +10,7 @@ data class AttachmentDataReport(
     val description: String,
     val school_id: String,
     val recipient_type: String,
+    val target_type: String,
     val date: String,
     val time: String,
     val iframe: String,

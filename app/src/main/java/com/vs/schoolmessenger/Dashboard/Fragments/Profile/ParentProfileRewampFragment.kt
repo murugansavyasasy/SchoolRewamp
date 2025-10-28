@@ -192,7 +192,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     mAdapter?.notifyDataSetChanged()
                 } else {
                     showDataValidation(
-                        resources.getString(R.string.fail), response.message, requireActivity()
+                        resources.getString(R.string.Oops), response.message, requireActivity()
                     )
                 }
                 pendingChangedData = null
@@ -313,7 +313,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         pendingChangedData = if (changedData.entrySet().isEmpty()) null else changedData
         if (pendingChangedData == null && profilePhotoFileItem == null && Constant.selectedFiles.isEmpty()) {
             showDataValidation(
-                getString(R.string.fail), "No changes detected", requireActivity()
+                getString(R.string.Oops), "No changes detected", requireActivity()
             )
             return
         }
@@ -333,7 +333,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                         textPayload.addProperty("photoPath", url)
                     } else {
                         showDataValidation(
-                            getString(R.string.fail),
+                            getString(R.string.Oops),
                             "Profile photo upload failed",
                             requireActivity()
                         )
@@ -380,7 +380,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     payload.addProperty("photoPath", url)
                 } else {
                     showDataValidation(
-                        getString(R.string.fail), "Profile photo upload failed", requireActivity()
+                        getString(R.string.Oops), "Profile photo upload failed", requireActivity()
                     )
                 }
                 if (payload.entrySet().isEmpty()) return@uploadProfilePhoto
