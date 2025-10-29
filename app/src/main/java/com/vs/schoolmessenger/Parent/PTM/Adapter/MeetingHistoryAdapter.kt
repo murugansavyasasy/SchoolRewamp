@@ -1,8 +1,11 @@
 package com.vs.schoolmessenger.Parent.PTM.Adapter
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,6 +77,7 @@ class MeetingHistoryAdapter(
         private val tvMode: TextView = view.findViewById(R.id.tvMode)
         private val tvDuration: TextView = view.findViewById(R.id.tvDuration)
         private val tvDate: TextView = view.findViewById(R.id.tvDate)
+        private val imgMeetingMode: ImageView = view.findViewById(R.id.imgMeetingMode)
         private val tvTime: TextView = view.findViewById(R.id.tvTime)
         private val tvStatus: TextView = view.findViewById(R.id.tvStatus)
         private val cancelButton: TextView = view.findViewById(R.id.cancelButton)
@@ -91,10 +95,19 @@ class MeetingHistoryAdapter(
             tvStatus.text = meeting.status
 
             val modeDrawable = when (meeting.mode.lowercase()) {
-                "in person" -> R.drawable.person_2_black_bg
-                "phone call" -> R.drawable.phone_icon_black
-                "virtual" -> R.drawable.network_black_bg
+                "In Person" -> R.drawable.person_2_black_bg
+                "Phone Call" -> R.drawable.phone_icon_black
+                "Virtual" -> R.drawable.network_black_bg
                 else -> 0
+            }
+
+            if (meeting.mode.equals("Phone Call")) {
+                imgMeetingMode.setImageResource(R.drawable.phone_icon_black)
+            } else if (meeting.mode.equals("In Person")) {
+                imgMeetingMode.setImageResource(R.drawable.person_2_black_bg)
+            } else {
+                imgMeetingMode.setImageResource(R.drawable.network_black_bg)
+
             }
 
             if (modeDrawable != 0) {
@@ -182,7 +195,7 @@ class MeetingHistoryAdapter(
                 val phoneNumber = meeting.staff_mobile_no?.trim()?.takeIf { it.isNotEmpty() } ?: ""
                 if (phoneNumber.isNotEmpty()) {
                     try {
-                        val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
+                        val intent = Intent(Intent.ACTION_DIAL).apply {
                             data = android.net.Uri.parse("tel:$phoneNumber")
                         }
                         context.startActivity(intent)
@@ -198,12 +211,18 @@ class MeetingHistoryAdapter(
             val joinButton: Button = itemView.findViewById(R.id.joinButton)
             joinButton.setOnClickListener {
                 val context = itemView.context
-                val url = meeting.meeting_url?.trim()
+                val url = meeting.event_link
+                Log.d("isUrl", url)
                 if (!url.isNullOrEmpty()) {
-                    try {
-                        val intent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
-                            data = android.net.Uri.parse(url)
+                    val formattedUrl =
+                        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                            "https://$url"
+                        } else {
+                            url
                         }
+
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(formattedUrl))
                         context.startActivity(intent)
                     } catch (e: Exception) {
                         Toast.makeText(context, "Unable to open meeting link", Toast.LENGTH_SHORT).show()
@@ -211,6 +230,7 @@ class MeetingHistoryAdapter(
                 } else {
                     Toast.makeText(context, "Meeting URL not available", Toast.LENGTH_SHORT).show()
                 }
+
             }
         }
 
@@ -317,7 +337,6 @@ class MeetingHistoryAdapter(
             dateString
         }
     }
-
 }
 
 sealed class MeetingListItem {
