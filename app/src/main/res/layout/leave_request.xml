@@ -175,7 +175,7 @@
                 android:layout_height="@dimen/two_fifty"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:src="@drawable/nomessages"
+                android:src="@drawable/no_leave_request_message"
                 android:textColor="@color/black"
                 android:textSize="@dimen/eighteen"
                 />

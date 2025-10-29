@@ -13,8 +13,8 @@ data class SchoolNameTarget(
     @SerializedName("group")
     val group: List<String>? = null,
 
-    @SerializedName("sections")
-    val sections: List<String>? = null,
+    @SerializedName("section")
+    val sectionList: List<String>? = null,
 
     @SerializedName("name")
     val name: String? = null,
@@ -25,8 +25,8 @@ data class SchoolNameTarget(
     @SerializedName("std")
     val std: String? = null,
 
-    @SerializedName("section")
-    val section: String? = null,
+    @SerializedName("sec")
+    val sec: String? = null,
 
     @SerializedName("mobile")
     val mobile: String? = null
@@ -42,18 +42,17 @@ data class SchoolNameTarget(
             !group.isNullOrEmpty() ->
                 "👥 ${group.joinToString(" , ")}"
 
-            !sections.isNullOrEmpty() ->
-                "🏷 ${sections.joinToString(" , ")}"
-
+            !sectionList.isNullOrEmpty() ->
+                "🏷 ${sectionList.joinToString(" , ")}"
 
             !name.isNullOrEmpty() && !role.isNullOrEmpty() ->
-                "👨‍🏫 $name ($role)"
+                "👨‍🏫 $name (${role})"
 
-
-            !name.isNullOrEmpty() && !std.isNullOrEmpty() && !section.isNullOrEmpty() ->
-                "🧒 $name - ${std}-${section}"
+            !name.isNullOrEmpty() && !std.isNullOrEmpty() && !sec.isNullOrEmpty() ->
+                "🧒 $name - $std - $sec"
 
             else -> name ?: ""
         }
     }
 }
+

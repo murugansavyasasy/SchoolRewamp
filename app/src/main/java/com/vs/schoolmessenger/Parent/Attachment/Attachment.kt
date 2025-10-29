@@ -35,10 +35,10 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         return ParentAttachmentBinding.inflate(layoutInflater)
     }
 
-    var mAttachmentReportAdapter: AttachmentReportAdapter? = null
+    var mAttachmentReportAdapter: AttachmentAdapter? = null
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    lateinit var mAdapter: AttachmentAdapter
+
 
     private var msg_id: Int = -1
 
@@ -221,7 +221,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
     fun isLoadData(data: List<AttachmentDataReport>) {
-        mAttachmentReportAdapter = AttachmentReportAdapter(
+        mAttachmentReportAdapter = AttachmentAdapter(
             data,
             this,
             this,
@@ -238,7 +238,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private fun isGetAttachment() {
 
         mAttachmentReportAdapter =
-            AttachmentReportAdapter(
+            AttachmentAdapter(
                 emptyList(),
                 this,
                 this,

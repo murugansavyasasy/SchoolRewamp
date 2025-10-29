@@ -248,12 +248,15 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             val slotArray = JsonArray().apply {
                 add(slotId)
             }
+            val isReopen= JsonObject()
+            isReopen.addProperty("slot_id",slotId)
+
             val mainObject = JsonObject().apply {
                 add("slot_ids", slotArray)
             }
             if (isSlotReOpen) {
 //                jsonObject.addProperty("action", "ReOpen")
-                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, mainObject)
+                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, isReopen)
             } else {
 //                jsonObject.addProperty("action", "Cancel")
                 appViewModel!!.isSlotCancelClose(isAccessToken!!, mainObject)
