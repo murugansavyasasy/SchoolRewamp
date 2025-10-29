@@ -102,7 +102,7 @@
         android:layout_below="@+id/rytSearch"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/twenty"
-        android:src="@drawable/nomessages"
+        android:src="@drawable/no_search_message"
         android:visibility="gone" />
 
     <TextView
