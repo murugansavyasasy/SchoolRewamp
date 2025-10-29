@@ -71,7 +71,6 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
             } else {
                 binding.rytsearch1.visibility = View.VISIBLE
                 binding.txtVideoMenu1.text.clear()
-
             }
         }
         appViewModel?.getstudentdetailsforchat?.observe(this) { response ->

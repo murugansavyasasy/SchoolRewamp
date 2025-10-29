@@ -203,10 +203,17 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 mAdapter.notifyDataSetChanged()
             }
         }
+
+
         binding.radioGroupSendTo.check(R.id.radioAll)
         binding.radioAll.setBackgroundResource(R.drawable.radio_selected_bg)
 
-
+        if (binding.radioGroupSendTo.checkedRadioButtonId == R.id.radioAll && isUserDetails?.staff_details != null) {
+            selectedSchoolIds.clear()
+            isUserDetails!!.staff_details.forEach { staff ->
+                selectedSchoolIds.add(staff.school_id.toString())
+            }
+        }
     }
 
     override fun onResume() {

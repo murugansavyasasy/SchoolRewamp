@@ -135,19 +135,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             getString(R.string.rolldsc)
         )
 
-//        binding.cbSelect.setOnClickListener {
-//            if (binding.cbSelect.isChecked) {
-//                isSpecificStudent.clear()
-//                studentsList?.forEach {
-//                    isSpecificStudent.add(it)
-//                }
-//                mAdapter.setAllAbsent(true)
-//            } else {
-//                isSpecificStudent.clear()
-//                mAdapter.setAllAbsent(false)
-//            }
-//            isCountAttendance()
-//        }
+
 
         binding.cbSelect.setOnClickListener {
             mAdapter.setAllAbsent(binding.cbSelect.isChecked,isCurrentAttendanceType.toString())
@@ -536,81 +524,12 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
 
 
-//        if (selectedFinalList.isEmpty()) {
-//            rcFinalList.visibility = View.GONE
-//            lytNoDataFound?.visibility = View.VISIBLE
-//            noDataFound?.text = "No Absentees,All students are marked as present!"
-//        } else {
-//            lblAbsenteesListCount.text = "${activity.getString(R.string.absentees_students_list)}(${selectedFinalList.size})"
-//
-//            rcFinalList.visibility = View.VISIBLE
-//            lytNoDataFound?.visibility = View.GONE
-//            rcFinalList.layoutManager = LinearLayoutManager(activity)
-//            val adapter = AbsenteesFinalListAdapter(
-//                itemList = selectedFinalList.toMutableList(),
-//                context = activity,
-//                isLoading = false,
-//                onRemove = { data ->
-//                    removedStudents.add(data)
-//                },
-//                onListCountChange = { count ->
-//                    if (count == 0) {
-//                        lblAbsenteesListCount.text = "${activity.getString(R.string.absentees_students_list)}(${count})"
-//                        lytNoDataFound.visibility = View.VISIBLE
-//                        noDataFound?.text = "No Absentees,All students are marked as present!"
-//                        rcFinalList.visibility = View.GONE
-//                    } else {
-//                        lblAbsenteesListCount.text = "${activity.getString(R.string.absentees_students_list)}(${count})"
-//                        lytNoDataFound.visibility = View.GONE
-//                        rcFinalList.visibility = View.VISIBLE
-//                    }
-//                    Log.d("AbsentessCount", "Current Absentess Count: $count")
-//                }
-//            )
-//            rcFinalList.adapter = adapter
-//        }
 
         lblMarkAsAbsent.setOnClickListener {
             alertDialog.dismiss()
+            mAdapter.unselectStudents(removedStudents)
             isMarkAttendance()
         }
-
-
-//        lnrTabOneName.setOnClickListener {
-//            lnrTabOneName.isEnabled = false
-//            lnrTabTwoName.isEnabled = true
-//            lnrTabThreeName.isEnabled = true
-//            line1.setBackgroundResource(R.color.iconBlue)
-//            tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//            tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//            line2.setBackgroundResource(R.color.athens_gray)
-//            tabThreeName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//            line3.setBackgroundResource(R.color.athens_gray)
-//        }
-//
-//        lnrTabTwoName.setOnClickListener {
-//            lnrTabOneName.isEnabled = true
-//            lnrTabThreeName.isEnabled = true
-//            lnrTabTwoName.isEnabled = false
-//            tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//            line2.setBackgroundResource(R.color.iconBlue)
-//            tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//            line1.setBackgroundResource(R.color.athens_gray)
-//            tabThreeName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//            line3.setBackgroundResource(R.color.athens_gray)
-//        }
-//
-//        lnrTabThreeName.setOnClickListener {
-//            lnrTabOneName.isEnabled = true
-//            lnrTabThreeName.isEnabled = false
-//            lnrTabTwoName.isEnabled = true
-//            tabThreeName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-//            line2.setBackgroundResource(R.color.iconBlue)
-//            tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//            line2.setBackgroundResource(R.color.athens_gray)
-//            tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-//            line1.setBackgroundResource(R.color.athens_gray)
-//        }
 
 
         lblClose.setOnClickListener {
@@ -700,7 +619,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         }
 
         AllPresent= if (hasAbsent) Constant.fullDay else Constant.allPresent
-//        AllPresent = if (studentsList.isNullOrEmpty()) Constant.allPresent else Constant.fullDay
 
         Log.d("isSelectedIds",studentsList.toString())
         Log.d("AllPresent",AllPresent.toString())
@@ -796,14 +714,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     }
 
-    override fun onIdCheck(data: GetAttendanceStudentListData) {
-//        if (!isSpecificStudent.any { it.id == data.id }) {
-//            isSpecificStudent.add(data)
-//        }
-//        binding.cbSelect.isChecked = isSpecificStudent.size == studentsList?.size
-//        isCountAttendance()
-    }
-
 
 
     fun isCountAttendance() {
@@ -851,10 +761,4 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
 
 
-    override fun onIdUnchecked(data: GetAttendanceStudentListData) {
-//        isSpecificStudent.removeAll { it.id == data.id }
-//        binding.cbSelect.isChecked = false
-//        isCountAttendance()
-
-    }
 }
