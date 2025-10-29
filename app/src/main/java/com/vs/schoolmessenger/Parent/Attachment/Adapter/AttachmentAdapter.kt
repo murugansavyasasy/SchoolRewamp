@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
@@ -30,29 +31,36 @@ import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 import com.vs.schoolmessenger.Parent.Attachment.OnChildItemClickListener
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Attachment.AttachmentFileView
+import com.vs.schoolmessenger.School.Attachment.AttachmentReportAdapter
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
+import com.vs.schoolmessenger.School.Attachment.OnAttachmentReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
+import java.util.Locale
 
 class AttachmentAdapter(
-    private var attachmentList: List<AttachmentData>?,
-    private val childClickListener: OnChildItemClickListener,
-    private val listener: AttachmentClickListener,
+    private var attachmentList: List<AttachmentDataReport>?,
+    private val childClickListener: OnAttachmentReportClickListener,
     private val context: Context,
     var isLoading: Boolean,
-    var isSeeMoreClick: Boolean
+    private val noDataImage: ImageView? = null,
+    private val noDataText: TextView? = null,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var fullList: List<AttachmentData> = attachmentList ?: listOf()
-    private var filteredList: List<AttachmentData> = attachmentList ?: listOf()
 
-    init {
-        fullList = attachmentList ?: listOf()
-        filteredList = fullList
-    }
+    private var originalList: ArrayList<AttachmentDataReport> =
+        ArrayList(attachmentList ?: emptyList())
+
+    private var filteredList: List<AttachmentDataReport> = attachmentList ?: emptyList()
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -60,252 +68,250 @@ class AttachmentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.attachment_report_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.homework_school_reportitem, parent, false)
+                .inflate(R.layout.attachment_report_item, parent, false)
             DataViewHolder(view, context, childClickListener)
         }
     }
 
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
-                val result = if (query.isEmpty()) {
-                    fullList
-                } else {
-                    fullList.filter {
-                        (it.title?.lowercase() ?: "").contains(query) ||
-                                (it.description?.lowercase() ?: "").contains(query)
-                    }
-                }
-                val filterResults = FilterResults()
-                filterResults.values = result
-                return filterResults
-            }
-
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as? List<AttachmentData> ?: listOf()
-                listener.onSearchResultEmpty(filteredList.isEmpty())
-                notifyDataSetChanged()
-            }
-        }
-    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (!isLoading && holder is DataViewHolder) {
-            holder.bind(filteredList[position], position, listener, this)
+            holder.bind(filteredList, position, childClickListener, this)
         }
-
     }
 
     override fun getItemCount(): Int {
         return if (isLoading) 5 else filteredList.size
     }
 
-    fun updateList(newList: List<AttachmentData>) {
-        this.attachmentList = newList
-        this.fullList = newList
-        this.filteredList = newList
-        isLoading = false
-        notifyDataSetChanged()
+    fun removeItemAt(position: Int) {
+        if (position in filteredList.indices) {
+            val itemToRemove = filteredList[position]
+            val mutableList = originalList.toMutableList()
+            mutableList.remove(itemToRemove)
+            originalList = ArrayList(mutableList)
+            filter.filter("") // refresh filtered list
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, filteredList.size)
+        }
     }
 
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString =
+                    constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
+
+                val resultList = if (charString.isEmpty()) {
+                    originalList
+                } else {
+                    originalList.filter {
+                        it.title?.lowercase(Locale.getDefault())?.contains(charString) == true ||
+                                it.description?.lowercase(Locale.getDefault())
+                                    ?.contains(charString) == true ||
+                                it.sent_by?.lowercase(Locale.getDefault())
+                                    ?.contains(charString) == true
+                    }
+                }
+
+                return FilterResults().apply {
+                    values = resultList
+                }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<AttachmentDataReport> ?: emptyList()
+                notifyDataSetChanged()
+
+                val isEmpty = filteredList.isEmpty()
+                Log.d("NoData", if (isEmpty) "No data" else "Data")
+
+                noDataImage?.visibility = if (isEmpty) View.VISIBLE else View.GONE
+                noDataText?.visibility = if (isEmpty) View.VISIBLE else View.GONE
+
+                // Notify activity/fragment about filter state change
+                childClickListener.onFilterEmpty(isEmpty)
+            }
+        }
+    }
+    fun AppendData(newList: List<AttachmentDataReport>) {
+        val oldSize = filteredList!!.size
+        filteredList = filteredList!!.toMutableList().apply { addAll(newList) }
+        originalList=ArrayList(filteredList)
+        Log.d("FinalList",originalList.size.toString())
+        Log.d("FinalList",filteredList.size.toString())
+        notifyItemRangeInserted(oldSize, newList.size)
+    }
+
+    fun getCurrentListSize(): Int {
+        return filteredList!!.size
+    }
+
+    fun getCurrentList(): List<AttachmentDataReport> {
+        return filteredList
+    }
+
+
     class DataViewHolder(
-        itemView: View, private val context: Context, private val listener: OnChildItemClickListener
-    ) :
-        RecyclerView.ViewHolder(itemView) {
+        itemView: View,
+        private val context: Context,
+        private val listener: OnAttachmentReportClickListener
+    ) : RecyclerView.ViewHolder(itemView) {
 
-        private var isTextExpanded = false
-        private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
-        private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
-        private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
-        private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
-        private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
-        private val tvView: TextView = itemView.findViewById(R.id.tvView)
-        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
-        private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
-        private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
-        private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
-        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
-        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
-        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
-        private val lblSeeMoreClick: TextView = itemView.findViewById(R.id.lblSeeMoreClick)
-
+        private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
+        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
+        private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
+        private val lblPostedBy: TextView = itemView.findViewById(R.id.lblPostedBy)
+        private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
+        private val rytHeader: RelativeLayout = itemView.findViewById(R.id.rytHeader)
+        private val rcyFile: RecyclerView = itemView.findViewById(R.id.rcyFile)
+        private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
+        private val imgReadUnRead: ImageView = itemView.findViewById(R.id.imgReadUnRead)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            item: AttachmentData,
+            item: List<AttachmentDataReport>,
             position: Int,
-            listener: AttachmentClickListener,
+            listener: OnAttachmentReportClickListener,
             adapter: AttachmentAdapter,
         ) {
+            val data = item[position]
+            lblDate.text = "${context.getString(R.string.posted_on)} : ${Constant.convertToReadableDate(data.date)}"
+            lblTitle.text = data.title
+            lblPostedBy.text = "${context.getString(R.string.posted_by)} : ${data.sent_by}"
+            lblDescription.text = data.description
+            lblDescription.maxLines = 3
+            lblDescription.ellipsize = TextUtils.TruncateAt.END
+            lblSeeMore.visibility = View.GONE
 
-            LblHWSubjectName.visibility = View.GONE
-            if (item.is_unread) {
-                imgNewImage.visibility = View.VISIBLE
-            } else {
-                imgNewImage.visibility = View.GONE
-            }
+            var isExpanded = false
 
-            if (position == adapter.itemCount - 1) {
-                if (adapter.isSeeMoreClick) {
-                    lblSeeMoreClick.visibility = View.VISIBLE
+            lblDescription.maxLines = Integer.MAX_VALUE
+            lblDescription.ellipsize = null
+            lblDescription.text = data.description
+
+            lblDescription.viewTreeObserver.addOnPreDrawListener(object :
+                ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    lblDescription.viewTreeObserver.removeOnPreDrawListener(this)
+
+                    if (lblDescription.lineCount > 3) {
+                        lblDescription.maxLines = 3
+                        lblDescription.ellipsize = TextUtils.TruncateAt.END
+                        lblSeeMore.visibility = View.VISIBLE
+                    } else {
+                        lblSeeMore.visibility = View.GONE
+                    }
+                    return true
+                }
+            })
+
+
+            lblSeeMore.setOnClickListener {
+                isExpanded = !isExpanded
+                if (isExpanded) {
+                    lblDescription.maxLines = Int.MAX_VALUE
+                    lblDescription.ellipsize = null
+                    lblSeeMore.text = context.getString(R.string.See_Less_1)
                 } else {
-                    lblSeeMoreClick.visibility = View.GONE
+                    lblDescription.maxLines = 3
+                    lblDescription.ellipsize = TextUtils.TruncateAt.END
+                    lblSeeMore.text = context.getString(R.string.see_more)
                 }
+            }
+
+
+            if (data.file_path.isNotEmpty()) {
+                rcyFile.visibility = View.VISIBLE
             } else {
-                lblSeeMoreClick.visibility = View.GONE
+                rcyFile.visibility = View.GONE
             }
 
-            lblSeeMoreClick.setOnClickListener {
-                lblSeeMoreClick.visibility = View.GONE
-                listener.onSeeMoreClick(item, this@DataViewHolder)
+            imgEditAndDelete.visibility =
+                if (data.can_delete && data.can_edit) View.VISIBLE else View.GONE
+            imgReadUnRead.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+
+            imgEditAndDelete.setOnClickListener {
+                listener.onItemClick(item, it, adapterPosition)
             }
 
-            rlaSelectText.visibility = View.GONE
-            lblTitleImage.text = item.title
-            lblContentImage.text = item.description
-            lblDateImage.text = Constant.convertDateTimeFormat(item.date)
-            lblTimeImage.text = item.time
-            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
-            tvSeeMoreImage.setOnClickListener {
-                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
-            }
-
-            webView.setBackgroundColor(Color.BLACK)
-
-            webView.setOnTouchListener { _, event ->
-                webView.onPause()
-                if (event.action == MotionEvent.ACTION_UP) {
-                    if (item.is_unread) {
-                        item.is_unread = false
-                        imgNewImage.visibility = View.GONE
-                        listener.onItemClick(item, this)
-                    }
-                    Constant.commonFileList = item.file_path.map { file ->
-                        CommonFileData(type = file.type, path = file.url)
-                    }?.toMutableList() ?: mutableListOf()
-
-                    Constant.selectedFileIndex = 0
-
-                    val intent = Intent(context, FilesViewActivity::class.java)
-                    intent.putExtra(Constant.subjectName, item.title)
-                    context.startActivity(intent)
+            val markAsRead = {
+                if (data.is_unread) {
+                    data.is_unread = false
+                    imgReadUnRead.visibility = View.GONE
+                    listener.onReadStatusClick(item, adapterPosition)
                 }
-                false
             }
 
-            if (item.iframe.isNotEmpty()) {
-                webView.visibility = View.VISIBLE
-                rytList.visibility = View.VISIBLE
-                rcyImgPDF.visibility = View.GONE
+            rcyFile.setOnClickListener { markAsRead() }
+            rytHeader.setOnClickListener {
+                markAsRead()
 
-                webView.settings.apply {
-                    javaScriptEnabled = true
-                    domStorageEnabled = true
-                    loadWithOverviewMode = true
-                    useWideViewPort = true
+                val convertedList = data.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
                 }
-
-
-                webView.webViewClient = object : WebViewClient() {
-                    override fun onPageStarted(
-                        view: android.webkit.WebView,
-                        url: String,
-                        favicon: Bitmap?
-                    ) {
-                        loadingBar.visibility = View.VISIBLE
-                    }
-
-                    override fun onPageFinished(view: android.webkit.WebView, url: String) {
-                        loadingBar.visibility = View.GONE
-                    }
-
-                    override fun onReceivedError(
-                        view: android.webkit.WebView?,
-                        request: WebResourceRequest?,
-                        error: WebResourceError?
-                    ) {
-                        loadingBar.visibility = View.GONE
-                        Log.e("WebViewError", "Error loading: ${error?.description}")
-                    }
-                }
-
-                webView.loadUrl(item.file_path.firstOrNull()?.url ?: "")
-            } else {
-//                indicator.visibility = if (item.file_path.size > 1) View.VISIBLE else View.GONE
-                webView.visibility = View.GONE
-                rytList.visibility = View.VISIBLE
-                rcyImgPDF.visibility = View.VISIBLE
-                rcyImgPDF.layoutManager = GridLayoutManager(context, 3)
-
-                rcyImgPDF.adapter = AttachmentFilePathAdapter(
-                    item.file_path, item, object : OnChildItemClickListener {
-                        override fun onChildItemClick(
-                            file: AttachmentFile, parent: AttachmentData
-                        ) {
-                            Log.d(
-                                "AttachmentAdapter",
-                                "Clicked file: ${file.url}, from parent: ${parent.title}"
-                            )
-                            imgNewImage.visibility = View.GONE
-                            (context as? OnChildItemClickListener)?.onChildItemClick(file, parent)
-                        }
-                    }, context, Constant.isShimmerViewDisable
+                val isHomeWorkData = FilePreview(
+                    id = data.id,
+                    title = data.title,
+                    description = data.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = data.thumbnail,
+                    isUnread = true,
+                    created_date = data.date,
+                    target_type = 0,
+                    isCompleted = true,
+                    isMenuType = Constant.M_ATTACHMENTS,
+                    fileList = convertedList,
+                    submittedCount = 0,
+                    assignmentid = "",
+                    category = "",
+                    assignmentsubject = "",
+                    isParentAssignment = true
                 )
-                indicator.attachToRecyclerView(rcyImgPDF)
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
+
+
             }
-        }
+
+            val attachmentAdapter = AttachmentFileView(data.file_path, context, "")
+            rcyFile.layoutManager = GridLayoutManager(context, 3)
+            rcyFile.isNestedScrollingEnabled = false
+            rcyFile.adapter = attachmentAdapter
 
 
-        private fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
-            val adapter = recyclerView.adapter ?: return
-            this.createIndicators(adapter.itemCount, 0)
-
-            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-                    val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
-                    val firstVisible = layoutManager.findFirstVisibleItemPosition()
-                    this@attachToRecyclerView.animatePageSelected(firstVisible)
+            rcyFile.addOnItemTouchListener(
+                object : RecyclerView.SimpleOnItemTouchListener() {
+                    override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                        val child = rv.findChildViewUnder(e.x, e.y)
+                        if (child != null && e.action == MotionEvent.ACTION_UP) {
+                            rv.getChildAdapterPosition(child)
+                            Log.d("RecyclerTouch", "Clicked position: $position")
+                            if (data.is_unread) {
+                                data.is_unread = false
+                                imgReadUnRead.visibility = View.GONE
+                                listener.onReadStatusClick(item, adapterPosition)
+                            }
+                        }
+                        return false
+                    }
                 }
-            })
-
-            adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onChanged() {
-                    this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
-                }
-            })
-        }
-
-        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
-            if (isTextExpanded) {
-                isTextExpanded = false
-                lblContent.maxLines = 3
-                lblContent.ellipsize = TextUtils.TruncateAt.END
-                tvSeeMore.text = itemView.context.getString(R.string.SeeMore)
-            } else {
-                isTextExpanded = true
-                lblContent.maxLines = Integer.MAX_VALUE
-                lblContent.ellipsize = null
-                tvSeeMore.text = itemView.context.getString(R.string.SeeLess)
-            }
-        }
-
-        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
-            lblContent.post {
-                if (lblContent.lineCount > 3) {
-                    tvSeeMore.visibility = View.VISIBLE
-                    lblContent.maxLines = 3
-                    lblContent.ellipsize = TextUtils.TruncateAt.END
-                }
-            }
+            )
         }
     }
+
+
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {

@@ -451,6 +451,24 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
+
+        if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
+            if(data!!.is_submitted == true) {
+                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                Log.d("lblviewSubmissions Visible success" ,"lblviewSubmissions Visible success")
+            } else {
+                binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
+                Log.d("lblviewSubmissions Visible failed" ,"lblviewSubmissions Visible failed")
+            }
+
+        } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false)  {
+            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
+            Log.d("lblviewSubmissions Visible failed" ,"lblviewSubmissions Visible failed")
+        } else {
+            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
+            Log.d("lblviewSubmissions Visible failed" ,"lblviewSubmissions Visible failed")
+        }
+
 //        if (data?.created_date.isNullOrBlank()) {
 //            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
 //        } else {
@@ -1070,13 +1088,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             alignItems = AlignItems.FLEX_START
         }
         binding.rcystandard.layoutManager = flexboxLayoutManager
-        assignmentchildstandardAdapter = AssignmentChildStandardAdapter(emptyList(), this, true)
-        binding.rcystandard.adapter = assignmentchildstandardAdapter
-
+        childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
+        binding.rcystandard.adapter = childstandardadapter
         appViewModel!!.getassignmentchildhomework(
             isAccessToken!!,
             data!!.id.toInt(),
-            data!!.target_type!!
+            data!!.target_type!!.toInt()
         )
     }
 
