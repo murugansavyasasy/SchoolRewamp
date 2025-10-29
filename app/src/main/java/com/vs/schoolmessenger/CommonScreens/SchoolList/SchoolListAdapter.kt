@@ -97,6 +97,8 @@ class SchoolListAdapter(
                     .into(imgSchoolLogo)
             }
 
+            chMultipleSchool.isChecked = selectedIds.contains(data.school_id.toString())
+
             rlaHeader.setOnClickListener {
                 if (!isMultipleSchool) {
                     listener.onItemClick(data)

@@ -194,6 +194,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
             val selectedRadioButton = group.findViewById<RadioButton>(checkedId)
             selectedRadioButton?.setBackgroundResource(R.drawable.radio_selected_bg)
+
+            if (checkedId == R.id.radioAll && isUserDetails?.staff_details != null) {
+                selectedSchoolIds.clear()
+                isUserDetails!!.staff_details.forEach { staff ->
+                    selectedSchoolIds.add(staff.school_id.toString())
+                }
+                mAdapter.notifyDataSetChanged()
+            }
         }
         binding.radioGroupSendTo.check(R.id.radioAll)
         binding.radioAll.setBackgroundResource(R.drawable.radio_selected_bg)
