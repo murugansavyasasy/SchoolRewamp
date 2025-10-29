@@ -106,7 +106,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this@AttendQuiz)
-                    Constant.showDataValidation(
+                    Constant.showParentDataValidation(
                         resources.getString(R.string.success), response.message, this
                     )
                     binding.apply {
@@ -115,10 +115,16 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                     }
                 } else {
                     Constant.hideLoading(this@AttendQuiz)
-                    Constant.showDataValidation(
+                    Constant.showParentDataValidation(
                         resources.getString(R.string.fail), response.message, this
                     )
                 }
+            }
+            else {
+                Constant.hideLoading(this@AttendQuiz)
+                Constant.showParentDataValidation(
+                    resources.getString(R.string.fail), getString(R.string.something_went_wrong_please_try_again_later), this
+                )
             }
         }
 

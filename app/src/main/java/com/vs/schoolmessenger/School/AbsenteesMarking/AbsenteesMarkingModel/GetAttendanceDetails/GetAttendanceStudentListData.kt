@@ -5,5 +5,6 @@ data class GetAttendanceStudentListData(
     val name: String,
     val admission_no: String,
     val roll_no: String,
-    var att_type: String
+    var att_type: String,
+    var att_status: String,
 )

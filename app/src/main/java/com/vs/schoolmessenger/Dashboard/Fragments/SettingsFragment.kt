@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
@@ -25,6 +26,7 @@ import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -51,6 +53,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
 import java.io.ByteArrayOutputStream
 
+
 class SettingsFragment : Fragment(), View.OnClickListener {
 
     override fun onAttach(context: Context) {
@@ -74,6 +77,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     private lateinit var btnConfirm: TextView
     private var isChecking = false
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -90,6 +94,12 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrChangePassword.setOnClickListener(this)
 //        binding.lnrSaveContact.setOnClickListener(this)
         binding.lnrwhatsnew.setOnClickListener(this)
+
+        val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
+        val versionName = pInfo.versionName
+        val versionCode = pInfo.longVersionCode
+        binding.lblAppVersion.text = "App Version: $versionName ( $versionCode )"
+
 
         if (Constant.checkBiometricSupport(requireActivity())) {
             binding.lnrEnableFingerPrint.visibility = View.VISIBLE

@@ -245,11 +245,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
     private fun checkContactPermission() {
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_CONTACTS)
+        val safeActivity = activity ?: return
+
+        if (ContextCompat.checkSelfPermission(safeActivity, Manifest.permission.READ_CONTACTS)
             != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                requireActivity(),
+                safeActivity,
                 arrayOf(Manifest.permission.READ_CONTACTS),
                 REQUEST_CONTACT_PERMISSION
             )

@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AbsenteesMarkAdapter(
     private var itemList: MutableList<GetAttendanceStudentListData>? = mutableListOf(),
+    private var isCurrentAttendanceType: String,
     private var context: Context,
     private var isLoading: Boolean,
     private val selectionListener: AbsenteesSelectionListener,
@@ -57,7 +58,7 @@ class AbsenteesMarkAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position)
+            holder.bind(itemList!![position],isCurrentAttendanceType, position)
 
         }
     }
@@ -84,41 +85,62 @@ class AbsenteesMarkAdapter(
         private val switchOD: ODCustomSwitch = itemView.findViewById(R.id.switchOD)
         private val cbLaterComer: CheckBox = itemView.findViewById(R.id.cbLaterComer)
 
-        fun bind(data: GetAttendanceStudentListData, position: Int) {
+        fun bind(data: GetAttendanceStudentListData, isCurrentAttendanceType: String, position: Int) {
 
-            if (data.roll_no != "") {
+            if (data.roll_no.isNotEmpty()) {
                 lblRollNo.text = data.roll_no
-                lblRollNo.visibility=View.VISIBLE
-            } else {
-                lblRollNo.visibility=View.GONE
-            }
+                lblRollNo.visibility = View.VISIBLE
+            } else lblRollNo.visibility = View.GONE
 
-            if (data.name.isNullOrEmpty()){
-                lblName.visibility=View.GONE
-            }
-            else{
-                lblName.visibility=View.VISIBLE
+            if (data.name.isNullOrEmpty()) {
+                lblName.visibility = View.GONE
+            } else {
+                lblName.visibility = View.VISIBLE
                 lblName.text = data.name
             }
 
-            if (data.name.isNullOrEmpty()){
-                lblAdmisNo.visibility=View.GONE
-            }
-            else{
-                lblAdmisNo.visibility=View.VISIBLE
+            if (data.name.isNullOrEmpty()) {
+                lblAdmisNo.visibility = View.GONE
+            } else {
+                lblAdmisNo.visibility = View.VISIBLE
                 lblAdmisNo.text = context.getString(R.string.ADMIS_NO_) + data.admission_no
             }
-            // --- Function to update UI safely ---
+
+            // -------- Helper functions --------
+            fun getCurrentHalfStatus(): String {
+                val parts = data.att_status.split("/")
+                return when (isCurrentAttendanceType) {
+                    "SH" -> parts.getOrNull(1) ?: "P" // second half
+                    else -> parts.getOrNull(0) ?: "P" // first half or full day
+                }
+            }
+
+            fun setCurrentHalfStatus(newValue: String) {
+                val parts = data.att_status.split("/")
+                val first = parts.getOrNull(0) ?: "P"
+                val second = parts.getOrNull(1) ?: "P"
+
+                data.att_status = when (isCurrentAttendanceType) {
+                    "SH" -> "$first/$newValue"
+                    else -> "$newValue/$second"
+                }
+
+                itemList[position] = data
+                selectionListener.onSelectionChanged(itemList)
+            }
+
+            // -------- UI update based on att_status --------
             fun updateUI() {
-                when (data.att_type) {
-                    "PRESENT" -> {
+                Log.d("CurrentAttendanceType",isCurrentAttendanceType)
+                when (getCurrentHalfStatus()) {
+                    "P" -> {
                         lnrEntirePresent.visibility = View.VISIBLE
                         lnrAbsent.visibility = View.GONE
                         lnrOD.visibility = View.GONE
                         switchOD.setChecked(false)
                         cbLaterComer.isChecked = false
                     }
-                    "ABSENT" -> {
+                    "A" -> {
                         lnrEntirePresent.visibility = View.GONE
                         lnrAbsent.visibility = View.VISIBLE
                         lnrOD.visibility = View.GONE
@@ -132,7 +154,7 @@ class AbsenteesMarkAdapter(
                         switchOD.setChecked(true)
                         cbLaterComer.isChecked = false
                     }
-                    "LATECOMER" -> {
+                    "P~" -> {
                         lnrEntirePresent.visibility = View.VISIBLE
                         lnrAbsent.visibility = View.GONE
                         lnrOD.visibility = View.GONE
@@ -140,49 +162,55 @@ class AbsenteesMarkAdapter(
                         cbLaterComer.isChecked = true
                     }
                 }
-                switchOD.isEnabled = true // OD always enabled
+                switchOD.isEnabled = true
             }
 
-            // ✅ Temporarily remove listener before changing checked state
+            // -------- Listeners --------
             cbLaterComer.setOnCheckedChangeListener(null)
-            cbLaterComer.isChecked = data.att_type == "LATECOMER"
+            cbLaterComer.isChecked = getCurrentHalfStatus() == "P~"
 
-            // ✅ Then reattach the listener AFTER UI sync
             val lateComerListener = CompoundButton.OnCheckedChangeListener { _, isChecked ->
-                Log.d("Clicking", "cbLaterComer")
-                data.att_type = if (isChecked) "LATECOMER" else "PRESENT"
+                setCurrentHalfStatus(if (isChecked) "P~" else "P")
                 updateUI()
-                itemList[position] = data
-                selectionListener.onSelectionChanged(itemList)
             }
             cbLaterComer.setOnCheckedChangeListener(lateComerListener)
 
-            // --- Present Click ---
+            // --- Present click ---
             lnrPresent.setOnClickListener {
                 cbLaterComer.setOnCheckedChangeListener(null)
-                data.att_type = "ABSENT"
+                setCurrentHalfStatus("A")
                 cbLaterComer.isChecked = false
                 updateUI()
                 cbLaterComer.setOnCheckedChangeListener(lateComerListener)
-                itemList[position] = data
-                selectionListener.onSelectionChanged(itemList)
             }
 
-            // --- Absent Click ---
+            // --- Absent click ---
             lnrAbsent.setOnClickListener {
                 cbLaterComer.setOnCheckedChangeListener(null)
-                data.att_type = "PRESENT"
+                setCurrentHalfStatus("P")
                 cbLaterComer.isChecked = false
                 updateUI()
                 cbLaterComer.setOnCheckedChangeListener(lateComerListener)
-                itemList[position] = data
-                selectionListener.onSelectionChanged(itemList)
             }
 
-            // --- OD Switch ---
+            // --- OD switch --- (kept your exact pattern)
+            switchOD.setChecked(false)
             switchOD.setOnCheckedChangeListener { isChecked ->
                 cbLaterComer.setOnCheckedChangeListener(null)
-                data.att_type = if (isChecked) "OD" else "PRESENT"
+
+                // Determine the new value for OD or Present
+                val newValue = if (isChecked) "OD" else "P"
+
+                // Update only the relevant half of att_status
+                val parts = data.att_status.split("/")
+                val first = parts.getOrNull(0) ?: "P"
+                val second = parts.getOrNull(1) ?: "P"
+
+                data.att_status = when (isCurrentAttendanceType) {
+                    "SH" -> "$first/$newValue"  // update second half
+                    else -> "$newValue/$second" // update first half (for F or FH)
+                }
+
                 cbLaterComer.isChecked = false
                 updateUI()
                 cbLaterComer.setOnCheckedChangeListener(lateComerListener)
@@ -190,33 +218,68 @@ class AbsenteesMarkAdapter(
                 selectionListener.onSelectionChanged(itemList)
             }
 
-            // Initial state sync
+
+            // Initial state
             updateUI()
         }
+
     }
 
-    fun setAllAbsent(enable: Boolean) {
+    fun setAllAbsent(enable: Boolean, isCurrentAttendanceType: String) {
         itemList?.forEachIndexed { index, data ->
-            data.att_type = if (enable) "ABSENT" else "PRESENT"
+            val parts = data.att_status.split("/")
+            val first = parts.getOrNull(0) ?: "P"
+            val second = parts.getOrNull(1) ?: "P"
+
+            val newValue = if (enable) "A" else "P"
+
+            // Decide which half to update based on session type
+            val updatedStatus = when (isCurrentAttendanceType) {
+                "SH" -> "$first/$newValue" // Update second half
+                else -> "$newValue/$second" // Update first half (FH/F)
+            }
+
+            data.att_status = updatedStatus
+            itemList?.set(index, data)
         }
+
         notifyDataSetChanged()
         selectionListener.onSelectionChanged(itemList ?: emptyList())
     }
 
+
     fun updateData(newList: List<GetAttendanceStudentListData>) {
+        Log.d("OldList",itemList.toString()+itemList!!.size.toString())
         itemList = newList.toMutableList()
+        Log.d("newList",itemList.toString()+itemList!!.size.toString())
         notifyDataSetChanged()
     }
 
-    fun unselectStudent(data: GetAttendanceStudentListData) {
-        selectedStudents.removeAll { it.id == data.id }
-        val position = itemList?.indexOfFirst { it.id == data.id } ?: -1
-        if (position != -1) {
-            notifyItemChanged(position)
+
+
+    fun unselectStudents(dataList: List<GetAttendanceStudentListData>) {
+        dataList.forEach { data ->
+            val position = itemList?.indexOfFirst { it.id == data.id } ?: -1
+            if (position != -1) {
+                val student = itemList!![position]
+                val parts = student.att_status.split("/")
+                val first = parts.getOrNull(0) ?: "P"
+                val second = parts.getOrNull(1) ?: "P"
+
+                // Make status "P" based on current attendance type
+                student.att_status = when (isCurrentAttendanceType) {
+                    "SH" -> "$first/P"   // update second half
+                    else -> "P/$second"  // update first half or full day
+                }
+
+                itemList!![position] = student
+                notifyItemChanged(position)
+            }
         }
-        selectionListener.onSelectionChanged(selectedStudents.toList())
-        selectionListener.onIdUnchecked(data)
+
+        selectionListener.onSelectionChanged(itemList ?: emptyList())
     }
+
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

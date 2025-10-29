@@ -50,9 +50,8 @@ class ChildStandardAdapter(
     class DataViewHolder(private val binding: ChildStandardRecyclerviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(school: SchoolNameTarget) {
-            binding.lblvalue.text = "🏛 ${school.institudeName}"
+        fun bind(item: SchoolNameTarget) {
+            binding.lblvalue.text = item.getDisplayText()
         }
     }
 }
-

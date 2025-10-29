@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
+import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
@@ -403,6 +404,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isFeeInvoices: LiveData<FeeInvoiceResponse?>? = null
     var isblockstudent: LiveData<BlockApiResponse?>? = null
     var isblockstudentlist: LiveData<BlockedStudentsResponse?>? = null
+    var isfrequentlyasked: LiveData<FrequentlyModelResponse?>? = null
     var getAttendanceStudentList: LiveData<GetAttendanceStudentList?>? = null
 
         private set
@@ -568,6 +570,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isFeeInvoices = apiParentRepositories.isFeeInvoices
         isblockstudent = apiSchoolRepositories.isblockstudentLiveData
         isblockstudentlist = apiSchoolRepositories.isblockstudentlistLiveData
+        isfrequentlyasked = apiSchoolRepositories.isfrequentlyaskedLiveData
         getmysubmissionedit = apiParentRepositories.getmysubmissioneditLiveData
         ismysubmissiondelete = apiParentRepositories.ismysubmissiondeleteLiveData
         getchildhomeworkstandard = apiSchoolRepositories.getchildhomeworkstandardLiveData
@@ -1464,8 +1467,8 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getdashboardnewupdates(isToken, role_type)
     }
 
-    fun getAttendanceStudentList(isToken: String, section_id: String,date:String) {
-        apiSchoolRepositories.isGetAttendanceStudentList(isToken, section_id,date)
+    fun getAttendanceStudentList(isToken: String, class_id: String,section_id: String,date:String) {
+        apiSchoolRepositories.isGetAttendanceStudentList(isToken,class_id, section_id,date)
     }
 
 
@@ -1476,6 +1479,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isblockstudentlist(isToken: String) {
         apiSchoolRepositories.isblockstudentlist(isToken)
+    }
+
+
+    fun isfrequentlyasked(isToken: String) {
+        apiSchoolRepositories.isfrequentlyasked(isToken)
     }
 }
 
