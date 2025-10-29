@@ -80,6 +80,14 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/imgMeetingMode"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/eight"
+                 />
+
             <TextView
                 android:id="@+id/tvMode"
                 style="@style/CustomTextStylePoppinsMedium"

@@ -136,7 +136,7 @@
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/ten"
                         android:paddingVertical="@dimen/seven"
-                        android:text="Phone call"
+                        android:text="Phone Call"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"></TextView>
 
