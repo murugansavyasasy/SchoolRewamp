@@ -72,7 +72,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         isAccessToken = isStaffDetails!!.access_token
 
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lesson_plan)
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -82,10 +82,22 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         binding.inprogressbutton1.setOnClickListener(this)
         binding.completedbutton1.setOnClickListener(this)
 
-        binding.createlp.setOnClickListener(this)
+
 
         sectionSubjectId = intent.getStringExtra(Constant.section_subject_id)
         request_type = intent.getStringExtra(Constant.request_type)
+
+        if (request_type == Constant.allclass) {
+            Log.d("Request Type",request_type.toString())
+            binding.createlp.visibility = View.GONE
+        } else {
+            Log.d("Request Type",request_type.toString())
+            binding.createlp.visibility = View.VISIBLE
+        }
+
+
+        binding.createlp.setOnClickListener(this)
+
 
         if (sectionSubjectId.isNullOrEmpty() || request_type.isNullOrEmpty()) {
             finish()
@@ -141,7 +153,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::lessonplanViewAdapter.isInitialized) {
                     lessonplanViewAdapter.filter.filter(s)
-                    Log.d("Search",s.toString())
+                    Log.d("Search", s.toString())
                 }
             }
 
@@ -168,6 +180,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
+
     private fun setupRecycler() {
         lessonplanViewAdapter = LessonPlanAdapter(
             null, this, this, Constant.isShimmerViewShow, request_type ?: ""
@@ -293,7 +306,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         tabs.forEach { (container, imageView, textView) ->
             if (container == selectedView) {
                 // Selected background
-                val drawable = ContextCompat.getDrawable(this, R.drawable.theme_colour_radius)?.mutate()
+                val drawable =
+                    ContextCompat.getDrawable(this, R.drawable.theme_colour_radius)?.mutate()
                 drawable?.setTint(ContextCompat.getColor(this, R.color.PrimaryColor))
                 container.background = drawable
 
@@ -305,7 +319,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
                 imageView?.setColorFilter(ContextCompat.getColor(this, R.color.white))
             } else {
                 // Unselected background
-                val drawable = ContextCompat.getDrawable(this, R.drawable.light_gray_radius)?.mutate()
+                val drawable =
+                    ContextCompat.getDrawable(this, R.drawable.light_gray_radius)?.mutate()
                 container.background = drawable
                 container.isEnabled = true
 
@@ -314,15 +329,37 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
                 // Reset image tint
                 when (imageView?.id) {
-                    R.id.imgAll      -> imageView.setColorFilter(ContextCompat.getColor(this, R.color.black))
-                    R.id.imgYet      -> imageView.setColorFilter(ContextCompat.getColor(this, R.color.dark_orange))
-                    R.id.imgProgress -> imageView.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor))
-                    R.id.imgComplete -> imageView.setColorFilter(ContextCompat.getColor(this, R.color.green))
+                    R.id.imgAll -> imageView.setColorFilter(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.black
+                        )
+                    )
+
+                    R.id.imgYet -> imageView.setColorFilter(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.dark_orange
+                        )
+                    )
+
+                    R.id.imgProgress -> imageView.setColorFilter(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.PrimaryColor
+                        )
+                    )
+
+                    R.id.imgComplete -> imageView.setColorFilter(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.green
+                        )
+                    )
                 }
             }
         }
     }
-
 
 
     override fun onEditItem(data: LessonPlanViewSummaryItem) {
@@ -386,8 +423,10 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             showTopDeleteAlertPopup(data)
         } else {
-            Toast.makeText(this,
-                getString(R.string.delete_popup_requires_android_o_or_higher), Toast.LENGTH_SHORT)
+            Toast.makeText(
+                this,
+                getString(R.string.delete_popup_requires_android_o_or_higher), Toast.LENGTH_SHORT
+            )
                 .show()
         }
     }
