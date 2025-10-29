@@ -702,58 +702,103 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     }
 
     private fun loadStudentReport(studentReportData: List<StudentAttendanceReportData>) {
-        // Once data is loaded, stop shimmer and pass the actual data
-        val total = studentReportData.size
-        val presentCount = studentReportData.count { it.att_status.equals("P", ignoreCase = true) }
-        val absentCount = studentReportData.count { it.att_status.equals("A", ignoreCase = true) }
+//        // Once data is loaded, stop shimmer and pass the actual data
+//        val total = studentReportData.size
+//        val presentCount = studentReportData.count { it.att_status.equals("P", ignoreCase = true) }
+//        val absentCount = studentReportData.count { it.att_status.equals("A", ignoreCase = true) }
+//
+//        val presentPercentage = if (total > 0) (presentCount * 100f) / total else 0f
+//        val absentPercentage = if (total > 0) (absentCount * 100f) / total else 0f
+//
+//        val presentFormatted = String.format("%.2f", presentPercentage)
+//        val absentFormatted = String.format("%.2f", absentPercentage)
+//
+//        binding.lblAbsentRate.text="$absentFormatted%"
+//        binding.lblPresentRate.text="$presentFormatted%"
 
-        val presentPercentage = if (total > 0) (presentCount * 100f) / total else 0f
-        val absentPercentage = if (total > 0) (absentCount * 100f) / total else 0f
+        // Calculate attendance stats
+        var presentCount = 0
+        var absentCount = 0
+        var odCount = 0
+        var lateCount = 0
+        var validCount = 0
 
+        for (student in studentReportData) {
+            val statusParts = student.att_status
+                ?.split("/")    // split P/A/OD/-
+                ?.map { it.trim() }
+                ?.filter { it.isNotEmpty() && it != "-" } ?: emptyList()
+
+            for (status in statusParts) {
+                when {
+                    status.equals("P", ignoreCase = true) -> presentCount++
+                    status.equals("A", ignoreCase = true) -> absentCount++
+                    status.equals("OD", ignoreCase = true) -> odCount++
+                    status.equals("P~", ignoreCase = true) -> lateCount++
+                }
+                validCount++
+            }
+        }
+
+// Calculate percentages safely
+        val presentPercentage = if (validCount > 0) (presentCount * 100f) / validCount else 0f
+        val absentPercentage = if (validCount > 0) (absentCount * 100f) / validCount else 0f
+        val odPercentage = if (validCount > 0) (odCount * 100f) / validCount else 0f
+        val latePercentage = if (validCount > 0) (lateCount * 100f) / validCount else 0f
+
+// Format to two decimal places
         val presentFormatted = String.format("%.2f", presentPercentage)
         val absentFormatted = String.format("%.2f", absentPercentage)
+        val odFormatted = String.format("%.2f", odPercentage)
+        val lateFormatted = String.format("%.2f", latePercentage)
 
-        binding.lblAbsentRate.text="$absentFormatted%"
-        binding.lblPresentRate.text="$presentFormatted%"
+// Set to UI
+        binding.lblPresentRate.text = "$presentFormatted%"
+        binding.lblAbsentRate.text = "$absentFormatted%"
+        binding.lblODRate.text = "$odFormatted%"
+        binding.lblLateRate.text = "$lateFormatted%"
+
+
+
         mAdapter =
             AttendanceStudentReportAdapter(studentReportData, this, Constant.isShimmerViewDisable)
 
         binding.rcyAttendanceReport.adapter = mAdapter
 
-        when {
-            absentFormatted.toFloat() == 100f -> {
-                binding.imgAbsentStatus.setImageResource(R.drawable.graph_up)
-                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
-                binding.imgPresentStatus.setImageResource(R.drawable.ifffin_icon)
-                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
-            }
-            presentFormatted.toFloat() == 100f -> {
-                binding.imgPresentStatus.setImageResource(R.drawable.graph_up)
-                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
-                binding.imgAbsentStatus.setImageResource(R.drawable.ifffin_icon)
-                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
-
-            }
-            presentPercentage > absentPercentage -> {
-                binding.imgPresentStatus.setImageResource(R.drawable.graph_up)
-                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
-                binding.imgAbsentStatus.setImageResource(R.drawable.graph_down)
-                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.red), PorterDuff.Mode.SRC_IN)
-            }
-            absentPercentage > presentPercentage -> {
-                binding.imgAbsentStatus.setImageResource(R.drawable.graph_up)
-                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
-                binding.imgPresentStatus.setImageResource(R.drawable.graph_down)
-                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.red), PorterDuff.Mode.SRC_IN)
-            }
-            else -> {
-                // Equal percentages (optional: handle tie)
-                binding.imgPresentStatus.setImageResource(R.drawable.ifffin_icon)
-                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.yellow), PorterDuff.Mode.SRC_IN)
-                binding.imgAbsentStatus.setImageResource(R.drawable.ifffin_icon)
-                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.yellow), PorterDuff.Mode.SRC_IN)
-            }
-        }
+//        when {
+//            absentFormatted.toFloat() == 100f -> {
+//                binding.imgAbsentStatus.setImageResource(R.drawable.graph_up)
+//                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
+//                binding.imgPresentStatus.setImageResource(R.drawable.ifffin_icon)
+//                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
+//            }
+//            presentFormatted.toFloat() == 100f -> {
+//                binding.imgPresentStatus.setImageResource(R.drawable.graph_up)
+//                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
+//                binding.imgAbsentStatus.setImageResource(R.drawable.ifffin_icon)
+//                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN)
+//
+//            }
+//            presentPercentage > absentPercentage -> {
+//                binding.imgPresentStatus.setImageResource(R.drawable.graph_up)
+//                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
+//                binding.imgAbsentStatus.setImageResource(R.drawable.graph_down)
+//                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.red), PorterDuff.Mode.SRC_IN)
+//            }
+//            absentPercentage > presentPercentage -> {
+//                binding.imgAbsentStatus.setImageResource(R.drawable.graph_up)
+//                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.green), PorterDuff.Mode.SRC_IN)
+//                binding.imgPresentStatus.setImageResource(R.drawable.graph_down)
+//                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.red), PorterDuff.Mode.SRC_IN)
+//            }
+//            else -> {
+//                // Equal percentages (optional: handle tie)
+//                binding.imgPresentStatus.setImageResource(R.drawable.ifffin_icon)
+//                binding.imgPresentStatus.setColorFilter(ContextCompat.getColor(this, R.color.yellow), PorterDuff.Mode.SRC_IN)
+//                binding.imgAbsentStatus.setImageResource(R.drawable.ifffin_icon)
+//                binding.imgAbsentStatus.setColorFilter(ContextCompat.getColor(this, R.color.yellow), PorterDuff.Mode.SRC_IN)
+//            }
+//        }
         
     }
 

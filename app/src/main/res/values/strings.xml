@@ -935,6 +935,8 @@
     <string name="attendance_type">Attendance Type</string>
     <string name="report_s">Report\'s</string>
     <string name="present_rate">Present Rate</string>
+    <string name="od_rate">OD Rate</string>
+    <string name="late_rate">Late Rate</string>
     <string name="absent_rate">Absent Rate</string>
     <string name="send_quiz">Send Quiz</string>
     <string name="default_notification_channel_id">fcm_default_channel</string>
@@ -971,6 +973,7 @@
     <string name="incoming_call">Incoming Call</string>
     <string name="account_securityl"><![CDATA[Account & Security]]></string>
     <string name="support_information"><![CDATA[Support & Information]]></string>
+    <string name="quick_status">Quick Status</string>
 
 
 </resources>
