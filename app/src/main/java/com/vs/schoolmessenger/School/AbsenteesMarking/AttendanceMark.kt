@@ -280,7 +280,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
             else{
                 binding.rcyAttendanceReport.visibility = View.GONE
-                ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later),R.drawable.no_data_found)
+                ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later),R.drawable.no_search_message)
                 binding.imgSearchicon.visibility=View.GONE
                 binding.lnrAttendancePercentageRate.visibility=View.GONE
             }
@@ -318,7 +318,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
         } else {
             binding.rcyAttendanceReport.visibility = View.GONE
-            ErrorMessage(resources.getString(R.string.no_data_found),R.drawable.no_data_found)
+            ErrorMessage(resources.getString(R.string.no_data_found),R.drawable.no_search_message)
         }
     }
 

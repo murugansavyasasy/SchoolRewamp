@@ -255,15 +255,7 @@ class AbsenteesMarkAdapter(
         notifyDataSetChanged()
     }
 
-//    fun unselectStudent(data: GetAttendanceStudentListData) {
-//        selectedStudents.removeAll { it.id == data.id }
-//        val position = itemList?.indexOfFirst { it.id == data.id } ?: -1
-//        if (position != -1) {
-//            notifyItemChanged(position)
-//        }
-//        selectionListener.onSelectionChanged(selectedStudents.toList())
-//        selectionListener.onIdUnchecked(data)
-//    }
+
 
     fun unselectStudents(dataList: List<GetAttendanceStudentListData>) {
         dataList.forEach { data ->
