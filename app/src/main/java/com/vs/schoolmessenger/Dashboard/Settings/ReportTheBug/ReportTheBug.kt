@@ -183,6 +183,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
             }
 
             R.id.imgBack -> {
+                Constant.selectedFiles.clear()
                 onBackPressed()
             }
 
@@ -285,6 +286,16 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                 }
                 startActivity(intent)
             }.setNegativeButton("Cancel", null).show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Constant.selectedFiles.clear()
+    }
+
+    override fun onResume() {
+        Constant.selectedFiles.clear()
+        super.onResume()
     }
 
     private fun isLoadTheReportImage(isImageSelected: ArrayList<String>) {

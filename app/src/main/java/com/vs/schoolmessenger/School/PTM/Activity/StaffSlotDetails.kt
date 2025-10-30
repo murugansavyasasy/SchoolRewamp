@@ -18,8 +18,6 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
-import java.text.SimpleDateFormat
-import java.util.*
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.PTM.Adapter.ClassesLoadAdapter
 import com.vs.schoolmessenger.School.PTM.Adapter.StaffSlotStatusAdapter
@@ -30,6 +28,7 @@ import com.vs.schoolmessenger.School.PTM.InterFace.StaffSlotCancelReOpenClickLis
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PtmStaffSlotDetailsBinding
+import java.util.Locale
 
 class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
     View.OnClickListener, StaffSlotCancelReOpenClickListener {
@@ -77,9 +76,9 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             Constant.hideLoading(this)
             if (response != null) {
                 val message = response.message ?: "Failed to cancel slot"
-                Constant.showTopAlertPopup1(message, this,true)
+                Constant.showTopAlertPopup1(message, this, true)
             } else {
-                Constant.showTopAlertPopup1("No response from server", this,true)
+                Constant.showTopAlertPopup1("No response from server", this, true)
             }
         }
 
@@ -89,11 +88,10 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
             if (response != null) {
                 val message = response.message ?: "Failed to reopen slot"
-                Constant.showTopAlertPopup1(message, this,true)
+                Constant.showTopAlertPopup1(message, this, true)
             } else {
-                Constant.showTopAlertPopup1("No response from server", this,true)
+                Constant.showTopAlertPopup1("No response from server", this, true)
             }
-
         }
         isLoadDataAdapter(isSlot)
         isLoadClasses(isSlotsDetails.std_sec_details)
@@ -117,7 +115,18 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         }
 
         val patterns = listOf(
-            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", "yyyy-MM-dd'T'HH:mm:ss.SSSX", "yyyy-MM-dd'T'HH:mm:ssXXX", "yyyy-MM-dd'T'HH:mm:ssX", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd", "dd-MM-yyyy", "dd/MM/yyyy", "MM/dd/yyyy")
+            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSX",
+            "yyyy-MM-dd'T'HH:mm:ssXXX",
+            "yyyy-MM-dd'T'HH:mm:ssX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd",
+            "dd-MM-yyyy",
+            "dd/MM/yyyy",
+            "MM/dd/yyyy"
+        )
         for (pattern in patterns) {
             try {
                 val parser = java.text.SimpleDateFormat(pattern, Locale.getDefault())
@@ -248,8 +257,8 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             val slotArray = JsonArray().apply {
                 add(slotId)
             }
-            val isReopen= JsonObject()
-            isReopen.addProperty("slot_id",slotId)
+            val isReopen = JsonObject()
+            isReopen.addProperty("slot_id", slotId)
 
             val mainObject = JsonObject().apply {
                 add("slot_ids", slotArray)
