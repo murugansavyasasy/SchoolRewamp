@@ -36,5 +36,10 @@ class GlobalVariableData(
     val contact_alert_content: String,
     val contact_display_name: String,
     val support_email: String,
-    val support_contact: String
+    val support_contact: String,
+    val how_to_use: String,
+    val about_the_app: String,
+    val privacy_policy: String
+
+
 )
