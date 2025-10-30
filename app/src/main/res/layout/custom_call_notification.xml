@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_white"
+    android:paddingBottom="5dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/logoCall"
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:padding="5dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/school_chimes"
+            android:visibility="visible">
+        </ImageView>
+
+
+        <RelativeLayout
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/rlaButtons"
+            android:layout_toRightOf="@+id/logoCall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/notification_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="N.S.V.V boys hr sec school"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/notification_title"
+                android:text="@string/incoming_call"
+                android:textSize="12dp"
+                android:textStyle="bold"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlaButtons"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/imgDecline"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@+id/imgAccept"
+                android:layout_marginLeft="10dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_end_answer">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/imgAccept"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_call_answer"></ImageView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

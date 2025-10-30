@@ -95,7 +95,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrPrivacyPolicy.setOnClickListener(this)
         binding.lnrAboutTheApp.setOnClickListener(this)
         binding.lnrHowToUseApp.setOnClickListener(this)
-//        binding.lnrSaveContact.setOnClickListener(this)
         binding.lnrwhatsnew.setOnClickListener(this)
 
         val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
@@ -197,10 +196,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             R.id.lnrwhatsnew -> {
                 RedirectToWhatsnew()
             }
-
-//            R.id.lnrSaveContact -> {
-//                //checkContactPermission()
-//            }
         }
     }
 
@@ -473,10 +468,5 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         chThai.isChecked = false
         chHindi.isChecked = false
         chArabic.isChecked = false
-    }
-
-    private fun refreshFragment() {
-        ChangeLanguage.setLocale(requireContext(), isSelectedLanguage)
-        requireActivity().recreate()
     }
 }

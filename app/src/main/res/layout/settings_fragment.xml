@@ -33,6 +33,7 @@
                 android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/fifty"
                 android:text="@string/permission_settings"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold">
@@ -92,6 +93,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:text="@string/change_password"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
@@ -152,6 +154,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/thirteen_sp"
                             android:textColor="@color/black"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:text="Enable Fingerprint Login" />
 
                         <Switch
@@ -275,6 +278,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblChangeLanguage"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -341,6 +345,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblFAQ"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -392,6 +397,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblContact"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -442,6 +448,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:text="@string/lblTermsCondition"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
@@ -494,6 +501,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="Privacy Policy"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -546,6 +554,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="About the App"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -597,6 +606,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="How to Use?"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -652,6 +662,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/what_s_new"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -716,6 +727,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblRateus"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -765,6 +777,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblReportbug"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -818,6 +831,7 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblLogout"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:textColor="@color/red"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold">
@@ -850,6 +864,7 @@
                     android:id="@+id/lblAppVersion"
                     android:layout_marginEnd="@dimen/thirty"
                     android:layout_below="@+id/isViewLogout"
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"

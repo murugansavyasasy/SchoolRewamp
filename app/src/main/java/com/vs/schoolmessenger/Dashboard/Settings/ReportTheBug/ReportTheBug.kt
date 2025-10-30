@@ -31,7 +31,7 @@ import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Call.NotificationCall
+import com.vs.schoolmessenger.FCM.NotificationCallScreen
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -187,7 +187,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
             }
 
             R.id.imgAddNotification -> {
-                val intent = Intent(this@ReportTheBug, NotificationCall::class.java)
+                val intent = Intent(this@ReportTheBug, NotificationCallScreen::class.java)
                 startActivity(intent)
             }
         }
