@@ -8,20 +8,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AlbumSelectActivityBinding
-import com.vs.schoolmessenger.databinding.AttachmentBinding
 
 class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 
@@ -62,9 +59,9 @@ override fun setupViews() {
 
         binding.toolbarLayout.tvSelectionCount.text =
             "Selected Files : 0 / ${Constant.isFileLimit}"
-
-//        binding.toolbarLayout.tvSelectedFiles.text =
-//            "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+    binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
+    binding.toolbarLayout.tvSelectedFiles.text =
+        "Total Selected Files : ${Constant.selectedFiles.size - 1}"
 
         Log.d("isFileLimit",Constant.isFileLimit.toString())
 

@@ -266,6 +266,7 @@ object Constant {
     var some_Absent = "F"
     var Absent = "Absent"
     var halfDay = "H"
+    var This_day_is_marked_as_a_holiday = "This day is marked as a holiday."
     var approved = "Approved"
     var rejected = "Rejected"
     var waiting_for_approval = "Waiting for approval"

@@ -18,7 +18,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -45,7 +44,6 @@ import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
-import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -93,7 +91,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private var selectedIds = mutableListOf<String>()
     var isSelectedType = 0
     var isAcademicYearId = -1
-    var isSubjectId = -1
+    private var isSubjectId: Int? = null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isCurrentAcademicYear = true
     var isTargetType: Int? = null
@@ -108,13 +106,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
 
+    var isClickedTab = 0
+
 
     override fun setupViews() {
         super.setupViews()
 //        setupToolbar()
         isToolBarPrimarySchool(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -205,7 +204,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         appViewModel!!.isGetSubjectList?.observe(this) { response ->
-            Constant.hideLoading(this@RecipientActivity)
+            //Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
                 if (response.status) {
                     isGetSubjectListData = response.data
@@ -626,8 +625,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isLoadSubject(isSubject: List<NameAndIds>?) {
-        val adapter = SubjectLoadAdapter(this, isSubject)
+        if (isSubject.isNullOrEmpty()) return
+
+        val subjectList = isSubject.toMutableList()
+        subjectList.add(0, NameAndIds(0, "Get Subject", "", "", ""))
+
+        val adapter = SubjectLoadAdapter(this, subjectList)
         binding.isSpinnerSubject.adapter = adapter
+
         binding.isSpinnerSubject.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -635,17 +640,21 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
-                    isSubject!![position]
+
+                    val selectedItem = subjectList[position]
                     Log.d(
                         "DropdownMenu",
-                        "Clicked Standard Year: ID = ${isSubject[position].id}, Year = ${isSubject[position].name}"
+                        "Clicked Subject: ID = ${selectedItem.id}, Name = ${selectedItem.name}"
                     )
-                    isSubjectId = isSubject.get(position).id
+                    isSubjectId = if (position != 0) selectedItem.id!! else null
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
+        binding.isSpinnerSubject.setSelection(0)
     }
+
+
 
     private fun isLoadStandard(isStandard: List<Standard>?) {
         val adapter = StandardDropDownListAdapter(this, isStandard)
@@ -784,35 +793,48 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         ),
                         resources.getString(R.string.Please_select_leastone) + " " + isTypeOfName + " " + resources.getString(
                             R.string.send_message
-                        ), this
+                        ),
+                        this
                     )
                 }
             }
 
             R.id.tapEntireSchool -> {
-                changeTapBg(Constant.isSchool)
+                if (isClickedTab != Constant.isSchool) {
+                    changeTapBg(Constant.isSchool)
+                }
             }
 
             R.id.tapStandards -> {
-                changeTapBg(Constant.isStandard)
+                if (isClickedTab != Constant.isStandard) {
+                    changeTapBg(Constant.isStandard)
+                }
             }
 
             R.id.tabSectionsStudent -> {
-                changeTapBg(Constant.isSection)
+                if (isClickedTab != Constant.isSection) {
+                    changeTapBg(Constant.isSection)
+                }
             }
 
             R.id.tabGroups -> {
-                changeTapBg(Constant.isGroup)
+                if (isClickedTab != Constant.isGroup) {
+                    changeTapBg(Constant.isGroup)
+                }
             }
 
             R.id.tapStaffs -> {
-                changeTapBg(Constant.isStaff)
+                if (isClickedTab != Constant.isStaff) {
+                    changeTapBg(Constant.isStaff)
+                }
             }
         }
     }
 
 
     private fun changeTapBg(type: Int) {
+
+        isClickedTab = type
 
         when (type) {
             Constant.isSchool -> {
@@ -823,14 +845,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.tabSectionsStudent.background = null
                 binding.tabGroups.background = null
                 binding.tapStaffs.background = null
-
                 binding.nomessageEntire.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 binding.lblCreatedOn.visibility = View.GONE
                 binding.chAllSelect.isChecked = false
                 binding.chAllSelect.visibility = View.GONE
-
                 isGroupSelectedIds.clear()
                 isStandardSelectedIds.clear()
                 isSectionSelectedIds.clear()
@@ -859,7 +879,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.nomessageEntire.visibility = View.GONE
                 binding.lblCreatedOn.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
-
                 binding.chAllSelect.visibility = View.GONE
                 binding.chAllSelect.isChecked = false
                 isGroupSelectedIds.clear()
@@ -995,7 +1014,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isGetSubjectList(isSectionId: String) {
-        Constant.showLoading(this@RecipientActivity)
+        // Constant.showLoading(this@RecipientActivity)
         appViewModel!!.isGetSubjectList(
             isAccessToken!!, isAcademicYearId, isSectionId.toString(), this
         )
@@ -1023,7 +1042,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     fun isUploadFilesInServer(isFileType: String?) {
 
-        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any { !it.path.contains("player.vimeo.com") }
+        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any {
+            !it.path.contains("player.vimeo.com")
+        }
         if (needsProcessing) {
             ProgressDialogHelper.show(this)
         }
@@ -1035,9 +1056,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         ProgressDialogHelper.updateProgress(0)
         Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(0) called")
 
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK ||
-            SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW
-        ) {
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW) {
             if (Constant.selectedFiles.isNotEmpty()) {
                 Constant.selectedFiles.removeAt(0)
             }
@@ -1069,10 +1088,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Log.d("UploadDebug", "Uploading non-video files to AWS...")
                 isFileUploadInAws(isFileType)
             }
+
             isVideoSelectedArrayList.isNotEmpty() -> {
                 Log.d("UploadDebug", "Uploading video files...")
                 videoUploading()
             }
+
             else -> {
                 Log.d("UploadDebug", "No files to upload.")
             }
@@ -1176,8 +1197,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (fileItem.path.contains("player.vimeo.com")) {
                 Constant.isAwsUploadedFiles.add(
                     AwsUploadedFiles(
-                        isFileUrl = fileItem.path,
-                        isFileType = fileItem.type.name
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
                 )
                 // Incremental progress update for pre-processed videos
@@ -1224,9 +1244,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
     override fun onUploadComplete(
-        success: Boolean,
-        iframe: String?,
-        link: String?
+        success: Boolean, iframe: String?, link: String?
     ) {
         runOnUiThread {
             if (success) {
@@ -1364,8 +1382,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (fileItem.path.contains("amazonaws.")) {
                 Constant.isAwsUploadedFiles.add(
                     AwsUploadedFiles(
-                        isFileUrl = fileItem.path,
-                        isFileType = fileItem.type.name
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
                 )
                 // Incremental progress for pre-signed files
@@ -1412,10 +1429,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         val originalSizeKB = try {
                             if (original.path.startsWith("content://")) {
                                 contentResolver.openFileDescriptor(
-                                    Uri.parse(original.path),
-                                    "r"
-                                )?.statSize
-                                    ?: 0
+                                    Uri.parse(original.path), "r"
+                                )?.statSize ?: 0
                             } else {
                                 File(original.path).length()
                             }
@@ -1458,8 +1473,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             object : UploadCallback {
 
                                 override fun onUploadSuccess(
-                                    response: String?,
-                                    isFileUploaded: String?
+                                    response: String?, isFileUploaded: String?
                                 ) {
                                     isAwsUploadingFile.add(isFileUploaded!!)
                                     Constant.isAwsUploadedFiles.add(
@@ -1501,8 +1515,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     Log.d("Compressor", "All files compressed and uploaded.")
-                }
-            )
+                })
         }
     }
 
@@ -1536,15 +1549,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 assignmentType = it.isAssignmentType,
                 date = it.isDate,
                 time = it.isTime,
-                subjectId = isSubjectId,
+                subjectId = isSubjectId!!,
             )
             appViewModel!!.isSendAssignment(isAccessToken!!, jsonObject, this)
         } ?: run {
             Constant.showValidationAlertPopup(
                 getString(
                     R.string.alert
-                ),
-                "Assignment details is missing.", this
+                ), "Assignment details is missing.", this
             )
         }
     }
@@ -1564,7 +1576,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 description = it.isDescription,
                 isLsrwType = it.isLsrwType,
                 submission_date = it.submission_date,
-                subjectId = isSubjectId
+                subjectId = isSubjectId!!
             )
             appViewModel!!.islsrwSkillCreate(isAccessToken!!, jsonObject, this)
 
@@ -1572,8 +1584,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.showValidationAlertPopup(
                 getString(
                     R.string.alert
-                ),
-                "Task details is missing.", this
+                ), "Task details is missing.", this
             )
         }
     }
@@ -1592,15 +1603,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 selectedIds = selectedIds,
                 title = it.title,
                 description = it.description,
-                subjectId = isSubjectId,
+                subjectId = isSubjectId!!,
             )
             appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
         } ?: run {
             Constant.showValidationAlertPopup(
                 getString(
                     R.string.alert
-                ),
-                resources.getString(R.string.Section_details_missing), this
+                ), resources.getString(R.string.Section_details_missing), this
             )
         }
     }
