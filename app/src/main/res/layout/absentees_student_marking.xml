@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
                 android:button="@drawable/ch_square"
-                android:text="@string/Selectallaspresent"
+                android:text="@string/mark_all_as_absent"
                 android:visibility="visible" />
         </RelativeLayout>
 
