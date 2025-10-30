@@ -116,12 +116,12 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         binding.toolbarLayout.imgSearchToolBarforCreate.setOnClickListener {
             if (binding.toolbarLayout.rytSearch.isVisible) {
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.toolbarLayout.txtSearch.setText("")
+                binding.toolbarLayout.txtSearch.text.clear()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
             } else {
                 binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
-                binding.toolbarLayout.txtSearch.setText("")
+                binding.toolbarLayout.txtSearch.text.clear()
                 binding.toolbarLayout.txtSearch.requestFocus()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(binding.toolbarLayout.txtSearch, InputMethodManager.SHOW_IMPLICIT)
@@ -142,7 +142,13 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
         binding.toolbarLayout.txtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                isAssignmentAdapter?.filter?.filter(s)
+                val query = s?.toString()?.trim() ?: ""
+                if (query.isEmpty()) {
+                    isAssignmentAdapter?.updateList(isAssignmentReportData ?: emptyList())
+                } else {
+                    isAssignmentAdapter?.filter?.filter(query)
+                }
+
                 binding.rcyAssignmentReport.post {
                     if (isAssignmentAdapter?.itemCount == 0) {
                         binding.rcyAssignmentReport.visibility = View.GONE
@@ -155,8 +161,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-            }
+            override fun afterTextChanged(s: Editable?) {}
         })
 
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
