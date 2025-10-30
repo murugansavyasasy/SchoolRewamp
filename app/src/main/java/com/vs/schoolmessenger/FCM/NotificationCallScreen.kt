@@ -1,7 +1,6 @@
-package com.vs.schoolmessenger.School.Call
+package com.vs.schoolmessenger.FCM
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
@@ -10,9 +9,10 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.databinding.NotificationCallBinding
+import com.vs.schoolmessenger.databinding.NotificationCallScreenBinding
 
-class NotificationCall : BaseActivity<NotificationCallBinding>(), View.OnClickListener {
+
+class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), View.OnClickListener {
 
     private var dX = 0f
     private var originalX = 0f
@@ -27,8 +27,8 @@ class NotificationCall : BaseActivity<NotificationCallBinding>(), View.OnClickLi
 
     private var voiceUrl: String = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7045/2025-09-266/RecordedAudio.m4a"
 
-    override fun getViewBinding(): NotificationCallBinding {
-        return NotificationCallBinding.inflate(layoutInflater)
+    override fun getViewBinding(): NotificationCallScreenBinding {
+        return NotificationCallScreenBinding.inflate(layoutInflater)
     }
 
     @SuppressLint("ClickableViewAccessibility")

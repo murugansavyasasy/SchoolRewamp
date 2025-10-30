@@ -127,7 +127,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         if (onlyImages && isFilesList.size > 1) {
             binding.indicator.attachToRecyclerView(binding.rcyFile)
         }
-
+        Log.d("currentPosition", Constant.selectedFileIndex.toString())
         currentPosition = Constant.selectedFileIndex
         scrollToPosition(currentPosition)
         updateNavButtons()

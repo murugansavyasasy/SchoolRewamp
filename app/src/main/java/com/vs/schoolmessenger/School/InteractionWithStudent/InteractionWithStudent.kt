@@ -114,11 +114,14 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
     }
 
     private fun showErrorUI(message: String) {
-        binding.nomessage.visibility = View.VISIBLE
+
+        binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
+        binding.nomessage.visibility = View.VISIBLE
         binding.rcystudentdata.visibility = View.GONE
     }
+
 
     private fun isLoadStaffData(data: List<StudentChatData>?) {
         if (data.isNullOrEmpty()) {
@@ -127,6 +130,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
             showErrorUI(getString(R.string.no_staff_data_available))
             return
         }
+        binding.lytList.visibility = View.GONE
         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.rytsearch1.visibility = View.GONE
         binding.nomessage.visibility = View.GONE
@@ -146,16 +150,19 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
+            binding.lytList.visibility = View.VISIBLE
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = (getString(R.string.no_matching_data_found))
+            binding.txtNoData.text = getString(R.string.no_matching_data_found)
             binding.rcystudentdata.visibility = View.GONE
         } else {
+            binding.lytList.visibility = View.GONE
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
             binding.rcystudentdata.visibility = View.VISIBLE
         }
     }
+
 
     override fun onClickItem(data: StudentChatData) {
         val intent =

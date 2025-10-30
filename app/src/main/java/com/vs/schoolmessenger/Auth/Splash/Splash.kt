@@ -129,7 +129,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     if(noInternetalertDialog != null && noInternetalertDialog!!.isShowing) {
                         noInternetalertDialog!!.dismiss()
                     }
-                    goToNext()
+                    Log.d("goToNext","goToNext1")
+                   // goToNext()
                 }
             }
 
@@ -173,9 +174,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
+                Log.d("goToNext","goToNext2")
+
                 goToNext()
                 Log.d("PermissionResult", "✅ User clicked ALLOW for notification permission")
             } else {
+                Log.d("goToNext","goToNext3")
+
                 goToNext()
                 Log.d(
                     "PermissionResult",
@@ -511,9 +516,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             ) {
                 notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             } else {
+                Log.d("goToNext","goToNext4")
+
                 goToNext()
             }
         } else {
+            Log.d("goToNext","goToNext5")
+
             goToNext()
         }
     }
@@ -634,6 +643,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 
         val btnUpdateButton = dialogView.findViewById<TextView>(R.id.btnUpdate)
         val btnNotNow = dialogView.findViewById<TextView>(R.id.btnNotNow)
+        val lblNewVersionCode = dialogView.findViewById<TextView>(R.id.lblNewVersionCode)
+        val lblYourAppVersionCode = dialogView.findViewById<TextView>(R.id.lblYourAppVersionCode)
+        val pInfo =this.packageManager.getPackageInfo(this.packageName, 0)
+        val versionName = pInfo.versionName
+        lblNewVersionCode.setText(versionData[0].new_version)
+        lblYourAppVersionCode.setText(versionName)
 
         if (versionData[0].force_update) {
             btnUpdateButton.visibility = View.VISIBLE
