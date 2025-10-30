@@ -92,6 +92,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrLogout.setOnClickListener(this)
         binding.lnrLanguage.setOnClickListener(this)
         binding.lnrChangePassword.setOnClickListener(this)
+        binding.lnrPrivacyPolicy.setOnClickListener(this)
+        binding.lnrAboutTheApp.setOnClickListener(this)
+        binding.lnrHowToUseApp.setOnClickListener(this)
 //        binding.lnrSaveContact.setOnClickListener(this)
         binding.lnrwhatsnew.setOnClickListener(this)
 
@@ -130,8 +133,29 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.lnrTermsConditions -> {
-                startActivity(Intent(requireActivity(), TermsAndConditions::class.java))
+                val intent = Intent(requireActivity(), TermsAndConditions::class.java)
+                intent.putExtra("screen_name", "isTerms")
+                startActivity(intent)
             }
+
+            R.id.lnrPrivacyPolicy -> {
+                val intent = Intent(requireActivity(), TermsAndConditions::class.java)
+                intent.putExtra("screen_name", "isPrivacy")
+                startActivity(intent)
+            }
+
+            R.id.lnrAboutTheApp -> {
+                val intent = Intent(requireActivity(), TermsAndConditions::class.java)
+                intent.putExtra("screen_name", "isAboutTheApp")
+                startActivity(intent)
+            }
+
+            R.id.lnrHowToUseApp -> {
+                val intent = Intent(requireActivity(), TermsAndConditions::class.java)
+                intent.putExtra("screen_name", "HowToUse")
+                startActivity(intent)
+            }
+
 
             R.id.lnrNotification -> {
                 startActivity(Intent(requireActivity(), Notification::class.java))
