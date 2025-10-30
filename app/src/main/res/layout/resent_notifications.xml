@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -59,29 +57,54 @@
 
                     <TextView
                         android:id="@+id/lblContent"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/thirty"
                         android:layout_marginBottom="@dimen/five"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:text="Probably at least one of the constraints in the following list is one you don't want."
                         android:textColor="@color/mild_grey6"
                         android:textSize="@dimen/fifteen_sp" />
 
-                    <TextView
-                        android:id="@+id/lblSendBy"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/lblContent"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:text="Saranraj"
-                        android:textColor="@color/sky_blue0"
-                        android:textSize="@dimen/thirteen_sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+
+                        <TextView
+                            android:id="@+id/notification_date"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_weight="1"
+                            android:text="10/09/2025"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/thirteen_sp" />
+
+                        <TextView
+                            android:id="@+id/lblSendBy"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="Saranraj"
+                            android:textColor="@color/sky_blue0"
+                            android:textSize="@dimen/thirteen_sp" />
+
+
+                    </LinearLayout>
+
 
                     <View
                         android:id="@+id/line"
@@ -90,8 +113,7 @@
                         android:layout_above="@+id/lblSendBy"
                         android:layout_marginTop="@dimen/fifteen"
                         android:background="@color/gray"
-                        android:visibility="visible">
-                    </View>
+                        android:visibility="visible"></View>
 
 
                 </LinearLayout>

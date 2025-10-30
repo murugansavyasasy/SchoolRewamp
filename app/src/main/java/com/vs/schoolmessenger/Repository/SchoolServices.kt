@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
+import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
@@ -223,6 +224,7 @@ class SchoolServices {
     var isblockstudent: MutableLiveData<BlockApiResponse?>
     var isblockstudentlist: MutableLiveData<BlockedStudentsResponse?>
     var isfrequentlyasked: MutableLiveData<FrequentlyModelResponse?>
+    var isdeletenotification: MutableLiveData<DeleteNotificationResponse?>
 
 
     init {
@@ -337,6 +339,7 @@ class SchoolServices {
         isblockstudent= MutableLiveData()
         isblockstudentlist= MutableLiveData()
         isfrequentlyasked= MutableLiveData()
+        isdeletenotification= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4359,6 +4362,48 @@ class SchoolServices {
 
     val isfrequentlyaskedLiveData: LiveData<FrequentlyModelResponse?>
         get() = isfrequentlyasked
+
+
+
+
+    fun isdeletenotification(
+        isToken: String,
+        jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isdeletenotification(isToken,jsonObject)
+            ?.enqueue(object : Callback<DeleteNotificationResponse?> {
+                override fun onResponse(
+                    call: Call<DeleteNotificationResponse?>, response: Response<DeleteNotificationResponse?>
+                ) {
+                    Log.d(
+                        "isAddQuestion Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                isdeletenotification.postValue(response.body())
+                            } else {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                isdeletenotification.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<DeleteNotificationResponse?>, t: Throwable
+                ) {
+                    isdeletenotification.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isdeletenotificationLiveData: LiveData<DeleteNotificationResponse?>
+        get() = isdeletenotification
 
 
 }

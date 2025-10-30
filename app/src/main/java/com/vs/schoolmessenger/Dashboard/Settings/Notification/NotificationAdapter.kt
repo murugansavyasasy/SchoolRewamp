@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -85,6 +86,7 @@ class NotificationAdapter(
         private val first_letter: TextView = itemView.findViewById(R.id.first_letter)
         private val lblNotification: TextView = itemView.findViewById(R.id.lblNotification)
         private val line: View = itemView.findViewById(R.id.line)
+        private val notification_date: TextView = itemView.findViewById(R.id.notification_date)
 
         private val fab : RelativeLayout = itemView.findViewById(R.id.fab)
 
@@ -93,6 +95,7 @@ class NotificationAdapter(
             lblTitle.text = data.title
             lblContent.text = data.content.replace("•", "")
             first_letter.visibility = View.GONE
+            notification_date.text = data.sent_on
             first_letter.text = data.sendBy.firstOrNull()?.toString() ?: "?"
             line.visibility = if (showDivider) View.VISIBLE else View.GONE
 
