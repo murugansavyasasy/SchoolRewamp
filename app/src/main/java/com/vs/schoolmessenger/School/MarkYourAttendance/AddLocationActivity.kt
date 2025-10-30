@@ -382,6 +382,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     ) {
         val popupView = LayoutInflater.from(this).inflate(R.layout.success_popup, null)
         val messageText = popupView.findViewById<TextView>(R.id.alertMessage)
+        val alertTitle = popupView.findViewById<TextView>(R.id.alertTitle)
         val okButton = popupView.findViewById<TextView>(R.id.btnOk)
         val btnCancel = popupView.findViewById<TextView>(R.id.btnCancel)
 
@@ -392,6 +393,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             btnCancel.visibility = View.GONE
         }
         messageText.text = message
+        alertTitle.text = "Delete!!"
 
         val dimView = View(this).apply {
             setBackgroundColor(Color.parseColor("#80000000"))

@@ -181,6 +181,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/five"
                     android:layout_width="wrap_content"
