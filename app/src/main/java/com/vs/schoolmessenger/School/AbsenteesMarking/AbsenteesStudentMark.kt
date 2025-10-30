@@ -659,7 +659,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 studentsList?.forEach { student ->
 
                     val parts = student.att_status.split("/")
-                    val status = when (Constant.isMarkAttendanceDataSending?.attendance_type) {
+                    val status = when (Constant.isMarkAttendanceDataSending?.session_type) {
                         "SH" -> parts.getOrNull(1) ?: "" // second half
                         else -> parts.getOrNull(0) ?: "" // first half or full day
                     }

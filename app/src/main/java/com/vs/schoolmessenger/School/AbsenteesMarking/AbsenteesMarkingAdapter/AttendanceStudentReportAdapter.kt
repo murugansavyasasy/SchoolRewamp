@@ -60,23 +60,25 @@ class AttendanceStudentReportAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val lblName: TextView = itemView.findViewById(R.id.tvName)
-        private val lblAdmissionNoValue: TextView = itemView.findViewById(R.id.lblAdmissionNoValue)
+        private val tvStudentName: TextView = itemView.findViewById(R.id.tvStudentName)
+        private val tvAdmissionNo: TextView = itemView.findViewById(R.id.tvAdmissionNo)
         private val tvRollNo: TextView = itemView.findViewById(R.id.tvRollNo)
-        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
-        private val imgAvatar: ImageView = itemView.findViewById(R.id.imgAvatar)
-        private val tvStatus: LinearLayout = itemView.findViewById(R.id.tvStatus)
+//        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
+        private val statusFN: TextView = itemView.findViewById(R.id.statusFN)
+        private val statusAN: TextView = itemView.findViewById(R.id.statusAN)
+//        private val imgAvatar: ImageView = itemView.findViewById(R.id.imgAvatar)
+//        private val tvStatus: LinearLayout = itemView.findViewById(R.id.tvStatus)
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StudentAttendanceReportData, position: Int) {
-            lblName.text = data.student_name
+            tvStudentName.text = data.student_name
 
             if (data.admission_no.isEmpty()){
-                lblAdmissionNoValue.visibility=View.GONE
+                tvAdmissionNo.visibility=View.GONE
             }
             else{
-                lblAdmissionNoValue.visibility=View.VISIBLE
-                lblAdmissionNoValue.text = data.admission_no
+                tvAdmissionNo.visibility=View.VISIBLE
+                tvAdmissionNo.text = "${context.getString(R.string.admission_no)}: ${data.admission_no}"
             }
 
             if (data.roll_no.isEmpty()){
@@ -84,46 +86,64 @@ class AttendanceStudentReportAdapter(
             }
             else{
                 tvRollNo.visibility=View.VISIBLE
-                tvRollNo.text = data.roll_no
+                tvRollNo.text = "${context.getString(R.string.roll_no)}${data.roll_no}"
             }
 
-            if (data.att_status == Constant.P){
-                tvStatus1.text =context.getString(R.string.present)
-                tvStatus.background.setTint(ContextCompat.getColor(context, R.color.green))
-                tvStatus1.setTextColor(ContextCompat.getColor(context,R.color.white))
+            // 🔹 Split att_status like "P/P" or "A/P~"
+            val statusParts = data.att_status.split("/")
+            val fnStatus = statusParts.getOrNull(0)?.trim() ?: "-"
+            val anStatus = statusParts.getOrNull(1)?.trim() ?: "-"
 
-            }
-            else{
-                tvStatus1.text =context.getString(R.string.absent)
-                tvStatus.background.setTint(ContextCompat.getColor(context,R.color.red))
-                tvStatus1.setTextColor(ContextCompat.getColor(context,R.color.white))
+
+            setStatusView(statusFN, fnStatus)
+            setStatusView(statusAN, anStatus)
+
+
+
+//            val profileUrl = data.profile
+//
+//            val defaultAvatar = when {
+//                data.gender.equals(Constant.male, ignoreCase = true) -> R.drawable.avatar
+//                data.gender.equals(Constant.female, ignoreCase = true) -> R.drawable.girl_avatar
+//                else -> R.drawable.person_circle // fallback if gender is unknown
+//            }
+//
+//            if (profileUrl.isNullOrEmpty()) {
+//                // No profile URL → load gender-based default directly
+//                Glide.with(imgAvatar.context)
+//                    .load(defaultAvatar)
+//                    .placeholder(R.drawable.person_circle)
+//                    .into(imgAvatar)
+//            } else {
+//                // Load URL → if fails, fallback to gender-based drawable
+//                Glide.with(imgAvatar.context)
+//                    .load(profileUrl)
+//                    .placeholder(R.drawable.person_circle)
+//                    .error(defaultAvatar)
+//                    .into(imgAvatar)
+//            }
+
+        }
+        private fun setStatusView(view: TextView, status: String) {
+            val drawableRes = when (status.uppercase()) {
+                "P" -> R.drawable.report_present_icon
+                "A" -> R.drawable.report_absent_icon
+                "P~" -> R.drawable.report_latercomer_icon
+                "OD" -> R.drawable.report_od_icon
+                else -> R.drawable.report_nottaken_icon // or "-"
             }
 
-            val profileUrl = data.profile
+            // Set background drawable
+            view.background = ContextCompat.getDrawable(context, drawableRes)
 
-            val defaultAvatar = when {
-                data.gender.equals(Constant.male, ignoreCase = true) -> R.drawable.avatar
-                data.gender.equals(Constant.female, ignoreCase = true) -> R.drawable.girl_avatar
-                else -> R.drawable.person_circle // fallback if gender is unknown
-            }
-
-            if (profileUrl.isNullOrEmpty()) {
-                // No profile URL → load gender-based default directly
-                Glide.with(imgAvatar.context)
-                    .load(defaultAvatar)
-                    .placeholder(R.drawable.person_circle)
-                    .into(imgAvatar)
-            } else {
-                // Load URL → if fails, fallback to gender-based drawable
-                Glide.with(imgAvatar.context)
-                    .load(profileUrl)
-                    .placeholder(R.drawable.person_circle)
-                    .error(defaultAvatar)
-                    .into(imgAvatar)
-            }
+            // set the status text (P, A, etc.)
+            view.text = if (status == "-") "-"
+            else if (status=="P~") "LA"
+            else status
 
         }
     }
+
 
     fun updateData(newList: List<StudentAttendanceReportData>) {
         itemList = newList
