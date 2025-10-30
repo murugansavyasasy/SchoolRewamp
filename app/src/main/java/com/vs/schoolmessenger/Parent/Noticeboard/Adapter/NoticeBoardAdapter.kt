@@ -34,7 +34,9 @@ import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class NoticeBoardAdapter(
     private var itemList: List<Notice>?,
@@ -148,8 +150,7 @@ class NoticeBoardAdapter(
             val parts = dateTime.split(" ")
             val date = parts.getOrNull(0) ?: ""
             val time = (parts.getOrNull(1) ?: "") + " " + (parts.getOrNull(2) ?: "")
-            lblDateImage.text = Constant.convertDateTimeFormat(date)
-            lblTimeImage.text = time
+
 
             loadingBar.visibility = View.GONE
 
@@ -157,6 +158,41 @@ class NoticeBoardAdapter(
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.INVISIBLE
             total_numbers.visibility = View.INVISIBLE
 
+
+
+
+            val dateTime1 = noticeData.created_on ?: ""
+            val parts1 = dateTime1.split(" ")
+            val date1 = parts1.getOrNull(0) ?: ""
+            val time1 = (parts1.getOrNull(1) ?: "") + " " + (parts1.getOrNull(2) ?: "")
+
+            val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+            val parsedDate = try {
+                inputFormat.parse(date1)
+            } catch (_: Exception) {
+                null
+            }
+
+            val calendar = Calendar.getInstance()
+            val today = calendar.time
+            calendar.add(Calendar.DAY_OF_YEAR, -1)
+            val yesterday = calendar.time
+
+            val outputText = when {
+                parsedDate != null -> {
+                    val sdf = SimpleDateFormat(Constant.yyyyMMdd, Locale.getDefault())
+                    when (sdf.format(parsedDate)) {
+                        sdf.format(today) -> context.getString(R.string.today)
+                        sdf.format(yesterday) -> context.getString(R.string.yesterday)
+                        else -> Constant.CustomisedconvertDateTimeFormat(date)
+                    }
+                }
+
+                else -> Constant.CustomisedconvertDateTimeFormat(date)
+            }
+
+            lblDateImage.text = outputText
+            lblTimeImage.text = time1
             if (hasFiles) {
                 val fileList = noticeData.file_path!!
                 val totalFiles = fileList.size

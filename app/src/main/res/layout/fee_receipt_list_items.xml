@@ -82,33 +82,38 @@
                     android:text="View"
                     android:textColor="@color/navi_blue6" />
             </RelativeLayout>
-            <LinearLayout
-                android:id="@+id/lnrDateTime"
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_below="@+id/lnrInvoiceDetails"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/lnrDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblInvoiceDate"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/five">
+                android:text="01-05-2025"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/ten" />
 
-                <TextView
-                    android:id="@+id/lblInvoiceDate"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="01-05-2025"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/ten" />
-
-                <TextView
-                    android:id="@+id/lblInvoiceTime"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/five"
-                    android:text="10:45 AM"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/ten" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/lblInvoiceTime"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:text="10:45 AM"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/ten" />
         </LinearLayout>
+
 
     </RelativeLayout>
 

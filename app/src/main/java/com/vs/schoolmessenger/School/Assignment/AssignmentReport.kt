@@ -19,6 +19,7 @@ import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
@@ -113,13 +114,17 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
 
         binding.toolbarLayout.imgSearchToolBarforCreate.setOnClickListener {
-            if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {
+            if (binding.toolbarLayout.rytSearch.isVisible) {
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.toolbarLayout.txtSearch.text.clear()
-
+                binding.toolbarLayout.txtSearch.setText("")
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
             } else {
                 binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
-                binding.toolbarLayout.txtSearch.text.clear()
+                binding.toolbarLayout.txtSearch.setText("")
+                binding.toolbarLayout.txtSearch.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.toolbarLayout.txtSearch, InputMethodManager.SHOW_IMPLICIT)
             }
         }
 
