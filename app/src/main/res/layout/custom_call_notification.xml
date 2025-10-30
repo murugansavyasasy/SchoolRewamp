@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="N.S.V.V boys hr sec school"
+                android:text="xxxxxxxxxxxx"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="15dp"
                 android:textStyle="bold" />

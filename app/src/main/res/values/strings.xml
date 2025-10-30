@@ -974,6 +974,7 @@
     <string name="account_securityl"><![CDATA[Account & Security]]></string>
     <string name="support_information"><![CDATA[Support & Information]]></string>
     <string name="quick_status">Quick Status</string>
+    <string name="students_attendance_reports">Students Attendance Reports</string>
 
 
 </resources>
