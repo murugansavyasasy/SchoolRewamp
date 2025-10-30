@@ -53,6 +53,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     var isChildId = ""
     var isSchoolID = ""
 
+    var isClickedTap = 1
+
     private val popupWebViewStack = Stack<WebView>()
     var alertDialogView: AlertDialog? = null
 
@@ -157,36 +159,41 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             R.id.imgBack -> onBackPressed()
 
             R.id.btnPayment -> {
-                Constant.hideLoading(this)
-                binding.payWebview.visibility = View.VISIBLE
-                binding.rvReceipts.visibility = View.GONE
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                binding.rytSearch1.visibility = View.GONE
-                binding.linePayment.setBackgroundResource(R.color.PrimaryColor)
-                binding.lineReceipt.setBackgroundResource(R.color.athens_gray)
-                binding.btnPayment.setTextColor(Color.parseColor("#0D47A1"))
-                binding.btnReceipt.setTextColor(Color.BLACK)
-                loadPaymentPage(binding.payWebview)
-                reloadPaymentPage()
+                if (isClickedTap != 2) {
+                    isClickedTap = 2
+                    Constant.hideLoading(this)
+                    binding.payWebview.visibility = View.VISIBLE
+                    binding.rvReceipts.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    binding.rytSearch1.visibility = View.GONE
+                    binding.linePayment.setBackgroundResource(R.color.PrimaryColor)
+                    binding.lineReceipt.setBackgroundResource(R.color.athens_gray)
+                    binding.btnPayment.setTextColor(Color.parseColor("#0D47A1"))
+                    binding.btnReceipt.setTextColor(Color.BLACK)
+                    loadPaymentPage(binding.payWebview)
+                    reloadPaymentPage()
+                }
             }
 
             R.id.btnReceipt -> {
-                Constant.hideLoading(this)
-                binding.payWebview.visibility = View.GONE
-                binding.rvReceipts.visibility = View.VISIBLE
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                if (isClickedTap != 1) {
+                    isClickedTap = 1
+                    Constant.hideLoading(this)
+                    binding.payWebview.visibility = View.GONE
+                    binding.rvReceipts.visibility = View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
-                binding.linePayment.setBackgroundResource(R.color.athens_gray)
-                binding.lineReceipt.setBackgroundResource(R.color.PrimaryColor)
-                binding.btnPayment.setTextColor(Color.BLACK)
-                binding.btnReceipt.setTextColor(Color.parseColor("#0D47A1"))
+                    binding.linePayment.setBackgroundResource(R.color.athens_gray)
+                    binding.lineReceipt.setBackgroundResource(R.color.PrimaryColor)
+                    binding.btnPayment.setTextColor(Color.BLACK)
+                    binding.btnReceipt.setTextColor(Color.parseColor("#0D47A1"))
 
-                loadFeeReceipts()
+                    loadFeeReceipts()
 
-                Constant.showLoading(this)
-                appViewModel?.getStudentInvoices(isAccessToken!!, this)
-                Log.d("FeeDetails_Token", "Fetching invoices with token: $isAccessToken")
-
+                    Constant.showLoading(this)
+                    appViewModel?.getStudentInvoices(isAccessToken!!, this)
+                    Log.d("FeeDetails_Token", "Fetching invoices with token: $isAccessToken")
+                }
             }
 
         }

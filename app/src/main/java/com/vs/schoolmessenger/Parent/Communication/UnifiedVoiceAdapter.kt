@@ -6,7 +6,6 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 
-
 class UnifiedVoiceAdapter(
     private var itemList: ArrayList<VoiceData>? = null,
     private var listener: VoiceClickListener,
@@ -38,24 +36,15 @@ class UnifiedVoiceAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var currentlyPlayingHolder: DataViewHolder? = null
+    var currentlyPlayingHolder: DataViewHolder? = null
+
     private var appViewModel: App =
         ViewModelProvider(context as ViewModelStoreOwner)[App::class.java]
 
     init {
         appViewModel.init()
-        appViewModel.isUpdateStatusArchive?.observe(lifecycleOwner) { response ->
-            Log.d(
-                "UnifiedVoiceAdapter",
-                if (response?.status == true) "Archive API successful" else "Archive API failed or empty"
-            )
-        }
-        appViewModel.isUpdateStatusCommunication?.observe(lifecycleOwner) { response ->
-            Log.d(
-                "UnifiedVoiceAdapter",
-                if (response?.status == true) "API successful" else "API failed or empty"
-            )
-        }
+        appViewModel.isUpdateStatusArchive?.observe(lifecycleOwner) {}
+        appViewModel.isUpdateStatusCommunication?.observe(lifecycleOwner) {}
     }
 
     fun setIsFromArchive(value: Boolean) {
@@ -89,7 +78,6 @@ class UnifiedVoiceAdapter(
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -124,9 +112,9 @@ class UnifiedVoiceAdapter(
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
         private val rytIsEmergency: View = itemView.findViewById(R.id.rytIsEmergency)
+
         private var isExpanded = false
         private var mediaPlayer: MediaPlayer? = null
-
         private var isPrepared = false
         private var isPlayingVoice = false
         private var lastPosition: Int = 0
@@ -134,7 +122,7 @@ class UnifiedVoiceAdapter(
 
         private val progressUpdater = object : Runnable {
             override fun run() {
-                if (isPrepared && mediaPlayer!!.isPlaying) {
+                if (isPrepared && mediaPlayer != null && mediaPlayer!!.isPlaying) {
                     waveformSeekBar.updateWithLevel(1f)
                     lblStartDuration.text = formatTime(mediaPlayer!!.currentPosition)
                     handler.postDelayed(this, 100)
@@ -149,13 +137,8 @@ class UnifiedVoiceAdapter(
             listener: VoiceClickListener,
             adapter: UnifiedVoiceAdapter
         ) {
-
-            if (position == adapter.itemCount - 1) {
-                if (adapter.isSeeMoreClick) {
-                    lblSeeMoreClick.visibility = View.VISIBLE
-                } else {
-                    lblSeeMoreClick.visibility = View.GONE
-                }
+            if (position == adapter.itemCount - 1 && adapter.isSeeMoreClick) {
+                lblSeeMoreClick.visibility = View.VISIBLE
             } else {
                 lblSeeMoreClick.visibility = View.GONE
             }
@@ -165,8 +148,7 @@ class UnifiedVoiceAdapter(
                 listener.onSeeMoreClick(data, this@DataViewHolder)
             }
 
-
-            rytIsEmergency.visibility = if (data.is_emergency!!) View.VISIBLE else View.GONE
+            rytIsEmergency.visibility = if (data.is_emergency == true) View.VISIBLE else View.GONE
 
             if (data.type.equals(Constant.VOICE)) {
                 rlaVoice.visibility = View.VISIBLE
@@ -174,30 +156,34 @@ class UnifiedVoiceAdapter(
                 lblTitle.text = data.title ?: ""
                 lblDate.text = Constant.convertDateTimeFormat(data.date.toString())
                 lblTime.text = data.time ?: ""
-                lblnewiconVoice.visibility = if (data.is_unread!!) View.VISIBLE else View.GONE
+                lblnewiconVoice.visibility = if (data.is_unread == true) View.VISIBLE else View.GONE
                 lblnewiconText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
                 lblContentText.text = data.content ?: ""
                 lblEndDuration.text = String.format(
-                   Constant.dateForMate, data.duration!!.toInt() / 60, data.duration!!.toInt() % 60
+                    Constant.dateForMate,
+                    data.duration!!.toInt() / 60,
+                    data.duration!!.toInt() % 60
                 )
 
                 imgVoicePlay.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
                     lblnewiconVoice.visibility = View.GONE
-                    if (data.is_unread!!) {
-                        if (data.is_archive!!) {
+
+                    if (data.is_unread == true) {
+                        if (data.is_archive == true)
                             listener.onUpdateArchiveStatus(data.type, data.id)
-                        } else {
+                        else
                             listener.onUpdateCommunicationStatus(data.type, data.id)
-                        }
                         data.is_unread = false
                     }
 
+                    // Stop other currently playing audio
                     if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
-                        adapter.currentlyPlayingHolder?.stopAudioPlayback()
+                        adapter.currentlyPlayingHolder?.pauseAudio() // not stopAudioPlayback()
                     }
 
+                    // Toggle play/pause
                     if (isPlayingVoice) {
                         pauseAudio()
                     } else {
@@ -207,9 +193,11 @@ class UnifiedVoiceAdapter(
                             resumeAudio()
                         }
                     }
+
                     adapter.currentlyPlayingHolder = this
                 }
             } else {
+                // --- TEXT type ---
                 rlaVoice.visibility = View.GONE
                 rlaText.visibility = View.VISIBLE
                 lblTitleText.text = data.title ?: ""
@@ -219,7 +207,7 @@ class UnifiedVoiceAdapter(
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
 
-                if (data.is_unread!!) {
+                if (data.is_unread == true) {
                     lblnewiconText.visibility = View.VISIBLE
                     lblSeeMore.visibility = View.VISIBLE
                 } else {
@@ -234,47 +222,37 @@ class UnifiedVoiceAdapter(
                         lblSeeMore.visibility = View.GONE
                     }
                 }
-                isSeeMoreVisibility(lblContentText, lblSeeMore)
 
+                isSeeMoreVisibility(lblContentText, lblSeeMore)
 
                 rlaText.setOnClickListener {
                     isExpanded = !isExpanded
-
                     if (data.is_unread == true) {
-                        if (data.is_archive == true) {
+                        if (data.is_archive == true)
                             listener.onUpdateArchiveStatus(data.type, data.id)
-                        } else {
+                        else
                             listener.onUpdateCommunicationStatus(data.type, data.id)
-                        }
                         data.is_unread = false
                     }
-
                     listener.onItemClick(data, this@DataViewHolder)
                 }
 
-                isSeeMoreVisibility(lblContentText, lblSeeMore)
-
-
                 lblSeeMore.setOnClickListener {
-                    lblnewiconText.visibility=View.GONE
+                    lblnewiconText.visibility = View.GONE
                     isExpanded = !isExpanded
                     lblSeeMore.visibility = View.GONE
                     if (isExpanded) {
                         lblContentText.maxLines = Int.MAX_VALUE
-//                        lblSeeMore.text = context.getString(R.string.see_less)
                     } else {
                         lblContentText.maxLines = 3
-//                        lblSeeMore.text = context.getString(R.string.see_more)
                     }
 
                     if (data.is_unread == true) {
-                        if (data.is_archive == true) {
+                        if (data.is_archive == true)
                             listener.onUpdateArchiveStatus(data.type, data.id)
-                        } else {
+                        else
                             listener.onUpdateCommunicationStatus(data.type, data.id)
-                        }
                         data.is_unread = false
-//                        lblnewiconText.visibility=View.GONE
                     }
                     listener.onItemClick(data, this@DataViewHolder)
                 }
@@ -287,9 +265,9 @@ class UnifiedVoiceAdapter(
                 prepareAsync()
                 setOnPreparedListener {
                     isPrepared = true
-                    startAudioProgressUpdate()
                     start()
                     isPlayingVoice = true
+                    startAudioProgressUpdate()
                     updatePlayPauseIcon(true)
                 }
                 setOnCompletionListener {
@@ -310,39 +288,35 @@ class UnifiedVoiceAdapter(
             }
         }
 
-        private fun pauseAudio() {
-            mediaPlayer!!.pause()
-            lastPosition = mediaPlayer!!.currentPosition
+        fun pauseAudio() {
+            mediaPlayer?.let {
+                if (it.isPlaying) {
+                    lastPosition = it.currentPosition
+                    it.pause()
+                }
+            }
             isPlayingVoice = false
             updatePlayPauseIcon(false)
             waveformSeekBar.updateWithLevel(0f)
+            stopAudioProgressUpdate()
         }
 
         private fun resumeAudio() {
-            mediaPlayer!!.seekTo(lastPosition)
-            mediaPlayer!!.start()
+            mediaPlayer?.let {
+                it.seekTo(lastPosition)
+                it.start()
+            }
             isPlayingVoice = true
             startAudioProgressUpdate()
             updatePlayPauseIcon(true)
         }
 
-        fun releaseMediaPlayer() {
-            mediaPlayer?.let {
-                if (it.isPlaying) {
-                    it.stop()
-                }
-                it.release()
-            }
-            mediaPlayer = null
-        }
-
         fun stopAudioPlayback() {
             mediaPlayer?.let {
                 if (it.isPlaying) it.stop()
-                it.reset()
                 it.release()
-                resetPlaybackState()
             }
+            resetPlaybackState()
             mediaPlayer = null
         }
 
@@ -356,15 +330,9 @@ class UnifiedVoiceAdapter(
         }
 
         private fun updatePlayPauseIcon(isPlaying: Boolean) {
-            val icon: Int
-            if (isPlaying) {
-                icon = R.drawable.pause_icon
-            } else {
-                icon = R.drawable.video_play
-            }
+            val icon = if (isPlaying) R.drawable.pause_icon else R.drawable.video_play
             imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
         }
-
 
         private fun startAudioProgressUpdate() {
             handler.post(progressUpdater)
@@ -381,7 +349,6 @@ class UnifiedVoiceAdapter(
         }
     }
 
-
     fun releaseMediaPlayer() {
         currentlyPlayingHolder?.stopAudioPlayback()
         currentlyPlayingHolder = null
@@ -390,11 +357,6 @@ class UnifiedVoiceAdapter(
     fun updateList(newList: List<VoiceData>, isSeeMoreData: Boolean) {
         this.itemList = ArrayList(newList)
         isSeeMoreClick = isSeeMoreData
-        notifyDataSetChanged()
-    }
-
-    fun setLoadingState(loading: Boolean) {
-        isLoading = loading
         notifyDataSetChanged()
     }
 

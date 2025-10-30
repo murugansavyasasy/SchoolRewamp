@@ -360,6 +360,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty_five"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_toStartOf="@+id/btnDone"
             android:gravity="start"
             android:text=""
@@ -375,7 +376,7 @@
             android:layout_marginTop="@dimen/five"
             android:layout_toStartOf="@+id/btnDone"
             android:gravity="start"
-            android:visibility="gone"
+            android:visibility="visible"
             android:text="Selected Files : 0"
             android:textColor="@color/white" />
 
@@ -385,7 +386,7 @@
             android:layout_width="@dimen/fifty"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/five"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/btn_green"
             android:gravity="center"

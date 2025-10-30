@@ -23,9 +23,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
+
         <ScrollView
             android:id="@+id/scrollRoot"
             android:layout_width="match_parent"
+            android:layout_below="@+id/toolbarLayout"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:fillViewport="true"
@@ -35,15 +40,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <include
-                    android:id="@+id/toolbarLayout"
-                    layout="@layout/school_side_tool_bar" />
-
                 <RelativeLayout
                     android:id="@+id/rlaAcademicYear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/toolbarLayout"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"

@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -157,6 +158,13 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
                     if(Constant.Remaining!! > 0) {
+                        if (Constant.Remaining != 10){
+                            Toast.makeText(
+                                this,
+                                "Only " + Constant.Remaining + " Added",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                         Constant.Remaining = Constant.Remaining - selectedUris!!.size
                         selectedUris?.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
@@ -222,6 +230,16 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 )
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("cameraImageFilePath", cameraImageFilePath)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        cameraImageFilePath = savedInstanceState.getString("cameraImageFilePath")
     }
 
 

@@ -46,10 +46,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d("FCM_PAYLOAD", "FCM Payload: ${remoteMessage.data}")
         }
         // Example: Extract fields safely
-        val title = remoteMessage.data["title"] ?: "No Title"
-        val body = remoteMessage.data["body"] ?: "No Body"
-        val tone = remoteMessage.data["tone"] ?: "Default"
-        val type = remoteMessage.data["type"] ?: "Default"
+        val title = remoteMessage.data["title"] ?: "School Chimes"
+        val body = remoteMessage.data["body"] ?: "You have a new message from your school"
+        val tone = remoteMessage.data["tone"] ?: "message"
+        val type = remoteMessage.data["type"] ?: "normal"
         val imageUrl = remoteMessage.data["image_url"] ?: "Default"
         val msgInfo = remoteMessage.data["msg_info"] ?: ""
         // Optional: Parse nested msg_info JSON if it’s in valid JSON format
