@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.FCM
 
 import android.Manifest
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -8,7 +9,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
@@ -19,8 +24,8 @@ import com.google.firebase.messaging.RemoteMessage
 import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.NotificationDismissService
 import org.json.JSONObject
-import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -31,6 +36,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         private const val CHANNEL_ID = "fcm_default_channel"
         private const val CHANNEL_NAME = "Custom Notifications"
     }
+
+    private val handler = Handler()
+
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "onMessageReceived called")
@@ -56,9 +64,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val institute_id = json.optString("institute_id")
 
             if (type.equals("isCall")) {
-
+                sendNotificationCall(title, body)
             } else {
-                sendNotification(title, body, imageUrl, menuName, menuId.toInt(), header_id.toInt())
+                sendNotification(
+                    title,
+                    body,
+                    tone,
+                    imageUrl,
+                    menuName,
+                    menuId.toInt(),
+                    header_id.toInt()
+                )
             }
             Log.d(
                 "FCM_MSG_INFO",
@@ -69,15 +85,104 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(TAG, "New FCM Token: $token")
     }
 
+    private fun sendNotificationCall(title: String, body: String) {
+        // Check for notification permission (Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                Log.e(TAG, "Notification permission not granted")
+                return
+            }
+        }
+
+        // Create Intent for notification tap
+        val intent = Intent(this, NotificationCallScreen::class.java).apply {
+            putExtra(Constant.menu_name, title)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        // Create notification channel
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val soundUri = Uri.parse("android.resource://${packageName}/raw/call_notification")
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Channel for custom notifications"
+                enableLights(true)
+                enableVibration(true)
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                setSound(
+                    soundUri,
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+                )
+                // 🔊 Play sound manually if needed
+                if (!Constant.mediaPlayer.isPlaying) {
+                    val mediaPlayer = MediaPlayer.create(this@MyFirebaseMessagingService, soundUri)
+                    mediaPlayer.isLooping = false
+                    mediaPlayer.start()
+                    Constant.mediaPlayer = mediaPlayer
+                }
+            }
+            manager.createNotificationChannel(channel)
+            handler.postDelayed(stopMediaPlayerRunnable, 30000)
+
+            Log.d(TAG, "Notification channel created")
+        }
+
+        // Try simple notification first to isolate RemoteViews issues
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.school_chimes)
+            .setContentTitle(title ?: "School Chimes")
+            .setContentText(body ?: "You have a new message from your school")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setDeleteIntent(createDeleteIntent()) // Add delete intent for dismissal
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+
+        // Handle custom notification with RemoteViews
+        try {
+            val remoteView = RemoteViews(packageName, R.layout.custom_call_notification).apply {
+                setTextViewText(R.id.notification_title, title ?: "School Chimes")
+
+            }
+            builder.setStyle(NotificationCompat.DecoratedCustomViewStyle())
+                .setCustomContentView(remoteView)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up custom notification: ${e.message}")
+        }
+
+        try {
+            manager.notify(System.currentTimeMillis().toInt(), builder.build())
+            Log.d(TAG, "Notification sent successfully")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to send notification: ${e.message}")
+        }
+    }
+
     private fun sendNotification(
         title: String?,
         messageBody: String?,
+        tone: String?,
         imageUrl: String?,
         menuName: String,
         menuId: Int,
@@ -108,6 +213,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             this, 0, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+        val message = Uri.parse("android.resource://${packageName}/raw/message")
+        val emergency_message = Uri.parse("android.resource://${packageName}/raw/emergencyvoice")
+
+        var notificationSound: Uri? = null
+        if (tone.equals("message")) {
+            notificationSound = message
+        } else if (tone.equals("emergency_voice")) {
+            notificationSound = emergency_message
+        }
 
         // Create notification channel
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -120,6 +234,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 description = "Channel for custom notifications"
                 enableLights(true)
                 enableVibration(true)
+                setSound(notificationSound, audioAttributes)  // ✅ Custom tone for this channel
+
             }
             manager.createNotificationChannel(channel)
             Log.d(TAG, "Notification channel created")
@@ -128,17 +244,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Try simple notification first to isolate RemoteViews issues
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.school_chimes)
-            .setContentTitle(title ?: "Default Title")
-            .setContentText(messageBody ?: "Default Body")
+            .setContentTitle(title ?: "School Chimes")
+            .setContentText(messageBody ?: "You have a new message from your school")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .setSound(notificationSound) // ✅ custom tone for pre-Oreo devices
 
         // Handle custom notification with RemoteViews
         try {
             val remoteView = RemoteViews(packageName, R.layout.custom_notification).apply {
-                setTextViewText(R.id.notification_title, title ?: "Default Title")
-                setTextViewText(R.id.notification_body, messageBody ?: "Default Body")
+                setTextViewText(R.id.notification_title, title ?: "School Chimes")
+                setTextViewText(
+                    R.id.notification_body,
+                    messageBody ?: "You have a new message from your school"
+                )
             }
 
             // Handle image download
@@ -181,5 +301,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send notification: ${e.message}")
         }
+    }
+
+    private val stopMediaPlayerRunnable = Runnable {
+        if (Constant.mediaPlayer != null && Constant.mediaPlayer.isPlaying()) {
+            Constant.mediaPlayer.stop()
+            Constant.mediaPlayer.release()
+            Constant.mediaPlayer = MediaPlayer()
+        }
+    }
+
+    // Creates a delete intent for handling notification dismissal
+    private fun createDeleteIntent(): PendingIntent? {
+        val dismissIntent: Intent = Intent(this, NotificationDismissService::class.java)
+        dismissIntent.setAction("NOTIFICATION_DISMISSED")
+        return PendingIntent.getService(
+            this,
+            0,
+            dismissIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 }

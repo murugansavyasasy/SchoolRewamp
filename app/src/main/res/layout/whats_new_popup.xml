@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/fifteen_sp"
-    android:background="@color/white"
+    android:background="@drawable/rect_white"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="@dimen/fifteen_sp"
-        android:background="@drawable/rect_white_light_radious"
         android:orientation="vertical">
 
 
@@ -19,7 +17,7 @@
             android:id="@+id/rytUpdateAvailabe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dark_orange"
+            android:background="@color/PrimaryColor"
             android:padding="@dimen/ten">
 
             <TextView
@@ -28,13 +26,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                style="@style/CustomTextStylePoppinsBold"
                 android:text="@string/update_available"
                 android:textColor="@color/white" />
 
 
             <ImageView
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/school_chimes" />
 
@@ -55,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:text="@string/new_version"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -64,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="1.1"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -90,15 +91,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:text="@string/your_version"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
-                android:id="@+id/lblYourAppVersion"
+                android:id="@+id/lblYourAppVersionCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="1.0"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -118,6 +121,7 @@
             android:layout_below="@+id/vwYour"
             android:layout_marginTop="@dimen/ten"
             android:padding="@dimen/ten"
+            style="@style/CustomTextStylePoppinsBold"
             android:text="@string/the_new_version_changes"
             android:textColor="@color/orange"
             android:textSize="@dimen/sixteen_sp"
@@ -125,6 +129,7 @@
 
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsScroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/idUpdateTitle">
@@ -150,10 +155,9 @@
 
 
         <RelativeLayout
+            android:layout_below="@+id/nsScroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
             android:gravity="center"
             android:padding="@dimen/ten">
 
@@ -166,7 +170,8 @@
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:text="@string/not_now"
-                android:textColor="@color/white"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:textColor="@color/PrimaryColor"
                 android:textSize="@dimen/sixteen_sp"
                 android:visibility="visible" />
 
@@ -179,7 +184,8 @@
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:text="@string/update_now"
-                android:textColor="@color/white"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:textColor="@color/PrimaryColor"
                 android:textSize="@dimen/sixteen_sp"
                 android:visibility="visible" />
 

@@ -591,6 +591,13 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             binding.edtDescription.requestFocus()
             return
         }
+
+        if (edtdate.isEmpty()) {
+            binding.edtdate.error = getString(R.string.This_field_required)
+            binding.edtdate.requestFocus()
+            return
+        }
+
         val isLsrwnewTaskSendingData = LsrwnewTaskSendingData(
             title,
             description,

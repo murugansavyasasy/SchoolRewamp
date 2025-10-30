@@ -47,7 +47,9 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         authViewModel!!.init()
 
         binding.lblTermsConditions.setOnClickListener {
-            startActivity(Intent(this, TermsAndConditions::class.java))
+            val intent = Intent(this, TermsAndConditions::class.java)
+            intent.putExtra("screen_name", "isTerms")
+            startActivity(intent)
         }
 
         binding.termsCheckbox.setOnCheckedChangeListener { _, isChecked ->

@@ -596,6 +596,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isSectionSelectedIds.clear()
                 isStandardSelectedIds.clear()
                 isGroupSelectedIds.clear()
+                binding.subjectlabel.visibility = View.GONE
+                binding.rytSubjectDropDown.visibility = View.GONE
                 selectedIds.clear()
                 binding.btnSpecificStudent.isEnabled = false
                 binding.btnSpecificStudent.background =
