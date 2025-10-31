@@ -217,7 +217,6 @@ class NoticeBoardAdapter(
             val convertedList = noticeData.file_path?.map {
                 GetFilePathDetails(type = it.type, url = it.url)
             } ?: emptyList()
-
             val preview = FilePreview(
                 id = "",
                 title = noticeData.title,
@@ -230,7 +229,6 @@ class NoticeBoardAdapter(
                 isMenuType = Constant.M_NOTICEBOARD,
                 fileList = convertedList
             )
-
             val intent = Intent(context, ChildHomeWork::class.java)
             intent.putExtra(Constant.isPreViewData, preview)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -306,5 +304,3 @@ class NoticeBoardAdapter(
         }
     }
 }
-
-

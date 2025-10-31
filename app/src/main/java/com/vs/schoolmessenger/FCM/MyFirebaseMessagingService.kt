@@ -56,7 +56,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         var menuId = ""
         var menuName = ""
         var receiverType = ""
-        var receiverid = ""
+        var receiver_id = ""
         var header_id = ""
         var institute_id = ""
         try {
@@ -65,7 +65,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             menuId = json.optString("menu_id")
             menuName = json.optString("menu_name")
             receiverType = json.optString("receiver_type")
-            receiverid = json.optString("receiverid")
+            receiver_id = json.optString("receiverid")
             header_id = json.optString("header_id")
             institute_id = json.optString("institute_id")
 
@@ -82,7 +82,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     header_id,  // Pass as String
                     msgId.toIntOrNull() ?: 0,  // Pass top-level msg_id separately if needed
                     receiverType,
-                    receiverid.toIntOrNull() ?: 0,
+                    receiver_id,
                     institute_id.toIntOrNull() ?: 0
                 )
             }
@@ -104,7 +104,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     "",  // Empty String fallback
                     msgId.toIntOrNull() ?: 0,
                     receiverType,  // Empty fallback
-                    0,
+                    receiver_id,
                     0
                 )
             }
@@ -210,12 +210,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         messageBody: String?,
         tone: String?,
         imageUrl: String?,
-        menuName: String,
+        menu_name: String,
         menuId: Int,
         headerId: String,  // Changed to String
         msgId: Int,     // Top-level msg_id from payload
         receiverType: String,
-        receiverId: Int,
+        receiverId: String,
         instituteId: Int
     ) {
         // Check for notification permission (Android 13+)
@@ -232,14 +232,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // Create Intent for notification tap
         val intent = Intent(this, Splash::class.java).apply {
-            putExtra(Constant.menu_name, menuName)
+            putExtra(Constant.menu_name, menu_name)
             putExtra(Constant.menu_id, menuId)
-            putExtra(Constant.msg_id, msgId)  // Top-level msg_id
-            putExtra("header_id", headerId)  // Now String
-            Log.d("FCM_INTENT", "Putting header_id: $headerId")
+            putExtra(Constant.msg_id, msgId)
+            putExtra("header_id", headerId)
             putExtra("receiver_type", receiverType)
-            putExtra("receiver_id", receiverId)
-            putExtra("institute_id", instituteId)
+            putExtra("receiverid", receiverId)
+            putExtra("institute_id", instituteId.toString())
             putExtra(Constant.fromNotification, true)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }

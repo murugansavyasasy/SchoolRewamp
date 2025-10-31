@@ -323,7 +323,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         if (fromNotification) {
             menu_name = intent.getStringExtra(Constant.menu_name)
             headerId = intent.getStringExtra("header_id")
-            receiverId = intent.getStringExtra("receiver_id")
+            receiverId = intent.getStringExtra("receiverid")
             menu_id = intent.getIntExtra(Constant.menu_id, 0)
             msg_id = intent.getIntExtra(Constant.msg_id, 0)
         }
@@ -333,7 +333,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             val loginIntent = Intent(this, Login::class.java).apply {
                 putExtra(Constant.menu_name, menu_name)
                 putExtra("header_id", headerId)  // Use "header_id" consistently
-                putExtra("receiver_id", receiverId)  // Use "header_id" consistently
+                putExtra("receiverId", receiverId)  // Use "header_id" consistently
                 putExtra(Constant.menu_id, menu_id)
                 putExtra(Constant.msg_id, msg_id)
                 putExtra(Constant.fromNotification, fromNotification)  // Fixed: was msg_id
@@ -387,7 +387,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     val detailIntent = Intent(this, NoticeBoard::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra("header_id", headerId)    // ← String
-                        putExtra("receiver_id", receiverId)    // ← String
+                        putExtra("receiverid", receiverId)
+                        // ← String
                         putExtra(Constant.menu_id, menu_id)
                         putExtra(Constant.msg_id, msg_id)
                         putExtra(Constant.fromNotification, fromNotification)
