@@ -186,6 +186,7 @@ object Constant {
     //from notification intent values
 
     var menu_name = "menu_name"
+    var headerId = "header_id"
     var menu_id = "menu_id"
     var msg_id = "msg_id"
     var fromNotification = "fromNotification"
