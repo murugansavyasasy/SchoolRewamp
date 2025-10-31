@@ -57,9 +57,9 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
         userDetails = SharedPreference.getUserDetails(this)
         fromNotification = intent.getBooleanExtra("fromNotification", false)
-        val isChildDetails = SharedPreference.getChildDetails(this)
 
         if (fromNotification) {
+            Constant.isParentChoose = true
             msg_id = intent.getIntExtra(Constant.msg_id, -1)
             headerId = intent.getStringExtra("header_id")
             receiverId = intent.getStringExtra("receiverid")
@@ -70,24 +70,16 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                 "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
             )
 
-            if (isChildDetails == null || isChildDetails.child_id.isEmpty()) {
                 val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-                isAccessToken = matchedChild?.access_token
-                binding.toolbarLayout.lblStudentName.text = matchedChild?.name ?: ""
-                binding.toolbarLayout.lblStudentSection.text =
-                    "${matchedChild?.standard_name ?: ""} - ${matchedChild?.section_name ?: ""}"
-            } else {
-                isAccessToken = isChildDetails.access_token
-                binding.toolbarLayout.lblStudentName.text = isChildDetails.name
-                binding.toolbarLayout.lblStudentSection.text =
-                    "${isChildDetails.standard_name} - ${isChildDetails.section_name}"
-            }
-        } else {
-            isAccessToken = isChildDetails?.access_token
-            binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-            binding.toolbarLayout.lblStudentSection.text =
-                "${isChildDetails?.standard_name ?: ""} - ${isChildDetails?.section_name ?: ""}"
+                SharedPreference.putChildDetails(this,matchedChild!!)
+               Constant.isParentMenuName = menu_name!!
         }
+
+        val isChildDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = isChildDetails?.access_token
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text =
+            "${isChildDetails?.standard_name ?: ""} - ${isChildDetails?.section_name ?: ""}"
 
         binding.root.post {
             val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
