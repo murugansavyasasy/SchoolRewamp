@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.MessageFromManagement
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
@@ -34,6 +35,8 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentFilePathAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -51,7 +54,7 @@ import me.relex.circleindicator.CircleIndicator2
 
 
 class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
-    View.OnClickListener,MsgStaffListener {
+    View.OnClickListener, MsgStaffListener {
 
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
@@ -64,13 +67,19 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var isMsgStaff: List<GetMessagesStaffData>? = emptyList()
     private var userDetails: UserDetails? = null
     private var updateRunnable: Runnable? = null
-    var isMenuCount=-1
+    var isMenuCount = -1
     private var isDialogShowing = false
 
 
     var TYPE: String? = ""
-    var selectedSchoolId=""
-    var isMultipleSchool=false
+    var selectedSchoolId = ""
+    var isMultipleSchool = false
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
 
 
     override fun getViewBinding(): MessageFromManagementBinding {
@@ -92,27 +101,46 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
 
         userDetails = SharedPreference.getUserDetails(this)
+
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = false
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra("header_id")
+            receiverId = intent.getStringExtra("receiverid")
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this,matchedChild!!)
+            Constant.isParentMenuName = menu_name!!
+        }
+
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
-        if (userDetails?.staff_role.equals(Constant.isStaffRole)){
-            binding.rytSpinner.visibility=View.GONE
+        if (userDetails?.staff_role.equals(Constant.isStaffRole)) {
+            binding.rytSpinner.visibility = View.GONE
             isAccessToken = isStaffDetails!!.access_token
-            isMultipleSchool=false
+            isMultipleSchool = false
             isGetMessageFromStaff()
             binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        }
-        else{
+        } else {
             if (userDetails?.staff_details?.size!! > 1) {
                 binding.rytSpinner.visibility = View.VISIBLE
-                isMultipleSchool=true
+                isMultipleSchool = true
                 //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
                 userDetails?.let { setupSchoolSpinner(it.staff_details) }
-            }
-            else{
+            } else {
                 isAccessToken = userDetails!!.staff_details.get(0).access_token
-                binding.rytSpinner.visibility=View.GONE
-                isMultipleSchool=false
+                binding.rytSpinner.visibility = View.GONE
+                isMultipleSchool = false
                 isGetMessageFromStaff()
                 binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
                 binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -120,7 +148,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         }
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        isMenuCount=Constant.isSchoolMenuCount
+        isMenuCount = Constant.isSchoolMenuCount
 
         appViewModel?.isGetMessageStaff?.observe(this) { response ->
             if (response != null) {
@@ -129,11 +157,13 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 //                    binding.lytList2.visibility = View.GONE
                     binding.lytList.visibility = View.GONE
                     isLoadMsgStaff(response.data)
-                    completeAttachmentList=response.data
-                }
-                else {
-                    binding.rytSpinner.visibility=View.GONE
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    completeAttachmentList = response.data
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
+                    }
+                } else {
+                    binding.rytSpinner.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.rytSearch1.visibility = View.GONE
                     binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                     binding.rcMessageStaff.visibility = View.GONE
@@ -141,8 +171,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     ErrorMessage(response.message)
                 }
             } else {
-                binding.rytSpinner.visibility=View.GONE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.rytSpinner.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rytSearch1.visibility = View.GONE
                 binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                 binding.rcMessageStaff.visibility = View.GONE
@@ -155,100 +185,107 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             if (response != null) {
                 Constant.hideLoading(this)
                 if (response.status) {
-                   if(response.data.isNotEmpty()){
-                       val updatedList = completeAttachmentList.toMutableList()
-                       updatedList.addAll(response.data)
-                       completeAttachmentList = updatedList
-                       isMsgStaff=completeAttachmentList
+                    if (response.data.isNotEmpty()) {
+                        val updatedList = completeAttachmentList.toMutableList()
+                        updatedList.addAll(response.data)
+                        completeAttachmentList = updatedList
+                        isMsgStaff = completeAttachmentList
 
-                       // Reinitialize adapter if shimmer was active
-                       if (!::adapter.isInitialized || adapter.getItemViewType(0) == 0) {
-                           adapter = MessageFromStaffAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
-                           binding.rcMessageStaff.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-                           binding.rcMessageStaff.adapter = adapter
-                           binding.rcMessageStaff.isNestedScrollingEnabled = false
-                       }
+                        // Reinitialize adapter if shimmer was active
+                        if (!::adapter.isInitialized || adapter.getItemViewType(0) == 0) {
+                            adapter = MessageFromStaffAdapter(
+                                mutableListOf(),
+                                this,
+                                this,
+                                Constant.isShimmerViewDisable
+                            )
+                            binding.rcMessageStaff.layoutManager =
+                                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                            binding.rcMessageStaff.adapter = adapter
+                            binding.rcMessageStaff.isNestedScrollingEnabled = false
+                        }
 
-                       if (isMultipleSchool){
-                           Log.d("IsComing","AAAAAAAAAAAAAAAAAA")
-                           if (selectedSchoolId==Constant.All_){
-                               Log.d("IsComing","ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
-                               Log.d("IsComing",isMultipleSchool.toString())
-                               adapter.AppendData(response.data)
-                           }
-                           else{
-                               Log.d("IsComing","BBBBBBBBBBBBBBBBBBBBBBBB")
-                               Log.d("IsComing",selectedSchoolId.toString())
-                               val filteredList = completeAttachmentList.filter { it.school_id == selectedSchoolId }
-                               Log.d("SpinnerSelection", "Selected school id: ${selectedSchoolId}, " +"Data: $filteredList, Token: $isAccessToken")
-                               adapter.updateData(filteredList)
-                           }
-                       }
-                       else{
-                           Log.d("IsComing","CCCCCCCCCCCCCCCCCCCCCCCC")
-                           //if role is staff or only handle one school means we are directly update the response direclty to adapter
-                           adapter.AppendData(response.data)
-                       }
+                        if (isMultipleSchool) {
+                            Log.d("IsComing", "AAAAAAAAAAAAAAAAAA")
+                            if (selectedSchoolId == Constant.All_) {
+                                Log.d("IsComing", "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
+                                Log.d("IsComing", isMultipleSchool.toString())
+                                adapter.AppendData(response.data)
+                            } else {
+                                Log.d("IsComing", "BBBBBBBBBBBBBBBBBBBBBBBB")
+                                Log.d("IsComing", selectedSchoolId.toString())
+                                val filteredList =
+                                    completeAttachmentList.filter { it.school_id == selectedSchoolId }
+                                Log.d(
+                                    "SpinnerSelection",
+                                    "Selected school id: ${selectedSchoolId}, " + "Data: $filteredList, Token: $isAccessToken"
+                                )
+                                adapter.updateData(filteredList)
+                            }
+                        } else {
+                            Log.d("IsComing", "CCCCCCCCCCCCCCCCCCCCCCCC")
+                            //if role is staff or only handle one school means we are directly update the response direclty to adapter
+                            adapter.AppendData(response.data)
+                        }
 
-                       if(adapter!!.getCurrentListSize()>0){
-                           binding.rytSearch1.visibility = View.GONE
-                           binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-                           binding.txtSearch1.text.clear()
-                       }
-                       else{
-                           binding.rytSearch1.visibility = View.GONE
-                           binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-                           binding.txtSearch1.text.clear()
-                       }
+                        if (adapter!!.getCurrentListSize() > 0) {
+                            binding.rytSearch1.visibility = View.GONE
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                            binding.txtSearch1.text.clear()
+                        } else {
+                            binding.rytSearch1.visibility = View.GONE
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                            binding.txtSearch1.text.clear()
+                        }
 
-                       ShowData()
+                        ShowData()
 //                       binding.lytList2.visibility = View.GONE
-                       binding.txtSearch1.text.clear()
-                       binding.isArchiveErrorMsg.visibility=View.GONE
-                   }
-                    else{
-                       binding.isArchiveErrorMsg.visibility=View.VISIBLE
-                       binding.isArchiveErrorMsg.text=response.message
-                       if(adapter.getCurrentListSize()==0){
+                        binding.txtSearch1.text.clear()
+                        binding.isArchiveErrorMsg.visibility = View.GONE
+                    } else {
+                        binding.isArchiveErrorMsg.visibility = View.VISIBLE
+                        binding.isArchiveErrorMsg.text = response.message
+                        if (adapter.getCurrentListSize() == 0) {
 //                           binding.lytList2.visibility = View.VISIBLE
-                           binding.lytList.visibility = View.VISIBLE
-                           binding.txtNoData.visibility=View.GONE
-                           binding.rytSearch1.visibility = View.GONE
-                           binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-                           binding.txtSearch1.text.clear()
+                            binding.lytList.visibility = View.VISIBLE
+                            binding.txtNoData.visibility = View.GONE
+                            binding.rytSearch1.visibility = View.GONE
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                            binding.txtSearch1.text.clear()
 
-                       }else{
+                        } else {
 //                           binding.lytList2.visibility = View.VISIBLE
-                           binding.lytList.visibility = View.GONE
-                           // Set top margin to 15dp dynamically
-                           val layoutParams = binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
-                           val topMarginInDp = TypedValue.applyDimension(
-                               TypedValue.COMPLEX_UNIT_DIP,
-                               15f,
-                               resources.displayMetrics
-                           ).toInt()
-                           layoutParams.topMargin = topMarginInDp
-                           binding.isArchiveErrorMsg.layoutParams = layoutParams
-                           binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-                       }
-                   }
-                }
-                else {
-                    binding.isArchiveErrorMsg.visibility=View.VISIBLE
-                    binding.isArchiveErrorMsg.text=response.message
-                    if(adapter.getCurrentListSize()==0){
+                            binding.lytList.visibility = View.GONE
+                            // Set top margin to 15dp dynamically
+                            val layoutParams =
+                                binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
+                            val topMarginInDp = TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP,
+                                15f,
+                                resources.displayMetrics
+                            ).toInt()
+                            layoutParams.topMargin = topMarginInDp
+                            binding.isArchiveErrorMsg.layoutParams = layoutParams
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                        }
+                    }
+                } else {
+                    binding.isArchiveErrorMsg.visibility = View.VISIBLE
+                    binding.isArchiveErrorMsg.text = response.message
+                    if (adapter.getCurrentListSize() == 0) {
 //                        binding.lytList2.visibility = View.VISIBLE
                         binding.lytList.visibility = View.VISIBLE
-                        binding.txtNoData.visibility=View.GONE
+                        binding.txtNoData.visibility = View.GONE
                         binding.rytSearch1.visibility = View.GONE
-                        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                         binding.txtSearch1.text.clear()
 
-                    }else{
+                    } else {
 //                        binding.lytList2.visibility = View.VISIBLE
                         binding.lytList.visibility = View.GONE
                         // Set top margin to 15dp dynamically
-                        val layoutParams = binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
+                        val layoutParams =
+                            binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
                         val topMarginInDp = TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,
                             15f,
@@ -256,23 +293,24 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         ).toInt()
                         layoutParams.topMargin = topMarginInDp
                         binding.isArchiveErrorMsg.layoutParams = layoutParams
-                        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     }
                 }
             } else {
-                binding.isArchiveErrorMsg.visibility=View.VISIBLE
-                binding.isArchiveErrorMsg.text=getString(R.string.something_went_wrong_please_try_again_later)
-                if(adapter.getCurrentListSize()==0){
+                binding.isArchiveErrorMsg.visibility = View.VISIBLE
+                binding.isArchiveErrorMsg.text =
+                    getString(R.string.something_went_wrong_please_try_again_later)
+                if (adapter.getCurrentListSize() == 0) {
 //                    binding.lytList2.visibility = View.VISIBLE
                     binding.lytList.visibility = View.VISIBLE
-                    binding.txtNoData.visibility=View.GONE
+                    binding.txtNoData.visibility = View.GONE
                     binding.rytSearch1.visibility = View.GONE
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.txtSearch1.text.clear()
-                }else{
+                } else {
 //                    binding.lytList2.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 }
             }
         }
@@ -304,7 +342,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
-                Log.d("Search",s.toString())
+                Log.d("Search", s.toString())
 
                 if (s!!.isNotEmpty()) {
                     if (binding.isArchiveErrorMsg.visibility == View.VISIBLE) {
@@ -319,6 +357,42 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             }
         })
 
+    }
+
+
+    private fun scrollToMessageId(headerId: String?) {
+        if (msg_id == -1) return
+
+        completeAttachmentList?.let { list ->
+            val index = list.indexOfFirst { it.header_id== headerId }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
+                binding.rcMessageStaff.post {
+                    binding.rcMessageStaff.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcMessageStaff, index)
+                }
+            } else {
+                Log.d("ScrollDebug", "No item found with headerId: $headerId")
+            }
+        }
+        Log.d("ScrollDebug", "No index found for headerId $headerId")
+    }
+
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
+            }
+        }
     }
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
@@ -359,7 +433,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                             isStaffDetails = selectedStaff
                             selectedSchoolId = selectedStaff.school_id
 
-                            val filteredList = completeAttachmentList.filter { it.school_id == selectedSchoolId }
+                            val filteredList =
+                                completeAttachmentList.filter { it.school_id == selectedSchoolId }
                             Log.d(
                                 "SpinnerSelection",
                                 "Selected school: ${selectedStaff.school_name}, " +
@@ -457,21 +532,25 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 //    }
 
 
-
-
     private fun isLoadMsgStaff(data: List<GetMessagesStaffData>) {
         if (data.isNotEmpty()) {
-            isMsgStaff=data
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            isMsgStaff = data
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.rytSearch1.visibility = View.GONE
-            adapter = MessageFromStaffAdapter(data.toMutableList(),this, this, Constant.isShimmerViewDisable)
-            binding.rcMessageStaff.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+            adapter = MessageFromStaffAdapter(
+                data.toMutableList(),
+                this,
+                this,
+                Constant.isShimmerViewDisable
+            )
+            binding.rcMessageStaff.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             binding.rcMessageStaff.adapter = adapter
             binding.rcMessageStaff.isNestedScrollingEnabled = false
             binding.rcMessageStaff.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
         } else {
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rytSearch1.visibility = View.GONE
             binding.rcMessageStaff.visibility = View.GONE
             binding.lytList.visibility = View.VISIBLE
@@ -480,16 +559,16 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     }
 
 
-
-    fun isGetMessageFromStaff(){
-        adapter = MessageFromStaffAdapter(mutableListOf(),this, this, Constant.isShimmerViewShow)
-        binding.rcMessageStaff.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+    fun isGetMessageFromStaff() {
+        adapter = MessageFromStaffAdapter(mutableListOf(), this, this, Constant.isShimmerViewShow)
+        binding.rcMessageStaff.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcMessageStaff.adapter = adapter
         binding.rcMessageStaff.isNestedScrollingEnabled = false
         appViewModel?.isGetMessageStaff(isAccessToken ?: "")
     }
 
-    fun isGetMessageFromStaffArchive(){
+    fun isGetMessageFromStaffArchive() {
         Constant.showLoading(this)
         appViewModel?.isGetMessageStaffArchive(isAccessToken ?: "")
     }
@@ -503,11 +582,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         activity: Activity,
         data: GetMessagesStaffData
     ) {
-        if (isDialogShowing ||activity.isFinishing || activity.isDestroyed) return
+        if (isDialogShowing || activity.isFinishing || activity.isDestroyed) return
         isDialogShowing = true
 
 
-        val dialogView = LayoutInflater.from(activity).inflate(R.layout.msg_from_staff_preview, null)
+        val dialogView =
+            LayoutInflater.from(activity).inflate(R.layout.msg_from_staff_preview, null)
         val builder = AlertDialog.Builder(activity).setView(dialogView)
         val alertDialog = builder.create()
         alertDialog.setCancelable(false)
@@ -546,33 +626,32 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         when (data.type) {
             Constant.TEXT -> {
-                rytDescription.visibility=View.VISIBLE
-                tvDescription.visibility=View.VISIBLE
-                rlaAudioDetails.visibility=View.GONE
+                rytDescription.visibility = View.VISIBLE
+                tvDescription.visibility = View.VISIBLE
+                rlaAudioDetails.visibility = View.GONE
                 recyclerView.visibility = View.GONE
                 indicator.visibility = View.GONE
                 tvDescription.text = data.description
             }
 
-            Constant.VOICE ->{
-                rytDescription.visibility=View.GONE
-                tvDescription.visibility=View.GONE
+            Constant.VOICE -> {
+                rytDescription.visibility = View.GONE
+                tvDescription.visibility = View.GONE
                 tvAudioTittle.apply {
-                    text=data.title
+                    text = data.title
                     isSingleLine = true
                     ellipsize = TextUtils.TruncateAt.END
                     maxLines = 1
                 }
-                if (data.is_emergency){
-                    lblEmergency.text=getString(R.string.emergency_voice)
-                    imgEmergency.visibility=View.VISIBLE
-                }
-                else{
-                    lblEmergency.text=getString(R.string.voice)
-                    imgEmergency.visibility=View.GONE
+                if (data.is_emergency) {
+                    lblEmergency.text = getString(R.string.emergency_voice)
+                    imgEmergency.visibility = View.VISIBLE
+                } else {
+                    lblEmergency.text = getString(R.string.voice)
+                    imgEmergency.visibility = View.GONE
                 }
                 tvDescription.text = data.description
-                rlaAudioDetails.visibility=View.VISIBLE
+                rlaAudioDetails.visibility = View.VISIBLE
                 recyclerView.visibility = View.GONE
                 indicator.visibility = View.GONE
 
@@ -586,10 +665,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 )
 
             }
+
             Constant.ATTACHMENT_ -> {
-                rytDescription.visibility=View.VISIBLE
-                tvDescription.visibility=View.VISIBLE
-                rlaAudioDetails.visibility=View.GONE
+                rytDescription.visibility = View.VISIBLE
+                tvDescription.visibility = View.VISIBLE
+                rlaAudioDetails.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE
                 indicator.visibility = View.VISIBLE
                 tvDescription.text = data.description
@@ -600,7 +680,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 } else {
                     indicator.visibility = View.VISIBLE
                     recyclerView.visibility = View.VISIBLE
-                    recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                    recyclerView.layoutManager =
+                        LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                     recyclerView.adapter = AttachmentMediaAdapter(
                         data.file_path,
                         activity,
@@ -644,27 +725,26 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
-            R.id.lblArchiveMsg->{
+
+            R.id.lblArchiveMsg -> {
                 binding.txtSearch1.text.clear()
                 isGetMessageFromStaffArchive()
-                binding.lblArchiveMsg.visibility=View.GONE
+                binding.lblArchiveMsg.visibility = View.GONE
             }
         }
     }
 
     override fun onStaffClick(data: GetMessagesStaffData) {
-        Log.d("SelectedData",data.toString())
-        showResumeListDialog(this,data)
-        if (data.is_unread){
+        Log.d("SelectedData", data.toString())
+        showResumeListDialog(this, data)
+        if (data.is_unread) {
             //            isMenuCount-=1
             //            setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
-            if(data.type.equals(Constant.TET2)){
+            if (data.type.equals(Constant.TET2)) {
                 TYPE = Constant.MGMT_MSG_TEXT
-            }
-            else if(data.type.equals(Constant.VOICE)){
+            } else if (data.type.equals(Constant.VOICE)) {
                 TYPE = Constant.MGMT_MSG_VOICE
-            }
-            else{
+            } else {
                 TYPE = Constant.MGMT_MSG_ATTACHMENT
             }
 
@@ -673,10 +753,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 addProperty(APIKeyNames.detail_id, data.id)
             }
 
-            if (data.is_archive){
+            if (data.is_archive) {
                 appViewModel?.isUpdateStatusArchive(isAccessToken!!, jsonObject, this)
-            }
-            else{
+            } else {
                 appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
             }
         }
@@ -762,6 +841,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     lblCurrent.text = milliSecondsToTimer(progress.toLong())
                 }
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
@@ -816,5 +896,13 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         releaseMediaPlayer()
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, SchoolDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 
 }

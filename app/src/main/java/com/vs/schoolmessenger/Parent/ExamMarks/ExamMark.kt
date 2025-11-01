@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
@@ -34,6 +35,15 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
     private var appViewModel: App? = null
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
+
+
     var examTitle = ""
 
     private var currentTab = TabType.EXAM_TIMETABLE
@@ -52,6 +62,28 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra("header_id")
+            receiverId = intent.getStringExtra("receiverid")
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this,matchedChild!!)
+            Constant.isParentMenuName = menu_name!!
+        }
+
+
+
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
 
@@ -66,7 +98,14 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         }
 
 
-        binding.lblHeaderTitle.text=Constant.isParentMenuName
+        binding.root.post {
+            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
+            binding.lblHeaderTitle.text = finalName
+            binding.lblHeaderTitle.visibility = View.VISIBLE
+        }
+
+
         binding.toolbarLayout.apply {
             imgBack.setOnClickListener(this@ExamMark)
             lblStudentName.text = isChildDetails!!.name
@@ -109,7 +148,6 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 return@observe
             }
-
             if (response.status) {
                 Constant.hideLoading(this)
                 isLoadexams(response.data)
@@ -286,5 +324,13 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                 onBackPressed()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

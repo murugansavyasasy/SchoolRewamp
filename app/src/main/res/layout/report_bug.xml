@@ -11,25 +11,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-<<<<<<< HEAD
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
-=======
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
->>>>>>> 40008ca318bfdfe925162d314c56fc3387670e4c
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -60,16 +51,16 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
-                    android:paddingEnd="40dp"
                     android:spinnerMode="dropdown"
+                    android:paddingEnd="40dp"
                     android:textColor="@color/black" />
 
                 <ImageView
                     android:id="@+id/spinnerCorrectAnswerimg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/three"
                     android:src="@drawable/ic_drop_down"
                     app:tint="@color/black" />
@@ -130,11 +121,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
-                android:horizontalSpacing="8dp"
                 android:numColumns="2"
+                android:verticalSpacing="8dp"
+                android:horizontalSpacing="8dp"
                 android:padding="@dimen/ten"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="8dp" />
+                android:stretchMode="columnWidth" />
 
             <TextView
                 android:id="@+id/btnReportBug"
@@ -142,12 +133,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_five"
-                android:layout_marginTop="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty_five"
-<<<<<<< HEAD
-=======
                 android:layout_marginTop="@dimen/twenty"
->>>>>>> 40008ca318bfdfe925162d314c56fc3387670e4c
                 android:layout_marginBottom="@dimen/twenty"
                 android:background="@drawable/background_radius_button"
                 android:gravity="center"
@@ -160,17 +147,6 @@
                 android:id="@+id/imgAddNotification"
                 android:layout_width="@dimen/fifty"
                 android:layout_height="@dimen/fifty"
-<<<<<<< HEAD
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/twenty"
-                android:layout_below="@id/btnReportBug"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/bg_orange"
-                android:padding="10dp"
-                android:src="@drawable/add_icon" />
-
-        </RelativeLayout>
-=======
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
@@ -180,7 +156,6 @@
                 android:padding="10dp" />
 
         </LinearLayout>
->>>>>>> 40008ca318bfdfe925162d314c56fc3387670e4c
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 
 data class SkillData(
     val id: String,
+    val header_id: String,
     val detail_id: String,
     val title: String,
     val description: String,

@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.Assignment
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
@@ -37,8 +40,12 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     private var isAssignmentReportData: List<ParentAssignmentData>? = null
 
     private var msg_id: Int = -1
-
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
     private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
+
 
     lateinit var mAdapter: AssignmentAdapter
     override fun setupViews() {
@@ -52,15 +59,32 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             onBackPressed()
         }
 
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra("header_id")
+            receiverId = intent.getStringExtra("receiverid")
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this,matchedChild!!)
+            Constant.isParentMenuName = menu_name!!
+        }
+
+
+
         val isChildDetails = SharedPreference.getChildDetails(this)
 
         isAccessToken = isChildDetails?.access_token
-
-
-        msg_id = intent.getIntExtra(Constant.msg_id, -1)
-
-        fromNotification = intent.getBooleanExtra("fromNotification", false)
-
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
 
@@ -85,7 +109,15 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
-        binding.lblHeaderTitle.text = Constant.isParentMenuName
+
+        binding.root.post {
+            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
+            binding.lblHeaderTitle.text = finalName
+            binding.lblHeaderTitle.visibility = View.VISIBLE
+        }
+
+
         Log.d("isParentMenuName", Constant.isParentMenuName)
 
         binding.toolbarLayout.lblStudentSection.text =
@@ -118,7 +150,9 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                 binding.rcyAssignment.visibility = View.VISIBLE
                 binding.lytList.visibility = View.GONE
                 Log.d("Message Id Value Indication", msg_id.toString())
-                scrollToMessageId(msg_id)
+                if (fromNotification) {
+                    scrollToMessageId(headerId)
+                }
 
             } else {
                 binding.rcyAssignment.visibility = View.GONE
@@ -168,31 +202,38 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         binding.rcyAssignment.adapter = isAssignmentAdapter
     }
 
-    private fun scrollToMessageId(msg_id: Int) {
+    private fun scrollToMessageId(headerId: String?) {
         if (msg_id == -1) return
 
         isAssignmentReportData?.let { list ->
-            val index = list.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            val index = list.indexOfFirst { it.header_id == headerId }
             if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index in completed")
+                Log.d("ScrollDebug", "Scrolling to index $index")
                 binding.rcyAssignment.post {
                     binding.rcyAssignment.smoothScrollToPosition(index)
                     highlightItemTemporarily(binding.rcyAssignment, index)
                 }
-                return
+            } else {
+                Log.d("ScrollDebug", "No index found for msg_id $headerId")
             }
         }
-        Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+        Log.d("ScrollDebug", "No index found for msg_id $headerId")
     }
+
 
 
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
-            recyclerView.postDelayed({
-                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
-            }, 2000)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
+            }
         }
     }
 

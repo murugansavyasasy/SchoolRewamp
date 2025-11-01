@@ -230,7 +230,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         if (msg_id == -1) return
 
         allVoiceData?.let { list ->
-            val index = list.indexOfFirst { it.id == headerId }
+            val index = list.indexOfFirst { it.header_id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in completed")
                 binding.recyclerInitial.post {

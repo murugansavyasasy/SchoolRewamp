@@ -138,7 +138,9 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
                 binding.rlNoDataContainer.visibility = View.GONE
                 allItems = response.data
                 adapter.updateList(allItems)
-                scrollToMessageId(headerId)
+                if (fromNotification) {
+                    scrollToMessageId(headerId)
+                }
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rcyrecyclerview.visibility = View.GONE
@@ -155,7 +157,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
         if (msg_id == -1) return
 
         allItems?.let { list ->
-            val index = list.indexOfFirst { it.id== headerId }
+            val index = list.indexOfFirst { it.header_id== headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.rcyrecyclerview.post {
