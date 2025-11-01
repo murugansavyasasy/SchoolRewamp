@@ -126,7 +126,6 @@
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
-            android:layout_marginStart="@dimen/eight"
             app:cardCornerRadius="@dimen/twele"
             app:cardElevation="@dimen/six"
             app:cardBackgroundColor="@android:color/white">
