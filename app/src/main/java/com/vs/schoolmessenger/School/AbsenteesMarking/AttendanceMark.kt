@@ -1,18 +1,29 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.support.annotation.DrawableRes
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.text.style.AbsoluteSizeSpan
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ListView
 import android.widget.PopupMenu
+import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -134,12 +145,17 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
         }
 
+//        binding.imgInfo.setOnClickListener {
+//            val popupMenu = PopupMenu(this, binding.imgInfo)
+//            popupMenu.menuInflater.inflate(R.menu.attendance_leave_status_menu, popupMenu.menu)
+//            forcePopupMenuIcons(popupMenu)
+//            popupMenu.show()
+//        }
+
         binding.imgInfo.setOnClickListener {
-            val popupMenu = PopupMenu(this, binding.imgInfo)
-            popupMenu.menuInflater.inflate(R.menu.attendance_leave_status_menu, popupMenu.menu)
-            forcePopupMenuIcons(popupMenu)
-            popupMenu.show()
+            showCustomPopupMenu()
         }
+
 
         binding.lnrTabOneName.setOnClickListener {
             binding.lnrTabOneName.isEnabled = false
@@ -280,19 +296,32 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                             ShowData()
                             loadStudentReport(studentsList)
                             binding.imgSearchicon.visibility=View.VISIBLE
+                            binding.rytInfoDetails.visibility=View.VISIBLE
                             binding.lnrAttendancePercentageRate.visibility=View.VISIBLE
                         } else {
+                            if (response.message==Constant.This_day_is_marked_as_a_holiday){
+                                ErrorMessage(response.message,R.drawable.no_holiday_message)
+                            }
+                            else{
+                                ErrorMessage(response.message,R.drawable.no_attendance_taken)
+                            }
                             binding.rcyAttendanceReport.visibility = View.GONE
-                            ErrorMessage(response.message,R.drawable.no_attendance_taken)
                             binding.imgSearchicon.visibility=View.GONE
+                            binding.rytInfoDetails.visibility=View.GONE
                             binding.lnrAttendancePercentageRate.visibility=View.GONE
                         }
                     }
 
                 } else {
+                    if (response.message==Constant.This_day_is_marked_as_a_holiday){
+                        ErrorMessage(response.message,R.drawable.no_holiday_message)
+                    }
+                    else{
+                        ErrorMessage(response.message,R.drawable.no_attendance_taken)
+                    }
                     binding.rcyAttendanceReport.visibility = View.GONE
-                    ErrorMessage(response.message,R.drawable.no_attendance_taken)
                     binding.imgSearchicon.visibility=View.GONE
+                    binding.rytInfoDetails.visibility=View.GONE
                     binding.lnrAttendancePercentageRate.visibility=View.GONE
                 }
             }
@@ -300,6 +329,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 binding.rcyAttendanceReport.visibility = View.GONE
                 ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later),R.drawable.no_search_message)
                 binding.imgSearchicon.visibility=View.GONE
+                binding.rytInfoDetails.visibility=View.GONE
                 binding.lnrAttendancePercentageRate.visibility=View.GONE
             }
         }
@@ -772,22 +802,158 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
     }
 
-    private fun forcePopupMenuIcons(menu: PopupMenu) {
-        try {
-            val fields = menu.javaClass.declaredFields
-            for (field in fields) {
-                if (field.name == Constant.mPopup) {
-                    field.isAccessible = true
-                    val helper = field.get(menu)
-                    val classPopup = Class.forName(helper.javaClass.name)
-                    val setIcons = classPopup.getMethod(Constant.setForceShowIcon, Boolean::class.java)
-                    setIcons.invoke(helper, true)
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+    private fun showCustomPopupMenu() {
+        val inflater = LayoutInflater.from(this)
+        val popupView = inflater.inflate(R.layout.dialog_attendance_status, null)
+        val container = popupView.findViewById<LinearLayout>(R.id.containerIcons)
+
+        val items = listOf(
+            Triple("-", "Not Taken", R.drawable.report_nottaken_icon),
+            Triple("P", "Present", R.drawable.report_present_icon),
+            Triple("OD", "OD", R.drawable.report_od_icon),
+            Triple("LA", "Late", R.drawable.report_latercomer_icon),
+            Triple("A", "Absent", R.drawable.report_absent_icon),
+        )
+
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        // --- Add FN : Forenoon and AN : Afternoon text block at top ---
+        val headerTextView = TextView(this).apply {
+            setPadding(18, 12, 16, 12)
+            setTextColor(ContextCompat.getColor(this@AttendanceMark, android.R.color.black))
+
+            val text = SpannableStringBuilder()
+
+            val fnLabel = "FN : "
+            val fnValue = "ForeNoon"
+            val anLabel = " / AN : "
+            val anValue = "AfterNoon"
+
+            val fnLabelStart = text.length
+            text.append(fnLabel)
+            text.setSpan(AbsoluteSizeSpan(16, true), fnLabelStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            // Forenoon
+            val fnValueStart = text.length
+            text.append(fnValue)
+            text.setSpan(AbsoluteSizeSpan(13, true), fnValueStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            // AN :
+            val anLabelStart = text.length
+            text.append(anLabel)
+            text.setSpan(AbsoluteSizeSpan(16, true), anLabelStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            val anValueStart = text.length
+            text.append(anValue)
+            text.setSpan(AbsoluteSizeSpan(13, true), anValueStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            textAlignment = TextView.TEXT_ALIGNMENT_VIEW_START
+            this.text = text
         }
+
+        container.addView(headerTextView)
+
+        // --- Add icon items ---
+        for ((code, title, iconRes) in items) {
+            val itemView = inflater.inflate(R.layout.item_popup_icon_text, container, false)
+            val txtInside = itemView.findViewById<TextView>(R.id.txtInsideIcon)
+            val txtTitle = itemView.findViewById<TextView>(R.id.txtTitle)
+
+            txtInside.text = code
+            txtTitle.text = title
+
+            if (iconRes != 0) {
+                txtInside.setBackgroundResource(iconRes)
+                txtInside.setTextColor(ContextCompat.getColor(this, android.R.color.white))
+            } else {
+                txtInside.background = null
+                txtInside.setTextColor(ContextCompat.getColor(this, R.color.gray))
+            }
+
+            itemView.setOnClickListener {
+                popupWindow.dismiss()
+            }
+
+            container.addView(itemView)
+        }
+
+        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.bg_popup_round))
+        popupWindow.elevation = 10f
+        popupWindow.isOutsideTouchable = true
+        popupWindow.showAsDropDown(binding.imgInfo, -30, 10)
     }
+
+
+//
+//    @SuppressLint("InflateParams")
+//    private fun showCustomPopupMenu() {
+//        val inflater = LayoutInflater.from(this)
+//        val popupView = inflater.inflate(R.layout.dialog_attendance_status, null)
+//        val container = popupView.findViewById<LinearLayout>(R.id.containerIcons)
+//
+//        val items = listOf(
+//            Triple("FN", "Forenoon", 0),
+//            Triple("AN", "Afternoon", 0),
+//            Triple("-", "Not Taken", R.drawable.report_nottaken_icon),
+//            Triple("P", "Present", R.drawable.report_present_icon),
+//            Triple("OD", "OD", R.drawable.report_od_icon),
+//            Triple("LA", "Late", R.drawable.report_latercomer_icon),
+//            Triple("A", "Absent", R.drawable.report_absent_icon),
+//        )
+//
+//        val popupWindow = PopupWindow(
+//            popupView,
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            true
+//        )
+//
+//        for ((code, title, iconRes) in items) {
+//            val itemView = inflater.inflate(R.layout.item_popup_icon_text, container, false)
+//            val txtInside = itemView.findViewById<TextView>(R.id.txtInsideIcon)
+//            val txtTitle = itemView.findViewById<TextView>(R.id.txtTitle)
+//
+//            txtInside.text = code
+//            txtTitle.text = title
+//
+//            when {
+//                iconRes != 0 -> {
+//                    txtInside.setBackgroundResource(iconRes)
+//                    txtInside.setTextColor(ContextCompat.getColor(this, android.R.color.white))
+//                }
+//                code == "FN" -> {
+//                    txtInside.background = null
+//                    txtInside.setTextColor(ContextCompat.getColor(this, android.R.color.black))
+//                }
+//                code == "AN" -> {
+//
+//                    txtInside.background = null
+//                    txtInside.setTextColor(ContextCompat.getColor(this, android.R.color.black))
+//                }
+//
+//                else -> {
+//                    txtInside.background = null
+//                    txtInside.setTextColor(ContextCompat.getColor(this, R.color.gray))
+//                }
+//            }
+//
+//            itemView.setOnClickListener {
+//                popupWindow.dismiss()
+//            }
+//
+//            container.addView(itemView)
+//        }
+//
+//        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.bg_popup_round))
+//        popupWindow.elevation = 10f
+//        popupWindow.isOutsideTouchable = true
+//        popupWindow.showAsDropDown(binding.imgInfo, -30, 10)
+//    }
 
 
 }

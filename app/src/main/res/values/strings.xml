@@ -959,7 +959,7 @@
     <string name="submission_report">Submission Report</string>
     <string name="absentees_students_list">👨🏻‍🎓 Absentees Students</string>
     <string name="on_duty">On Duty</string>
-    <string name="late">Late</string>
+    <string name="late">&#160;Late</string>
     <string name="what_s_new">What\'s New</string>
     <string name="no_country_found">No country found</string>
     <string name="ptm">PTM</string>
@@ -975,6 +975,7 @@
     <string name="support_information"><![CDATA[Support & Information]]></string>
     <string name="quick_status">Quick Status</string>
     <string name="students_attendance_reports">Students Attendance Reports</string>
+    <string name="mark_all_as_absent">&#160;Mark all as absent</string>
 
 
 </resources>

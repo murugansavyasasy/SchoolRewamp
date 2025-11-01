@@ -2,8 +2,11 @@ package com.vs.schoolmessenger.Parent.PTM
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.PTM.Adapter.MeetingHistoryAdapter
 import com.vs.schoolmessenger.Parent.PTM.Adapter.MeetingListItem
 import com.vs.schoolmessenger.Parent.PTM.Adapter.ParentMeetingAdapter
@@ -54,12 +59,42 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     var isSubjectId = "0"
     var isManagement = false
 
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this,matchedChild!!)
+            Constant.isParentMenuName = menu_name!!
+        }
+
+
         binding.rytsearch.visibility = View.GONE
         binding.txtSearchMeeting.setText("")
         binding.lblScheduleMeeting.setOnClickListener(this)
@@ -106,6 +141,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                     binding.rytNoDataFound.visibility = View.GONE
                     binding.recyclerViewSlots.visibility = View.VISIBLE
                     isLoadData(response.data)
+
+
                 } else {
                     binding.rytNoDataFound.visibility = View.VISIBLE
                     binding.recyclerViewSlots.visibility = View.GONE
@@ -227,7 +264,31 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             }
         }
+
+
     }
+
+
+
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
+            }
+        }
+    }
+
+
+
 
     fun isLoadData(data: List<MeetingData>) {
         val adapter = ParentMeetingAdapter(data) { meeting, slot, isSelected ->
@@ -457,5 +518,13 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
         }
         Log.d("CancelSlotRequest", jsonObject.toString())
         appViewModel!!.isSlotCancelByStudent(isAccessToken!!, jsonObject)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

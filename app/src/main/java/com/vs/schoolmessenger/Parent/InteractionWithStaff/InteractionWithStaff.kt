@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Adapter.InteractionWithStaffAdapter
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
@@ -34,6 +36,14 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
 
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
+
     private lateinit var interactionWithStaffAdapter: InteractionWithStaffAdapter
 
     override fun getViewBinding(): IntectionWithStaffBinding {
@@ -47,6 +57,29 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this,matchedChild!!)
+            Constant.isParentMenuName = menu_name!!
+        }
+
+
+
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
@@ -73,7 +106,13 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
-        binding.lblHeaderTitle.text=Constant.isParentMenuName
+
+        binding.root.post {
+            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
+            binding.lblHeaderTitle.text = finalName
+            binding.lblHeaderTitle.visibility = View.VISIBLE
+        }
 
         fetchstaffdata()
 
@@ -187,5 +226,13 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     override fun onResume() {
         super.onResume()
         fetchstaffdata()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

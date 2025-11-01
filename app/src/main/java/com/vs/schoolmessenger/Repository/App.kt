@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
+import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
@@ -139,7 +140,7 @@ import okhttp3.RequestBody
 
 class App(application: Application) : AndroidViewModel(application) {
 
-    private var apiSchoolRepositories: SchoolServices = SchoolServices()
+     var apiSchoolRepositories: SchoolServices = SchoolServices()
 
     var apiParentRepositories: ParentServices = ParentServices()
 
@@ -406,6 +407,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isblockstudentlist: LiveData<BlockedStudentsResponse?>? = null
     var isfrequentlyasked: LiveData<FrequentlyModelResponse?>? = null
     var getAttendanceStudentList: LiveData<GetAttendanceStudentList?>? = null
+    var isdeletenotification: LiveData<DeleteNotificationResponse?>? = null
 
         private set
 
@@ -578,6 +580,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getattachmentchildhomework = apiSchoolRepositories.getattachmentchildhomeworkLiveData
         getdashboardnewupdates = apiSchoolRepositories.getdashboardnewupdatesLiveData
         getAttendanceStudentList = apiSchoolRepositories.getAttendanceStudentListLiveData
+        isdeletenotification = apiSchoolRepositories.isdeletenotificationLiveData
 
 
     }
@@ -1485,6 +1488,11 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isfrequentlyasked(isToken: String) {
         apiSchoolRepositories.isfrequentlyasked(isToken)
     }
+
+    fun isdeletenotification(isToken: String,jsonObject: JsonObject) {
+        apiSchoolRepositories.isdeletenotification(isToken,jsonObject)
+    }
+
 }
 
 

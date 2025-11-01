@@ -468,6 +468,7 @@
                 android:background="@drawable/white_bg_card"
                 android:layout_height="wrap_content">
                 <RelativeLayout
+                    android:id="@+id/rytInfoDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
@@ -488,8 +489,8 @@
                         android:src="@drawable/info_icon"
                         android:layout_marginStart="@dimen/three"
                         android:layout_toEndOf="@+id/lblReport"
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen">
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty">
 
                     </ImageView>
 

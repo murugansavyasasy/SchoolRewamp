@@ -39,7 +39,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private val handler = Handler()
 
-
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "onMessageReceived called")
         if (remoteMessage.data.isNotEmpty()) {
@@ -51,17 +50,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val tone = remoteMessage.data["tone"] ?: "message"
         val type = remoteMessage.data["type"] ?: "normal"
         val imageUrl = remoteMessage.data["image_url"] ?: "Default"
+        val msgId = remoteMessage.data["msg_id"] ?: ""  // Separate top-level msg_id from payload
         val msgInfo = remoteMessage.data["msg_info"] ?: ""
-        // Optional: Parse nested msg_info JSON if it’s in valid JSON format
+        // Optional: Parse nested msg_info JSON if it's in valid JSON format
+        var menuId = ""
+        var menuName = ""
+        var receiverType = ""
+        var receiver_id = ""
+        var header_id = ""
+        var institute_id = ""
         try {
             // Firebase may send it like: {"menu_id":"39", "menu_name":"Attachments", ...}
             val json = JSONObject(msgInfo)
-            val menuId = json.optString("menu_id")
-            val menuName = json.optString("menu_name")
-            val receiverType = json.optString("receiver_type")
-            val receiverid = json.optString("receiverid")
-            val header_id = json.optString("header_id")
-            val institute_id = json.optString("institute_id")
+            menuId = json.optString("menu_id")
+            menuName = json.optString("menu_name")
+            receiverType = json.optString("receiver_type")
+            receiver_id = json.optString("receiverid")
+            header_id = json.optString("header_id")
+            institute_id = json.optString("institute_id")
 
             if (type.equals("isCall")) {
                 sendNotificationCall(title, body)
@@ -72,8 +78,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     tone,
                     imageUrl,
                     menuName,
-                    menuId.toInt(),
-                    header_id.toInt()
+                    menuId.toIntOrNull() ?: 0,
+                    header_id,  // Pass as String
+                    msgId.toIntOrNull() ?: 0,  // Pass top-level msg_id separately if needed
+                    receiverType,
+                    receiver_id,
+                    institute_id.toIntOrNull() ?: 0
                 )
             }
             Log.d(
@@ -82,6 +92,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
         } catch (e: Exception) {
             Log.e("FCM", "Error parsing msg_info: ${e.message}")
+            // Fallback: If parsing fails, still send basic notification
+            if (!type.equals("isCall")) {
+                sendNotification(
+                    title,
+                    body,
+                    tone,
+                    imageUrl,
+                    menuName,  // Empty fallback
+                    0,
+                    "",  // Empty String fallback
+                    msgId.toIntOrNull() ?: 0,
+                    receiverType,  // Empty fallback
+                    receiver_id,
+                    0
+                )
+            }
         }
     }
 
@@ -184,9 +210,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         messageBody: String?,
         tone: String?,
         imageUrl: String?,
-        menuName: String,
+        menu_name: String,
         menuId: Int,
-        msg_id: Int
+        headerId: String,  // Changed to String
+        msgId: Int,     // Top-level msg_id from payload
+        receiverType: String,
+        receiverId: String,
+        instituteId: Int
     ) {
         // Check for notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -202,9 +232,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // Create Intent for notification tap
         val intent = Intent(this, Splash::class.java).apply {
-            putExtra(Constant.menu_name, menuName)
+            putExtra(Constant.menu_name, menu_name)
             putExtra(Constant.menu_id, menuId)
-            putExtra(Constant.msg_id, msg_id)
+            putExtra(Constant.msg_id, msgId)
+            putExtra(Constant.header_id, headerId)
+            putExtra("receiver_type", receiverType)
+            putExtra(Constant.receiverid, receiverId)
+            putExtra("institute_id", instituteId.toString())
             putExtra(Constant.fromNotification, true)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
@@ -263,7 +297,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             // Handle image download
             var bitmap: Bitmap? = null
-            if (!imageUrl.isNullOrEmpty()) {
+            if (!imageUrl.isNullOrEmpty() && imageUrl != "Default") {
                 try {
                     val url = URL(imageUrl)
                     val connection = url.openConnection() as HttpURLConnection

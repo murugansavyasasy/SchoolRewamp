@@ -6,6 +6,8 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 data class VoiceData(
     @SerializedName(APIKeyNames.type) val type: String?,
     @SerializedName(APIKeyNames.id) val id: String?,
+    @SerializedName(APIKeyNames.header_id) val header_id: String?,
+
     @SerializedName(APIKeyNames.content) val content: String?,
     @SerializedName(APIKeyNames.title) var title: String?,
     @SerializedName(APIKeyNames.date) val date: String?,
