@@ -189,6 +189,8 @@ object Constant {
     var headerId = "header_id"
     var menu_id = "menu_id"
     var msg_id = "msg_id"
+    var header_id = "header_id"
+    var receiverid = "receiverid"
     var fromNotification = "fromNotification"
 
     var school = "A"

@@ -71,7 +71,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
         msg_id = intent.getIntExtra(Constant.msg_id, -1)
 
-        fromNotification = intent.getBooleanExtra("fromNotification", false)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
 
 
 
