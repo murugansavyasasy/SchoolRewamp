@@ -221,10 +221,12 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_lesson_plans_found)
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rcyLessonViewPlan.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.rcyLessonViewPlan.visibility = View.VISIBLE
         }
 
