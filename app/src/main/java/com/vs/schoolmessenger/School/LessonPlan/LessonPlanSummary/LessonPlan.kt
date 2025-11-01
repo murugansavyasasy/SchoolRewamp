@@ -45,8 +45,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
         binding.toolbarLayout.rytSearch.visibility = View.GONE
 
@@ -102,7 +101,6 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
 
         binding.lnrTabOneName.setOnClickListener {
-
             hideKeyboard()
             binding.lnrTabOneName.isEnabled = false
             binding.lnrTabTwoName.isEnabled = true
@@ -160,6 +158,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
+
     private fun islpStaffData(data: List<AllClassData>?, requestType: String) {
         if (data.isNullOrEmpty()) {
             binding.rytSearch1.visibility = View.GONE
@@ -184,7 +183,6 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
 
         appViewModel!!.getlpStaffReport(isAccessToken!!, requestType, this@LessonPlan)
     }
-
 
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
@@ -226,10 +224,26 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             binding.line2.visibility = View.GONE
             binding.tabTwoName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
             binding.tabTwoName.gravity = Gravity.START
+            binding.lnrTabOneName.isEnabled = true
+            binding.lnrTabTwoName.isEnabled = false
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.line2.setBackgroundResource(R.color.iconBlue)
+            binding.line1.setBackgroundResource(R.color.athens_gray)
+            binding.txtSearchMenu1.text.clear()
+            binding.rytSearch1.visibility = View.GONE
             loadlpAllClassdata(Constant.myclass)
         } else {
             binding.lnrTabOneName.visibility = View.VISIBLE
             binding.line1.visibility = View.VISIBLE
+            binding.lnrTabOneName.isEnabled = false
+            binding.lnrTabTwoName.isEnabled = true
+            binding.line1.setBackgroundResource(R.color.iconBlue)
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.line2.setBackgroundResource(R.color.athens_gray)
+            binding.txtSearchMenu1.text.clear()
+            binding.rytSearch1.visibility = View.GONE
             loadlpAllClassdata(Constant.allclass)
         }
 

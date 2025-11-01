@@ -102,13 +102,13 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         userDetails = SharedPreference.getUserDetails(this)
 
-        fromNotification = intent.getBooleanExtra("fromNotification", false)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
 
         if (fromNotification) {
             Constant.isParentChoose = false
             msg_id = intent.getIntExtra(Constant.msg_id, -1)
-            headerId = intent.getStringExtra("header_id")
-            receiverId = intent.getStringExtra("receiverid")
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
             menu_name = intent.getStringExtra(Constant.menu_name)
 
             Log.d(
@@ -116,9 +116,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
             )
 
-            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
-            Constant.isParentMenuName = menu_name!!
+            val matchedChild = userDetails?.staff_details?.find { it.staff_id == receiverId }
+            SharedPreference.putStaffDetails(this,matchedChild!!)
+            Constant.isSchoolMenuName = menu_name!!
         }
 
 
