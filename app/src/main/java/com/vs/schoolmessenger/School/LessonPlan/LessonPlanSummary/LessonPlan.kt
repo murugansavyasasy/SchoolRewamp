@@ -175,8 +175,6 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     }
 
     private fun loadlpAllClassdata(requestType: String) {
-
-
         currentRequestType = requestType
         lessonplanAdapter =
             LessonPlanPicChartAdapter(null, this, this, Constant.isShimmerViewShow, requestType)
