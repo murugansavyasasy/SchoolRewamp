@@ -102,7 +102,15 @@ class MessageFromStaffAdapter(
             val name = data.sent_by ?: ""
             lblLogo.text = Constant.getNameInitials(name)
             lblName.text = name
-            lblRole.text = data.role
+
+            if (data.role!!.isNotEmpty()){
+                lblRole.text = data.role
+                lblRole.visibility=View.VISIBLE
+            }
+            else{
+                lblRole.visibility=View.GONE
+            }
+
             lblSchoolName.text = data.school_name
             lblSchoolName.visibility=View.GONE
 
