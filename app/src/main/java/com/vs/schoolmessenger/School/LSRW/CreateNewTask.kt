@@ -167,6 +167,13 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
                     if(Constant.Remaining!! > 0) {
+                        if (Constant.Remaining != 10){
+                            Toast.makeText(
+                                this,
+                                "Only " + Constant.Remaining + " Added",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                         Constant.Remaining = Constant.Remaining - selectedUris!!.size
                         selectedUris?.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
@@ -591,6 +598,13 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             binding.edtDescription.requestFocus()
             return
         }
+
+        if (edtdate.isEmpty()) {
+            binding.edtdate.error = getString(R.string.This_field_required)
+            binding.edtdate.requestFocus()
+            return
+        }
+
         val isLsrwnewTaskSendingData = LsrwnewTaskSendingData(
             title,
             description,

@@ -154,7 +154,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             binding.lnrTab.visibility = View.GONE
         }
 
-
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
@@ -184,7 +183,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
         isLoadAcademicYear(isAcademicYearList)
         isAcademicYearId = isAcademicYearList!![0].id
-
 
         binding.radioGroupSendTo.setOnCheckedChangeListener { group, checkedId ->
             for (i in 0 until group.childCount) {

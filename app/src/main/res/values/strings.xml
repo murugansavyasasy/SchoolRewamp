@@ -290,12 +290,12 @@
     <string name="unit">Unit</string>
     <string name="eg_result_announcement">eg.Result announcement</string>
     <string name="sms">SMS</string>
-    <string name="update_available">Update Available</string>
+    <string name="update_available">Update Available!!</string>
     <string name="new_version">New Version</string>
     <string name="your_version">Your Version</string>
-    <string name="the_new_version_changes">The new version changes.</string>
-    <string name="not_now">Not now</string>
-    <string name="update_now">Update now</string>
+    <string name="the_new_version_changes">The new version changes</string>
+    <string name="not_now">Not Now</string>
+    <string name="update_now">Update Now</string>
     <string name="_0_100">0 / 100</string>
     <string name="your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text">Your password has been securely stored and encrypted for protection. For security reasons, it cannot be displayed in plain text.</string>
     <string name="_00_00">00:00</string>
@@ -959,7 +959,7 @@
     <string name="submission_report">Submission Report</string>
     <string name="absentees_students_list">👨🏻‍🎓 Absentees Students</string>
     <string name="on_duty">On Duty</string>
-    <string name="late">Late</string>
+    <string name="late">&#160;Late</string>
     <string name="what_s_new">What\'s New</string>
     <string name="no_country_found">No country found</string>
     <string name="ptm">PTM</string>
@@ -974,6 +974,8 @@
     <string name="account_securityl"><![CDATA[Account & Security]]></string>
     <string name="support_information"><![CDATA[Support & Information]]></string>
     <string name="quick_status">Quick Status</string>
+    <string name="students_attendance_reports">Students Attendance Reports</string>
+    <string name="mark_all_as_absent">&#160;Mark all as absent</string>
 
 
 </resources>

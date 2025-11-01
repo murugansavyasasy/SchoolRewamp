@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/twenty">
+    >
 
     <ImageView
         android:id="@+id/imgCancle"
@@ -14,27 +14,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardImage"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/one_twenty"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:visibility="visible"
-        android:layout_marginEnd="@dimen/twenty"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="@dimen/thirteen"
-        app:cardElevation="@dimen/four"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/cardImage"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/one_twenty"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginStart="@dimen/ten"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:visibility="visible"-->
+<!--        android:layout_marginEnd="@dimen/twenty"-->
+<!--        app:cardBackgroundColor="@android:color/white"-->
+<!--        app:cardCornerRadius="@dimen/thirteen"-->
+<!--        app:cardElevation="@dimen/four"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
         <ImageView
             android:id="@+id/imgGallery"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:src="@drawable/red_box"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_height="@dimen/one_twenty"
             android:scaleType="centerCrop" />
 
-    </androidx.cardview.widget.CardView>
+<!--    </androidx.cardview.widget.CardView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

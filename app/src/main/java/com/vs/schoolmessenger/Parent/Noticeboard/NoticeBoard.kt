@@ -5,6 +5,8 @@ import android.app.NotificationManager
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.R
@@ -22,6 +25,9 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.NoticeRevampBinding
+
+
+
 
 class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     NoticeBoardClickListener {
@@ -34,31 +40,62 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var msg_id: Int = -1
-
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
     private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
+
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        appViewModel = ViewModelProvider(this).get(App::class.java)
-        appViewModel?.init()
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra("header_id")
+            receiverId = intent.getStringExtra("receiverid")
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+                val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                SharedPreference.putChildDetails(this,matchedChild!!)
+               Constant.isParentMenuName = menu_name!!
+        }
+
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
-        msg_id = intent.getIntExtra(Constant.msg_id, -1)
-        fromNotification = intent.getBooleanExtra("fromNotification", false)
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text =
+            "${isChildDetails?.standard_name ?: ""} - ${isChildDetails?.section_name ?: ""}"
+
+        binding.root.post {
+            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
+            binding.headerview.text = finalName
+            binding.headerview.visibility = View.VISIBLE
+        }
+
+
+        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel?.init()
         isGetNoticeBoardList()
 
-
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
-        binding.toolbarLayout.lblStudentSection.text =
-            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        // Listeners
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
-
 
         binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -79,71 +116,66 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
-                scrollToMessageId(msg_id)
+                if (fromNotification) {
+                    scrollToMessageId(headerId)
+                }
             } else {
                 binding.rcyNoticeBoard.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 
+
         val channel = NotificationChannel(
-            Constant.reminder_channel,
-            Constant.Reminders,
-            NotificationManager.IMPORTANCE_HIGH
+            Constant.reminder_channel, Constant.Reminders, NotificationManager.IMPORTANCE_HIGH
         )
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
-
     }
 
+    private fun scrollToMessageId(headerId: String?) {
+        val dataList = mAdapter.getCurrentList()
+        if (dataList.isNullOrEmpty()) return
 
-    private fun scrollToMessageId(msg_id: Int) {
-        if (msg_id == -1) return
+        val index = dataList.indexOfFirst { it.id == headerId }
+        if (index != -1) {
+            Log.d("ScrollDebug", "Scrolling to index $index for headerId: $headerId")
+            binding.rcyNoticeBoard.post {
+                binding.rcyNoticeBoard.smoothScrollToPosition(index)
+                highlightItemTemporarily(binding.rcyNoticeBoard, index)
+            }
+        } else {
+            Log.d("ScrollDebug", "No item found with headerId: $headerId")
+        }
+    }
 
-        val dataList = mAdapter?.getCurrentList()
-        if (!dataList.isNullOrEmpty()) {
-            val index = dataList.indexOfFirst { it.id.toIntOrNull() == msg_id }
-            if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index")
-                binding.rcyNoticeBoard.post {
-                    binding.rcyNoticeBoard.smoothScrollToPosition(index)
-                    highlightItemTemporarily(binding.rcyNoticeBoard, index)
-                }
-            } else {
-                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
             }
         }
     }
 
 
-
-    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
-        recyclerView.post {
-            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
-            recyclerView.postDelayed({
-                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
-            }, 2000)
-        }
-    }
-
-
-
     private fun isloadhomeworkData(newData: List<Notice>?) {
-
-        if (newData.isNullOrEmpty()){
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-        }
-        else{
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-            mAdapter =
-                NoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        if (newData.isNullOrEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        } else {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+            mAdapter = NoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
             binding.rcyNoticeBoard.adapter = mAdapter
         }
-
     }
 
     override fun onBackPressed() {
@@ -156,9 +188,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.imgBack ->{
-                onBackPressed()
-            }
+            R.id.imgBack -> onBackPressed()
 
             R.id.imgSearchToolBar -> {
                 if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {
@@ -174,10 +204,8 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                     imm.showSoftInput(binding.toolbarLayout.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
                 }
             }
-
         }
     }
-
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
@@ -192,15 +220,12 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         }
     }
 
-
     private fun isGetNoticeBoardList() {
         Constant.showLoading(this)
         mAdapter = NoticeBoardAdapter(null, this, this, Constant.isShimmerViewDisable)
         binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
         binding.rcyNoticeBoard.adapter = mAdapter
-        appViewModel!!.isNoticeBoardReport(
-            isAccessToken!!, this
-        )
+        appViewModel!!.isNoticeBoardReport(isAccessToken!!, this)
     }
 }

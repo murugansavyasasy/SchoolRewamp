@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
+import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
@@ -1208,6 +1209,13 @@ interface ApiInterfaces {
     fun isfrequentlyasked(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<FrequentlyModelResponse?>?
+
+
+    @PUT(APIMethods.isdeletenotification)
+    fun isdeletenotification(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<DeleteNotificationResponse?>?
 
 
 }

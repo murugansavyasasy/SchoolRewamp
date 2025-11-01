@@ -12,6 +12,7 @@ import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
 import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
@@ -185,6 +186,7 @@ object Constant {
     //from notification intent values
 
     var menu_name = "menu_name"
+    var headerId = "header_id"
     var menu_id = "menu_id"
     var msg_id = "msg_id"
     var fromNotification = "fromNotification"
@@ -204,6 +206,9 @@ object Constant {
     var isVoiceType = 1
     var isQuestionLimit = -1
     var isClickEdit = false
+
+    var mediaPlayer: MediaPlayer = MediaPlayer()
+
 
     var isTitleLength = 50
     var isDescriptionLength = 500
@@ -262,6 +267,7 @@ object Constant {
     var some_Absent = "F"
     var Absent = "Absent"
     var halfDay = "H"
+    var This_day_is_marked_as_a_holiday = "This day is marked as a holiday."
     var approved = "Approved"
     var rejected = "Rejected"
     var waiting_for_approval = "Waiting for approval"

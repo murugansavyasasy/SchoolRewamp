@@ -139,9 +139,14 @@
                 android:id="@+id/ring3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+<<<<<<< HEAD:app/src/main/res/layout/notification_call.xml
                 android:alpha="0.3"
                 android:background="@drawable/incoming_glow" />
 
+=======
+                android:alpha="0.2"
+                android:background="@drawable/glow_circle" />
+>>>>>>> 40008ca318bfdfe925162d314c56fc3387670e4c:app/src/main/res/layout/notification_call_screen.xml
             <ImageButton
                 android:id="@+id/acceptButton"
                 android:layout_width="@dimen/seventy"

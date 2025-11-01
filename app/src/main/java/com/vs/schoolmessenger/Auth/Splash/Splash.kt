@@ -129,7 +129,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     if(noInternetalertDialog != null && noInternetalertDialog!!.isShowing) {
                         noInternetalertDialog!!.dismiss()
                     }
-                    goToNext()
+                    Log.d("goToNext","goToNext1")
+                   // goToNext()
                 }
             }
 
@@ -173,9 +174,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
+                Log.d("goToNext","goToNext2")
+
                 goToNext()
                 Log.d("PermissionResult", "✅ User clicked ALLOW for notification permission")
             } else {
+                Log.d("goToNext","goToNext3")
+
                 goToNext()
                 Log.d(
                     "PermissionResult",
@@ -311,21 +316,28 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         intent ?: return
         val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
         var menu_name: String? = null
-        var menu_id: Int? = 0
-        var msg_id: Int? = 0
+        var menu_id: Int = 0
+        var msg_id: Int = 0
+        var headerId: String? = null
+        var receiverId: String? = null
         if (fromNotification) {
             menu_name = intent.getStringExtra(Constant.menu_name)
+            headerId = intent.getStringExtra("header_id")
+            receiverId = intent.getStringExtra("receiverid")
             menu_id = intent.getIntExtra(Constant.menu_id, 0)
             msg_id = intent.getIntExtra(Constant.msg_id, 0)
         }
 
         if (!SharedPreference.isLoggedIn(this)) {
             // Redirect to login
-            val loginIntent = Intent(this, Login::class.java)
-            loginIntent.putExtra(Constant.menu_name, menu_name)
-            loginIntent.putExtra(Constant.menu_id, menu_id)
-            loginIntent.putExtra(Constant.msg_id, msg_id)
-            loginIntent.putExtra(Constant.fromNotification, msg_id)
+            val loginIntent = Intent(this, Login::class.java).apply {
+                putExtra(Constant.menu_name, menu_name)
+                putExtra("header_id", headerId)  // Use "header_id" consistently
+                putExtra("receiverId", receiverId)  // Use "header_id" consistently
+                putExtra(Constant.menu_id, menu_id)
+                putExtra(Constant.msg_id, msg_id)
+                putExtra(Constant.fromNotification, fromNotification)  // Fixed: was msg_id
+            }
             startActivity(loginIntent)
             return
         }
@@ -334,11 +346,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         if (fromNotification) {
             when (menu_id) {
                 Constant.M_COMMUNICATION -> {
-                    val detailIntent = Intent(this, CommunicationParent::class.java)
-                    detailIntent.putExtra(Constant.menu_name, menu_name)
-                    detailIntent.putExtra(Constant.menu_id, menu_id)
-                    detailIntent.putExtra(Constant.msg_id, msg_id)
-                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    val detailIntent = Intent(this, CommunicationParent::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(CommunicationParent::class.java)
@@ -352,11 +365,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
 
                 Constant.M_HOMEWORK -> {
-                    val detailIntent = Intent(this, HomeWork::class.java)
-                    detailIntent.putExtra(Constant.menu_name, menu_name)
-                    detailIntent.putExtra(Constant.menu_id, menu_id)
-                    detailIntent.putExtra(Constant.msg_id, msg_id)
-                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    val detailIntent = Intent(this, HomeWork::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(CommunicationParent::class.java)
@@ -370,11 +384,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
 
                 Constant.M_NOTICEBOARD -> {
-                    val detailIntent = Intent(this, NoticeBoard::class.java)
-                    detailIntent.putExtra(Constant.menu_name, menu_name)
-                    detailIntent.putExtra(Constant.menu_id, menu_id)
-                    detailIntent.putExtra(Constant.msg_id, msg_id)
-                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    val detailIntent = Intent(this, NoticeBoard::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra("header_id", headerId)    // ← String
+                        putExtra("receiverid", receiverId)
+                        // ← String
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(NoticeBoard::class.java)
@@ -388,11 +406,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
 
                 Constant.M_ASSIGNMENT -> {
-                    val detailIntent = Intent(this, Assignment::class.java)
-                    detailIntent.putExtra(Constant.menu_name, menu_name)
-                    detailIntent.putExtra(Constant.menu_id, menu_id)
-                    detailIntent.putExtra(Constant.msg_id, msg_id)
-                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    val detailIntent = Intent(this, Assignment::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(Assignment::class.java)
@@ -406,11 +425,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
 
                 Constant.M_ATTACHMENTS -> {
-                    val detailIntent = Intent(this, Attachment::class.java)
-                    detailIntent.putExtra(Constant.menu_name, menu_name)
-                    detailIntent.putExtra(Constant.menu_id, menu_id)
-                    detailIntent.putExtra(Constant.msg_id, msg_id)
-                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    val detailIntent = Intent(this, Attachment::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(Attachment::class.java)
@@ -424,11 +444,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
 
                 Constant.M_SCHOOL_CLASS_EVENTS -> {
-                    val detailIntent = Intent(this, Event::class.java)
-                    detailIntent.putExtra(Constant.menu_name, menu_name)
-                    detailIntent.putExtra(Constant.menu_id, menu_id)
-                    detailIntent.putExtra(Constant.msg_id, msg_id)
-                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    val detailIntent = Intent(this, Event::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(EventReport::class.java)
@@ -442,11 +463,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
 
                 Constant.M_PARENT_CLASS_EVENTS -> {
-                    val detailIntent = Intent(this, Event::class.java)
-                    detailIntent.putExtra(Constant.menu_name, menu_name)
-                    detailIntent.putExtra(Constant.menu_id, menu_id)
-                    detailIntent.putExtra(Constant.msg_id, msg_id)
-                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    val detailIntent = Intent(this, Event::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(Event::class.java)
@@ -460,11 +482,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
 
                 Constant.M_PTM -> {
-                    val detailIntent = Intent(this, PTM::class.java)
-                    detailIntent.putExtra(Constant.menu_name, menu_name)
-                    detailIntent.putExtra(Constant.menu_id, menu_id)
-                    detailIntent.putExtra(Constant.msg_id, msg_id)
-                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    val detailIntent = Intent(this, PTM::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(CommunicationParent::class.java)
@@ -478,11 +501,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
 
                 Constant.M_FEE_DETAILS -> {
-                    val detailIntent = Intent(this, PTM::class.java)
-                    detailIntent.putExtra(Constant.menu_name, menu_name)
-                    detailIntent.putExtra(Constant.menu_id, menu_id)
-                    detailIntent.putExtra(Constant.msg_id, msg_id)
-                    detailIntent.putExtra(Constant.fromNotification, fromNotification)
+                    val detailIntent = Intent(this, PTM::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(FeeDetails::class.java)
@@ -500,7 +524,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
             }
         } else {
-            //usual process
+            // usual process
         }
     }
 
@@ -511,9 +535,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             ) {
                 notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             } else {
+                Log.d("goToNext","goToNext4")
+
                 goToNext()
             }
         } else {
+            Log.d("goToNext","goToNext5")
+
             goToNext()
         }
     }
@@ -634,6 +662,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 
         val btnUpdateButton = dialogView.findViewById<TextView>(R.id.btnUpdate)
         val btnNotNow = dialogView.findViewById<TextView>(R.id.btnNotNow)
+        val lblNewVersionCode = dialogView.findViewById<TextView>(R.id.lblNewVersionCode)
+        val lblYourAppVersionCode = dialogView.findViewById<TextView>(R.id.lblYourAppVersionCode)
+        val pInfo =this.packageManager.getPackageInfo(this.packageName, 0)
+        val versionName = pInfo.versionName
+        lblNewVersionCode.setText(versionData[0].new_version)
+        lblYourAppVersionCode.setText(versionName)
 
         if (versionData[0].force_update) {
             btnUpdateButton.visibility = View.VISIBLE

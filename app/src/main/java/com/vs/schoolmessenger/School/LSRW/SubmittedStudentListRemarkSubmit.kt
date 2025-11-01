@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkChildAdapter
@@ -34,20 +37,30 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
 
+    private var isChildDetails: ChildDetails? = null
+    private var isStaffDetails: StaffDetails? = null
+    var userDetails: UserDetails? = null
+
+
     private var data: FilePreview? = null
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
         data = intent.getParcelableExtra(Constant.isPreViewData)
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
-        val childDetails = SharedPreference.getChildDetails(this)
-        isAccessToken = childDetails?.access_token
+        isChildDetails = SharedPreference.getChildDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        userDetails = SharedPreference.getUserDetails(this)
+
+        isAccessToken = if (Constant.isParentChoose) {
+            isChildDetails?.access_token
+        } else {
+            isStaffDetails?.access_token
+        }
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblParentToolBar.text = childDetails!!.name
-        binding.toolbarLayout.lblSchoolName.text = childDetails!!.school_name
 //        binding.descriptionValue.text = data!!.description
 
         val adapter = StudentSubmittedListRemarkAdapter(

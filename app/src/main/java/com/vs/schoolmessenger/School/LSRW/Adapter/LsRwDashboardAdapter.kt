@@ -60,14 +60,13 @@ class LsRwDashboardAdapter(
                 imgIcon.setImageResource(R.drawable.exampadsvg)
             } else if (item.title == Constant.Avg_Performance) {
                 imgIcon.setImageResource(R.drawable.graphsvgformat)
-            } else if (item.title == Constant.Completed_Tasks){
+            } else if (item.title == Constant.Completed_Tasks) {
                 imgIcon.setImageResource(R.drawable.correcticonsvg)
             } else {
                 imgIcon.setImageResource(R.drawable.questionmark)
             }
 
             root_linearlayout.setOnClickListener {
-
 
 
                 if (item.title == Constant.Active_Tasks) {

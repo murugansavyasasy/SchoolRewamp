@@ -32,7 +32,8 @@ class VoiceHistoryAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var currentlyPlayingHolder: DataViewHolder? = null // Track currently playing holder
+    // Track currently playing holder
+    var currentlyPlayingHolder: DataViewHolder? = null
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -46,22 +47,20 @@ class VoiceHistoryAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.history_from_voice_message, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
+            holder.bind(itemList!![position], position, listener, this)
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else itemList?.size ?: 0
+        return if (isLoading) 20 else itemList?.size ?: 0
     }
 
     class DataViewHolder(itemView: View, private val context: Context) :
@@ -83,7 +82,6 @@ class VoiceHistoryAdapter(
         private var lastPosition: Int = 0
         private val handler = Handler(Looper.getMainLooper())
 
-        // Progress updater for audio playback
         private val progressUpdater = object : Runnable {
             override fun run() {
                 if (isPrepared && mediaPlayer.isPlaying) {
@@ -94,7 +92,6 @@ class VoiceHistoryAdapter(
                 }
             }
         }
-
 
         @SuppressLint("DefaultLocale")
         fun bind(
@@ -116,7 +113,7 @@ class VoiceHistoryAdapter(
 
             rlaSendVoice.visibility = View.VISIBLE
             lblEndDuration.text = String.format(
-               Constant.dateForMate,
+                Constant.dateForMate,
                 data.duration.toInt() / 60,
                 data.duration.toInt() % 60
             )
@@ -126,14 +123,18 @@ class VoiceHistoryAdapter(
             }
 
             imgVoicePlay.setOnClickListener {
+                // Stop any other currently playing holder
                 if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
-                    adapter.currentlyPlayingHolder?.stopAudioPlayback()
+                    adapter.currentlyPlayingHolder?.pauseAudioOnly()
                 }
 
+                // Play/pause logic
                 if (isPlayingVoice) {
                     pauseAudio()
                 } else {
-                    if (!isPrepared) {
+                    if (!::mediaPlayer.isInitialized) {
+                        initializeMediaPlayer(data.url)
+                    } else if (!isPrepared) {
                         initializeMediaPlayer(data.url)
                     } else {
                         resumeAudio()
@@ -144,18 +145,17 @@ class VoiceHistoryAdapter(
             }
         }
 
-        // isVoice
-        // Initialize MediaPlayer and prepare audio
         private fun initializeMediaPlayer(audioUrl: String) {
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(audioUrl)
                 prepareAsync()
                 setOnPreparedListener {
                     isPrepared = true
-                    startAudioProgressUpdate()
+                    seekTo(lastPosition) // resume if it was previously played
                     start()
                     isPlayingVoice = true
-                    updatePlayPauseIcon(isPlaying = true)
+                    startAudioProgressUpdate()
+                    updatePlayPauseIcon(true)
                 }
                 setOnCompletionListener {
                     resetPlaybackState()
@@ -164,92 +164,77 @@ class VoiceHistoryAdapter(
             }
         }
 
-        // Pause audio playback
         private fun pauseAudio() {
-            mediaPlayer.pause()
-            lastPosition = mediaPlayer.currentPosition
-            isPlayingVoice = false
-            updatePlayPauseIcon(isPlaying = false)
-            waveformSeekBar.updateWithLevel(0f)
-
+            if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
+                mediaPlayer.pause()
+                lastPosition = mediaPlayer.currentPosition
+                isPlayingVoice = false
+                updatePlayPauseIcon(false)
+                stopAudioProgressUpdate()
+                waveformSeekBar.updateWithLevel(0f) // stop wave animation
+            }
         }
 
-        // Resume audio playback
+        // Used to pause when another holder starts playing
+        fun pauseAudioOnly() {
+            if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
+                mediaPlayer.pause()
+                lastPosition = mediaPlayer.currentPosition
+                isPlayingVoice = false
+                updatePlayPauseIcon(false)
+                stopAudioProgressUpdate()
+                waveformSeekBar.updateWithLevel(0f) // stop wave animation
+            }
+        }
+
         private fun resumeAudio() {
-            mediaPlayer.seekTo(lastPosition)
-            mediaPlayer.start()
-            isPlayingVoice = true
-            startAudioProgressUpdate()
-            updatePlayPauseIcon(isPlaying = true)
+            if (::mediaPlayer.isInitialized) {
+                mediaPlayer.seekTo(lastPosition)
+                mediaPlayer.start()
+                isPlayingVoice = true
+                startAudioProgressUpdate()
+                updatePlayPauseIcon(true)
+            }
         }
 
-        // Stop audio playback
         fun stopAudioPlayback() {
             if (::mediaPlayer.isInitialized) {
                 if (mediaPlayer.isPlaying) {
                     mediaPlayer.stop()
                 }
-                mediaPlayer.reset()
-                resetPlaybackState()
+                mediaPlayer.release()
             }
+            resetPlaybackState()
+            waveformSeekBar.updateWithLevel(0f) // stop wave animation
         }
 
         private fun updatePlayPauseIcon(isPlaying: Boolean) {
-            val icon: Int
-            if (isPlaying) {
-                icon = R.drawable.pause_icon
-            } else {
-                icon = R.drawable.video_play
-            }
+            val icon = if (isPlaying) R.drawable.pause_icon else R.drawable.video_play
             imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
         }
 
-
-        // Reset playback state
         private fun resetPlaybackState() {
             stopAudioProgressUpdate()
             isPrepared = false
             isPlayingVoice = false
             lastPosition = 0
             waveformSeekBar.updateWithLevel(0f)
-            updatePlayPauseIcon(isPlaying = false)
+            updatePlayPauseIcon(false)
         }
 
-        // Start updating audio progress
         private fun startAudioProgressUpdate() {
             handler.post(progressUpdater)
         }
 
-        // Stop updating audio progress
         private fun stopAudioProgressUpdate() {
             handler.removeCallbacks(progressUpdater)
         }
 
-        // Format milliseconds to "mm:ss"
         private fun formatTime(milliseconds: Int): String {
             val adjustedDuration = ceil(milliseconds / 1000.0).toInt()
             val seconds = adjustedDuration % 60
             val minutes = adjustedDuration / 60
             return String.format(Constant.dateForMate, minutes, seconds)
-        }
-
-        // Get audio duration asynchronously
-        private fun getAudioDuration(audioUrl: String, callback: (Int) -> Unit) {
-            val tempMediaPlayer = MediaPlayer()
-            try {
-                tempMediaPlayer.setDataSource(audioUrl)
-                tempMediaPlayer.prepareAsync()
-                tempMediaPlayer.setOnPreparedListener {
-                    callback(tempMediaPlayer.duration)
-                    tempMediaPlayer.release()
-                }
-                tempMediaPlayer.setOnErrorListener { mp, _, _ ->
-                    mp.release()
-                    false
-                }
-            } catch (e: Exception) {
-                tempMediaPlayer.release()
-            }
         }
     }
 
@@ -257,7 +242,6 @@ class VoiceHistoryAdapter(
         currentlyPlayingHolder?.stopAudioPlayback()
         currentlyPlayingHolder = null
     }
-
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

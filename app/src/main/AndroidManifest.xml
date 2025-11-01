@@ -100,7 +100,7 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".School.Call.NotificationCall"
+            android:name=".FCM.NotificationCallScreen"
             android:exported="true"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
@@ -225,6 +225,7 @@
         <activity
             android:name=".School.Homework.HomeWorkCreate"
             android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Dashboard.Parent.ParentDashboard"
@@ -233,6 +234,7 @@
         <activity
             android:name=".School.Assignment.AssignmentCreate"
             android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.SchoolStrength.SchoolStrength"
@@ -349,6 +351,7 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Event.CreateEvent"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
@@ -362,6 +365,7 @@
         <activity
             android:name=".School.NoticeBoard.CreateNoticeBoard"
             android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.LSRW.ActiveTaskList"
@@ -533,6 +537,7 @@
         <activity
             android:name=".School.Attachment.Attachment"
             android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CommonScreens.FilesViewActivity"

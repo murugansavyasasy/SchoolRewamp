@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -95,7 +96,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         isSectionId = Constant.isMarkAttendanceDataSending?.section_id
         isAcademicYearId = Constant.isMarkAttendanceDataSending?.academic_year_id!!
         binding.cbSelect.visibility = View.VISIBLE
-        binding.cbSelect.text = getString(R.string.Selectall)
 
         isHalfDay=Constant.isMarkAttendanceDataSending?.session_type
         isFullDay=Constant.isMarkAttendanceDataSending?.attendance_type
@@ -119,9 +119,14 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         binding.toolbarLayout.imgSearch.setOnClickListener {
             if (binding.rlaSortSearch.visibility == View.VISIBLE) {
                 binding.rlaSortSearch.visibility = View.GONE
+                binding.txtSearchMenu.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.imgSearch.windowToken, 0)
             } else {
                 binding.rlaSortSearch.visibility = View.VISIBLE
                 binding.txtSearchMenu.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.imgSearch.windowToken, 0)
             }
         }
 
@@ -659,7 +664,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 studentsList?.forEach { student ->
 
                     val parts = student.att_status.split("/")
-                    val status = when (Constant.isMarkAttendanceDataSending?.attendance_type) {
+                    val status = when (Constant.isMarkAttendanceDataSending?.session_type) {
                         "SH" -> parts.getOrNull(1) ?: "" // second half
                         else -> parts.getOrNull(0) ?: "" // first half or full day
                     }

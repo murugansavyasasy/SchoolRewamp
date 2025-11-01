@@ -35,7 +35,6 @@
 
 
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyAssignmentReport"
             android:layout_width="match_parent"

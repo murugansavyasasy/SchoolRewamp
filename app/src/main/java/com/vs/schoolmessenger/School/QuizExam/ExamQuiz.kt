@@ -201,7 +201,6 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         }
     }
 
-
     fun ErrorMessage(errorMessage: String) {
         binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = errorMessage

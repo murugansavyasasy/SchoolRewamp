@@ -195,6 +195,11 @@ object APIMethods {
     const val isblockstudentlist = "/comm/api/interaction/blocked-students"
     const val isfrequentlyasked = "/dashboard/api/dashboard/faqs"
 
+
+
+    const val isdeletenotification = "dashboard/api/dashboard/delete-notification"
+
+
 }
 
 
