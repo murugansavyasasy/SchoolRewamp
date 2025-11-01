@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventCategoryAdapter
@@ -48,9 +51,15 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     private var allOngoingEvents: List<EventItem>? = null
     private var allUpcomingEvents: List<EventItem>? = null
     private var allCompletedEvents: List<EventItem>? = null
-    private var msg_id: Int = -1
 
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
     private var fromNotification: Boolean = false
+
+    var userDetails: UserDetails? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -58,12 +67,35 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra("header_id")
+            receiverId = intent.getStringExtra("receiverid")
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this,matchedChild!!)
+            Constant.isParentMenuName = menu_name!!
+        }
+
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 
-        msg_id = intent.getIntExtra(Constant.msg_id, -1)
 
-        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
@@ -197,7 +229,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 isloadUpcomingData(allUpcomingEvents)
                 isloadCompletedData(allCompletedEvents)
                 Log.d("Message Id Value Indication",msg_id.toString())
-                scrollToMessageId(msg_id)
+                scrollToMessageId(headerId)
 
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -300,58 +332,62 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     }
 
 
-    private fun scrollToMessageId(msg_id: Int) {
-        if (msg_id == -1) return
-
+    private fun scrollToMessageId(headerId: String?) {
 
         allOngoingEvents?.let { list ->
-            val index = list.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            val index = list.indexOfFirst { it.id== headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.rcyongoingevent.post {
                     binding.rcyongoingevent.smoothScrollToPosition(index)
                     highlightItemTemporarily(binding.rcyongoingevent, index)
                 }
-                return
+            } else {
+                Log.d("ScrollDebug", "No item found with headerId: $headerId")
             }
         }
 
         allUpcomingEvents?.let { list ->
-            val index = list.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            val index = list.indexOfFirst { it.id== headerId }
+
             if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index in upcoming")
+                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.rcyupcomingevent.post {
                     binding.rcyupcomingevent.smoothScrollToPosition(index)
                     highlightItemTemporarily(binding.rcyupcomingevent, index)
                 }
-
-                return
+            } else {
+                Log.d("ScrollDebug", "No item found with headerId: $headerId")
             }
         }
 
         allCompletedEvents?.let { list ->
-            val index = list.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            val index = list.indexOfFirst { it.id== headerId }
             if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index in completed")
+                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.rcycompletedevent.post {
                     binding.rcycompletedevent.smoothScrollToPosition(index)
                     highlightItemTemporarily(binding.rcycompletedevent, index)
                 }
-
-                return
+            } else {
+                Log.d("ScrollDebug", "No item found with headerId: $headerId")
             }
         }
         Log.d("ScrollDebug", "No index found for msg_id $msg_id")
     }
 
-
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
-            recyclerView.postDelayed({
-                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
-            }, 2000)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
+            }
         }
     }
 
