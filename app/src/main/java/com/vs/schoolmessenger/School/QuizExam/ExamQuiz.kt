@@ -170,7 +170,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             }
         }
 
-        // 🔹 Update UI
+        // Update UI
         if (filteredList.isNotEmpty()) {
             ShowData()
             adapter.updateData(filteredList)
@@ -242,6 +242,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
         val SaveCreateExamQuizDetails =
             SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked)
+        Log.d("SaveCreateExamQuizDetails",SaveCreateExamQuizDetails.title)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
         startActivity(intent)

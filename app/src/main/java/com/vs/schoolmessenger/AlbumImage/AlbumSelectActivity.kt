@@ -21,12 +21,11 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AlbumSelectActivityBinding
 
 class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
-
-//    private lateinit var binding: AlbumSelectActivityBinding
     private lateinit var adapter: FileGridAdapter
     private lateinit var documentPickerLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private var fileType: String = Constant.IMAGE
+    private var isReportTheBugMenu = false
     private var shouldReload = false
     private var hasOpenedSettingsOnce = false
 
@@ -40,30 +39,31 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         return AlbumSelectActivityBinding.inflate(layoutInflater)
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        binding = AlbumSelectActivityBinding.inflate(layoutInflater)
-//
-//        setContentView(binding.root)
-override fun setupViews() {
-    super.setupViews()
-    isToolBarPrimarySchool(
-        mainViewId = R.id.main,
-        statusBarBgView = binding.statusBarBackground
-    )
-    binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
+    override fun setupViews() {
+        super.setupViews()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
+        )
+        binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
 
         fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
+        isReportTheBugMenu = intent.getBooleanExtra("ReportBugMenu", false)
         setupPermissionLauncher()
         setupDocumentPicker()
 
         binding.toolbarLayout.tvSelectionCount.text =
             "Selected Files : 0 / ${Constant.isFileLimit}"
-    binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
-    binding.toolbarLayout.tvSelectedFiles.text =
-        "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+        binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
 
-        Log.d("isFileLimit",Constant.isFileLimit.toString())
+        if (!isReportTheBugMenu) {
+            binding.toolbarLayout.tvSelectedFiles.text =
+                "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+        } else {
+            binding.toolbarLayout.tvSelectedFiles.text =
+                "Total Selected Files : ${Constant.selectedFiles.size}"
+        }
+
+        Log.d("isFileLimit", Constant.isFileLimit.toString())
 
         adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =
@@ -83,7 +83,10 @@ override fun setupViews() {
             checkAndRequestPermissionsForMedia()
         }
 
-        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            isReportTheBugMenu = false
+            onBackPressed()
+        }
 
         binding.toolbarLayout.btnDone.setOnClickListener {
             val selectedUris = adapter.getSelectedItems()

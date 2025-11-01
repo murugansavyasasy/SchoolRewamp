@@ -216,8 +216,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 layout_reopen.visibility = View.GONE
                 layout_cancel.visibility = View.VISIBLE
             }
-
-
         }
 
         layout_reopen.setOnClickListener {
