@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.Attachment
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
@@ -41,8 +44,11 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
 
     private var msg_id: Int = -1
-
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
     private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
 
 
     override fun setupViews() {
@@ -51,18 +57,43 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra("fromNotification", false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra("header_id")
+            receiverId = intent.getStringExtra("receiverid")
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this,matchedChild!!)
+            Constant.isParentMenuName = menu_name!!
+        }
+
+
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
-        msg_id = intent.getIntExtra(Constant.msg_id, -1)
 
-        fromNotification = intent.getBooleanExtra("fromNotification", false)
 
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
         binding.lblArchiveMsg.setOnClickListener(this)
-        binding.lblHeaderTitle.text=Constant.isParentMenuName
+        binding.root.post {
+            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
+            binding.lblHeaderTitle.text = finalName
+            binding.lblHeaderTitle.visibility = View.VISIBLE
+        }
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
@@ -211,7 +242,9 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 binding.recycleracademic.visibility = View.VISIBLE
                 isLoadData(response.data)
                 Log.d("Message Id Value Indication", msg_id.toString())
-                scrollToMessageId(msg_id)
+                if (fromNotification) {
+                    scrollToMessageId(headerId)
+                }
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 showEmptyState(response?.message ?: getString(R.string.no_data_found))
@@ -264,12 +297,10 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
 
-    private fun scrollToMessageId(msg_id: Int) {
-        if (msg_id == -1) return
-
+    private fun scrollToMessageId(headerId: String?) {
         val dataList = mAttachmentReportAdapter?.getCurrentList()
         if (!dataList.isNullOrEmpty()) {
-            val index = dataList.indexOfFirst { it.id.toIntOrNull() == msg_id }
+            val index = dataList.indexOfFirst { it.header_id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index")
                 binding.recycleracademic.post {
@@ -287,10 +318,15 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
-            recyclerView.postDelayed({
-                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
-            }, 2000)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
+            }
         }
     }
 

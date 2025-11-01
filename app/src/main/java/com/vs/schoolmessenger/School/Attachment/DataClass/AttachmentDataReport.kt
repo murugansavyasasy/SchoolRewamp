@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class AttachmentDataReport(
     val id: String,
+    val header_id: String,
     val title: String,
     val description: String,
     val school_id: String,

@@ -53,6 +53,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
+import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
@@ -367,6 +368,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 Constant.M_HOMEWORK -> {
                     val detailIntent = Intent(this, HomeWork::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
+                        putExtra("header_id", headerId)
+                        putExtra("receiverid", receiverId)
                         putExtra(Constant.menu_id, menu_id)
                         putExtra(Constant.msg_id, msg_id)
                         putExtra(Constant.fromNotification, fromNotification)
@@ -405,6 +408,28 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     pendingIntent?.send()
                 }
 
+                Constant.M_LSRW -> {
+                    val detailIntent = Intent(this, LSRW::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra("header_id", headerId)    // ← String
+                        putExtra("receiverid", receiverId)
+                        // ← String
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(LSRW::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+
+                    pendingIntent?.send()
+                }
+
                 Constant.M_ASSIGNMENT -> {
                     val detailIntent = Intent(this, Assignment::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
@@ -427,6 +452,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 Constant.M_ATTACHMENTS -> {
                     val detailIntent = Intent(this, Attachment::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
+                        putExtra("header_id", headerId)
+                        putExtra("receiverid", receiverId)
                         putExtra(Constant.menu_id, menu_id)
                         putExtra(Constant.msg_id, msg_id)
                         putExtra(Constant.fromNotification, fromNotification)
@@ -465,11 +492,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 Constant.M_PARENT_CLASS_EVENTS -> {
                     val detailIntent = Intent(this, Event::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
+                        putExtra("header_id", headerId)
+                        putExtra("receiverid", receiverId)
                         putExtra(Constant.menu_id, menu_id)
                         putExtra(Constant.msg_id, msg_id)
                         putExtra(Constant.fromNotification, fromNotification)
                     }
-                    // Build proper back stack
+
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(Event::class.java)
                         addNextIntent(detailIntent)
