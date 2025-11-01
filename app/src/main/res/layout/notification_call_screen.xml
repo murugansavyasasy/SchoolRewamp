@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/action_bg">
@@ -81,8 +80,8 @@
         android:id="@+id/actionContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/twenty_five"
-        android:layout_marginEnd="@dimen/twenty_five"
+        android:layout_marginStart="@dimen/thirty"
+        android:layout_marginEnd="@dimen/thirty"
         android:layout_marginBottom="@dimen/fifty"
         android:padding="@dimen/sixteen"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -126,22 +125,28 @@
                 android:id="@+id/ring1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.4"
-                android:background="@drawable/glow_circle" />
+                android:alpha="0.6"
+                android:background="@drawable/incoming_glow" />
 
             <View
                 android:id="@+id/ring2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.3"
-                android:background="@drawable/glow_circle" />
+                android:alpha="0.5"
+                android:background="@drawable/incoming_glow" />
 
             <View
                 android:id="@+id/ring3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+<<<<<<< HEAD:app/src/main/res/layout/notification_call.xml
+                android:alpha="0.3"
+                android:background="@drawable/incoming_glow" />
+
+=======
                 android:alpha="0.2"
                 android:background="@drawable/glow_circle" />
+>>>>>>> 40008ca318bfdfe925162d314c56fc3387670e4c:app/src/main/res/layout/notification_call_screen.xml
             <ImageButton
                 android:id="@+id/acceptButton"
                 android:layout_width="@dimen/seventy"

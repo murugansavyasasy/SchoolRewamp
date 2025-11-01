@@ -203,7 +203,7 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
 
             R.id.btnLoginContinue -> {
 
-                if (binding.lblPassword.text.toString() != "") {
+                if (binding.txtPassword.text.toString() != "") {
                     isValidateUser()
                 } else {
                     Toast.makeText(
