@@ -113,7 +113,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isStandardId = ""
     var isClickedTab = 0
 
-
     override fun setupViews() {
         super.setupViews()
 //        setupToolbar()
@@ -161,7 +160,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isAcademicYear = reorderedList
                 isLoadAcademicYear(isAcademicYear)
                 isValidAcademicYear =
-                    isAcademicYear?.any { it.current_academic_year == true } == true
+                    isAcademicYear?.any { it.current_academic_year } == true
                 isSelectedAcademicYear = isAcademicYear!![0].year
                 isAcademicYearId = isAcademicYear!![0].id
                 isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
@@ -328,7 +327,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
-
             }
         }
 
@@ -347,7 +345,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Constant.showTopAlertPopup(response.message, this)
             }
         }
-
 
         appViewModel!!.islsrwSkillSubmit?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
@@ -444,37 +441,42 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun tapVisibility() {
         Log.d("Tap Visibility Check", "Tap Debug Check")
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
-            if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM) {
+            when (SELECTED_SCHOOL_MENU) {
+                M_HOMEWORK, Constant.M_QUIZ_EXAM -> {
 
-                binding.nomessage.visibility = View.GONE
-                binding.nomessageEntire.visibility = View.GONE
-                binding.tabLayout.visibility = View.GONE
-                changeTapBg(Constant.isSection)
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
 
-            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+                }
+                M_ASSIGNMENT -> {
 
-                binding.nomessage.visibility = View.GONE
-                binding.nomessageEntire.visibility = View.GONE
-                binding.tabLayout.visibility = View.GONE
-                changeTapBg(Constant.isSection)
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
 
-                //show send and specific student button
-            } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
-                binding.nomessage.visibility = View.GONE
-                binding.nomessageEntire.visibility = View.GONE
-                binding.tabLayout.visibility = View.GONE
-                changeTapBg(Constant.isSection)
-            } else {
+                    //show send and specific student button
+                }
+                M_LSRW -> {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
+                }
+                else -> {
 
-                binding.nomessage.visibility = View.GONE
-                binding.nomessageEntire.visibility = View.GONE
-                binding.tapEntireSchool.visibility = View.GONE
-                binding.tapStandards.visibility = View.VISIBLE
-                binding.tabSectionsStudent.visibility = View.VISIBLE
-                binding.tabGroups.visibility = View.VISIBLE
-                binding.tapStaffs.visibility = View.GONE
-                changeTapBg(Constant.isStandard)
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tapEntireSchool.visibility = View.GONE
+                    binding.tapStandards.visibility = View.VISIBLE
+                    binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabGroups.visibility = View.VISIBLE
+                    binding.tapStaffs.visibility = View.GONE
+                    changeTapBg(Constant.isStandard)
 
+                }
             }
         } else {
             Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
@@ -1168,13 +1170,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (needsProcessing) {
             ProgressDialogHelper.show(this)
         }
-        Log.d("UploadDebug", "isUploadFilesInServer called with type: $isFileType")
-
         ProgressDialogHelper.show(this)
-        Log.d("UploadDebug", "ProgressDialogHelper.show() called")
-
         ProgressDialogHelper.updateProgress(0)
-        Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(0) called")
 
         if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW) {
             if (Constant.selectedFiles.isNotEmpty()) {

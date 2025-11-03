@@ -154,13 +154,18 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         Log.d("isSchoolMenuName", Constant.isParentMenuName.length.toString())
         Log.d("isParentMenuName", Constant.isSchoolMenuName)
         Log.d("isParentMenuName", Constant.isParentMenuName)
+        data = intent.getParcelableExtra("isPreViewData")
 
         binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
         binding.toolbarLayout.lblStudentSection.visibility = View.GONE
         if (!Constant.isSchoolMenuName.isNullOrBlank()) {
             binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
+            binding.toolbarLayout.lblSubjectName.visibility=View.VISIBLE
+            binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
         } else {
             binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
+            binding.toolbarLayout.lblSubjectName.visibility=View.VISIBLE
+            binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
         }
         binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
             Log.d("ChildHomeWork", "Button clicked!")
@@ -168,7 +173,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         binding.lblClickComplete.setOnClickListener(this)
-        data = intent.getParcelableExtra("isPreViewData")
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         isChildDetails = SharedPreference.getChildDetails(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
