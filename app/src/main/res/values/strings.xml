@@ -888,7 +888,7 @@
     <string name="update_event">Update Event</string>
     <string name="are_you_sure_want_to_update_this_event">Are you sure want to update this event?</string>
     <string name="no_fee_pending_data_available">No fee pending data available.</string>
-    <string name="update_homework">Update HomeWork</string>
+    <string name="update_homework">Update</string>
     <string name="are_you_sure_want_to_update_this_homework">Are you sure want to update this homework?</string>
     <string name="no_matching_data_found">No matching data found</string>
     <string name="invalid_question_id">Invalid question ID</string>

@@ -454,6 +454,7 @@
                     <RelativeLayout
                         android:id="@+id/rytPickDurationBreak"
                         android:layout_width="match_parent"
+                        android:padding="@dimen/five"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblSelectBreakTime"
                         android:layout_marginStart="@dimen/ten"
@@ -477,7 +478,6 @@
                             android:layout_marginStart="@dimen/five"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_toEndOf="@+id/imgDuration"
-                            android:background="@drawable/bg_white_light_radious"
                             android:gravity="center">
 
                             <Spinner

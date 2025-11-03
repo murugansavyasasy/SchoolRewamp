@@ -71,6 +71,20 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/lblSubjectName"
+            android:visibility="gone"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textColor="@color/white"
+            android:layout_below="@+id/rlaStudentName"
+            android:layout_toStartOf="@+id/imgSearchToolBar"
+            android:layout_toEndOf="@id/imgBack"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
             android:id="@+id/lblPostedOn"
             android:layout_centerVertical="true"
             android:visibility="gone"

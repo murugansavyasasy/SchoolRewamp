@@ -543,6 +543,15 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        adapter!!.pauseMediaPlayer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter!!.onDestroyMediaPlayer()
+    }
 
     override fun onBackPressed() {
         if (adapter != null) {

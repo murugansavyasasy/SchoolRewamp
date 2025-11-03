@@ -285,8 +285,6 @@
                         android:visibility="gone">
 
                     </TextView>
-
-
                 </RelativeLayout>
 
                 <RelativeLayout

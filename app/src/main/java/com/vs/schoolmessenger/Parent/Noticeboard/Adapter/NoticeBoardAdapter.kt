@@ -9,6 +9,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -159,8 +160,6 @@ class NoticeBoardAdapter(
             total_numbers.visibility = View.INVISIBLE
 
 
-
-
             val dateTime1 = noticeData.created_on ?: ""
             val parts1 = dateTime1.split(" ")
             val date1 = parts1.getOrNull(0) ?: ""
@@ -217,22 +216,45 @@ class NoticeBoardAdapter(
             val convertedList = noticeData.file_path?.map {
                 GetFilePathDetails(type = it.type, url = it.url)
             } ?: emptyList()
+
             val preview = FilePreview(
-                id = "",
+                id = noticeData.id,
                 title = noticeData.title,
                 description = noticeData.description,
                 subjectName = "",
-                sentBy = "",
+                sentBy = noticeData.sent_by,
                 thumbnail = "",
                 isUnread = true,
+                intended_for = noticeData.intended_for,
+                school_name = "",
+                created_date = noticeData.created_on,
                 isCompleted = true,
                 isMenuType = Constant.M_NOTICEBOARD,
                 fileList = convertedList
             )
+            Log.d("previewData", preview.toString())
             val intent = Intent(context, ChildHomeWork::class.java)
             intent.putExtra(Constant.isPreViewData, preview)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             context.startActivity(intent)
+
+//            val preview = FilePreview(
+//                id = "",
+//                title = noticeData.title,
+//                description = noticeData.description,
+//                subjectName = "",
+//                sentBy = "",
+//                thumbnail = "",
+//                isUnread = true,
+//                isCompleted = true,
+//                isMenuType = Constant.M_NOTICEBOARD,
+//                fileList = convertedList
+//            )
+//            val intent = Intent(context, ChildHomeWork::class.java)
+//            intent.putExtra(Constant.isHomeWorkDate, noticeData.created_on)
+//            intent.putExtra(Constant.isPreViewData, preview)
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//            context.startActivity(intent)
         }
 
         private fun setupPreviewListeners(noticeData: Notice) {

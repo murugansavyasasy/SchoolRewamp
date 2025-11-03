@@ -140,7 +140,7 @@ import okhttp3.RequestBody
 
 class App(application: Application) : AndroidViewModel(application) {
 
-     var apiSchoolRepositories: SchoolServices = SchoolServices()
+    var apiSchoolRepositories: SchoolServices = SchoolServices()
 
     var apiParentRepositories: ParentServices = ParentServices()
 
@@ -254,7 +254,6 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isAssignmentUpdate: LiveData<HomeWorkSendResponse?>? = null
         private set
-
 
 
     var isVoiceSend: LiveData<TextSendResponse?>? = null
@@ -408,7 +407,6 @@ class App(application: Application) : AndroidViewModel(application) {
     var isfrequentlyasked: LiveData<FrequentlyModelResponse?>? = null
     var getAttendanceStudentList: LiveData<GetAttendanceStudentList?>? = null
     var isdeletenotification: LiveData<DeleteNotificationResponse?>? = null
-
         private set
 
 
@@ -607,8 +605,8 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.isGetAds(isToken, isMenuId, activity)
     }
 
-    fun isGetGlobalVariables(jsonObject: JsonObject,isToken: String, activity: Activity) {
-        apiSchoolRepositories.isGetGlobalVariables(jsonObject,isToken, activity)
+    fun isGetGlobalVariables(jsonObject: JsonObject, isToken: String, activity: Activity) {
+        apiSchoolRepositories.isGetGlobalVariables(jsonObject, isToken, activity)
     }
 
     fun isGetStaffList(isToken: String, activity: Activity) {
@@ -936,7 +934,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getlpcreateReport(
-        isToken: String,request_type: String, activity: Activity
+        isToken: String, request_type: String, activity: Activity
     ) {
 
         apiSchoolRepositories.getlpcreateReport(isToken, request_type, activity)
@@ -1247,7 +1245,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isManagement: Boolean
     ) {
         apiParentRepositories.isSlotAvailableForStudent(
-            isToken, isEventDate, isSubjectId, isClassTeacherId,isManagement
+            isToken, isEventDate, isSubjectId, isClassTeacherId, isManagement
         )
     }
 
@@ -1280,12 +1278,11 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiParentRepositories.isSubjectListWithClassTeacher(isToken)
     }
-    
+
     fun isQuizExamList(
         isToken: String,
         type: String,
         status_type: String,
-
         ) {
         apiParentRepositories.isQuizExamList(isToken, type, status_type)
     }
@@ -1415,17 +1412,16 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.isSchoolprofilelist(isToken)
     }
 
-    fun islsrwmysubmission(isToken: String,id: String) {
-        apiParentRepositories.islsrwmysubmission(isToken,id)
+    fun islsrwmysubmission(isToken: String, id: String) {
+        apiParentRepositories.islsrwmysubmission(isToken, id)
     }
-
 
 
     fun ispresubmission(
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
         apiParentRepositories.ispresubmission(
-            isToken, jsonObject,activity
+            isToken, jsonObject, activity
         )
     }
 
@@ -1438,10 +1434,10 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getmysubmissionedit(
-        isToken: String, jsonObject: JsonObject,activity: Activity
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
         apiParentRepositories.getmysubmissionedit(
-            isToken, jsonObject,activity
+            isToken, jsonObject, activity
         )
     }
 
@@ -1456,12 +1452,12 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getassignmentchildhomework(isToken: String, id: Int, target_type : Int) {
+    fun getassignmentchildhomework(isToken: String, id: Int, target_type: Int) {
         apiSchoolRepositories.getassignmentchildhomework(isToken, id, target_type)
     }
 
 
-    fun getattachmentchildhomework(isToken: String, id: Int, target_type : Int) {
+    fun getattachmentchildhomework(isToken: String, id: Int, target_type: Int) {
         apiSchoolRepositories.getattachmentchildhomework(isToken, id, target_type)
     }
 
@@ -1470,8 +1466,13 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getdashboardnewupdates(isToken, role_type)
     }
 
-    fun getAttendanceStudentList(isToken: String, class_id: String,section_id: String,date:String) {
-        apiSchoolRepositories.isGetAttendanceStudentList(isToken,class_id, section_id,date)
+    fun getAttendanceStudentList(
+        isToken: String,
+        class_id: String,
+        section_id: String,
+        date: String
+    ) {
+        apiSchoolRepositories.isGetAttendanceStudentList(isToken, class_id, section_id, date)
     }
 
 
@@ -1489,8 +1490,8 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.isfrequentlyasked(isToken)
     }
 
-    fun isdeletenotification(isToken: String,jsonObject: JsonObject) {
-        apiSchoolRepositories.isdeletenotification(isToken,jsonObject)
+    fun isdeletenotification(isToken: String, jsonObject: JsonObject) {
+        apiSchoolRepositories.isdeletenotification(isToken, jsonObject)
     }
 
 }
