@@ -310,7 +310,6 @@ class UnifiedVoiceAdapter(
             startAudioProgressUpdate()
             updatePlayPauseIcon(true)
         }
-
         fun stopAudioPlayback() {
             mediaPlayer?.let {
                 if (it.isPlaying) it.stop()
@@ -347,7 +346,30 @@ class UnifiedVoiceAdapter(
             val minutes = (milliseconds / (1000 * 60)) % 60
             return String.format(Constant.dateForMate, minutes, seconds)
         }
+
+        fun pauseIfPlaying() {
+            if (mediaPlayer?.isPlaying == true) {
+                waveformSeekBar.updateWithLevel(0f)
+                updatePlayPauseIcon(false)
+                mediaPlayer?.pause()
+            }
+        }
+
+        fun releasePlayer() {
+            mediaPlayer?.release()
+            mediaPlayer = null
+        }
     }
+
+    fun pauseMediaPlayer() {
+        currentlyPlayingHolder?.pauseIfPlaying()
+        currentlyPlayingHolder = null
+    }
+    fun onDestroyMediaPlayer() {
+        currentlyPlayingHolder?.releasePlayer()
+        currentlyPlayingHolder = null
+    }
+
 
     fun releaseMediaPlayer() {
         currentlyPlayingHolder?.stopAudioPlayback()

@@ -232,6 +232,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
     override fun onResume() {
         super.onResume()
+        isHomeWorkList()
         Constant.isCompletedHomeworkId?.let { homeworkId ->
             updateList(homeworkId)
             Constant.isCompletedHomeworkId = null

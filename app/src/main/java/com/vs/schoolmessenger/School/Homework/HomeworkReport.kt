@@ -38,6 +38,9 @@ import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeworkReportBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
 import java.util.Locale
 
 class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
@@ -108,13 +111,18 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
             onBackPressedDispatcher.onBackPressed()
         }
 
+//        isSelectedDate = Constant.getCurrentDate()
+//        binding.txtStartDate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
+//        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+//        binding.lblDay.text = formattedDate
+
         isSelectedDate = Constant.getCurrentDate()
-        binding.txtStartDate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
-        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
-        binding.lblDay.text = formattedDate
+        binding.txtStartDate.text = Constant.convertToReadableDate(isSelectedDate)
+        binding.lblDay.text = getDayLabel(isSelectedDate)
 
 
-          isAcademicYear = Constant.isAcademicYearList
+
+        isAcademicYear = Constant.isAcademicYearList
            isLoadAcademicYear(isAcademicYear)
         isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
         isAcademicYearId = isAcademicYear!![0].id
@@ -339,15 +347,40 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
-
-        @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSelected(date: String) {
         isSelectedDate = date
         binding.txtStartDate.text = Constant.convertToReadableDate(date)
-            val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
-            binding.lblDay.text = formattedDate
+        val labelDay = getDayLabel(date)
+        binding.lblDay.text = labelDay
         fetchHomeWorkReportData()
     }
+
+//        @RequiresApi(Build.VERSION_CODES.O)
+//    override fun onDateSelected(date: String) {
+//        isSelectedDate = date
+//        binding.txtStartDate.text = Constant.convertToReadableDate(date)
+//            val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+//            binding.lblDay.text = formattedDate
+//        fetchHomeWorkReportData()
+//    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDayLabel(dateStr: String): String {
+        // Match the input format: "03-11-2025"
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val selectedDate = LocalDate.parse(dateStr, formatter)
+        val today = LocalDate.now()
+
+        return when {
+            selectedDate.isEqual(today) -> "Today"
+            selectedDate.isEqual(today.plusDays(1)) -> "Tomorrow"
+            selectedDate.isEqual(today.minusDays(1)) -> "Yesterday"
+            else -> selectedDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
+        }
+    }
+
+
 
     override fun onClickListener(data: HomeWorkReportData, anchorView: View, isPosition: Int) {
         isHomeWorkId = data.id

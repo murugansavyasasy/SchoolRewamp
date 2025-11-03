@@ -229,7 +229,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 Constant.showDatePickerNormal(this) { selectedDate ->
                     isSelectedDate = toDashDate(selectedDate)
                     binding.imgDelete.visibility = View.VISIBLE
-                    binding.lblDatePicking.text = selectedDate
+                    binding.lblDatePicking.text = Constant.convertDateTimeFormat(selectedDate)
                     isAllSlot = false
                     isLoadData(isSlotCategory)
                 }

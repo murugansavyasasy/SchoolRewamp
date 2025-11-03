@@ -132,6 +132,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Create Intent for notification tap
         val intent = Intent(this, NotificationCallScreen::class.java).apply {
             putExtra(Constant.menu_name, title)
+            putExtra("isNotificationId", "")
+            putExtra("isVoiceUrl", "")
+            putExtra("isReceiverId", "")
+            putExtra("retrycount", "")
+            putExtra("circularId", "")
+            putExtra("ei1", "")
+            putExtra("ei2", "")
+            putExtra("ei3", "")
+            putExtra("ei4", "")
+            putExtra("ei5", "")
+            putExtra("role", "")
+            putExtra("menuId", "")
+            putExtra("welcome", "")
+            putExtra("school_name", "")
+            putExtra("member_name", "")
+            putExtra("call_title", "")
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
