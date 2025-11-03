@@ -118,6 +118,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     private lateinit var editableQuizQuestionReportList: MutableList<GetQuizQuestionReportData>
 
     private var isAccessToken: String? = null
+    private var isQuestionBankErrorMsg: String? = null
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter2: PickQuestionAdapter
 
@@ -226,17 +227,21 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     showResumeListDialog(this, pickQBankList)
                 } else {
                     Constant.hideLoading(this)
+                    pickQBankList= emptyList()
+                    isQuestionBankErrorMsg=response.message
                     Constant.showErrorAlert(
                         this, getString(R.string.alert), response.message
                     )
                 }
             } else {
                 Constant.hideLoading(this)
+                pickQBankList= emptyList()
                 Constant.showErrorAlert(
                     this,
                     getString(R.string.fail),
                     getString(R.string.Something_went_wrong_Please_try_again)
                 )
+                isQuestionBankErrorMsg=getString(R.string.Something_went_wrong_Please_try_again)
             }
         }
         isFetchQuizQuestionReport()
@@ -871,7 +876,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     isFetchFromQuestionBank()
                     isFirstClick = false
                 } else {
-                    showResumeListDialog(this, pickQBankList)
+                    if (pickQBankList.isEmpty()){
+                        Log.d("isEmpty","isEmpty")
+                        Constant.showErrorAlert(this, getString(R.string.alert), isQuestionBankErrorMsg.toString())
+                    }
+                    else{
+                        Log.d("isEmpty","isNotEmpty")
+                        showResumeListDialog(this, pickQBankList)
+                    }
                 }
 
             }

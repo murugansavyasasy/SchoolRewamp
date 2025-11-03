@@ -313,11 +313,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     }
 
                 } else {
-                    if (response.message==Constant.This_day_is_marked_as_a_holiday){
-                        ErrorMessage(response.message,R.drawable.no_holiday_message)
+                    if (response.message==Constant.Attendance_has_not_been_taken_yet){
+                        ErrorMessage(response.message,R.drawable.no_attendance_taken)
                     }
                     else{
-                        ErrorMessage(response.message,R.drawable.no_attendance_taken)
+                        ErrorMessage(response.message,R.drawable.no_holiday_message)
                     }
                     binding.rcyAttendanceReport.visibility = View.GONE
                     binding.imgSearchicon.visibility=View.GONE
