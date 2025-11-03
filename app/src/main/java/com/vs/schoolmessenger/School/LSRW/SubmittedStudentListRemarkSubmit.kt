@@ -59,8 +59,11 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
         }
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-
+        binding.toolbarLayout.lblParentToolBar.text = data!!.description
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblSchoolName.text = data!!.subjectName + " - " +  data!!.sentBy
+
+
 //        binding.descriptionValue.text = data!!.description
 
         val adapter = StudentSubmittedListRemarkAdapter(

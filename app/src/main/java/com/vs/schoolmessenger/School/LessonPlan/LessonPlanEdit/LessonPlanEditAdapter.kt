@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.LessonPlan.LessonPlanEdit
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.text.Editable
 import android.text.TextWatcher
@@ -85,9 +86,15 @@ class LessonPlanEditAdapter(
             val isSpinner = itemView.findViewById<Spinner>(R.id.isSpinner)
             val spinnerItem = itemView.findViewById<LinearLayout>(R.id.SpinnerItem)
 
-            nameTextView.text = "${data.name}"
+            nameTextView.text = data.name
+
+            // Reset visibility each time
+            spinnerItem.visibility = View.GONE
+            valueTextView.visibility = View.GONE
+            headerdatelabe1l.visibility = View.GONE
 
             when (data.field_type) {
+
                 Constant.dropdown -> {
                     val options = data.field_data ?: listOf()
                     val adapter = ArrayAdapter(
@@ -95,6 +102,7 @@ class LessonPlanEditAdapter(
                     )
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     isSpinner.adapter = adapter
+
                     val selectedIndex = options.indexOf(data.value)
                     if (selectedIndex != -1) {
                         isSpinner.setSelection(selectedIndex)
@@ -111,9 +119,7 @@ class LessonPlanEditAdapter(
                     }
 
                     spinnerItem.visibility = View.VISIBLE
-                    headerdatelabe1l.visibility = View.GONE
-                    valueTextView.visibility = View.GONE
-                    isSpinner.isEnabled = data.is_disable != true
+                    isSpinner.isEnabled = !data.is_disable
                 }
 
                 Constant.text_ -> {
@@ -125,33 +131,23 @@ class LessonPlanEditAdapter(
 
                         override fun beforeTextChanged(
                             s: CharSequence?, start: Int, count: Int, after: Int
-                        ) {
-                        }
+                        ) {}
 
                         override fun onTextChanged(
                             s: CharSequence?, start: Int, before: Int, count: Int
-                        ) {
-                        }
+                        ) {}
                     })
 
-                    spinnerItem.visibility = View.GONE
-                    headerdatelabe1l.visibility = View.GONE
                     valueTextView.visibility = View.VISIBLE
                     valueTextView.isEnabled = !data.is_disable
-                    if (!data.is_disable) {
-                        valueTextView.setBackgroundResource(R.drawable.gray_bg_radius_textview)
-                    }
                 }
 
                 Constant.datepicker -> {
                     headerdatelabe1l.text = data.value
-                    spinnerItem.visibility = View.GONE
-                    valueTextView.visibility = View.GONE
                     headerdatelabe1l.visibility = View.VISIBLE
                     headerdatelabe1l.isEnabled = !data.is_disable
 
                     if (!data.is_disable) {
-                        headerdatelabe1l.setBackgroundResource(R.drawable.gray_bg_radius_textview)
                         headerdatelabe1l.setOnClickListener {
                             val calendar = Calendar.getInstance()
                             val year = calendar.get(Calendar.YEAR)
@@ -159,17 +155,57 @@ class LessonPlanEditAdapter(
                             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
                             val datePickerDialog = DatePickerDialog(
-                                itemView.context, { _, selectedYear, selectedMonth, selectedDay ->
+                                itemView.context,
+                                { _, selectedYear, selectedMonth, selectedDay ->
                                     val cal = Calendar.getInstance()
                                     cal.set(selectedYear, selectedMonth, selectedDay)
                                     val sdf = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
                                     val formattedDate = sdf.format(cal.time)
                                     headerdatelabe1l.text = formattedDate
                                     data.value = formattedDate
-                                }, year, month, day
+                                },
+                                year, month, day
                             )
                             datePickerDialog.show()
                         }
+                    }
+                }
+            }
+
+            val grayColor = Color.parseColor("#616159")
+            val black = Color.parseColor("#FF000000")
+
+            if (data.is_disable == true) {
+                when (data.field_type) {
+                    Constant.dropdown -> {
+                        val selectedView = isSpinner.selectedView as? TextView
+                        selectedView?.setTextColor(grayColor)
+                        spinnerItem.setBackgroundResource(R.drawable.gray_bg_radius_textview)
+                    }
+
+                    Constant.text_ -> {
+                        valueTextView.setTextColor(grayColor)
+                        valueTextView.setBackgroundResource(R.drawable.gray_bg_radius_textview)
+                    }
+
+                    Constant.datepicker -> {
+                        headerdatelabe1l.setTextColor(grayColor)
+                        headerdatelabe1l.setBackgroundResource(R.drawable.gray_bg_radius_textview)
+                    }
+                }
+            } else {
+                // Optional: Style for enabled (active) fields
+                when (data.field_type) {
+                    Constant.text_ -> {
+                        valueTextView.setTextColor(black)
+                        valueTextView.setBackgroundResource(R.drawable.field_background)
+                    }
+                    Constant.datepicker -> {
+                        headerdatelabe1l.setTextColor(black)
+                        headerdatelabe1l.setBackgroundResource(R.drawable.field_background)
+                    }
+                    Constant.dropdown -> {
+                        spinnerItem.setBackgroundResource(R.drawable.field_background)
                     }
                 }
             }

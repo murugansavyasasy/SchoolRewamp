@@ -138,11 +138,11 @@ class AbsenteesStudentListDetailAdapter(
 
 
 
-            Constant.isAbsenteesReportDataSending?.let { report ->
-                val sectionNamesCombined =
-                    report.section_wise?.joinToString(", ") { it.section_name } ?: ""
-                sectionValue.text = "${report.class_name ?: ""} - $sectionNamesCombined"
-            }
+//            Constant.isAbsenteesReportDataSending?.let { report ->
+//                val sectionNamesCombined =
+//                    report.section_wise?.joinToString(", ") { it.section_name } ?: ""
+//                sectionValue.text = "${report.class_name ?: ""} - $sectionNamesCombined"
+//            }
 
             itemView.setOnClickListener {
                 listener.onFooterItemClicked(position, data)

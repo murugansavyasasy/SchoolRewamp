@@ -382,7 +382,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
 
             R.id.rytStartDate -> {
-                CustomshowDatePickerDialog(this, this)
+                AssignmentCustomshowDatePickerDialog(this, this,isSelectedDate)
             }
 
             R.id.rytHistory -> startActivity(Intent(this, AssignmentReport::class.java))

@@ -10,13 +10,29 @@
         layout="@layout/school_side_tool_bar" />
 
 
+    <TextView
+        android:id="@+id/lbltitle"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_marginEnd="@dimen/twenty_five"
+        android:gravity="start"
+        android:textSize="20sp"
+        android:text="My Submission"
+        >
+
+    </TextView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcystudentlistdetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginTop="@dimen/five"
+        android:layout_below="@+id/lbltitle"
+        android:layout_marginTop="@dimen/ten"
         android:visibility="visible">
 
     </androidx.recyclerview.widget.RecyclerView>
