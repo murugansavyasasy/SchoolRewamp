@@ -747,7 +747,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 "P" -> presentCount++
                 "A" -> absentCount++
                 "OD" -> odCount++
-                "P~" -> presentCount++
+                "P~" -> presentCount++   //here late means we adding that in present
             }
         }
 

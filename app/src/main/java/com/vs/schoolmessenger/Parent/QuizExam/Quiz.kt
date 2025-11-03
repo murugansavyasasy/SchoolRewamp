@@ -219,7 +219,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         if (msg_id == -1) return
 
         isUpcoming?.let { list ->
-            val index = list.indexOfFirst { it.header_id == headerId }
+            val index = list.indexOfFirst { it.id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index")
                 binding.rcUpcoming.post {
