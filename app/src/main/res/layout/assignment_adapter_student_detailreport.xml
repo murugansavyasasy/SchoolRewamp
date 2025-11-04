@@ -22,8 +22,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ten">
 
+
             <TextView
-                android:id="@+id/lblStudentName"
+                android:id="@+id/lbltitle"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,25 +38,45 @@
             </TextView>
 
             <TextView
-                android:id="@+id/sectionlabel"
+                android:id="@+id/lblassignmentsubject"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblStudentName"
                 android:layout_marginStart="@dimen/twenty_five"
-                android:layout_marginTop="@dimen/ten"
-                android:text="I"
-               >
+                android:layout_below="@+id/lbltitle"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:gravity="start"
+                android:text="Sathish"
+                >
 
             </TextView>
 
+
+            <TextView
+                android:id="@+id/lblStudentName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:gravity="start"
+                android:layout_below="@+id/lblassignmentsubject"
+                android:text="Sathish"
+                >
+
+
+
+            </TextView>
 
             <LinearLayout
                 android:id="@+id/rytList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sectionlabel"
-                android:layout_marginStart="@dimen/five"
+                android:layout_below="@+id/lblStudentName"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginBottom="@dimen/two"
                 android:orientation="horizontal">
 
@@ -140,6 +161,22 @@
                     android:visibility="gone" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/sectionlabel"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytList"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:textColor="@color/red"
+                android:text="I">
+
+            </TextView>
+
+
+
+
 
 
         </RelativeLayout>

@@ -182,7 +182,7 @@ object APIMethods {
     const val fee_student_invoice = "fee/api/fee-details/student-invoice"
     const val fee_student_invoice_details = "fee/api/fee-details-invoice-details"
     const val childhomework_standard = "admin/api/school-event/target-details"
-    const val assignment_childhomework = "admin/api/school-event/target-details"
+    const val assignment_childhomework = "comm/api/assignment/target-details"
     const val attachment_childhomework = "comm/api/attachment/target-details"
 
     const val getmysubmissionedit = "comm/api/assignment/update-submission"

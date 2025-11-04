@@ -40,7 +40,7 @@
         android:text="Value"
         android:background="@drawable/field_background"
         android:padding="@dimen/ten"
-        android:visibility="visible"
+        android:visibility="gone"
         android:gravity="start"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"

@@ -539,16 +539,16 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
                 val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                 val startDate = sdf.parse(txtStartDate!!) ?: Date()
+
                 val cal = Calendar.getInstance()
                 cal.time = startDate
                 val minDate = cal.timeInMillis
-                cal.add(Calendar.DAY_OF_MONTH, 30)
-                val maxDate = cal.timeInMillis
+                val maxDate = Long.MAX_VALUE
 
                 val defaultEndDate = try {
-                    sdf.parse(txtEndDate ?: "") ?: Date(maxDate)
+                    sdf.parse(txtEndDate ?: "") ?: Date()
                 } catch (e: Exception) {
-                    Date(maxDate)
+                    Date()
                 }
                 val defaultCal = Calendar.getInstance()
                 defaultCal.time = defaultEndDate
@@ -561,17 +561,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     maxDate = maxDate
                 ) { selectedDate ->
                     txtEndDate = Constant.covertDateFormate(selectedDate)
-                    val (endday, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())// 13 Monday
+                    val (endday, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())
                     binding.lblEndDay.text = endformattedDate
                     binding.txtEndDate.text = txtEndDate
-//                    val parts = txtEndDate!!.split(" ")
-//                    val day = parts[0]
-//                    val month = parts[1]
-//                    val year = parts[2]
-//                    binding.lblEndDay.text = day
-//                    binding.txtEndDate.text = "$month $year"
                 }
             }
+
 
             R.id.btnNext -> {
                 if (binding.btnNext.text.toString() == getString(R.string.update_noticeboard)) {

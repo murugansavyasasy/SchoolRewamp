@@ -234,6 +234,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             loadFragment(
                 StudentListFragment.newInstance(
                     data!!.assignmentid ?: "",
+                    data!!.title ?: "",
+                    data!!.assignmentsubject ?: "",
                     "TOTAL",
                     data!!.submittedCount ?: 0,
                     data!!.totalCount ?: 0,

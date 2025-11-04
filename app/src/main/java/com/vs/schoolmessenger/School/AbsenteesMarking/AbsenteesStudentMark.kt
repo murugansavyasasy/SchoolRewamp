@@ -355,6 +355,17 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     studentsList.toMutableList(),isCurrentAttendanceType!!, this, Constant.isShimmerViewDisable, this
                 )
             binding.recycleStudents.adapter = mAdapter
+
+            //we are checking whether all are marked as present or absent at initial time
+            binding.cbSelect.isChecked = studentsList?.all { student ->
+                val parts = student.att_status.split("/")
+                when (isCurrentAttendanceType) {
+                    "SH" -> parts.getOrNull(1)?.equals("A", ignoreCase = true) == true
+                    "FH", "F" -> parts.getOrNull(0)?.equals("A", ignoreCase = true) == true
+                    else -> false
+                }
+            } == true
+
         }
         else{
             binding.toolbarLayout.imgSearch.visibility=View.GONE

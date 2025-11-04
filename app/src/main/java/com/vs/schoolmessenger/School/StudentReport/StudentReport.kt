@@ -174,6 +174,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         if (isGetStandard!!.get(0).sections.size > 0) {
                             isSection = isGetStandard!!.get(0).sections
                         }
+                        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                        binding.rytSearchBar.visibility = View.GONE
                         isGetStudentReport()
                     } else {
                         originalStudentList = emptyList()
@@ -182,6 +184,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         binding.tabLayout.visibility = View.GONE
                         binding.rlaStandardPicking.visibility = View.GONE
                         ErrorMessage(response.message)
+                        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                        binding.rytSearchBar.visibility = View.GONE
                     }
                 }
             }
@@ -192,6 +196,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 binding.tabLayout.visibility = View.GONE
                 binding.rlaStandardPicking.visibility = View.GONE
                 ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later))
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.rytSearchBar.visibility = View.GONE
 
             }
         }
@@ -258,6 +264,14 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             SortType.NAME_DESC -> currentFilteredList.sortedByDescending { it.name }
         }
         mAdapter.updateData(sortedList)
+
+        if (binding.txtSearchMenu.text.isNotEmpty()){
+            filter(binding.txtSearchMenu.text.toString())
+        }else{
+            binding.txtSearchMenu.text.clear()
+        }
+
+
     }
 
     private fun filterByGender(genderType: GenderType) {
@@ -306,7 +320,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             binding.isGenderCatory.setSelection(0)
             filterByGender(GenderType.ALL)
             highlightSelectedTab(binding.tapNameAsc)
-            sortList(SortType.NO_ASC)
+            sortList(SortType.NAME_ASC)
         }
     }
 

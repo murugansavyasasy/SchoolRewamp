@@ -144,26 +144,24 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val query = s?.toString()?.trim() ?: ""
                 if (query.isEmpty()) {
-                    isAssignmentAdapter?.updateList(isAssignmentReportData ?: emptyList())
+                    isAssignmentReportData?.let { data ->
+                        isAssignmentAdapter?.updateList(data)
+                    } ?: run {
+                        isAssignmentAdapter?.updateList(emptyList())
+                    }
                 } else {
                     isAssignmentAdapter?.filter?.filter(query)
                 }
 
+                // Use helper instead of inline post
                 binding.rcyAssignmentReport.post {
-                    if (isAssignmentAdapter?.itemCount == 0) {
-                        binding.rcyAssignmentReport.visibility = View.GONE
-                        binding.lytNoDataFound.visibility = View.VISIBLE
-                    } else {
-                        binding.rcyAssignmentReport.visibility = View.VISIBLE
-                        binding.lytNoDataFound.visibility = View.GONE
-                    }
+                    updateNoDataVisibility()
                 }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
         })
-
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
             val intent = Intent(this, AssignmentCreate::class.java)
             startActivity(intent)
@@ -216,25 +214,19 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             Constant.hideLoading(this@AssignmentReport)
             if (response != null) {
                 if (response.status) {
-                    binding.rcyAssignmentReport.visibility = View.VISIBLE
-                    binding.lytNoDataFound.visibility = View.GONE
-                    val isAssignmentReport = response.data
+                    val isAssignmentReport = response.data ?: emptyList()  // Ensure non-null
                     isAssignmentReportData = isAssignmentReport
                     loadAssignmentReportData()
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                 } else {
+                    isAssignmentReportData = emptyList()
+                    loadAssignmentReportData()
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
-                    binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.GONE
-                    binding.toolbarLayout.rytSearch.visibility = View.GONE
-                    binding.rcyAssignmentReport.visibility = View.GONE
-                    binding.lytNoDataFound.visibility = View.VISIBLE
-                    binding.noDataFound.text = getString(R.string.no_data_found)
                 }
             }
-        }
-    }
+        }    }
 
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
@@ -262,35 +254,51 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
     private fun fetchAssignmentReportData() {
         Constant.showLoading(this@AssignmentReport)
+        binding.lytNoDataFound.visibility = View.GONE
         binding.rcyAssignmentReport.visibility = View.VISIBLE
-        isAssignmentAdapter =
-            AssignmentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
+
+        val shimmerLoading = !Constant.isShimmerViewDisable
+        isAssignmentAdapter = AssignmentAdapter(mutableListOf(), this, this, shimmerLoading)
         binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
         binding.rcyAssignmentReport.isNestedScrollingEnabled = false
         binding.rcyAssignmentReport.adapter = isAssignmentAdapter
-        appViewModel?.isGetAssignmentReport(
-            isAccessToken!!, isAcademicYearId, this
-        )
+
+        appViewModel?.isGetAssignmentReport(isAccessToken!!, isAcademicYearId, this)
     }
 
 
     private fun loadAssignmentReportData() {
-        if (isAssignmentReportData.isNullOrEmpty()){
-            binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.GONE
+        val query = binding.toolbarLayout.txtSearch.text.toString().trim()  // Capture current query
+        val hasData = !isAssignmentReportData.isNullOrEmpty()
+
+        if (!hasData) {
+            binding.toolbarLayout.imgSearchToolBarforCreate.visibility = View.GONE
             binding.toolbarLayout.rytSearch.visibility = View.GONE
-        }
-        else{
-            binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.VISIBLE
-            binding.toolbarLayout.rytSearch.visibility = View.GONE
+            binding.rcyAssignmentReport.visibility = View.GONE
+            binding.lytNoDataFound.visibility = View.VISIBLE
+            binding.noDataFound.text = getString(R.string.no_data_found)  // Set message if needed
+            isAssignmentAdapter = null
+        } else {
+            binding.toolbarLayout.imgSearchToolBarforCreate.visibility = View.VISIBLE
+            binding.toolbarLayout.rytSearch.visibility = View.GONE  // Hide search layout, but keep input visible if active
             binding.rcyAssignmentReport.visibility = View.VISIBLE
+            binding.lytNoDataFound.visibility = View.GONE
+
             isAssignmentAdapter = AssignmentAdapter(
                 isAssignmentReportData!!.toMutableList(), this, this, Constant.isShimmerViewDisable
             )
             binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
             binding.rcyAssignmentReport.isNestedScrollingEnabled = false
             binding.rcyAssignmentReport.adapter = isAssignmentAdapter
-        }
+            if (query.isNotEmpty()) {
+                isAssignmentAdapter?.filter?.filter(query)
+            }
 
+            // Manually check visibility (like TextWatcher's post) after filter/update
+            binding.rcyAssignmentReport.post {
+                updateNoDataVisibility()
+            }
+        }
     }
 
     override fun onSubmittedClick(data: AssignmentData) {
@@ -335,6 +343,21 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         adapterPosition: Int
     ) {
         TODO("Not yet implemented")
+    }
+
+    private fun updateNoDataVisibility() {
+        if (isAssignmentAdapter?.itemCount == 0) {
+            binding.rcyAssignmentReport.visibility = View.GONE
+            binding.lytNoDataFound.visibility = View.VISIBLE
+            binding.noDataFound.text = if (binding.toolbarLayout.txtSearch.text.toString().trim().isNotEmpty()) {
+                "No data found"
+            } else {
+                getString(R.string.no_data_found)
+            }
+        } else {
+            binding.rcyAssignmentReport.visibility = View.VISIBLE
+            binding.lytNoDataFound.visibility = View.GONE
+        }
     }
 
 

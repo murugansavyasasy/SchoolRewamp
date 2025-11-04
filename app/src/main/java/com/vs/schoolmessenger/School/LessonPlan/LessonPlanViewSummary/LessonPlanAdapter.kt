@@ -24,7 +24,11 @@ class LessonPlanAdapter(
     private val listener: LessonPlanClickListener,
     private val context: Context,
     private val isLoading: Boolean,
-    private val requestType: String
+    private val requestType: String,
+    private val subject_name: String,
+    private val items_completed: String,
+    private val completed_items: String,
+    private val total_items: String
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private var fullList: List<LessonPlanViewSummaryItem> = itemList ?: listOf()
@@ -52,10 +56,11 @@ class LessonPlanAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
             filteredList.getOrNull(position)?.let { data ->
-                holder.bind(data,context)
+                holder.bind(data, context, subject_name, items_completed, completed_items, total_items)
             }
         }
     }
+
 
     override fun getItemCount(): Int {
         return if (isLoading) 5 else filteredList.size
@@ -63,7 +68,7 @@ class LessonPlanAdapter(
 
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: LessonPlanViewSummaryItem, context: Context) {
+        fun bind(item: LessonPlanViewSummaryItem, context: Context, subject_name: String,items_completed: String,completed_items: String,total_items: String) {
             val recyclerView = itemView.findViewById<RecyclerView>(R.id.detailsRecyclerView)
             val lblSubjectId = itemView.findViewById<TextView>(R.id.lblSubjectId)
             val lblTeaching = itemView.findViewById<TextView>(R.id.lblTeaching)
@@ -74,8 +79,8 @@ class LessonPlanAdapter(
             val activityDetail = item.details.find { it.name.equals(Constant.Activity, ignoreCase = true) }
             val topicDetail = item.details.find { it.name.equals(Constant.Topic, ignoreCase = true) }
 
-            lblSubjectId.text = topicDetail?.value ?: ""
-            lblTeaching.text = activityDetail?.value ?: ""
+            lblSubjectId.text = subject_name + " Language Teaching"
+            lblTeaching.text = "Chapters Completed "+ completed_items + " - " + total_items
             lblLevel.text = item.lesson_plan_status.toString()?: ""
 
             val btnedit = itemView.findViewById<LinearLayout>(R.id.btnEditContainer)

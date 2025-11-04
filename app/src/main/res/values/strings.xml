@@ -952,8 +952,8 @@
     <string name="enter_a_valid_mobile_number">Enter a valid mobile Number</string>
     <string name="see_archived_messages">See Archived Messages</string>
     <string name="underline_see_archived_messages"><u>See Archived Messages</u></string>
-    <string name="all_student">ALL STUDENT</string>
-    <string name="class_and_section">CLASS AND SECTION</string>
+    <string name="all_student">All students</string>
+    <string name="class_and_section">Class &amp; Section</string>
     <string name="remove">Remove</string>
     <string name="note_the_following_students_are_marked_as_absent_their_parents_will_receive_an_automatic_call_please_double_check_before_confirming_attendance">📢 Note: The following students are marked as absent. 📞 Their parents will receive an automatic call. Please double-check before confirming attendance</string>
     <string name="submission_report">Submission Report</string>
