@@ -649,16 +649,44 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val flattenedTargetList = response.data.flatMap { it.name }
-                        childstandardadapter.updateList(flattenedTargetList)
 
-                        val typelist = dataList.map { it.type }
+                        val flattenedTargetList = dataList.flatMap { dataItem ->
+                            dataItem.name?.flatMap { nameObj ->
+                                when {
+                                    !nameObj.standardList.isNullOrEmpty() ->
+                                        nameObj.standardList.map { std ->
+                                            SchoolNameTarget(name = std)
+                                        }
+
+                                    !nameObj.institute.isNullOrEmpty() ->
+                                        nameObj.institute.map { inst ->
+                                            SchoolNameTarget(name = inst)
+                                        }
+
+                                    !nameObj.group.isNullOrEmpty() ->
+                                        nameObj.group.map { grp ->
+                                            SchoolNameTarget(name = grp)
+                                        }
+
+                                    !nameObj.sectionList.isNullOrEmpty() ->
+                                        nameObj.sectionList.map { sec ->
+                                            SchoolNameTarget(name = sec)
+                                        }
+
+                                    else -> emptyList()
+                                }
+                            } ?: emptyList()
+                        }
+
+                        val typelist = dataList.mapNotNull { it.type }
                         childstandardadapter = ChildStandardAdapter(
-                            flattenedTargetList, this, Constant.isShimmerViewDisable
+                            flattenedTargetList,
+                            this,
+                            Constant.isShimmerViewDisable
                         )
                         binding.rcystandard.adapter = childstandardadapter
                         binding.sendtostandardLabel.visibility = View.VISIBLE
-                        binding.standardValue.text = "\uD83C\uDF93 ${typelist}"
+                        binding.standardValue.text = "\uD83C\uDF93 ${typelist.joinToString(", ")}"
                     }
 
                 } else {
@@ -678,16 +706,44 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val flattenedTargetList = response.data.flatMap { it.name }
-                        childstandardadapter.updateList(flattenedTargetList)
 
-                        val typelist = dataList.map { it.type }
+                        val flattenedTargetList = dataList.flatMap { dataItem ->
+                            dataItem.name?.flatMap { nameObj ->
+                                when {
+                                    !nameObj.standardList.isNullOrEmpty() ->
+                                        nameObj.standardList.map { std ->
+                                            SchoolNameTarget(name = std)
+                                        }
+
+                                    !nameObj.institute.isNullOrEmpty() ->
+                                        nameObj.institute.map { inst ->
+                                            SchoolNameTarget(name = inst)
+                                        }
+
+                                    !nameObj.group.isNullOrEmpty() ->
+                                        nameObj.group.map { grp ->
+                                            SchoolNameTarget(name = grp)
+                                        }
+
+                                    !nameObj.sectionList.isNullOrEmpty() ->
+                                        nameObj.sectionList.map { sec ->
+                                            SchoolNameTarget(name = sec)
+                                        }
+
+                                    else -> emptyList()
+                                }
+                            } ?: emptyList()
+                        }
+
+                        val typelist = dataList.mapNotNull { it.type }
                         childstandardadapter = ChildStandardAdapter(
-                            flattenedTargetList, this, Constant.isShimmerViewDisable
+                            flattenedTargetList,
+                            this,
+                            Constant.isShimmerViewDisable
                         )
                         binding.rcystandard.adapter = childstandardadapter
                         binding.sendtostandardLabel.visibility = View.VISIBLE
-                        binding.standardValue.text = "\uD83C\uDF93 ${typelist}"
+                        binding.standardValue.text = "\uD83C\uDF93 ${typelist.joinToString(", ")}"
                     }
 
                 } else {
@@ -696,22 +752,53 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 }
             }
         }
+
+
+
 
         appViewModel!!.getassignmentchildhomework?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val flattenedTargetList = response.data.flatMap { it.name }
-                        childstandardadapter.updateList(flattenedTargetList)
 
-                        val typelist = dataList.map { it.type }
+                        val flattenedTargetList = dataList.flatMap { dataItem ->
+                            dataItem.name?.flatMap { nameObj ->
+                                when {
+                                    !nameObj.standardList.isNullOrEmpty() ->
+                                        nameObj.standardList.map { std ->
+                                            SchoolNameTarget(name = std)
+                                        }
+
+                                    !nameObj.institute.isNullOrEmpty() ->
+                                        nameObj.institute.map { inst ->
+                                            SchoolNameTarget(name = inst)
+                                        }
+
+                                    !nameObj.group.isNullOrEmpty() ->
+                                        nameObj.group.map { grp ->
+                                            SchoolNameTarget(name = grp)
+                                        }
+
+                                    !nameObj.sectionList.isNullOrEmpty() ->
+                                        nameObj.sectionList.map { sec ->
+                                            SchoolNameTarget(name = sec)
+                                        }
+
+                                    else -> emptyList()
+                                }
+                            } ?: emptyList()
+                        }
+
+                        val typelist = dataList.mapNotNull { it.type }
                         childstandardadapter = ChildStandardAdapter(
-                            flattenedTargetList, this, Constant.isShimmerViewDisable
+                            flattenedTargetList,
+                            this,
+                            Constant.isShimmerViewDisable
                         )
                         binding.rcystandard.adapter = childstandardadapter
                         binding.sendtostandardLabel.visibility = View.VISIBLE
-                        binding.standardValue.text = "\uD83C\uDF93 ${typelist}"
+                        binding.standardValue.text = "\uD83C\uDF93 ${typelist.joinToString(", ")}"
                     }
 
                 } else {
@@ -720,6 +807,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 }
             }
         }
+
+
 
 
         val isEmpty = adapter.itemCount == 0

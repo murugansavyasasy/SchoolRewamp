@@ -58,6 +58,7 @@
 
     <!--    <color name="colorPrimary">#22c9cc</color>-->
     <color name="colorPrimary">#0e4275</color>
+    <color name="lightblue_primary">#cde7ff</color>
     <color name="pinkcolorcustom">#ff93c1</color>
     <color name="color_blue_primary">#679df1</color>
     <color name="custom_orange_color">#e26b26</color>

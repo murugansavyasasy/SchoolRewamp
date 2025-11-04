@@ -143,10 +143,23 @@ class LessonPlanEditAdapter(
                 }
 
                 Constant.datepicker -> {
-                    headerdatelabe1l.text = data.value
+                    // ✅ When loading from API
+                    if (!data.value.isNullOrEmpty()) {
+                        try {
+                            // Parse API format (dd-MM-yyyy)
+                            val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                            val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                            val parsedDate = apiFormat.parse(data.value!!)
+                            headerdatelabe1l.text = displayFormat.format(parsedDate!!)
+                        } catch (e: Exception) {
+                            headerdatelabe1l.text = data.value
+                        }
+                    }
+
                     headerdatelabe1l.visibility = View.VISIBLE
                     headerdatelabe1l.isEnabled = !data.is_disable
 
+                    // ✅ When user picks new date
                     if (!data.is_disable) {
                         headerdatelabe1l.setOnClickListener {
                             val calendar = Calendar.getInstance()
@@ -159,10 +172,17 @@ class LessonPlanEditAdapter(
                                 { _, selectedYear, selectedMonth, selectedDay ->
                                     val cal = Calendar.getInstance()
                                     cal.set(selectedYear, selectedMonth, selectedDay)
-                                    val sdf = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
-                                    val formattedDate = sdf.format(cal.time)
-                                    headerdatelabe1l.text = formattedDate
-                                    data.value = formattedDate
+
+                                    val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                                    val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+                                    // ✅ show pretty format on screen
+                                    val formattedDisplayDate = displayFormat.format(cal.time)
+                                    // ✅ store API format in data.value
+                                    val formattedApiDate = apiFormat.format(cal.time)
+
+                                    headerdatelabe1l.text = formattedDisplayDate
+                                    data.value = formattedApiDate
                                 },
                                 year, month, day
                             )

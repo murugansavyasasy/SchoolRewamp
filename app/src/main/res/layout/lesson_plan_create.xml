@@ -74,7 +74,7 @@
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
                 android:paddingEnd="@dimen/eighteen_sp"
-                android:text="Submit"
+                android:text="Create"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
 

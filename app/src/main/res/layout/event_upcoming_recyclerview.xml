@@ -71,6 +71,7 @@
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/five"
             android:ellipsize="end"
+            android:lines="3"
             android:maxLines="3"
             android:text="Festival 10:00 AM -17/07"
             android:textColor="@color/white"

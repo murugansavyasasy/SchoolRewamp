@@ -164,7 +164,7 @@ class SchoolEventCompletedAdapter(
             adapter: SchoolEventCompletedAdapter
         ) {
             event_header.text = data.title
-            event_time.text = data.time + " - " + Constant.convertDateTimeFormat(data.date)
+            event_time.text = data.category + " " + data.time + " - " + Constant.convertDateTimeFormat(data.date)
             event_location.text = data.venue
             eventdesc.text = data.description
 
@@ -216,8 +216,9 @@ class SchoolEventCompletedAdapter(
                 id = data.id,
                 title = data.title,
                 description = data.description,
+                created_date = data.date,
                 subjectName = "",
-                sentBy = "",
+                sentBy = data.sent_by,
                 thumbnail = data.thumbnail,
                 isUnread = true,
                 isCompleted = true,
