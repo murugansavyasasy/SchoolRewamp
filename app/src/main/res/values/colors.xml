@@ -5,6 +5,7 @@
     <color name="PrimaryColor_light">#81ADFB</color>
     <color name="PrimaryColor_50">#504085ef</color>
     <color name="PrimaryColor_90">#904085ef</color>
+    <color name="red_90">#FF7F7F</color>
     <color name="PrimaryColor_80">#804085ef</color>
 
     <color name="dark_blue_5">#3668C2</color>

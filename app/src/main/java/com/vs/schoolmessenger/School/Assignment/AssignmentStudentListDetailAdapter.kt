@@ -126,12 +126,14 @@ class AssignmentStudentListDetailAdapter(
                     subjectName = "",
                     sentBy = "",
                     thumbnail = data.thumbnail,
+                    created_date = data.submitted_on,
                     isUnread = true,
                     isCompleted = true,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
                     submittedCount = 0,
                     assignmentid = data.id,
+                    isStudentlistdetail = true,
                     category = "",
                     assignmentsubject = ""
                 )
@@ -155,12 +157,14 @@ class AssignmentStudentListDetailAdapter(
                     subjectName = "",
                     sentBy = "",
                     thumbnail = data.thumbnail,
+                    created_date = data.submitted_on,
                     isUnread = true,
                     isCompleted = true,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
                     submittedCount = 0,
                     assignmentid = data.id,
+                    isStudentlistdetail = true,
                     category = "",
                     assignmentsubject = ""
                 )
@@ -189,6 +193,7 @@ class AssignmentStudentListDetailAdapter(
                                 description = data.description,
                                 subjectName = "",
                                 sentBy = "",
+                                created_date = data.submitted_on,
                                 thumbnail = data.thumbnail,
                                 isUnread = true,
                                 isCompleted = true,
@@ -196,6 +201,7 @@ class AssignmentStudentListDetailAdapter(
                                 fileList = convertedList,
                                 submittedCount = 0,
                                 assignmentid = data.id,
+                                isStudentlistdetail = true,
                                 category = "",
                                 assignmentsubject = ""
                             )

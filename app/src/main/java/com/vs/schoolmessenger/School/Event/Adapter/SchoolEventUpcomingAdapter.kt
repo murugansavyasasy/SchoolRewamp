@@ -170,11 +170,12 @@ class SchoolEventUpcomingAdapter(
 
             loadingBar.visibility = View.GONE
 
-            if (data.can_edit && data.can_delete) {
+            if (data.can_edit || data.can_delete) {
                 imgEditAndDelete.visibility = View.VISIBLE
             } else {
                 imgEditAndDelete.visibility = View.GONE
             }
+
             imgEditAndDelete.setOnClickListener {
                 listener.onEditAndDelete(data, it, adapterPosition)
             }

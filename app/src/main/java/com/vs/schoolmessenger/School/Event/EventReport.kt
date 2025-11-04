@@ -262,6 +262,7 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
                 if (response.status) {
                     Constant.hideLoading(this@EventReport)
                     eventupcomingadapter.removeItemAt(isEventPosition)
+                    loadeventdata()
                 } else {
                     Constant.showDataValidation(
                         resources.getString(R.string.fail), response.message, this
@@ -372,6 +373,18 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
+        if(data.can_edit) {
+            layoutEdit.visibility = View.VISIBLE
+        } else {
+            layoutEdit.visibility = View.GONE
+        }
+
+        if(data.can_delete) {
+            layoutDelete.visibility = View.VISIBLE
+        } else {
+            layoutDelete.visibility = View.GONE
+        }
+
         layoutEdit.setOnClickListener {
             Constant.isClickEdit=true
             val intent = Intent(this, CreateEvent::class.java)
@@ -388,6 +401,48 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         popupWindow.showAsDropDown(anchor, 0, 10)
     }
 
+
+    fun showEditDeletePopupCompleted(data: SchoolEventItem, anchor: View) {
+        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+
+        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+
+        if(data.can_edit) {
+            layoutEdit.visibility = View.VISIBLE
+        } else {
+            layoutEdit.visibility = View.GONE
+        }
+
+        if(data.can_delete) {
+            layoutDelete.visibility = View.VISIBLE
+        } else {
+            layoutDelete.visibility = View.GONE
+        }
+        layoutEdit.setOnClickListener {
+            Constant.isClickEdit=true
+            val intent = Intent(this, CreateEvent::class.java)
+            intent.putExtra(Constant.event_data, data)
+            startActivity(intent)
+            // isEditProcess(data)
+            popupWindow.dismiss()
+        }
+
+        layoutDelete.setOnClickListener {
+            showSendConfirmationDialog(false)
+            popupWindow.dismiss()
+        }
+        popupWindow.showAsDropDown(anchor, 0, 10)
+    }
 
     private fun updateDotIndicator() {
         val ongoingCount = mAdapter.itemCount
@@ -507,11 +562,13 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
 
 //            appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
 
+
+
             appViewModel!!.isEventDelete?.observe(this) { response ->
                 if (response != null) {
                     if (response.status) {
                         Constant.hideLoading(this@EventReport)
-                        eventupcomingadapter.removeItemAt(position)
+                        loadeventdata()
                     } else {
                         showConfirmationDialog(
                             resources.getString(R.string.fail),
@@ -558,12 +615,24 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
     }
 
 
+
+
     override fun onEditAndDelete(
         data: SchoolEventItem, anchorView: View, adapterPosition: Int
     ) {
         isEventId = data.id
         isEventPosition = adapterPosition
         showEditDeletePopup(data, anchorView)
+    }
+
+    override fun onEditAndDeleteCompleted(
+        data: SchoolEventItem,
+        anchorView: View,
+        adapterPosition: Int
+    ) {
+        isEventId = data.id
+        isEventPosition = adapterPosition
+        showEditDeletePopupCompleted(data, anchorView)
     }
 
 

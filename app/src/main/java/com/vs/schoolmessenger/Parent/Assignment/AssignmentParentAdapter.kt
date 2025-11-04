@@ -173,15 +173,16 @@ class AssignmentParentAdapter(
                     subjectName = "",
                     sentBy = "",
                     thumbnail = data.thumbnail,
-                    created_date = data.created_date,
                     isUnread = true,
                     isCompleted = true,
+                    created_date = data.created_date,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
                     submittedCount = data.submitted_count,
                     assignmentid = data.id,
                     category = data.category,
-                    assignmentsubject = data.subject
+                    assignmentsubject = data.subject,
+                    isParentAssignment = true
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -211,15 +212,16 @@ class AssignmentParentAdapter(
                     subjectName = "",
                     sentBy = "",
                     thumbnail = data.thumbnail,
-                    created_date = data.created_date,
                     isUnread = true,
                     isCompleted = true,
+                    created_date = data.created_date,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
                     submittedCount = data.submitted_count,
                     assignmentid = data.id,
                     category = data.category,
-                    assignmentsubject = data.subject
+                    assignmentsubject = data.subject,
+                    isParentAssignment = true
                 )
 
                 val intent = Intent(context, ChildHomeWork::class.java)
@@ -244,8 +246,8 @@ class AssignmentParentAdapter(
                     sentBy = "",
                     thumbnail = data.thumbnail,
                     isUnread = true,
-                    created_date = data.created_date,
                     isCompleted = true,
+                    created_date = data.created_date,
                     isMenuType = Constant.M_ASSIGNMENT,
                     fileList = convertedList,
                     submittedCount = data.submitted_count,

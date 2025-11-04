@@ -10,6 +10,7 @@ interface SchoolEventClickListener {
     fun onDeleteEvent(type: String?, id: String?, position: Int)
 
     fun onEditAndDelete(data: SchoolEventItem, anchorView: View, adapterPosition: Int)
+    fun onEditAndDeleteCompleted(data: SchoolEventItem, anchorView: View, adapterPosition: Int)
 
     fun onCategoryClicked(data: EventCategory)
 

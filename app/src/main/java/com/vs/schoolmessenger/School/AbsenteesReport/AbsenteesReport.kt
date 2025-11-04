@@ -11,7 +11,6 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.AbsenteesMarking.CustomCalendarFragement.CustomCalendarFragment
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportDetailAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesClickListener
@@ -32,7 +31,7 @@ import java.util.Locale
 
 
 class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener,
-    AbsenteesClickListener, AbsenteesStudentDetailClickListener, CustomCalendarFragment.CalendarDateListener {
+    AbsenteesClickListener, AbsenteesStudentDetailClickListener, CustomAbsenteesCalendarFragment.AbsenteesCalendarDateListener {
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
@@ -65,7 +64,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 
-        val calendarFragment = CustomCalendarFragment.newInstance(
+        val calendarFragment = CustomAbsenteesCalendarFragment.newInstance(
             minDate = "2020-01-01",
             maxDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()),
             selectedDate = null,
@@ -120,7 +119,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateCalendarWithAbsentDates() {
-        val fragment = supportFragmentManager.findFragmentByTag("CustomCalendarFragment") as? CustomCalendarFragment
+        val fragment = supportFragmentManager.findFragmentByTag("CustomCalendarFragment") as? CustomAbsenteesCalendarFragment
         fragment?.let {
             val absentDates = absenteeList.mapNotNull { data ->
                 try {
@@ -172,29 +171,52 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             }
         }
 
-        val adapter =
-            AbsenteesReportDetailAdapter(flatList, selectedDate, object : OnAbsenteeClickListener {
-                override fun onAbsenteeClicked(absentOn: String, sectionId: String, classname: String, sectionname: String, student_counts: String, absent: String, total: String) {
+        val adapter = AbsenteesReportDetailAdapter(
+            flatList,
+            selectedDate,
+            object : OnAbsenteeClickListener {
+                override fun onAbsenteeClicked(
+                    absentOn: String,
+                    sectionId: String,
+                    classname: String,
+                    sectionname: String,
+                    student_counts: String,
+                    absent: String,
+                    total: String
+                ) {
                     showStudentShimmer()
+
+                    // Update basic info
                     binding.absenteecount.text = "Absentees : $absent"
                     binding.totalstudentscount.text = "Total students : $student_counts"
                     binding.classDetailname.text = "$classname - $sectionname"
 
-                    binding.progressAbsent.max = total.toIntOrNull() ?: 1
-                    binding.progressAbsent.progress = absent.toIntOrNull() ?: 0
-                    Constant.showLoading(this@AbsenteesReport)
+                    // Safely parse to Int
+                    val totalCount = total.toIntOrNull() ?: 0
+                    val absentCount = absent.toIntOrNull() ?: 0
 
+                    binding.progressAbsent.max = if (totalCount > 0) totalCount else 1
+                    binding.progressAbsent.progress = absentCount.coerceAtMost(totalCount)
+
+
+                    Constant.showLoading(this@AbsenteesReport)
                     appViewModel?.getabsenteesstudentbydate(
-                        isAccessToken ?: "", absentOn, sectionId, this@AbsenteesReport
+                        isAccessToken ?: "",
+                        absentOn,
+                        sectionId,
+                        this@AbsenteesReport
                     )
                 }
-            })
+            }
+        )
+
         binding.rlaabsenteesreport2.adapter = adapter
+
 
         if (flatList.isNotEmpty()) {
             val (classWise, sectionWise) = flatList[0]
             val absent = sectionWise.total_absentees.toIntOrNull() ?: 0
-            val total = classWise.student_counts.toIntOrNull() ?: 1
+            val total = sectionWise.student_counts.toIntOrNull() ?: 1
             val sectiontotal = sectionWise.student_counts.toIntOrNull() ?: 1
             // Set initial UI values for the first item
             binding.absenteecount.text = "Absentees : $absent"

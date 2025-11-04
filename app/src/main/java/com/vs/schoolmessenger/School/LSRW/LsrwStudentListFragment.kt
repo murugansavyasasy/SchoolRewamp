@@ -56,7 +56,6 @@ class LsrwStudentListFragment : Fragment() {
         setupAdapter()
 
         appViewModel?.islsrwStudentlist?.observe(viewLifecycleOwner) { response ->
-            Constant.hideLoading(requireActivity())
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcystudentlist.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
@@ -82,7 +81,6 @@ class LsrwStudentListFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        Constant.showLoading(requireActivity())
         submittedStudentlistAdapter = SubmittedStudentlistAdapter(emptyList(), requireContext())
         binding.rcystudentlist.layoutManager = LinearLayoutManager(requireContext())
         binding.rcystudentlist.isNestedScrollingEnabled = false
