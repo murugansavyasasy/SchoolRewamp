@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
-        android:background="@drawable/rect_white_light_radious"
+        android:background="@drawable/bg_white_primary_shadow"
         android:layout_height="wrap_content">
 
         <TextView

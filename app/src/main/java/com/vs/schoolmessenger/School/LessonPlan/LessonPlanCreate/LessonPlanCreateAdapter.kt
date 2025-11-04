@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreate
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.text.Editable
 import android.text.TextWatcher
@@ -92,7 +93,12 @@ class LessonPlanCreateAdapter(
 
             nameTextView.text = data.name
 
+            spinnerContainer.visibility = View.GONE
+            valueTextView.visibility = View.GONE
+            headerDateLabel.visibility = View.GONE
+
             when (data.field_type) {
+
                 Constant.dropdown -> {
                     val options = data.field_data ?: listOf()
                     val adapter = ArrayAdapter(
@@ -100,6 +106,7 @@ class LessonPlanCreateAdapter(
                     )
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     spinner.adapter = adapter
+
                     val selectedIndex = options.indexOf(data.value)
                     if (selectedIndex != -1) {
                         spinner.setSelection(selectedIndex)
@@ -116,9 +123,7 @@ class LessonPlanCreateAdapter(
                     }
 
                     spinnerContainer.visibility = View.VISIBLE
-                    headerDateLabel.visibility = View.GONE
-                    valueTextView.visibility = View.GONE
-                    spinner.isEnabled = data.is_disable != true
+                    spinner.isEnabled = !data.is_disable
                 }
 
                 Constant.text_ -> {
@@ -130,33 +135,23 @@ class LessonPlanCreateAdapter(
 
                         override fun beforeTextChanged(
                             s: CharSequence?, start: Int, count: Int, after: Int
-                        ) {
-                        }
+                        ) {}
 
                         override fun onTextChanged(
                             s: CharSequence?, start: Int, before: Int, count: Int
-                        ) {
-                        }
+                        ) {}
                     })
 
-                    spinnerContainer.visibility = View.GONE
-                    spinnerContainer.visibility = View.GONE
                     valueTextView.visibility = View.VISIBLE
                     valueTextView.isEnabled = !data.is_disable
-                    if (!data.is_disable) {
-                        valueTextView.setBackgroundResource(R.drawable.gray_bg_radius_textview)
-                    }
                 }
 
                 Constant.datepicker -> {
                     headerDateLabel.text = data.value
-                    spinnerContainer.visibility = View.GONE
-                    valueTextView.visibility = View.GONE
                     headerDateLabel.visibility = View.VISIBLE
                     headerDateLabel.isEnabled = !data.is_disable
 
                     if (!data.is_disable) {
-                        headerDateLabel.setBackgroundResource(R.drawable.gray_bg_radius_textview)
                         headerDateLabel.setOnClickListener {
                             val calendar = Calendar.getInstance()
                             val year = calendar.get(Calendar.YEAR)
@@ -164,22 +159,59 @@ class LessonPlanCreateAdapter(
                             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
                             val datePickerDialog = DatePickerDialog(
-                                itemView.context, { _, selectedYear, selectedMonth, selectedDay ->
+                                itemView.context,
+                                { _, selectedYear, selectedMonth, selectedDay ->
                                     val cal = Calendar.getInstance()
                                     cal.set(selectedYear, selectedMonth, selectedDay)
                                     val sdf = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
                                     val formattedDate = sdf.format(cal.time)
                                     headerDateLabel.text = formattedDate
                                     data.value = formattedDate
-                                }, year, month, day
+                                },
+                                year, month, day
                             )
                             datePickerDialog.show()
                         }
                     }
                 }
             }
+
+            val grayColor = Color.parseColor("#616159")
+            val black = Color.parseColor("#FF000000")
+            if (data.is_disable == true) {
+                when (data.field_type) {
+                    Constant.dropdown -> {
+                        val selectedView = spinner.selectedView as? TextView
+                        selectedView?.setTextColor(grayColor)
+                        spinner.setBackgroundResource(R.drawable.gray_bg_radius_textview)
+                    }
+                    Constant.text_ -> {
+                        valueTextView.setTextColor(grayColor)
+                        valueTextView.setBackgroundResource(R.drawable.gray_bg_radius_textview)
+                    }
+                    Constant.datepicker -> {
+                        headerDateLabel.setTextColor(grayColor)
+                        headerDateLabel.setBackgroundResource(R.drawable.gray_bg_radius_textview)
+                    }
+                }
+            } else {
+                when (data.field_type) {
+                    Constant.text_ -> {
+                        valueTextView.setTextColor(black)
+                        valueTextView.setBackgroundResource(R.drawable.field_background)
+                    }
+                    Constant.datepicker -> {
+                        headerDateLabel.setTextColor(black)
+                        headerDateLabel.setBackgroundResource(R.drawable.field_background)
+                    }
+                    Constant.dropdown -> {
+                        spinnerContainer.setBackgroundResource(R.drawable.field_background)
+                    }
+                }
+            }
         }
     }
+
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shimmerLayout: ShimmerFrameLayout =

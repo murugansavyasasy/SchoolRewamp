@@ -36,6 +36,8 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
     private lateinit var assignmentstudentlistadapter: AssignmentStudentListAdapter
 
     private var assignmentId: String? = null
+    private var title: String? = null
+    private var assignmentsubject: String? = null
     private var submittedCount: Int = 0
     private var totalCount: Int = 0
     private var created_date: String? = null
@@ -48,6 +50,8 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         arguments?.let {
             assignmentId = it.getString(Constant.assignment_id)
             type = it.getString(Constant.type)
+            title = it.getString("title")
+            assignmentsubject = it.getString(Constant.assignmentsubject)
             submittedCount = it.getInt(Constant.submitted_count, 0)
             totalCount = it.getInt(Constant.Total_Count, 0)
             created_date = it.getString(Constant.created_date)
@@ -169,8 +173,11 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             Constant.isShimmerViewShow,
             binding.nomessage,
             binding.txtNoData,
-            created_date
+            created_date,
+            title,
+            assignmentsubject
         )
+
 
         binding.rcystudentlist.layoutManager = LinearLayoutManager(requireContext())
         binding.rcystudentlist.isNestedScrollingEnabled = false
@@ -211,6 +218,8 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
     companion object {
         fun newInstance(
             assignmentId: String,
+            title: String,
+            assignmentsubject: String,
             type: String,
             submittedCount: Int,
             totalCount: Int,
@@ -218,6 +227,8 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
         ) = StudentListFragment().apply {
             arguments = Bundle().apply {
                 putString(Constant.assignment_id, assignmentId)
+                putString("title", title)
+                putString(Constant.assignmentsubject, assignmentsubject)
                 putString(Constant.type, type)
                 putInt(Constant.submitted_count, submittedCount)
                 putInt(Constant.Total_Count, totalCount)

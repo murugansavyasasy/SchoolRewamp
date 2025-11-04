@@ -71,7 +71,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
         msg_id = intent.getIntExtra(Constant.msg_id, -1)
 
-        fromNotification = intent.getBooleanExtra("fromNotification", false)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
 
 
 
@@ -232,6 +232,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
     override fun onResume() {
         super.onResume()
+        isHomeWorkList()
         Constant.isCompletedHomeworkId?.let { homeworkId ->
             updateList(homeworkId)
             Constant.isCompletedHomeworkId = null

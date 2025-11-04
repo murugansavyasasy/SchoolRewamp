@@ -18,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
 import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
 import com.vs.schoolmessenger.R
@@ -55,6 +56,11 @@ class MeetingHistoryAdapter(
     }
 
     override fun getItemCount() = items.size
+
+    fun getCurrentList(): List<MeetingListItem> {
+        return items
+    }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {

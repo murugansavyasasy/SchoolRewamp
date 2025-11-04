@@ -387,7 +387,7 @@
                                 android:layout_marginTop="@dimen/three"
                                 android:id="@+id/txtStartDate"
                                 android:layout_width="wrap_content"
-                                android:text=""
+                                android:text="jasjdknsdjnkj"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_height="wrap_content">
                             </TextView>

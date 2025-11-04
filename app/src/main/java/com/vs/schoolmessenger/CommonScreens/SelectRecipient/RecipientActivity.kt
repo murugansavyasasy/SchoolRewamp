@@ -14,10 +14,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -44,6 +47,8 @@ import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
+import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevelData
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -70,7 +75,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
     }
-
     val isGroupSelectedIds = mutableListOf<NameAndIds>()
     val isStandardSelectedIds = mutableListOf<Standard>()
     val isSectionSelectedIds = mutableListOf<Section>()
@@ -84,6 +88,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private var isStandardListAdapter: StandardListAdapter? = null
     var isGetStandard: List<Standard>? = null
     var isSection: List<Section>? = null
+    var selectedLevelValue = 0
     private var isGroupStaffAdapter: GroupStaffAdapter? = null
     private var isAccessToken: String? = null
     private var isUserDetails: UserDetails? = null
@@ -105,9 +110,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private lateinit var dimOverlayManager: DimOverlayManager
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
-
+    var isStandardId = ""
     var isClickedTab = 0
-
 
     override fun setupViews() {
         super.setupViews()
@@ -156,7 +160,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isAcademicYear = reorderedList
                 isLoadAcademicYear(isAcademicYear)
                 isValidAcademicYear =
-                    isAcademicYear?.any { it.current_academic_year == true } == true
+                    isAcademicYear?.any { it.current_academic_year } == true
                 isSelectedAcademicYear = isAcademicYear!![0].year
                 isAcademicYearId = isAcademicYear!![0].id
                 isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
@@ -208,12 +212,20 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (response != null) {
                 if (response.status) {
                     isGetSubjectListData = response.data
-                    if (isGetSubjectListData!!.size > 0) {
-                        isSubjectId = isGetSubjectListData!!.first().id
+                    if (isGetSubjectListData!!.isNotEmpty()) {
+                        //  isSubjectId = isGetSubjectListData!!.first().id
                         binding.rytSubjectDropDown.visibility = View.VISIBLE
                         binding.subjectlabel.visibility = View.VISIBLE
                         isLoadSubject(isGetSubjectListData)
                     }
+                }
+            }
+        }
+
+        appViewModel!!.isGetCheckLevel?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    isLoadCheckLevelData(response.data)
                 }
             }
         }
@@ -237,7 +249,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             isSection = isGetStandard!!.get(0).sections
                             binding.nomessage.visibility = View.GONE
                             isLoadData(isSection)
-                            binding.grouplabel.text = resources.getString(R.string.Section)
+//                            binding.grouplabel.text = resources.getString(R.string.Section)
+                            binding.grouplabel.text = resources.getString(R.string.Standards)
                         } else {
                             isLoadTheStandardData(isGetStandard)
                             binding.bottomLayout.visibility = View.VISIBLE
@@ -301,11 +314,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
 
+        appViewModel!!.isCreateQuiz?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            ProgressDialogHelper.dismiss()
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
         appViewModel!!.isAssignmentSend?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
-
             }
         }
 
@@ -314,7 +335,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
-
             }
         }
 
@@ -325,7 +345,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Constant.showTopAlertPopup(response.message, this)
             }
         }
-
 
         appViewModel!!.islsrwSkillSubmit?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
@@ -422,37 +441,42 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun tapVisibility() {
         Log.d("Tap Visibility Check", "Tap Debug Check")
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
-            if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM) {
+            when (SELECTED_SCHOOL_MENU) {
+                M_HOMEWORK, Constant.M_QUIZ_EXAM -> {
 
-                binding.nomessage.visibility = View.GONE
-                binding.nomessageEntire.visibility = View.GONE
-                binding.tabLayout.visibility = View.GONE
-                changeTapBg(Constant.isSection)
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
 
-            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+                }
+                M_ASSIGNMENT -> {
 
-                binding.nomessage.visibility = View.GONE
-                binding.nomessageEntire.visibility = View.GONE
-                binding.tabLayout.visibility = View.GONE
-                changeTapBg(Constant.isSection)
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
 
-                //show send and specific student button
-            } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
-                binding.nomessage.visibility = View.GONE
-                binding.nomessageEntire.visibility = View.GONE
-                binding.tabLayout.visibility = View.GONE
-                changeTapBg(Constant.isSection)
-            } else {
+                    //show send and specific student button
+                }
+                M_LSRW -> {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
+                }
+                else -> {
 
-                binding.nomessage.visibility = View.GONE
-                binding.nomessageEntire.visibility = View.GONE
-                binding.tapEntireSchool.visibility = View.GONE
-                binding.tapStandards.visibility = View.VISIBLE
-                binding.tabSectionsStudent.visibility = View.VISIBLE
-                binding.tabGroups.visibility = View.VISIBLE
-                binding.tapStaffs.visibility = View.GONE
-                changeTapBg(Constant.isStandard)
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tapEntireSchool.visibility = View.GONE
+                    binding.tapStandards.visibility = View.VISIBLE
+                    binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabGroups.visibility = View.VISIBLE
+                    binding.tapStaffs.visibility = View.GONE
+                    changeTapBg(Constant.isStandard)
 
+                }
             }
         } else {
             Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
@@ -544,6 +568,42 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
         binding.recyclerView.adapter = isGroupStaffAdapter
 
+    }
+
+    private fun isLoadCheckLevelData(data: List<GetCheckLevelData>?) {
+        if (data.isNullOrEmpty()) return
+
+        val levelList = data.toMutableList()
+        levelList.add(0, GetCheckLevelData(0))
+
+        val displayList = levelList.map {
+            if (it.level == 0) "Select Level" else "Level ${it.level}"
+        }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, displayList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.isSpinnerLevel.adapter = adapter
+
+        binding.isSpinnerLevel.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedLevel = levelList[position]
+                    Log.d("DropdownMenu", "Clicked Level: ${selectedLevel.level}")
+
+                    selectedLevelValue = if (position != 0) {
+                        selectedLevel.level
+                    } else {
+                        0
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+        binding.isSpinnerLevel.setSelection(0)
     }
 
     private fun isLoadData(isSection: List<Section>?) {
@@ -646,7 +706,16 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         "DropdownMenu",
                         "Clicked Subject: ID = ${selectedItem.id}, Name = ${selectedItem.name}"
                     )
-                    isSubjectId = if (position != 0) selectedItem.id!! else null
+                    isSubjectId = if (position != 0) selectedItem.id else null
+
+                    if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
+                        if (position != 0) {
+                            binding.rytLevelDropDown.visibility = View.VISIBLE
+                            isCheckLevel()
+                        } else {
+                            binding.rytLevelDropDown.visibility = View.GONE
+                        }
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -675,6 +744,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         "Clicked Standard Year: ID = ${isStandard!![position].id}, Year = ${isStandard[position].name}"
                     )
 
+                    isStandardId = isStandard[position].id.toString()
                     isSection = isStandard[position].sections
                     binding.recyclerView.visibility = View.VISIBLE
                     binding.chAllSelect.isChecked = false
@@ -776,15 +846,59 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     if (isSelectedType == 0) {
-                        showSendConfirmationDialog(
-                            "", isAcademicYearNote
-                        )
+                        if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
+                            if (selectedLevelValue == 0) {
+                                Constant.showValidationAlertPopup("Alert", "Select the level", this)
+                            } else {
+                                showSendConfirmationDialog(
+                                    "", isAcademicYearNote
+                                )
+                            }
+                        } else if (Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU) {
+                            if (isSubjectId == null) {
+                                Constant.showValidationAlertPopup("Alert", "Select the subject", this)
+                            } else {
+                                showSendConfirmationDialog(
+                                    "", isAcademicYearNote
+                                )
+                            }
+                        } else {
+                            showSendConfirmationDialog(
+                                "", isAcademicYearNote
+                            )
+                        }
                     } else {
-                        showSendConfirmationDialog(
-                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-                                R.string._s
-                            ), isAcademicYearNote
-                        )
+
+                        if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
+                            if (selectedLevelValue == 0) {
+                                Constant.showValidationAlertPopup("Alert", "Select the level", this)
+                            } else {
+                                showSendConfirmationDialog(
+                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                        R.string._s
+                                    ), isAcademicYearNote
+                                )
+                            }
+                        } else if (Constant.M_HOMEWORK==SELECTED_SCHOOL_MENU){
+                            if (isSubjectId==null){
+                                Constant.showValidationAlertPopup("Alert", "Select the subject", this)
+                            }else{
+                                showSendConfirmationDialog(
+                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                        R.string._s
+                                    ), isAcademicYearNote
+                                )
+                            }
+                        }
+
+
+                        else {
+                            showSendConfirmationDialog(
+                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                    R.string._s
+                                ), isAcademicYearNote
+                            )
+                        }
                     }
                 } else {
                     Constant.showValidationAlertPopup(
@@ -924,7 +1038,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.textdesc.visibility = View.GONE
                 binding.bottomLayout.visibility = View.GONE
                 binding.grouplabel.visibility = View.VISIBLE
-                binding.grouplabel.text = resources.getString(R.string.Section)
+//                binding.grouplabel.text = resources.getString(R.string.Section)
+                binding.grouplabel.text = resources.getString(R.string.Standards)
 
                 binding.chAllSelect.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
@@ -1013,6 +1128,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         appViewModel!!.isGetGroupList(isAccessToken!!, isAcademicYearId, this)
     }
 
+    private fun isCheckLevel() {
+        appViewModel!!.isGetCheckLevel(
+            isAccessToken!!, isStandardId, isSubjectId!!.toString(),
+            ""
+        )
+    }
+
     private fun isGetSubjectList(isSectionId: String) {
         // Constant.showLoading(this@RecipientActivity)
         appViewModel!!.isGetSubjectList(
@@ -1048,13 +1170,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (needsProcessing) {
             ProgressDialogHelper.show(this)
         }
-        Log.d("UploadDebug", "isUploadFilesInServer called with type: $isFileType")
-
         ProgressDialogHelper.show(this)
-        Log.d("UploadDebug", "ProgressDialogHelper.show() called")
-
         ProgressDialogHelper.updateProgress(0)
-        Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(0) called")
 
         if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW) {
             if (Constant.selectedFiles.isNotEmpty()) {
@@ -1075,7 +1192,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (file.type == FileType.VIDEO) {
                 isVideoSelectedArrayList.add(file)
                 iterator.remove()
-
             }
         }
 
@@ -1151,14 +1267,33 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 }
 
                 Constant.M_QUIZ_EXAM -> {
-//                    val isQuizData = intent.getSerializableExtra(Constant.create_quiz_exam_data) as? SaveCreateExamQuizDetails
-//                    Log.d("isQuizData",isQuizData!!.title)
-//                    val jsonObject = JsonObject()
-//                    jsonObject.addProperty("title",isQuizData!!.title)
-//                    jsonObject.addProperty("description",isQuizData!!.description)
-//                    jsonObject.addProperty("no_of_question",isQuizData!!.no_of_question)
-//                    jsonObject.addProperty("level_flag",1)
-//                    appViewModel!!.isCreateQuiz(isAccessToken!!, jsonObject)
+                    Constant.showLoading(this)
+                    val isQuizData =
+                        intent.getSerializableExtra(Constant.create_quiz_exam_data) as? SaveCreateExamQuizDetails
+                    if (isQuizData != null) {
+                        Log.d("isQuizData", isQuizData.title)
+
+                        val jsonObject = JsonObject().apply {
+                            addProperty("title", isQuizData.title)
+                            addProperty("description", isQuizData.description)
+                            addProperty("no_of_question", isQuizData.no_of_question.toInt())
+                            addProperty("target_type", isTargetType)
+                            addProperty("level", selectedLevelValue)
+                            addProperty("level_flag", isQuizData.level_flag)
+                            addProperty("subject_id", isSubjectId!!.toString())
+                            addProperty("class_id", isStandardId)
+
+                            val jsonArray = JsonArray()
+                            selectedIds.forEach { id ->
+                                jsonArray.add(id)
+                            }
+                            add("target_code", jsonArray)
+                        }
+
+                        Log.d("CreateQuizRequest", jsonObject.toString())
+                        appViewModel!!.isCreateQuiz(isAccessToken!!, jsonObject)
+                    }
+
                 }
             }
         }

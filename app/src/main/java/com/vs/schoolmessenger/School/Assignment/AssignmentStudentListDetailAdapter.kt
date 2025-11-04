@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.Assignment
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -21,11 +22,15 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionDetail
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AssignmentStudentListDetailAdapter(
     private var itemList: List<SubmissionDetail>?,
     private var context: Context,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
+    private val title: String ,
+    private val assignmentSubject: String
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -44,7 +49,7 @@ class AssignmentStudentListDetailAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.assignment_adapter_student_detailreport, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view, context,title,assignmentSubject)
         }
     }
 
@@ -69,10 +74,12 @@ class AssignmentStudentListDetailAdapter(
     }
 
     class DataViewHolder(
-        itemView: View, private val context: Context
+        itemView: View, private val context: Context, private val title: String, private val assignmentSubject: String
     ) : RecyclerView.ViewHolder(itemView) {
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
+        private val lbltitle: TextView = itemView.findViewById(R.id.lbltitle)
+        private val lblassignmentsubject: TextView = itemView.findViewById(R.id.lblassignmentsubject)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val video_player: ImageView = itemView.findViewById(R.id.video_player)
@@ -84,7 +91,22 @@ class AssignmentStudentListDetailAdapter(
             data: SubmissionDetail, position: Int, adapter: AssignmentStudentListDetailAdapter
         ) {
             lblStudentName.text = data.description
-            sectionlabel.text = data.submitted_on
+            lbltitle.text = title
+            lblassignmentsubject.text = assignmentSubject
+            Log.d("title",title.toString())
+            Log.d("description",assignmentSubject.toString())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+
+            val formattedDate = try {
+                val date = inputFormat.parse(data.submitted_on)
+                outputFormat.format(date ?: "")
+            } catch (e: Exception) {
+                data.submitted_on // fallback if parsing fails
+            }
+
+            sectionlabel.text = "Submitted $formattedDate"
+
             val hasFiles = !data.file_path.isNullOrEmpty()
 
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
@@ -99,7 +121,7 @@ class AssignmentStudentListDetailAdapter(
                 }
                 val isHomeWorkData = FilePreview(
                     id = data.id,
-                    title = "",
+                    title = title,
                     description = data.description,
                     subjectName = "",
                     sentBy = "",
@@ -128,7 +150,7 @@ class AssignmentStudentListDetailAdapter(
                 }
                 val isHomeWorkData = FilePreview(
                     id = data.id,
-                    title ="",
+                    title =title,
                     description = data.description,
                     subjectName = "",
                     sentBy = "",
@@ -163,7 +185,7 @@ class AssignmentStudentListDetailAdapter(
                             }
                             val isHomeWorkData = FilePreview(
                                 id = data.id,
-                                title = "",
+                                title = title,
                                 description = data.description,
                                 subjectName = "",
                                 sentBy = "",

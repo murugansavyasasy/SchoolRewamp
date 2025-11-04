@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.PTM.Activity
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.util.Log
@@ -18,6 +19,7 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -68,7 +70,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     var isSlotsCount = 1
     private var bottomSheetDialog: BottomSheetDialog? = null
     private val itemsCategory = listOf(
-        "Select Slot Duration", "10", "15", "20", "30", "Custom"
+        "Select Slot Duration", "10 mins", "15 mins", "20 mins", "30 mins", "Custom"
     )
     private lateinit var isSlotCreateValues: MutableList<Pair<String, List<SlotAvailability>>>
     var isSlotDuration = ""
@@ -289,25 +291,50 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                         val chosenTime = Calendar.getInstance().apply {
                             set(Calendar.HOUR_OF_DAY, hour)
                             set(Calendar.MINUTE, minute)
+                            set(Calendar.SECOND, 0)
+                            set(Calendar.MILLISECOND, 0)
                         }
 
+                        // Format today and compare properly
                         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                         val todayStr = sdf.format(now.time)
 
-                        // Case: multiple dates already selected, including today
-                        if (selectedDates.contains(todayStr) && chosenTime.before(now)) {
-                            Toast.makeText(
-                                this,
-                                "Cannot select past time when today is selected",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            return@TimePickerDialog // stop here — don’t update text
+                        // Normalize selectedDates format to dd-MM-yyyy
+                        val normalizedSelectedDates = selectedDates.map {
+                            try {
+                                // Try to parse any format like dd-MMM-yyyy or yyyy-MM-dd
+                                val parsed =
+                                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(it)
+                                sdf.format(parsed!!)
+                            } catch (e: Exception) {
+                                it
+                            }
                         }
 
-                        // Otherwise allow
+                        // Case: multiple dates including today
+                        if (normalizedSelectedDates.contains(todayStr)) {
+                            val nowTime = Calendar.getInstance().apply {
+                                set(Calendar.SECOND, 0)
+                                set(Calendar.MILLISECOND, 0)
+                            }
+                            if (chosenTime.before(nowTime)) {
+                                Toast.makeText(
+                                    this,
+                                    "Cannot select past time when today is selected",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return@TimePickerDialog
+                            }
+                        }
+
+                        // Save and display
                         startCalendar = chosenTime
                         binding.lblFromTime.text =
                             SimpleDateFormat("hh:mm a", Locale.getDefault()).format(startCalendar!!.time)
+
+                        // Reset end time
+                        binding.lblToTime.text = "End with"
+                        endCalendar = null
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
@@ -329,22 +356,37 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                         endCalendar = Calendar.getInstance().apply {
                             set(Calendar.HOUR_OF_DAY, hour)
                             set(Calendar.MINUTE, minute)
+                            set(Calendar.SECOND, 0)
+                            set(Calendar.MILLISECOND, 0)
                         }
 
-                        if (endCalendar!!.before(startCalendar)) {
-                            Toast.makeText(
-                                this,
-                                "End Time cannot be before Start Time",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            binding.lblToTime.text = "End with"
-                            endCalendar = null
-                        } else {
-                            binding.lblToTime.text =
-                                SimpleDateFormat(
+                        when {
+                            endCalendar!!.before(startCalendar) -> {
+                                Toast.makeText(
+                                    this,
+                                    "End Time cannot be before Start Time",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                binding.lblToTime.text = "End with"
+                                endCalendar = null
+                            }
+
+                            endCalendar!!.timeInMillis == startCalendar!!.timeInMillis -> {
+                                Toast.makeText(
+                                    this,
+                                    "Start Time and End Time cannot be the same",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                binding.lblToTime.text = "End with"
+                                endCalendar = null
+                            }
+
+                            else -> {
+                                binding.lblToTime.text = SimpleDateFormat(
                                     "hh:mm a",
                                     Locale.getDefault()
                                 ).format(endCalendar!!.time)
+                            }
                         }
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
@@ -352,6 +394,79 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     false
                 ).show()
             }
+
+//            R.id.rytPickFromTime -> {
+//                val calendar = Calendar.getInstance()
+//                TimePickerDialog(
+//                    this,
+//                    { _, hour, minute ->
+//                        val now = Calendar.getInstance()
+//                        val chosenTime = Calendar.getInstance().apply {
+//                            set(Calendar.HOUR_OF_DAY, hour)
+//                            set(Calendar.MINUTE, minute)
+//                        }
+//
+//                        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+//                        val todayStr = sdf.format(now.time)
+//
+//                        // Case: multiple dates already selected, including today
+//                        if (selectedDates.contains(todayStr) && chosenTime.before(now)) {
+//                            Toast.makeText(
+//                                this,
+//                                "Cannot select past time when today is selected",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                            return@TimePickerDialog // stop here — don’t update text
+//                        }
+//
+//                        // Otherwise allow
+//                        startCalendar = chosenTime
+//                        binding.lblFromTime.text =
+//                            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(startCalendar!!.time)
+//                    },
+//                    calendar.get(Calendar.HOUR_OF_DAY),
+//                    calendar.get(Calendar.MINUTE),
+//                    false
+//                ).show()
+//            }
+//
+//            R.id.rytToTime -> {
+//                if (startCalendar == null) {
+//                    Toast.makeText(this, "Please select Start Time first", Toast.LENGTH_SHORT)
+//                        .show()
+//                    return
+//                }
+//
+//                val calendar = Calendar.getInstance()
+//                TimePickerDialog(
+//                    this,
+//                    { _, hour, minute ->
+//                        endCalendar = Calendar.getInstance().apply {
+//                            set(Calendar.HOUR_OF_DAY, hour)
+//                            set(Calendar.MINUTE, minute)
+//                        }
+//
+//                        if (endCalendar!!.before(startCalendar)) {
+//                            Toast.makeText(
+//                                this,
+//                                "End Time cannot be before Start Time",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                            binding.lblToTime.text = "End with"
+//                            endCalendar = null
+//                        } else {
+//                            binding.lblToTime.text =
+//                                SimpleDateFormat(
+//                                    "hh:mm a",
+//                                    Locale.getDefault()
+//                                ).format(endCalendar!!.time)
+//                        }
+//                    },
+//                    calendar.get(Calendar.HOUR_OF_DAY),
+//                    calendar.get(Calendar.MINUTE),
+//                    false
+//                ).show()
+//            }
 
             R.id.lblCheckAvailability -> {
                 isCheckAvailableSlots()
@@ -539,8 +654,13 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         val allSlotsList = data.filter { it.slots.isNotEmpty() }
 
         if (allSlotsList.isEmpty()) {
-            Toast.makeText(this, "No slots found for selected date(s)", Toast.LENGTH_SHORT).show()
+            Constant.showTopAlertPopup1("No slots found for selected date(s) and time", this, false)
             return
+        }
+
+        // ✅ Prevent reopening if already open
+        if (bottomSheetDialog != null && bottomSheetDialog!!.isShowing) {
+            return  // Exit immediately if already showing
         }
 
         // 2. Setup bottom sheet
@@ -566,7 +686,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         // 5. Handle create slot click
         lblCreateSlot?.setOnClickListener {
-            // Filter only available slots before saving
             val availableSlots = selectedSlots.filter { (_, slot) ->
                 slot.slot_availablity.equals("Available", true)
             }
@@ -576,11 +695,10 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 return@setOnClickListener
             }
 
-            val dialogBuilder = android.app.AlertDialog.Builder(this)
+            val dialogBuilder = AlertDialog.Builder(this)
             dialogBuilder.setTitle("Confirm Slot Creation")
             dialogBuilder.setMessage("Are you sure you want to create slots for the selected dates?")
             dialogBuilder.setPositiveButton("Yes") { dialog, _ ->
-                // Group selected available slots by date
                 isSlotCreateValues = availableSlots
                     .groupBy { it.first } // date
                     .map { (date, slots) -> date to slots.map { it.second } }
@@ -596,14 +714,19 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             dialogBuilder.create().show()
         }
 
-        //6. Show bottom sheet full height
+        // 6. Show bottom sheet full height
         bottomSheetDialog!!.show()
+
         val bottomSheet = bottomSheetDialog!!.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.let { sheet ->
-            val behavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(sheet)
-            behavior.state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+            val behavior = BottomSheetBehavior.from(sheet)
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
             behavior.isFitToContents = true
             behavior.skipCollapsed = true
+        }
+
+        bottomSheetDialog!!.setOnDismissListener {
+            bottomSheetDialog = null
         }
     }
 
@@ -634,22 +757,22 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
 
         if (selectedDates.isEmpty()) {
-            Toast.makeText(this, "Please select choose the date", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Kindly select the date", Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (binding.lblFromTime.text.toString() == "Start with") {
-            Toast.makeText(this, "Please choose the starting time", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Kindly select the start time", Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (binding.lblToTime.text.toString() == "End with") {
-            Toast.makeText(this, "Please choose the end time", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Kindly select the end time", Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (isSlotDuration == "Select Slot Duration") {
-            Toast.makeText(this, "Please choose the slot duration", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Kindly select the slot duration", Toast.LENGTH_SHORT).show()
             return null
         }
 
@@ -658,8 +781,13 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             return null
         }
 
+        if (binding.edtSlotCustomDuration.text.toString() == "0") {
+            Toast.makeText(this, "Minutes should greater then zero", Toast.LENGTH_SHORT).show()
+            return null
+        }
+
         if (binding.switchBreak.isChecked() && isBreakDuration.isEmpty()) {
-            Toast.makeText(this, "Choose the break duration", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Select the break duration", Toast.LENGTH_SHORT).show()
             return null
         }
         if (isSlotDurationCustom) {
@@ -689,7 +817,15 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
-                    isSlotDuration = itemsCategory[position]
+
+                    if (position != 0 || itemsCategory[position] != "Custom") {
+                        val parts = itemsCategory[position].split(" ")
+                        val number = parts[0]
+//                        val unit = parts[1]
+                        isSlotDuration = number
+                    }
+
+//                    isSlotDuration = itemsCategory[position]
                     if (isSlotDuration == "Custom") {
                         binding.rytSlotCustomEdit.visibility = View.VISIBLE
                         isSlotDurationCustom = true

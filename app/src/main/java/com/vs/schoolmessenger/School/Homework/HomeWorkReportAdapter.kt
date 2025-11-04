@@ -98,7 +98,11 @@ class HomeWorkReportAdapter(
             binding.redDot.visibility = View.GONE
             binding.imgSuccess.visibility = View.GONE
             binding.progressContainer.visibility = View.GONE
-            binding.imgEditAndDelete.visibility = View.VISIBLE
+            if (item.can_edit && item.can_delete) {
+                binding.imgEditAndDelete.visibility = View.VISIBLE
+            }else{
+                binding.imgEditAndDelete.visibility = View.GONE
+            }
 
             binding.imgEditAndDelete.setOnClickListener {
                 listener.onClickListener(item, it, adapterPosition)

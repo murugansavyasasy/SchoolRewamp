@@ -83,6 +83,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
+                binding.txtNoData.text=response?.message?:getString(R.string.no_list_found)
                 binding.rcyLessonPlanEdit.visibility = View.GONE
             }
         }

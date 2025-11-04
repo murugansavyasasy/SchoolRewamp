@@ -59,13 +59,13 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         )
 
         userDetails = SharedPreference.getUserDetails(this)
-        fromNotification = intent.getBooleanExtra("fromNotification", false)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
 
         if (fromNotification) {
             Constant.isParentChoose = true
             msg_id = intent.getIntExtra(Constant.msg_id, -1)
-            headerId = intent.getStringExtra("header_id")
-            receiverId = intent.getStringExtra("receiverid")
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
             menu_name = intent.getStringExtra(Constant.menu_name)
 
             Log.d(

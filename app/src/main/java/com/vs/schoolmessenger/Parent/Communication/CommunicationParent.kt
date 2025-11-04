@@ -67,13 +67,13 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.imgFilter.setOnClickListener(this)
 
         userDetails = SharedPreference.getUserDetails(this)
-        fromNotification = intent.getBooleanExtra("fromNotification", false)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
 
         if (fromNotification) {
             Constant.isParentChoose = true
             msg_id = intent.getIntExtra(Constant.msg_id, -1)
-            headerId = intent.getStringExtra("header_id")
-            receiverId = intent.getStringExtra("receiverid")
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
             menu_name = intent.getStringExtra(Constant.menu_name)
 
             Log.d(
@@ -230,7 +230,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         if (msg_id == -1) return
 
         allVoiceData?.let { list ->
-            val index = list.indexOfFirst { it.id == headerId }
+            val index = list.indexOfFirst { it.header_id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in completed")
                 binding.recyclerInitial.post {
@@ -543,6 +543,15 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        adapter!!.pauseMediaPlayer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter!!.onDestroyMediaPlayer()
+    }
 
     override fun onBackPressed() {
         if (adapter != null) {

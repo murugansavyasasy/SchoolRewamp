@@ -1,6 +1,9 @@
 package com.vs.schoolmessenger.Parent.QuizExam
 
 import android.content.Intent
+import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -10,8 +13,10 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.QuizExam.Adapter.CompletedQuizAdapter
 import com.vs.schoolmessenger.Parent.QuizExam.Adapter.QuizUpcomingAdapter
@@ -35,6 +40,17 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
     private var isUpcoming: List<GetQuizExamListData>? = emptyList()
     private var isCompleted: List<GetQuizExamListData>? = emptyList()
 
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
+
+
+
+
     override fun getViewBinding(): QuizBinding {
         return QuizBinding.inflate(layoutInflater)
     }
@@ -46,6 +62,28 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this,matchedChild!!)
+            Constant.isParentMenuName = menu_name!!
+        }
+
+
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
@@ -53,7 +91,16 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
         binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+
+        binding.root.post {
+            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
+            binding.toolbarLayout.lblParentToolBar.text = finalName
+            binding.toolbarLayout.lblParentToolBar.visibility = View.VISIBLE
+        }
+
+
+
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         binding.toolbarLayout.lnrParent.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)
@@ -97,6 +144,10 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
                         binding.rcCompleted.visibility = View.VISIBLE
                         isLoadCompletedEQ(response.data)
                         isCompleted = response.data
+                    }
+
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
                     }
 
                 } else {
@@ -161,6 +212,41 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             }
         })
 
+    }
+
+
+    private fun scrollToMessageId(headerId: String?) {
+        if (msg_id == -1) return
+
+        isUpcoming?.let { list ->
+            val index = list.indexOfFirst { it.id == headerId }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index")
+                binding.rcUpcoming.post {
+                    binding.rcUpcoming.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcUpcoming, index)
+                }
+            } else {
+                Log.d("ScrollDebug", "No index found for msg_id $headerId")
+            }
+        }
+        Log.d("ScrollDebug", "No index found for msg_id $headerId")
+    }
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
+            }
+        }
     }
 
     private fun filter(text: String) {

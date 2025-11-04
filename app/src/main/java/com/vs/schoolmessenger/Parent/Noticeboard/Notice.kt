@@ -4,6 +4,7 @@ data class Notice(
     val title: String,
     val id: String,
     val description: String,
+    val sent_by: String,
     val created_on: String,
     val day: String,
     val visible_from: String,

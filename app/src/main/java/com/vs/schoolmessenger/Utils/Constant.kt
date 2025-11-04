@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -189,6 +190,8 @@ object Constant {
     var headerId = "header_id"
     var menu_id = "menu_id"
     var msg_id = "msg_id"
+    var header_id = "header_id"
+    var receiverid = "receiverid"
     var fromNotification = "fromNotification"
 
     var school = "A"
@@ -268,6 +271,7 @@ object Constant {
     var Absent = "Absent"
     var halfDay = "H"
     var This_day_is_marked_as_a_holiday = "This day is marked as a holiday."
+    var Attendance_has_not_been_taken_yet = "Attendance has not been taken yet."
     var approved = "Approved"
     var rejected = "Rejected"
     var waiting_for_approval = "Waiting for approval"
@@ -435,6 +439,7 @@ object Constant {
     var isCommonTitle = ""
     var isCommonDescription = ""
     var assignment_id = "assignment_id"
+    var assignmentsubject = "assignmentsubject"
     var title_ = "title"
     var description = "description"
     var subject = "subject"
@@ -556,6 +561,10 @@ object Constant {
     var section_subject_id = "section_subject_id"
     var particular_id = "particular_id"
     var request_type = "request_type"
+    var subject_name = "subject_name"
+    var items_completed = "items_completed"
+    var completed_items = "completed_items"
+    var total_items = "total_items"
     var field_id = "field_id"
     var value = "value"
     var dropdown = "dropdown"
@@ -1692,17 +1701,51 @@ object Constant {
 
 
     //Convert dd-MM-YYYY to dd MMM YYYY (12-02-2025 to 12 Feb 2025)
+
+    @SuppressLint("SimpleDateFormat")
     fun convertToReadableDate(inputDateStr: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(inputDateStr)
-            outputFormat.format(date!!)
+            val calendar = Calendar.getInstance()
+
+            val today = Calendar.getInstance()
+            val yesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
+
+            // Compare date values without time component
+            val isToday = isSameDay(calendar.apply { time = date!! }, today)
+            val isYesterday = isSameDay(calendar.apply { time = date!! }, yesterday)
+
+            when {
+                isToday -> "Today"
+                isYesterday -> "Yesterday"
+                else -> {
+                    val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+                    outputFormat.format(date!!)
+                }
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             inputDateStr
         }
     }
+
+//    private fun isSameDay(cal1: Calendar, cal2: Calendar): Boolean {
+//        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+//                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+//    }
+
+//    fun convertToReadableDate(inputDateStr: String): String {
+//        return try {
+//            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+//            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+//            val date = inputFormat.parse(inputDateStr)
+//            outputFormat.format(date!!)
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            inputDateStr
+//        }
+//    }
 
 
     // Convert dd-MM-yyyy hh:mm a("16-07-2025 04:24 PM" ) to dd, MMM yyyy hh:mm a ("16, Jul 2025 04:24 PM")

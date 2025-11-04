@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/ten"
-                android:text="SS - 1"
+                android:text=""
                 android:textColor="@color/light_gray_"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>

@@ -30,7 +30,9 @@ class AssignmentStudentListAdapter(
     private var isLoading: Boolean,
     private val noDataImage: ImageView? = null,
     private val noDataText: TextView? = null,
-    private val createdDate: String? = null
+    private val createdDate: String? = null,
+    private val title: String? = null,
+    private val assignmentSubject: String? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
@@ -52,14 +54,14 @@ class AssignmentStudentListAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.assignment_student_list, parent, false)
-            DataViewHolder(view, context, listener,createdDate)
+            DataViewHolder(view, context, listener, createdDate,title,assignmentSubject)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (!isLoading && holder is DataViewHolder) {
             filteredList.getOrNull(position)?.let { student ->
-                holder.bind(student, position, this)
+                holder.bind(student, position)
             }
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
@@ -80,29 +82,22 @@ class AssignmentStudentListAdapter(
         onDataChange?.invoke(filteredList.isNotEmpty())
     }
 
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                Log.d("NoticeBoardFilter", "originalList size: ${originalList.size}")
-                val charString =
-                    constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
+                val charString = constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
 
                 val resultList = if (charString.isEmpty()) {
                     originalList
                 } else {
                     originalList.filter { student ->
-                        student.student_name?.lowercase(Locale.getDefault())
-                            ?.contains(charString) == true ||
-                                student.standard?.lowercase(Locale.getDefault())
-                                    ?.contains(charString) == true ||
-                                student.section?.lowercase(Locale.getDefault())
-                                    ?.contains(charString) == true ||
-                                student.submit_status?.lowercase(Locale.getDefault())
-                                    ?.contains(charString) == true
+                        student.student_name?.lowercase(Locale.getDefault())?.contains(charString) == true ||
+                                student.standard?.lowercase(Locale.getDefault())?.contains(charString) == true ||
+                                student.section?.lowercase(Locale.getDefault())?.contains(charString) == true ||
+                                student.submit_status?.lowercase(Locale.getDefault())?.contains(charString) == true
                     }
                 }
-                Log.d("NoticeBoardFilter", "Filtered list size: ${resultList.size}")
+
                 val filterResults = FilterResults()
                 filterResults.values = resultList
                 return filterResults
@@ -117,88 +112,84 @@ class AssignmentStudentListAdapter(
         }
     }
 
-
     class DataViewHolder(
         itemView: View,
         private val context: Context,
         private val listener: AssignmentStudentListClickListener,
-        private  val createdDate: String?
+        private val createdDate: String?,
+        private val title: String?,
+        private val assignmentSubject: String?
     ) : RecyclerView.ViewHolder(itemView) {
-        private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
 
+        private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val sectionLabel: TextView = itemView.findViewById(R.id.sectionlabel)
         private val statusLabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val layout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
-//        private val arrowIcon: ImageView = itemView.findViewById(R.id.arrow_icon)
-
-        private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
-        private val statuslabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val submittedLabel: TextView = itemView.findViewById(R.id.submittedLabel)
         private val submittedDate: TextView = itemView.findViewById(R.id.submittedDate)
-        private val cancelimage: ImageView = itemView.findViewById(R.id.cancelimage)
+        private val cancelImage: ImageView = itemView.findViewById(R.id.cancelimage)
         private val statusButton: LinearLayout = itemView.findViewById(R.id.statusButton)
         private val avatarText: TextView = itemView.findViewById(R.id.avatarText)
+        private val statusText: TextView = itemView.findViewById(R.id.statuslabel)
+
+        fun bind(data: StudentSubmission, position: Int) {
+            val submissionDetails = data.submissions_details.firstOrNull()
 
 
-        fun bind(data: StudentSubmission, position: Int, adapter: AssignmentStudentListAdapter) {
+            sectionLabel.text = buildString {
+                append(data.standard?.trim() ?: "")
+                if (!data.section.isNullOrEmpty()) {
+                    append(" - ${data.section.trim()}")
+                }
+            }
+            Log.d("FinalText", sectionLabel.text.toString())
 
-            sectionlabel.text = data.standard + " - " + data.section
-            val submissiondetails = data.submissions_details.firstOrNull()
 
             if (data.submit_status == Constant.NOTSUBMITTED) {
                 submittedLabel.text = "${context.getString(R.string.Due_Date)} : "
                 submittedDate.text = Constant.formatCreatedDate(createdDate)
                 Log.d("created_date", Constant.formatCreatedDate(createdDate))
-
             } else {
-                submittedLabel.text = data.submit_status + " : "
-                submittedDate.text = Constant.convertSubmittedDateAssignment(submissiondetails?.submitted_on)
+                submittedLabel.text = "${data.submit_status} : "
+                submittedDate.text = Constant.convertSubmittedDateAssignment(submissionDetails?.submitted_on)
             }
 
             lblStudentName.text = data.student_name
+            avatarText.text = data.student_name?.firstOrNull()?.uppercase()?.toString() ?: "-"
 
-            val name = data.student_name
-            avatarText.text = if (!name.isNullOrEmpty()) {
-                name.first().toString().uppercase()
-            } else {
-                "-"
-            }
-
-            sectionLabel.text = data.standard
-//            standardLabel.text = data.section
             statusLabel.text = data.submit_status
-
-//            arrowIcon.visibility = if (data.submit_status.equals("SUBMITTED", true)) View.VISIBLE else View.GONE
 
             layout.setOnClickListener {
                 if (data.submit_status.equals(Constant.SUBMITTED, true)) {
-                    val intent = Intent(context, AssignmentStudentListDetail::class.java)
-                    intent.putParcelableArrayListExtra(
-                        Constant.submission_list,
-                        ArrayList(data.submissions_details)
-                    )
+                    val intent = Intent(context, AssignmentStudentListDetail::class.java).apply {
+                        putParcelableArrayListExtra(
+                            Constant.submission_list,
+                            ArrayList(data.submissions_details)
+                        )
+                        putExtra("title", title)
+                        putExtra(Constant.assignmentsubject, assignmentSubject)
+                        Log.d("titleAssignmentStudentlist",title.toString())
+                        Log.d("descriptionAssignmentStudentlist",assignmentSubject.toString())
+
+                    }
                     context.startActivity(intent)
                 } else {
                     Log.d("AssignmentAdapter", "No Redirection Available")
                 }
             }
 
+
             if (data.submit_status == Constant.SUBMITTED) {
-                statuslabel.text = context.getString(R.string.submitted)
-                cancelimage.setBackgroundResource(R.drawable.correcticonsvg)
-                statuslabel.setTextColor(
-                    ContextCompat.getColor(context, R.color.clr_green)
-                )
+                statusText.text = context.getString(R.string.submitted)
+                cancelImage.setBackgroundResource(R.drawable.correcticonsvg)
+                statusText.setTextColor(ContextCompat.getColor(context, R.color.clr_green))
                 statusButton.setBackgroundResource(R.drawable.completed_button_bg)
             } else {
-                statuslabel.text = context.getString(R.string.pending)
-                cancelimage.setBackgroundResource(R.drawable.downloadsvgformat)
-                statuslabel.setTextColor("#9e6e40".toColorInt())
-
+                statusText.text = context.getString(R.string.pending)
+                cancelImage.setBackgroundResource(R.drawable.downloadsvgformat)
+                statusText.setTextColor("#9e6e40".toColorInt())
                 statusButton.setBackgroundResource(R.drawable.pending_button_bg)
             }
-
-
         }
     }
 

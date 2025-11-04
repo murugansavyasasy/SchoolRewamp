@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import androidx.cardview.widget.CardView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
-import java.io.File
+import com.vs.schoolmessenger.Utils.FileItem
 
 class ImagePreviewAdapter(
-    private val imagePathList: ArrayList<String>,
+    private val imagePathList: MutableList<FileItem>,
     private val context: Context,
     private val listener: ImagePreviewRemoveListener
 ) : BaseAdapter() {
@@ -36,7 +35,7 @@ class ImagePreviewAdapter(
         val path = imagePathList[position]
 
         Glide.with(context)
-            .load(Uri.parse(path))
+            .load(Uri.parse(path.path))
             .into(imgGallery)
 
         imgCancel.setOnClickListener {

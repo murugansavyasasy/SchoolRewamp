@@ -199,20 +199,14 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                 if (result.resultCode == RESULT_OK) {
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    val remaining = MAX_FILES - Constant.selectedFiles.size
 
-                    if(Constant.Remaining!! > 0) {
+                    Log.d("Constant.Remaining", Constant.Remaining.toString())
 
-                        if (Constant.Remaining != 10){
-                            Toast.makeText(
-                                this,
-                                "Only " + Constant.Remaining + " Added",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    if (Constant.Remaining > 0 && !selectedUris.isNullOrEmpty()) {
 
-                        Constant.Remaining = Constant.Remaining - selectedUris!!.size
-                        selectedUris?.forEach { uri ->
+                        val previousCount = Constant.selectedFiles.size
+                        Constant.Remaining -= selectedUris.size
+                        selectedUris.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
                             val path = when (uri.scheme) {
                                 Constant.file_ -> uri.path
@@ -225,41 +219,113 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                             }
 
                             val fileName = getFileName(uri).ifEmpty { File(path).name }
+
                             val type = when {
                                 mimeType?.startsWith("image/") == true -> FileType.IMAGE
                                 mimeType?.startsWith("video/") == true -> FileType.VIDEO
                                 mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                                 fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(
-                                    ".docx", true
-                                ) -> FileType.DOC
-
-                                fileName.endsWith(".xls", true) || fileName.endsWith(
-                                    ".xlsx", true
-                                ) -> FileType.EXCEL
-
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                    ".pptx", true
-                                ) -> FileType.PPT
-
+                                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
+                                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
-                            if(Constant.selectedFiles.size < MAX_FILES +1) {
+
+                            Log.d("MAX_FILES", MAX_FILES.toString())
+
+                            if (Constant.selectedFiles.size < MAX_FILES + 1) {
                                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                            }
-                            else{
+                            } else {
                                 Constant.Remaining = 0
                             }
 
                             Log.d("SelectedFile", "URI: $uri, Type: $type")
                         }
-                        mAdapter!!.notifyDataSetChanged()
+                        mAdapter?.notifyDataSetChanged()
+                        val addedCount = Constant.selectedFiles.size - previousCount
+                        val totalCount = Constant.selectedFiles.size
+
+                        Toast.makeText(
+                            this,
+                            "Added $addedCount file${if (addedCount > 1) "s" else ""}",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
 
+                        Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
+                    } else if (Constant.Remaining <= 0) {
+                        Toast.makeText(this, "You have reached the maximum file limit.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
+
+//        albumResultLauncher =
+//            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//                if (result.resultCode == RESULT_OK) {
+//                    val selectedUris =
+//                        result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
+//                    val remaining = MAX_FILES - Constant.selectedFiles.size
+//
+//                    if(Constant.Remaining!! > 0) {
+//
+//                        if (Constant.Remaining != 10){
+//                            Toast.makeText(
+//                                this,
+//                                "Only " + Constant.Remaining + " Added",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//
+//                        Constant.Remaining = Constant.Remaining - selectedUris!!.size
+//                        selectedUris?.forEach { uri ->
+//                            val mimeType = contentResolver.getType(uri)
+//                            val path = when (uri.scheme) {
+//                                Constant.file_ -> uri.path
+//                                else -> getPathFromUri(uri)
+//                            }
+//
+//                            if (path == null) {
+//                                Log.w("addPath", "Could not resolve path from URI: $uri")
+//                                return@forEach
+//                            }
+//
+//                            val fileName = getFileName(uri).ifEmpty { File(path).name }
+//                            val type = when {
+//                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
+//                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
+//                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+//                                fileName.endsWith(".pdf", true) -> FileType.PDF
+//                                fileName.endsWith(".doc", true) || fileName.endsWith(
+//                                    ".docx", true
+//                                ) -> FileType.DOC
+//
+//                                fileName.endsWith(".xls", true) || fileName.endsWith(
+//                                    ".xlsx", true
+//                                ) -> FileType.EXCEL
+//
+//                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+//                                    ".pptx", true
+//                                ) -> FileType.PPT
+//
+//                                fileName.endsWith(".txt", true) -> FileType.TXT
+//                                else -> FileType.OTHER
+//                            }
+//                            if(Constant.selectedFiles.size < MAX_FILES +1) {
+//                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+//                            }
+//                            else{
+//                                Constant.Remaining = 0
+//                            }
+//
+//                            Log.d("SelectedFile", "URI: $uri, Type: $type")
+//                        }
+//                        mAdapter!!.notifyDataSetChanged()
+//
+//
+//                    }
+//                }
+//            }
 
         appViewModel!!.isAssignmentUpdate?.observe(this) { response ->
             if (response != null) {
@@ -316,7 +382,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
 
             R.id.rytStartDate -> {
-                CustomshowDatePickerDialog(this, this)
+                AssignmentCustomshowDatePickerDialog(this, this,isSelectedDate)
             }
 
             R.id.rytHistory -> startActivity(Intent(this, AssignmentReport::class.java))

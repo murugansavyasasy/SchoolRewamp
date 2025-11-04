@@ -54,6 +54,12 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
     private lateinit var lessonplanViewAdapter: LessonPlanAdapter
     private var sectionSubjectId: String? = null
     private var request_type: String? = null
+    private var subject_name: String? = null
+    private var items_completed: String? = null
+
+
+    private var completed_items: String? = null
+    private var total_items: String? = null
     private var currentStatus: Int = 0
 
     private var fullLessonPlanList: List<LessonPlanViewSummaryItem> = listOf()
@@ -86,6 +92,13 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
         sectionSubjectId = intent.getStringExtra(Constant.section_subject_id)
         request_type = intent.getStringExtra(Constant.request_type)
+
+
+        subject_name = intent.getStringExtra(Constant.subject_name)
+        items_completed = intent.getStringExtra(Constant.items_completed)
+
+        completed_items = intent.getStringExtra(Constant.completed_items)
+        total_items = intent.getStringExtra(Constant.total_items)
 
         if (request_type == Constant.allclass) {
             Log.d("Request Type",request_type.toString())
@@ -131,6 +144,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
+                binding.txtNoData.text=response?.message?:getString(R.string.no_list_found)
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.tabLayout1.visibility = View.GONE
                 binding.rcyLessonViewPlan.visibility = View.GONE
@@ -183,7 +197,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
     private fun setupRecycler() {
         lessonplanViewAdapter = LessonPlanAdapter(
-            null, this, this, Constant.isShimmerViewShow, request_type ?: ""
+            null, this, this, Constant.isShimmerViewShow, request_type ?: "", subject_name ?: "", items_completed?: "", completed_items?: "", total_items?: ""
         )
         binding.rcyLessonViewPlan.layoutManager = LinearLayoutManager(this)
         binding.rcyLessonViewPlan.isNestedScrollingEnabled = false
@@ -192,7 +206,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
     private fun fetchLessonPlanData(sectionSubjectId: String?) {
         lessonplanViewAdapter = LessonPlanAdapter(
-            null, this, this, Constant.isShimmerViewShow, request_type ?: ""
+            null, this, this, Constant.isShimmerViewShow, request_type ?: "", subject_name ?: "", items_completed?: "", completed_items?: "", total_items?: ""
         )
         binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
 
@@ -221,15 +235,17 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_lesson_plans_found)
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rcyLessonViewPlan.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.rcyLessonViewPlan.visibility = View.VISIBLE
         }
 
         lessonplanViewAdapter = LessonPlanAdapter(
-            filteredList, this, this, Constant.isShimmerViewDisable, request_type ?: ""
+            filteredList, this, this, Constant.isShimmerViewDisable, request_type ?: "", subject_name ?: "", items_completed?: "", completed_items?: "", total_items?: ""
         )
         binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
     }
