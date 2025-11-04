@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.Communication
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -45,8 +48,11 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private var currentSearchQuery: String = ""
 
     private var msg_id: Int = -1
-
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
     private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -60,18 +66,26 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.seeMoreLabel.setOnClickListener(this)
         binding.imgFilter.setOnClickListener(this)
 
-        msg_id = intent.getIntExtra(Constant.msg_id, -1)
-
+        userDetails = SharedPreference.getUserDetails(this)
         fromNotification = intent.getBooleanExtra("fromNotification", false)
 
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra("header_id")
+            receiverId = intent.getStringExtra("receiverid")
+            menu_name = intent.getStringExtra(Constant.menu_name)
 
-        val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
-        if(fromNotification){
-            val menu_name = intent.getStringExtra(Constant.menu_name)
-            val menu_id = intent.getIntExtra(Constant.menu_id,0)
-            val msg_id = intent.getIntExtra(Constant.msg_id,0)
-            //process when user comes from notification
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this,matchedChild!!)
+            Constant.isParentMenuName = menu_name!!
         }
+
 
 
         isFromArchive = intent.getBooleanExtra(Constant.fromArchive, false)
@@ -86,7 +100,12 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
-        binding.lblHeaderTitle.text=Constant.isParentMenuName
+        binding.root.post {
+            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            Log.d("lblHeaderTitle", "Setting headerview text: $finalName")
+            binding.lblHeaderTitle.text = finalName
+            binding.lblHeaderTitle.visibility = View.VISIBLE
+        }
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.linearlayout1.visibility == View.VISIBLE) {
@@ -121,7 +140,9 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 if (response.data.isNotEmpty()) {
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     appendData(response.data, archiveFlag = true)
-                    scrollToMessageId(msg_id)
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
+                    }
                 } else {
                     hasFetchedMore = true
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -145,7 +166,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 }
                 appendData(response.data, archiveFlag = false)
-                scrollToMessageId(msg_id)
+                scrollToMessageId(headerId)
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 checkAndShowNoData(message = response?.message)
@@ -205,11 +226,11 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     }
 
 
-    private fun scrollToMessageId(msg_id: Int) {
+    private fun scrollToMessageId(headerId: String?) {
         if (msg_id == -1) return
 
         allVoiceData?.let { list ->
-            val index = list.indexOfFirst { it.id?.toIntOrNull() == msg_id }
+            val index = list.indexOfFirst { it.id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in completed")
                 binding.recyclerInitial.post {
@@ -226,10 +247,15 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
-            recyclerView.postDelayed({
-                viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
-            }, 2000)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
+            }
         }
     }
 
