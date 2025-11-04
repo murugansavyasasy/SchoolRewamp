@@ -73,7 +73,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-
         userDetails = SharedPreference.getUserDetails(this)
         fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
 
@@ -93,6 +92,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             SharedPreference.putChildDetails(this,matchedChild!!)
             Constant.isParentMenuName = menu_name!!
         }
+
 
 
         binding.rytsearch.visibility = View.GONE
@@ -425,6 +425,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.lblScheduleMeeting -> {
+                Constant.hideKeyboardIfOpen(this)
                 isChangeBackGroundTab(binding.lblScheduleMeeting)
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
 
@@ -494,20 +495,36 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
         }
     }
 
-    fun generateDates(daysCount: Int): List<Pair<String, Int>> {
-        val list = mutableListOf<Pair<String, Int>>()
+    fun generateDates(daysCount: Int): List<Triple<String, Int, Int>> { // month, day, year
+        val list = mutableListOf<Triple<String, Int, Int>>()
         val calendar = Calendar.getInstance()
         val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
 
         repeat(daysCount) {
             val month = monthFormat.format(calendar.time)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
-            list.add(month to day)
-            calendar.add(Calendar.DAY_OF_MONTH, 1) // move forward by 1 day
+            val year = calendar.get(Calendar.YEAR)
+            list.add(Triple(month, day, year))
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 
         return list
     }
+
+//    fun generateDates(daysCount: Int): List<Pair<String, Int>> {
+//        val list = mutableListOf<Pair<String, Int>>()
+//        val calendar = Calendar.getInstance()
+//        val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
+//
+//        repeat(daysCount) {
+//            val month = monthFormat.format(calendar.time)
+//            val day = calendar.get(Calendar.DAY_OF_MONTH)
+//            list.add(month to day)
+//            calendar.add(Calendar.DAY_OF_MONTH, 1) // move forward by 1 day
+//        }
+//
+//        return list
+//    }
 
 
     override fun onCancelClick(meeting: MeetingItem, position: Int, reason: String) {

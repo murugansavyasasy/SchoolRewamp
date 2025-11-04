@@ -62,13 +62,9 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest.islsrwSkillSubmit
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentChildStandardAdapter
-import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetail
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardAdapter
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.SchoolNameTarget
-import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetData
-import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetItem
-import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetName
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.LSRW.LsrwStudentListFragment
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
@@ -92,8 +88,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Date
 import java.util.Locale
-import kotlin.text.endsWith
-import kotlin.text.ifEmpty
 
 class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClickListener,
     OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
@@ -584,7 +578,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.lblPostedBy.visibility = View.VISIBLE
                 binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
             }
-
         }
 
         for (i in data!!.fileList.indices) {
@@ -608,7 +601,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.rcChildHW
         }
 
-        Log.d("ParentAssigmentValue", isParentAssignment.toString())
+        Log.d("ParentAssignmentValue", isParentAssignment.toString())
 
         val spanCount = when {
             SELECTED_SCHOOL_MENU == M_ASSIGNMENT -> 2
@@ -1593,13 +1586,5 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
         dimView.isFocusable = true
         dimView.isFocusableInTouchMode = true
-
     }
-
-    override fun onResume() {
-        super.onResume()
-        setupViews()
-    }
-
-
 }
