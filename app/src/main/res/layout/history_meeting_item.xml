@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/twele"
-        android:background="@drawable/bg_orange"
+        android:background="@drawable/bg_blue_radious"
         android:backgroundTint="@color/violet_color"
         android:paddingHorizontal="@dimen/fifteen"
         android:paddingVertical="@dimen/five"
@@ -84,7 +84,8 @@
                 android:id="@+id/imgMeetingMode"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
-                android:layout_gravity="center_vertical"
+                android:src="@drawable/phone_icon"
+                android:gravity="center"
                 android:layout_marginEnd="@dimen/eight"
                  />
 
@@ -93,7 +94,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:text="@string/phone_call"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -108,8 +109,8 @@
             <ImageView
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
-                android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/eight"
+                android:gravity="center"
                 android:src="@drawable/stopwatch_gray" />
 
             <TextView
@@ -117,7 +118,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:text="15 min"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -145,15 +146,15 @@
                 <ImageView
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/eight"
+                    android:gravity="center"
                     android:src="@drawable/calendar_circle_fill_gray" />
 
                 <TextView
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
                     android:text="@string/date"
                     android:textSize="@dimen/thirteen_sp" />
             </LinearLayout>
@@ -184,15 +185,15 @@
                 <ImageView
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/eight"
+                    android:gravity="center"
                     android:src="@drawable/clock_circle_fill_gray" />
 
                 <TextView
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
                     android:text="@string/time"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -224,7 +225,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/eight"
-            android:background="@drawable/bg_red"
+            android:background="@drawable/bg_red_radious"
             android:drawableStart="@drawable/close_icon"
             android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/six"
@@ -241,7 +242,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eight"
-            android:background="@drawable/bg_orange"
+            android:background="@drawable/bg_blue_radious"
             android:drawableStart="@drawable/phone_icon_bg"
             android:drawablePadding="@dimen/five"
             android:gravity="center_vertical"
@@ -258,7 +259,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eight"
-            android:background="@drawable/bg_orange"
+            android:background="@drawable/bg_blue_radious"
             android:drawableStart="@drawable/network"
             android:drawablePadding="@dimen/five"
             android:gravity="center_vertical"

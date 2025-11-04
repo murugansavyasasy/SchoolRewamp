@@ -11,22 +11,15 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
-import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -49,13 +42,11 @@ import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
-import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
 import com.vs.schoolmessenger.Parent.LSRW.LSRW
-import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
@@ -64,14 +55,10 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RestClient
-import com.vs.schoolmessenger.School.Event.EventReport
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
-import com.vs.schoolmessenger.Utils.AnimationHelper
-import com.vs.schoolmessenger.Utils.AppDataCleaner
 import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.Constant.isDeveloperModeEnabled
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.fingerPrintAunthenticateListener
 import com.vs.schoolmessenger.databinding.SplashBinding
@@ -605,9 +592,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 
                     pendingIntent?.send()
                 }
-
-
-
                 else -> {
                     // default behavior
                 }

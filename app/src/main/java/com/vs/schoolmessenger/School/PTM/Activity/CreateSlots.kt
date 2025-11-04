@@ -68,6 +68,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     var startCalendar: Calendar? = null
     var endCalendar: Calendar? = null
     var isSlotsCount = 1
+    var breakAfterSlots = ""
     private var bottomSheetDialog: BottomSheetDialog? = null
     private val itemsCategory = listOf(
         "Select Slot Duration", "10 mins", "15 mins", "20 mins", "30 mins", "Custom"
@@ -117,7 +118,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             onBackPressed()
         }
 
-
+        binding.lblMenuName.text = Constant.isSchoolMenuName
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             if (response != null) {
                 if (response.status && response.data.isNotEmpty()) {
@@ -490,25 +491,44 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 jsonObject.addProperty("break_time", meetingData.break_time)
                 jsonObject.addProperty("meeting_mode", meetingData.meetingMode)
 
+                // Prepare class-section JSON
                 val isStdSecJsonArray = JsonArray()
                 for (section in meetingData.selectedSections) {
-                    val isStdSecJsonObject = JsonObject()
-                    isStdSecJsonObject.addProperty("section_id", section.section_id)
-                    isStdSecJsonObject.addProperty("class_id", section.class_id)
-                    isStdSecJsonArray.add(isStdSecJsonObject)
+                    val isStdSecJsonArrayObj = JsonObject()
+                    isStdSecJsonArrayObj.addProperty("section_id", section.section_id)
+                    isStdSecJsonArrayObj.addProperty("class_id", section.class_id)
+                    isStdSecJsonArray.add(isStdSecJsonArrayObj)
                 }
 
+                // Break duration in minutes
                 val breakMinutes = if (!meetingData.break_time.isNullOrEmpty() && meetingData.break_time != "0") {
                     meetingData.break_time.toInt()
                 } else 0
 
-                val slotsTiming = splitIntoSlots(
-                    formatTimeWithAMPM(meetingData.fromTime),
-                    formatTimeWithAMPM(meetingData.toTime),
-                    meetingData.slotDuration.toInt(),
-                    breakMinutes
+                if (binding.switchBreak.isChecked()) {
+                    breakAfterSlots = binding.lblSlotsCount.text.toString()
+                } else {
+                    breakAfterSlots = "0"
+                }
+                // Debug logs (helpful during testing)
+                Log.d(
+                    "SlotCalc",
+                    "from=${formatTimeWithAMPM(meetingData.fromTime)} to=${
+                        formatTimeWithAMPM(meetingData.toTime)
+                    } " +
+                            "slotDuration=${meetingData.slotDuration} breakMinutes=$breakMinutes breakAfterSlots=$breakAfterSlots"
                 )
 
+                // Generate time slots
+                val slotsTiming = splitIntoSlots(
+                    startTime = formatTimeWithAMPM(meetingData.fromTime),
+                    endTime = formatTimeWithAMPM(meetingData.toTime),
+                    slotDurationMinutes = meetingData.slotDuration.toInt(),
+                    breakMinutes = breakMinutes,
+                    breakAfterSlots = breakAfterSlots.toInt()
+                )
+
+                // Build slots JSON array
                 val isSlotsDateJsonArray = JsonArray()
                 for (slot in slotsTiming) {
                     val slotObj = JsonObject()
@@ -526,6 +546,246 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             appViewModel!!.isSlotValidationForStaff(isAccessToken!!, jsonArray)
         }
     }
+
+    // --- slot generator ---
+    fun splitIntoSlots(
+        startTime: String,
+        endTime: String,
+        slotDurationMinutes: Int,
+        breakMinutes: Int,
+        breakAfterSlots: Int = 0 // 0 => no break
+    ): List<SlotTiming> {
+        val slots = mutableListOf<SlotTiming>()
+        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+
+        val startDate = try {
+            sdf.parse(startTime)
+        } catch (e: Exception) {
+            null
+        }
+        val endDate = try {
+            sdf.parse(endTime)
+        } catch (e: Exception) {
+            null
+        }
+        if (startDate == null || endDate == null) {
+            Log.e(
+                "splitIntoSlots",
+                "Invalid start or end time format. start=$startTime end=$endTime"
+            )
+            return slots
+        }
+
+        // Defensive: if slot duration <=0 or start >= end, nothing to do
+        if (slotDurationMinutes <= 0 || !startDate.before(endDate)) return slots
+
+        var cursor = Calendar.getInstance().apply { time = startDate }
+        val endCal = Calendar.getInstance().apply { time = endDate }
+
+        var slotCounter = 0
+
+        while (cursor.before(endCal)) {
+            val slotStart = cursor.time
+
+            // compute slot end
+            val slotEndCal = Calendar.getInstance().apply { time = slotStart }
+            slotEndCal.add(Calendar.MINUTE, slotDurationMinutes)
+
+            // if slot end is after overall end -> stop
+            if (slotEndCal.time.after(endCal.time)) break
+
+            // add slot
+            slots.add(
+                SlotTiming(
+                    fromTime = sdf.format(slotStart),
+                    toTime = sdf.format(slotEndCal.time)
+                )
+            )
+            slotCounter++
+
+            // Advance cursor: normally to the end of this slot
+            cursor.time = slotEndCal.time
+
+            // If we need to add a break after every N slots
+            if (breakAfterSlots > 0 && slotCounter % breakAfterSlots == 0 && breakMinutes > 0) {
+                // add break minutes
+                cursor.add(Calendar.MINUTE, breakMinutes)
+
+                // If cursor now exceeds end time, break the loop
+                if (!cursor.before(endCal)) break
+            }
+        }
+
+        Log.d(
+            "splitIntoSlots",
+            "Generated ${slots.size} slots. breakAfterSlots=$breakAfterSlots breakMinutes=$breakMinutes"
+        )
+        return slots
+    }
+
+//    fun isCheckAvailableSlots() {
+//        val meetingData = validateMeetingInputs()
+//        if (meetingData != null) {
+//            val jsonArray = JsonArray()
+//
+//            for (i in meetingData.selectedDates.indices) {
+//                val jsonObject = JsonObject()
+//                jsonObject.addProperty("date", meetingData.selectedDates[i])
+//                jsonObject.addProperty("event_name", meetingData.purpose)
+//                jsonObject.addProperty("from_time", formatTimeWithAMPM(meetingData.fromTime))
+//                jsonObject.addProperty("to_time", formatTimeWithAMPM(meetingData.toTime))
+//                jsonObject.addProperty("duration", meetingData.slotDuration)
+//                jsonObject.addProperty("event_link", meetingData.meetingLink)
+//                jsonObject.addProperty("break_time", meetingData.break_time)
+//                jsonObject.addProperty("meeting_mode", meetingData.meetingMode)
+//
+//                // Prepare class-section JSON
+//                val isStdSecJsonArray = JsonArray()
+//                for (section in meetingData.selectedSections) {
+//                    val isStdSecJsonObject = JsonObject()
+//                    isStdSecJsonObject.addProperty("section_id", section.section_id)
+//                    isStdSecJsonObject.addProperty("class_id", section.class_id)
+//                    isStdSecJsonArray.add(isStdSecJsonObject)
+//                }
+//
+//                // Break duration in minutes
+//                val breakMinutes = if (!meetingData.break_time.isNullOrEmpty() && meetingData.break_time != "0") {
+//                    meetingData.break_time.toInt()
+//                } else 0
+//
+//                // Get how many slots before applying a break (example: lblSlotsCount = "3")
+//
+//                if (binding.switchBreak.isChecked()){
+//                    breakAfterSlots=0
+//                }else{
+//                     breakAfterSlots = binding.lblSlotsCount.text.toString().toIntOrNull() ?: 0
+//                }
+//
+//                // Generate time slots
+//                val slotsTiming = splitIntoSlots(
+//                    formatTimeWithAMPM(meetingData.fromTime),
+//                    formatTimeWithAMPM(meetingData.toTime),
+//                    meetingData.slotDuration.toInt(),
+//                    breakMinutes,
+//                    breakAfterSlots
+//                )
+//
+//                // Build slots JSON array
+//                val isSlotsDateJsonArray = JsonArray()
+//                for (slot in slotsTiming) {
+//                    val slotObj = JsonObject()
+//                    slotObj.addProperty("from_time", slot.fromTime)
+//                    slotObj.addProperty("to_time", slot.toTime)
+//                    isSlotsDateJsonArray.add(slotObj)
+//                }
+//
+//                jsonObject.add("slots", isSlotsDateJsonArray)
+//                jsonObject.add("std_sec_details", isStdSecJsonArray)
+//                jsonArray.add(jsonObject)
+//            }
+//
+//            Log.d("jsonArray", jsonArray.toString())
+//            appViewModel!!.isSlotValidationForStaff(isAccessToken!!, jsonArray)
+//        }
+//    }
+
+//    fun splitIntoSlots(
+//        startTime: String,
+//        endTime: String,
+//        slotDurationMinutes: Int,
+//        breakMinutes: Int,
+//        breakAfterSlots: Int = 0 // example: 3 = add break after every 3 slots
+//    ): List<SlotTiming> {
+//        val slots = mutableListOf<SlotTiming>()
+//        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+//
+//        var start = sdf.parse(startTime)
+//        val end = sdf.parse(endTime)
+//        if (start == null || end == null) return slots
+//
+//        var slotCounter = 0
+//
+//        while (start.before(end)) {
+//            val slotStart = Calendar.getInstance().apply { time = start }
+//            val slotEnd = Calendar.getInstance().apply { time = start }
+//            slotEnd.add(Calendar.MINUTE, slotDurationMinutes)
+//
+//            // Stop if next slot exceeds end time
+//            if (slotEnd.time.after(end)) break
+//
+//            slots.add(
+//                SlotTiming(
+//                    fromTime = sdf.format(slotStart.time),
+//                    toTime = sdf.format(slotEnd.time)
+//                )
+//            )
+//
+//            slotCounter++
+//
+//            // Add break after every N slots
+//            if (breakAfterSlots > 0 && slotCounter % breakAfterSlots == 0) {
+//                slotEnd.add(Calendar.MINUTE, breakMinutes)
+//            }
+//
+//            start = slotEnd.time
+//        }
+//
+//        return slots
+//    }
+
+
+//    fun isCheckAvailableSlots() {
+//        val meetingData = validateMeetingInputs()
+//        if (meetingData != null) {
+//            val jsonArray = JsonArray()
+//
+//            for (i in meetingData.selectedDates.indices) {
+//                val jsonObject = JsonObject()
+//                jsonObject.addProperty("date", meetingData.selectedDates[i])
+//                jsonObject.addProperty("event_name", meetingData.purpose)
+//                jsonObject.addProperty("from_time", formatTimeWithAMPM(meetingData.fromTime))
+//                jsonObject.addProperty("to_time", formatTimeWithAMPM(meetingData.toTime))
+//                jsonObject.addProperty("duration", meetingData.slotDuration)
+//                jsonObject.addProperty("event_link", meetingData.meetingLink)
+//                jsonObject.addProperty("break_time", meetingData.break_time)
+//                jsonObject.addProperty("meeting_mode", meetingData.meetingMode)
+//
+//                val isStdSecJsonArray = JsonArray()
+//                for (section in meetingData.selectedSections) {
+//                    val isStdSecJsonObject = JsonObject()
+//                    isStdSecJsonObject.addProperty("section_id", section.section_id)
+//                    isStdSecJsonObject.addProperty("class_id", section.class_id)
+//                    isStdSecJsonArray.add(isStdSecJsonObject)
+//                }
+//
+//                val breakMinutes = if (!meetingData.break_time.isNullOrEmpty() && meetingData.break_time != "0") {
+//                    meetingData.break_time.toInt()
+//                } else 0
+//
+//                val slotsTiming = splitIntoSlots(
+//                    formatTimeWithAMPM(meetingData.fromTime),
+//                    formatTimeWithAMPM(meetingData.toTime),
+//                    meetingData.slotDuration.toInt(),
+//                    breakMinutes
+//                )
+//
+//                val isSlotsDateJsonArray = JsonArray()
+//                for (slot in slotsTiming) {
+//                    val slotObj = JsonObject()
+//                    slotObj.addProperty("from_time", slot.fromTime)
+//                    slotObj.addProperty("to_time", slot.toTime)
+//                    isSlotsDateJsonArray.add(slotObj)
+//                }
+//
+//                jsonObject.add("slots", isSlotsDateJsonArray)
+//                jsonObject.add("std_sec_details", isStdSecJsonArray)
+//                jsonArray.add(jsonObject)
+//            }
+//
+//            Log.d("jsonArray", jsonArray.toString())
+//            appViewModel!!.isSlotValidationForStaff(isAccessToken!!, jsonArray)
+//        }
+//    }
 
     data class SlotTiming(
         val fromTime: String,
@@ -606,48 +866,48 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     }
 
 
-    private fun splitIntoSlots(
-        fromTime: String,
-        toTime: String,
-        slotDuration: Int,
-        breakDuration: Int = 0
-    ): List<SlotTiming> {
-        val slots = mutableListOf<SlotTiming>()
-        try {
-            val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
-            var start = sdf.parse(fromTime)
-            val end = sdf.parse(toTime)
-            if (start == null || end == null) return slots
-
-            val calendar = Calendar.getInstance()
-            val outputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-
-            while (start.before(end)) {
-                calendar.time = start
-                calendar.add(Calendar.MINUTE, slotDuration)
-                val slotEnd = calendar.time
-                if (slotEnd.after(end)) break
-
-                slots.add(
-                    SlotTiming(
-                        fromTime = outputFormat.format(start),
-                        toTime = outputFormat.format(slotEnd)
-                    )
-                )
-
-                // Move to next slot after break
-                calendar.time = slotEnd
-                if (breakDuration > 0) {
-                    calendar.add(Calendar.MINUTE, breakDuration)
-                }
-                start = calendar.time
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        return slots
-    }
+    // private fun splitIntoSlots(
+//        fromTime: String,
+//        toTime: String,
+//        slotDuration: Int,
+//        breakDuration: Int = 0
+//    ): List<SlotTiming> {
+//        val slots = mutableListOf<SlotTiming>()
+//        try {
+//            val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+//            var start = sdf.parse(fromTime)
+//            val end = sdf.parse(toTime)
+//            if (start == null || end == null) return slots
+//
+//            val calendar = Calendar.getInstance()
+//            val outputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+//
+//            while (start.before(end)) {
+//                calendar.time = start
+//                calendar.add(Calendar.MINUTE, slotDuration)
+//                val slotEnd = calendar.time
+//                if (slotEnd.after(end)) break
+//
+//                slots.add(
+//                    SlotTiming(
+//                        fromTime = outputFormat.format(start),
+//                        toTime = outputFormat.format(slotEnd)
+//                    )
+//                )
+//
+//                // Move to next slot after break
+//                calendar.time = slotEnd
+//                if (breakDuration > 0) {
+//                    calendar.add(Calendar.MINUTE, breakDuration)
+//                }
+//                start = calendar.time
+//            }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//
+//        return slots
+//    }
 
     private fun isShowAvailableSlot(data: List<ValidatedSlot>) {
         // 1. Keep all slots (Available + Not Available) for display
@@ -737,7 +997,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
     private fun validateMeetingInputs(): MeetingCreationData? {
         if (binding.edtPurPose.text.toString().isEmpty()) {
-            Toast.makeText(this, "Enter the Purpose of meeting", Toast.LENGTH_SHORT).show()
+
+            binding.edtPurPose.error = "Enter the Purpose of meeting"
+//            Toast.makeText(this, "Enter the Purpose of meeting", Toast.LENGTH_SHORT).show()
             return null
         }
 
@@ -747,7 +1009,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
 
         if (isOnlineMeeting && binding.edtMobileOrLink.text.toString().isEmpty()) {
-            Toast.makeText(this, "Paste the meeting link", Toast.LENGTH_SHORT).show()
+
+            binding.edtMobileOrLink.error = "Paste the meeting link"
+//            Toast.makeText(this, "Paste the meeting link", Toast.LENGTH_SHORT).show()
             return null
         }
 
@@ -777,7 +1041,9 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
 
         if (isSlotDurationCustom && binding.edtSlotCustomDuration.text.toString().isEmpty()) {
-            Toast.makeText(this, "Enter the slot duration", Toast.LENGTH_SHORT).show()
+
+            binding.edtSlotCustomDuration.error = "Enter the slot duration"
+//            Toast.makeText(this, "Enter the slot duration", Toast.LENGTH_SHORT).show()
             return null
         }
 

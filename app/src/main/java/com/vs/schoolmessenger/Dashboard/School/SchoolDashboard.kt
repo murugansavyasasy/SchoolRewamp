@@ -65,7 +65,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
     var access_token = ""
-
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 

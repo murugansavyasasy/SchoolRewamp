@@ -49,8 +49,13 @@ class ParentMeetingAdapter(
         holder.tvMeetingTitle.text = meeting.event_name
         holder.tvParentName.text = meeting.staff_name
 
-        val subjectNames = meeting.slots.mapNotNull { it.subject_name }.distinct().joinToString(", ")
+        val subjectNames = meeting.slots
+            .flatMap { it.subject_name ?: emptyList() }
+            .distinct()
+            .joinToString(", ")
         holder.tvSubject.text = subjectNames.ifEmpty { "No Subject" }
+
+
 
         val mode = meeting.slots.firstOrNull()?.event_mode ?: "Meeting"
         holder.btnMeetingType.text = mode

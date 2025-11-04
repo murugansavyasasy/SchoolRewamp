@@ -18,7 +18,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
 import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
 import com.vs.schoolmessenger.R
@@ -95,13 +94,20 @@ class MeetingHistoryAdapter(
             tvStaff.text = "with ${meeting.staff_name}"
             tvSubject.text = meeting.subject_name.joinToString(", ")
             tvMode.text = meeting.mode
-            tvDuration.text = "15 min"
+            tvDuration.text = meeting.duration.toString() + " Min"
             tvDate.text = formatDate(meeting.date)
             tvTime.text = meeting.time
-            tvStatus.text = meeting.status
+
+            if (meeting.status.isNullOrBlank()) {
+                tvStatus.visibility = View.GONE
+            } else {
+                tvStatus.visibility = View.VISIBLE
+                tvStatus.text = meeting.status
+            }
 
             val modeDrawable = when (meeting.mode.lowercase()) {
                 "In Person" -> R.drawable.person_2_black_bg
+                "Person" -> R.drawable.person_2_black_bg
                 "Phone Call" -> R.drawable.phone_icon_black
                 "Virtual" -> R.drawable.network_black_bg
                 else -> 0

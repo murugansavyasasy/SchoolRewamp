@@ -498,7 +498,7 @@
     <string name="recipient_selection">Recipient Selection</string>
     <string name="choose_academic_year">Choose academic year :</string>
     <string name="add_location">Add location</string>
-    <string name="lblchoose_academic_year">Choose academic year:</string>
+    <string name="lblchoose_academic_year">Choose Academic Year:</string>
     <string name="entire_school">Entire School</string>
     <string name="section_student">Section/Student</string>
     <string name="staff">Staff</string>
@@ -963,11 +963,11 @@
     <string name="what_s_new">What\'s New</string>
     <string name="no_country_found">No country found</string>
     <string name="ptm">PTM</string>
-    <string name="purpose_of_meeting">Purpose of meeting</string>
-    <string name="select_meeting_mode">Select meeting mode</string>
+    <string name="purpose_of_meeting">Purpose of Meeting</string>
+    <string name="select_meeting_mode">Select Meeting Mode</string>
     <string name="select_your_classes">Select Your Classes</string>
     <string name="check_slot_availability">Check slot availability</string>
-    <string name="need_break_between_slots">Need break between slots?</string>
+    <string name="need_break_between_slots">Need Break Between Slots?</string>
     <string name="All_students_are_marked_as_present">All students are marked as present!</string>
     <string name="school_chimes">School Chimes</string>
     <string name="incoming_call">Incoming Call</string>

@@ -14,10 +14,16 @@ import java.util.Calendar
 import java.util.Locale
 import kotlin.collections.find
 
+//class PtmParentCalender(
+//    private val dates: List<Pair<String, Int>>,       // month, day
+//    private val slotCounts: List<SlotCountData>,      // response from API
+//    private val onDateClick: (String) -> Unit         // returns formatted date
+//) : RecyclerView.Adapter<PtmParentCalender.DateViewHolder>() {
+
 class PtmParentCalender(
-    private val dates: List<Pair<String, Int>>,       // month, day
-    private val slotCounts: List<SlotCountData>,      // response from API
-    private val onDateClick: (String) -> Unit         // returns formatted date
+    private val dates: List<Triple<String, Int, Int>>, // month, day, year
+    private val slotCounts: List<SlotCountData>,
+    private val onDateClick: (String) -> Unit
 ) : RecyclerView.Adapter<PtmParentCalender.DateViewHolder>() {
 
 
@@ -38,7 +44,7 @@ class PtmParentCalender(
     }
 
     override fun onBindViewHolder(holder: DateViewHolder, position: Int) {
-        val (month, day) = dates[position]
+        val (month, day, year) = dates[position]
 
         holder.tvMonth.text = month
         holder.tvDay.text = day.toString()
@@ -49,7 +55,7 @@ class PtmParentCalender(
         holder.tvMonth.setTextColor(if (isSelected) Color.WHITE else Color.BLACK)
 
         // Format this calendar item date
-        val formattedDate = formatDate(month, day) // dd-MM-yyyy
+        val formattedDate = formatDate(month, day,year) // dd-MM-yyyy
 
         // Find if this date has a slot count
         val countData = slotCounts.find { it.event_date == formattedDate }
@@ -79,11 +85,12 @@ class PtmParentCalender(
             selectedPos = pos
             notifyItemChanged(selectedPos)
 
-            val (month, day) = dates[pos]
-            val formattedDate = formatDate(month, day)
+            val (month, day, year) = dates[pos]
+            val formattedDate = formatDate(month, day, year)
             onDateClick(formattedDate)
         }
     }
+
 
     /** Optionally select today’s date if it exists in the list */
     fun selectToday() {
@@ -112,9 +119,9 @@ class PtmParentCalender(
             else -> 0
         }
     }
-    private fun formatDate(month: String, day: Int): String {
+    private fun formatDate(month: String, day: Int, year: Int): String {
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.YEAR, currentYear)
+        calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, monthToIndex(month))
         calendar.set(Calendar.DAY_OF_MONTH, day)
         val outputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)

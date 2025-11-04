@@ -4,6 +4,8 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
@@ -72,6 +74,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         return CommunicationSchoolBinding.inflate(layoutInflater)
     }
 
+    private var fromHour24: Int? = null
+    private var fromMinute: Int? = null
+    private var toHour24: Int? = null
+    private var toMinute: Int? = null
+    private var isFromTime = true
+
+
     private var isInitialized = false
     private var selectedDatesAdapter: SelectedDatesAdapter? = null
 
@@ -98,7 +107,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     var isAcademicYearId = -1
     var isAcademicYear: List<AcademicYear>? = null
     var isFileName: String? = null
-    var isFromTime = true
+//    var isFromTime = true
     private val progressUpdater = object : Runnable {
         override fun run() {
             if (isPrepared && mediaPlayer!!.isPlaying) {
@@ -849,14 +858,33 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.rlaFromTime -> {
                 KeyboardUtils.hideKeyboard(this)
                 isFromTime = true
-                showTimePickerDialog(this, this)
+                isShowTimePickerDialog(this, this,
+                    preSelectedHour = fromHour24,
+                    preSelectedMinute = fromMinute
+                )
             }
 
             R.id.rlaToTime -> {
                 KeyboardUtils.hideKeyboard(this)
                 isFromTime = false
-                showTimePickerDialog(this, this)
+                isShowTimePickerDialog(this, this,
+                    preSelectedHour = toHour24,
+                    preSelectedMinute = toMinute
+                )
             }
+
+
+//            R.id.rlaFromTime -> {
+//                KeyboardUtils.hideKeyboard(this)
+//                isFromTime = true
+//                isShowTimePickerDialog(this, this)
+//            }
+//
+//            R.id.rlaToTime -> {
+//                KeyboardUtils.hideKeyboard(this)
+//                isFromTime = false
+//                isShowTimePickerDialog(this, this)
+//            }
 
             R.id.rlaAddLocalFile -> {
 
@@ -874,7 +902,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     openAudioFilePicker()
                 }
             }
-
 
             R.id.imgClose -> {
                 KeyboardUtils.hideKeyboard(this)
@@ -1147,6 +1174,50 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
+
+    fun isShowTimePickerDialog(
+        context: Context,
+        listener: TimeSelectedListener,
+        preSelectedHour: Int? = null,
+        preSelectedMinute: Int? = null
+    ) {
+        val calendar = Calendar.getInstance()
+
+        // Use previously picked time if available, else current time
+        val hour = preSelectedHour ?: calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = preSelectedMinute ?: calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            context,
+            { _, selectedHour, selectedMinute ->
+                val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
+                val hourIn12Format = when {
+                    selectedHour == 0 -> 12
+                    selectedHour > 12 -> selectedHour - 12
+                    else -> selectedHour
+                }
+
+                // Callback
+                listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
+
+                // Save last picked time (in 24-hour format)
+                if (isFromTime) {
+                    fromHour24 = selectedHour
+                    fromMinute = selectedMinute
+                } else {
+                    toHour24 = selectedHour
+                    toMinute = selectedMinute
+                }
+            },
+            hour,
+            minute,
+            false // 12-hour format
+        )
+
+        timePickerDialog.show()
+    }
+
+
 
     private fun validateAndSetTime(hour: Int, minute: Int, amPm: String): Boolean {
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
