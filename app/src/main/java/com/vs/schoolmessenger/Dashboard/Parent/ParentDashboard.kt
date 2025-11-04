@@ -29,10 +29,9 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
-import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -140,7 +139,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                 }
 
                 R.id.help_click -> {
-                    loadFragment(this, HelpFragment())
+                    loadFragment(this, HolidaysFragment())
                     updateNavBar(R.id.icon_help)
                 }
 

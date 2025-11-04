@@ -29,7 +29,6 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.PopupWindow
 import android.widget.TextView
-import android.widget.TimePicker
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -41,7 +40,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
-import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
@@ -439,7 +438,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             updateNavBar(icon_home)
         }
         nav_help.setOnClickListener {
-            loadFragment(this, HelpFragment())
+            loadFragment(this, HolidaysFragment())
             updateNavBar(icon_help)
         }
         nav_settings.setOnClickListener {
