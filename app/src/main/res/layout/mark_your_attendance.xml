@@ -105,6 +105,7 @@
         android:id="@+id/rytMarkAttendanceSceen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/rytAddLocation"
         android:visibility="visible"
         android:layout_below="@+id/lnrParent">
 
@@ -120,6 +121,7 @@
             <ImageView
                 android:id="@+id/imgLocationIllustrate"
                 android:layout_width="wrap_content"
+
                 android:layout_height="@dimen/one_fifty"
                 android:src="@drawable/boy_doing_biometric_finger_scanning" />
 
@@ -175,7 +177,7 @@
                 android:gravity="center"
                 android:text="@string/enable_location"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold" />
 

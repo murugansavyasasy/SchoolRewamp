@@ -61,7 +61,8 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
         binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken=isChildDetails!!.access_token

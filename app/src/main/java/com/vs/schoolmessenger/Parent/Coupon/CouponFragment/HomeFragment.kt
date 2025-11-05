@@ -65,7 +65,8 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         fetchPauketPoints()
 
 
-        binding.backtext.text=Constant.isParentMenuName
+//        binding.backtext.text=Constant.isParentMenuName
+        binding.backtext.text=Constant.isSelectedMenuName
         appViewModel.getcouponmenu?.observe(viewLifecycleOwner) { response ->
             val categoryList = response?.data?.categories
             if (categoryList.isNullOrEmpty()) {

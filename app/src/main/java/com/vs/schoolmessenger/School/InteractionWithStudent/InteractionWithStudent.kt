@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -51,7 +50,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         val staffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = staffDetails?.access_token
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = staffDetails!!.school_name
 

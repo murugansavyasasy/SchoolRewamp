@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -87,7 +86,8 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this,matchedChild!!)
-            Constant.isParentMenuName = menu_name!!
+//            Constant.isParentMenuName = menu_name!!
+            Constant.isSelectedMenuName = menu_name!!
         }
 
 

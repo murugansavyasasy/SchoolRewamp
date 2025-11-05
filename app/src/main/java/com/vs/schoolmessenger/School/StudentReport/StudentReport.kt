@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -114,7 +113,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         Log.d("isAccessToken", isStaffDetails!!.access_token)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.visibility = View.VISIBLE
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         setupGenderCaterotyType(filterGenderCaterotyType)
 

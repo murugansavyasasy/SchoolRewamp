@@ -134,7 +134,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
         isUserDetails = SharedPreference.getUserDetails(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         isMultipleSchool = isUserDetails!!.staff_details.size > 1
 
         binding.btnNoticeBoardReport.text=getString(R.string.History)+" "+">>"

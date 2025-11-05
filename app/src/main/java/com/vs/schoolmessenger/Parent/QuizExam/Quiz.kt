@@ -80,7 +80,8 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this,matchedChild!!)
-            Constant.isParentMenuName = menu_name!!
+//            Constant.isParentMenuName = menu_name!!
+            Constant.isSelectedMenuName = menu_name!!
         }
 
 
@@ -93,7 +94,8 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
 
         binding.root.post {
-            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.toolbarLayout.lblParentToolBar.text = finalName
             binding.toolbarLayout.lblParentToolBar.visibility = View.VISIBLE

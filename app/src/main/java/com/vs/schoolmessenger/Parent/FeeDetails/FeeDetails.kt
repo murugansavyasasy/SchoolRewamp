@@ -93,14 +93,16 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         )
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         alertDialogView = AlertDialog.Builder(this@FeeDetails).create()
-        binding.lblHeaderTitle.text = Constant.isParentMenuName
+//        binding.lblHeaderTitle.text = Constant.isParentMenuName
+        binding.lblHeaderTitle.text = Constant.isSelectedMenuName
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {

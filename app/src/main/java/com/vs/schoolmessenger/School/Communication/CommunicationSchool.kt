@@ -174,7 +174,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         } else {
             binding.rlaScheduleCall.visibility = View.VISIBLE
         }
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
         if (!checkAndRequestPermissions(this)) {
             return

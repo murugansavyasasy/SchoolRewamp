@@ -120,7 +120,7 @@ class SchoolMenuAdapter(
             }
 
             rlaMenu.setOnClickListener {
-                Constant.isSchoolMenuName = data.name
+                Constant.isSelectedMenuName = data.name
                 Constant.SELECTED_SCHOOL_MENU = data.id
                 listener.onClick(data)
                 Constant.isSchoolMenuCount = itemCountList?.getOrNull(position)?.unread_count ?: 0

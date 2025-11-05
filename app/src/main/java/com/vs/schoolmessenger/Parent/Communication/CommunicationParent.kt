@@ -32,7 +32,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     VoiceClickListener {
 
     override fun getViewBinding() = CommunicationBinding.inflate(layoutInflater)
-
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var allVoiceData = mutableListOf<VoiceData>()
@@ -60,7 +59,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.rlaTextMessage.setOnClickListener(this)
         binding.rlaVoiceMessage.setOnClickListener(this)
         binding.seeMoreLabel.setOnClickListener(this)
@@ -82,8 +81,9 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
-            Constant.isParentMenuName = menu_name!!
+            SharedPreference.putChildDetails(this, matchedChild!!)
+//            Constant.isParentMenuName = menu_name!!
+            Constant.isSelectedMenuName = menu_name!!
         }
 
 
@@ -96,12 +96,13 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         isAccessToken = isChildDetails?.access_token
         showShimmer()
 
-        binding.toolbarLayout.lblStudentName.text= isChildDetails!!.name
+        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
         binding.root.post {
-            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("lblHeaderTitle", "Setting headerview text: $finalName")
             binding.lblHeaderTitle.text = finalName
             binding.lblHeaderTitle.visibility = View.VISIBLE
@@ -160,15 +161,15 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
         appViewModel?.isGetCommmunicationlistload?.observe(this) { response ->
             if (response?.status == true) {
-                if (response.data.size>0){
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-                }else{
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                if (response.data.size > 0) {
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 }
                 appendData(response.data, archiveFlag = false)
                 scrollToMessageId(headerId)
             } else {
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 checkAndShowNoData(message = response?.message)
             }
         }
@@ -320,8 +321,10 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         }
         if (currentSearchQuery.isNotEmpty()) {
             filteredList = filteredList.filter { item ->
-                val contentMatch = item.content.orEmpty().contains(currentSearchQuery, ignoreCase = true)
-                val titleMatch = item.title.orEmpty().contains(currentSearchQuery, ignoreCase = true)
+                val contentMatch =
+                    item.content.orEmpty().contains(currentSearchQuery, ignoreCase = true)
+                val titleMatch =
+                    item.title.orEmpty().contains(currentSearchQuery, ignoreCase = true)
                 val typeMatch = item.type.orEmpty().contains(currentSearchQuery, ignoreCase = true)
                 val timeMatch = item.time.orEmpty().contains(currentSearchQuery, ignoreCase = true)
 
@@ -374,15 +377,15 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             }
 
             R.id.seeMoreLabel -> {
-                Log.d("hasFetchedMoreBefore",hasFetchedMore.toString())
-                Log.d("seeMoreVisbilityBefore",binding.seeMoreLabel.isVisible.toString())
+                Log.d("hasFetchedMoreBefore", hasFetchedMore.toString())
+                Log.d("seeMoreVisbilityBefore", binding.seeMoreLabel.isVisible.toString())
                 if (!hasFetchedMore) {
-                    Log.d("isComing","iscoming")
-                    Log.d("hasFetchedMore",hasFetchedMore.toString())
+                    Log.d("isComing", "iscoming")
+                    Log.d("hasFetchedMore", hasFetchedMore.toString())
                     hasFetchedMore = true
                     isSeeMoreClick = false
                     binding.seeMoreLabel.visibility = View.GONE
-                    Log.d("seeMoreVisbilityAfter",binding.seeMoreLabel.isVisible.toString())
+                    Log.d("seeMoreVisbilityAfter", binding.seeMoreLabel.isVisible.toString())
                     binding.txtSearchMenu.text.clear()
                     fetchMoreData()
                 }
@@ -436,7 +439,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
 
         if (!isFilterClick) {
-            binding.seeMoreLabel.visibility = if (isEmpty && isSeeMoreClick) View.VISIBLE else View.GONE
+            binding.seeMoreLabel.visibility =
+                if (isEmpty && isSeeMoreClick) View.VISIBLE else View.GONE
         }
         binding.nomessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding.recyclerInitial.visibility = if (isEmpty) View.GONE else View.VISIBLE
@@ -545,12 +549,12 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     override fun onPause() {
         super.onPause()
-        adapter!!.pauseMediaPlayer()
+        adapter?.pauseMediaPlayer()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        adapter!!.onDestroyMediaPlayer()
+        adapter?.onDestroyMediaPlayer()
     }
 
     override fun onBackPressed() {

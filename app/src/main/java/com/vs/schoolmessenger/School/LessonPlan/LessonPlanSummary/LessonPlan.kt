@@ -11,7 +11,6 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.compose.foundation.interaction.DragInteraction
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,7 +53,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)

@@ -111,7 +111,7 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         binding.completedeventHeaderview.visibility = View.GONE
         binding.dotindicator.visibility = View.GONE
         binding.rcycategoryEvent.visibility = View.GONE
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 

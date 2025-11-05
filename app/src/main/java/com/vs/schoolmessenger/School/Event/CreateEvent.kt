@@ -28,7 +28,6 @@ import android.view.Window
 import android.widget.AdapterView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -53,9 +52,6 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.Event.Adapter.EventCategorySpinnerAdapter
-import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventAdapter
-import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventCompletedAdapter
-import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventUpcomingAdapter
 import com.vs.schoolmessenger.School.Event.Model.EventCategory
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
@@ -135,7 +131,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         isAccessToken = isStaffDetails!!.access_token
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         saveDrawableToCache(R.drawable.attachment_with_bg)?.let {

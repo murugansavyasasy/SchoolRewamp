@@ -91,7 +91,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()

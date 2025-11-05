@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -32,7 +31,6 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
-import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -86,7 +84,7 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
 //        binding.lnrTabOneName.setOnClickListener(this)
 //        binding.lnrTabTwoName.setOnClickListener(this)

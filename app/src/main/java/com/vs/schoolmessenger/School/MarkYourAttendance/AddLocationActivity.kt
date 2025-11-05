@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.School.MarkYourAttendance
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -15,7 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
@@ -87,20 +85,19 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         appViewModel!!.isAddLocation?.observe(this) { response ->
             if (response != null) {
                 Constant.hideLoading(this@AddLocationActivity)
-                showSuccessPopup(response.message,response.status)
+                showSuccessPopup(response.message, response.status)
 //                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
         appViewModel!!.isLocationHistory?.observe(this) { response ->
             if (response != null) {
-                if(response.status) {
+                if (response.status) {
                     recyleLocations?.visibility = View.VISIBLE
                     lblNoRecords?.visibility = View.GONE
                     val isLocationHistory = response!!.data
                     isLoadLocationHistory(isLocationHistory, response.message)
-                }
-                else{
+                } else {
                     recyleLocations?.visibility = View.GONE
                     lblNoRecords?.visibility = View.VISIBLE
                     lblNoRecords?.text = response.message
@@ -112,7 +109,13 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             if (response != null) {
                 Constant.hideLoading(this@AddLocationActivity)
                 val dialogRootView = view as ViewGroup
-                showTopAlertPopup(response.message, dialogRootView, -1, response.status, Constant.isUpdate)
+                showTopAlertPopup(
+                    response.message,
+                    dialogRootView,
+                    -1,
+                    response.status,
+                    Constant.isUpdate
+                )
             }
         }
 
@@ -120,7 +123,13 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             if (response != null && response.status) {
                 Constant.hideLoading(this)
                 val dialogRootView = view as ViewGroup
-                showTopAlertPopup(response.message, dialogRootView, -1, response.status, Constant.isRemove)
+                showTopAlertPopup(
+                    response.message,
+                    dialogRootView,
+                    -1,
+                    response.status,
+                    Constant.isRemove
+                )
             }
         }
     }
@@ -144,7 +153,8 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
                 isLongitude = location.longitude
                 val isLocationName = getAddressFromLocation(isLatitude!!, isLongitude!!)
                 binding.lblAddress.text = isLocationName
-                binding.lbllatLong.text = "${getString(R.string.Lat)} : ${isLatitude} , ${getString(R.string.Long)} : ${isLongitude}"
+                binding.lbllatLong.text =
+                    "${getString(R.string.Lat)} : ${isLatitude} , ${getString(R.string.Long)} : ${isLongitude}"
             } else {
                 println("Location is null. Try again later or enable location.")
             }
@@ -165,7 +175,11 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     }
 
     private fun openInGoogleMaps(lat: Double, lng: Double, isTitle: String) {
-        val uri = Uri.parse("${Constant.geo_}$lat${Constant.camma}$lng${Constant.questionQEqual}$lat${Constant.camma}$lng${Constant.leftBracket}${Uri.encode(isTitle)}${Constant.rightBracket}")
+        val uri = Uri.parse(
+            "${Constant.geo_}$lat${Constant.camma}$lng${Constant.questionQEqual}$lat${Constant.camma}$lng${Constant.leftBracket}${
+                Uri.encode(isTitle)
+            }${Constant.rightBracket}"
+        )
         val intent = Intent(Intent.ACTION_VIEW, uri)
         intent.setPackage(Constant.googleMap)
         startActivity(intent)
@@ -393,7 +407,11 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             btnCancel.visibility = View.GONE
         }
         messageText.text = message
-        alertTitle.text = "Delete!!"
+        if (isDeleteLocation == "isUpdate") {
+            alertTitle.text = "Update"
+        } else {
+            alertTitle.text = "Delete"
+        }
 
         val dimView = View(this).apply {
             setBackgroundColor(Color.parseColor("#80000000"))

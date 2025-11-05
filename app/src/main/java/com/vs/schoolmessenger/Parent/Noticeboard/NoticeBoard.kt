@@ -72,7 +72,8 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
                 val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
                 SharedPreference.putChildDetails(this,matchedChild!!)
-               Constant.isParentMenuName = menu_name!!
+//               Constant.isParentMenuName = menu_name!!
+               Constant.isSelectedMenuName = menu_name!!
         }
 
         val isChildDetails = SharedPreference.getChildDetails(this)
@@ -82,7 +83,8 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
             "${isChildDetails?.standard_name ?: ""} - ${isChildDetails?.section_name ?: ""}"
 
         binding.root.post {
-            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.headerview.text = finalName
             binding.headerview.visibility = View.VISIBLE
