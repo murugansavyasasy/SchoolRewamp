@@ -976,6 +976,7 @@
     <string name="quick_status">Quick Status</string>
     <string name="students_attendance_reports">Students Attendance Reports</string>
     <string name="mark_all_as_absent">&#160;Mark all as absent</string>
+    <string name="edit_and_save_attendance"><![CDATA[Edit & Save Attendance]]></string>
 
 
 </resources>

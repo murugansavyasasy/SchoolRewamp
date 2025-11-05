@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearRes
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
+import com.vs.schoolmessenger.Dashboard.NewFeatures.Model.GetFeature
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
@@ -225,6 +226,7 @@ class SchoolServices {
     var isblockstudentlist: MutableLiveData<BlockedStudentsResponse?>
     var isfrequentlyasked: MutableLiveData<FrequentlyModelResponse?>
     var isdeletenotification: MutableLiveData<DeleteNotificationResponse?>
+    var isgetfeature: MutableLiveData<GetFeature?>
 
 
     init {
@@ -340,6 +342,7 @@ class SchoolServices {
         isblockstudentlist= MutableLiveData()
         isfrequentlyasked= MutableLiveData()
         isdeletenotification= MutableLiveData()
+        isgetfeature= MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4206,8 +4209,9 @@ class SchoolServices {
         class_id: String,
         section_id: String,
         date: String,
+        attendance_type: String,
     ) {
-        RestClient.apiInterfaces.getAttendanceStudentList(isToken,class_id,section_id,date)
+        RestClient.apiInterfaces.getAttendanceStudentList(isToken,class_id,section_id,date,attendance_type)
             ?.enqueue(object : Callback<GetAttendanceStudentList?> {
                 override fun onResponse(
                     call: Call<GetAttendanceStudentList?>, response: Response<GetAttendanceStudentList?>
@@ -4404,6 +4408,44 @@ class SchoolServices {
 
     val isdeletenotificationLiveData: LiveData<DeleteNotificationResponse?>
         get() = isdeletenotification
+
+
+
+    fun isgetfeature() {
+        RestClient.apiInterfaces.isgetfeature()
+            ?.enqueue(object : Callback<GetFeature?> {
+                override fun onResponse(
+                    call: Call<GetFeature?>, response: Response<GetFeature?>
+                ) {
+                    Log.d(
+                        "GetFeature Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetFeature", response.body().toString())
+                                isgetfeature.postValue(response.body())
+                            } else {
+                                Log.d("GetFeature", response.body().toString())
+                                isgetfeature.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetFeature?>, t: Throwable
+                ) {
+                    isgetfeature.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getnewfeatureLiveData: LiveData<GetFeature?>
+        get() = isgetfeature
 
 
 }

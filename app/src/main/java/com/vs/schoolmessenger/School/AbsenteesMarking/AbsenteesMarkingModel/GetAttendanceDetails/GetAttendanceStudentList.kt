@@ -3,5 +3,5 @@ package com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Get
 class GetAttendanceStudentList (
     val status: Boolean,
     val message: String,
-    val data: List<GetAttendanceStudentListData>
+    val data: List<GetAttendanceStudent>
 )

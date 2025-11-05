@@ -70,6 +70,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     var isSectionId: String? = null
     var isFullDay: String? = null
     var isHalfDay: String? = null
+    var isEditAttendance: Boolean? = null
     var isCurrentAttendanceType: String? = null
     private var filterSelectedOption: String? = null
 
@@ -181,12 +182,14 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     binding.recycleStudents.visibility = View.VISIBLE
                     binding.cbSelect.visibility = View.VISIBLE
                     binding.rytSend.visibility = View.VISIBLE
-                    studentsList = response.data
-                    FilterAttendanceList=response.data
-                    originalAttendanceList=response.data
+                    isEditAttendance=response.data.get(0).is_edit
+                    studentsList = response.data.get(0).attd_details
+                    FilterAttendanceList=response.data.get(0).attd_details
+                    originalAttendanceList=response.data.get(0).attd_details
                     loadStudentAbsenteesList(studentsList!!)
 
                 } else {
+                    isEditAttendance=false
                     binding.rytSearchBar.visibility=View.GONE
                     binding.toolbarLayout.imgSearch.visibility=View.GONE
                     binding.lnrHeader.visibility = View.GONE
@@ -198,6 +201,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     ErrorMessage(response.message)
                 }
             } else {
+                isEditAttendance=false
                 binding.rytSearchBar.visibility=View.GONE
                 binding.toolbarLayout.imgSearch.visibility=View.GONE
                 binding.imgSearch.isEnabled = false
@@ -207,7 +211,15 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 binding.rytSend.visibility = View.GONE
                 ErrorMessage(getString(R.string.no_student_found))
             }
+
+            if (isEditAttendance!!){
+                binding.lblSend.text=getString(R.string.edit_and_save_attendance)
+            }
+            else{
+                binding.lblSend.text=getString(R.string.confirm_submit_attendance)
+            }
         }
+
         setupFilterCaterotyType(filterCaterotyType)
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
@@ -339,7 +351,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
         appViewModel!!.getAttendanceStudentList(
             isAccessToken!!,Constant.isMarkAttendanceDataSending?.class_id.toString(),
-            isSectionId!!.toString(),Constant.isMarkAttendanceDataSending?.attendance_date!!
+            isSectionId!!.toString(),Constant.isMarkAttendanceDataSending?.attendance_date!!,isFullDay.toString()
         )
 
     }
