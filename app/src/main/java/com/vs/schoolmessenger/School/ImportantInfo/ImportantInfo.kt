@@ -21,7 +21,7 @@ class ImportantInfo : BaseActivity<ImportantInfoBinding>(),
         )
 
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
-        binding.toolbarLayout.lblParentToolBar.text=Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text=Constant.isSelectedMenuName
 
         Constant.loadWebView(
             this,

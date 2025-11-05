@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -55,6 +56,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     override fun getViewBinding(): CreateSlotsBinding {
         return CreateSlotsBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     private lateinit var selectedDatesAdapter: SelectedDatesAdapter
     private var selectedSlots: List<Pair<String, SlotAvailability>> = emptyList()
@@ -118,7 +120,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             onBackPressed()
         }
 
-        binding.lblMenuName.text = Constant.isSchoolMenuName
+        binding.lblMenuName.text = Constant.isSelectedMenuName
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             if (response != null) {
                 if (response.status && response.data.isNotEmpty()) {
@@ -129,7 +131,11 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     selectedDates.clear()
                     selectedSlots = emptyList()
                     isSelectedList.clear()
-                    Constant.showTopAlertPopup1("No standards found for selected academic year", this,false)
+                    Constant.showTopAlertPopup1(
+                        "No standards found for selected academic year",
+                        this,
+                        false
+                    )
                 }
             }
         }
@@ -216,10 +222,14 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 val selectedOption = isAcademicYear!![position]
                 isAcademicYearId = selectedOption.id
                 isCurrentAcademicYear = selectedOption.current_academic_year
-                Log.d("DropdownMenu", "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}")
+                Log.d(
+                    "DropdownMenu",
+                    "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
+                )
                 isSelectedList.clear()
                 isGetStandardSection()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
@@ -331,7 +341,10 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                         // Save and display
                         startCalendar = chosenTime
                         binding.lblFromTime.text =
-                            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(startCalendar!!.time)
+                            SimpleDateFormat(
+                                "hh:mm a",
+                                Locale.getDefault()
+                            ).format(startCalendar!!.time)
 
                         // Reset end time
                         binding.lblToTime.text = "End with"
@@ -501,9 +514,10 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 }
 
                 // Break duration in minutes
-                val breakMinutes = if (!meetingData.break_time.isNullOrEmpty() && meetingData.break_time != "0") {
-                    meetingData.break_time.toInt()
-                } else 0
+                val breakMinutes =
+                    if (!meetingData.break_time.isNullOrEmpty() && meetingData.break_time != "0") {
+                        meetingData.break_time.toInt()
+                    } else 0
 
                 if (binding.switchBreak.isChecked()) {
                     breakAfterSlots = binding.lblSlotsCount.text.toString()
@@ -930,6 +944,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         val rcySlotDate = view.findViewById<RecyclerView>(R.id.rcySlotDate)
         val lblCreateSlot = view.findViewById<TextView>(R.id.lblCreateSlot)
+        val imgClose = view.findViewById<ImageView>(R.id.imgClose)
 
         // 3. Prepare grouped data (date → slots)
         val groupedData = allSlotsList.map { slot ->
@@ -951,7 +966,11 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
 
             if (availableSlots.isEmpty()) {
-                Toast.makeText(this, "Please select at least one available slot", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Please select at least one available slot",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
@@ -977,7 +996,8 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         // 6. Show bottom sheet full height
         bottomSheetDialog!!.show()
 
-        val bottomSheet = bottomSheetDialog!!.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val bottomSheet =
+            bottomSheetDialog!!.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.let { sheet ->
             val behavior = BottomSheetBehavior.from(sheet)
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -988,6 +1008,8 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         bottomSheetDialog!!.setOnDismissListener {
             bottomSheetDialog = null
         }
+
+        imgClose.setOnClickListener { bottomSheetDialog!!.dismiss() }
     }
 
     fun dismissBottomSheet() {
@@ -1034,7 +1056,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             Toast.makeText(this, "Kindly select the end time", Toast.LENGTH_SHORT).show()
             return null
         }
-
         if (isSlotDuration == "Select Slot Duration") {
             Toast.makeText(this, "Kindly select the slot duration", Toast.LENGTH_SHORT).show()
             return null
@@ -1072,6 +1093,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             break_time = isBreakDuration
         )
     }
+
     fun isLoadSlotDuration() {
         val adapter = SpinnerLoadingAdapter(this, itemsCategory)
         binding.spinnerSlotDuration.adapter = adapter
@@ -1083,13 +1105,16 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
+                    isSlotDuration=itemsCategory.get(position)
 
-                    if (position != 0 || itemsCategory[position] != "Custom") {
+                    if (position != 0 && itemsCategory[position] != "Custom") {
                         val parts = itemsCategory[position].split(" ")
                         val number = parts[0]
 //                        val unit = parts[1]
                         isSlotDuration = number
                     }
+
+
 
 //                    isSlotDuration = itemsCategory[position]
                     if (isSlotDuration == "Custom") {
@@ -1175,6 +1200,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
         dialog.show()
     }
+
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun isChangeTheBackRoundBreakDuration(isSelectedTextView: TextView) {
         binding.lblFiveMin.setBackgroundDrawable(this.getDrawable(R.drawable.gray_bg_radius))

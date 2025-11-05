@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -50,7 +49,8 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.btnSendCertificateRequest.setOnClickListener(this)
 
-        binding.headerText3.text=Constant.isParentMenuName
+//        binding.headerText3.text=Constant.isParentMenuName
+        binding.headerText3.text=Constant.isSelectedMenuName
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text  =

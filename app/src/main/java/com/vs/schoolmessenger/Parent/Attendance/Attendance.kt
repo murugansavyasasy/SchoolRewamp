@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.Attendance
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.PopupMenu
@@ -58,9 +57,10 @@ class Attendance : BaseActivity<AttendanceBinding>() {
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
 
-        Log.d("Menu_name",Constant.isParentMenuName)
+//        Log.d("Menu_name",Constant.isParentMenuName)
 
-        binding.lblHeaderTitle.setText(Constant.isParentMenuName)
+//        binding.lblHeaderTitle.setText(Constant.isParentMenuName)
+        binding.lblHeaderTitle.setText(Constant.isSelectedMenuName)
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]

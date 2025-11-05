@@ -143,23 +143,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.btnSubmit.setOnClickListener(this)
-        Log.d("isSchoolMenuName", Constant.isSchoolMenuName.length.toString())
-        Log.d("isSchoolMenuName", Constant.isParentMenuName.length.toString())
-        Log.d("isParentMenuName", Constant.isSchoolMenuName)
-        Log.d("isParentMenuName", Constant.isParentMenuName)
+
+        Log.d("isSchoolMenuName", Constant.isSelectedMenuName)
+//        Log.d("isParentMenuName", Constant.isParentMenuName)
         data = intent.getParcelableExtra("isPreViewData")
 
         binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
         binding.toolbarLayout.lblStudentSection.visibility = View.GONE
-        if (!Constant.isSchoolMenuName.isNullOrBlank()) {
-            binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
-            binding.toolbarLayout.lblSubjectName.visibility=View.VISIBLE
-            binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
-        } else {
-            binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
-            binding.toolbarLayout.lblSubjectName.visibility=View.VISIBLE
-            binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
-        }
+      //  if (!Constant.isSchoolMenuName.isNullOrBlank()) {
+            binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
+//        } else {
+//            binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
+//        }
+        binding.toolbarLayout.lblSubjectName.visibility=View.VISIBLE
+        binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
         binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
             Log.d("ChildHomeWork", "Button clicked!")
             LsrwSubmitSkill()
@@ -219,11 +216,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
-            if (!Constant.isSchoolMenuName.isNullOrBlank()) {
-                binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
-            } else {
-                binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
-            }
+         //   if (!Constant.isSchoolMenuName.isNullOrBlank()) {
+                binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
+//            } else {
+//                binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
+//            }
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.VISIBLE
             binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
@@ -552,11 +549,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
 
 
-            if (!Constant.isSchoolMenuName.isNullOrBlank()) {
-                binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
-            } else {
-                binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
-            }
+          //  if (!Constant.isSchoolMenuName.isNullOrBlank()) {
+                binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
+//            } else {
+//                binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
+//            }
 
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE

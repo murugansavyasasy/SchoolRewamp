@@ -219,8 +219,8 @@ object Constant {
 //    var MAX_FILES = 10
 
     var isAcademicYearList: List<AcademicYear>? = null
-    var isParentMenuName = ""
-    var isSchoolMenuName = ""
+   // var isParentMenuName = ""
+    var isSelectedMenuName = ""
     var isSchoolMenuCount = -1
 
     var isCompletedHomeworkId: String? = null
@@ -1741,6 +1741,21 @@ object Constant {
             inputDateStr
         }
     }
+
+
+    @SuppressLint("SimpleDateFormat")
+    fun convertToReadableDate1(inputDateStr: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val date = inputFormat.parse(inputDateStr)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            inputDateStr
+        }
+    }
+
 
 //    private fun isSameDay(cal1: Calendar, cal2: Calendar): Boolean {
 //        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
