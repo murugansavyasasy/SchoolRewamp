@@ -17,6 +17,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
+import com.vs.schoolmessenger.Dashboard.NewFeatures.Model.GetFeature
+import com.vs.schoolmessenger.Dashboard.NewFeatures.Model.GetFeatureData
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
@@ -408,6 +410,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var getAttendanceStudentList: LiveData<GetAttendanceStudentList?>? = null
     var isdeletenotification: LiveData<DeleteNotificationResponse?>? = null
         private set
+    var getNewFeature: LiveData<GetFeature?>? = null
+
 
 
     fun init() {
@@ -577,6 +581,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getassignmentchildhomework = apiSchoolRepositories.getassignmentchildhomeworkLiveData
         getattachmentchildhomework = apiSchoolRepositories.getattachmentchildhomeworkLiveData
         getdashboardnewupdates = apiSchoolRepositories.getdashboardnewupdatesLiveData
+        getNewFeature = apiSchoolRepositories.getnewfeatureLiveData
         getAttendanceStudentList = apiSchoolRepositories.getAttendanceStudentListLiveData
         isdeletenotification = apiSchoolRepositories.isdeletenotificationLiveData
 
@@ -1470,9 +1475,10 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String,
         class_id: String,
         section_id: String,
-        date: String
+        date: String,
+        attendance_type: String,
     ) {
-        apiSchoolRepositories.isGetAttendanceStudentList(isToken, class_id, section_id, date)
+        apiSchoolRepositories.isGetAttendanceStudentList(isToken, class_id, section_id, date,attendance_type)
     }
 
 
@@ -1492,6 +1498,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isdeletenotification(isToken: String, jsonObject: JsonObject) {
         apiSchoolRepositories.isdeletenotification(isToken, jsonObject)
+    }
+
+    fun isGetFeature() {
+        apiSchoolRepositories.isgetfeature()
     }
 
 }

@@ -1,49 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Base Gradient Layer -->
+    <!-- Base gradient (bottom light blue fade) -->
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:type="linear"
-                android:angle="270"
-                android:startColor="#EFFFFF"
-                android:centerColor="#D9F3FF"
-                android:endColor="#C9ECFF" />
-        </shape>
-    </item>
-
-    <!-- First Soft Curve Layer (light blue) -->
-    <item android:bottom="0dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#B3E7FF" />
-            <corners
-                android:topLeftRadius="0dp"
-                android:topRightRadius="0dp"
-                android:bottomLeftRadius="160dp"
-                android:bottomRightRadius="160dp" />
-        </shape>
-    </item>
-
-    <!-- Second Curve Layer (deeper blue accent) -->
-    <item android:bottom="0dp" android:top="480dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#A0DCFF" />
-            <corners
-                android:topLeftRadius="0dp"
-                android:topRightRadius="0dp"
-                android:bottomLeftRadius="220dp"
-                android:bottomRightRadius="220dp" />
-        </shape>
-    </item>
-
-    <!-- Optional Highlight Overlay for Gloss Effect -->
-    <item android:bottom="0dp" android:top="520dp">
-        <shape android:shape="rectangle">
-            <gradient
-                android:startColor="#80FFFFFF"
-                android:endColor="@android:color/transparent"
+                android:startColor="#9CE7FC"
+                android:endColor="#D1F9FF"
                 android:angle="270" />
         </shape>
     </item>
 
+    <!-- Gentle upward curve (white overlay) -->
+    <item>
+        <vector
+            android:width="1440dp"
+            android:height="320dp"
+            android:viewportWidth="1440"
+            android:viewportHeight="320">
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M0,180
+                                  C240,200 480,160 720,180
+                                  C960,200 1200,160 1440,180
+                                  L1440,0 L0,0 Z" />
+        </vector>
+    </item>
+
 </layer-list>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<vector xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:width="250dp"-->
+<!--    android:height="250dp"-->
+<!--    android:viewportWidth="600"-->
+<!--    android:viewportHeight="600">-->
+
+<!--    &lt;!&ndash; Inverted blue wave &ndash;&gt;-->
+<!--    <path-->
+<!--        android:fillColor="#11b6ed"-->
+<!--        android:pathData="M0,200-->
+<!--                          C120,240 240,160 360,200-->
+<!--                          C480,240 600,160 720,200-->
+<!--                          L720,0 L0,0 Z" />-->
+<!--</vector>-->
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<vector xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:width="320dp"-->
+    <!--    android:height="480dp"-->
+    <!--    android:viewportWidth="320"-->
+    <!--    android:viewportHeight="480">-->
+
+
+    <!--    <path-->
+    <!--        android:pathData="M0,340-->
+    <!--                         C80,320 120,380 200,360-->
+    <!--                         C280,340 320,380 320,340-->
+    <!--                         V480 H0 Z"-->
+    <!--        android:fillColor="#81D4FA"/>-->
+
+
+    <!--</vector>-->
+
+
+    <!--    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+    <!--    &lt;!&ndash; Base Gradient Layer &ndash;&gt;-->
+    <!--    <item>-->
+    <!--        <shape android:shape="rectangle">-->
+    <!--            <gradient-->
+    <!--                android:type="linear"-->
+    <!--                android:angle="270"-->
+    <!--                android:startColor="#EFFFFF"-->
+    <!--                android:centerColor="#D9F3FF"-->
+    <!--                android:endColor="#C9ECFF" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
+
+    <!--    &lt;!&ndash; First Soft Curve Layer (light blue) &ndash;&gt;-->
+    <!--    <item android:bottom="0dp">-->
+    <!--        <shape android:shape="rectangle">-->
+    <!--            <solid android:color="#B3E7FF" />-->
+    <!--            <corners-->
+    <!--                android:topLeftRadius="0dp"-->
+    <!--                android:topRightRadius="0dp"-->
+    <!--                android:bottomLeftRadius="160dp"-->
+    <!--                android:bottomRightRadius="160dp" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
+
+    <!--    &lt;!&ndash; Second Curve Layer (deeper blue accent) &ndash;&gt;-->
+    <!--    <item android:bottom="0dp" android:top="480dp">-->
+    <!--        <shape android:shape="rectangle">-->
+    <!--            <solid android:color="#A0DCFF" />-->
+    <!--            <corners-->
+    <!--                android:topLeftRadius="0dp"-->
+    <!--                android:topRightRadius="0dp"-->
+    <!--                android:bottomLeftRadius="220dp"-->
+    <!--                android:bottomRightRadius="220dp" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
+
+    <!--    &lt;!&ndash; Optional Highlight Overlay for Gloss Effect &ndash;&gt;-->
+    <!--    <item android:bottom="0dp" android:top="520dp">-->
+    <!--        <shape android:shape="rectangle">-->
+    <!--            <gradient-->
+    <!--                android:startColor="#80FFFFFF"-->
+    <!--                android:endColor="@android:color/transparent"-->
+    <!--                android:angle="270" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
+
+    <!--</layer-list>-->

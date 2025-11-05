@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
+import com.vs.schoolmessenger.Dashboard.NewFeatures.Model.GetFeature
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
@@ -1187,7 +1188,8 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.class_id) class_id: String,
         @Query(APIKeyNames.section_id ) section_id: String,
-        @Query(APIKeyNames.date ) date : String
+        @Query(APIKeyNames.date ) date : String,
+        @Query(APIKeyNames.attendance_type ) attendance_type : String
     ): Call<GetAttendanceStudentList>
 
 
@@ -1216,5 +1218,7 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject,
     ): Call<DeleteNotificationResponse?>?
 
+    @GET(APIMethods.isgetfeature)
+    fun isgetfeature(): Call<GetFeature?>?
 
 }
