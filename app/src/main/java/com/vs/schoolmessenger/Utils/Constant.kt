@@ -1713,28 +1713,24 @@ object Constant {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(inputDateStr)
-            val calendar = Calendar.getInstance()
 
-            val today = Calendar.getInstance()
             val yesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
+            val calendar = Calendar.getInstance().apply { time = date!! }
 
-            // Compare date values without time component
-            val isToday = isSameDay(calendar.apply { time = date!! }, today)
-            val isYesterday = isSameDay(calendar.apply { time = date!! }, yesterday)
+            val isYesterday = isSameDay(calendar, yesterday)
 
-            when {
-                isToday -> "Today"
-                isYesterday -> "Yesterday"
-                else -> {
-                    val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
-                    outputFormat.format(date!!)
-                }
+            if (isYesterday) {
+                "Yesterday"
+            } else {
+                val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+                outputFormat.format(date)
             }
         } catch (e: Exception) {
             e.printStackTrace()
             inputDateStr
         }
     }
+
 
 //    private fun isSameDay(cal1: Calendar, cal2: Calendar): Boolean {
 //        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&

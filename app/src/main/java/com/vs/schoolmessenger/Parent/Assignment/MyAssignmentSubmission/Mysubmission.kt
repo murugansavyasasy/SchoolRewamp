@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
@@ -95,6 +96,9 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
                 if (response.status) {
                     Constant.hideLoading(this@Mysubmission)
                     mAdapter!!.removeItemAt(isMySubmissionPosition)
+                    val intent = Intent(this, Assignment::class.java)
+                    startActivity(intent)
+
                 } else {
                     Constant.showDataValidation(
                         resources.getString(R.string.fail), response.message, this
@@ -233,7 +237,6 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
             val jsonObject = JsonObject()
             jsonObject.addProperty(APIKeyNames.id, isMySubmissionId)
             appViewModel?.ismysubmissiondelete(isAccessToken!!, jsonObject, this)
-//            }
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }

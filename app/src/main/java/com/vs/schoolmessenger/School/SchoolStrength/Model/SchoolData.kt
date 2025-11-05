@@ -25,5 +25,6 @@ data class SchoolData(
     @SerializedName("total_others_strength")
     val totalOthersStrength: String,
 
-    val standards: List<Standard>
+    val standards: List<Standard>,
+    val previous: PreviousStrength
 )
