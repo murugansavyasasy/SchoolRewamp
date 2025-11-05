@@ -153,6 +153,8 @@ class SchoolEventCompletedAdapter(
         private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)
         private val header: RelativeLayout = itemView.findViewById(R.id.header)
         private val rytList2: LinearLayout = itemView.findViewById(R.id.rytList2)
+        private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
+
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -162,12 +164,23 @@ class SchoolEventCompletedAdapter(
             adapter: SchoolEventCompletedAdapter
         ) {
             event_header.text = data.title
-            event_time.text = data.time + " - " + Constant.convertDateTimeFormat(data.date)
+            event_time.text = data.category + " " + data.time + " - " + Constant.convertDateTimeFormat(data.date)
             event_location.text = data.venue
             eventdesc.text = data.description
 
             loadingBar.visibility = View.GONE
             setupPreviewListeners(data)
+
+            if (data.can_edit || data.can_delete) {
+                imgEditAndDelete.visibility = View.VISIBLE
+            } else {
+                imgEditAndDelete.visibility = View.GONE
+            }
+
+            imgEditAndDelete.setOnClickListener {
+                listener.onEditAndDeleteCompleted(data, it, adapterPosition)
+            }
+
 
             if (data.file_path.isEmpty()) {
                 rcyImgPDF.visibility = View.GONE
@@ -203,8 +216,9 @@ class SchoolEventCompletedAdapter(
                 id = data.id,
                 title = data.title,
                 description = data.description,
+                created_date = data.date,
                 subjectName = "",
-                sentBy = "",
+                sentBy = data.sent_by,
                 thumbnail = data.thumbnail,
                 isUnread = true,
                 isCompleted = true,

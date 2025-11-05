@@ -59,6 +59,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         super.setupViews()
         setupToolbarBlueWhite()
         val subjectName = intent.getStringExtra(Constant.subjectName) ?: ""
+        binding.lblSubject.visibility = View.GONE
         binding.lblSubject.text = subjectName
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token

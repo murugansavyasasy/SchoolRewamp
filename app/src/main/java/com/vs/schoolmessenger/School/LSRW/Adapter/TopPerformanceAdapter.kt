@@ -29,10 +29,16 @@ class TopPerformanceAdapter(
 
             val name = item.studentName
             avatarText.text = if (!name.isNullOrEmpty()) {
-                name.first().toString().uppercase()
+                val parts = name.trim().split("\\s+".toRegex())
+                val initials = buildString {
+                    append(parts.first().first().uppercaseChar())
+                    if (parts.size > 1) append(parts.last().first().uppercaseChar())
+                }
+                initials
             } else {
                 "-"
             }
+
 
         }
     }

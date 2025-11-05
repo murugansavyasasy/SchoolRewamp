@@ -101,14 +101,15 @@
                         android:layout_width="@dimen/sixty"
                         android:layout_height="@dimen/thirty"
                         android:paddingTop="@dimen/three"
+                        android:padding="@dimen/seven"
                         android:paddingBottom="@dimen/three"
-                        android:src="@drawable/ic_help" />
+                        android:src="@drawable/calendar_icon" />
 
                     <TextView
                         android:id="@+id/lblHelp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/lblHelp"
+                        android:text="@string/HoliDay"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp" />
                 </LinearLayout>

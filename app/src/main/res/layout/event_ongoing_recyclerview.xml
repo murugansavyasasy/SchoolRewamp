@@ -25,9 +25,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
-            android:text="Christmas Day Celebration"
+            android:text="Christmaasjus Day Celebration"
             android:textColor="@color/white"
             android:singleLine="true"
+            android:maxLines="1"
+            android:lines="1"
             android:ellipsize="end"
             android:textSize="@dimen/sixteen_sp" />
 
@@ -39,6 +41,7 @@
             android:layout_marginTop="@dimen/five"
             android:ellipsize="end"
             android:maxLines="3"
+            android:lines="3"
             android:text="Festival 10:00 AM -17/07"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />

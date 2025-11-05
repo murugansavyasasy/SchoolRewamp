@@ -1,8 +1,10 @@
 package com.vs.schoolmessenger.School.PTM.Activity
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -64,7 +66,21 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
         binding.lblMeetingTitle.text = isSlotsDetails.event_name
         binding.lblMeetingMode.text = "Mode" + " - " + isSlotsDetails.event_mode
+        binding.lblModeMeeting.text = isSlotsDetails.event_mode
         binding.lblDate.text = formatApiDateToDisplay(isSlotsDetails.date)
+
+        if (isSlotsDetails.event_mode == "Online") {
+            binding.rytJoin.visibility = View.VISIBLE
+        } else {
+            binding.rytJoin.visibility = View.GONE
+        }
+
+        binding.rytJoin.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(isSlotsDetails.join_url)
+            startActivity(intent)
+        }
+
 
         binding.lblTime.text = isSlotsDetails.start_time + " - " + isSlotsDetails.end_time
 

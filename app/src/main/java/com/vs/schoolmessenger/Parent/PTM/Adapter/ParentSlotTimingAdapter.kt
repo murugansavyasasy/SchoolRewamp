@@ -88,6 +88,7 @@ class ParentSlotTimingAdapter(
                 holder.card.setBackgroundResource(R.drawable.bg_btn_blue)
                 holder.tvSlotStatus.text = "Selected"
                 holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
+                holder.tvSlotTime.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
                 holder.card.isEnabled = true
             }
 
@@ -95,6 +96,7 @@ class ParentSlotTimingAdapter(
                 holder.card.setBackgroundResource(R.drawable.outline_gray)
                 holder.tvSlotStatus.text = "Available"
                 holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.green))
+                holder.tvSlotTime.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
                 holder.card.isEnabled = true
             }
         }

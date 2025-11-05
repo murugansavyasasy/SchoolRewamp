@@ -30,6 +30,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -96,7 +97,6 @@ object Constant {
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
-    var isShimmerViewDisablenew = false
     var isShimmerView = false
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
@@ -134,7 +134,6 @@ object Constant {
     val M_EXAM = 10
     val M_FEEDBACK = 11
     val M_FEE_DETAILS = 12
-    val M_FEE_PAYMENT = 13
     val M_FEE_PENDING_REPORT = 14
     val M_HOMEWORK = 15
     val M_INTERACTION_WITH_STAFF = 16
@@ -150,17 +149,13 @@ object Constant {
     val M_ONLINE_TEXT_BOOK = 25
     val M_PTM = 26
     val M_QUIZ_EXAM = 27
-    val M_REQUEST_LEAVE = 28
     val M_SCHOOL_CLASS_EVENTS = 29
     val M_PARENT_CLASS_EVENTS = 9
     val M_SCHOOL_NEEDS = 30
     val M_SCHOOL_STRENGTH = 31
-    val M_STAFF_LIST = 32
     val M_STAFF_WISE_ATTENDANCE_REPORT = 33
-    val M_STUDENT_LIST = 34
     val M_STUDENT_REPORT = 35
     val M_VERY_IMPORTANT_INFO = 36
-    val M_YOUR_PROFILE = 37
     val M_SCHEDULE_EXAM_TEST = 38
     val M_ATTACHMENTS = 39
     val M_FINANCE = 194
@@ -428,10 +423,10 @@ object Constant {
     var wav_ = "wav"
 
     var GET_ALL_STUDENT = "GET ALL STUDENT"
-    var ALL_STUDENTS = "ALL STUDENTS"
+    var ALL_STUDENTS = "All students"
     var STANDARD = "STANDARD"
     var STANDARD_AND_SECTION = "STANDARD AND SECTION"
-    var CLASS_AND_SECTION = "CLASS AND SECTION"
+    var CLASS_AND_SECTION = "Class & Section"
 
     var NO_DATA_FOUND = "No Data Found"
     var No_STANDARD_FOUND = "No Standard Found"
@@ -948,6 +943,17 @@ object Constant {
             onKeyboardStateChanged(isKeyboardOpened)
         }
     }
+
+    fun hideKeyboardIfOpen(activity: Activity) {
+        val inputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocusView = activity.currentFocus
+
+        if (currentFocusView != null) {
+            inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
+            currentFocusView.clearFocus()
+        }
+    }
+
 
     fun isNavigation(activity: Activity) {
         val isUserDetails = SharedPreference.getUserDetails(activity)
@@ -1982,17 +1988,17 @@ object Constant {
     }
 
 
-    fun convertDateTimeFormat(input: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
-            val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.getDefault())
-            val date = inputFormat.parse(input)
-            outputFormat.format(date!!)
-        } catch (e: Exception) {
-            input // return original if there's a parsing error
-        }
-
-    }
+//    fun convertDateTimeFormat(input: String): String {
+//        return try {
+//            val inputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
+//            val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.getDefault())
+//            val date = inputFormat.parse(input)
+//            outputFormat.format(date!!)
+//        } catch (e: Exception) {
+//            input // return original if there's a parsing error
+//        }
+//
+//    }
 
     fun convertDateAndTimeFormat(input: String): String {
         return try {
@@ -2429,9 +2435,24 @@ object Constant {
 
     fun showDatePickerNormal(
         context: Context,
+        preSelectedDate: String? = null,
         onDateSelected: (String) -> Unit
     ) {
         val calendar = Calendar.getInstance()
+
+        // If a previously selected date exists, use it
+        if (!preSelectedDate.isNullOrBlank()) {
+            try {
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val date = sdf.parse(preSelectedDate)
+                if (date != null) {
+                    calendar.time = date
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -2442,7 +2463,6 @@ object Constant {
                 val pickedCalendar = Calendar.getInstance()
                 pickedCalendar.set(selectedYear, selectedMonth, selectedDay)
 
-                // Format date as dd-MM-yyyy
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(pickedCalendar.time)
 
@@ -2456,6 +2476,47 @@ object Constant {
 
         datePicker.show()
     }
+
+    fun convertDateTimeFormat(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // fallback if parsing fails
+        }
+    }
+
+//    fun showDatePickerNormal(
+//        context: Context,
+//        onDateSelected: (String) -> Unit
+//    ) {
+//        val calendar = Calendar.getInstance()
+//        val year = calendar.get(Calendar.YEAR)
+//        val month = calendar.get(Calendar.MONTH)
+//        val day = calendar.get(Calendar.DAY_OF_MONTH)
+//
+//        val datePicker = DatePickerDialog(
+//            context,
+//            { _, selectedYear, selectedMonth, selectedDay ->
+//                val pickedCalendar = Calendar.getInstance()
+//                pickedCalendar.set(selectedYear, selectedMonth, selectedDay)
+//
+//                // Format date as dd-MM-yyyy
+//                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+//                val formattedDate = sdf.format(pickedCalendar.time)
+//
+//                // Return selected date
+//                onDateSelected(formattedDate)
+//            },
+//            year,
+//            month,
+//            day
+//        )
+//
+//        datePicker.show()
+//    }
 
 
     fun setupEditTextWithScroll(context: Context, scrollView: ScrollView, editText: EditText) {

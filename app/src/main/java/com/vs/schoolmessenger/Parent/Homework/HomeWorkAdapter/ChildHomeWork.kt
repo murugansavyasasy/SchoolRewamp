@@ -62,13 +62,9 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest.islsrwSkillSubmit
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentChildStandardAdapter
-import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetail
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardAdapter
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.SchoolNameTarget
-import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetData
-import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetItem
-import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.TargetName
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.LSRW.LsrwStudentListFragment
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
@@ -92,8 +88,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Date
 import java.util.Locale
-import kotlin.text.endsWith
-import kotlin.text.ifEmpty
 
 class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClickListener,
     OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
@@ -141,8 +135,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         super.setupViews()
         setupToolbarBlueWhite()
         isToolBarPrimarySchool(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
         Constant.Remaining = MAX_FILES
 
@@ -160,11 +153,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.lblStudentSection.visibility = View.GONE
         if (!Constant.isSchoolMenuName.isNullOrBlank()) {
             binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
-            binding.toolbarLayout.lblSubjectName.visibility=View.VISIBLE
+            binding.toolbarLayout.lblSubjectName.visibility = View.VISIBLE
             binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
         } else {
             binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
-            binding.toolbarLayout.lblSubjectName.visibility=View.VISIBLE
+            binding.toolbarLayout.lblSubjectName.visibility = View.VISIBLE
             binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
         }
         binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
@@ -217,6 +210,24 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         } else {
             binding.sendtostandardLabel.visibility = View.GONE
             Log.d("", "")
+        }
+
+
+        if (SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT && data!!.isStudentlistdetail == true) {
+            binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
+            val params =
+                binding.toolbarLayout.rlaStudentName.layoutParams as RelativeLayout.LayoutParams
+            params.removeRule(RelativeLayout.START_OF)
+            params.addRule(
+                RelativeLayout.START_OF, R.id.lblPostedOn
+            )
+            binding.toolbarLayout.rlaStudentName.layoutParams = params
+            binding.toolbarLayout.lblPostedOn.text =
+                "Posted On : ${Constant.convertToReadableDate(data!!.created_date.toString())}"
+            Log.d("Posted On isStudentlistdetail", data!!.created_date.toString())
+
+        } else {
+            Log.d("Posted On isStudentlistdetail", data!!.created_date.toString())
         }
 
 
@@ -459,20 +470,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
         if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
-            if(data!!.is_submitted == true) {
+            if (data!!.is_submitted == true) {
                 binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
-                Log.d("lblviewSubmissions Visible success" ,"lblviewSubmissions Visible success")
+                Log.d("lblviewSubmissions Visible success", "lblviewSubmissions Visible success")
             } else {
                 binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
-                Log.d("lblviewSubmissions Visible failed" ,"lblviewSubmissions Visible failed")
+                Log.d("lblviewSubmissions Visible failed", "lblviewSubmissions Visible failed")
             }
 
-        } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false)  {
+        } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false) {
             binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
-            Log.d("lblviewSubmissions Visible failed" ,"lblviewSubmissions Visible failed")
+            Log.d("lblviewSubmissions Visible failed", "lblviewSubmissions Visible failed")
         } else {
             binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
-            Log.d("lblviewSubmissions Visible failed" ,"lblviewSubmissions Visible failed")
+            Log.d("lblviewSubmissions Visible failed", "lblviewSubmissions Visible failed")
         }
 
 //        if (data?.created_date.isNullOrBlank()) {
@@ -501,8 +512,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.toolbarLayout.rlaStudentName.layoutParams as RelativeLayout.LayoutParams// Assuming you already have view binding set up
             params.removeRule(RelativeLayout.START_OF) // Remove the old rule pointing to imgSearchToolBar
             params.addRule(
-                RelativeLayout.START_OF,
-                R.id.lblPostedOn
+                RelativeLayout.START_OF, R.id.lblPostedOn
             ) // Add a new rule pointing to lblPostedOn
             binding.toolbarLayout.rlaStudentName.layoutParams =
                 params // Apply the updated layout params
@@ -543,8 +553,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.toolbarLayout.rlaStudentName.layoutParams as RelativeLayout.LayoutParams// Assuming you already have view binding set up
             params.removeRule(RelativeLayout.START_OF) // Remove the old rule pointing to imgSearchToolBar
             params.addRule(
-                RelativeLayout.START_OF,
-                R.id.lblPostedOn
+                RelativeLayout.START_OF, R.id.lblPostedOn
             ) // Add a new rule pointing to lblPostedOn
             binding.toolbarLayout.rlaStudentName.layoutParams =
                 params // Apply the updated layout params
@@ -569,7 +578,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.lblPostedBy.visibility = View.VISIBLE
                 binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
             }
-
         }
 
         for (i in data!!.fileList.indices) {
@@ -584,11 +592,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         Log.d("Child Homework Redirection", isParentAssignment.toString())
 
         val adapter = HomeWorkChildAdapter(
-            this,
-            data!!.fileList,
-            data!!.subjectName!!,
-            SELECTED_SCHOOL_MENU,
-            isParentAssignment
+            this, data!!.fileList, data!!.subjectName!!, SELECTED_SCHOOL_MENU, isParentAssignment
         )
 
         val recyclerView = if (SELECTED_SCHOOL_MENU == M_LSRW) {
@@ -597,7 +601,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.rcChildHW
         }
 
-        Log.d("ParentAssigmentValue", isParentAssignment.toString())
+        Log.d("ParentAssignmentValue", isParentAssignment.toString())
 
         val spanCount = when {
             SELECTED_SCHOOL_MENU == M_ASSIGNMENT -> 2
@@ -638,16 +642,44 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val flattenedTargetList = response.data
-                            .flatMap { it.name }
-                        childstandardadapter.updateList(flattenedTargetList)
 
-                        val typelist = dataList.map { it.type }
-                        childstandardadapter =
-                            ChildStandardAdapter(flattenedTargetList, this, Constant.isShimmerViewDisable)
+                        val flattenedTargetList = dataList.flatMap { dataItem ->
+                            dataItem.name?.flatMap { nameObj ->
+                                when {
+                                    !nameObj.standardList.isNullOrEmpty() ->
+                                        nameObj.standardList.map { std ->
+                                            SchoolNameTarget(name = std)
+                                        }
+
+                                    !nameObj.institute.isNullOrEmpty() ->
+                                        nameObj.institute.map { inst ->
+                                            SchoolNameTarget(name = inst)
+                                        }
+
+                                    !nameObj.group.isNullOrEmpty() ->
+                                        nameObj.group.map { grp ->
+                                            SchoolNameTarget(name = grp)
+                                        }
+
+                                    !nameObj.sectionList.isNullOrEmpty() ->
+                                        nameObj.sectionList.map { sec ->
+                                            SchoolNameTarget(name = sec)
+                                        }
+
+                                    else -> emptyList()
+                                }
+                            } ?: emptyList()
+                        }
+
+                        val typelist = dataList.mapNotNull { it.type }
+                        childstandardadapter = ChildStandardAdapter(
+                            flattenedTargetList,
+                            this,
+                            Constant.isShimmerViewDisable
+                        )
                         binding.rcystandard.adapter = childstandardadapter
                         binding.sendtostandardLabel.visibility = View.VISIBLE
-                        binding.standardValue.text = "\uD83C\uDF93 ${typelist}"
+                        binding.standardValue.text = "\uD83C\uDF93 ${typelist.joinToString(", ")}"
                     }
 
                 } else {
@@ -667,16 +699,44 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val flattenedTargetList = response.data
-                            .flatMap { it.name }
-                        childstandardadapter.updateList(flattenedTargetList)
 
-                        val typelist = dataList.map { it.type }
-                        childstandardadapter =
-                            ChildStandardAdapter(flattenedTargetList, this, Constant.isShimmerViewDisable)
+                        val flattenedTargetList = dataList.flatMap { dataItem ->
+                            dataItem.name?.flatMap { nameObj ->
+                                when {
+                                    !nameObj.standardList.isNullOrEmpty() ->
+                                        nameObj.standardList.map { std ->
+                                            SchoolNameTarget(name = std)
+                                        }
+
+                                    !nameObj.institute.isNullOrEmpty() ->
+                                        nameObj.institute.map { inst ->
+                                            SchoolNameTarget(name = inst)
+                                        }
+
+                                    !nameObj.group.isNullOrEmpty() ->
+                                        nameObj.group.map { grp ->
+                                            SchoolNameTarget(name = grp)
+                                        }
+
+                                    !nameObj.sectionList.isNullOrEmpty() ->
+                                        nameObj.sectionList.map { sec ->
+                                            SchoolNameTarget(name = sec)
+                                        }
+
+                                    else -> emptyList()
+                                }
+                            } ?: emptyList()
+                        }
+
+                        val typelist = dataList.mapNotNull { it.type }
+                        childstandardadapter = ChildStandardAdapter(
+                            flattenedTargetList,
+                            this,
+                            Constant.isShimmerViewDisable
+                        )
                         binding.rcystandard.adapter = childstandardadapter
                         binding.sendtostandardLabel.visibility = View.VISIBLE
-                        binding.standardValue.text = "\uD83C\uDF93 ${typelist}"
+                        binding.standardValue.text = "\uD83C\uDF93 ${typelist.joinToString(", ")}"
                     }
 
                 } else {
@@ -685,22 +745,53 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 }
             }
         }
+
+
+
 
         appViewModel!!.getassignmentchildhomework?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     response.data?.let { dataList ->
                         Constant.isShimmerViewDisable = false
-                        val flattenedTargetList = response.data
-                            .flatMap { it.name }
-                        childstandardadapter.updateList(flattenedTargetList)
 
-                        val typelist = dataList.map { it.type }
-                        childstandardadapter =
-                            ChildStandardAdapter(flattenedTargetList, this, Constant.isShimmerViewDisable)
+                        val flattenedTargetList = dataList.flatMap { dataItem ->
+                            dataItem.name?.flatMap { nameObj ->
+                                when {
+                                    !nameObj.standardList.isNullOrEmpty() ->
+                                        nameObj.standardList.map { std ->
+                                            SchoolNameTarget(name = std)
+                                        }
+
+                                    !nameObj.institute.isNullOrEmpty() ->
+                                        nameObj.institute.map { inst ->
+                                            SchoolNameTarget(name = inst)
+                                        }
+
+                                    !nameObj.group.isNullOrEmpty() ->
+                                        nameObj.group.map { grp ->
+                                            SchoolNameTarget(name = grp)
+                                        }
+
+                                    !nameObj.sectionList.isNullOrEmpty() ->
+                                        nameObj.sectionList.map { sec ->
+                                            SchoolNameTarget(name = sec)
+                                        }
+
+                                    else -> emptyList()
+                                }
+                            } ?: emptyList()
+                        }
+
+                        val typelist = dataList.mapNotNull { it.type }
+                        childstandardadapter = ChildStandardAdapter(
+                            flattenedTargetList,
+                            this,
+                            Constant.isShimmerViewDisable
+                        )
                         binding.rcystandard.adapter = childstandardadapter
                         binding.sendtostandardLabel.visibility = View.VISIBLE
-                        binding.standardValue.text = "\uD83C\uDF93 ${typelist}"
+                        binding.standardValue.text = "\uD83C\uDF93 ${typelist.joinToString(", ")}"
                     }
 
                 } else {
@@ -709,6 +800,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 }
             }
         }
+
+
 
 
         val isEmpty = adapter.itemCount == 0
@@ -864,8 +957,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val nonImages = allNonVideos.filter { it.type != FileType.IMAGE }
         val newSelectedFiles = mutableListOf<FileItem>()
         val outputDir = File(
-            getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-            "CompressedOutput"
+            getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput"
         )
         outputDir.mkdirs()
         Constant.compressImageFilesOnly(
@@ -1005,8 +1097,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
     private fun subloadFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.lsrwgragmentcontainer, fragment)
+        supportFragmentManager.beginTransaction().replace(R.id.lsrwgragmentcontainer, fragment)
             .commit()
     }
 
@@ -1079,9 +1170,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
         appViewModel!!.getattachmentchildhomework(
-            isAccessToken!!,
-            data!!.id.toInt(),
-            data!!.target_type!!.toInt()
+            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt()
         )
     }
 
@@ -1097,9 +1186,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
         appViewModel!!.getassignmentchildhomework(
-            isAccessToken!!,
-            data!!.id.toInt(),
-            data!!.target_type!!.toInt()
+            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt()
         )
     }
 
@@ -1499,8 +1586,5 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
         dimView.isFocusable = true
         dimView.isFocusableInTouchMode = true
-
     }
-
-
 }

@@ -1,0 +1,49 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base Gradient Layer -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#EFFFFF"
+                android:centerColor="#D9F3FF"
+                android:endColor="#C9ECFF" />
+        </shape>
+    </item>
+
+    <!-- First Soft Curve Layer (light blue) -->
+    <item android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#B3E7FF" />
+            <corners
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="160dp"
+                android:bottomRightRadius="160dp" />
+        </shape>
+    </item>
+
+    <!-- Second Curve Layer (deeper blue accent) -->
+    <item android:bottom="0dp" android:top="480dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#A0DCFF" />
+            <corners
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="220dp"
+                android:bottomRightRadius="220dp" />
+        </shape>
+    </item>
+
+    <!-- Optional Highlight Overlay for Gloss Effect -->
+    <item android:bottom="0dp" android:top="520dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#80FFFFFF"
+                android:endColor="@android:color/transparent"
+                android:angle="270" />
+        </shape>
+    </item>
+
+</layer-list>

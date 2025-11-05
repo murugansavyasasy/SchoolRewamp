@@ -83,7 +83,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
                     android:background="@drawable/field_background"
-                    android:hint="Purpose of meeting"
+                    android:hint="Purpose of Meeting"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp"></EditText>
 
@@ -277,7 +277,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:text="Select date &amp; time"
+                    android:text="Select Date &amp; Time"
                     android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <RelativeLayout
@@ -307,7 +307,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_toEndOf="@+id/imgCalender"
-                        android:text="Select Date"
+                        android:text="Select Dates"
                         android:textColor="@color/black"></TextView>
 
                     <ImageView

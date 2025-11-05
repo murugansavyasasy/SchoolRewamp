@@ -82,7 +82,7 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
+                    appViewModel?.isAddRewardPoints("", jsonObject)
 
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser

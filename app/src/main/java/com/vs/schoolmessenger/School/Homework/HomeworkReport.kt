@@ -152,13 +152,23 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
                         binding.rytStandardDropDown.visibility = View.VISIBLE
                         binding.rytSectionDropDown.visibility = View.VISIBLE
                         isSectionId = isGetStandard!![0].sections[0].id
-                        if (isGetStandard!!.get(0).sections.size > 0) {
+                        if (isGetStandard!!.get(0).sections.isNotEmpty()) {
                             isLoadStandard(isGetStandard)
                             isSection = isGetStandard!!.get(0).sections
+                            binding.noDataFound.visibility = View.GONE
+                            binding.lytNoDataFound.visibility = View.GONE
+                            binding.line1.visibility=View.VISIBLE
+                            binding.line2.visibility=View.VISIBLE
                         }
                     } else {
                         binding.rytStandardDropDown.visibility = View.GONE
                         binding.rytSectionDropDown.visibility = View.GONE
+                        binding.rcyHomeWorkReport.visibility = View.GONE
+                        binding.lytNoDataFound.visibility = View.VISIBLE
+                        binding.noDataFound.visibility = View.VISIBLE
+                        binding.noDataFound.text = response.message
+                        binding.line1.visibility=View.GONE
+                        binding.line2.visibility=View.GONE
                     }
                 }
             }
@@ -179,11 +189,10 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
                     loadHomeWorkReportData(isHomeWorkReportDataData!!)
                 } else {
                     binding.search.visibility=View.GONE
-                    binding.line1.visibility=View.GONE
-                    binding.line2.visibility=View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.line1.visibility = View.GONE
                     binding.line2.visibility = View.GONE
+                    binding.noDataFound.visibility = View.VISIBLE
                     binding.rcyHomeWorkReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
                     binding.noDataFound.text = response.message
@@ -221,7 +230,8 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
                         "DropdownMenu",
                         "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
                     )
-                    fetchHomeWorkReportData()
+
+                    isGetStandardSection()
                 }
             }
 
