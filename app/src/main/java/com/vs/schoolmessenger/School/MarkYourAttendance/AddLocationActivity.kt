@@ -445,7 +445,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         okButton.setOnClickListener {
             if (id != -1 && isDeleteLocation == Constant.isRemove) {
                 val jsonObject = JsonObject().apply {
-                    addProperty(APIKeyNames.location_id, id)
+                    addProperty(APIKeyNames.location_id, id.toString())
                 }
                 appViewModel?.removeLocation(isAccessToken!!, jsonObject, this)
             } else if (isDeleteLocation == Constant.isUpdate) {
