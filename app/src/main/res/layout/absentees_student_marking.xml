@@ -182,6 +182,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/recycleStudents"
             android:layout_centerInParent="true"
+            android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -189,14 +190,16 @@
                 android:layout_width="@dimen/two_fifty"
                 android:layout_height="@dimen/two_fifty"
                 android:layout_marginTop="@dimen/twenty_five"
-                android:src="@drawable/no_takeattendence_message"></ImageView>
+                android:src="@drawable/no_takeattendence_message">
+
+            </ImageView>
 
             <TextView
                 android:id="@+id/noDataFound"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_marginTop="@dimen/twenty"
                 android:textSize="@dimen/fifteen_sp"
                 android:text="">
@@ -226,7 +229,6 @@
             android:layout_centerVertical="true"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center_horizontal"
-            android:text="@string/confirm_submit_attendance"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="normal" />

@@ -168,8 +168,9 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                         if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
                     binding.headerview.visibility =
                         if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                    // Fix: Change > 0 to > 1
                     binding.dotindicator.visibility =
-                        if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                        if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
 
                     binding.rcyupcomingevent.visibility =
                         if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
@@ -180,6 +181,9 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                         if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
                     binding.completedeventHeaderview.visibility =
                         if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+
+                    // This is already correct; keeps it
+                    updateDotIndicator()
                 }, 100)
             }
 
@@ -200,26 +204,15 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 allUpcomingEvents = data.up_coming
                 allCompletedEvents = data.completed
 
-                binding.dotindicator.visibility =
-                    if (!allOngoingEvents.isNullOrEmpty() && allOngoingEvents!!.size > 1) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
-
                 val isAllEmpty = allOngoingEvents.isNullOrEmpty() &&
                         allUpcomingEvents.isNullOrEmpty() &&
                         allCompletedEvents.isNullOrEmpty()
 
                 binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                binding.dotindicator.visibility =
-                    if (!allOngoingEvents.isNullOrEmpty() && allOngoingEvents!!.size > 1) View.VISIBLE else View.GONE
-
-
                 val CategoryList = data.categories
 
-                updateVisibility(allOngoingEvents, binding.rcyongoingevent, binding.headerview, binding.dotindicator)
+                updateVisibility(allOngoingEvents, binding.rcyongoingevent, binding.headerview)
                 updateVisibility(CategoryList, binding.rcycategoryEvent, binding.categoryHeaderview)
                 updateVisibility(allUpcomingEvents, binding.rcyupcomingevent, binding.upcomingeventHeaderview)
                 updateVisibility(allCompletedEvents, binding.rcycompletedevent, binding.completedeventHeaderview)
@@ -228,16 +221,17 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 isloadCategoryData(CategoryList)
                 isloadUpcomingData(allUpcomingEvents)
                 isloadCompletedData(allCompletedEvents)
-                Log.d("Message Id Value Indication",msg_id.toString())
-                scrollToMessageId(headerId)
 
+                updateDotIndicator()
+
+                Log.d("Message Id Value Indication", msg_id.toString())
+                scrollToMessageId(headerId)
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 hideAllSections()
                 binding.lytNoDataFound.visibility = View.VISIBLE
             }
         }
-
     }
 
     private fun <T> updateVisibility(
@@ -271,29 +265,39 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         updateVisibility(
             emptyList<Any>(), binding.rcycompletedevent, binding.completedeventHeaderview
         )
+        // Add: Ensures dot is GONE
+        binding.dotindicator.visibility = View.GONE
     }
 
 
     private fun isloadeventData(newData: List<EventItem>?) {
-        mAdapter = EventAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcyongoingevent.adapter = mAdapter
+        if (::mAdapter.isInitialized) {
+            mAdapter.updateList(newData)
+        } else {
+            mAdapter = EventAdapter(newData, this, this, Constant.isShimmerViewDisable)
+            binding.rcyongoingevent.adapter = mAdapter
+        }
     }
-
     private fun isloadCategoryData(newData: List<Category>?) {
         categoryadapter = EventCategoryAdapter(newData, this, this, Constant.isShimmerViewDisable)
         binding.rcycategoryEvent.adapter = categoryadapter
     }
 
     private fun isloadUpcomingData(newData: List<EventItem>?) {
-        eventupcomingadapter =
-            EventUpcomingAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcyupcomingevent.adapter = eventupcomingadapter
+        if (::eventupcomingadapter.isInitialized) {
+            eventupcomingadapter.updateList(newData)
+        } else {
+            eventupcomingadapter = EventUpcomingAdapter(newData, this, this, Constant.isShimmerViewDisable)
+            binding.rcyupcomingevent.adapter = eventupcomingadapter
+        }
     }
-
     private fun isloadCompletedData(newData: List<EventItem>?) {
-        eventcompletedadapter =
-            EventCompletedAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcycompletedevent.adapter = eventcompletedadapter
+        if (::eventcompletedadapter.isInitialized) {
+            eventcompletedadapter.updateList(newData)
+        } else {
+            eventcompletedadapter = EventCompletedAdapter(newData, this, this, Constant.isShimmerViewDisable)
+            binding.rcycompletedevent.adapter = eventcompletedadapter
+        }
     }
 
 
@@ -392,10 +396,10 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     }
 
     private fun updateDotIndicator() {
-        binding.dotindicator.visibility =
-            if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
+        val ongoingCount = mAdapter.itemCount
+        binding.dotindicator.visibility = if (ongoingCount > 1) View.VISIBLE else View.GONE
+        Log.d("OngoingCOunt", ongoingCount.toString())
     }
-
 
 
     private fun filterAllEventLists() {
@@ -446,7 +450,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 binding.dotindicator.visibility = View.GONE
             }
 
-            updateDotIndicator()
+
 
 
             if (upcomingFiltered.size > 0) {
@@ -497,6 +501,8 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 eventcompletedadapter.itemCount == 0
 
         binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+
+        updateDotIndicator()
     }
 
 

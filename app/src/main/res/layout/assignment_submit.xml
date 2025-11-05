@@ -54,7 +54,6 @@
             android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
-
             android:layout_marginEnd="@dimen/fifteen"
             android:background="@drawable/field_background"
             android:gravity="center_vertical"
@@ -101,6 +100,19 @@
             android:textSize="@dimen/fifteen_sp">
 
         </TextView>
+
+
+        <TextView
+            android:id="@+id/lblStar2"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitleTextCount"
+            android:layout_marginStart="@dimen/two"
+            android:layout_marginTop="@dimen/eight"
+            android:layout_toEndOf="@id/lblDescription"
+            android:text="@string/mandatory"
+            android:textColor="@color/red" />
 
         <LinearLayout
             android:id="@+id/lnrDesc"

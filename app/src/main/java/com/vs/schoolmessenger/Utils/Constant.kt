@@ -97,7 +97,6 @@ object Constant {
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
-    var isShimmerViewDisablenew = false
     var isShimmerView = false
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
@@ -135,7 +134,6 @@ object Constant {
     val M_EXAM = 10
     val M_FEEDBACK = 11
     val M_FEE_DETAILS = 12
-    val M_FEE_PAYMENT = 13
     val M_FEE_PENDING_REPORT = 14
     val M_HOMEWORK = 15
     val M_INTERACTION_WITH_STAFF = 16
@@ -151,17 +149,13 @@ object Constant {
     val M_ONLINE_TEXT_BOOK = 25
     val M_PTM = 26
     val M_QUIZ_EXAM = 27
-    val M_REQUEST_LEAVE = 28
     val M_SCHOOL_CLASS_EVENTS = 29
     val M_PARENT_CLASS_EVENTS = 9
     val M_SCHOOL_NEEDS = 30
     val M_SCHOOL_STRENGTH = 31
-    val M_STAFF_LIST = 32
     val M_STAFF_WISE_ATTENDANCE_REPORT = 33
-    val M_STUDENT_LIST = 34
     val M_STUDENT_REPORT = 35
     val M_VERY_IMPORTANT_INFO = 36
-    val M_YOUR_PROFILE = 37
     val M_SCHEDULE_EXAM_TEST = 38
     val M_ATTACHMENTS = 39
     val M_FINANCE = 194
@@ -1719,22 +1713,17 @@ object Constant {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(inputDateStr)
-            val calendar = Calendar.getInstance()
 
-            val today = Calendar.getInstance()
             val yesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
+            val calendar = Calendar.getInstance().apply { time = date!! }
 
-            // Compare date values without time component
-            val isToday = isSameDay(calendar.apply { time = date!! }, today)
-            val isYesterday = isSameDay(calendar.apply { time = date!! }, yesterday)
+            val isYesterday = isSameDay(calendar, yesterday)
 
-            when {
-                isToday -> "Today"
-                isYesterday -> "Yesterday"
-                else -> {
-                    val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
-                    outputFormat.format(date!!)
-                }
+            if (isYesterday) {
+                "Yesterday"
+            } else {
+                val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+                outputFormat.format(date)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -1755,7 +1744,6 @@ object Constant {
             inputDateStr
         }
     }
-
 
 //    private fun isSameDay(cal1: Calendar, cal2: Calendar): Boolean {
 //        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&

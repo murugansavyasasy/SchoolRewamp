@@ -13,6 +13,7 @@ data class SchoolEventItem(
     val date: String,
     val time: String,
     val venue: String,
+    val sent_by: String,
     val iframe: String,
     val file_size: String,
     val thumbnail: String,

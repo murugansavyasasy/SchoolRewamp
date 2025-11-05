@@ -72,7 +72,7 @@ class SubmittedStudentlistAdapter (
                 submittedDate.text = item.submit_status
                 submittedLabel.text = ""
             } else {
-                submittedDate.text = item.submitted_date
+                submittedDate.text = Constant.convertDateAndTimeFormat(item.submitted_date)
                 submittedLabel.visibility = View.VISIBLE
             }
 

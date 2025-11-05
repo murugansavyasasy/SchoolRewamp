@@ -6,6 +6,7 @@ data class EventItem(
     val category: String,
     val description: String,
     val date: String,
+    val sent_by: String,
     val time: String,
     val venue: String,
     val iframe: String,

@@ -171,15 +171,11 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
 
                     binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                    binding.dotindicator.visibility =
-                        if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
 
                     binding.rcyongoingevent.visibility =
                         if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
                     binding.headerview.visibility =
                         if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.dotindicator.visibility =
-                        if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE  // Updated: Use > 1 here (not > 0)
 
                     binding.rcyupcomingevent.visibility =
                         if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
@@ -190,6 +186,7 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
                         if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
                     binding.completedeventHeaderview.visibility =
                         if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    updateDotIndicator()
                 }, 100)
             }
 
@@ -220,17 +217,12 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
 
                 binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                binding.dotindicator.visibility =
-                    if (!allOngoingEvents.isNullOrEmpty() && allOngoingEvents!!.size > 1) View.VISIBLE else View.GONE
-
-
                 val CategoryList = data.categories
 
                 updateVisibility(
                     allOngoingEvents,
                     binding.rcyongoingevent,
-                    binding.headerview,
-                    binding.dotindicator
+                    binding.headerview
                 )
                 updateVisibility(CategoryList, binding.rcycategoryEvent, binding.categoryHeaderview)
                 updateVisibility(
@@ -262,6 +254,7 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
                 if (response.status) {
                     Constant.hideLoading(this@EventReport)
                     eventupcomingadapter.removeItemAt(isEventPosition)
+                    loadeventdata()
                 } else {
                     Constant.showDataValidation(
                         resources.getString(R.string.fail), response.message, this
@@ -298,10 +291,13 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         )
     }
 
-
     private fun isloadeventData(newData: List<SchoolEventItem>?) {
-        mAdapter = SchoolEventAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcyongoingevent.adapter = mAdapter
+        if (::mAdapter.isInitialized) {
+            mAdapter.updateList(newData)
+        } else {
+            mAdapter = SchoolEventAdapter(newData, this, this, Constant.isShimmerViewDisable)
+            binding.rcyongoingevent.adapter = mAdapter
+        }
     }
 
     private fun isloadCategoryData(newData: List<EventCategory>?) {
@@ -372,6 +368,18 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
+        if(data.can_edit) {
+            layoutEdit.visibility = View.VISIBLE
+        } else {
+            layoutEdit.visibility = View.GONE
+        }
+
+        if(data.can_delete) {
+            layoutDelete.visibility = View.VISIBLE
+        } else {
+            layoutDelete.visibility = View.GONE
+        }
+
         layoutEdit.setOnClickListener {
             Constant.isClickEdit=true
             val intent = Intent(this, CreateEvent::class.java)
@@ -389,9 +397,52 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
     }
 
 
+    fun showEditDeletePopupCompleted(data: SchoolEventItem, anchor: View) {
+        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+
+        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+
+        if(data.can_edit) {
+            layoutEdit.visibility = View.VISIBLE
+        } else {
+            layoutEdit.visibility = View.GONE
+        }
+
+        if(data.can_delete) {
+            layoutDelete.visibility = View.VISIBLE
+        } else {
+            layoutDelete.visibility = View.GONE
+        }
+        layoutEdit.setOnClickListener {
+            Constant.isClickEdit=true
+            val intent = Intent(this, CreateEvent::class.java)
+            intent.putExtra(Constant.event_data, data)
+            startActivity(intent)
+            // isEditProcess(data)
+            popupWindow.dismiss()
+        }
+
+        layoutDelete.setOnClickListener {
+            showSendConfirmationDialog(false)
+            popupWindow.dismiss()
+        }
+        popupWindow.showAsDropDown(anchor, 0, 10)
+    }
+
     private fun updateDotIndicator() {
         val ongoingCount = mAdapter.itemCount
         binding.dotindicator.visibility = if (ongoingCount > 1) View.VISIBLE else View.GONE
+        Log.d("OngoingCOunt", ongoingCount.toString())
     }
 
 
@@ -478,14 +529,18 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
 
     override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
         when (adapterTag) {
-            Constant.ONGOING -> binding.rcyongoingevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
-
-            Constant.COMPLETED -> binding.rcycompletedevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
-
-            Constant.UPCOMING -> binding.rcyupcomingevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
+            Constant.ONGOING -> {
+                binding.rcyongoingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.headerview.visibility = if (isEmpty) View.GONE else View.VISIBLE  // Also hide header if empty
+            }
+            Constant.COMPLETED -> {
+                binding.rcycompletedevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.completedeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE  // Add header
+            }
+            Constant.UPCOMING -> {
+                binding.rcyupcomingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+                binding.upcomingeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE  // Add header
+            }
         }
 
         val isAllEmpty = mAdapter.itemCount == 0 &&
@@ -493,6 +548,8 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
                 eventcompletedadapter.itemCount == 0
 
         binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+
+        updateDotIndicator()
     }
 
     override fun onDeleteEvent(type: String?, id: String?, position: Int) {
@@ -507,11 +564,13 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
 
 //            appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
 
+
+
             appViewModel!!.isEventDelete?.observe(this) { response ->
                 if (response != null) {
                     if (response.status) {
                         Constant.hideLoading(this@EventReport)
-                        eventupcomingadapter.removeItemAt(position)
+                        loadeventdata()
                     } else {
                         showConfirmationDialog(
                             resources.getString(R.string.fail),
@@ -558,12 +617,24 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
     }
 
 
+
+
     override fun onEditAndDelete(
         data: SchoolEventItem, anchorView: View, adapterPosition: Int
     ) {
         isEventId = data.id
         isEventPosition = adapterPosition
         showEditDeletePopup(data, anchorView)
+    }
+
+    override fun onEditAndDeleteCompleted(
+        data: SchoolEventItem,
+        anchorView: View,
+        adapterPosition: Int
+    ) {
+        isEventId = data.id
+        isEventPosition = adapterPosition
+        showEditDeletePopupCompleted(data, anchorView)
     }
 
 

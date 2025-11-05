@@ -94,7 +94,7 @@ class StudentSubmittedListRemarkAdapter(
 
                 Constant.VIDEO -> {
                     binding.imgView.setBackgroundColor(Color.BLACK)
-                    binding.imgView.setImageResource(R.drawable.video_play)
+                    binding.imgView.setImageResource(R.drawable.videoplay_svgformatstyle)
                     binding.progressBar.visibility = View.GONE
                 }
 

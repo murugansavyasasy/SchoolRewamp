@@ -33,20 +33,23 @@
         style="@style/CustomTextStylePoppinsMedium"/>
 
     <TextView
+        android:id="@+id/headerdatelabe1l"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/headerdatelabe1l"
         android:layout_below="@+id/headerlabe1l"
-        android:text="Value"
+        android:text=""
         android:background="@drawable/field_background"
         android:padding="@dimen/ten"
         android:visibility="gone"
-        android:gravity="start"
+        android:gravity="start|center_vertical"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:textSize="@dimen/fifteen_sp"
         android:layout_marginTop="@dimen/ten"
-        style="@style/CustomTextStylePoppinsMedium"/>
+        android:drawableEnd="@drawable/ic_date_time_primary"
+    android:drawablePadding="8dp"
+    style="@style/CustomTextStylePoppinsMedium" />
+
 
 
     <LinearLayout

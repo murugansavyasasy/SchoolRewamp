@@ -147,7 +147,18 @@ class LessonPlanCreateAdapter(
                 }
 
                 Constant.datepicker -> {
-                    headerDateLabel.text = data.value
+                    if (!data.value.isNullOrEmpty()) {
+                        try {
+                            // Parse API format (dd-MM-yyyy)
+                            val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                            val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                            val parsedDate = apiFormat.parse(data.value!!)
+                            headerDateLabel.text = displayFormat.format(parsedDate!!)
+                        } catch (e: Exception) {
+                            headerDateLabel.text = data.value // fallback
+                        }
+                    }
+
                     headerDateLabel.visibility = View.VISIBLE
                     headerDateLabel.isEnabled = !data.is_disable
 
@@ -163,10 +174,17 @@ class LessonPlanCreateAdapter(
                                 { _, selectedYear, selectedMonth, selectedDay ->
                                     val cal = Calendar.getInstance()
                                     cal.set(selectedYear, selectedMonth, selectedDay)
-                                    val sdf = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
-                                    val formattedDate = sdf.format(cal.time)
-                                    headerDateLabel.text = formattedDate
-                                    data.value = formattedDate
+
+                                    val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                                    val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+
+                                    val formattedDisplayDate = displayFormat.format(cal.time)
+
+                                    val formattedApiDate = apiFormat.format(cal.time)
+
+                                    headerDateLabel.text = formattedDisplayDate
+                                    data.value = formattedApiDate
                                 },
                                 year, month, day
                             )

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/dateBox"
+        android:layout_width="@dimen/thirty_five"
+        android:layout_height="@dimen/thirty_five"
+        android:gravity="center"
+        android:text=" "
+        android:textColor="@color/black"
+        android:textSize="@dimen/twele_sp" />
+
+    <View
+        android:id="@+id/dot_indicator"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/dot_shape"
+        android:visibility="gone" />
+
+</LinearLayout>
