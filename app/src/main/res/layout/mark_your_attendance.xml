@@ -38,7 +38,7 @@
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/fifteen"
-        android:background="@drawable/bg_light_blue"
+        android:background="@drawable/gray_bg_radius"
         android:padding="@dimen/one">
 
         <TextView
@@ -47,10 +47,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/white_bg_radius"
+            android:background="@drawable/bg_primary"
             android:gravity="center"
             android:text="@string/punch_in"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
 
         <TextView
@@ -62,7 +62,7 @@
             android:gravity="center"
             android:padding="@dimen/eight"
             android:text="@string/Reports"
-            android:textColor="@color/dark_blue"
+            android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
 
     </LinearLayout>
