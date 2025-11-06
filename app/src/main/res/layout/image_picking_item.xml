@@ -14,6 +14,7 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         android:src="@drawable/add_image">
 
     </ImageView>

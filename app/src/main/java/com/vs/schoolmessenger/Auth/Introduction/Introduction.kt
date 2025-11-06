@@ -2,63 +2,141 @@ package com.vs.schoolmessenger.Auth.Introduction
 
 import android.content.Intent
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.Country.CountryScreen
+import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeatureData
+import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.databinding.IntroductionBinding
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.databinding.NewFeaturesBinding
 
-class Introduction : BaseActivity<IntroductionBinding>(), View.OnClickListener {
+class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
 
-    override fun getViewBinding(): IntroductionBinding {
-        return IntroductionBinding.inflate(layoutInflater)
+    override fun getViewBinding(): NewFeaturesBinding {
+        return NewFeaturesBinding.inflate(layoutInflater)
     }
 
-    private lateinit var slideInRight: Animation
-    private var isCompleteIntro = false
+    private var appViewModel: App? = null
+    private lateinit var adapter: OnboardingAdapter
+    private lateinit var layoutDots: LinearLayout
+    private var currentIndex = 0
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
 
-        binding.btnNext.setOnClickListener(this)
-        binding.btnPrevious.setOnClickListener(this)
-        binding.btnSkip.setOnClickListener(this)
-    }
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
-    override fun onClick(p0: View?) {
-
-        when (p0?.id) {
-            R.id.btnNext -> {
-                if (!isCompleteIntro) {
-                    binding.btnPrevious.visibility = View.VISIBLE
-                    slideInRight = AnimationUtils.loadAnimation(this, R.anim.right_to_left)
-                    binding.btnPrevious.startAnimation(slideInRight)
-                    binding.lblIntroContent.text = getString(R.string.Introduction2)
-                    binding.lblIntroContent.startAnimation(slideInRight)
-                    isCompleteIntro = true
-                } else {
-                    isGoingToCountryActivity()
+        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel!!.init()
+        appViewModel!!.getNewFeature!!.observe(this) { response ->
+            Constant.hideLoading(this)
+            if (response != null) {
+                if (response.status) {
+                    if (response.data.isNotEmpty()){
+                        setupOnboardingRecycler( response.data)
+                    }
+                    else{
+                        Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else {
+                       Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
                 }
             }
-
-            R.id.btnPrevious -> {
-                isCompleteIntro = false
-                binding.btnPrevious.visibility = View.GONE
-                slideInRight = AnimationUtils.loadAnimation(this, R.anim.left_to_right)
-                binding.lblIntroContent.text = getString(R.string.Introduction)
-                binding.lblIntroContent.startAnimation(slideInRight)
+            else {
+                Toast.makeText(this, getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
             }
+        }
 
-            R.id.btnSkip -> {
-                isGoingToCountryActivity()
+        getNewfeatures()
+    }
+
+    private fun getNewfeatures() {
+        Constant.showLoading(this)
+        appViewModel!!.isGetFeature()
+    }
+
+
+    private fun setupOnboardingRecycler(features: List<GetFeatureData>) {
+        val recycler = binding.recyclerOnboarding
+        layoutDots = binding.layoutDots
+        adapter = OnboardingAdapter(features, this)
+        recycler.adapter = adapter
+        recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        PagerSnapHelper().attachToRecyclerView(recycler)
+
+        setupDots(features.size)
+        updateDots(0)
+
+        recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(rv: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val pos = (rv.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    if (pos != currentIndex) {
+                        currentIndex = pos
+                        updateDots(pos)
+                        updateButtonText(pos)
+                    }
+                }
             }
+        })
+
+
+        binding.btnSkip.setOnClickListener {
+            if (currentIndex == adapter.itemCount - 1) {
+                SharedPreference.putIntroductionSkip(this@Introduction,true)
+                startActivity(Intent(this@Introduction, CountryScreen::class.java))
+                finish()
+            } else {
+                binding.recyclerOnboarding.smoothScrollToPosition(adapter.itemCount - 1)
+            }
+        }
+
+    }
+    private fun updateButtonText(position: Int) {
+        if (position == adapter.itemCount - 1) {
+            binding.btnSkip.text = "Lets Go"
+        } else {
+            binding.btnSkip.text = "Skip"
         }
     }
 
-    private fun isGoingToCountryActivity() {
-        val intent = Intent(this@Introduction, CountryScreen::class.java)
-        startActivity(intent)
+
+    private fun setupDots(count: Int) {
+        layoutDots.removeAllViews()
+        val size = 25
+        for (i in 0 until count) {
+            val dot = View(this)
+            val params = LinearLayout.LayoutParams(size, size)
+            params.marginEnd = 12
+            dot.layoutParams = params
+            dot.background = ContextCompat.getDrawable(this, R.drawable.dot_inactive)
+            layoutDots.addView(dot)
+        }
     }
+
+    private fun updateDots(index: Int) {
+        for (i in 0 until layoutDots.childCount) {
+            val dot = layoutDots.getChildAt(i)
+            dot.background = ContextCompat.getDrawable(
+                this,
+                if (i == index) R.drawable.dot_active else R.drawable.dot_inactive
+            )
+        }
+    }
+
+    override fun onClick(v: View?) {}
 }

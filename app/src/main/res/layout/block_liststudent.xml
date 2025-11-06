@@ -39,9 +39,11 @@
         android:layout_marginTop="@dimen/ten" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scrollview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:overScrollMode="never"
+        android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/headerDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,5 +55,40 @@
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"/>
     </androidx.core.widget.NestedScrollView>
+
+
+
+    <LinearLayout
+        android:id="@+id/lytList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/headerDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/no_notification_message"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty"
+            android:gravity="center"
+            android:text="@string/no_list_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

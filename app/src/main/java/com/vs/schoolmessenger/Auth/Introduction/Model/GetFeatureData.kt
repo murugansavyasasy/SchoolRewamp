@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Dashboard.NewFeatures.Model
+package com.vs.schoolmessenger.Auth.Introduction.Model
 
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 

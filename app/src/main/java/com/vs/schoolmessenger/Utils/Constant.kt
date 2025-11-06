@@ -1910,38 +1910,30 @@ object Constant {
 
 
     fun formatChatDate(createdOn: String): String {
-        if (createdOn.isBlank()) {
-            return ""
-        }
+        if (createdOn.isBlank()) return ""
 
         val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
-        val date: Date? = try {
-            inputFormat.parse(createdOn)
+        val date: Date = try {
+            inputFormat.parse(createdOn) ?: return createdOn
         } catch (e: ParseException) {
             return createdOn
-        } ?: return createdOn
+        }
 
         val now = Calendar.getInstance()
         val messageCal = Calendar.getInstance().apply { time = date }
 
-        val diffMillis = now.timeInMillis - messageCal.timeInMillis
-        val daysDiff = TimeUnit.MILLISECONDS.toDays(diffMillis)
-
-        return when {
+        return if (
             now.get(Calendar.YEAR) == messageCal.get(Calendar.YEAR) &&
-                    now.get(Calendar.DAY_OF_YEAR) == messageCal.get(Calendar.DAY_OF_YEAR) -> {
-                SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
-            }
-
-            daysDiff == 1L -> {
-                "1 day ago"
-            }
-
-            else -> {
-                SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
-            }
+            now.get(Calendar.DAY_OF_YEAR) == messageCal.get(Calendar.DAY_OF_YEAR)
+        ) {
+            // Same day → show only time
+            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
+        } else {
+            // Different day → show both date + time
+            SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(date)
         }
     }
+
 
 
     fun CustomisedconvertDateTimeFormat(input: String): String {
