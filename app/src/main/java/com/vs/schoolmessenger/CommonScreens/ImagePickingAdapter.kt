@@ -15,6 +15,9 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
@@ -72,10 +75,23 @@ class ImagePickingAdapter(
             else -> R.drawable.address_icon
         }
 
-        Glide.with(context)
+//        Glide.with(context)
+//            .load(fileUri)
+//            .placeholder(placeholderRes)
+//            .apply(RequestOptions().dontTransform())
+//            .error(placeholderRes)
+//            .into(holder.img)
+
+
+        Glide.with(holder.img.context)
             .load(fileUri)
-            .placeholder(placeholderRes)
-            .error(placeholderRes)
+            .apply(
+                RequestOptions()
+                    .centerCrop()
+                    .dontTransform()
+                    .skipMemoryCache(true) // bypass memory cache
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) // bypass disk cache
+            )
             .into(holder.img)
 
         holder.del.visibility = if (pos == 0) GONE else VISIBLE

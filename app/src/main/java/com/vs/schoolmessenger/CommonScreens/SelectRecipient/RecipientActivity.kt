@@ -847,13 +847,18 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     if (isSelectedType == 0) {
                         if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
-                            if (selectedLevelValue == 0) {
-                                Constant.showValidationAlertPopup("Alert", "Select the level", this)
-                            } else {
-                                showSendConfirmationDialog(
-                                    "", isAcademicYearNote
-                                )
+                            if (isSubjectId==null){
+                                Constant.showValidationAlertPopup("Alert", "Select the subject", this)
+                            }else{
+                                if (selectedLevelValue == 0) {
+                                    Constant.showValidationAlertPopup("Alert", "Select the level", this)
+                                } else {
+                                    showSendConfirmationDialog(
+                                        "", isAcademicYearNote
+                                    )
+                                }
                             }
+
                         } else if (Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU) {
                             if (isSubjectId == null) {
                                 Constant.showValidationAlertPopup("Alert", "Select the subject", this)
@@ -870,14 +875,18 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     } else {
 
                         if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
-                            if (selectedLevelValue == 0) {
-                                Constant.showValidationAlertPopup("Alert", "Select the level", this)
-                            } else {
-                                showSendConfirmationDialog(
-                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-                                        R.string._s
-                                    ), isAcademicYearNote
-                                )
+                            if (isSubjectId==null){
+                                Constant.showValidationAlertPopup("Alert", "Select the subject", this)
+                            }else{
+                                if (selectedLevelValue == 0) {
+                                    Constant.showValidationAlertPopup("Alert", "Select the level", this)
+                                } else {
+                                    showSendConfirmationDialog(
+                                        resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                            R.string._s
+                                        ), isAcademicYearNote
+                                    )
+                                }
                             }
                         } else if (Constant.M_HOMEWORK==SELECTED_SCHOOL_MENU){
                             if (isSubjectId==null){
