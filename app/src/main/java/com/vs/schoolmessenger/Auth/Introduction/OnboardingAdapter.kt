@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Dashboard.NewFeatures
+package com.vs.schoolmessenger.Auth.Introduction
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.Dashboard.NewFeatures.Model.GetFeatureData
+import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeatureData
 import com.vs.schoolmessenger.R
 
 class OnboardingAdapter(
