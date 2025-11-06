@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblTitle"
                     android:background="@android:color/transparent"
-                    android:hint="@string/Title"
+                    android:hint="@string/enter_title"
                     android:paddingHorizontal="@dimen/ten">
 
                 </EditText>
@@ -226,7 +226,7 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:gravity="start"
-                    android:hint="@string/Description"
+                    android:hint="@string/Enterdescription"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp">
 

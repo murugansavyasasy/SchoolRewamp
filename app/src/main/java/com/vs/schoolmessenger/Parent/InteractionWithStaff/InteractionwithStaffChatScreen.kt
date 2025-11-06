@@ -78,6 +78,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         }
 
         appViewModel!!.sendquestion?.observe(this) { response ->
+            binding.btnSend.isEnabled = true
             if (response != null) {
                 if (response.status) {
                     binding.edtMessage.text.clear()
@@ -178,6 +179,8 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
             binding.edtMessage.error = getString(R.string.This_field_required)
             return
         }
+
+        binding.btnSend.isEnabled = false
 
         val fileList = emptyList<FilePath>()
 

@@ -29,17 +29,6 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         setupToolbar()
 
 
-        binding.lblAppUi.setOnClickListener(this)
-        binding.lblWatchUi.setOnClickListener(this)
-        binding.lbPricing.setOnClickListener(this)
-        binding.lblConnection.setOnClickListener(this)
-        binding.lblPairing.setOnClickListener(this)
-        binding.lblWatchFaces.setOnClickListener(this)
-        binding.lblWatchHardware.setOnClickListener(this)
-        binding.lblAlumniAssistance.setOnClickListener(this)
-        binding.lblLoginuser.setOnClickListener(this)
-        binding.lblRegistration.setOnClickListener(this)
-        binding.lblOthers.setOnClickListener(this)
         binding.imgback.setOnClickListener(this)
         binding.btnsubmit.setOnClickListener(this)
         binding.lblMayBeLater.setOnClickListener(this)
@@ -60,7 +49,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
                 when (ratingBar.rating.toInt()) {
                     0 -> {
                         isMaybeLater()
-                        binding.consRatingType.visibility = View.GONE
+//                        binding.consRatingType.visibility = View.GONE
                         binding.btnsubmit.isEnabled = false
                     }
 
@@ -95,7 +84,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
                     }
 
                     else -> {
-                        binding.consRatingType.visibility = View.VISIBLE
+//                        binding.consRatingType.visibility = View.VISIBLE
                         binding.btnsubmit.isEnabled = true
                     }
                 }
@@ -137,32 +126,11 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         for (i in isRatingData.indices) {
             if (isRatingData[i].rating == isStarType) {
                 binding.lblContent.text = isRatingData[i].content
-                binding.consRatingType.visibility = View.VISIBLE
+//                binding.consRatingType.visibility = View.VISIBLE
                 binding.btnsubmit.isEnabled = true
                 for (k in inPutRatingContent.indices) {
 
-                    binding.lblAppUi.text = inPutRatingContent[0]
-                    binding.lblWatchUi.text = inPutRatingContent[1]
-                    binding.lbPricing.text = inPutRatingContent[2]
-                    binding.lblConnection.text = inPutRatingContent[3]
-                    binding.lblPairing.text = inPutRatingContent[4]
-                    binding.lblWatchFaces.text = inPutRatingContent[5]
-                    binding.lblWatchHardware.text = inPutRatingContent[6]
-                    binding.lblAlumniAssistance.text = inPutRatingContent[7]
 
-                    if (inPutRatingContent.size > 8) {
-                        binding.lblLoginuser.visibility = View.VISIBLE
-                        binding.lblLoginuser.text = inPutRatingContent[8]
-                    } else {
-                        binding.lblLoginuser.visibility = View.GONE
-                    }
-
-                    if (inPutRatingContent.size > 9) {
-                        binding.lblRegistration.visibility = View.VISIBLE
-                        binding.lblRegistration.text = inPutRatingContent[9]
-                    } else {
-                        binding.lblRegistration.visibility = View.GONE
-                    }
                 }
             }
         }
@@ -193,49 +161,6 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
                 onBackPressed()
             }
 
-            R.id.lblAppUi -> {
-                isBackRoundChange(binding.lblAppUi)
-            }
-
-            R.id.lblWatchUi -> {
-                isBackRoundChange(binding.lblWatchUi)
-            }
-
-            R.id.lbPricing -> {
-                isBackRoundChange(binding.lbPricing)
-            }
-
-            R.id.lblConnection -> {
-                isBackRoundChange(binding.lblConnection)
-            }
-
-            R.id.lblPairing -> {
-                isBackRoundChange(binding.lblPairing)
-            }
-
-            R.id.lblWatchFaces -> {
-                isBackRoundChange(binding.lblWatchFaces)
-            }
-
-            R.id.lblWatchHardware -> {
-                isBackRoundChange(binding.lblWatchHardware)
-            }
-
-            R.id.lblAlumniAssistance -> {
-                isBackRoundChange(binding.lblAlumniAssistance)
-            }
-
-            R.id.lblLoginuser -> {
-                isBackRoundChange(binding.lblLoginuser)
-            }
-
-            R.id.lblRegistration -> {
-                isBackRoundChange(binding.lblRegistration)
-            }
-
-            R.id.lblOthers -> {
-                isBackRoundChange(binding.lblOthers)
-            }
 
             R.id.btnsubmit -> {
                 val intent = Intent(this@RateUs, RatingSuccess::class.java)
