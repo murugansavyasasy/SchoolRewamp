@@ -102,11 +102,11 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                 if (response.status) {
                     Constant.hideLoading(this@NewLeaveRequest)
                     Log.d("isleaverequestupdate", response.message)
-                    Constant.showParentDataValidation(
+                    Constant.showRedirecttoMenu(
                         resources.getString(R.string.success), response.message, this
                     )
                 } else {
-                    Constant.showParentDataValidation(
+                    Constant.showRedirecttoMenu(
                         resources.getString(R.string.fail), response.message, this
                     )
                 }

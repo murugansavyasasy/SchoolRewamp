@@ -104,8 +104,8 @@ class LeaveRequestAdapter(
             textName.text = data.student_name
             textFirstLetter.text = data.student_name.firstOrNull()?.toString() ?: "?"
 
-            textDate.text = "${Constant.convertDateTimeFormat(data.leave_from ?: "")} - ${
-                Constant.convertDateTimeFormat(data.leave_to ?: "")
+            textDate.text = "${Constant.convertDateTimeFormat2(data.leave_from ?: "")} - ${
+                Constant.convertDateTimeFormat2(data.leave_to ?: "")
             }"
             textNoOfDays.text =
                 "${data.no_of_days} ${if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(R.string.days)} ${context.getString(R.string.Application)}"

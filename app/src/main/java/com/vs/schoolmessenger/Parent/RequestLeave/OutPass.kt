@@ -34,6 +34,7 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
         appViewModel?.init()
         val childDetails = SharedPreference.getChildDetails(this)
         binding.imgBack.setOnClickListener(this)
+        binding.btnOk.setOnClickListener(this)
         binding.imgBack.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
@@ -42,7 +43,6 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
         )
-        binding.btnOk.visibility=View.GONE
 
 
         Glide.with(this)
@@ -70,6 +70,9 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
+                onBackPressed()
+            }
+            R.id.btn_ok->{
                 onBackPressed()
             }
         }
