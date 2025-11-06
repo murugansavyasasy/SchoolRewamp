@@ -67,6 +67,7 @@ import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
@@ -1454,6 +1455,57 @@ object Constant {
 
 
 
+    fun showRedirecttoMenu(title: String, message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        titleText.text = title
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            val intent = Intent(activity, LeaveRequest::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
+            activity.finish()
+            closePopup()
+        }
+    }
+
+
+
+
     fun showDataValidationNoDashboardRedirect(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -1858,38 +1910,30 @@ object Constant {
 
 
     fun formatChatDate(createdOn: String): String {
-        if (createdOn.isBlank()) {
-            return ""
-        }
+        if (createdOn.isBlank()) return ""
 
         val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
-        val date: Date? = try {
-            inputFormat.parse(createdOn)
+        val date: Date = try {
+            inputFormat.parse(createdOn) ?: return createdOn
         } catch (e: ParseException) {
             return createdOn
-        } ?: return createdOn
+        }
 
         val now = Calendar.getInstance()
         val messageCal = Calendar.getInstance().apply { time = date }
 
-        val diffMillis = now.timeInMillis - messageCal.timeInMillis
-        val daysDiff = TimeUnit.MILLISECONDS.toDays(diffMillis)
-
-        return when {
+        return if (
             now.get(Calendar.YEAR) == messageCal.get(Calendar.YEAR) &&
-                    now.get(Calendar.DAY_OF_YEAR) == messageCal.get(Calendar.DAY_OF_YEAR) -> {
-                SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
-            }
-
-            daysDiff == 1L -> {
-                "1 day ago"
-            }
-
-            else -> {
-                SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
-            }
+            now.get(Calendar.DAY_OF_YEAR) == messageCal.get(Calendar.DAY_OF_YEAR)
+        ) {
+            // Same day → show only time
+            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
+        } else {
+            // Different day → show both date + time
+            SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(date)
         }
     }
+
 
 
     fun CustomisedconvertDateTimeFormat(input: String): String {
@@ -2490,6 +2534,18 @@ object Constant {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             val outputFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // fallback if parsing fails
+        }
+    }
+
+
+    fun convertDateTimeFormat2(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {

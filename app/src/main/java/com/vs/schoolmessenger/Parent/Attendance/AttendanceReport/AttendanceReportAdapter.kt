@@ -117,7 +117,7 @@
                 if (data.type == Constant.Absent) {
 //                    lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle))
                     tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge))
-                    tvFullDate.text = Constant.convertDateTimeFormat(data.date)
+                    tvFullDate.text = Constant.convertDateTimeFormat2(data.date)
                     tvStatus.text = data.type
                     tvDayName.text = data.day
 

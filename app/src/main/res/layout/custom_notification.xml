@@ -5,8 +5,7 @@
     android:layout_marginEnd="@dimen/five"
     android:elevation="@dimen/four"
     android:orientation="vertical"
-    android:padding="@dimen/eight"
-    android:background="@drawable/notification_background">
+    android:padding="@dimen/eight">
 
     <ImageView
         android:id="@+id/notification_icon"

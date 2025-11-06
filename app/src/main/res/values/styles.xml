@@ -189,5 +189,15 @@
     </style>
 
 
+    <style name="FeedbackChip">
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:background">@drawable/bg_outline_light_blue</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/navi_blue1</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
 
 </resources>

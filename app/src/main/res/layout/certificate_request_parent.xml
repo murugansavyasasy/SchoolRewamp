@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_gray4">
+    android:background="@color/light_gray_3_">
 
     <View
         android:id="@+id/statusBarBackground"
@@ -48,6 +48,7 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/rect_grey"
                 android:visibility="gone"
+                android:backgroundTint="@color/white"
                 app:layout_constraintTop_toBottomOf="@+id/header_text4">
 
 

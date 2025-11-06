@@ -86,7 +86,7 @@
     <string name="lblSubmit">Submit</string>
     <string name="lblRateus">Rate us</string>
     <string name="lblHowsatisfied">How satisfied are you with the School Chimes?</string>
-    <string name="lblMaybelater">Maybe later</string>
+    <string name="lblMaybelater">Later</string>
     <string name="lblAppinterface">App UI interface</string>
     <string name="lblWatchUI">Watch UI</string>
     <string name="lblPricing">Pricing</string>
@@ -99,8 +99,8 @@
     <string name="lblRegistration">Registration</string>
     <string name="lblOthers">Others</string>
     <string name="lblAnyothersuggestions">Any other suggestions? (optional)</string>
-    <string name="lblThankYou">Thank You.</string>
-    <string name="lblBackhome">Back to home  &lt;&lt;</string>
+    <string name="lblThankYou">Thank You</string>
+    <string name="lblBackhome">Go Back</string>
     <string name="lblEntertheBug">Enter the bug...</string>
     <string name="lblConfirm">Confirm</string>
     <string name="lblThai">Thai</string>
