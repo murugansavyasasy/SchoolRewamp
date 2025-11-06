@@ -97,25 +97,16 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
         }
 
 
-//        binding.toolbarLayout.imgBack.setOnClickListener { dismiss() }
 
         fetchStudentData()
 
-//        binding.txtVideoMenu1.addTextChangedListener(object : TextWatcher {
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                if (::mAdapter.isInitialized) {
-//                    mAdapter.filter.filter(s)
-//                }
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//            override fun afterTextChanged(s: Editable?) {}
-//        })
 
         viewModel.isblockstudentlist!!.observe(viewLifecycleOwner) { response ->
             if (response?.status == true) {
                 isLoadStaffData(response.data)
+                binding.lytList.visibility = View.GONE
             } else {
+
                 showErrorUI(response?.message ?: "No blocked data available")
             }
         }
@@ -172,9 +163,9 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
     }
 
     private fun showErrorUI(message: String) {
-//        binding.nomessage.visibility = View.VISIBLE
-//        binding.txtNoData.text = message
-//        binding.txtNoData.visibility = View.VISIBLE
+        binding.nestedScrollview.visibility = View.GONE
+        binding.lytList.visibility = View.VISIBLE
+        binding.txtNoData.text = message
         binding.rcystudentdata.visibility = View.GONE
     }
 
@@ -184,9 +175,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
             return
         }
 
-//        binding.nomessage.visibility = View.GONE
-//        binding.txtNoData.visibility = View.GONE
-        binding.rcystudentdata.visibility = View.VISIBLE
+        binding.nestedScrollview.visibility = View.VISIBLE
 
         binding.rcystudentdata.layoutManager = LinearLayoutManager(requireContext())
         mAdapter = BlockListStudentAdapter(data, this, requireContext(), false)

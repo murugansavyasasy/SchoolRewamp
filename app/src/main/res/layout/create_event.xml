@@ -134,6 +134,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:inputType="text"
+                        android:hint="Venue"
                         android:paddingHorizontal="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp" />
 
@@ -179,6 +180,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:inputType="text"
+                        android:hint="Title"
                         android:paddingHorizontal="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp" />
 

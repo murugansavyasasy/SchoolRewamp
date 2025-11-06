@@ -119,6 +119,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/lblStar8"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/two"
+                    android:layout_toEndOf="@id/lblCategory"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red" />
+
             <TextView
                 android:id="@+id/lblCategory"
                 style="@style/CustomTextStylePoppinsBold"
@@ -204,6 +214,19 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/lblStar1"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/rytSendingType"
+                android:layout_toEndOf="@id/lblTitle"
+                android:text="@string/mandatory"
+                android:textColor="@color/red" />
+
+
+            <TextView
                 android:id="@+id/lblTitle"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
@@ -211,10 +234,9 @@
                 android:layout_below="@+id/rytSendingType"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:text="@string/Title"
-                >
-
+                android:text="@string/Title">
             </TextView>
+
 
             <LinearLayout
                 android:id="@+id/lnrTitle"
@@ -235,6 +257,7 @@
                     android:id="@+id/edtTitle"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
+                    android:hint="Title"
                     android:background="@android:color/transparent"
                     android:layout_height="match_parent">
 
@@ -271,6 +294,19 @@
                 >
 
             </TextView>
+
+            <TextView
+                android:id="@+id/lblStar4"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/lblTitleTextCount"
+                android:layout_toEndOf="@id/lblDescription"
+                android:text="@string/mandatory"
+                android:textColor="@color/red" />
+
 
             <LinearLayout
                 android:id="@+id/lnrDesc"
@@ -318,6 +354,19 @@
                 android:textColor="@color/light_gray">
 
             </TextView>
+
+
+            <TextView
+                android:id="@+id/lblStar423"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/lblTextCount"
+                android:layout_toEndOf="@id/lblSubDate"
+                android:text="@string/mandatory"
+                android:textColor="@color/red" />
+
 
             <TextView
                 android:id="@+id/lblSubDate"
