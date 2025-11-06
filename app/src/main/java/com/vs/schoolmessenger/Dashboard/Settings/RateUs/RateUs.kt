@@ -29,7 +29,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         setupToolbar()
 
 
-        binding.imgback.setOnClickListener(this)
+        binding.lblClose.setOnClickListener(this)
         binding.btnsubmit.setOnClickListener(this)
         binding.lblMayBeLater.setOnClickListener(this)
 
@@ -157,7 +157,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0?.id) {
 
-            R.id.imgback -> {
+            R.id.lblClose -> {
                 onBackPressed()
             }
 

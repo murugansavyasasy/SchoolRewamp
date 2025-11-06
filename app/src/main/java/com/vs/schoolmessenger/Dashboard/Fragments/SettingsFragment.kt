@@ -101,7 +101,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
         val versionName = pInfo.versionName
         val versionCode = pInfo.longVersionCode
-        binding.lblAppVersion.text = "App Version: $versionName ( $versionCode )"
+        binding.lblAppVersion.text = "App Version - $versionName"
 
 
         if (Constant.checkBiometricSupport(requireActivity())) {

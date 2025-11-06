@@ -57,16 +57,16 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
     }
 
     private fun setupViews() {
-        binding.imgback.setOnClickListener(this)
+        binding.lblClose.setOnClickListener(this)
         binding.btnsubmit.setOnClickListener(this)
         binding.lblMayBeLater.setOnClickListener(this)
 
         isRatingData = listOf(
-            GetRatingData(1, "Very Bad"),
-            GetRatingData(2, "Fair"),
-            GetRatingData(3, "Okay"),
-            GetRatingData(4, "Good"),
-            GetRatingData(5, "Loved It")
+            GetRatingData(1, "Unsatisfactory"),
+            GetRatingData(2, "Needs Improvement"),
+            GetRatingData(3, "Fair Experience"),
+            GetRatingData(4, "Very Good"),
+            GetRatingData(5, "Outstanding")
         )
 
         binding.edtSuggestions.setOnTouchListener { v, event ->
@@ -139,7 +139,7 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.imgback, R.id.lblMayBeLater -> dismiss()
+            R.id.lblClose, R.id.lblMayBeLater -> dismiss()
 
 
             R.id.btnsubmit -> {

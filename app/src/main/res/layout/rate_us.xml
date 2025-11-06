@@ -24,15 +24,19 @@
                 android:layout_height="match_parent"
                 android:padding="20dp">
 
-                <ImageView
-                    android:id="@+id/imgback"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
+                <TextView
+                    android:id="@+id/lblClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/ten"
-                    android:src="@drawable/close_icon_red">
+                    android:text="Close"
+                    android:padding="@dimen/five"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/fifteen_sp">
 
-                </ImageView>
+                </TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -40,6 +44,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
                     android:text="@string/lblRateus"
+                    android:padding="@dimen/five"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/eighteen_sp"
                     android:textStyle="bold">
@@ -65,6 +71,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:text="@string/lblHowsatisfied"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
@@ -97,6 +104,7 @@
                     android:layout_marginBottom="@dimen/thirty"
                     android:background="@drawable/bg_outline_green"
                     android:gravity="center"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:padding="@dimen/eight"
                     android:text="@string/lblMaybelater"
                     android:textColor="@color/orange"
@@ -129,6 +137,7 @@
                         android:id="@+id/lblEdtTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
                         android:text="@string/lblAnyothersuggestions"
@@ -142,6 +151,7 @@
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/fifteen"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:background="@drawable/bg_edittext"
                         android:gravity="top|start"
                         android:maxLength="300"
@@ -175,6 +185,7 @@
                         android:background="@drawable/rect_btn_orange"
                         android:enabled="false"
                         android:text="@string/lblSubmit"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp" />
                 </LinearLayout>
