@@ -199,7 +199,7 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Title"
+                    android:hint="@string/enter_title"
                     android:background="@android:color/transparent"
                     android:paddingHorizontal="@dimen/ten" />
 
@@ -267,7 +267,7 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:gravity="start"
-                    android:hint="@string/Description"
+                    android:hint="@string/Enterdescription"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp" />
             </LinearLayout>

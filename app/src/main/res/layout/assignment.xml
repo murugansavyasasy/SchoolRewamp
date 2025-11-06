@@ -257,7 +257,7 @@
                     android:id="@+id/edtTitle"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
-                    android:hint="Title"
+                    android:hint="@string/enter_title"
                     android:background="@android:color/transparent"
                     android:layout_height="match_parent">
 
@@ -327,7 +327,7 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:gravity="start|top"
-                    android:hint="@string/Description"
+                    android:hint="@string/Enterdescription"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp"
                     android:scrollbars="vertical"

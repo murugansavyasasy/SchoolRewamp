@@ -129,7 +129,7 @@
                         android:layout_alignStart="@+id/lblEventTitle"
                         android:background="@android:color/transparent"
                         android:inputType="text"
-                        android:hint="Title"
+                        android:hint="@string/enter_title"
                         android:paddingHorizontal="@dimen/ten"
                         android:paddingBottom="@dimen/ten" />
 
@@ -190,7 +190,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="top"
-                        android:hint="@string/Description" />
+                        android:hint="@string/Enterdescription" />
                 </RelativeLayout>
 
                 <TextView

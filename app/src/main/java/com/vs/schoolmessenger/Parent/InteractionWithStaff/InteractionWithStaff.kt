@@ -107,14 +107,8 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
-
-        binding.root.post {
-//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
-            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
-            Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
-            binding.lblHeaderTitle.text = finalName
-            binding.lblHeaderTitle.visibility = View.VISIBLE
-        }
+        binding.lblHeaderTitle.visibility = View.VISIBLE
+        binding.lblHeaderTitle.text = getString(R.string.interaction_with_staff)
 
         fetchstaffdata()
 

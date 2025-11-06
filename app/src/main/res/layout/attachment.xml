@@ -127,7 +127,7 @@
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
                             android:paddingHorizontal="@dimen/ten"
-                            android:hint="Enter title"
+                            android:hint="@string/enter_title"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp">
 
