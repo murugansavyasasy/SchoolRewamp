@@ -17,6 +17,7 @@
         android:layout_height="@dimen/thirty"
         android:layout_marginTop="@dimen/twenty"
         android:layout_marginStart="@dimen/twenty"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/left_arrow" />
@@ -29,7 +30,7 @@
         android:layout_marginEnd="@dimen/twenty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/threedot" />
+        app:srcCompat="@drawable/close_icon" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/id_card1"
@@ -164,7 +165,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="@string/apply_on"
-                        android:textColor="@color/black"
+                        android:textColor="@color/PrimaryColor"
                         android:textSize="@dimen/fourteen_sp"
                         android:textStyle="bold" />
 
@@ -197,7 +198,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="@string/from_date"
-                        android:textColor="@color/black"
+                        android:textColor="@color/PrimaryColor"
                         android:textSize="@dimen/fourteen_sp"
                         android:textStyle="bold" />
 
@@ -205,7 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" :    "
-                        android:textColor="@color/black"
+                        android:textColor="@color/PrimaryColor"
                         android:textSize="@dimen/fourteen_sp"
                         android:textStyle="bold" />
 
@@ -230,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="@string/to_date"
-                        android:textColor="@color/black"
+                        android:textColor="@color/PrimaryColor"
                         android:textSize="@dimen/fourteen_sp"
                         android:textStyle="bold" />
 
@@ -263,7 +264,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="@string/no_of_day_s"
-                        android:textColor="@color/black"
+                        android:textColor="@color/PrimaryColor"
                         android:textSize="@dimen/fourteen_sp"
                         android:textStyle="bold" />
 
@@ -297,7 +298,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="@string/approved_by"
-                        android:textColor="@color/black"
+                        android:textColor="@color/PrimaryColor"
                         android:textSize="@dimen/fourteen_sp"
                         android:textStyle="bold" />
 

@@ -337,18 +337,33 @@
                                         android:progress="0"
                                         android:progressDrawable="@drawable/progress_circle_drawable"
                                         android:rotation="270" />
-
-                                    <TextView
-                                        android:id="@+id/lblOngoingDaysPercentage"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
+                                        android:orientation="horizontal"
                                         android:gravity="center"
-                                        android:text="0"
-                                        style="@style/CustomTextStylePoppinsBold"
-                                        android:maxLength="3"
-                                        android:textColor="@color/PrimaryColor"
-                                        android:textSize="@dimen/fifteen_sp"
-                                        />
+                                        android:layout_gravity="center"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:id="@+id/lblOngoingDaysPercentage"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="0"
+                                            android:maxLength="3"
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:textSize="@dimen/fifteen_sp"
+                                            android:textColor="@color/PrimaryColor"
+                                            />
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="%"
+                                            android:layout_marginTop="@dimen/three"
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:textSize="@dimen/thirteen_sp"
+                                            android:textColor="@color/PrimaryColor"
+                                            />
+                                    </LinearLayout>
+
                                 </FrameLayout>
                                 <TextView
                                     android:layout_width="match_parent"
