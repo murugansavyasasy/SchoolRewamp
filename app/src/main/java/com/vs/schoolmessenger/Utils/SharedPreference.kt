@@ -18,6 +18,7 @@ object SharedPreference {
     private const val SH_MOBILE_NUMBER = "isMobileNumber"
     private const val SH_PASSWORD = "isPassWord"
     private const val SH_COUNTRY_ID = "isCountryId"
+    private const val SH_INTRODUCTION_SKIP = "isIntroductionSkip"
     private const val SH_USER_DETAILS = "UserDetails"
     private const val SH_CHILD_DETAILS = "ChildDetails"
     private const val SH_STAFF_DETAILS = "StaffDetails"
@@ -182,6 +183,30 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
         return sharedPreferences.getInt(SH_COUNTRY_ID, 0)
+
+    }
+
+    fun putIntroductionSkip(activity: Activity, isCountryId: Boolean?) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit { putBoolean(SH_INTRODUCTION_SKIP, isCountryId!!) }
+    }
+
+    fun getIntroductionSkip(activity: Context): Boolean? {
+
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getBoolean(SH_INTRODUCTION_SKIP, false)
 
     }
 

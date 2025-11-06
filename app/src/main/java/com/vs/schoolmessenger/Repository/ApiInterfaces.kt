@@ -21,7 +21,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
-import com.vs.schoolmessenger.Dashboard.NewFeatures.Model.GetFeature
+import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse

@@ -113,6 +113,18 @@
             android:background="@drawable/rect_shadow_white"
             android:visibility="visible">
 
+            <TextView
+                android:id="@+id/lblStar8"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two"
+                android:layout_toEndOf="@id/lblTitle"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/mandatory"
+                android:textColor="@color/red" />
+
+
 
             <TextView
                 android:id="@+id/lblTitle"
@@ -165,6 +177,18 @@
                 android:visibility="gone">
 
             </TextView>
+
+
+            <TextView
+                android:id="@+id/lblStqwear8"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two"
+                android:layout_toEndOf="@id/lblDescription"
+                android:layout_below="@+id/lblTitleTextCount"
+                android:text="@string/mandatory"
+                android:textColor="@color/red" />
 
             <TextView
                 android:id="@+id/lblDescription"
@@ -225,6 +249,17 @@
                 android:visibility="gone">
 
             </TextView>
+
+            <TextView
+                android:id="@+id/lblStq2332wear8"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two"
+                android:layout_toEndOf="@id/lblNoQuestion"
+                android:layout_below="@+id/lblTextCount"
+                android:text="@string/mandatory"
+                android:textColor="@color/red" />
 
             <TextView
                 android:id="@+id/lblNoQuestion"

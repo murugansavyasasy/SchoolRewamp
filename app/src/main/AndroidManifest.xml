@@ -282,7 +282,7 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".Dashboard.NewFeatures.NewFeatures"
+            android:name=".Auth.Introduction.Introduction"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
