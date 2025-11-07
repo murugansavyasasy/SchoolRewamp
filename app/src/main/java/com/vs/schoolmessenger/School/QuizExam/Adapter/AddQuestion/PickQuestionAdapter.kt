@@ -119,6 +119,18 @@ class PickQuestionAdapter(
         return itemList!!.filter { tempSelection[it.id] ?: it.checked }
     }
 
+    // Reset only temporary selections (revert to permanent imported state)
+    fun resetTemporarySelections() {
+        tempSelection.clear()
+        notifyDataSetChanged()
+        notifySelectionChanged()
+    }
+
+    // Check if all items are imported (checked permanently)
+    fun isAllImported(): Boolean {
+        return itemList?.all { it.checked } == true
+    }
+
 
 
     fun clearSelections() {

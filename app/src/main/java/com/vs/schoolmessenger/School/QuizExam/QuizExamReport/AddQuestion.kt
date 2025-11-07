@@ -427,31 +427,50 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
 
         cbSelect.setOnCheckedChangeListener { _, isChecked ->
+//            if (isChecked) {
+//                val allQuestions = adapter2.getAllNotImported()
+//                val totalToSelect = allQuestions.size
+//
+//                if (totalToSelect <= Constant.isQuestionLimit) {
+//                    // Within limit → mark all as imported
+////                    Constant.isQuestionLimit -= totalToSelect
+//                    adapter2.markAsImported(allQuestions)
+//
+//                    cbSelect.isChecked = true
+//
+//                } else {
+//
+//                    // Over limit → error
+//                    Constant.showErrorAlert(
+//                        this, getString(R.string.alert), getString(R.string.question_limit_reached)
+//                    )
+//                    cbSelect.isChecked = false
+//                }
+//
+//                adapter2.notifySelectionChanged()
+//            } else {
+//                adapter2.clearSelections()
+//                adapter2.notifySelectionChanged()
+//            }
+
             if (isChecked) {
                 val allQuestions = adapter2.getAllNotImported()
                 val totalToSelect = allQuestions.size
 
                 if (totalToSelect <= Constant.isQuestionLimit) {
-                    // Within limit → mark all as imported
-//                    Constant.isQuestionLimit -= totalToSelect
-                    adapter2.markAsImported(allQuestions)
-
-                    cbSelect.isChecked = true
-
+                    //  only temporary selection, not permanent
+                    adapter2.selectAll(true)
                 } else {
-
-                    // Over limit → error
                     Constant.showErrorAlert(
                         this, getString(R.string.alert), getString(R.string.question_limit_reached)
                     )
                     cbSelect.isChecked = false
                 }
-
-                adapter2.notifySelectionChanged()
             } else {
-                adapter2.clearSelections()
-                adapter2.notifySelectionChanged()
+                //  clear only temporary selections
+                adapter2.selectAll(false)
             }
+            adapter2.notifySelectionChanged()
         }
 
         recyclerView.adapter = adapter2
@@ -537,6 +556,12 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
 
         lblClose.setOnClickListener {
+            // revert to permanent state
+            adapter2.resetTemporarySelections()
+
+            // update the "Select All" checkbox based on real imported items
+            cbSelect.isChecked = adapter2.isAllImported()
+
             alertDialog.dismiss()
         }
 
