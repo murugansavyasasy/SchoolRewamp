@@ -126,7 +126,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.txtStartTime.setOnClickListener(this)
         binding.rytHistory.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
-        Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         isAwsUploadingPreSigned = AwsUploadingPreSigned()

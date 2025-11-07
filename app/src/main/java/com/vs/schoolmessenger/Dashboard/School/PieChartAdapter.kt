@@ -12,24 +12,12 @@ class PieChartAdapter(private val context: Context, private val item: List<Int>)
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        //        private const val VIEW_TYPE_PIE_CHART = 0
         private const val VIEW_TYPE_REGULAR_ITEM = 1
     }
 
     override fun getItemViewType(position: Int): Int {
-//        return if (position == 0) VIEW_TYPE_PIE_CHART else VIEW_TYPE_REGULAR_ITEM
         return VIEW_TYPE_REGULAR_ITEM
     }
-
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//        return if (viewType == VIEW_TYPE_PIE_CHART) {
-//            val view = LayoutInflater.from(context).inflate(R.layout.piechart_view, parent, false)
-//            PieChartViewHolder(view)
-//        } else {
-//            val view = LayoutInflater.from(context).inflate(R.layout.autoscrolling_message, parent, false)
-//            BannerViewHolder(view)
-//        }
-//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
@@ -39,10 +27,6 @@ class PieChartAdapter(private val context: Context, private val item: List<Int>)
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        if (holder is PieChartViewHolder) {
-//            // Customize PieChartView at 0th position
-//            holder.bind()
-//        } else
         if (holder is BannerViewHolder) {
             val url = item[position % item.size]
             holder.bind(url)
@@ -62,17 +46,4 @@ class PieChartAdapter(private val context: Context, private val item: List<Int>)
         }
     }
 
-//    inner class PieChartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        private val pieChart: PieChartView = itemView.findViewById(R.id.customPieChart)
-//
-//        fun bind() {
-//            // Set u  p pie chart data and appearance here
-//            val chartData = listOf(
-//                Pair(20f, context.getColor(R.color.yellow)),
-//                Pair(50f, context.getColor(R.color.light_green_bg1)),
-//                Pair(30f, context.getColor(R.color.light_orange0))
-//            )
-//            pieChart.setData(chartData)
-//        }
-//    }
 }

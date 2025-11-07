@@ -189,14 +189,14 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
     }
 
     private fun sendMailWithAttachment() {
-        val email = "support@savyasasy.com"
+        val email = Constant.isGlobalVariableData!!.support_email
         val subject = selectedMenu
         val message = binding.edtReportBug.text.toString().trim()
 
-        if (Constant.selectedFiles.isEmpty()) {
-            Toast.makeText(this, "Please attach at least one file", Toast.LENGTH_SHORT).show()
-            return
-        }
+//        if (Constant.selectedFiles.isEmpty()) {
+//            Toast.makeText(this, "Please attach at least one file", Toast.LENGTH_SHORT).show()
+//            return
+//        }
 
         val uris = arrayListOf<Uri>()
 
@@ -225,6 +225,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         val intent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
             type = "*/*"
             putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+            putExtra(Intent.EXTRA_CC, arrayOf("murugan@savyasasy.com", "swathi@savyasasy.com")) // CC
             putExtra(Intent.EXTRA_SUBJECT, subject)
             putExtra(Intent.EXTRA_TEXT, message)
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
