@@ -143,17 +143,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp" />
 
-            <ImageView
-                android:id="@+id/imgAddNotification"
-                android:layout_width="@dimen/fifty"
-                android:layout_height="@dimen/fifty"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/twenty"
-                android:layout_marginTop="@dimen/ten"
-                android:src="@drawable/add_icon"
-                android:background="@drawable/bg_orange"
-                android:contentDescription="Add Notification"
-                android:padding="10dp" />
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
