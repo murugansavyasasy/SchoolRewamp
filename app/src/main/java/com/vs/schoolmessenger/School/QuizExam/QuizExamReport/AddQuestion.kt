@@ -81,7 +81,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     val quizAttachments: MutableList<QuizAttachmentData> = mutableListOf()
     val isQuizUploadedFiles: MutableList<QuizAttachmentData> = mutableListOf()
 
-
     private var itemList: MutableList<GetQuizQuestionReportData> = mutableListOf()
     private var quizAdapter: AddQuestionAdapter? = null
     private var clickedPosition: Int = RecyclerView.NO_POSITION
@@ -537,7 +536,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     }
 
     fun UpdateQuestionCount() {
-        val text = "${Constant.isQuestionLimit}/$isSavedQuestionLimit"
+        val text = "${isSavedQuestionLimit-Constant.isQuestionLimit}/$isSavedQuestionLimit"
         val spannable = SpannableString(text)
 
         // Apply blue color only to part before "/"

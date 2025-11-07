@@ -83,7 +83,9 @@ class AddQuestionAdapter(
     fun addItems(newItems: List<GetQuizQuestionReportData>) {
         val startPosition = itemList!!.size
         itemList!!.addAll(newItems)
-        notifyItemRangeInserted(startPosition, newItems.size)
+//        notifyItemRangeInserted(startPosition, newItems.size)
+        notifyItemRangeChanged(0, itemList!!.size)//refresh to update remove visibility on all items
+
     }
 
 
@@ -111,6 +113,9 @@ class AddQuestionAdapter(
         notifyItemInserted(itemList!!.size - 1)
 
 
+        notifyItemRangeChanged(0, itemList!!.size)//refresh to update remove visibility on all items
+
+
         recyclerView.post {
             recyclerView.smoothScrollToPosition(itemList!!.size - 1)
         }
@@ -129,7 +134,9 @@ class AddQuestionAdapter(
 
             itemList!!.removeAt(position)
             notifyItemRemoved(position)
-            notifyItemRangeChanged(position, itemList!!.size)
+//            notifyItemRangeChanged(position, itemList!!.size)
+
+            notifyItemRangeChanged(0, itemList!!.size)// Rebind all items so lblremove visibility updates correctly
             Constant.isQuestionLimit += 1
             listener?.onCountUpdated()
         }
@@ -173,7 +180,12 @@ class AddQuestionAdapter(
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
-                item.answer.isBlank() || item.answer == "0" -> {
+//                item.answer.isBlank() || item.answer == "0" -> {
+//                    Toast.makeText(context, "Please select correct answer", Toast.LENGTH_SHORT).show()
+//                    if (firstInvalidIndex == null) firstInvalidIndex = index
+//                    isAllValid = false
+//                }
+                item.answer.isBlank() -> {
                     Toast.makeText(context, "Please select correct answer", Toast.LENGTH_SHORT).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
@@ -282,7 +294,7 @@ class AddQuestionAdapter(
             edtMark.setText(data.mark.toString())
 
             val optionsList = listOf(
-                "Select correct answer",
+                "Select correct option",
                 data.a_option.ifBlank { "Option A" },
                 data.b_option.ifBlank { "Option B" },
                 data.c_option.ifBlank { "Option C" },
@@ -325,27 +337,27 @@ class AddQuestionAdapter(
             edtOptionA.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].a_option = text.toString()
-                    updateSpinnerOptions(this, itemList!![adapterPosition])
+//                    updateSpinnerOptions(this, itemList!![adapterPosition])
                 }
             }
             edtOptionB.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].b_option = text.toString()
-                    updateSpinnerOptions(this, itemList!![adapterPosition])
+//                    updateSpinnerOptions(this, itemList!![adapterPosition])
 
                 }
             }
             edtOptionC.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].c_option = text.toString()
-                    updateSpinnerOptions(this, itemList!![adapterPosition])
+//                    updateSpinnerOptions(this, itemList!![adapterPosition])
 
                 }
             }
             edtOptionD.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].d_option = text.toString()
-                    updateSpinnerOptions(this, itemList!![adapterPosition])
+//                    updateSpinnerOptions(this, itemList!![adapterPosition])
                 }
             }
 
@@ -359,7 +371,14 @@ class AddQuestionAdapter(
                 isListener.onAttachmentPick(adapterPosition, itemList)
             }
 
-            // remove item
+            //we are just hiding the lblremove if the itemList size is one to avoid last item to not be removed
+            if(itemList!!.size==1){
+                lblremove.visibility= View.GONE
+            }
+            else{
+                lblremove.visibility= View.VISIBLE
+            }
+
             lblremove.setOnClickListener {
                 removeItem(position)
             }
