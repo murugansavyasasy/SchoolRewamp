@@ -926,12 +926,20 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (Constant.selectedFiles.isNotEmpty()) {
                         if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
-                                if (selectedDates.isNotEmpty()) {
-                                    isGoToRecipient()
+                                if (binding.lblStartTime.text.toString() != "Select time" &&  binding.lblEndTime.text.toString() != "Select time") {
+                                    if (selectedDates.isNotEmpty()) {
+                                        isGoToRecipient()
+                                    } else {
+                                        Constant.showValidationAlertPopup(
+                                            getString(R.string.alert),
+                                            getString(R.string.Select_schedule_date),
+                                            this
+                                        )
+                                    }
                                 } else {
                                     Constant.showValidationAlertPopup(
                                         getString(R.string.alert),
-                                        getString(R.string.Select_schedule_date),
+                                        "Select the time ",
                                         this
                                     )
                                 }
@@ -952,12 +960,20 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (Constant.selectedFiles.isNotEmpty()) {
                         if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
-                                if (selectedDates.isNotEmpty()) {
-                                    isGoToRecipient()
+                                if (binding.lblStartTime.text.toString() != "Select time" &&  binding.lblEndTime.text.toString() != "Select time") {
+                                    if (selectedDates.isNotEmpty()) {
+                                        isGoToRecipient()
+                                    } else {
+                                        Constant.showValidationAlertPopup(
+                                            getString(R.string.alert),
+                                            getString(R.string.Select_schedule_date),
+                                            this
+                                        )
+                                    }
                                 } else {
                                     Constant.showValidationAlertPopup(
                                         getString(R.string.alert),
-                                        getString(R.string.Select_schedule_date),
+                                        "Select the time ",
                                         this
                                     )
                                 }
@@ -1226,9 +1242,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 // Clear the respective label
                 if (isFromTime) {
-                    binding.lblStartTime.text = ""
+                    binding.lblStartTime.text = "Select time"
                 } else {
-                    binding.lblEndTime.text = ""
+                    binding.lblEndTime.text = "Select time"
                 }
                 return false
             }

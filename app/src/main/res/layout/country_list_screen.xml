@@ -228,7 +228,6 @@
                     android:id="@+id/terms_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CustomCheckBox"
                     android:layout_centerVertical="true"
                     tools:ignore="MissingConstraints" />
 

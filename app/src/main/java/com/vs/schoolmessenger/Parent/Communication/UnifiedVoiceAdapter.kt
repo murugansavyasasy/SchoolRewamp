@@ -120,6 +120,9 @@ class UnifiedVoiceAdapter(
         private var lastPosition: Int = 0
         private val handler = Handler(Looper.getMainLooper())
 
+        private var lastClickTime = 0L
+        private val CLICK_DELAY_MS = 500L
+
         private val progressUpdater = object : Runnable {
             override fun run() {
                 if (isPrepared && mediaPlayer != null && mediaPlayer!!.isPlaying) {
@@ -167,6 +170,10 @@ class UnifiedVoiceAdapter(
                 )
 
                 imgVoicePlay.setOnClickListener {
+
+                    val now = System.currentTimeMillis()
+                    if (now - lastClickTime < CLICK_DELAY_MS) return@setOnClickListener
+                    lastClickTime = now
                     listener.onItemClick(data, this@DataViewHolder)
                     lblnewiconVoice.visibility = View.GONE
 
@@ -281,7 +288,7 @@ class UnifiedVoiceAdapter(
             lblContent.post {
                 if (lblContent.lineCount > 3) {
                     tvSeeMore.visibility = View.VISIBLE
-                    lblnewiconText.visibility = View.GONE
+                  //  lblnewiconText.visibility = View.GONE
                     lblContent.maxLines = 3
                     lblContent.ellipsize = TextUtils.TruncateAt.END
                 }

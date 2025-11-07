@@ -355,7 +355,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSelected(date: String) {
         isSelectedDate = date
-        binding.txtStartDate.text = Constant.convertToReadableDate(date)
+        binding.txtStartDate.text = Constant.convertToReadableDate1(date)
         val labelDay = getDayLabel(date)
         binding.lblDay.text = labelDay
         fetchHomeWorkReportData()
