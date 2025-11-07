@@ -1,34 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
-        android:layout_marginTop="@dimen/fifty"
         android:id="@+id/txtTitle"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fifty"
         android:text="Super Easy Transaction"
         android:textColor="@color/PrimaryColor"
-        android:textSize="@dimen/twenty_four_sp"
-        />
+        android:textSize="@dimen/twenty_four_sp" />
 
     <TextView
         android:id="@+id/txtDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pay anything, anywhere, anytime more easy with this emoney"
-        android:textColor="#808080"
         android:layout_marginTop="8dp"
-        />
+        android:text="Pay anything, anywhere, anytime more easy with this emoney"
+        android:textColor="#808080" />
+
     <ImageView
         android:id="@+id/imgOnboard"
         android:layout_width="match_parent"
         android:layout_height="@dimen/two_fifty"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp" />
 
 </LinearLayout>
+
+    <!--last code-->
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent">-->
+
+    <!--    &lt;!&ndash; 🔹 Background Image &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imgOnboard"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:scaleType="fitEnd"-->
+    <!--        android:src="@drawable/lesson_plan_illustrate" />-->
+
+    <!--    &lt;!&ndash; 🔹 Foreground Content &ndash;&gt;-->
+    <!--    <LinearLayout-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:padding="16dp"-->
+    <!--        android:background="@android:color/transparent">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/txtTitle"-->
+    <!--            style="@style/CustomTextStylePoppinsBold"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="Super Easy Transaction"-->
+    <!--            android:textColor="@color/PrimaryColor"-->
+    <!--            android:textSize="@dimen/twenty_four_sp"-->
+    <!--            android:layout_marginTop="@dimen/fifty" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/txtDesc"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="Pay anything, anywhere, anytime more easy with this emoney"-->
+    <!--            android:textColor="#808080"-->
+    <!--            android:layout_marginTop="8dp" />-->
+
+    <!--    </LinearLayout>-->
+
+    <!--</FrameLayout>-->
+
+
