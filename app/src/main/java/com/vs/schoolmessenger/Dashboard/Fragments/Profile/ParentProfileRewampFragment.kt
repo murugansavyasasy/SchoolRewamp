@@ -127,7 +127,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         binding.btnupdateprofile.setOnClickListener(this)
         binding.imgEdit.setOnClickListener(this)
-//        binding.imgProfile.setOnClickListener(this)
         binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
         appViewModel.isParentprofilelist?.observe(viewLifecycleOwner) { response ->
@@ -288,10 +287,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 currentEditMode = "profile_photo"
                 showBottomDialog()
             }
-//            R.id.imgProfile -> {
-//                currentEditMode = "profile_photo"
-//                showBottomDialog()
-//            }
+
         }
     }
 

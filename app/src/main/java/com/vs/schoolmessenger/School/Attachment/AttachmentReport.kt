@@ -237,39 +237,6 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         )
     }
 
-//    private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-//        val schoolNames = staffList.map { it.school_name }
-//        Log.d("schoolNames", schoolNames.size.toString())
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.schoollistfilter.adapter = adapter
-//
-//        binding.schoollistfilter.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
-//                ) {
-//                    val selectedStaff = staffList[position]
-//                    isAccessToken = selectedStaff.access_token
-//                    isStaffDetails = selectedStaff
-//                    SharedPreference.putStaffDetails(this@AttachmentReport,isStaffDetails!!)
-//                    Log.d(
-//                        "SpinnerSelection",
-//                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
-//                    )
-//                    isGetAttachmentReport()
-//                }
-//
-//                override fun onNothingSelected(parent: AdapterView<*>) {}
-//            }
-//
-//        if (staffList.isNotEmpty()) {
-//            isAccessToken = staffList[0].access_token
-//            isStaffDetails = staffList[0]
-//            Log.d("DefaultSelection", "Default token: $isAccessToken")
-//        }
-//    }
-
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
 
         // Prepare spinner list (Add "All" + school names)
@@ -328,9 +295,6 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-
-
-        //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
         // Initial load (All schools)
         if (staffList.isNotEmpty()) {
             isAccessToken = staffList[0].access_token

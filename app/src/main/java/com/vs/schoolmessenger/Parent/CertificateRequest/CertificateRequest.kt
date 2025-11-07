@@ -65,26 +65,30 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.ivradio1.setImageResource(R.drawable.unselected_radio_button)
 
         appViewModel!!.isCertificateRequestList?.observe(this) { response ->
-            if (response != null && response.status) {
-                certificateRequestList = response.data
-                if (certificateRequestList.isNotEmpty()) {
-                    binding.recyclerView.visibility = View.VISIBLE
-                    binding.lnrNoRecords.visibility = View.GONE
-                    setupRecyclerView()
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            if (response != null) {
+                if (response != null && response.status) {
+                    certificateRequestList = response.data
+                    if (certificateRequestList.isNotEmpty()) {
+                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.lnrNoRecords.visibility = View.GONE
+                        setupRecyclerView()
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    }
+                } else {
+                    binding.recyclerView.visibility = View.GONE
+                    binding.lnrNoRecords.visibility = View.VISIBLE
+                    binding.txtNoData.text = getString(R.string.no_data_found)
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 }
-            } else {
-                binding.recyclerView.visibility = View.GONE
-                binding.lnrNoRecords.visibility = View.VISIBLE
-                binding.txtNoData.text = getString(R.string.no_data_found)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             }
         }
 
         appViewModel!!.isCertificateType?.observe(this) { response ->
-            if (response != null && response.status) {
-                val certificateTypeList = response.data
-                loadCertificates(certificateTypeList)
+            if (response != null) {
+                if (response != null && response.status) {
+                    val certificateTypeList = response.data
+                    loadCertificates(certificateTypeList)
+                }
             }
         }
 

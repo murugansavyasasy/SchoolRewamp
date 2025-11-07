@@ -210,17 +210,11 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     override fun onItem(data: AllClassData, requestType: String) {
         val intent = Intent(this@LessonPlan, LessonPlanViewDetails::class.java)
         intent.putExtra(Constant.section_subject_id, data.section_subject_id)
-        Log.d("section_subject_id", data.section_subject_id.toString())
         intent.putExtra(Constant.request_type, requestType)
-        Log.d("request_type", requestType)
         intent.putExtra(Constant.subject_name, data.subject_name)
-        Log.d("subject_name", data.subject_name)
         intent.putExtra(Constant.items_completed, data.items_completed)
-        Log.d("items_completed", data.items_completed)
         intent.putExtra(Constant.completed_items, data.completed_items)
-        Log.d("completed_items", data.completed_items)
         intent.putExtra(Constant.total_items, data.total_items)
-        Log.d("total_items", data.total_items)
         startActivity(intent)
     }
 

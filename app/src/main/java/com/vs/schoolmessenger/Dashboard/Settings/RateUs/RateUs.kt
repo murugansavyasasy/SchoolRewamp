@@ -49,7 +49,6 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
                 when (ratingBar.rating.toInt()) {
                     0 -> {
                         isMaybeLater()
-//                        binding.consRatingType.visibility = View.GONE
                         binding.btnsubmit.isEnabled = false
                     }
 

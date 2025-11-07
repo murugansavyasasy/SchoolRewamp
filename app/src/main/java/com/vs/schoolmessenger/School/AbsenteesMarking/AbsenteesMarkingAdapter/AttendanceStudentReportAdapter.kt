@@ -100,29 +100,6 @@ class AttendanceStudentReportAdapter(
 
 
 
-//            val profileUrl = data.profile
-//
-//            val defaultAvatar = when {
-//                data.gender.equals(Constant.male, ignoreCase = true) -> R.drawable.avatar
-//                data.gender.equals(Constant.female, ignoreCase = true) -> R.drawable.girl_avatar
-//                else -> R.drawable.person_circle // fallback if gender is unknown
-//            }
-//
-//            if (profileUrl.isNullOrEmpty()) {
-//                // No profile URL → load gender-based default directly
-//                Glide.with(imgAvatar.context)
-//                    .load(defaultAvatar)
-//                    .placeholder(R.drawable.person_circle)
-//                    .into(imgAvatar)
-//            } else {
-//                // Load URL → if fails, fallback to gender-based drawable
-//                Glide.with(imgAvatar.context)
-//                    .load(profileUrl)
-//                    .placeholder(R.drawable.person_circle)
-//                    .error(defaultAvatar)
-//                    .into(imgAvatar)
-//            }
-
         }
         private fun setStatusView(view: TextView, status: String) {
             val drawableRes = when (status.uppercase()) {

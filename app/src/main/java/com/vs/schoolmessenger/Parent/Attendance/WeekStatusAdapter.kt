@@ -67,21 +67,6 @@ class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
         }
 
 
-
-//        if (status == Constant.x || status == Constant.X_) {
-//            holder.lnrBackground.setBackgroundResource(R.drawable.present_icon)
-//        } else if (status == Constant.school) {
-//            holder.lnrBackground.setBackgroundResource(R.drawable.absent_icon)
-//        } else if (status == Constant.iffin) {
-//            holder.lnrBackground.setBackgroundResource(R.drawable.not_taken_icon)
-//        } else if (status == Constant.slash) {
-//            holder.lnrBackground.setBackgroundResource(R.drawable.first_half_icon)
-//        } else if (status == Constant.secondHalf) {
-//            holder.lnrBackground.setBackgroundResource(R.drawable.second_half_icon)
-//        } else if (status == Constant.section) {
-//            holder.lnrBackground.setBackgroundResource(R.drawable.holiday_icon)
-//        }
-
     }
 
     override fun getItemCount(): Int = items.size

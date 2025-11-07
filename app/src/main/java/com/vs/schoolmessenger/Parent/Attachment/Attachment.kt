@@ -88,7 +88,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.imgFilter.setOnClickListener(this)
         binding.lblArchiveMsg.setOnClickListener(this)
         binding.root.post {
-//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             val finalName =
                 Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
@@ -109,7 +108,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             }
         }
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
-//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
@@ -159,7 +157,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                         binding.txtNoData.visibility = View.GONE
 
                         if (mAttachmentReportAdapter!!.getCurrentListSize() > 0) {
-//                            binding.rytSearch1.visibility = View.GONE
                             binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                             binding.txtSearchMenu1.text.clear()
                         } else {
@@ -294,7 +291,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private fun showEmptyState(message: String) {
         binding.recycleracademic.visibility = View.GONE
         binding.nomessage.visibility = View.VISIBLE
-//        binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
     }

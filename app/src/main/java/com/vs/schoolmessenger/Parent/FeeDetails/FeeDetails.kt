@@ -80,7 +80,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
         fromNotification = intent.getBooleanExtra("fromNotification", false)
 
-
         val feeUrl = Constant.isGlobalVariableData!!.fees_url
 
         val isFinalFeeUrl = feeUrl
@@ -93,7 +92,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         )
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
@@ -101,7 +99,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         alertDialogView = AlertDialog.Builder(this@FeeDetails).create()
-//        binding.lblHeaderTitle.text = Constant.isParentMenuName
         binding.lblHeaderTitle.text = Constant.isSelectedMenuName
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -504,7 +501,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         holder: FeeReceiptAdapter.DataViewHolder
     ) {
         Log.d("InvoiceID", data.id)
-
         val intent = Intent(this@FeeDetails, FeeReceiptViewActivity::class.java)
         intent.putExtra("invoice_id", data.id)
         startActivity(intent)

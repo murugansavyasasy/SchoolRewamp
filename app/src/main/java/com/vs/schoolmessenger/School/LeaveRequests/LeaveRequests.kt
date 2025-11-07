@@ -138,24 +138,26 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
 
         appViewModel?.getleaverequest?.observe(this) { response ->
             Constant.hideLoading(this)
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-                binding.rcyleaverequest.visibility = View.VISIBLE
-                binding.nomessage.visibility = View.GONE
-                binding.txtNoData.visibility = View.GONE
-                leaveRequestMonthWiseList = response.data
-                isloadleaverequestData(leaveRequestMonthWiseList)
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    binding.rcyleaverequest.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    leaveRequestMonthWiseList = response.data
+                    isloadleaverequestData(leaveRequestMonthWiseList)
 
-            } else {
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-                binding.tabLayoutStatus.visibility = View.GONE
-                binding.rcyleaverequest.visibility = View.GONE
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.nomessage.visibility = View.VISIBLE
-                binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?:getString(R.string.no_data_found)
+                } else {
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    binding.tabLayoutStatus.visibility = View.GONE
+                    binding.rcyleaverequest.visibility = View.GONE
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.nomessage.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
+                }
             }
         }
 

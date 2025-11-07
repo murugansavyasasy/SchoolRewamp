@@ -59,15 +59,10 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         bottomSheetBehavior = BottomSheetBehavior.from<View?>(binding.bottomLayout.bottomSheet)
 
         val screenHeight = getResources().displayMetrics.heightPixels
-        val topGap = 230
-
 
         val params: ViewGroup.LayoutParams = binding.imageBanner.layoutParams
         params.height = screenHeight / 2
         binding.imageBanner.setLayoutParams(params)
-
-
-
 
         bottomSheetBehavior?.setFitToContents(true)
         bottomSheetBehavior?.peekHeight = (screenHeight * 0.6).toInt()
@@ -94,8 +89,6 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         remainingPoints = intent.getIntExtra(Constant.remainingPoints, 0)
         pointspercoupon = intent.getIntExtra(Constant.pointspercoupon, 0)
 
-        Log.d("pointspercoupon",pointspercoupon.toString())
-        Log.d("remainingPoints",remainingPoints.toString())
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()

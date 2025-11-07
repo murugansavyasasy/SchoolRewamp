@@ -72,7 +72,6 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
                 val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
                 SharedPreference.putChildDetails(this,matchedChild!!)
-//               Constant.isParentMenuName = menu_name!!
                Constant.isSelectedMenuName = menu_name!!
         }
 
@@ -83,7 +82,6 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
             "${isChildDetails?.standard_name ?: ""} - ${isChildDetails?.section_name ?: ""}"
 
         binding.root.post {
-//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.headerview.text = finalName
@@ -113,20 +111,22 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
         appViewModel?.isNoticeBoardReport?.observe(this) { response ->
             Constant.hideLoading(this)
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                binding.rcyNoticeBoard.visibility = View.VISIBLE
-                binding.nomessage.visibility = View.GONE
-                binding.txtNoData.visibility = View.GONE
-                isloadhomeworkData(response.data)
-                if (fromNotification) {
-                    scrollToMessageId(headerId)
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
+                    binding.rcyNoticeBoard.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    isloadhomeworkData(response.data)
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
+                    }
+                } else {
+                    binding.rcyNoticeBoard.visibility = View.GONE
+                    binding.nomessage.visibility = View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
                 }
-            } else {
-                binding.rcyNoticeBoard.visibility = View.GONE
-                binding.nomessage.visibility = View.VISIBLE
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 

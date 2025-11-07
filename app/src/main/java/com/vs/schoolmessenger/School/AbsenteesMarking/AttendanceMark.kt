@@ -140,13 +140,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
         }
 
-//        binding.imgInfo.setOnClickListener {
-//            val popupMenu = PopupMenu(this, binding.imgInfo)
-//            popupMenu.menuInflater.inflate(R.menu.attendance_leave_status_menu, popupMenu.menu)
-//            forcePopupMenuIcons(popupMenu)
-//            popupMenu.show()
-//        }
-
         binding.imgInfo.setOnClickListener {
             showCustomPopupMenu()
         }
@@ -882,73 +875,5 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         popupWindow.isOutsideTouchable = true
         popupWindow.showAsDropDown(binding.imgInfo, -30, 10)
     }
-
-
-//
-//    @SuppressLint("InflateParams")
-//    private fun showCustomPopupMenu() {
-//        val inflater = LayoutInflater.from(this)
-//        val popupView = inflater.inflate(R.layout.dialog_attendance_status, null)
-//        val container = popupView.findViewById<LinearLayout>(R.id.containerIcons)
-//
-//        val items = listOf(
-//            Triple("FN", "Forenoon", 0),
-//            Triple("AN", "Afternoon", 0),
-//            Triple("-", "Not Taken", R.drawable.report_nottaken_icon),
-//            Triple("P", "Present", R.drawable.report_present_icon),
-//            Triple("OD", "OD", R.drawable.report_od_icon),
-//            Triple("LA", "Late", R.drawable.report_latercomer_icon),
-//            Triple("A", "Absent", R.drawable.report_absent_icon),
-//        )
-//
-//        val popupWindow = PopupWindow(
-//            popupView,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            true
-//        )
-//
-//        for ((code, title, iconRes) in items) {
-//            val itemView = inflater.inflate(R.layout.item_popup_icon_text, container, false)
-//            val txtInside = itemView.findViewById<TextView>(R.id.txtInsideIcon)
-//            val txtTitle = itemView.findViewById<TextView>(R.id.txtTitle)
-//
-//            txtInside.text = code
-//            txtTitle.text = title
-//
-//            when {
-//                iconRes != 0 -> {
-//                    txtInside.setBackgroundResource(iconRes)
-//                    txtInside.setTextColor(ContextCompat.getColor(this, android.R.color.white))
-//                }
-//                code == "FN" -> {
-//                    txtInside.background = null
-//                    txtInside.setTextColor(ContextCompat.getColor(this, android.R.color.black))
-//                }
-//                code == "AN" -> {
-//
-//                    txtInside.background = null
-//                    txtInside.setTextColor(ContextCompat.getColor(this, android.R.color.black))
-//                }
-//
-//                else -> {
-//                    txtInside.background = null
-//                    txtInside.setTextColor(ContextCompat.getColor(this, R.color.gray))
-//                }
-//            }
-//
-//            itemView.setOnClickListener {
-//                popupWindow.dismiss()
-//            }
-//
-//            container.addView(itemView)
-//        }
-//
-//        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.bg_popup_round))
-//        popupWindow.elevation = 10f
-//        popupWindow.isOutsideTouchable = true
-//        popupWindow.showAsDropDown(binding.imgInfo, -30, 10)
-//    }
-
 
 }

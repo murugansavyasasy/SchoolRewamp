@@ -226,15 +226,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-//            R.id.layoutDatePicking -> {
-//                Constant.showDatePickerNormal(this) { selectedDate ->
-//                    isSelectedDate = toDashDate(selectedDate)
-//                    binding.imgDelete.visibility = View.VISIBLE
-//                    binding.lblDatePicking.text = Constant.convertDateTimeFormat(selectedDate)
-//                    isAllSlot = false
-//                    isLoadData(isSlotCategory)
-//                }
-//            }
 
             R.id.layoutDatePicking -> {
                 Constant.showDatePickerNormal(

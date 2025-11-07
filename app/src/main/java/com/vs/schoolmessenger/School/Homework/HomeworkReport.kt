@@ -111,11 +111,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
             onBackPressedDispatcher.onBackPressed()
         }
 
-//        isSelectedDate = Constant.getCurrentDate()
-//        binding.txtStartDate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
-//        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
-//        binding.lblDay.text = formattedDate
-
         isSelectedDate = Constant.getCurrentDate()
         binding.txtStartDate.text = Constant.convertToReadableDate(isSelectedDate)
         binding.lblDay.text = getDayLabel(isSelectedDate)
@@ -416,7 +411,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
             val intent = Intent(this, HomeWorkCreate::class.java)
             intent.putExtra(Constant.homework_data, data)
             startActivity(intent)
-//            isEditProcess(data)
             popupWindow.dismiss()
         }
 

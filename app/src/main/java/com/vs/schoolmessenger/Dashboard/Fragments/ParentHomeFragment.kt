@@ -86,14 +86,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: ParentHomeFragmentBinding
     lateinit var isMenuAdapter: ChildMenuAdapter
-    private lateinit var aditems: List<AdItem>
-    private var isSearchVisible = false
     var childDetails: ChildDetails? = null
     var userDetails: UserDetails? = null
     private var appViewModel: App? = null
     var isDashBoardCountData: List<DashboardCountData>? = null
-    private lateinit var items: List<ScrollItem>
-    var isContactDetails: ContactDetails? = null
     var access_token = ""
 
     var isAdsDisplayOptions: AdsDisplayOptions? = null
@@ -268,9 +264,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 if (missingContacts.isNotEmpty()) {
                     saveContactsPopup(missingContacts)
                 }
-//                else{
-//                    Toast.makeText(requireActivity(), "All contacts are already saved", Toast.LENGTH_SHORT).show()
-//                }
+
             }
         }
     }

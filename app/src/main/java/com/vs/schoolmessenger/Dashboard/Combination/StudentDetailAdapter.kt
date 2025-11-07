@@ -107,34 +107,6 @@ class StudentDetailAdapter(
         holder.binding.lblSchoolPlace.text = item.school_city
         holder.binding.lblacademicyear.text = "Academic Year : " + item.academic_year_name
 
-
-//        Glide.with(context)
-//            .load(item.school_logo_url)
-//            .placeholder(R.drawable.school_sample) // Temporary image while loading
-//            .listener(object : RequestListener<Drawable> {
-//                override fun onLoadFailed(
-//                    e: GlideException?,
-//                    model: Any?,
-//                    target: com.bumptech.glide.request.target.Target<Drawable?>,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    // Log the error if needed
-//                    Log.e("GlideError", "Image load failed", e)
-//                    return false
-//                }
-//
-//                override fun onResourceReady(
-//                    resource: Drawable,
-//                    model: Any,
-//                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
-//                    dataSource: DataSource,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    return false
-//                }
-//            })
-//            .into(holder.binding.imgSchool)
-
         Glide.with(context)
             .load(item.profile)
             .placeholder(R.drawable.default_profile_fill_icon) // Temporary image while loading

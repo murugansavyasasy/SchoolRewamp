@@ -149,7 +149,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.rcyImages.adapter = mAdapter
 
         val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
-//        binding.lblDate.text = dayOnly
         binding.lblDay.text = dayOfWeek
 
         binding.txtStartDate.text = fullDate
@@ -221,73 +220,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     }
                 }
             }
-
-
-//        albumResultLauncher =
-//            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//                if (result.resultCode == RESULT_OK) {
-//                    val selectedUris =
-//                        result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-//
-//                    if(Constant.Remaining!! > 0) {
-//                        if (Constant.Remaining != 10){
-//                            Toast.makeText(
-//                                this,
-//                                "Only " + Constant.Remaining + " Added",
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }
-//                        Constant.Remaining = Constant.Remaining - selectedUris!!.size
-//                        selectedUris?.forEach { uri ->
-//                            val mimeType = contentResolver.getType(uri)
-//                            val path = when (uri.scheme) {
-//                                Constant.file_ -> uri.path
-//                                else -> getPathFromUri(uri)
-//                            }
-//
-//                            if (path == null) {
-//                                Log.w("addPath", "Could not resolve path from URI: $uri")
-//                                return@forEach
-//                            }
-//
-//                            val fileName = getFileName(uri).ifEmpty { File(path).name }
-//                            val type = when {
-//                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
-//                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
-//                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-//                                fileName.endsWith(".pdf", true) -> FileType.PDF
-//                                fileName.endsWith(".doc", true) || fileName.endsWith(
-//                                    ".docx",
-//                                    true
-//                                ) -> FileType.DOC
-//
-//                                fileName.endsWith(".xls", true) || fileName.endsWith(
-//                                    ".xlsx",
-//                                    true
-//                                ) -> FileType.EXCEL
-//
-//                                fileName.endsWith(".ppt", true) || fileName.endsWith(
-//                                    ".pptx",
-//                                    true
-//                                ) -> FileType.PPT
-//
-//                                fileName.endsWith(".txt", true) -> FileType.TXT
-//                                else -> FileType.OTHER
-//                            }
-//                            if(Constant.selectedFiles.size < MAX_FILES +1) {
-//                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
-//                            }
-//                            else{
-//                                Constant.Remaining = 0
-//                            }
-//                            Log.d("SelectedFile", "URI: $uri, Type: $type")
-//                        }
-//                        mAdapter!!.notifyDataSetChanged()
-//
-//
-//                    }
-//                }
-//            }
 
 
         appViewModel!!.isEditEvent?.observe(this) { response ->
@@ -462,7 +394,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         Constant.covertDateFormate(selectedDate) // 13 may 2222
                     val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
                     binding.lblDay.text = formattedDate
-//                    binding.lblDate.text = day
                 }
             }
 

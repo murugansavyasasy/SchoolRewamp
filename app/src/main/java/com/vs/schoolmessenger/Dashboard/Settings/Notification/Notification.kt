@@ -128,7 +128,6 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
                 binding.lytList.visibility = View.GONE
                 binding.rcyNotification.visibility = View.VISIBLE
                 binding.btnClearall.visibility = View.VISIBLE
-                // Refresh adapter
                 isNotificationAdapter = NotificationAdapter(isNotificationItems, this, this, false)
                 binding.rcyNotification.adapter = isNotificationAdapter
 

@@ -86,16 +86,12 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this,matchedChild!!)
-//            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
 
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
-
-
-
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token

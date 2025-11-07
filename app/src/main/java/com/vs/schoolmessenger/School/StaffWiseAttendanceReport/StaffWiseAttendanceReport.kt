@@ -128,7 +128,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                 binding.rlaStaff.visibility = View.VISIBLE
                 isGetStaffListData = response.data
                 isLoadStaff(isGetStaffListData)
-//                binding.lblStaff.text = isGetStaffListData!![0].name
                 isStaffId = isGetStaffListData!![0].id
                 getStaffAttendanceReport("", isSelectedYear!!, selectedMonthNumber!!)
             }
@@ -153,12 +152,10 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {
-//        Constant.executeAfterDelay {
         isStaffAttendanceReportAdapter = StaffAttendanceReportAdapter(
             isStaffReport, this, this, Constant.isShimmerViewDisable
         )
         binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
-        // }
     }
 
     private fun isLoadYear(isAcademicYear: List<AcademicYear>?) {
@@ -228,85 +225,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
             }
     }
 
-
-//    private fun isLoadYear(yearList: List<AcademicYear>) {
-//        val uniqueYears = yearList.mapNotNull { it.year.split("-").firstOrNull() }.distinct()
-//        val currentYear =
-//            yearList.find { it.current_academic_year }?.year?.split("-")?.firstOrNull()
-//        val sortedYears = if (currentYear != null) {
-//            listOf(currentYear) + uniqueYears.filter { it != currentYear }
-//        } else {
-//            uniqueYears
-//        }
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sortedYears)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.spinnerYears.adapter = adapter
-//
-//
-//        binding.spinnerYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//                binding.lytNoRecordFound.visibility = View.GONE
-//                isSelectedYear = parent.getItemAtPosition(position).toString()
-//                isLoadMonth()
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {}
-//        }
-//    }
-
-
-//    fun isLoadMonth() {
-//        val months = listOf(
-//            "January", "February", "March", "April", "May", "June",
-//            "July", "August", "September", "October", "November", "December"
-//        )
-//
-//        val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
-//        val currentMonthName = months[currentMonthIndex]
-//
-//        val updatedMonths: List<String>
-//        val selectedIndex: Int
-//
-//        if (isLoadingFirstTime) {
-//            updatedMonths = months
-//            selectedIndex = currentMonthIndex
-//            isLoadingFirstTime = false
-//        } else if (isMonthLoaded.isNotEmpty()) {
-//            updatedMonths = listOf(isMonthLoaded) + months.filter { it != isMonthLoaded }
-//            selectedIndex = 0
-//        } else {
-//            updatedMonths = months
-//            selectedIndex = currentMonthIndex
-//        }
-//
-//        val monthAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, updatedMonths)
-//        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.spinnerMonths.adapter = monthAdapter
-//        binding.spinnerMonths.setSelection(selectedIndex)
-//
-//        binding.spinnerMonths.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//                isMonthLoaded = updatedMonths[position]
-//                binding.lytNoRecordFound.visibility = View.GONE
-//                selectedMonthNumber = String.format("%02d", months.indexOf(isMonthLoaded) + 1)
-//                isGetStaffList()
-//
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {}
-//        }
-//    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun isBackgroundChange(btnClick: TextView) {
         binding.btnCreate.background = null
@@ -333,13 +251,12 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         if (data.isNotEmpty()) {
             rcyPunchList!!.visibility = View.VISIBLE
             lblNoRecordsFound!!.visibility = View.GONE
-//            Constant.executeAfterDelay {
             isPunchHistoryAdapter = PunchHistoryAdapter(
                 data, this, Constant.isShimmerViewDisable
             )
             rcyPunchList!!.layoutManager = LinearLayoutManager(this)
             rcyPunchList!!.adapter = isPunchHistoryAdapter
-//            }
+
         } else {
             rcyPunchList!!.visibility = View.GONE
             lblNoRecordsFound!!.text = getString(R.string.Punch_History_found)
