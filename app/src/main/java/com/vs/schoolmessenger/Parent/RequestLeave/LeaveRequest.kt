@@ -245,7 +245,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
 
     }
 

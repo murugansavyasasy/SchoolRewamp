@@ -146,7 +146,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             Constant.hideLoading(this@HomeWorkCreate)
             if (response != null) {
                 Log.d("Response", response.status.toString())
-                Constant.showTopAlertPopup(response.message, this)
+                Constant.showTopAlertPopup1(response.message, this,false)
             }
         }
 

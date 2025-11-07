@@ -209,8 +209,6 @@ object Constant {
     var mediaPlayer: MediaPlayer = MediaPlayer()
 
 
-    var isTitleLength = 50
-    var isDescriptionLength = 500
 //    var MAX_FILES = 10
 
     var isAcademicYearList: List<AcademicYear>? = null
