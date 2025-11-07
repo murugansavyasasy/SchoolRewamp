@@ -138,7 +138,6 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
         } else {
             binding.wvCertificatePdf.visibility = View.GONE
             binding.rytCertificate.visibility = View.GONE
-//            binding.imgMoreOptions.visibility = View.GONE
             binding.loadingBar.visibility = View.GONE
             binding.rytWaitingProcess.visibility = View.VISIBLE
             binding.lblCertificateDate.visibility = View.GONE

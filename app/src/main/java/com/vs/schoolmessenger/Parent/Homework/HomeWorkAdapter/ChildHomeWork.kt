@@ -247,7 +247,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 )
             )
         } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == true) {
-//            binding.lblPostedDate.visibility = View.GONE
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.GONE
             binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")

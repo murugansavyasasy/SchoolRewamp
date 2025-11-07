@@ -157,14 +157,6 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
             true
         }
 
-//        appViewModel!!.isGlobalVariables?.observe(this) { response ->
-//            if (response != null) {
-//                response.status
-//                response.message
-//                Constant.isGlobalVariableData=response.data[0]
-//
-//            }
-//        }
         // ✅ Use correct lifecycle-aware callback
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -207,7 +199,6 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                     val token = task.result
                     Log.d("FCM", "Token: $token")
                     isUpdateDeviceToken(token)
-                   // isGlobalVariables(token)
                 }
             }
 
@@ -266,14 +257,6 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
-
-    private fun isGlobalVariables(token: String) {
-        val jsonObject = JsonObject()
-        val jsonArray = JsonArray()
-        jsonObject.add("key_names", jsonArray)
-        appViewModel!!.isGetGlobalVariables(jsonObject, token, this)
-    }
-
 
     fun openDrawer() {
         if (::drawerLayout.isInitialized) {

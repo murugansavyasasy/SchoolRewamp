@@ -44,7 +44,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var toDateMillis: Long = 0L
     private var totalLeaveDays: Int = 0
     private val dateFormat = SimpleDateFormat(Constant.dd_MM_yyyy, Locale.getDefault())
-    private var currentTab = TabType.LeaveRequest
     private var selectedStatus: String = Constant.All_
     private var originalLeaveList: List<MonthWiseLeaveData> = emptyList()
     private var isLeaveList: List<MonthWiseLeaveData> = emptyList()
@@ -245,10 +244,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
-//        isGetLeaveRequestList()
-
-//        }
-
 
         Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
 

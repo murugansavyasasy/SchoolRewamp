@@ -607,12 +607,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     fun checkAndRequestPermissions(activity: Activity): Boolean {
         val permissions = mutableListOf<String>()
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            permissions.add(Manifest.permission.READ_MEDIA_AUDIO)
-//        } else {
-//            permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-//        }
         permissions.add(Manifest.permission.RECORD_AUDIO)
 
         val deniedPermissions = permissions.filter {
@@ -872,19 +866,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     preSelectedMinute = toMinute
                 )
             }
-
-
-//            R.id.rlaFromTime -> {
-//                KeyboardUtils.hideKeyboard(this)
-//                isFromTime = true
-//                isShowTimePickerDialog(this, this)
-//            }
-//
-//            R.id.rlaToTime -> {
-//                KeyboardUtils.hideKeyboard(this)
-//                isFromTime = false
-//                isShowTimePickerDialog(this, this)
-//            }
 
             R.id.rlaAddLocalFile -> {
 

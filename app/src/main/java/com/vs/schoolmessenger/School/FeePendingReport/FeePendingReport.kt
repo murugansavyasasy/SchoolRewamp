@@ -80,14 +80,17 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             Constant.hideLoading(this@FeePendingReport)
             Log.d("response++", response.toString())
             mAdapter?.clearData()
-
-            if (response != null && response.status && !response.data.isNullOrEmpty()) {
-                isFirstLoad = true
-                isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility = View.VISIBLE
-            } else {
-                showNoDataMessage(response?.message ?: getString(R.string.no_fee_pending_data_available))
-                binding.relativeLayout6.visibility = View.GONE
+            if (response != null) {
+                if (response != null && response.status && !response.data.isNullOrEmpty()) {
+                    isFirstLoad = true
+                    isLoadDailyCollectionData(response.data)
+                    binding.relativeLayout6.visibility = View.VISIBLE
+                } else {
+                    showNoDataMessage(
+                        response?.message ?: getString(R.string.no_fee_pending_data_available)
+                    )
+                    binding.relativeLayout6.visibility = View.GONE
+                }
             }
         }
 
@@ -95,14 +98,17 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             Constant.hideLoading(this@FeePendingReport)
             Log.d("response++", response.toString())
             mAdapter?.clearData()
-
-            if (response != null && response.status && !response.data.isNullOrEmpty()) {
-                isFirstLoad = true
-                isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility = View.VISIBLE
-            } else {
-                showNoDataMessage(response?.message ?: getString(R.string.no_fee_pending_data_available))
-                binding.relativeLayout6.visibility = View.GONE
+            if (response != null) {
+                if (response != null && response.status && !response.data.isNullOrEmpty()) {
+                    isFirstLoad = true
+                    isLoadDailyCollectionData(response.data)
+                    binding.relativeLayout6.visibility = View.VISIBLE
+                } else {
+                    showNoDataMessage(
+                        response?.message ?: getString(R.string.no_fee_pending_data_available)
+                    )
+                    binding.relativeLayout6.visibility = View.GONE
+                }
             }
         }
     }
@@ -260,6 +266,4 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
 
         }
     }
-
-
 }

@@ -116,7 +116,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     override fun setupViews() {
         super.setupViews()
-//        setupToolbar()
         isToolBarPrimarySchool(
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
@@ -124,7 +123,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         appViewModel!!.init()
 
 
-//        binding.rlaSubject.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
         binding.btnSpecificStudent.setOnClickListener(this)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -250,7 +248,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             isSection = isGetStandard!!.get(0).sections
                             binding.nomessage.visibility = View.GONE
                             isLoadData(isSection)
-//                            binding.grouplabel.text = resources.getString(R.string.Section)
                             binding.grouplabel.text = resources.getString(R.string.Standards)
                         } else {
                             isLoadTheStandardData(isGetStandard)
@@ -533,7 +530,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.GONE
                     changeTapBg(Constant.isSchool)
-                    //   isSelectedType = 0
                     isGetAcademicYear()
                 }
 
@@ -547,7 +543,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.VISIBLE
                     changeTapBg(Constant.isSchool)
-                    //   isSelectedType = 0
                     isGetAcademicYear()
 
                 }
@@ -849,7 +844,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
-                //    if (isSelectedType == 0) {
                         if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU || Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU || Constant.M_LSRW == SELECTED_SCHOOL_MENU) {
                             if (isSubjectId == null) {
                                 Constant.showValidationAlertPopup(
@@ -871,9 +865,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                                 R.string._s
                                             ), isAcademicYearNote
                                         )
-//                                    showSendConfirmationDialog(
-//                                        "", isAcademicYearNote
-//                                    )
+
                                     }
                                 } else {
                                     showSendConfirmationDialog(
@@ -882,100 +874,20 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                         ), isAcademicYearNote
                                     )
                                 }
-//                                if (selectedLevelValue == 0) {
-//                                    Constant.showValidationAlertPopup(
-//                                        "Alert",
-//                                        "Select the level",
-//                                        this
-//                                    )
-//                                } else {
-//                                    showSendConfirmationDialog(
-//                                        resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-//                                            R.string._s
-//                                        ), isAcademicYearNote
-//                                    )
-////                                    showSendConfirmationDialog(
-////                                        "", isAcademicYearNote
-////                                    )
-//                                }
+
                             }
 
                         }
-//                        else if (Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU || Constant.M_LSRW == SELECTED_SCHOOL_MENU) {
-//                            if (isSubjectId == null) {
-//                                Constant.showValidationAlertPopup(
-//                                    "Alert",
-//                                    "Select the subject",
-//                                    this
-//                                )
-//                            } else {
-//                                showSendConfirmationDialog(
-//                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-//                                        R.string._s
-//                                    ), isAcademicYearNote
-//                                )
-////                                showSendConfirmationDialog(
-////                                    "", isAcademicYearNote
-////                                )
-//                            }
-//                        }
+
                         else {
-//                            showSendConfirmationDialog(
-//                                "", isAcademicYearNote
-//                            )
+
                             showSendConfirmationDialog(
                                 resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
                                     R.string._s
                                 ), isAcademicYearNote
                             )
                         }
-                 //   }
-//                    else {
-//
-//                        if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
-//                            if (isSubjectId == null) {
-//                                Constant.showValidationAlertPopup(
-//                                    "Alert",
-//                                    "Select the subject",
-//                                    this
-//                                )
-//                            } else {
-//                                if (selectedLevelValue == 0) {
-//                                    Constant.showValidationAlertPopup(
-//                                        "Alert",
-//                                        "Select the level",
-//                                        this
-//                                    )
-//                                } else {
-//                                    showSendConfirmationDialog(
-//                                        resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-//                                            R.string._s
-//                                        ), isAcademicYearNote
-//                                    )
-//                                }
-//                            }
-//                        } else if (Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU || Constant.M_LSRW == SELECTED_SCHOOL_MENU) {
-//                            if (isSubjectId == null) {
-//                                Constant.showValidationAlertPopup(
-//                                    "Alert",
-//                                    "Select the subject",
-//                                    this
-//                                )
-//                            } else {
-//                                showSendConfirmationDialog(
-//                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-//                                        R.string._s
-//                                    ), isAcademicYearNote
-//                                )
-//                            }
-//                        } else {
-//                            showSendConfirmationDialog(
-//                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-//                                    R.string._s
-//                                ), isAcademicYearNote
-//                            )
-//                        }
-//                    }
+
                 } else {
                     Constant.showValidationAlertPopup(
                         getString(
@@ -1114,7 +1026,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.textdesc.visibility = View.GONE
                 binding.bottomLayout.visibility = View.GONE
                 binding.grouplabel.visibility = View.VISIBLE
-//                binding.grouplabel.text = resources.getString(R.string.Section)
                 binding.grouplabel.text = resources.getString(R.string.Standards)
 
                 binding.chAllSelect.visibility = View.GONE

@@ -56,10 +56,6 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
-
-//        Log.d("Menu_name",Constant.isParentMenuName)
-
-//        binding.lblHeaderTitle.setText(Constant.isParentMenuName)
         binding.lblHeaderTitle.setText(Constant.isSelectedMenuName)
 
         isAccessToken = isChildDetails?.access_token

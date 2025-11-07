@@ -474,14 +474,6 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
                 allCompletedEvents?.filter { it.category == selectedId }
             }
 
-            Log.d("ongoingFiltered", ongoingFiltered!!.size.toString())
-            Log.d("ongoingFiltered", ongoingFiltered!!.toString())
-            Log.d("upcomingFiltered", upcomingFiltered!!.size.toString())
-            Log.d("upcomingFiltered", upcomingFiltered!!.toString())
-            Log.d("completedFiltered", completedFiltered!!.size.toString())
-            Log.d("completedFiltered", completedFiltered!!.toString())
-
-
             if (!ongoingFiltered.isNullOrEmpty()) {
                 mAdapter.updateList(ongoingFiltered)
                 binding.rcyongoingevent.visibility = View.VISIBLE
@@ -562,10 +554,6 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
             json.put(APIKeyNames.id, id)
             json.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
-//            appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
-
-
-
             appViewModel!!.isEventDelete?.observe(this) { response ->
                 if (response != null) {
                     if (response.status) {
@@ -593,25 +581,17 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-//        if (isEventUpdate) {
-//            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_event)
-//        } else {
         alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
-        //    }
+
 
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-//            if (isEventUpdate) {
-//                ProgressDialogHelper.show(this)
-//                ProgressDialogHelper.updateProgress(10)
-//             //   isUploadFilesInServer(Constant.file_)
-//            } else {
             val jsonObject = JsonObject()
             jsonObject.addProperty(APIKeyNames.id, isEventId)
             appViewModel?.isEventDelete(isAccessToken!!, jsonObject, this)
-            //  }
+
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }

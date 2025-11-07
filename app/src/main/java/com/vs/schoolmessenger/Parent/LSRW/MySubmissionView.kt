@@ -52,8 +52,6 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
         fetchMySubmissionList()
 
 
-
-
         appViewModel?.islsrwmysubmission?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {

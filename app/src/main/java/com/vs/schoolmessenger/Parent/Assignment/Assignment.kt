@@ -111,15 +111,11 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
 
         binding.root.post {
-//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.lblHeaderTitle.text = finalName
             binding.lblHeaderTitle.visibility = View.VISIBLE
         }
-
-
-//        Log.d("isParentMenuName", Constant.isParentMenuName)
 
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name

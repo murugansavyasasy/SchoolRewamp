@@ -165,22 +165,24 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
 
         appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
             Constant.hideLoading(this)
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                binding.rcyNoticeBoard.visibility = View.VISIBLE
-                binding.nomessage.visibility = View.GONE
-                binding.txtNoData.visibility = View.GONE
-                isloadhomeworkData(response.data)
-                completeNoticeList=response.data
-                binding.edtSearch.text.clear()
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
+                    binding.rcyNoticeBoard.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    isloadhomeworkData(response.data)
+                    completeNoticeList = response.data
+                    binding.edtSearch.text.clear()
 
-            } else {
-                isloadhomeworkData(emptyList())
-                binding.rcyNoticeBoard.visibility = View.GONE
-                binding.nomessage.visibility = View.VISIBLE
-                binding.txtNoData.visibility = View.VISIBLE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-                binding.rytSearch323.visibility=View.GONE
-                binding.edtSearch.text.clear()
+                } else {
+                    isloadhomeworkData(emptyList())
+                    binding.rcyNoticeBoard.visibility = View.GONE
+                    binding.nomessage.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    binding.rytSearch323.visibility = View.GONE
+                    binding.edtSearch.text.clear()
+                }
             }
         }
 
@@ -192,47 +194,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
 
     }
 
-
-        private fun loadNoticeData(newData: List<NoticeStaffData>) {
-        Log.d("AdapterUpdate", "New data size: ${newData.size}")
-
-        noticeboardadapter.updateList(newData)
-        binding.rcyNoticeBoard.visibility = View.VISIBLE
-        binding.nomessage.visibility = View.GONE
-        binding.txtNoData.visibility = View.GONE
-    }
-
-//    private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
-//        val schoolNames = staffList.map { it.school_name }
-//
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.schoollistfilter.adapter = adapter
-//
-//        binding.schoollistfilter.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>, view: View?, position: Int, id: Long
-//                ) {
-//                    val selectedStaff = staffList[position]
-//                    isAccessToken = selectedStaff.access_token
-//                    isStaffDetails = selectedStaff
-//                    Log.d(
-//                        "SpinnerSelection",
-//                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
-//                    )
-//                    isGetNoticeBoardList()
-//                }
-//
-//                override fun onNothingSelected(parent: AdapterView<*>) {}
-//            }
-//
-//        if (staffList.isNotEmpty()) {
-//            isAccessToken = staffList[0].access_token
-//            isStaffDetails = staffList[0]
-//            Log.d("DefaultSelection", "Default token: $isAccessToken")
-//        }
-//    }
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
 
@@ -303,7 +264,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
 
 
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
-        Log.d("SearchDebug", "isloadhomeworkData called with ${newData?.size ?: 0} items")
 
         if (newData != null && newData.isNotEmpty()) {
             binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE

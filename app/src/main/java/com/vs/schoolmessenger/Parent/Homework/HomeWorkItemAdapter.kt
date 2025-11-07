@@ -293,10 +293,6 @@ class HomeWorkItemAdapter(
                         "https://picsum.photos/600/400?random=5"  // Random Image 5
                     )
 
-//                    // Set up the adapter
-//                    val viewPagerAdapter = ImageSliderAdapter(context, imageUrls)
-//                    viewpager.adapter = viewPagerAdapter
-//                    indicator.setViewPager(viewpager)
                 }
             }
 

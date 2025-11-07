@@ -140,8 +140,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.btnNext.text = getString(R.string.NEXT)
         val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
-        //        binding.lblDay.text = dayOnly
-//        binding.lblEndDay.text = dayOnly
+
         binding.lblDay.text = dayOfWeek
         binding.lblEndDay.text = dayOfWeek
 
@@ -151,12 +150,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.txtStartDate.text =txtStartDate
         binding.txtEndDate.text = txtEndDate
 
-
-//        val parts = txtStartDate!!.split(" ")
-//        val Month = parts[1]
-//        val Year = parts[2]
-//        binding.txtStartDate.text = Month + " " + Year
-//        binding.txtEndDate.text = Month + " " + Year
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -245,67 +238,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             }
 
 
-//        albumResultLauncher =
-//            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//                if (result.resultCode == RESULT_OK) {
-//                    val selectedUris =
-//                        result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-//
-//                    if(Constant.Remaining!! > 0) {
-//                        if (Constant.Remaining != 10){
-//                            Toast.makeText(
-//                                this,
-//                                "Only " + Constant.Remaining + " Added",
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }
-//                        Constant.Remaining = Constant.Remaining - selectedUris!!.size
-//                        selectedUris?.forEach { uri ->
-//                            val mimeType = contentResolver.getType(uri)
-//                            val path = when (uri.scheme) {
-//                                Constant.file_ -> uri.path
-//                                else -> getPathFromUri(uri)
-//                            }
-//
-//                            if (path == null) {
-//                                Log.w("addPath", "Could not resolve path from URI: $uri")
-//                                return@forEach
-//                            }
-//
-//                            val fileName = getFileName(uri).ifEmpty { File(path).name }
-//                            val type = when {
-//                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
-//                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
-//                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-//                                fileName.endsWith(".pdf", true) -> FileType.PDF
-//                                fileName.endsWith(".doc", true) || fileName.endsWith(
-//                                    ".docx", true
-//                                ) -> FileType.DOC
-//
-//                                fileName.endsWith(".xls", true) || fileName.endsWith(
-//                                    ".xlsx", true
-//                                ) -> FileType.EXCEL
-//
-//                                fileName.endsWith(".ppt", true) || fileName.endsWith(
-//                                    ".pptx", true
-//                                ) -> FileType.PPT
-//
-//                                fileName.endsWith(".txt", true) -> FileType.TXT
-//                                else -> FileType.OTHER
-//                            }
-//                            if(Constant.selectedFiles.size < MAX_FILES +1) {
-//                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
-//                            }
-//                            else{
-//                                Constant.Remaining = 0
-//                            }
-//                            Log.d("SelectedFile", "URI: $uri, Type: $type")
-//                        }
-//                        mAdapter!!.notifyDataSetChanged()
-//
-//                    }
-//                }
-//            }
 
         appViewModel!!.isEditNoticeBoard?.observe(this) { response ->
             Constant.hideLoading(this@CreateNoticeBoard)
@@ -502,13 +434,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     binding.lblDay.text = formattedDate
                     binding.txtStartDate.text =txtStartDate
 
-//                    val parts = txtStartDate!!.split(" ")
-//                    val day = parts[0]
-//                    val month = parts[1]
-//                    val year = parts[2]
-//                    binding.lblDay.text = day
-//                    binding.txtStartDate.text = "$month $year"
-
                     val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                     val startDate = sdf.parse(txtStartDate!!) ?: Date()
                     val cal = Calendar.getInstance()
@@ -518,12 +443,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     txtEndDate = sdf.format(endDate)
                     val (endday, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())// 13 Monday
 
-
                     binding.lblEndDay.text = endformattedDate
                     binding.txtEndDate.text = txtEndDate
-//                    val endParts = txtEndDate!!.split(" ")
-//                    binding.lblEndDay.text = endParts[0]
-//                    binding.txtEndDate.text = "${endParts[1]} ${endParts[2]}"
+
                 }
             }
 
@@ -584,9 +506,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
         binding.lblDay.text = formattedDate
         binding.txtStartDate.text = txtStartDate
-//        val startParts = txtStartDate!!.split(" ")
-//        binding.lblDay.text = startParts[0]
-//        binding.txtStartDate.text = "${startParts[1]} ${startParts[2]}"
         val cal = Calendar.getInstance()
         cal.time = today
         cal.add(Calendar.DAY_OF_MONTH, 30)
@@ -597,9 +516,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
         binding.lblEndDay.text = endformattedDate
         binding.txtEndDate.text = txtEndDate
-//        val endParts = txtEndDate!!.split(" ")
-//        binding.lblEndDay.text = endParts[0]
-//        binding.txtEndDate.text = "${endParts[1]} ${endParts[2]}"
+
     }
 
 
