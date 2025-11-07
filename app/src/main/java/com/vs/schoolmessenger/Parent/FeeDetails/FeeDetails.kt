@@ -53,7 +53,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     var isChildId = ""
     var isSchoolID = ""
 
-    var isClickedTap = 1
+    var isClickedTap = 2
 
     private val popupWebViewStack = Stack<WebView>()
     var alertDialogView: AlertDialog? = null
@@ -157,8 +157,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
-
             R.id.btnPayment -> {
+                Log.d("isClickedTap",isClickedTap.toString())
                 if (isClickedTap != 2) {
                     isClickedTap = 2
                     Constant.hideLoading(this)
@@ -176,6 +176,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             }
 
             R.id.btnReceipt -> {
+                Log.d("isClickedTap", isClickedTap.toString())
                 if (isClickedTap != 1) {
                     isClickedTap = 1
                     Constant.hideLoading(this)
