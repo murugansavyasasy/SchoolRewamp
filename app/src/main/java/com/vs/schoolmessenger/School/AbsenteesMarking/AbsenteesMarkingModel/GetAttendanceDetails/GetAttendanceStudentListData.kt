@@ -7,4 +7,5 @@ data class GetAttendanceStudentListData(
     val roll_no: String,
     var att_type: String,
     var att_status: String,
+    var is_edit: String,
 )

@@ -143,25 +143,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.btnSubmit.setOnClickListener(this)
-        Log.d("isSchoolMenuName", Constant.isSchoolMenuName.length.toString())
-        Log.d("isSchoolMenuName", Constant.isParentMenuName.length.toString())
-        Log.d("isParentMenuName", Constant.isSchoolMenuName)
-        Log.d("isParentMenuName", Constant.isParentMenuName)
+
+        Log.d("isSchoolMenuName", Constant.isSelectedMenuName)
         data = intent.getParcelableExtra("isPreViewData")
 
         binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
         binding.toolbarLayout.lblStudentSection.visibility = View.GONE
-        if (!Constant.isSchoolMenuName.isNullOrBlank()) {
-            binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
-            binding.toolbarLayout.lblSubjectName.visibility = View.VISIBLE
-            binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
-        } else {
-            binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
-            binding.toolbarLayout.lblSubjectName.visibility = View.VISIBLE
-            binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
-        }
+        binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
+        binding.toolbarLayout.lblSubjectName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
+
         binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
-            Log.d("ChildHomeWork", "Button clicked!")
             LsrwSubmitSkill()
         }
 
@@ -196,11 +188,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS && data!!.isParentAssignment == false) {
             binding.sendtostandardLabel.visibility = View.VISIBLE
-            Log.d("Visible Success", "visible Success")
             loadattachmentsChildHomeWorkstandard()
         } else {
             binding.sendtostandardLabel.visibility = View.GONE
-            Log.d("", "")
         }
 
 
@@ -237,13 +227,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
-            if (!Constant.isSchoolMenuName.isNullOrBlank()) {
-                binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
-            } else {
-                binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
-            }
+            binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
             binding.lblviewSubmissions.visibility = View.GONE
-            binding.linearlayoutContainer.visibility = View.VISIBLE
+            binding.linearlayoutContainer.visibility = View.GONE
             binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
             Log.d("createddatevalue", data?.created_date ?: "")
             binding.category.text = data?.category ?: ""
@@ -263,7 +249,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == true) {
 //            binding.lblPostedDate.visibility = View.GONE
             binding.lblviewSubmissions.visibility = View.GONE
-            binding.linearlayoutContainer.visibility = View.VISIBLE
+            binding.linearlayoutContainer.visibility = View.GONE
             binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
             binding.category.text = data?.category ?: ""
             binding.subject.text = data?.assignmentsubject ?: ""
@@ -486,13 +472,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             Log.d("lblviewSubmissions Visible failed", "lblviewSubmissions Visible failed")
         }
 
-//        if (data?.created_date.isNullOrBlank()) {
-//            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
-//        } else {
-//            binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
-//        }
-
-
         binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener(this)
 
         binding.childlsrwlayoutxml.lblviewSubmissions.setOnClickListener {
@@ -505,7 +484,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (data!!.isMenuType == Constant.M_HOMEWORK) {
             isHomeworkId = data!!.id
             isHomeWorkDate = intent.getStringExtra("isHomeWorkDate")
-//            Log.d("isHomeWorkDate2", isHomeWorkDate.toString())
 
             binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
             val params =
@@ -519,10 +497,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.toolbarLayout.lblPostedOn.text =
                 "Posted On : ${Constant.convertToReadableDate(data!!.created_date.toString())}"
 
-            if (data!!.subjectName != "") {
-//                binding.lblSubjectName.visibility = View.VISIBLE
-//                binding.lblSubjectName.text = data!!.subjectName
-            }
+
             if (!data!!.isCompleted) {
                 binding.lblClickComplete.visibility = View.VISIBLE
                 binding.lblClickComplete.text = "Click \"here\" when you're done "
@@ -530,11 +505,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             } else {
                 binding.lblClickComplete.visibility = View.GONE
                 binding.thumbContainer.visibility = View.GONE
-            }
-            if (isHomeWorkDate != "") {
-//                binding.lblPostedDate.visibility = View.VISIBLE
-//                binding.lblPostedDate.text =
-//                    "Posted on : " + Constant.formatDateSmart(isHomeWorkDate.toString())
             }
 
             if (data!!.sentBy != "") {
@@ -561,18 +531,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.toolbarLayout.lblPostedOn.text =
                 "Posted On : ${Constant.convertToReadableDateformat(data!!.created_date.toString())}"
 
-            //            binding.lblSubjectName.visibility = View.GONE
             binding.lblClickComplete.visibility = View.GONE
-//            binding.lblPostedDate.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
-
-
-            if (!Constant.isSchoolMenuName.isNullOrBlank()) {
-                binding.toolbarLayout.lblStudentName.text = Constant.isSchoolMenuName
-            } else {
-                binding.toolbarLayout.lblStudentName.text = Constant.isParentMenuName
-            }
+            binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
 
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
@@ -633,10 +595,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
 
-
-
-
-
         appViewModel!!.getchildhomeworkstandard?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
@@ -688,11 +646,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 }
             }
         }
-
-
-
-
-
 
         appViewModel!!.getattachmentchildhomework?.observe(this) { response ->
             if (response != null) {
@@ -800,8 +753,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 }
             }
         }
-
-
 
 
         val isEmpty = adapter.itemCount == 0

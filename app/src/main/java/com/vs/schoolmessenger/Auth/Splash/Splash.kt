@@ -34,6 +34,7 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.Country.CountryScreen
+import com.vs.schoolmessenger.Auth.Introduction.Introduction
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.OTP.OTP
@@ -629,9 +630,17 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     Log.d("countryId", countryId.toString())
                     if (countryId != 0) {
                         isVersionCheck()
-                    } else {
-                        startActivity(Intent(this@Splash, CountryScreen::class.java))
-                        finish()
+                    }
+                    else {
+                        val isIntroductionSkip = SharedPreference.getIntroductionSkip(this@Splash)
+                        if(isIntroductionSkip!!){
+                            startActivity(Intent(this@Splash, CountryScreen::class.java))
+                            finish()
+                        }
+                        else{
+                            startActivity(Intent(this@Splash, Introduction::class.java))
+                            finish()
+                        }
                     }
                 } else {
                     Log.e("Network Error", "No Internet Connection")

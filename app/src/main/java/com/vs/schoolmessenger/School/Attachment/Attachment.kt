@@ -134,7 +134,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
         isUserDetails = SharedPreference.getUserDetails(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         isMultipleSchool = isUserDetails!!.staff_details.size > 1
 
         binding.btnNoticeBoardReport.text=getString(R.string.History)+" "+">>"
@@ -218,75 +218,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                     }
                 }
             }
-
-//        albumResultLauncher =
-//            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//                if (result.resultCode == RESULT_OK) {
-//                    val selectedUris =
-//                        result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-//                 Log.d("Constant.Remaining",Constant.Remaining.toString())
-//                    if (Constant.Remaining > 0) {
-////                      if (Constant.Remaining != 10){
-////                          Toast.makeText(
-////                              this,
-////                              "Only " + Constant.Remaining + " Added",
-////                              Toast.LENGTH_SHORT
-////                          ).show()
-////                      }
-//                        Constant.Remaining = Constant.Remaining - selectedUris!!.size
-//                        selectedUris?.forEach { uri ->
-//                            val mimeType = contentResolver.getType(uri)
-//                            val path = when (uri.scheme) {
-//                                Constant.file_ -> uri.path
-//                                else -> getPathFromUri(uri)
-//                            }
-//
-//                            if (path == null) {
-//                                Log.w("addPath", "Could not resolve path from URI: $uri")
-//                                return@forEach
-//                            }
-//
-//                            val fileName = getFileName(uri).ifEmpty { File(path).name }
-//                            val type = when {
-//                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
-//                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
-//                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-//                                fileName.endsWith(".pdf", true) -> FileType.PDF
-//                                fileName.endsWith(".doc", true) || fileName.endsWith(
-//                                    ".docx",
-//                                    true
-//                                ) -> FileType.DOC
-//
-//                                fileName.endsWith(".xls", true) || fileName.endsWith(
-//                                    ".xlsx",
-//                                    true
-//                                ) -> FileType.EXCEL
-//
-//                                fileName.endsWith(".ppt", true) || fileName.endsWith(
-//                                    ".pptx",
-//                                    true
-//                                ) -> FileType.PPT
-//
-//                                fileName.endsWith(".txt", true) -> FileType.TXT
-//                                else -> FileType.OTHER
-//                            }
-//                            Log.d("MAX_FILES",MAX_FILES.toString())
-//                            if(Constant.selectedFiles.size < MAX_FILES +1) {
-//                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
-//                            }
-//                            else{
-//                                Constant.Remaining = 0
-//                            }
-//                            Log.d("SelectedFile", "URI: $uri, Type: $type")
-//                            Log.d("FisSelectedFile", Constant.selectedFiles.size.toString())
-//                        }
-//
-//                        mAdapter!!.notifyDataSetChanged()
-//
-//                    }
-//
-//                }
-//            }
 
         binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
         binding.edtDescription.filters =
@@ -394,7 +325,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
-
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
@@ -580,29 +510,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 }
             }
 
-//            CAMERA_IMAGE_REQUEST -> {
-//                cameraImageFilePath?.let { filePath ->
-//                    var file = File(filePath)
-//                    if (file.exists()) {
-//                        if (!file.name.endsWith(".jpg", true)) {
-//                            val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
-//                            if (file.renameTo(newFile)) {
-//                                cameraImageFilePath = newFile.absolutePath
-//                                file = newFile
-//                            }
-//                        }
-//                        val uri = Uri.fromFile(file)
-//                        Constant.Remaining = Constant.Remaining - 1
-//                        addPath(uri)
-//                    } else {
-//                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
-//                            .show()
-//                    }
-//                } ?: run {
-//                    Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
-//                }
-//            }
-
             PICK_DOCUMENT_REQUEST -> {
                 val clipData = data?.clipData
                 val singleUri = data?.data
@@ -625,24 +532,46 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     }
 
     private fun fixImageOrientation(imagePath: String): Bitmap? {
-        val bitmap = BitmapFactory.decodeFile(imagePath)
+        val bitmap = BitmapFactory.decodeFile(imagePath) ?: return null
         val exif = ExifInterface(imagePath)
-        val orientation = exif.getAttributeInt(
-            ExifInterface.TAG_ORIENTATION,
-            ExifInterface.ORIENTATION_NORMAL
-        )
+        val orientation =
+            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
         val matrix = Matrix()
         when (orientation) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.postRotate(90f)
-            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.postRotate(180f)
-            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.postRotate(270f)
-            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.preScale(-1f, 1f)
-            ExifInterface.ORIENTATION_FLIP_VERTICAL -> matrix.preScale(1f, -1f)
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.setScale(-1f, 1f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180f)
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> {
+                matrix.setRotate(180f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_TRANSPOSE -> {
+                matrix.setRotate(90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90f)
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                matrix.setRotate(-90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(-90f)
+            ExifInterface.ORIENTATION_NORMAL -> return bitmap
+            else -> return bitmap
         }
 
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+        return try {
+            val fixedBitmap =
+                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+            bitmap.recycle()  // Free up memory from the original bitmap
+            fixedBitmap
+        } catch (e: OutOfMemoryError) {
+            null
+        }
     }
+
 
 
     private fun getPathFromUri(uri: Uri): String? {
@@ -1051,5 +980,4 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             }
         }
     }
-
 }

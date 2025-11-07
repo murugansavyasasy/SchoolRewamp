@@ -16,7 +16,6 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
-import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.Parent.LSRW.Model.SkillData
 import com.vs.schoolmessenger.Parent.LSRW.Model.lsrwitemclicklistener
 import com.vs.schoolmessenger.R
@@ -70,7 +69,8 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this,matchedChild!!)
-            Constant.isParentMenuName = menu_name!!
+//            Constant.isParentMenuName = menu_name!!
+            Constant.isSelectedMenuName = menu_name!!
         }
 
 
@@ -78,13 +78,14 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
 
         binding.root.post {
-            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.lblHeaderTitle.text = finalName
             binding.lblHeaderTitle.visibility = View.VISIBLE
         }
 
-        Log.d("isParentMenuName", Constant.isParentMenuName)
+//        Log.d("isParentMenuName", Constant.isParentMenuName)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
 
@@ -132,7 +133,8 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
 
         appViewModel.islsrwSkilllist?.observe(this) { response ->
             Constant.hideLoading(this)
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyrecyclerview.visibility = View.VISIBLE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.rlNoDataContainer.visibility = View.GONE
@@ -148,6 +150,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
                 binding.rlNoDataContainer.visibility = View.VISIBLE
                 binding.noDataFound.text = getString(R.string.no_data_found)
             }
+        }
         }
 
     }

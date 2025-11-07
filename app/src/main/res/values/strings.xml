@@ -86,7 +86,7 @@
     <string name="lblSubmit">Submit</string>
     <string name="lblRateus">Rate us</string>
     <string name="lblHowsatisfied">How satisfied are you with the School Chimes?</string>
-    <string name="lblMaybelater">Maybe later</string>
+    <string name="lblMaybelater">Later</string>
     <string name="lblAppinterface">App UI interface</string>
     <string name="lblWatchUI">Watch UI</string>
     <string name="lblPricing">Pricing</string>
@@ -99,8 +99,8 @@
     <string name="lblRegistration">Registration</string>
     <string name="lblOthers">Others</string>
     <string name="lblAnyothersuggestions">Any other suggestions? (optional)</string>
-    <string name="lblThankYou">Thank You.</string>
-    <string name="lblBackhome">Back to home  &lt;&lt;</string>
+    <string name="lblThankYou">Thank You</string>
+    <string name="lblBackhome">Go Back</string>
     <string name="lblEntertheBug">Enter the bug...</string>
     <string name="lblConfirm">Confirm</string>
     <string name="lblThai">Thai</string>
@@ -155,7 +155,7 @@
     <string name="Fathername">Father name</string>
     <string name="Teachername">Teacher name</string>
     <string name="Assignment">Assignment</string>
-    <string name="Catogory">Catogory</string>
+    <string name="Catogory">Category</string>
     <string name="Entertitle">Enter title</string>
     <string name="Enterdescription">Enter description</string>
     <string name="SubmissionDate">Submission Date</string>
@@ -976,6 +976,10 @@
     <string name="quick_status">Quick Status</string>
     <string name="students_attendance_reports">Students Attendance Reports</string>
     <string name="mark_all_as_absent">&#160;Mark all as absent</string>
+    <string name="edit_and_save_attendance"><![CDATA[Edit & Save Attendance]]></string>
+    <string name="enter_title">Enter title</string>
+    <string name="enter_venue">Enter Venue</string>
+    <string name="interaction_with_staff">Interaction with staff</string>
 
 
 </resources>

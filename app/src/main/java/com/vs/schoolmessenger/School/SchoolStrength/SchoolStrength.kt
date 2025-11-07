@@ -51,7 +51,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         isAccessToken = isStaffDetails!!.access_token
 
         binding.AcademicYear.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
@@ -208,9 +208,10 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         binding.summaryStaticscardview.studentCount.text = firstItem.totalStudentStrength
         binding.summaryStaticscardview.staffCount.text = firstItem.totalStaffStrength
 
-        binding.summaryStaticscardview.malestaffCount.text = "male" + " "+ firstItem.totalmalestaffsstrength
-        binding.summaryStaticscardview.femaleStaffcount.text ="female" + " "+  firstItem.totalfemalestaffsstrength
-
+        binding.summaryStaticscardview.malestaffCount.text =
+            "male" + " " + firstItem.totalmalestaffsstrength
+        binding.summaryStaticscardview.femaleStaffcount.text =
+            "female" + " " + firstItem.totalfemalestaffsstrength
 
 
         val malestaffStrength = firstItem.totalmalestaffsstrength.toIntOrNull() ?: 0
@@ -228,7 +229,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
 
         binding.progressBarGender.othersCount.text =
-            "others " + (firstItem.totalOthersStrength)
+            "Unspecified " + (firstItem.totalOthersStrength)
         binding.summaryStaticscardview.totalMale.text = "Staffs " + firstItem.totalStaffStrength
         binding.summaryStaticscardview.totalFemale.text =
             "Students " + firstItem.totalStudentStrength
@@ -241,6 +242,32 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
                 ?: 0) + (firstItem.totalStudentStrength?.toIntOrNull()
                 ?: 0) + (firstItem.totalOthersStrength?.toIntOrNull() ?: 0)).toString()
 
+
+        if (firstItem.previous.message.isNullOrEmpty()) {
+            binding.summaryStaticscardview.growthValue3.text =
+                ((firstItem.previous.total_staff_strength.toIntOrNull()
+                    ?: 0) + (firstItem.previous.total_student_strength.toIntOrNull()
+                    ?: 0)).toString() + " " + "from last year"
+
+            binding.summaryStaticscardview.growthValue1.text =
+                ((firstItem.previous.total_student_strength.toIntOrNull()
+                    ?: 0)).toString() + " " + "from last year"
+
+
+            binding.summaryStaticscardview.growthValue2.text =
+                ((firstItem.previous.total_staff_strength.toIntOrNull()
+                    ?: 0)).toString() + " " + "from last year"
+
+        } else {
+            binding.summaryStaticscardview.growthValue3.text = firstItem.previous.message
+            binding.summaryStaticscardview.arrowUp.visibility = View.GONE
+            binding.summaryStaticscardview.arrowUp1.visibility = View.GONE
+            binding.summaryStaticscardview.arrowUp2.visibility = View.GONE
+            binding.summaryStaticscardview.growthValue1.text = firstItem.previous.message
+
+
+            binding.summaryStaticscardview.growthValue2.text = firstItem.previous.message
+        }
     }
 
 

@@ -5,13 +5,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -50,7 +50,8 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
         binding.btnSendCertificateRequest.setOnClickListener(this)
 
-        binding.headerText3.text=Constant.isParentMenuName
+//        binding.headerText3.text=Constant.isParentMenuName
+        binding.headerText3.text=Constant.isSelectedMenuName
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text  =
@@ -107,11 +108,14 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
             if (binding.rlaSortSearch1.visibility == View.VISIBLE) {
                 binding.rlaSortSearch1.visibility = View.GONE
                 binding.txtSearchMenutext.text.clear()
-
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenutext.windowToken, 0)
 
             } else {
                 binding.rlaSortSearch1.visibility = View.VISIBLE
                 binding.txtSearchMenutext.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenutext.windowToken, 0)
             }
         }
 

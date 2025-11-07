@@ -11,7 +11,6 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionDetail
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AssignmentStudentDetailreportBinding
-import kotlin.toString
 
 class AssignmentStudentListDetail : BaseActivity<AssignmentStudentDetailreportBinding>(),
     View.OnClickListener {
@@ -37,7 +36,7 @@ class AssignmentStudentListDetail : BaseActivity<AssignmentStudentDetailreportBi
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         title = intent.getStringExtra("title") ?: ""

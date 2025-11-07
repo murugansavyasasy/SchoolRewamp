@@ -45,6 +45,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewActivity
 import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Faq
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUsDialog
 import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ChangeLanguage
@@ -100,7 +101,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
         val versionName = pInfo.versionName
         val versionCode = pInfo.longVersionCode
-        binding.lblAppVersion.text = "App Version: $versionName ( $versionCode )"
+        binding.lblAppVersion.text = "App Version - $versionName"
 
 
         if (Constant.checkBiometricSupport(requireActivity())) {
@@ -169,9 +170,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.lnrFeedBack -> {
-                redirectToAppRating(requireActivity())
-                //showInAppReview(requireActivity())
-                //startActivity(Intent(requireActivity(), RateUs::class.java))
+                val dialog = RateUsDialog()
+                dialog.show(parentFragmentManager, "RateUsDialog")
             }
 
             R.id.lnrFaq -> {

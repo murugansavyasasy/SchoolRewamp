@@ -10,6 +10,7 @@
         android:icon="@drawable/gear"/>
     <item android:id="@+id/help_click"
         android:title="Help"
+        android:visible="false"
         android:icon="@drawable/questionmark_circle"/>
     <item android:id="@+id/role_click"
         android:title="Switch Role"

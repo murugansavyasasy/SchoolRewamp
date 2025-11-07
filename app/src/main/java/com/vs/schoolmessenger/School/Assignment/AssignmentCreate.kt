@@ -166,7 +166,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.btnNoticeBoardReport.text=getString(R.string.History)+" "+">>"
 

@@ -75,6 +75,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
     }
+
     val isGroupSelectedIds = mutableListOf<NameAndIds>()
     val isStandardSelectedIds = mutableListOf<Standard>()
     val isSectionSelectedIds = mutableListOf<Section>()
@@ -450,6 +451,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     changeTapBg(Constant.isSection)
 
                 }
+
                 M_ASSIGNMENT -> {
 
                     binding.nomessage.visibility = View.GONE
@@ -459,12 +461,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     //show send and specific student button
                 }
+
                 M_LSRW -> {
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
                     binding.tabLayout.visibility = View.GONE
                     changeTapBg(Constant.isSection)
                 }
+
                 else -> {
 
                     binding.nomessage.visibility = View.GONE
@@ -724,7 +728,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
 
-
     private fun isLoadStandard(isStandard: List<Standard>?) {
         val adapter = StandardDropDownListAdapter(this, isStandard)
         binding.isSpinnerSection.adapter = adapter
@@ -796,6 +799,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isTargetType = Constant.isSchool
                         isCircularType = Constant.school
                         selectedIds.clear()
+                        isTypeOfName="School"
                         isStaffDetails!!.school_id.let {
                             selectedIds.add(it)
                         }
@@ -845,61 +849,133 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
-                    if (isSelectedType == 0) {
-                        if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
-                            if (selectedLevelValue == 0) {
-                                Constant.showValidationAlertPopup("Alert", "Select the level", this)
-                            } else {
-                                showSendConfirmationDialog(
-                                    "", isAcademicYearNote
-                                )
-                            }
-                        } else if (Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU) {
+                //    if (isSelectedType == 0) {
+                        if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU || Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU || Constant.M_LSRW == SELECTED_SCHOOL_MENU) {
                             if (isSubjectId == null) {
-                                Constant.showValidationAlertPopup("Alert", "Select the subject", this)
+                                Constant.showValidationAlertPopup(
+                                    "Alert",
+                                    "Select the subject",
+                                    this
+                                )
                             } else {
-                                showSendConfirmationDialog(
-                                    "", isAcademicYearNote
-                                )
+                                if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
+                                    if (selectedLevelValue == 0) {
+                                        Constant.showValidationAlertPopup(
+                                            "Alert",
+                                            "Select the level",
+                                            this
+                                        )
+                                    } else {
+                                        showSendConfirmationDialog(
+                                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                                R.string._s
+                                            ), isAcademicYearNote
+                                        )
+//                                    showSendConfirmationDialog(
+//                                        "", isAcademicYearNote
+//                                    )
+                                    }
+                                } else {
+                                    showSendConfirmationDialog(
+                                        resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                            R.string._s
+                                        ), isAcademicYearNote
+                                    )
+                                }
+//                                if (selectedLevelValue == 0) {
+//                                    Constant.showValidationAlertPopup(
+//                                        "Alert",
+//                                        "Select the level",
+//                                        this
+//                                    )
+//                                } else {
+//                                    showSendConfirmationDialog(
+//                                        resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+//                                            R.string._s
+//                                        ), isAcademicYearNote
+//                                    )
+////                                    showSendConfirmationDialog(
+////                                        "", isAcademicYearNote
+////                                    )
+//                                }
                             }
-                        } else {
-                            showSendConfirmationDialog(
-                                "", isAcademicYearNote
-                            )
+
                         }
-                    } else {
-
-                        if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
-                            if (selectedLevelValue == 0) {
-                                Constant.showValidationAlertPopup("Alert", "Select the level", this)
-                            } else {
-                                showSendConfirmationDialog(
-                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-                                        R.string._s
-                                    ), isAcademicYearNote
-                                )
-                            }
-                        } else if (Constant.M_HOMEWORK==SELECTED_SCHOOL_MENU){
-                            if (isSubjectId==null){
-                                Constant.showValidationAlertPopup("Alert", "Select the subject", this)
-                            }else{
-                                showSendConfirmationDialog(
-                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-                                        R.string._s
-                                    ), isAcademicYearNote
-                                )
-                            }
-                        }
-
-
+//                        else if (Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU || Constant.M_LSRW == SELECTED_SCHOOL_MENU) {
+//                            if (isSubjectId == null) {
+//                                Constant.showValidationAlertPopup(
+//                                    "Alert",
+//                                    "Select the subject",
+//                                    this
+//                                )
+//                            } else {
+//                                showSendConfirmationDialog(
+//                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+//                                        R.string._s
+//                                    ), isAcademicYearNote
+//                                )
+////                                showSendConfirmationDialog(
+////                                    "", isAcademicYearNote
+////                                )
+//                            }
+//                        }
                         else {
+//                            showSendConfirmationDialog(
+//                                "", isAcademicYearNote
+//                            )
                             showSendConfirmationDialog(
                                 resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
                                     R.string._s
                                 ), isAcademicYearNote
                             )
                         }
-                    }
+                 //   }
+//                    else {
+//
+//                        if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
+//                            if (isSubjectId == null) {
+//                                Constant.showValidationAlertPopup(
+//                                    "Alert",
+//                                    "Select the subject",
+//                                    this
+//                                )
+//                            } else {
+//                                if (selectedLevelValue == 0) {
+//                                    Constant.showValidationAlertPopup(
+//                                        "Alert",
+//                                        "Select the level",
+//                                        this
+//                                    )
+//                                } else {
+//                                    showSendConfirmationDialog(
+//                                        resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+//                                            R.string._s
+//                                        ), isAcademicYearNote
+//                                    )
+//                                }
+//                            }
+//                        } else if (Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU || Constant.M_LSRW == SELECTED_SCHOOL_MENU) {
+//                            if (isSubjectId == null) {
+//                                Constant.showValidationAlertPopup(
+//                                    "Alert",
+//                                    "Select the subject",
+//                                    this
+//                                )
+//                            } else {
+//                                showSendConfirmationDialog(
+//                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+//                                        R.string._s
+//                                    ), isAcademicYearNote
+//                                )
+//                            }
+//                        } else {
+//                            showSendConfirmationDialog(
+//                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+//                                    R.string._s
+//                                ), isAcademicYearNote
+//                            )
+//                        }
+//                    }
                 } else {
                     Constant.showValidationAlertPopup(
                         getString(

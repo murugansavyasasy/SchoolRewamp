@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.Attendance
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.PopupMenu
@@ -58,9 +57,10 @@ class Attendance : BaseActivity<AttendanceBinding>() {
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
 
-        Log.d("Menu_name",Constant.isParentMenuName)
+//        Log.d("Menu_name",Constant.isParentMenuName)
 
-        binding.lblHeaderTitle.setText(Constant.isParentMenuName)
+//        binding.lblHeaderTitle.setText(Constant.isParentMenuName)
+        binding.lblHeaderTitle.setText(Constant.isSelectedMenuName)
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -129,26 +129,33 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         }
 
     }
-
     private fun isLoadStudentStats(data: getStudentStatsData) {
-        binding.lblAttendancePercentage.text = (data.attendance_percentage.toFloatOrNull()?.roundToInt() ?: 0).toString()
-        binding.lblLeaveTakenPercentage.text = data.absent_days.toString()
-        binding.lblOngoingDaysPercentage.text = data.completed_working_days.toString()
-        animateProgress(
-            binding.attendanceProgressBar,
-            data.attendance_percentage.toFloatOrNull()?.roundToInt() ?: 0,
-            100
-        )
-        animateProgress(binding.leaveTakenProgressBar, data.absent_days, 20)
-        animateProgress(
-            binding.ongoingDaysProgressBar,
-            data.completed_working_days,
-            data.total_working_days
-        )
 
+        val attendancePercentage = data.attendance_percentage.toDoubleOrNull() ?: 0.0
+        val absentDays = data.absent_days
+        val completedDays = data.completed_working_days
+        val totalDays = if (data.total_working_days <= 0.0) 1.0 else data.total_working_days
+        val ongoingPercentage = ((completedDays / totalDays) * 100).roundToInt().coerceIn(0, 100)
+
+
+        // Show text values
+        binding.lblAttendancePercentage.text = attendancePercentage.roundToInt().toString()
+        binding.lblLeaveTakenPercentage.text = absentDays.toString()
+        binding.lblOngoingDaysPercentage.text =ongoingPercentage.toString()
+
+
+        // Animate progress bars
+        animateProgress(binding.attendanceProgressBar, attendancePercentage, 100.0)
+        animateProgress(binding.leaveTakenProgressBar, absentDays, totalDays)
+        animateProgress(binding.ongoingDaysProgressBar, completedDays, totalDays)
+
+        // Weekly attendance list
         val attList = data.weekly_status.att_list
-
-        val days = listOf(Constant.M, Constant.allPresent, Constant.W, Constant.allPresent, Constant.fullDay, Constant.section,Constant.section)
+        val days = listOf(
+            Constant.M, Constant.allPresent, Constant.W,
+            Constant.allPresent, Constant.fullDay,
+            Constant.section, Constant.section
+        )
 
         if (attList.isNotEmpty()) {
             binding.rcWeekStatus.visibility = View.VISIBLE
@@ -156,6 +163,7 @@ class Attendance : BaseActivity<AttendanceBinding>() {
             val weekList = days.mapIndexed { index, day ->
                 GetWeekStatusData(day, attList.getOrElse(index) { "" })
             }
+
             binding.rcWeekStatus.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.rcWeekStatus.adapter = WeekStatusAdapter(weekList)
@@ -164,29 +172,31 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         }
     }
 
-
     fun animateProgress(
         progressBar: ProgressBar,
-        current: Int,
-        max: Int,
+        current: Double,
+        max: Double,
         duration: Long = 1000
     ) {
-        val safeMax = if (max <= 0) 1 else max           // Avoid divide by zero
-        val safeCurrent = current.coerceIn(0, safeMax)   // Clamp current within valid range
+        val safeMax = if (max <= 0.0) 1.0 else max
+        val safeCurrent = current.coerceIn(0.0, safeMax)
 
-        val percentage = ((safeCurrent.toFloat() / safeMax) * 100).toInt()
+        val percentage = ((safeCurrent / safeMax) * 100).toInt()
 
         progressBar.max = 100
         val animator = ObjectAnimator.ofInt(
             progressBar,
             Constant.progress,
-            progressBar.progress,   // start from current progress, not always 0
-            percentage              // animate to target percentage
+            progressBar.progress,
+            percentage
         )
         animator.duration = duration
         animator.interpolator = DecelerateInterpolator()
         animator.start()
     }
+
+
+
 
     private fun loadStudentStats() {
         appViewModel!!.isStudentStats(isAccessToken!!)

@@ -120,7 +120,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)

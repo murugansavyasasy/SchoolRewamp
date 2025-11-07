@@ -94,7 +94,7 @@ class CertificateRequestAdapter(
 
 
 
-            lblDate.text = Constant.convertDateTimeFormat(data.requested_on)
+            lblDate.text = Constant.convertDateTimeFormat2(data.requested_on)
 
             rytCertificate.setOnClickListener {
 

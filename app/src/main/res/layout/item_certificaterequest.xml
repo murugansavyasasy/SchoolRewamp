@@ -8,8 +8,7 @@
     <RelativeLayout
         android:id="@+id/rytCertificate"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/one_thirty"
-        android:background="@color/light_green_4"
+        android:layout_height="wrap_content"
         android:padding="@dimen/ten">
 
         <ImageView
@@ -27,7 +26,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
+            android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/five"
             android:layout_toEndOf="@+id/imgCalender"
             android:textSize="@dimen/thirteen_sp"
@@ -38,12 +37,14 @@
         <TextView
             android:id="@+id/lblCertificateTitle"
             style="@style/CustomTextStylePoppinsMedium1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgCalender"
             android:layout_marginStart="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
             android:layout_marginTop="@dimen/ten"
             android:maxLines="1"
+            android:ellipsize="end"
             android:text="Study Certificate"
             android:textSize="@dimen/fifteen_sp">
 
@@ -60,6 +61,7 @@
             android:layout_marginBottom="@dimen/ten"
             android:layout_toStartOf="@+id/imgNext"
             android:maxLines="1"
+            android:ellipsize="end"
             android:visibility="gone"
             android:text="Study Certificate"
             android:textColor="@color/black"
@@ -69,8 +71,8 @@
 
         <ImageView
             android:id="@+id/imgNext"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
             android:layout_below="@+id/lblCertificateTitle"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="@dimen/ten"

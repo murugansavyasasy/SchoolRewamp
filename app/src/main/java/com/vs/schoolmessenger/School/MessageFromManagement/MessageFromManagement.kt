@@ -10,8 +10,6 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
@@ -21,13 +19,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,18 +31,15 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentFilePathAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.AttachmentMediaAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Adapter.MessageFromStaffAdapter
 import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.RoundedBackgroundSpan
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.MessageFromManagementBinding
@@ -118,7 +111,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
             val matchedChild = userDetails?.staff_details?.find { it.staff_id == receiverId }
             SharedPreference.putStaffDetails(this,matchedChild!!)
-            Constant.isSchoolMenuName = menu_name!!
+            Constant.isSelectedMenuName = menu_name!!
         }
 
 
@@ -147,7 +140,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             }
         }
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         isMenuCount = Constant.isSchoolMenuCount
 
         appViewModel?.isGetMessageStaff?.observe(this) { response ->

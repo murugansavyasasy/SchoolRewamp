@@ -91,7 +91,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
@@ -428,8 +428,13 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         binding.btnHistory.background = null
         binding.lblNoRecords.visibility = View.GONE
         binding.imgNorecord.visibility = View.GONE
-        binding.lnrParent.setBackgroundResource(R.drawable.bg_light_blue)
-        btnClick.setBackgroundResource(R.drawable.white_bg_radius)
+
+        binding.lnrParent.setBackgroundResource(R.drawable.gray_bg_radius)
+        btnClick.setBackgroundResource(R.drawable.bg_primary)
+
+        binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.black))
+        btnClick.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         if (btnClick == binding.btnCreate) {
             binding.rytMarkAttendanceSceen.visibility = View.VISIBLE
@@ -441,6 +446,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             binding.rytAttendanceHistorySceen.visibility = View.VISIBLE
         }
     }
+
 
     private fun authenticatStart() {
         val biometricManager = BiometricManager.from(this)

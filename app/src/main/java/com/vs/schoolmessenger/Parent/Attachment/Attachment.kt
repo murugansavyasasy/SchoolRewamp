@@ -20,11 +20,9 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
-import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Attachment.AttachmentReportAdapter
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.School.Attachment.OnAttachmentReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
@@ -74,8 +72,9 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
-            Constant.isParentMenuName = menu_name!!
+            SharedPreference.putChildDetails(this, matchedChild!!)
+//            Constant.isParentMenuName = menu_name!!
+            Constant.isSelectedMenuName = menu_name!!
         }
 
 
@@ -89,12 +88,14 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.imgFilter.setOnClickListener(this)
         binding.lblArchiveMsg.setOnClickListener(this)
         binding.root.post {
-            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName =
+                Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.lblHeaderTitle.text = finalName
             binding.lblHeaderTitle.visibility = View.VISIBLE
         }
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
                 binding.txtSearchMenu1.setText("")
@@ -108,7 +109,8 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             }
         }
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
         binding.linearlayout1.visibility = View.VISIBLE
@@ -129,6 +131,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -147,37 +150,36 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         appViewModel?.isAttachmentResponseArchive?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
-                    if(response.data.isNotEmpty()){
+                    if (response.data.isNotEmpty()) {
                         mAttachmentReportAdapter!!.AppendData(response.data)
                         binding.txtSearchMenu1.text.clear()
-                        binding.isArchiveErrorMsg.visibility=View.GONE
+                        binding.isArchiveErrorMsg.visibility = View.GONE
                         binding.recycleracademic.visibility = View.VISIBLE
                         binding.nomessage.visibility = View.GONE
                         binding.txtNoData.visibility = View.GONE
 
-                        if(mAttachmentReportAdapter!!.getCurrentListSize()>0){
+                        if (mAttachmentReportAdapter!!.getCurrentListSize() > 0) {
 //                            binding.rytSearch1.visibility = View.GONE
-                            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                             binding.txtSearchMenu1.text.clear()
-                        }
-                        else{
+                        } else {
                             binding.rytSearch1.visibility = View.GONE
-                            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                             binding.txtSearchMenu1.text.clear()
                         }
 
-                    }
-                    else{
-                        binding.isArchiveErrorMsg.visibility=View.VISIBLE
-                        binding.isArchiveErrorMsg.text=response.message
-                        if(mAttachmentReportAdapter!!.getCurrentListSize()==0){
-                            binding.txtNoData.visibility=View.GONE
+                    } else {
+                        binding.isArchiveErrorMsg.visibility = View.VISIBLE
+                        binding.isArchiveErrorMsg.text = response.message
+                        if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
+                            binding.txtNoData.visibility = View.GONE
                             binding.rytSearch1.visibility = View.GONE
-                            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                             binding.txtSearchMenu1.text.clear()
-                        }else{
+                        } else {
                             // Set top margin to 15dp dynamically
-                            val layoutParams = binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
+                            val layoutParams =
+                                binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
                             val topMarginInDp = TypedValue.applyDimension(
                                 TypedValue.COMPLEX_UNIT_DIP,
                                 15f,
@@ -185,21 +187,21 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                             ).toInt()
                             layoutParams.topMargin = topMarginInDp
                             binding.isArchiveErrorMsg.layoutParams = layoutParams
-                            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                         }
                     }
-                }
-                else {
-                    binding.isArchiveErrorMsg.visibility=View.VISIBLE
-                    binding.isArchiveErrorMsg.text=response.message
-                    if(mAttachmentReportAdapter!!.getCurrentListSize()==0){
-                        binding.txtNoData.visibility=View.GONE
+                } else {
+                    binding.isArchiveErrorMsg.visibility = View.VISIBLE
+                    binding.isArchiveErrorMsg.text = response.message
+                    if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
+                        binding.txtNoData.visibility = View.GONE
                         binding.rytSearch1.visibility = View.GONE
-                        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                         binding.txtSearchMenu1.text.clear()
-                    }else{
+                    } else {
                         // Set top margin to 15dp dynamically
-                        val layoutParams = binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
+                        val layoutParams =
+                            binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
                         val topMarginInDp = TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,
                             15f,
@@ -207,19 +209,20 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                         ).toInt()
                         layoutParams.topMargin = topMarginInDp
                         binding.isArchiveErrorMsg.layoutParams = layoutParams
-                        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     }
                 }
             } else {
-                binding.isArchiveErrorMsg.visibility=View.VISIBLE
-                binding.isArchiveErrorMsg.text=getString(R.string.something_went_wrong_please_try_again_later)
-                if(mAttachmentReportAdapter!!.getCurrentListSize()==0){
-                    binding.txtNoData.visibility=View.GONE
+                binding.isArchiveErrorMsg.visibility = View.VISIBLE
+                binding.isArchiveErrorMsg.text =
+                    getString(R.string.something_went_wrong_please_try_again_later)
+                if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
+                    binding.txtNoData.visibility = View.GONE
                     binding.rytSearch1.visibility = View.GONE
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.txtSearchMenu1.text.clear()
-                }else{
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 }
             }
         }
@@ -232,13 +235,13 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     addProperty(APIKeyNames.mobile_number, mobileNumber)
                     addProperty(APIKeyNames.activity, Constant.add_points_view_attachments)
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
-                    addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
+                    addProperty(APIKeyNames.menu_id, Constant.SELECTED_SCHOOL_MENU)
                 }
                 appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
 
                 binding.txtNoData.visibility = View.GONE
                 binding.nomessage.visibility = View.GONE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.recycleracademic.visibility = View.VISIBLE
                 isLoadData(response.data)
                 Log.d("Message Id Value Indication", msg_id.toString())
@@ -246,7 +249,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     scrollToMessageId(headerId)
                 }
             } else {
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 showEmptyState(response?.message ?: getString(R.string.no_data_found))
             }
         }
@@ -314,7 +317,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
 
-
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
@@ -333,11 +335,10 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun onClick(v: View?) {
         when (v?.id) {
-
-            R.id.lblArchiveMsg->{
+            R.id.lblArchiveMsg -> {
                 binding.txtSearchMenu1.text.clear()
                 isGetAttachmentArchive()
-                binding.lblArchiveMsg.visibility=View.GONE
+                binding.lblArchiveMsg.visibility = View.GONE
             }
         }
     }
@@ -368,10 +369,9 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             addProperty(APIKeyNames.detail_id, isData[isPosition].id)
         }
 
-        if (isData[isPosition].is_archive){
+        if (isData[isPosition].is_archive) {
             appViewModel?.isUpdateStatusArchive(isAccessToken!!, jsonObject, this)
-        }
-        else{
+        } else {
             appViewModel?.isUpdateStatusCommunication(isAccessToken!!, jsonObject, this)
 
         }
@@ -379,15 +379,16 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun onFilterEmpty(showNoData: Boolean) {
         if (showNoData) {
-            Log.d("NoDta","No data")
+            Log.d("NoDta", "No data")
             binding.recycleracademic.visibility = View.GONE
-            binding.nomessage.visibility=View.VISIBLE
-            binding.txtNoData.visibility=View.VISIBLE
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No data found"
         } else {
-            Log.d("NoDta","data")
+            Log.d("NoDta", "data")
             binding.recycleracademic.visibility = View.VISIBLE
-            binding.nomessage.visibility=View.GONE
-            binding.txtNoData.visibility=View.GONE
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
         }
     }
 }

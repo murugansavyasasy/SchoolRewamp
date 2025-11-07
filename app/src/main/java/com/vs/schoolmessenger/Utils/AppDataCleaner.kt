@@ -1,7 +1,9 @@
 package com.vs.schoolmessenger.Utils
 
 import android.content.Context
+import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import com.google.android.gms.common.wrappers.Wrappers.packageManager
 import java.io.File
@@ -13,13 +15,7 @@ object AppDataCleaner {
         val prefs = context.getSharedPreferences("migration_prefs", Context.MODE_PRIVATE)
         val savedVersion = prefs.getInt("last_version", -1)
         Log.d("savedVersion",savedVersion.toString())
-        val packageInfo = packageManager(context).getPackageInfo("com.vs.schoolmessenger.SchoolChimesRewamp", 0)
-        val currentVersion = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            packageInfo.longVersionCode.toInt()
-        } else {
-            packageInfo.versionCode
-        }
-
+        val currentVersion = 10
         Log.d("currentVersion",currentVersion.toString())
 
        return if (savedVersion < currentVersion) {
@@ -48,20 +44,43 @@ object AppDataCleaner {
 
            //5. if folder created
 
-           val downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-
-           val myFolder = File(downloads, "SchoolChimes")
-           if (myFolder.exists()) {
-               Log.d("File Exist","exist")
-               deleteDir(myFolder)
+           val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+               // Android 11+ Scoped Storage
+               try {
+                   val uri = MediaStore.Downloads.EXTERNAL_CONTENT_URI
+                   val selection = "${MediaStore.Downloads.RELATIVE_PATH} LIKE ?"
+                   val selectionArgs = arrayOf("%Download/School%") // Match all folders starting with 'School'
+                   val rows = context.contentResolver.delete(uri, selection, selectionArgs)
+                   Log.d("DOWNLOAD_CLEANER", "Deleted $rows files via MediaStore")
+               } catch (e: Exception) {
+                   Log.e("DOWNLOAD_CLEANER", "Error deleting via MediaStore: ${e.message}")
+               }
+           } else {
+               // Android 10 and below
+               try {
+                   downloadsDir.listFiles()?.forEach { file ->
+                       if (file.isDirectory && file.name.startsWith("School")) {
+                           file.deleteRecursively()
+                           Log.d("DOWNLOAD_CLEANER", "Deleted folder: ${file.name}")
+                       }
+                   }
+               } catch (e: Exception) {
+                   Log.e("DOWNLOAD_CLEANER", "Error clearing old folders: ${e.message}")
+               }
            }
 
-
-           // (Optional) clear specific external dirs like Downloads, Pictures
-            val externalStorage = Environment.getExternalStorageDirectory()
-//            val appFolder = File(externalStorage, "Android/data/${context.packageName}")
-            val appFolder = File(externalStorage, "Android/data/com.vs.schoolmessenger.SchoolChimesRewamp")
-            deleteDir(appFolder)
+//           val myFolder = File(downloadsDir, "SchoolChimes")
+//           if (myFolder.exists()) {
+//               Log.d("File Exist","exist")
+//               deleteDir(myFolder)
+//           }
+//
+//           // (Optional) clear specific external dirs like Downloads, Pictures
+//            val externalStorage = Environment.getExternalStorageDirectory()
+////            val appFolder = File(externalStorage, "Android/data/${context.packageName}")
+//            val appFolder = File(externalStorage, "Android/data/com.vs.schoolmessenger.SchoolChimesRewamp")
+//            deleteDir(appFolder)
 
             // 5. Save new version to avoid running again
             prefs.edit().putInt("last_version", currentVersion).apply()

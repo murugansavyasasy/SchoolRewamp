@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.PTM.Activity
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
@@ -51,7 +50,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
 
-        binding.lblMenuName.text = Constant.isSchoolMenuName
+        binding.lblMenuName.text = Constant.isSelectedMenuName
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token

@@ -191,6 +191,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:hint="@string/enter_title"
                             android:paddingHorizontal="@dimen/ten"
                             android:background="@android:color/transparent"
                             android:singleLine="true">
@@ -263,7 +264,7 @@
                             android:focusable="true"
                             android:focusableInTouchMode="true"
                             android:gravity="start"
-                            android:hint="@string/Description"
+                            android:hint="@string/Enterdescription"
                             android:padding="@dimen/ten">
 
                         </EditText>

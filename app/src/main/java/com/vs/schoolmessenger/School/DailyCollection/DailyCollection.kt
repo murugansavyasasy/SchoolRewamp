@@ -53,7 +53,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.linearLayout3.setOnClickListener(this)
         binding.linearLayout5.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
@@ -62,10 +62,10 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
         val currentDate = dateFormat.format(calendar.time)
         to_Date = currentDate
-        binding.fromDate3.text = Constant.convertToReadableDate(currentDate)
+        binding.fromDate3.text = Constant.convertToReadableDate1(currentDate)
 
         from_Date = currentDate
-        binding.fromDate2.text = Constant.convertToReadableDate(currentDate)
+        binding.fromDate2.text = Constant.convertToReadableDate1(currentDate)
 
 
         // Convert currentDate string into millis
@@ -220,29 +220,37 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
             R.id.class_name -> {
                 selectedType = Constant.two
-                binding.className.setBackgroundResource(R.drawable.white_radious)
-                binding.className.setTextColor(Color.BLACK)
-                binding.modeName.setBackgroundResource(R.drawable.bg_light_blue)
-                binding.categoryName.setBackgroundResource(R.drawable.bg_light_blue)
+                binding.className.setBackgroundResource(R.drawable.bg_primary)
+                binding.className.setTextColor(Color.WHITE)
+                binding.modeName.setTextColor(Color.BLACK)
+                binding.categoryName.setTextColor(Color.BLACK)
+                binding.modeName.setBackgroundResource(R.drawable.gray_bg_radius)
+                binding.categoryName.setBackgroundResource(R.drawable.gray_bg_radius)
 
                 isGetDailyCollection()
             }
 
             R.id.mode_name -> {
                 selectedType = Constant.three
-                binding.modeName.setBackgroundResource(R.drawable.white_radious)
-                binding.modeName.setTextColor(Color.BLACK)
-                binding.className.setBackgroundResource(R.drawable.bg_light_blue)
-                binding.categoryName.setBackgroundResource(R.drawable.bg_light_blue)
+                binding.modeName.setBackgroundResource(R.drawable.bg_primary)
+                binding.modeName.setTextColor(Color.WHITE)
+                binding.className.setTextColor(Color.BLACK)
+                binding.categoryName.setTextColor(Color.BLACK)
+
+                binding.className.setBackgroundResource(R.drawable.gray_bg_radius)
+                binding.categoryName.setBackgroundResource(R.drawable.gray_bg_radius)
                 isGetDailyCollection()
             }
 
             R.id.category_name -> {
                 selectedType = Constant.one
-                binding.categoryName.setBackgroundResource(R.drawable.white_radious)
-                binding.categoryName.setTextColor(Color.BLACK)
-                binding.modeName.setBackgroundResource(R.drawable.bg_light_blue)
-                binding.className.setBackgroundResource(R.drawable.bg_light_blue)
+                binding.categoryName.setBackgroundResource(R.drawable.bg_primary)
+                binding.categoryName.setTextColor(Color.WHITE)
+                binding.modeName.setTextColor(Color.BLACK)
+                binding.className.setTextColor(Color.BLACK)
+
+                binding.modeName.setBackgroundResource(R.drawable.gray_bg_radius)
+                binding.className.setBackgroundResource(R.drawable.gray_bg_radius)
                 isGetDailyCollection()
             }
 
@@ -252,7 +260,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                     this,
                     this,
                     isFromDate = true,
-                    fromDateMillis = fromDateMillis
+                    fromDateMillis = fromDateMillis,
+                    preSelectedDate = from_Date
                 )
             }
 
@@ -262,9 +271,31 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                     this,
                     this,
                     isFromDate = false,
-                    fromDateMillis = fromDateMillis
+                    fromDateMillis = fromDateMillis,
+                    preSelectedDate = to_Date
                 )
             }
+
+
+//            R.id.linear_layout3 -> {
+//                selectedDateTarget = R.id.linear_layout3
+//                dailycollectionshowDatePickerDialog(
+//                    this,
+//                    this,
+//                    isFromDate = true,
+//                    fromDateMillis = fromDateMillis
+//                )
+//            }
+//
+//            R.id.linear_layout5 -> {
+//                selectedDateTarget = R.id.linear_layout5
+//                dailycollectionshowDatePickerDialog(
+//                    this,
+//                    this,
+//                    isFromDate = false,
+//                    fromDateMillis = fromDateMillis
+//                )
+//            }
 
         }
     }
@@ -272,7 +303,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     override fun onDateSelected(date: String) {
         when (selectedDateTarget) {
             R.id.linear_layout3 -> {
-                binding.fromDate2.text = Constant.convertToReadableDate(date)
+                binding.fromDate2.text = Constant.convertToReadableDate1(date)
                 from_Date = date
 
                 // update fromDateMillis
@@ -281,7 +312,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             }
 
             R.id.linear_layout5 -> {
-                binding.fromDate3.text = Constant.convertToReadableDate(date)
+                binding.fromDate3.text = Constant.convertToReadableDate1(date)
                 to_Date = date
             }
         }

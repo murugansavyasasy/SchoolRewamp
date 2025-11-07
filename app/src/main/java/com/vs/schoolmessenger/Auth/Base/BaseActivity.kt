@@ -749,9 +749,22 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         context: Context,
         listener: OnDateSelectedListener,
         isFromDate: Boolean,
-        fromDateMillis: Long
+        fromDateMillis: Long,
+        preSelectedDate: String? = null // 👈 add optional pre-selected date
     ) {
         val calendar = Calendar.getInstance()
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+        // ✅ If a pre-selected date is provided, open the picker with that date
+        if (!preSelectedDate.isNullOrEmpty()) {
+            try {
+                val parsedDate = sdf.parse(preSelectedDate)
+                if (parsedDate != null) calendar.time = parsedDate
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -761,20 +774,20 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             { _, selectedYear, selectedMonth, selectedDay ->
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(cal.time)
                 listener.onDateSelected(formattedDate)
             },
             year, month, day
         )
 
-        // 🚫 If TO-DATE picker open, don’t allow dates before FROM-DATE
+        // 🚫 Restrict TO-DATE picker’s minimum date
         if (!isFromDate) {
             datePickerDialog.datePicker.minDate = fromDateMillis
         }
 
         datePickerDialog.show()
     }
+
 
 
 

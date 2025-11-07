@@ -162,22 +162,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         }
 
 
-//        appViewModel!!.isLeaveRequest?.observe(this) { response ->
-//            if (response != null) {
-//                if (response.status) {
-//                    Constant.hideLoading(this@LeaveRequest)
-//                    Constant.showDataValidation(
-//                        resources.getString(R.string.success), response.message, this
-//                    )
-//                } else {
-//                    Constant.showDataValidation(
-//                        resources.getString(R.string.fail), response.message, this
-//                    )
-//                }
-//            }
-//        }
-
-
         appViewModel!!.isleaverequestdelete?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {

@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Auth.Introduction.Introduction
 import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -38,6 +40,10 @@ class HolidaysFragment : Fragment(), View.OnClickListener {
         userDetails = SharedPreference.getUserDetails(requireActivity())
         isStaffDetails = SharedPreference.getStaffDetails(requireActivity())
 
+        binding.lblCreateNoticeBoard.setOnClickListener{
+            val intent = Intent(requireActivity(), Introduction::class.java)
+            startActivity(intent)
+        }
 
         if (Constant.isParentChoose){
             val isChildDetails = SharedPreference.getChildDetails(requireActivity())

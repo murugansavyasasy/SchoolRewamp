@@ -19,6 +19,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="lightyellow_color">#f6e7ad</color>
     <color name="black">#FF000000</color>
+    <color name="lightgray">#D3D3D3</color>
     <color name="black_2">#000000</color>
     <color name="light_gray_4">#444</color>
     <color name="light_gray_5">#666666</color>
@@ -169,6 +170,7 @@
     <color name="light_green1">#cdffab</color>
     <color name="light_green2">#ccf4e6</color>
     <color name="light_green_4">#c8ead1</color>
+    <color name="light_gray_3_">#e5e4e9</color>
     <color name="light_green3">#204e5e</color>
     <color name="light_pink">#ffd6f2</color>
     <color name="light_pink2">#C5ADBD</color>
