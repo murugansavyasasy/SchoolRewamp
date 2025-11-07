@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CustomCheckbox" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="CustomCheckbox1" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:button">@drawable/custom_checkbox</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
