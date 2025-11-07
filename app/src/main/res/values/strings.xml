@@ -720,7 +720,7 @@
     <string name="select_all_as_present">Select All as Present</string>
     <string name="quiz">Quiz</string>
     <string name="no_of_question">No of question</string>
-    <string name="check_the_box_to_continue_next_level">Check the box to continue next level</string>
+    <string name="check_the_box_to_continue_next_level">&#160;Check the box to continue next level</string>
     <string name="submit_report">Submit Report</string>
     <string name="question">Question</string>
     <string name="enter_question_here">Enter Question here</string>
@@ -980,6 +980,7 @@
     <string name="enter_title">Enter title</string>
     <string name="enter_venue">Enter Venue</string>
     <string name="interaction_with_staff">Interaction with staff</string>
+    <string name="please_select_at_least_one_question_from_question_bank">Please select at least one question from Question Bank</string>
 
 
 </resources>

@@ -83,6 +83,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
     private var itemList: MutableList<GetQuizQuestionReportData> = mutableListOf()
     private var quizAdapter: AddQuestionAdapter? = null
+    private var isDialogShowing = false
+
     private var clickedPosition: Int = RecyclerView.NO_POSITION
 
     var isAttachmentAdapterPosition = 0
@@ -217,6 +219,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         }
 
         appViewModel?.isGetPickFromQBank?.observe(this) { response ->
+            binding.lblImportQuestion.isEnabled=true//now enable after api call
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this)
@@ -230,7 +233,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                         this, getString(R.string.alert), response.message
                     )
                 }
-            } else {
+            }
+            else {
                 Constant.hideLoading(this)
                 pickQBankList= emptyList()
                 Constant.showErrorAlert(
@@ -384,7 +388,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     fun showResumeListDialog(
         activity: Activity, pickFomQbank: List<GetPickFromQBankData>
     ) {
-        if (activity.isFinishing || activity.isDestroyed) return
+        if (isDialogShowing||activity.isFinishing || activity.isDestroyed) return
+        isDialogShowing = true//This is to ensure next time if it is clicked multiple times it will not open the dialog more than one time
 
         val dialogView =
             LayoutInflater.from(activity).inflate(R.layout.pick_question_from_qbank, null)
@@ -427,36 +432,63 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
 
         cbSelect.setOnCheckedChangeListener { _, isChecked ->
+//            if (isChecked) {
+//                val allQuestions = adapter2.getAllNotImported()
+//                val totalToSelect = allQuestions.size
+//
+//                if (totalToSelect <= Constant.isQuestionLimit) {
+//                    // Within limit → mark all as imported
+////                    Constant.isQuestionLimit -= totalToSelect
+//                    adapter2.markAsImported(allQuestions)
+//
+//                    cbSelect.isChecked = true
+//
+//                } else {
+//
+//                    // Over limit → error
+//                    Constant.showErrorAlert(
+//                        this, getString(R.string.alert), getString(R.string.question_limit_reached)
+//                    )
+//                    cbSelect.isChecked = false
+//                }
+//
+//                adapter2.notifySelectionChanged()
+//            } else {
+//                adapter2.clearSelections()
+//                adapter2.notifySelectionChanged()
+//            }
+
             if (isChecked) {
                 val allQuestions = adapter2.getAllNotImported()
                 val totalToSelect = allQuestions.size
 
                 if (totalToSelect <= Constant.isQuestionLimit) {
-                    // Within limit → mark all as imported
-//                    Constant.isQuestionLimit -= totalToSelect
-                    adapter2.markAsImported(allQuestions)
-
-                    cbSelect.isChecked = true
-
+                    //  only temporary selection, not permanent
+                    adapter2.selectAll(true)
                 } else {
-
-                    // Over limit → error
                     Constant.showErrorAlert(
                         this, getString(R.string.alert), getString(R.string.question_limit_reached)
                     )
                     cbSelect.isChecked = false
                 }
-
-                adapter2.notifySelectionChanged()
             } else {
-                adapter2.clearSelections()
-                adapter2.notifySelectionChanged()
+                //  clear only temporary selections
+                adapter2.selectAll(false)
             }
+            adapter2.notifySelectionChanged()
         }
 
         recyclerView.adapter = adapter2
 
         lblImportQuestion.setOnClickListener {
+
+            //Prevent import if no question is selected
+            if (!adapter2.hasAnySelected()) {
+                Toast.makeText(this,
+                    getString(R.string.please_select_at_least_one_question_from_question_bank), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val selectedQuestions = adapter2.getSelected()
             val selectedIds = selectedQuestions.map { it.id }.toSet()
 
@@ -519,6 +551,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 UpdateQuestionCount()
 
                 alertDialog.dismiss()
+                isDialogShowing = false
+
             } else {
                 // not enough slots; do nothing (no removals), just show error
                 Constant.showErrorAlert(
@@ -529,7 +563,15 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
 
         lblClose.setOnClickListener {
+            // revert to permanent state
+            adapter2.resetTemporarySelections()
+
+            // update the "Select All" checkbox based on real imported items
+            cbSelect.isChecked = adapter2.isAllImported()
+
             alertDialog.dismiss()
+            isDialogShowing = false
+
         }
 
 
@@ -872,6 +914,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     Constant.showLoading(this)
                     isFetchFromQuestionBank()
                     isFirstClick = false
+                    binding.lblImportQuestion.isEnabled=false //to avoid clicking multiple times i have disabled the button to api call
+
                 } else {
                     if (pickQBankList.isEmpty()){
                         Log.d("isEmpty","isEmpty")

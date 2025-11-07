@@ -23,7 +23,6 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
 
     private var isRatingValue = 0
     private var isRatingData: List<GetRatingData> = ArrayList()
-    private var inPutRatingContent: ArrayList<String> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

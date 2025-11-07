@@ -219,21 +219,8 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 }
             }
 
-        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.edtDescription.filters =
-            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(
-            this,
-            binding.edtDescription,
-            Constant.isDescriptionLength,
-            binding.lblTextCount
-        )
-        Constant.editTextCounter(
-            this,
-            binding.edtTitle,
-            Constant.isTitleLength,
-            binding.lblTitleTextCount
-        )
+
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
