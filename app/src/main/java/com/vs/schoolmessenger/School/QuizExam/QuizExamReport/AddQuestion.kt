@@ -83,6 +83,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
     private var itemList: MutableList<GetQuizQuestionReportData> = mutableListOf()
     private var quizAdapter: AddQuestionAdapter? = null
+    private var isDialogShowing = false
+
     private var clickedPosition: Int = RecyclerView.NO_POSITION
 
     var isAttachmentAdapterPosition = 0
@@ -217,6 +219,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         }
 
         appViewModel?.isGetPickFromQBank?.observe(this) { response ->
+            binding.lblImportQuestion.isEnabled=true//now enable after api call
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this)
@@ -230,7 +233,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                         this, getString(R.string.alert), response.message
                     )
                 }
-            } else {
+            }
+            else {
                 Constant.hideLoading(this)
                 pickQBankList= emptyList()
                 Constant.showErrorAlert(
@@ -384,7 +388,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     fun showResumeListDialog(
         activity: Activity, pickFomQbank: List<GetPickFromQBankData>
     ) {
-        if (activity.isFinishing || activity.isDestroyed) return
+        if (isDialogShowing||activity.isFinishing || activity.isDestroyed) return
+        isDialogShowing = true//This is to ensure next time if it is clicked multiple times it will not open the dialog more than one time
 
         val dialogView =
             LayoutInflater.from(activity).inflate(R.layout.pick_question_from_qbank, null)
@@ -546,6 +551,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 UpdateQuestionCount()
 
                 alertDialog.dismiss()
+                isDialogShowing = false
+
             } else {
                 // not enough slots; do nothing (no removals), just show error
                 Constant.showErrorAlert(
@@ -563,6 +570,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             cbSelect.isChecked = adapter2.isAllImported()
 
             alertDialog.dismiss()
+            isDialogShowing = false
+
         }
 
 
@@ -905,6 +914,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     Constant.showLoading(this)
                     isFetchFromQuestionBank()
                     isFirstClick = false
+                    binding.lblImportQuestion.isEnabled=false //to avoid clicking multiple times i have disabled the button to api call
+
                 } else {
                     if (pickQBankList.isEmpty()){
                         Log.d("isEmpty","isEmpty")
