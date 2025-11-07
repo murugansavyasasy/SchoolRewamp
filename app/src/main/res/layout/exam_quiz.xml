@@ -289,19 +289,34 @@
 
             </EditText>
 
-            <RadioButton
-                android:id="@+id/rbNextLvl"
+            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                style="@style/CustomCheckbox"
+                android:id="@+id/rbNextLvl"
+                android:focusable="true"
+                android:gravity="center"
                 android:layout_below="@+id/edtQuestion"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/five"
-                android:buttonTint="@color/radio_button_colour"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="@string/check_the_box_to_continue_next_level">
-            </RadioButton>
+                android:text="@string/check_the_box_to_continue_next_level"
+               />
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/rbNextLvl"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/edtQuestion"-->
+<!--                android:layout_marginStart="@dimen/fifteen"-->
+<!--                android:layout_marginTop="@dimen/five"-->
+<!--                android:buttonTint="@color/radio_button_colour"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/check_the_box_to_continue_next_level">-->
+<!--            </RadioButton>-->
 
 
             <TextView

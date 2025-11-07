@@ -40,6 +40,8 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+        binding.termsCheckbox.buttonTintList=null
+
 
         Log.d("CountryScreen", "onCreate triggered")
 
@@ -55,6 +57,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         binding.termsCheckbox.setOnCheckedChangeListener { _, isChecked ->
             isAgree = isChecked
         }
+
 
         isCountry()
 

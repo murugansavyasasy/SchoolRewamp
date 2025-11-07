@@ -130,6 +130,12 @@ class PickQuestionAdapter(
     }
 
 
+    fun hasAnySelected(): Boolean {
+        return itemList?.any { tempSelection[it.id] == true || it.checked } == true
+    }
+
+
+
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val cbQuestion: CheckBox = itemView.findViewById(R.id.cbQuestion)

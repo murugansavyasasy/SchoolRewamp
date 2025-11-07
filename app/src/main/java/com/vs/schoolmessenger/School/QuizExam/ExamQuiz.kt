@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamQuizBinding
+import kotlin.math.log
 
 
 class ExamQuiz : BaseActivity<ExamQuizBinding>(),
@@ -44,6 +45,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+        binding.rbNextLvl.buttonTintList=null
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -80,10 +82,16 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             }
         }
 
-        binding.rbNextLvl.setOnClickListener {
-            isNextLevelChecked = !isNextLevelChecked
-            binding.rbNextLvl.isChecked = isNextLevelChecked
+//        binding.rbNextLvl.setOnClickListener {
+//            isNextLevelChecked = !isNextLevelChecked
+//            binding.rbNextLvl.isChecked = isNextLevelChecked
+//        }
+
+        binding.rbNextLvl.setOnCheckedChangeListener { _, isChecked ->
+            isNextLevelChecked = isChecked
+            Log.d("isNextLevelChecked",isNextLevelChecked.toString())
         }
+
 
         binding.txtSearch1.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

@@ -180,16 +180,14 @@ class AddQuestionAdapter(
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
-//                item.answer.isBlank() || item.answer == "0" -> {
-//                    Toast.makeText(context, "Please select correct answer", Toast.LENGTH_SHORT).show()
-//                    if (firstInvalidIndex == null) firstInvalidIndex = index
-//                    isAllValid = false
-//                }
-                item.answer.isBlank() -> {
-                    Toast.makeText(context, "Please select correct answer", Toast.LENGTH_SHORT).show()
+
+                //here "0" means means option if option is 0 need to show Please select correct option
+                item.answer.isBlank() || item.answer == "0" -> {
+                    Toast.makeText(context, "Please select correct option", Toast.LENGTH_SHORT).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
+
                 item.mark == null -> {
                     holder?.edtMark?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
@@ -291,14 +289,23 @@ class AddQuestionAdapter(
             edtOptionC.setText(data.c_option)
             edtOptionD.setText(data.d_option)
 //            edtCorrectAns.setText(data.answer)
-            edtMark.setText(data.mark.toString())
+//            edtMark.setText(data.mark.toString())
+            edtMark.setText(if (data.mark == 0) "" else data.mark.toString())
+
+//            val optionsList = listOf(
+//                "Select correct option",
+//                data.a_option.ifBlank { "Option A" },
+//                data.b_option.ifBlank { "Option B" },
+//                data.c_option.ifBlank { "Option C" },
+//                data.d_option.ifBlank { "Option D" }
+//            )
 
             val optionsList = listOf(
                 "Select correct option",
-                data.a_option.ifBlank { "Option A" },
-                data.b_option.ifBlank { "Option B" },
-                data.c_option.ifBlank { "Option C" },
-                data.d_option.ifBlank { "Option D" }
+                "Option A",
+                "Option B",
+                "Option C",
+                "Option D"
             )
 
             val spinnerAdapter = SpinnerLoadingAdapter(context, optionsList)

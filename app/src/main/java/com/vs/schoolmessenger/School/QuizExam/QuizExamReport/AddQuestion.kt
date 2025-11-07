@@ -457,6 +457,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         recyclerView.adapter = adapter2
 
         lblImportQuestion.setOnClickListener {
+
+            //Prevent import if no question is selected
+            if (!adapter2.hasAnySelected()) {
+                Toast.makeText(this,
+                    getString(R.string.please_select_at_least_one_question_from_question_bank), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val selectedQuestions = adapter2.getSelected()
             val selectedIds = selectedQuestions.map { it.id }.toSet()
 
