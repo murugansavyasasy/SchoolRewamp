@@ -133,7 +133,8 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
 
         appViewModel.islsrwSkilllist?.observe(this) { response ->
             Constant.hideLoading(this)
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyrecyclerview.visibility = View.VISIBLE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.rlNoDataContainer.visibility = View.GONE
@@ -149,6 +150,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
                 binding.rlNoDataContainer.visibility = View.VISIBLE
                 binding.noDataFound.text = getString(R.string.no_data_found)
             }
+        }
         }
 
     }

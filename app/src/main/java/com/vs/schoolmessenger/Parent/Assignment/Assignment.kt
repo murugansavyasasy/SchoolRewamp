@@ -130,14 +130,15 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         binding.rcyAssignment.layoutManager = LinearLayoutManager(this)
 
         appViewModel?.isAssignmentlist?.observe(this) { response ->
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val mobileNumber = SharedPreference.getMobileNumber(this)
 
                 val jsonObject = JsonObject().apply {
                     addProperty(APIKeyNames.mobile_number, mobileNumber)
                     addProperty(APIKeyNames.activity, Constant.add_points_view_assignmnents)
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
-                    addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
+                    addProperty(APIKeyNames.menu_id, Constant.SELECTED_SCHOOL_MENU)
                 }
                 appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
 
@@ -162,6 +163,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.txtNoData.text = response?.message
             }
+        }
         }
 
         fetchAssignmentReportData()

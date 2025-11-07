@@ -137,48 +137,53 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
         }
 
         appViewModel?.isStudentSlotResponse?.observe(this) { response ->
-            if (response!!.status) {
-                if (response.data.isNotEmpty()) {
-                    binding.rytNoDataFound.visibility = View.GONE
-                    binding.recyclerViewSlots.visibility = View.VISIBLE
-                    isLoadData(response.data)
+            if (response != null) {
+
+                if (response!!.status) {
+                    if (response.data.isNotEmpty()) {
+                        binding.rytNoDataFound.visibility = View.GONE
+                        binding.recyclerViewSlots.visibility = View.VISIBLE
+                        isLoadData(response.data)
 
 
+                    } else {
+                        binding.rytNoDataFound.visibility = View.VISIBLE
+                        binding.recyclerViewSlots.visibility = View.GONE
+                    }
                 } else {
                     binding.rytNoDataFound.visibility = View.VISIBLE
                     binding.recyclerViewSlots.visibility = View.GONE
                 }
-            } else {
-                binding.rytNoDataFound.visibility = View.VISIBLE
-                binding.recyclerViewSlots.visibility = View.GONE
             }
         }
 
         appViewModel?.isSlotCancelByStudent?.observe(this) { response ->
-            if (response?.status == true) {
-                AlertDialog.Builder(this)
-                    .setTitle("Success")
-                    .setMessage(response.message)
-                    .setPositiveButton("OK") { dialog, _ ->
-                        dialog.dismiss()
-                        if (::isMeetingHistoryAdapter.isInitialized && lastCancelledPosition >= 0) {
-                            isMeetingHistoryAdapter.removeItem(lastCancelledPosition)
-                            lastCancelledPosition = -1
-                            isMeetingHistoryList()
-                            isScheduleCallList()
+            if (response != null) {
+                if (response?.status == true) {
+                    AlertDialog.Builder(this)
+                        .setTitle("Success")
+                        .setMessage(response.message)
+                        .setPositiveButton("OK") { dialog, _ ->
+                            dialog.dismiss()
+                            if (::isMeetingHistoryAdapter.isInitialized && lastCancelledPosition >= 0) {
+                                isMeetingHistoryAdapter.removeItem(lastCancelledPosition)
+                                lastCancelledPosition = -1
+                                isMeetingHistoryList()
+                                isScheduleCallList()
 
-                            if (isMeetingHistoryAdapter.itemCount == 0) {
-                                binding.rytNoDataFound.visibility = View.VISIBLE
-                                binding.rcyMeetingHistory.visibility = View.GONE
-                                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                            } else {
-                                binding.rytNoDataFound.visibility = View.GONE
-                                binding.rcyMeetingHistory.visibility = View.VISIBLE
-                                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                                if (isMeetingHistoryAdapter.itemCount == 0) {
+                                    binding.rytNoDataFound.visibility = View.VISIBLE
+                                    binding.rcyMeetingHistory.visibility = View.GONE
+                                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                                } else {
+                                    binding.rytNoDataFound.visibility = View.GONE
+                                    binding.rcyMeetingHistory.visibility = View.VISIBLE
+                                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                                }
                             }
                         }
-                    }
-                    .show()
+                        .show()
+                }
             }
         }
 
@@ -194,7 +199,8 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 //        }
 
         appViewModel?.isSlotBookingForStudent?.observe(this) { response ->
-            binding.rcyMeetingHistory.postDelayed({
+            if (response != null) {
+                binding.rcyMeetingHistory.postDelayed({
                 Constant.hideLoading(this)
                 if (response?.status == true) {
                     AlertDialog.Builder(this)
@@ -216,11 +222,14 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                 }
             }, 2000)
         }
+        }
 
 
         appViewModel?.isSubjectResponse?.observe(this) { response ->
-            if (response?.status!!) {
-                isLoadSubjectList(response.data)
+            if (response != null) {
+                if (response?.status!!) {
+                    isLoadSubjectList(response.data)
+                }
             }
         }
 

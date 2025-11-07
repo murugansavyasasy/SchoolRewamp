@@ -137,7 +137,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         })
 
         appViewModel?.isGetCommmunicationlist?.observe(this) { response ->
-            if (response?.status == true) {
+            if (response != null) {
+                if (response?.status == true) {
                 if (response.data.isNotEmpty()) {
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     appendData(response.data, archiveFlag = true)
@@ -157,20 +158,23 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 checkAndShowNoData(message = response?.message)
             }
         }
+        }
 
 
         appViewModel?.isGetCommmunicationlistload?.observe(this) { response ->
-            if (response?.status == true) {
-                if (response.data.size > 0) {
-                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+            if (response != null) {
+                if (response?.status == true) {
+                    if (response.data.size > 0) {
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    } else {
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    }
+                    appendData(response.data, archiveFlag = false)
+                    scrollToMessageId(headerId)
                 } else {
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    checkAndShowNoData(message = response?.message)
                 }
-                appendData(response.data, archiveFlag = false)
-                scrollToMessageId(headerId)
-            } else {
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                checkAndShowNoData(message = response?.message)
             }
         }
 

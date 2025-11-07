@@ -196,7 +196,8 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
         appViewModel?.IsGetEventReport?.observe(this) { response ->
             Constant.hideLoading(this)
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
@@ -214,8 +215,16 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
                 updateVisibility(allOngoingEvents, binding.rcyongoingevent, binding.headerview)
                 updateVisibility(CategoryList, binding.rcycategoryEvent, binding.categoryHeaderview)
-                updateVisibility(allUpcomingEvents, binding.rcyupcomingevent, binding.upcomingeventHeaderview)
-                updateVisibility(allCompletedEvents, binding.rcycompletedevent, binding.completedeventHeaderview)
+                updateVisibility(
+                    allUpcomingEvents,
+                    binding.rcyupcomingevent,
+                    binding.upcomingeventHeaderview
+                )
+                updateVisibility(
+                    allCompletedEvents,
+                    binding.rcycompletedevent,
+                    binding.completedeventHeaderview
+                )
 
                 isloadeventData(allOngoingEvents)
                 isloadCategoryData(CategoryList)
@@ -231,6 +240,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 hideAllSections()
                 binding.lytNoDataFound.visibility = View.VISIBLE
             }
+        }
         }
     }
 
