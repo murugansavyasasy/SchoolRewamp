@@ -287,7 +287,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         } else {
             ShowData()
         }
-//        mAdapter.updateData(currentFilteredList)
         sortList(currentSortType)
 
     }

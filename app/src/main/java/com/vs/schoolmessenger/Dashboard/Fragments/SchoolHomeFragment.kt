@@ -99,8 +99,6 @@ import java.util.Locale
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding
-
-    //    private lateinit var items: List<ScrollItem>
     lateinit var isMenuAdapter: SchoolMenuAdapter
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
@@ -298,9 +296,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 if (missingContacts.isNotEmpty()) {
                     saveContactsPopup(missingContacts)
                 }
-//                else{
-//                    Toast.makeText(requireActivity(), "All contacts are already saved", Toast.LENGTH_SHORT).show()
-//                }
+
             }
         }
     }

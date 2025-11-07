@@ -82,7 +82,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
-//            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
 
@@ -101,7 +100,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
         binding.root.post {
-//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("lblHeaderTitle", "Setting headerview text: $finalName")
             binding.lblHeaderTitle.text = finalName

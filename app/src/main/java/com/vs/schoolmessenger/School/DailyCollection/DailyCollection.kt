@@ -275,28 +275,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                     preSelectedDate = to_Date
                 )
             }
-
-
-//            R.id.linear_layout3 -> {
-//                selectedDateTarget = R.id.linear_layout3
-//                dailycollectionshowDatePickerDialog(
-//                    this,
-//                    this,
-//                    isFromDate = true,
-//                    fromDateMillis = fromDateMillis
-//                )
-//            }
-//
-//            R.id.linear_layout5 -> {
-//                selectedDateTarget = R.id.linear_layout5
-//                dailycollectionshowDatePickerDialog(
-//                    this,
-//                    this,
-//                    isFromDate = false,
-//                    fromDateMillis = fromDateMillis
-//                )
-//            }
-
         }
     }
 

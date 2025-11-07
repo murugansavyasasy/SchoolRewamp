@@ -176,22 +176,24 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         }
 
         appViewModel?.getassignmentlist?.observe(this) { response ->
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
-                binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.VISIBLE
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
+                    binding.toolbarLayout.imgSearchToolBarforCreate.visibility = View.VISIBLE
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
 //                adapter.updateList(response.data)
-                binding.rcyAssignmentReport.visibility = View.VISIBLE
-                binding.lytNoDataFound.visibility = View.GONE
-            } else {
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
-                binding.toolbarLayout.imgSearchToolBarforCreate.visibility=View.GONE
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.rcyAssignmentReport.visibility = View.GONE
-                binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.noDataFound.text = getString(R.string.no_data_found)
+                    binding.rcyAssignmentReport.visibility = View.VISIBLE
+                    binding.lytNoDataFound.visibility = View.GONE
+                } else {
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
+                    binding.toolbarLayout.imgSearchToolBarforCreate.visibility = View.GONE
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.rcyAssignmentReport.visibility = View.GONE
+                    binding.lytNoDataFound.visibility = View.VISIBLE
+                    binding.noDataFound.text = getString(R.string.no_data_found)
+                }
             }
         }
 

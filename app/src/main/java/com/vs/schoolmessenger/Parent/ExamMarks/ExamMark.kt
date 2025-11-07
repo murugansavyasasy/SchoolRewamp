@@ -78,11 +78,9 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
-//            Constant.isParentMenuName = menu_name!!
+            SharedPreference.putChildDetails(this, matchedChild!!)
             Constant.isSelectedMenuName = menu_name!!
         }
-
 
 
         val isChildDetails = SharedPreference.getChildDetails(this)
@@ -100,8 +98,8 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
 
         binding.root.post {
-//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
-            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName =
+                Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.lblHeaderTitle.text = finalName
             binding.lblHeaderTitle.visibility = View.VISIBLE
@@ -125,14 +123,14 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                     TabType.EXAM_MARKS -> {
                         if (::exammarkadapter.isInitialized) {
                             exammarkadapter.filter.filter(query)
-                            Log.d("query",query)
+                            Log.d("query", query)
                         }
                     }
 
                     TabType.EXAM_TIMETABLE -> {
                         if (::examAdapter.isInitialized) {
                             examAdapter.filter.filter(query)
-                            Log.d("query",query)
+                            Log.d("query", query)
                         }
                     }
                 }
@@ -144,21 +142,23 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
         appViewModel?.getexams?.observe(this) { response ->
             Log.d("response++", response.toString())
-            if (response == null || !response.status || response.data.isNullOrEmpty()) {
-                Constant.hideLoading(this)
-                showErrorUI(response?.message ?: getString(R.string.no_data_available))
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-                return@observe
-            }
-            if (response.status) {
-                Constant.hideLoading(this)
-                isLoadexams(response.data)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-            } else {
-                Constant.hideLoading(this)
-                showErrorUI(response.message ?: "No data available")
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            if (response != null) {
+                if (response == null || !response.status || response.data.isNullOrEmpty()) {
+                    Constant.hideLoading(this)
+                    showErrorUI(response?.message ?: getString(R.string.no_data_available))
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    return@observe
+                }
+                if (response.status) {
+                    Constant.hideLoading(this)
+                    isLoadexams(response.data)
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                } else {
+                    Constant.hideLoading(this)
+                    showErrorUI(response.message ?: "No data available")
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
 
+                }
             }
         }
 
@@ -166,37 +166,45 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             Log.d("response++", response.toString())
             if (response == null) {
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 return@observe
             }
             if (response.status) {
                 isLoadExamList(response.data)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             } else {
                 showErrorUI(response.message ?: "No data available")
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             }
         }
 
         appViewModel?.getProgressMarks?.observe(this) { response ->
-            if (response == null || !response.status || response.data.isNullOrEmpty()) {
-                Toast.makeText(this, response!!.message, Toast.LENGTH_SHORT).show()
-                return@observe
+            if (response != null) {
 
-            }
+                if (response == null || !response.status || response.data.isNullOrEmpty()) {
+                    Toast.makeText(this, response!!.message, Toast.LENGTH_SHORT).show()
+                    return@observe
 
-            if (response.status) {
-                Constant.commonFileList.isEmpty()
-                Constant.commonFileList.clear()
-                Constant.commonFileList.add(CommonFileData(type = Constant.PDF, path = response.data[0]))
-                Constant.selectedFileIndex = 0
-                Log.d("File",Constant.commonFileList.toString())
-                Log.d("FileSize",Constant.commonFileList.size.toString())
-                val intent = Intent(this, FilesViewActivity::class.java)
-                intent.putExtra(Constant.subjectName, examTitle)
-                this.startActivity(intent)
-            } else {
-                Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                }
+
+                if (response.status) {
+                    Constant.commonFileList.isEmpty()
+                    Constant.commonFileList.clear()
+                    Constant.commonFileList.add(
+                        CommonFileData(
+                            type = Constant.PDF,
+                            path = response.data[0]
+                        )
+                    )
+                    Constant.selectedFileIndex = 0
+                    Log.d("File", Constant.commonFileList.toString())
+                    Log.d("FileSize", Constant.commonFileList.size.toString())
+                    val intent = Intent(this, FilesViewActivity::class.java)
+                    intent.putExtra(Constant.subjectName, examTitle)
+                    this.startActivity(intent)
+                } else {
+                    Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -314,7 +322,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
         binding.rcExamTimeTable.apply {
             layoutManager = LinearLayoutManager(this@ExamMark)
-            examAdapter = ExamTimeTableAdapter(data,this@ExamMark, this@ExamMark)
+            examAdapter = ExamTimeTableAdapter(data, this@ExamMark, this@ExamMark)
             binding.rcExamTimeTable.adapter = examAdapter
         }
     }

@@ -14,12 +14,6 @@ import java.util.Calendar
 import java.util.Locale
 import kotlin.collections.find
 
-//class PtmParentCalender(
-//    private val dates: List<Pair<String, Int>>,       // month, day
-//    private val slotCounts: List<SlotCountData>,      // response from API
-//    private val onDateClick: (String) -> Unit         // returns formatted date
-//) : RecyclerView.Adapter<PtmParentCalender.DateViewHolder>() {
-
 class PtmParentCalender(
     private val dates: List<Triple<String, Int, Int>>, // month, day, year
     private val slotCounts: List<SlotCountData>,

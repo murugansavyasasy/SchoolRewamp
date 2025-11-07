@@ -56,21 +56,6 @@ class MonthWiseLeaveHistoryAdapter(
         notifyDataSetChanged()
     }
 
-//    fun filterByStatus(status: String) {
-//        filteredList = if (status.equals(Constant.All_, ignoreCase = true)) {
-//            fullList
-//        } else {
-//            fullList.mapNotNull { monthData ->
-//                val filteredDetails = monthData.details.filter {
-//                    it.status.equals(status, ignoreCase = true)
-//                }
-//                if (filteredDetails.isNotEmpty()) {
-//                    MonthWiseLeaveData(month = monthData.month, details = filteredDetails)
-//                } else null
-//            }
-//        }
-//        notifyDataSetChanged()
-//    }
 
     fun removeItemById(id: String) {
         val updatedList = fullList.mapNotNull { monthData ->

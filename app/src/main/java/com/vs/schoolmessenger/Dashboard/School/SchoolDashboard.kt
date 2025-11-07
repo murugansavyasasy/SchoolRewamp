@@ -111,7 +111,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             .into(headerBinding.imgProfile)
 
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
-//        setupToolbarBlueWhite()
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navigationView
@@ -222,7 +221,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                     val token = task.result
                     Log.d("FCM", "Token: $token")
                     isUpdateDeviceToken(token)
-//                    isGlobalVariables(token)
 
                 }
             }
@@ -233,14 +231,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                 response.message
             }
         }
-
-//        appViewModel!!.isGlobalVariables?.observe(this) { response ->
-//            if (response != null) {
-//                response.status
-//                response.message
-//                Constant.isGlobalVariableData=response.data[0]
-//            }
-//        }
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             response?.data?.let { academicList ->
@@ -294,27 +284,11 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         }
     }
 
-
-//    private fun isGlobalVariables(token: String) {
-//        val jsonObject = JsonObject()
-//        val jsonArray = JsonArray()
-//        jsonObject.add("key_names", jsonArray)
-//        appViewModel!!.isGetGlobalVariables(jsonObject, token, this)
-//    }
-
-
-
     fun openDrawer() {
         if (::drawerLayout.isInitialized) {
             drawerLayout.openDrawer(GravityCompat.START)
         }
     }
-
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
 
     private fun isGetAcademicYear() {
         appViewModel!!.isGetAcademicYear(access_token, this)

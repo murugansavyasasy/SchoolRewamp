@@ -75,13 +75,6 @@ class ImagePickingAdapter(
             else -> R.drawable.address_icon
         }
 
-//        Glide.with(context)
-//            .load(fileUri)
-//            .placeholder(placeholderRes)
-//            .apply(RequestOptions().dontTransform())
-//            .error(placeholderRes)
-//            .into(holder.img)
-
 
         Glide.with(holder.img.context)
             .load(fileUri)
@@ -125,14 +118,6 @@ class ImagePickingAdapter(
                         intent.putExtra(Constant.subjectName, "Your Files")
                         context.startActivity(intent)
 
-//                        Constant.commonFileList = Constant.selectedFiles.map {
-//                            CommonFileData(type = it.type.toString(), path = it.path)
-//                        }.toMutableList()
-//                        Log.d("pos",pos.toString())
-//                        Constant.selectedFileIndex = pos - 1
-//                        val intent = Intent(context, FilesViewActivity::class.java)
-//                        intent.putExtra(Constant.subjectName, "Your Files")
-//                        context.startActivity(intent)
 
                     } else {
 

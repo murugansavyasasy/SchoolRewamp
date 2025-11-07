@@ -56,11 +56,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     lateinit var mAdapter: AbsenteesMarkAdapter
     private var appViewModel: App? = null
-//    val isSpecificStudent = mutableListOf<GetAttendanceStudentListData>()
     private var studentsList: List<GetAttendanceStudentListData>? = null
     private var FilterAttendanceList: List<GetAttendanceStudentListData>? = null
     private var originalAttendanceList: List<GetAttendanceStudentListData>? = null
-    //    private var isSelectedIds: List<GetAttendanceStudentListData>? = null
     private lateinit var isStandardName: String
     private lateinit var isSectionName: String
     private var AllPresent: String? = null
@@ -781,12 +779,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         binding.toolbarLayout.tvodCount.text =
             if (odCount > 0) String.format(Constant.time02d, odCount) else Constant.zero
 
-//    binding.toolbarLayout.tvLateCount.text =
-//        if (lateComerCount > 0) String.format(Constant.time02d, lateComerCount) else Constant.zero
     }
-
-
-
-
 
 }

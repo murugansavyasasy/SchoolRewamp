@@ -59,7 +59,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
     private val PICK_DOCUMENT_REQUEST = 1003
     private val MAX_FILES = 10
 
-//    private lateinit var menuItems: List<String>
     private var selectedMenu: String? = null
     private var cameraPermissionDeniedCount = 0
     private val CAMERA_IMAGE_REQUEST = 1001

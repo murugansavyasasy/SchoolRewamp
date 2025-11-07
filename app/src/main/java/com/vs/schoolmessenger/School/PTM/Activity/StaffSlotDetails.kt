@@ -278,10 +278,8 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 add("slot_ids", slotArray)
             }
             if (isSlotReOpen) {
-//                jsonObject.addProperty("action", "ReOpen")
                 appViewModel!!.isSlotCancelReOpen(isAccessToken!!, isReopen)
             } else {
-//                jsonObject.addProperty("action", "Cancel")
                 appViewModel!!.isSlotCancelClose(isAccessToken!!, mainObject)
             }
 

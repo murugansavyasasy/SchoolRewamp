@@ -187,17 +187,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             }
         }
 
-//        appViewModel?.isSlotBookingForStudent?.observe(this) { response ->
-//            binding.rcyMeetingHistory.postDelayed({
-//                Constant.hideLoading(this)
-//                if (response?.status == true) {
-//                    Constant.showTopAlertPopup(response.message, this)
-//                } else {
-//                    Constant.showTopAlertPopup("Booking failed!", this)
-//                }
-//            }, 2000)
-//        }
-
         appViewModel?.isSlotBookingForStudent?.observe(this) { response ->
             if (response != null) {
                 binding.rcyMeetingHistory.postDelayed({
@@ -277,28 +266,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 
 
     }
-
-
-
-
-
-    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
-        recyclerView.post {
-            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.let { itemView ->
-                val originalBackground = itemView.background
-
-                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
-
-                Handler(Looper.getMainLooper()).postDelayed({
-                    itemView.background = originalBackground
-                }, 3000)
-            }
-        }
-    }
-
-
-
 
     fun isLoadData(data: List<MeetingData>) {
         val adapter = ParentMeetingAdapter(data) { meeting, slot, isSelected ->
@@ -520,22 +487,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 
         return list
     }
-
-//    fun generateDates(daysCount: Int): List<Pair<String, Int>> {
-//        val list = mutableListOf<Pair<String, Int>>()
-//        val calendar = Calendar.getInstance()
-//        val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
-//
-//        repeat(daysCount) {
-//            val month = monthFormat.format(calendar.time)
-//            val day = calendar.get(Calendar.DAY_OF_MONTH)
-//            list.add(month to day)
-//            calendar.add(Calendar.DAY_OF_MONTH, 1) // move forward by 1 day
-//        }
-//
-//        return list
-//    }
-
 
     override fun onCancelClick(meeting: MeetingItem, position: Int, reason: String) {
         lastCancelledPosition = position

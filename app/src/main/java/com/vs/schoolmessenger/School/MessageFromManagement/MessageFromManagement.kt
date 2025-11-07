@@ -147,7 +147,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             if (response != null) {
                 if (response.status) {
                     binding.rcMessageStaff.visibility = View.VISIBLE
-//                    binding.lytList2.visibility = View.GONE
                     binding.lytList.visibility = View.GONE
                     isLoadMsgStaff(response.data)
                     completeAttachmentList = response.data
@@ -160,7 +159,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.rytSearch1.visibility = View.GONE
                     binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                     binding.rcMessageStaff.visibility = View.GONE
-//                    binding.lytList2.visibility = View.VISIBLE
                     ErrorMessage(response.message)
                 }
             } else {
@@ -169,7 +167,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 binding.rytSearch1.visibility = View.GONE
                 binding.rlaMessageFFromStaff.visibility = View.VISIBLE
                 binding.rcMessageStaff.visibility = View.GONE
-//                binding.lytList2.visibility = View.VISIBLE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
             }
         }
@@ -184,7 +181,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         completeAttachmentList = updatedList
                         isMsgStaff = completeAttachmentList
 
-                        // Reinitialize adapter if shimmer was active
                         if (!::adapter.isInitialized || adapter.getItemViewType(0) == 0) {
                             adapter = MessageFromStaffAdapter(
                                 mutableListOf(),
@@ -232,14 +228,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         }
 
                         ShowData()
-//                       binding.lytList2.visibility = View.GONE
                         binding.txtSearch1.text.clear()
                         binding.isArchiveErrorMsg.visibility = View.GONE
                     } else {
                         binding.isArchiveErrorMsg.visibility = View.VISIBLE
                         binding.isArchiveErrorMsg.text = response.message
                         if (adapter.getCurrentListSize() == 0) {
-//                           binding.lytList2.visibility = View.VISIBLE
                             binding.lytList.visibility = View.VISIBLE
                             binding.txtNoData.visibility = View.GONE
                             binding.rytSearch1.visibility = View.GONE
@@ -247,9 +241,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                             binding.txtSearch1.text.clear()
 
                         } else {
-//                           binding.lytList2.visibility = View.VISIBLE
                             binding.lytList.visibility = View.GONE
-                            // Set top margin to 15dp dynamically
                             val layoutParams =
                                 binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
                             val topMarginInDp = TypedValue.applyDimension(
@@ -266,7 +258,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.isArchiveErrorMsg.visibility = View.VISIBLE
                     binding.isArchiveErrorMsg.text = response.message
                     if (adapter.getCurrentListSize() == 0) {
-//                        binding.lytList2.visibility = View.VISIBLE
                         binding.lytList.visibility = View.VISIBLE
                         binding.txtNoData.visibility = View.GONE
                         binding.rytSearch1.visibility = View.GONE
@@ -274,9 +265,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         binding.txtSearch1.text.clear()
 
                     } else {
-//                        binding.lytList2.visibility = View.VISIBLE
                         binding.lytList.visibility = View.GONE
-                        // Set top margin to 15dp dynamically
                         val layoutParams =
                             binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
                         val topMarginInDp = TypedValue.applyDimension(
@@ -294,14 +283,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 binding.isArchiveErrorMsg.text =
                     getString(R.string.something_went_wrong_please_try_again_later)
                 if (adapter.getCurrentListSize() == 0) {
-//                    binding.lytList2.visibility = View.VISIBLE
                     binding.lytList.visibility = View.VISIBLE
                     binding.txtNoData.visibility = View.GONE
                     binding.rytSearch1.visibility = View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.txtSearch1.text.clear()
                 } else {
-//                    binding.lytList2.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 }
@@ -484,13 +471,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         // 🔹 Update UI
         if (filteredList.isNotEmpty()) {
-//            binding.lytList2.visibility = View.GONE
             ShowData()
             adapter.updateData(filteredList)
         } else {
             binding.rlaMessageFFromStaff.visibility = View.VISIBLE
             binding.rcMessageStaff.visibility = View.GONE
-//            binding.lytList2.visibility = View.VISIBLE
             ErrorMessage(getString(R.string.no_data_found))
         }
     }
@@ -501,29 +486,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         binding.rcMessageStaff.visibility = View.VISIBLE
         binding.lytList.visibility = View.GONE
     }
-
-//    fun setMessageWithCount(textView: TextView, message: String, count: Int) {
-//        val fullText = "$message $count"
-//        val spannable = SpannableString(fullText)
-//
-//        val start = fullText.indexOf(count.toString())
-//        val end = start + count.toString().length
-//
-//        spannable.setSpan(
-//            RoundedBackgroundSpan(
-//                backgroundColor = ContextCompat.getColor(textView.context, R.color.red),
-//                textColor = ContextCompat.getColor(textView.context, R.color.white),
-//                cornerRadius = 20f,
-//                padding = 15f
-//            ),
-//            start,
-//            end,
-//            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-//        )
-//
-//        textView.text = spannable
-//    }
-
 
     private fun isLoadMsgStaff(data: List<GetMessagesStaffData>) {
         if (data.isNotEmpty()) {
@@ -731,8 +693,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         Log.d("SelectedData", data.toString())
         showResumeListDialog(this, data)
         if (data.is_unread) {
-            //            isMenuCount-=1
-            //            setMessageWithCount(binding.toolbarLayout.lblParentToolBar, Constant.isSchoolMenuName,isMenuCount )
             if (data.type.equals(Constant.TET2)) {
                 TYPE = Constant.MGMT_MSG_TEXT
             } else if (data.type.equals(Constant.VOICE)) {
