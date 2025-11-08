@@ -48,15 +48,20 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
                         setupOnboardingRecycler( response.data)
                     }
                     else{
-                        Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                        //if suppose api status is failed we directly go country list
+                        RedirectCountryList()
                     }
                 }
                 else {
-                       Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                    //if suppose api status is failed we directly go country list
+
+                    RedirectCountryList()
                 }
             }
             else {
-                Toast.makeText(this, getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
+                //if suppose api status is failed we directly go country list
+
+                RedirectCountryList()
             }
         }
 
@@ -95,20 +100,14 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
         })
 
         binding.btnSkip.setOnClickListener {
-            val lastIndex = adapter.itemCount - 1
-            binding.recyclerOnboarding.smoothScrollToPosition(lastIndex)
-            updateDots(lastIndex)
-            updateButtonText(lastIndex)
-            currentIndex = lastIndex
+            RedirectCountryList()
         }
 
 
         binding.rytNext.setOnClickListener {
             if (currentIndex == adapter.itemCount - 1) {
                 // Last page → Go to next screen
-                SharedPreference.putIntroductionSkip(this@Introduction, true)
-                startActivity(Intent(this@Introduction, CountryScreen::class.java))
-                finish()
+                RedirectCountryList()
             } else {
                 //  Move to next page one by one
                 val nextIndex = currentIndex + 1
@@ -122,7 +121,6 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
     }
     private fun updateButtonText(position: Int) {
         val isLastPage = position == adapter.itemCount - 1
-
         binding.btnNext.text = if (isLastPage) "Let's Go" else "Next"
         binding.btnSkip.visibility = if (isLastPage) View.GONE else View.VISIBLE
 
@@ -151,6 +149,11 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
                 if (i == index) R.drawable.dot_active else R.drawable.dot_inactive
             )
         }
+    }
+    fun RedirectCountryList(){
+        SharedPreference.putIntroductionSkip(this@Introduction, true)
+        startActivity(Intent(this@Introduction, CountryScreen::class.java))
+        finish()
     }
 
     override fun onClick(v: View?) {}

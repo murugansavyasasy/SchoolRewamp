@@ -155,6 +155,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 val fieldsToSearch = listOf(
                     convertedDate.lowercase(),
                     student.status?.lowercase().orEmpty(),
+                    student.type?.lowercase().orEmpty(),
                     student.reason?.lowercase().orEmpty(),
                     student.urgency_level?.lowercase().orEmpty(),
                 )
