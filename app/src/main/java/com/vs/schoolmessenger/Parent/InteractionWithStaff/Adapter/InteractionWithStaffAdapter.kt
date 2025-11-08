@@ -76,7 +76,8 @@ class InteractionWithStaffAdapter(
                     fullList
                 } else {
                     fullList.filter {
-                        it.subject_name.lowercase().contains(query)
+                        it.subject_name.lowercase().contains(query) ||
+                        it.name.lowercase().contains(query)
                     }
                 }
                 val filterResults = FilterResults()

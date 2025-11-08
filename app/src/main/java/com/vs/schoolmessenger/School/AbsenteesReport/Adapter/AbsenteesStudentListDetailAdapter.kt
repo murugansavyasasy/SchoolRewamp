@@ -9,6 +9,7 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
@@ -80,10 +81,18 @@ class AbsenteesStudentListDetailAdapter(
                     fullList
                 } else {
                     fullList.filter {
-                        it.student_name.lowercase().contains(query) || it.admission_no.lowercase()
-                            .contains(query) || it.primary_mobile.lowercase()
-                            .contains(query) || it.student_id.lowercase()
-                            .contains(query) || it.roll_no.lowercase().contains(query)
+                        // Safe null checks with Elvis (default to empty string)
+                        val studentName = it.student_name?.lowercase() ?: ""
+                        val admissionNo = it.admission_no?.lowercase() ?: ""
+                        val primaryMobile = it.primary_mobile?.lowercase() ?: ""
+                        val studentId = it.student_id?.lowercase() ?: ""
+                        val rollNo = it.roll_no?.lowercase() ?: ""
+
+                        studentName.contains(query) ||
+                                admissionNo.contains(query) ||
+                                primaryMobile.contains(query) ||
+                                studentId.contains(query) ||
+                                rollNo.contains(query)
                     }
                 }
                 return FilterResults().apply { values = result }
@@ -100,16 +109,41 @@ class AbsenteesStudentListDetailAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-        private val studentName: TextView = itemView.findViewById(R.id.student_name)
-        private val sectionValue: TextView = itemView.findViewById(R.id.section_value)
-        private val registerNumber: TextView = itemView.findViewById(R.id.register_number)
+        private val tvStudentName: TextView = itemView.findViewById(R.id.tvStudentName)
+        private val tvAdmissionNo: TextView = itemView.findViewById(R.id.tvAdmissionNo)
+        private val tvRollNo: TextView = itemView.findViewById(R.id.tvRollNo)
+        //        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
+        private val statusFN: TextView = itemView.findViewById(R.id.statusFN)
+        private val statusAN: TextView = itemView.findViewById(R.id.statusAN)
         private val imageView: ShapeableImageView = itemView.findViewById(R.id.Image_value)
-        private val buttoncall: TextView = itemView.findViewById(R.id.buttoncall)
-        private val linearlayout: LinearLayout = itemView.findViewById(R.id.relative_layout)
 
         fun bind(data: Student, position: Int, listener: AbsenteesStudentDetailClickListener) {
-            studentName.text = data.student_name
-            registerNumber.text = "Admission No : " + data.admission_no
+            tvStudentName.text = data.student_name
+
+            if (data.admission_no.isEmpty()) {
+                tvAdmissionNo.visibility = View.GONE
+            } else {
+                tvAdmissionNo.visibility = View.VISIBLE
+                tvAdmissionNo.text = "${context.getString(R.string.admission_no)}: ${data.admission_no}"
+            }
+
+            if (data.roll_no.isEmpty()) {
+                tvRollNo.visibility = View.GONE
+            } else {
+                tvRollNo.visibility = View.VISIBLE
+                tvRollNo.text = "${context.getString(R.string.roll_no)}${data.roll_no}"
+            }
+
+            val attStatus = data.att_status ?: ""  // Default to empty string if null
+            val statusParts = attStatus.split("/")
+            val fnStatus = statusParts.getOrNull(0)?.trim() ?: "-"
+            val anStatus = statusParts.getOrNull(1)?.trim() ?: "-"
+
+            setStatusView(statusFN, fnStatus)
+            setStatusView(statusAN, anStatus)
+
+
+
 
 
 
@@ -133,31 +167,35 @@ class AbsenteesStudentListDetailAdapter(
                     .into(imageView)
             }
 
-
-
-
-
-
-//            Constant.isAbsenteesReportDataSending?.let { report ->
-//                val sectionNamesCombined =
-//                    report.section_wise?.joinToString(", ") { it.section_name } ?: ""
-//                sectionValue.text = "${report.class_name ?: ""} - $sectionNamesCombined"
-//            }
-
             itemView.setOnClickListener {
                 listener.onFooterItemClicked(position, data)
             }
 
-            linearlayout.setOnClickListener {
-                Constant.redirectToDialPad(context, data.primary_mobile)
+        }
+
+
+        private fun setStatusView(view: TextView, status: String) {
+            val drawableRes = when (status.uppercase()) {
+                "P" -> R.drawable.report_present_icon
+                "A" -> R.drawable.report_absent_icon
+                "P~" -> R.drawable.report_latercomer_icon
+                "OD" -> R.drawable.report_od_icon
+                else -> R.drawable.report_nottaken_icon // or "-"
             }
 
-            buttoncall.setOnClickListener {
-                Constant.redirectToDialPad(context, data.primary_mobile)
-            }
+            // Set background drawable
+            view.background = ContextCompat.getDrawable(context, drawableRes)
+
+            // set the status text (P, A, etc.)
+            view.text = if (status == "-") "-"
+            else if (status=="P~") "LA"
+            else status
 
         }
+
+
     }
+
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

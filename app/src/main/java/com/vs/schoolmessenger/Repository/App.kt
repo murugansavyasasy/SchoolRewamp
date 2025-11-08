@@ -843,9 +843,9 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getabsenteesstudentbydate(
-        isToken: String, absent_on: String, section_id: String, activity: Activity
+        isToken: String, absent_on: String, standard_id: String, section_id: String, activity: Activity
     ) {
-        apiSchoolRepositories.getabsenteesstudentbydate(isToken, absent_on, section_id, activity)
+        apiSchoolRepositories.getabsenteesstudentbydate(isToken, absent_on,standard_id, section_id, activity)
     }
 
     fun getStudentAttendanceReport(

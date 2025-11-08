@@ -92,10 +92,14 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
         val section_id =
             Constant.isAbsenteesReportDataSending?.section_wise?.firstOrNull()?.section_id ?: ""
 
+        val class_id =
+            Constant.isAbsenteesReportDataSending?.class_id
+
+
         Log.d("API_CALL", "Fetching for date: $absent_on, section: $section_id")
 
         appViewModel?.getabsenteesstudentbydate(
-            isAccessToken ?: "", absent_on, section_id, this
+            isAccessToken ?: "", absent_on,class_id!!, section_id, this
         )
     }
 
