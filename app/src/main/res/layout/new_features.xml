@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_white">
 
+    <!-- 🔹 Optional colored status bar -->
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
@@ -16,129 +17,163 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <RelativeLayout
-        android:id="@+id/toolbarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <!-- 🔹 FrameLayout holds RecyclerView and overlayed controls -->
+    <FrameLayout
+        android:id="@+id/frameContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
-        <LinearLayout
+        <!-- Background content -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerOnboarding"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:clipToPadding="false"
+             />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerOnboarding"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:paddingBottom="32dp" />
+        <!-- Floating overlay container -->
+        <LinearLayout
+            android:id="@+id/bottomControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="32dp"
+            android:orientation="vertical">
 
             <!-- Dot indicator -->
             <LinearLayout
                 android:id="@+id/layoutDots"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:orientation="horizontal" />
 
-            <!-- Skip button -->
-            <TextView
-                android:id="@+id/btnSkip"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/bg__rounded_rect"
-                android:paddingHorizontal="@dimen/twenty_five"
-                android:paddingVertical="@dimen/eight"
-                android:text="Skip"
-                android:textAllCaps="false"
-                android:textColor="#222222" />
+           <RelativeLayout
+               android:layout_width="wrap_content"
+               android:layout_gravity="end"
+               android:layout_height="wrap_content">
+               <TextView
+                   android:id="@+id/btnSkip"
+                   style="@style/CustomTextStylePoppinsBold"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:paddingHorizontal="@dimen/fifteen"
+                   android:paddingVertical="@dimen/five"
+                   android:text="Skip"
+                   android:textColor="@color/white"
+                   android:layout_gravity="end"
+                   android:textAllCaps="false"
+                   />
 
+               <RelativeLayout
+                   android:id="@+id/rytNext"
+                   android:layout_marginStart="@dimen/five"
+                   android:layout_toEndOf="@+id/btnSkip"
+                   android:layout_width="wrap_content"
+                   android:layout_gravity="end"
+                   android:background="@drawable/bg__rounded_rect"
+                   android:paddingHorizontal="@dimen/fifteen"
+                   android:paddingVertical="@dimen/five"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:id="@+id/btnNext"
+                       style="@style/CustomTextStylePoppinsBold"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Next"
+                       android:layout_centerVertical="true"
+                       android:textColor="@color/white"
+                       android:textAllCaps="false"
+                       />
+                   <ImageView
+                       android:layout_marginStart="@dimen/three"
+                       android:layout_centerVertical="true"
+                       android:layout_toEndOf="@+id/btnNext"
+                       android:layout_width="@dimen/fifteen"
+                       android:src="@drawable/right_arrow_ic"
+                       android:layout_height="@dimen/fifteen">
+
+                   </ImageView>
+               </RelativeLayout>
+           </RelativeLayout>
         </LinearLayout>
-    </RelativeLayout>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--Last code-->
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--    xmlns:tools="http://schemas.android.com/tools"-->
-    <!--    android:id="@+id/main"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="match_parent"-->
-    <!--    android:background="@color/light_white">-->
 
-    <!--    &lt;!&ndash; 🔹 Optional colored status bar &ndash;&gt;-->
-    <!--    <View-->
-    <!--        android:id="@+id/statusBarBackground"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:background="@color/PrimaryColor"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:id="@+id/main"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="@color/light_white">-->
 
-    <!--    &lt;!&ndash; 🔹 FrameLayout holds RecyclerView and overlayed controls &ndash;&gt;-->
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/frameContainer"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">-->
+<!--    <View-->
+<!--        android:id="@+id/statusBarBackground"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:background="@color/PrimaryColor"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <!--        &lt;!&ndash; Background content &ndash;&gt;-->
-    <!--        <androidx.recyclerview.widget.RecyclerView-->
-    <!--            android:id="@+id/recyclerOnboarding"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:clipToPadding="false"-->
-    <!--             />-->
 
-    <!--        &lt;!&ndash; Floating overlay container &ndash;&gt;-->
-    <!--        <LinearLayout-->
-    <!--            android:visibility="gone"-->
-    <!--            android:id="@+id/bottomControls"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="bottom"-->
-    <!--            android:layout_marginBottom="32dp"-->
-    <!--            android:gravity="center_horizontal"-->
-    <!--            android:orientation="vertical">-->
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/toolbarLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">-->
 
-    <!--            &lt;!&ndash; Dot indicator &ndash;&gt;-->
-    <!--            <LinearLayout-->
-    <!--                android:id="@+id/layoutDots"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginBottom="16dp"-->
-    <!--                android:gravity="center"-->
-    <!--                android:orientation="horizontal" />-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:orientation="vertical">-->
 
-    <!--            &lt;!&ndash; Skip button &ndash;&gt;-->
-    <!--            <TextView-->
-    <!--                android:id="@+id/btnSkip"-->
-    <!--                style="@style/CustomTextStylePoppinsBold"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:background="@drawable/bg__rounded_rect"-->
-    <!--                android:paddingHorizontal="@dimen/twenty_five"-->
-    <!--                android:paddingVertical="@dimen/eight"-->
-    <!--                android:text="Skip"-->
-    <!--                android:textAllCaps="false"-->
-    <!--                android:textColor="#222222" />-->
-    <!--        </LinearLayout>-->
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/recyclerOnboarding"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:clipToPadding="false"-->
+<!--                android:paddingBottom="32dp" />-->
 
-    <!--    </FrameLayout>-->
+<!--            &lt;!&ndash; Dot indicator &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/layoutDots"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="24dp"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal" />-->
 
-    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--            &lt;!&ndash; Skip button &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/btnSkip"-->
+<!--                style="@style/CustomTextStylePoppinsBold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="32dp"-->
+<!--                android:background="@drawable/bg__rounded_rect"-->
+<!--                android:paddingHorizontal="@dimen/twenty_five"-->
+<!--                android:paddingVertical="@dimen/eight"-->
+<!--                android:text="Skip"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="#222222" />-->
+
+<!--        </LinearLayout>-->
+<!--    </RelativeLayout>-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
