@@ -144,6 +144,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         isMenuCount = Constant.isSchoolMenuCount
 
         appViewModel?.isGetMessageStaff?.observe(this) { response ->
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
             if (response != null) {
                 if (response.status) {
                     binding.rcMessageStaff.visibility = View.VISIBLE
@@ -293,6 +295,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 }
             }
+
         }
 
 

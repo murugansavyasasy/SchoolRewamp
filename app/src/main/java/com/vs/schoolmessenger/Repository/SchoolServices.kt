@@ -2259,10 +2259,10 @@ class SchoolServices {
 
 
     fun getabsenteesstudentbydate(
-        isToken: String, absent_on: String? = null, section_id: String? = null, activity: Activity
+        isToken: String, absent_on: String? = null, standard_id: String ,section_id: String? = null, activity: Activity
 
     ) {
-        RestClient.apiInterfaces.getabsenteesstudentbydate(isToken, absent_on, section_id)
+        RestClient.apiInterfaces.getabsenteesstudentbydate(isToken, absent_on,standard_id, section_id)
             ?.enqueue(object : Callback<AbsenteeStudentsResponse?> {
                 override fun onResponse(
                     call: Call<AbsenteeStudentsResponse?>,

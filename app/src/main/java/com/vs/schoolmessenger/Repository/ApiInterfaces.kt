@@ -593,7 +593,9 @@ interface ApiInterfaces {
     fun getabsenteesstudentbydate(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.absent_on) absent_on: String?,
+        @Query(APIKeyNames.standard_id) class_id: String?,
         @Query(APIKeyNames.section_id) section_id: String?
+
     ): Call<AbsenteeStudentsResponse?>
 
     @POST(APIMethods.sendnotice)

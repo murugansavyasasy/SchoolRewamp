@@ -76,6 +76,7 @@ class AbsenteesReportDetailAdapter(
                 notifyItemChanged(selectedPosition)
                 listener.onAbsenteeClicked(
                     selectedDate,
+                    classWise.class_id,
                     sectionWise.section_id,
                     classWise.class_name,
                     sectionWise.section_name,

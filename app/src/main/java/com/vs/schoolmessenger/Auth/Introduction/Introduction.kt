@@ -94,25 +94,40 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
             }
         })
 
-
         binding.btnSkip.setOnClickListener {
+            val lastIndex = adapter.itemCount - 1
+            binding.recyclerOnboarding.smoothScrollToPosition(lastIndex)
+            updateDots(lastIndex)
+            updateButtonText(lastIndex)
+            currentIndex = lastIndex
+        }
+
+
+        binding.rytNext.setOnClickListener {
             if (currentIndex == adapter.itemCount - 1) {
-                SharedPreference.putIntroductionSkip(this@Introduction,true)
+                // Last page → Go to next screen
+                SharedPreference.putIntroductionSkip(this@Introduction, true)
                 startActivity(Intent(this@Introduction, CountryScreen::class.java))
                 finish()
             } else {
-                binding.recyclerOnboarding.smoothScrollToPosition(adapter.itemCount - 1)
+                //  Move to next page one by one
+                val nextIndex = currentIndex + 1
+                binding.recyclerOnboarding.smoothScrollToPosition(nextIndex)
+                updateButtonText(nextIndex)
+                updateDots(nextIndex)
+                currentIndex = nextIndex
             }
         }
 
     }
     private fun updateButtonText(position: Int) {
-        if (position == adapter.itemCount - 1) {
-            binding.btnSkip.text = "Lets Go"
-        } else {
-            binding.btnSkip.text = "Skip"
-        }
+        val isLastPage = position == adapter.itemCount - 1
+
+        binding.btnNext.text = if (isLastPage) "Let's Go" else "Next"
+        binding.btnSkip.visibility = if (isLastPage) View.GONE else View.VISIBLE
+
     }
+
 
 
     private fun setupDots(count: Int) {

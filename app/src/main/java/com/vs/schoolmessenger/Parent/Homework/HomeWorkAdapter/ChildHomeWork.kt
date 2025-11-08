@@ -213,7 +213,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             )
             binding.toolbarLayout.rlaStudentName.layoutParams = params
             binding.toolbarLayout.lblPostedOn.text =
-                "Posted On : ${Constant.convertToReadableDate(data!!.created_date.toString())}"
+                "Posted On : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
             Log.d("Posted On isStudentlistdetail", data!!.created_date.toString())
 
         } else {
@@ -494,7 +494,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.toolbarLayout.rlaStudentName.layoutParams =
                 params // Apply the updated layout params
             binding.toolbarLayout.lblPostedOn.text =
-                "Posted On : ${Constant.convertToReadableDate(data!!.created_date.toString())}"
+                "Posted On : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
 
 
             if (!data!!.isCompleted) {
@@ -528,7 +528,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 params // Apply the updated layout params
             Log.d("data!!.created_date", data!!.created_date.toString())
             binding.toolbarLayout.lblPostedOn.text =
-                "Posted On : ${Constant.convertToReadableDateformat(data!!.created_date.toString())}"
+                "Posted On : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
 
             binding.lblClickComplete.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
