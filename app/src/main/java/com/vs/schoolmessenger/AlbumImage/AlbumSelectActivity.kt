@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
@@ -101,35 +102,28 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 
     override fun onResume() {
         super.onResume()
-
-        if (!shouldReload) return
-
+        // Always check permission when returning
         if (fileType.uppercase() == Constant.DOCUMENT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                if (android.os.Environment.isExternalStorageManager()) {
+                if (Environment.isExternalStorageManager()) {
+                    Log.d("PermissionFlow", "StorageManager granted, loading documents")
                     loadDocumentsOrOpenPicker()
                     shouldReload = false
                     hasOpenedSettingsOnce = false
                 } else {
-                    if (hasOpenedSettingsOnce) {
-                        shouldReload = false
-                        hasOpenedSettingsOnce = false
-                        showPermissionSettingsDialog()
-                    }
+                    Log.d("PermissionFlow", " StorageManager not granted")
+                    if (hasOpenedSettingsOnce) showPermissionSettingsDialog()
                 }
             } else {
-                val granted =
-                    checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                val granted = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 if (granted) {
+                    Log.d("PermissionFlow", " READ_EXTERNAL_STORAGE granted, loading documents")
                     loadDocumentsOrOpenPicker()
                     shouldReload = false
                     hasOpenedSettingsOnce = false
                 } else {
-                    if (hasOpenedSettingsOnce) {
-                        shouldReload = false
-                        hasOpenedSettingsOnce = false
-                        showPermissionSettingsDialog()
-                    }
+                    Log.d("PermissionFlow", " READ_EXTERNAL_STORAGE denied")
+                    if (hasOpenedSettingsOnce) showPermissionSettingsDialog()
                 }
             }
         } else {
@@ -142,18 +136,76 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
             }
 
             if (granted) {
+                Log.d("PermissionFlow", " Media permission granted, loading media")
                 loadMediaFiles()
                 shouldReload = false
                 hasOpenedSettingsOnce = false
             } else {
-                if (hasOpenedSettingsOnce) {
-                    shouldReload = false
-                    hasOpenedSettingsOnce = false
-                    showPermissionSettingsDialog()
-                }
+                Log.d("PermissionFlow", " Media permission denied")
+                if (hasOpenedSettingsOnce) showPermissionSettingsDialog()
             }
         }
     }
+
+
+//    override fun onResume() {
+//        super.onResume()
+//
+//        if (!shouldReload) return
+//
+//        if (fileType.uppercase() == Constant.DOCUMENT) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                if (android.os.Environment.isExternalStorageManager()) {
+//                    loadDocumentsOrOpenPicker()
+//                    shouldReload = false
+//                    hasOpenedSettingsOnce = false
+//                } else {
+//                    if (hasOpenedSettingsOnce) {
+//                        shouldReload = false
+//                        hasOpenedSettingsOnce = false
+//                        Log.d("isComing","5555555555555555")
+//                        showPermissionSettingsDialog()
+//                    }
+//                }
+//            } else {
+//                val granted =
+//                    checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+//                if (granted) {
+//                    loadDocumentsOrOpenPicker()
+//                    shouldReload = false
+//                    hasOpenedSettingsOnce = false
+//                } else {
+//                    if (hasOpenedSettingsOnce) {
+//                        shouldReload = false
+//                        hasOpenedSettingsOnce = false
+//                        Log.d("isComing","44444444444444")
+//                        showPermissionSettingsDialog()
+//                    }
+//                }
+//            }
+//        } else {
+//            val granted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//                checkSelfPermission(Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED ||
+//                        checkSelfPermission(Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED ||
+//                        checkSelfPermission(Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
+//            } else {
+//                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+//            }
+//
+//            if (granted) {
+//                loadMediaFiles()
+//                shouldReload = false
+//                hasOpenedSettingsOnce = false
+//            } else {
+//                if (hasOpenedSettingsOnce) {
+//                    shouldReload = false
+//                    hasOpenedSettingsOnce = false
+//                    Log.d("isComing","333333333333333")
+//                    showPermissionSettingsDialog()
+//                }
+//            }
+//        }
+//    }
 
     private fun setupPermissionLauncher() {
         permissionLauncher =
@@ -166,12 +218,14 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
                     ) {
                         loadDocumentsOrOpenPicker()
                     } else {
+                        Log.d("isComing","1111111111111111")
                         showPermissionSettingsDialog()
                     }
                 } else {
                     if (allGranted) {
                         loadMediaFiles()
                     } else {
+                        Log.d("isComing","22222222222222222222")
                         showPermissionSettingsDialog()
                     }
                 }
@@ -214,13 +268,15 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
             if (android.os.Environment.isExternalStorageManager()) {
                 loadDocumentsOrOpenPicker()
             } else {
+                Log.d("isComing","77777777777777777")
                 shouldReload = true
                 hasOpenedSettingsOnce = true
-                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                intent.data = Uri.parse("package:$packageName")
-                startActivity(intent)
+//                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+//                intent.data = Uri.parse("package:$packageName")
+//                startActivity(intent)
             }
         } else {
+            Log.d("isComing","888888888888888888")
             shouldReload = true
             permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
         }

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -69,17 +70,23 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         binding.lblModeMeeting.text = isSlotsDetails.event_mode
         binding.lblDate.text = formatApiDateToDisplay(isSlotsDetails.date)
 
-        if (isSlotsDetails.event_mode == "Online") {
+        if (isSlotsDetails.event_mode == "Online" || isSlotsDetails.event_mode == "Virtual") {
             binding.rytJoin.visibility = View.VISIBLE
         } else {
             binding.rytJoin.visibility = View.GONE
         }
 
         binding.rytJoin.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(isSlotsDetails.join_url)
-            startActivity(intent)
+            val joinUrl = isSlotsDetails.join_url
+
+            if (!joinUrl.isNullOrEmpty()) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(joinUrl))
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Join URL not available", Toast.LENGTH_SHORT).show()
+            }
         }
+
 
 
         binding.lblTime.text = isSlotsDetails.start_time + " - " + isSlotsDetails.end_time

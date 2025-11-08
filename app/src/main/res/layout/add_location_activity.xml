@@ -397,7 +397,7 @@
                         android:layout_height="@dimen/fourty"
                         android:layout_marginHorizontal="@dimen/sixty"
                         android:layout_marginTop="@dimen/twenty"
-                        android:background="@drawable/rect_brown"
+                        android:background="@drawable/rect_skyblue"
                         android:gravity="center"
                         android:text="@string/lblSubmit"
                         android:textColor="@color/white"
