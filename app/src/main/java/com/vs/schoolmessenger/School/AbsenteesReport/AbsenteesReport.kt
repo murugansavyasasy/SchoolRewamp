@@ -177,6 +177,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             object : OnAbsenteeClickListener {
                 override fun onAbsenteeClicked(
                     absentOn: String,
+                    classId: String,
                     sectionId: String,
                     classname: String,
                     sectionname: String,
@@ -203,6 +204,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                     appViewModel?.getabsenteesstudentbydate(
                         isAccessToken ?: "",
                         absentOn,
+                        classId,
                         sectionId,
                         this@AbsenteesReport
                     )
@@ -228,7 +230,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
             showStudentShimmer()
             appViewModel?.getabsenteesstudentbydate(
-                isAccessToken ?: "", selectedDate, sectionWise.section_id, this
+                isAccessToken ?: "", selectedDate,classWise.class_id, sectionWise.section_id, this
             )
         }
     }

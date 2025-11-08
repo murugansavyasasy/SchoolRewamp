@@ -15,7 +15,7 @@
         android:elevation="@dimen/ten"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_more_vert_custom"
-        android:visibility="visible"
+        android:visibility="gone"
         />
 
 

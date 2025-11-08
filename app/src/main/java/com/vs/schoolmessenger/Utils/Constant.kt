@@ -977,6 +977,15 @@ object Constant {
         }
     }
 
+    fun formatDatepostedby(dateStr: String): String {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+
+        val inputDate = inputFormat.parse(dateStr) ?: return dateStr
+        return outputFormat.format(inputDate)
+    }
+
+
 
     //"dd-MM-yyyy" to "dd MMMM, yyyy"
     fun formatDate(dateStr: String): String {
