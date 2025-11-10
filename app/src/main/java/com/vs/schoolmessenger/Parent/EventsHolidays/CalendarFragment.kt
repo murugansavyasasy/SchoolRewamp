@@ -209,20 +209,22 @@ class CalendarFragment : Fragment() {
             Log.d("holidayModels", holidayModels.toString())
 
             binding.holidayRecyclerView.visibility = View.VISIBLE
-            binding.holidaylabel.visibility = View.VISIBLE
+            binding.lnrErrorMsg.visibility = View.GONE
             binding.holidayRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.holidayRecyclerView.adapter = HolidayAdapter(holidayModels)
             binding.holidaylabel.setTextColor(
                 ContextCompat.getColor(requireContext(), android.R.color.black)
             )
             binding.holidaylabel.text = "${getString(R.string.Holidays_for)} $currentMonthYear"
+            binding.holidaylabel.visibility=View.VISIBLE
         } else {
+            binding.holidaylabel.visibility=View.GONE
             binding.holidayRecyclerView.visibility = View.GONE
-            binding.holidaylabel.visibility = View.VISIBLE
+            binding.lnrErrorMsg.visibility = View.VISIBLE
             binding.holidaylabel.setTextColor(
                 ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
             )
-            binding.holidaylabel.text = "${getString(R.string.No_holidays_in)} $currentMonthYear"
+            binding.errorMsg.text = "${getString(R.string.No_holidays_in)} $currentMonthYear"
         }
 
     }

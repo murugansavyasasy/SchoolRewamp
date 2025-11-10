@@ -33,7 +33,7 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarPrimaryTheme1(
+        isToolBarPrimaryIntroduction(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
