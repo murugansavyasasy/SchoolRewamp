@@ -51,6 +51,17 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
+
+            <ImageView
+                android:id="@+id/imgSearchToolBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/twenty"
+                android:src="@drawable/search_icon_white" />
+
+
         </RelativeLayout>
 
 
@@ -138,6 +149,7 @@
             android:layout_below="@+id/totalcoinscardview"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
+            android:visibility="gone"
             android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/bg_search"
             android:gravity="center_vertical"

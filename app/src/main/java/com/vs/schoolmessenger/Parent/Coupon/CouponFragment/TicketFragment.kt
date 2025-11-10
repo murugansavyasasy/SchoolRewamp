@@ -1,11 +1,13 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -36,7 +38,7 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         binding.coupontablayout.activetext.setOnClickListener(this)
         binding.coupontablayout.expiredtext.setOnClickListener(this)
         binding.coupontablayout.redeemedtext.setOnClickListener(this)
-        binding.relativeLayout.setOnClickListener {
+        binding.back.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
@@ -48,7 +50,23 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
+        binding.imgSearchToolBar.setOnClickListener {
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            if (binding.linearlayout.visibility == View.VISIBLE) {
+                binding.linearlayout.visibility = View.GONE
+                binding.editSearch.setText("")
+                imm.hideSoftInputFromWindow(binding.editSearch.windowToken, 0)
+            } else {
+                binding.linearlayout.visibility = View.VISIBLE
+                binding.editSearch.setText("")
+                binding.editSearch.requestFocus()
+                imm.showSoftInput(binding.editSearch, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
+
         fetchticketsummary(Constant.all__)
+
+
 
         appViewModel.getmycouponsSummary?.observe(viewLifecycleOwner) { response ->
             hideProgressBar()

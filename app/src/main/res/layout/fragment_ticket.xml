@@ -25,6 +25,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:id="@+id/relative_layout">
 
         <ImageView
@@ -44,6 +45,18 @@
             android:layout_toEndOf="@id/back"
             android:layout_marginStart="@dimen/eight"
             android:layout_alignTop="@id/back"/>
+
+        <ImageView
+            android:id="@+id/imgSearchToolBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/twenty"
+            android:src="@drawable/search_icon_white" />
+
+
+
     </RelativeLayout>
 
 
@@ -54,6 +67,7 @@
         android:layout_margin="@dimen/sixteen"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/twele"
+        android:visibility="gone"
         android:layout_below="@+id/relative_layout"
         android:background="@drawable/bg_search"
         android:gravity="center_vertical">
@@ -87,16 +101,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="@dimen/three_hundred_seventy_seven"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/coupontablayout"
         android:clipToPadding="false"
         android:scrollIndicators="none"
-        android:layout_alignStart="@+id/linearlayout"
-        android:layout_alignEnd="@+id/linearlayout"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="@dimen/five"
         android:scrollbars="vertical"
-        android:layout_marginTop="@dimen/five"/>
+        android:layout_marginTop="10dp"/>
 
 
     <ProgressBar

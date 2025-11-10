@@ -95,7 +95,7 @@ class NotificationAdapter(
             lblTitle.text = data.title
             lblContent.text = data.content.replace("•", "")
             first_letter.visibility = View.GONE
-            notification_date.text = data.sent_on
+            notification_date.text = Constant.convertDateAndTimeFormat(data.sent_on)
             first_letter.text = data.sendBy.firstOrNull()?.toString() ?: "?"
             line.visibility = if (showDivider) View.VISIBLE else View.GONE
 
