@@ -220,6 +220,7 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 hideAllSections()
                 binding.lytNoDataFound.visibility = View.VISIBLE
+                binding.txtNoDataFound.text=response!!.message?:getString(R.string.no_data_found)
             }
         }
 
