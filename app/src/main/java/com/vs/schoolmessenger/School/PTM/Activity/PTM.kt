@@ -64,6 +64,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 isLoadData(isSlotCategory)
             } else {
                 binding.tvNoData.visibility = View.VISIBLE
+                binding.tvNoData.text=response!!.message?:"No Meeting Available"
                 binding.rcyToday.adapter = null
                 binding.rcyUpcoming.adapter = null
                 binding.rcyComplete.adapter = null

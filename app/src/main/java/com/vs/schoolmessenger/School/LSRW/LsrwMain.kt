@@ -108,9 +108,9 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
                 allCompletedItems = data.completed
                 completedviewadapter.updateList(allCompletedItems)
                 setupFilters(allTaskItems, allCompletedItems)
-                handleVisibility(allTaskItems, allCompletedItems)
+                handleVisibility(allTaskItems, allCompletedItems,"")
             } else {
-                handleVisibility(emptyList(), emptyList())
+                handleVisibility(emptyList(), emptyList(),response!!.message?:getString(R.string.no_data_found))
             }
         }
     }
@@ -178,7 +178,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
 
             adapter.updateList(filteredActive)
             completedviewadapter.updateList(filteredCompleted)
-            handleVisibility(filteredActive, filteredCompleted)
+            handleVisibility(filteredActive, filteredCompleted,getString(R.string.no_data_found))
         }
 
         binding.rcyFilter.layoutManager =
@@ -188,7 +188,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
 
 
 
-    private fun handleVisibility(active: List<LsrwTask>, completed: List<LsrwTask>) {
+    private fun handleVisibility(active: List<LsrwTask>, completed: List<LsrwTask>,ErrorMsg: String) {
         val hasActive = active.isNotEmpty()
         val hasCompleted = completed.isNotEmpty()
         binding.rcylsrwreport.visibility = if (hasActive) View.VISIBLE else View.GONE
@@ -199,6 +199,8 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
             binding.lytNoDataFound.visibility = View.VISIBLE
             binding.noDataFound.visibility = View.VISIBLE
             binding.noDataImage.visibility = View.VISIBLE
+            binding.noDataFound.text=ErrorMsg
+
         } else {
             binding.lytNoDataFound.visibility = View.GONE
             binding.noDataFound.visibility = View.GONE

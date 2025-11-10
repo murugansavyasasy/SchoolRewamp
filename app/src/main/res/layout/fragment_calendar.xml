@@ -188,12 +188,6 @@
             android:layout_below="@+id/holidaylabel"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="@dimen/two_fifty"
-                android:src="@drawable/holiday_message"
-                android:layout_height="@dimen/two_fifty">
-
-            </ImageView>
             <TextView
                 android:id="@+id/errorMsg"
                 android:layout_width="match_parent"
@@ -202,9 +196,16 @@
                 android:layout_marginStart="@dimen/five"
                 android:gravity="center"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/red"
                 android:textSize="@dimen/fourteen_sp"
                 style="@style/CustomTextStylePoppinsBold"/>
+
+            <ImageView
+                android:layout_width="@dimen/two_fifty"
+                android:src="@drawable/no_holiday_2_message"
+                android:layout_height="@dimen/two_fifty">
+            </ImageView>
+
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="@dimen/ten"

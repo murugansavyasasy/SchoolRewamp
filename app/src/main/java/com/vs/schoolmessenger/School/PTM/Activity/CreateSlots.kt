@@ -132,7 +132,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     selectedSlots = emptyList()
                     isSelectedList.clear()
                     Constant.showTopAlertPopup1(
-                        "No standards found for selected academic year",
+                        response.message?:"No standards found for selected academic year",
                         this,
                         false
                     )
