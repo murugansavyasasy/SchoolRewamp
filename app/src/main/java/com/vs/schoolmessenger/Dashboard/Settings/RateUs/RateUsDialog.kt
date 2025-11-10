@@ -2,7 +2,9 @@ package com.vs.schoolmessenger.Dashboard.Settings.RateUs
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
@@ -12,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.RateUsBinding
@@ -68,6 +71,11 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
             GetRatingData(4, "Very Good"),
             GetRatingData(5, "Outstanding")
         )
+
+        binding.ratingBar.progressTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(requireContext(), R.color.light_yellow)
+        )
+
 
         binding.edtSuggestions.setOnTouchListener { v, event ->
             if (v.hasFocus()) {

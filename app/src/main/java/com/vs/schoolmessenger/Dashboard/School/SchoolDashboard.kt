@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
+import androidx.core.view.ViewGroupCompat
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -17,6 +19,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -80,17 +83,36 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         access_token = userDetails!!.staff_details[0].access_token
         enableEdgeToEdge()
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { rootView, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            binding.statusBarBackground.updateLayoutParams { height = systemBars.top }
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                binding.customBottomNav.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    bottomMargin = systemBars.bottom
+                }
+            } else {
+                binding.customBottomNav.updatePadding(bottom = systemBars.bottom)
+            }
+
+            insets
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.updateLayoutParams { height = systemBars.top }
             WindowInsetsCompat.CONSUMED
         }
-
         ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(bottom = systemBars.bottom)
-            insets
+            view.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                bottomMargin = systemBars.bottom
+            }
+            WindowInsetsCompat.CONSUMED
         }
+
+
 
         Constant.isParentChoose = false
 
