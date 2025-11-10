@@ -11,7 +11,7 @@ import com.vs.schoolmessenger.R
 
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.StudentlistRemarksubmitBinding
 
@@ -67,7 +67,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
                         this,
                         fileList,
                         "English",
-                        SELECTED_SCHOOL_MENU,
+                        SELECTED_MENU_ID,
                         true
                     )
 

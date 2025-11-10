@@ -71,7 +71,7 @@ import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
 import com.vs.schoolmessenger.Utils.Constant.selectedFiles
@@ -177,7 +177,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lblDescription.text = data!!.description
 
 
-        if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
+        if (SELECTED_MENU_ID == Constant.M_SCHOOL_CLASS_EVENTS) {
             binding.sendtostandardLabel.visibility = View.VISIBLE
             loadEventChildHomewordStandard()
         } else {
@@ -186,7 +186,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS && data!!.isParentAssignment == false) {
+        if (SELECTED_MENU_ID == Constant.M_ATTACHMENTS && data!!.isParentAssignment == false) {
             binding.sendtostandardLabel.visibility = View.VISIBLE
             loadattachmentsChildHomeWorkstandard()
         } else {
@@ -194,7 +194,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if (SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT && data!!.isParentAssignment == false) {
+        if (SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.sendtostandardLabel.visibility = View.VISIBLE
             loadAssignemntChildHomewordStandard()
         } else {
@@ -203,7 +203,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if (SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT && data!!.isStudentlistdetail == true) {
+        if (SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.isStudentlistdetail == true) {
             binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
             val params =
                 binding.toolbarLayout.rlaStudentName.layoutParams as RelativeLayout.LayoutParams
@@ -224,7 +224,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
 
-        if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == false) {
+        if (SELECTED_MENU_ID == M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
@@ -246,7 +246,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     data!!.created_date ?: ""
                 )
             )
-        } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT && data!!.isParentAssignment == true) {
+        } else if (SELECTED_MENU_ID == M_ASSIGNMENT && data!!.isParentAssignment == true) {
             binding.lblviewSubmissions.visibility = View.GONE
             binding.linearlayoutContainer.visibility = View.GONE
             binding.createdDate.text = Constant.convertToReadableDate(data?.created_date ?: "")
@@ -254,7 +254,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.subject.text = data?.assignmentsubject ?: ""
             binding.fragmentContainer.visibility = View.GONE
 
-        } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false) {
+        } else if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == false) {
             binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
             if (data!!.assignmentid == "Listening") {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.headphonesvgformat)
@@ -302,7 +302,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
             }
 
-        } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
+        } else if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
             binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
@@ -454,7 +454,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
 
-        if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
+        if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
             if (data!!.is_submitted == true) {
                 binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
                 Log.d("lblviewSubmissions Visible success", "lblviewSubmissions Visible success")
@@ -463,7 +463,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 Log.d("lblviewSubmissions Visible failed", "lblviewSubmissions Visible failed")
             }
 
-        } else if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == false) {
+        } else if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == false) {
             binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
             Log.d("lblviewSubmissions Visible failed", "lblviewSubmissions Visible failed")
         } else {
@@ -546,17 +546,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         val isParentAssignment =
-            (SELECTED_SCHOOL_MENU == M_LSRW && data?.isParentAssignment == true)
+            (SELECTED_MENU_ID == M_LSRW && data?.isParentAssignment == true)
 
 
-        Log.d("Child Homework Redirection", SELECTED_SCHOOL_MENU.toString())
+        Log.d("Child Homework Redirection", SELECTED_MENU_ID.toString())
         Log.d("Child Homework Redirection", isParentAssignment.toString())
 
         val adapter = HomeWorkChildAdapter(
-            this, data!!.fileList, data!!.subjectName!!, SELECTED_SCHOOL_MENU, isParentAssignment
+            this, data!!.fileList, data!!.subjectName!!, SELECTED_MENU_ID, isParentAssignment
         )
 
-        val recyclerView = if (SELECTED_SCHOOL_MENU == M_LSRW) {
+        val recyclerView = if (SELECTED_MENU_ID == M_LSRW) {
             binding.childlsrwlayoutxml.rcChildHW
         } else {
             binding.rcChildHW
@@ -565,9 +565,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         Log.d("ParentAssignmentValue", isParentAssignment.toString())
 
         val spanCount = when {
-            SELECTED_SCHOOL_MENU == M_ASSIGNMENT -> 2
-            SELECTED_SCHOOL_MENU == M_LSRW && !isParentAssignment -> 2
-            SELECTED_SCHOOL_MENU == M_LSRW && isParentAssignment -> 2
+            SELECTED_MENU_ID == M_ASSIGNMENT -> 2
+            SELECTED_MENU_ID == M_LSRW && !isParentAssignment -> 2
+            SELECTED_MENU_ID == M_LSRW && isParentAssignment -> 2
             else -> 3
         }
 
@@ -755,8 +755,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
         val isEmpty = adapter.itemCount == 0
-        val isAssignment = SELECTED_SCHOOL_MENU == M_ASSIGNMENT
-        val isLsrw = SELECTED_SCHOOL_MENU == M_LSRW
+        val isAssignment = SELECTED_MENU_ID == M_ASSIGNMENT
+        val isLsrw = SELECTED_MENU_ID == M_LSRW
 
         val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams
         if (isEmpty) {
@@ -877,7 +877,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     fun isUploadFilesInServer(isFileType: String?) {
         Log.d("ChildHomeWork", "Starting file upload, total: ${Constant.selectedFiles.size}")
-        if (SELECTED_SCHOOL_MENU == M_LSRW && data!!.isParentAssignment == true) {
+        if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
             Constant.selectedFiles.removeAt(0)
         }
         isTotalSelectedItem = Constant.selectedFiles.size

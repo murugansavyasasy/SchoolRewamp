@@ -24,20 +24,16 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
-import com.vs.schoolmessenger.Parent.EBooks.Ebooks
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
 import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
-import com.vs.schoolmessenger.School.Assignment.AssignmentReport
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
-import com.vs.schoolmessenger.School.Event.EventReport
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
-import com.vs.schoolmessenger.School.Homework.HomeworkReport
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
@@ -66,7 +62,6 @@ import com.vs.schoolmessenger.Utils.Constant.M_MARK_YOUR_ATTENDANCE
 import com.vs.schoolmessenger.Utils.Constant.M_MESSAGES_FROM_MANAGEMENT
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_ONLINE_MEETING
-import com.vs.schoolmessenger.Utils.Constant.M_ONLINE_TEXT_BOOK
 import com.vs.schoolmessenger.Utils.Constant.M_PTM
 import com.vs.schoolmessenger.Utils.Constant.M_QUIZ_EXAM
 import com.vs.schoolmessenger.Utils.Constant.M_SCHEDULE_EXAM_TEST
@@ -74,7 +69,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_STRENGTH
 import com.vs.schoolmessenger.Utils.Constant.M_STAFF_WISE_ATTENDANCE_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_STUDENT_REPORT
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -132,18 +127,18 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         Constant.hideLoading(this)
         isUserDetails = SharedPreference.getUserDetails(this)
 
-        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
+        if (SELECTED_MENU_ID == M_COMMUNICATION || SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_SCHEDULE_EXAM_TEST || SELECTED_MENU_ID == M_ONLINE_MEETING) {
             isMultipleSchool = false
             if (Constant.isEmergencyVoiceNoticeBoard!!) {
                 binding.lnrTab.visibility = View.GONE
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_LESSON_PLAN || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_INTERACTION_WITH_STUDENT || SELECTED_SCHOOL_MENU == M_LSRW || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == Constant.M_PTM || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM || SELECTED_SCHOOL_MENU == Constant.M_MESSAGES_FROM_MANAGEMENT) {
+        } else if (SELECTED_MENU_ID == M_MARK_YOUR_ATTENDANCE || SELECTED_MENU_ID == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_MENU_ID == M_STUDENT_REPORT || SELECTED_MENU_ID == M_LESSON_PLAN || SELECTED_MENU_ID == M_SCHOOL_STRENGTH || SELECTED_MENU_ID == M_ABSENTEES_REPORT || SELECTED_MENU_ID == M_DAILY_COLLECTION || SELECTED_MENU_ID == M_INTERACTION_WITH_STUDENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == M_FEE_PENDING_REPORT || SELECTED_MENU_ID == M_ATTENDANCE_MARKING || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == Constant.M_PTM || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM || SELECTED_MENU_ID == Constant.M_MESSAGES_FROM_MANAGEMENT) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
 
-        } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+        } else if (SELECTED_MENU_ID == M_NOTICEBOARD) {
             isMultipleSchool = true
             binding.lnrTab.visibility = View.GONE
             binding.rytSend.visibility = View.VISIBLE
@@ -286,17 +281,17 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     Log.d("SelectedSchoolId", selectedSchoolIds[i].toString())
                 }
                 if (selectedSchoolIds.isNotEmpty()) {
-                    if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
+                    if (SELECTED_MENU_ID == M_COMMUNICATION) {
                         showConfirmationAlert(
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
                         )
-                    } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                    } else if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                         showConfirmationAlert(
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
                             resources.getString(R.string.are_you_sure_want_to_send_this_attachment)
                         )
-                    } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+                    } else if (SELECTED_MENU_ID == M_NOTICEBOARD) {
                         val selectedRadioId = binding.radioGroupSendTo.checkedRadioButtonId
 
                         if (selectedRadioId == -1) {
@@ -340,79 +335,79 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     override fun onItemClick(data: StaffDetails) {
-        Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
+        Log.d("SELECTED_SCHOOL_MENU", SELECTED_MENU_ID.toString())
         SharedPreference.putStaffDetails(this, data)
 
-        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST) {
+        if (SELECTED_MENU_ID == M_COMMUNICATION || SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_ONLINE_MEETING || SELECTED_MENU_ID == M_SCHEDULE_EXAM_TEST) {
             val intent = Intent(this, RecipientActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         } else {
-            if (SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING) {
+            if (SELECTED_MENU_ID == M_ATTENDANCE_MARKING) {
                 val intent = Intent(this, AttendanceMark::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+            } else if (SELECTED_MENU_ID == M_HOMEWORK) {
                 val intent = Intent(this, HomeWorkCreate::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
+            } else if (SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS) {
                 val intent = Intent(this, CreateEvent::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT) {
+            } else if (SELECTED_MENU_ID == M_ABSENTEES_REPORT) {
                 val intent = Intent(this, AbsenteesReport::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH) {
+            } else if (SELECTED_MENU_ID == M_SCHOOL_STRENGTH) {
                 val intent = Intent(this, SchoolStrength::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_MESSAGES_FROM_MANAGEMENT) {
+            } else if (SELECTED_MENU_ID == M_MESSAGES_FROM_MANAGEMENT) {
                 val intent = Intent(this, MessageFromManagement::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION) {
+            } else if (SELECTED_MENU_ID == M_DAILY_COLLECTION) {
                 val intent = Intent(this, DailyCollection::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_INTERACTION_WITH_STUDENT) {
+            } else if (SELECTED_MENU_ID == M_INTERACTION_WITH_STUDENT) {
                 val intent = Intent(this, InteractionWithStudent::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_LSRW) {
+            } else if (SELECTED_MENU_ID == M_LSRW) {
                 val intent = Intent(this, LsrwMain::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_STUDENT_REPORT) {
+            } else if (SELECTED_MENU_ID == M_STUDENT_REPORT) {
                 val intent = Intent(this, StudentReport::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_LESSON_PLAN) {
+            } else if (SELECTED_MENU_ID == M_LESSON_PLAN) {
                 val intent = Intent(this, LessonPlan::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT) {
+            } else if (SELECTED_MENU_ID == M_FEE_PENDING_REPORT) {
                 val intent = Intent(this, FeePendingReport::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE) {
+            } else if (SELECTED_MENU_ID == M_MARK_YOUR_ATTENDANCE) {
                 val intent = Intent(this, MarkYourAttendance::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT) {
+            } else if (SELECTED_MENU_ID == M_STAFF_WISE_ATTENDANCE_REPORT) {
                 val intent = Intent(this, StaffWiseAttendanceReport::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_PTM) {
+            } else if (SELECTED_MENU_ID == M_PTM) {
                 val intent = Intent(this, PTM::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+            } else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
                 val intent = Intent(this, AssignmentCreate::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_QUIZ_EXAM) {
+            } else if (SELECTED_MENU_ID == M_QUIZ_EXAM) {
                 val intent = Intent(this, ExamQuiz::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
@@ -424,7 +419,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         ProgressDialogHelper.show(this)
         ProgressDialogHelper.updateProgress(0)  // Start at 0% for accurate incremental updates
 
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+        if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
 
@@ -460,7 +455,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
             else -> {
                 ProgressDialogHelper.dismiss()
-                when (SELECTED_SCHOOL_MENU) {
+                when (SELECTED_MENU_ID) {
                     M_COMMUNICATION -> voiceSendApi()
                     M_ATTACHMENTS -> attachmentSendApi()
                     M_NOTICEBOARD -> noticeboardsendapi()
@@ -493,7 +488,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
                 ProgressDialogHelper.dismiss()
-                when (SELECTED_SCHOOL_MENU) {
+                when (SELECTED_MENU_ID) {
                     M_COMMUNICATION -> voiceSendApi()
                     M_ATTACHMENTS -> attachmentSendApi()
                     M_NOTICEBOARD -> noticeboardsendapi()
@@ -573,7 +568,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
                                 if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                     ProgressDialogHelper.dismiss()
-                                    when (SELECTED_SCHOOL_MENU) {
+                                    when (SELECTED_MENU_ID) {
                                         M_ATTACHMENTS -> attachmentSendApi()
                                         M_COMMUNICATION -> voiceSendApi()
                                         M_NOTICEBOARD -> noticeboardsendapi()
@@ -634,7 +629,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         } else {
             ProgressDialogHelper.dismiss()
-            when (SELECTED_SCHOOL_MENU) {
+            when (SELECTED_MENU_ID) {
                 M_ATTACHMENTS -> attachmentSendApi()
                 M_NOTICEBOARD -> noticeboardsendapi()
             }
@@ -724,7 +719,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            when (SELECTED_SCHOOL_MENU) {
+            when (SELECTED_MENU_ID) {
                 M_COMMUNICATION -> {
                     Log.d("Constant.isCommunicationType", Constant.isCommunicationType.toString())
                     if (Constant.isCommunicationType == 3) {
@@ -748,7 +743,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 M_ATTACHMENTS, M_NOTICEBOARD -> {
                     if (Constant.selectedFiles.size != 1) {
                         isUploadFilesInServer("file")
-                    } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+                    } else if (SELECTED_MENU_ID == M_NOTICEBOARD) {
                         noticeboardsendapi()
                     }
                 }
@@ -772,7 +767,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
             if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()
-                when (SELECTED_SCHOOL_MENU) {
+                when (SELECTED_MENU_ID) {
                     M_ATTACHMENTS -> attachmentSendApi()
                     M_NOTICEBOARD -> noticeboardsendapi()
                 }

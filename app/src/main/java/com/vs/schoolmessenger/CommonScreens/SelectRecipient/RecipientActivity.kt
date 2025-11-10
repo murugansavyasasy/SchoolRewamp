@@ -41,6 +41,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
 import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
@@ -57,7 +58,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.DimOverlayManager
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -325,6 +326,16 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
+                if(response.status){
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_assignment)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                }
             }
         }
 
@@ -357,6 +368,17 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
+
+                if(response.status){
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_voice)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                }
             }
         }
 
@@ -364,6 +386,17 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
+
+                if(response.status){
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_text)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                }
             }
         }
 
@@ -371,6 +404,17 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
+
+                if(response.status){
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_homework)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                }
             }
         }
 
@@ -378,6 +422,17 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
+
+                if(response.status){
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_attachment)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                }
             }
         }
 
@@ -439,7 +494,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun tapVisibility() {
         Log.d("Tap Visibility Check", "Tap Debug Check")
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
-            when (SELECTED_SCHOOL_MENU) {
+            when (SELECTED_MENU_ID) {
                 M_HOMEWORK, Constant.M_QUIZ_EXAM -> {
 
                     binding.nomessage.visibility = View.GONE
@@ -480,8 +535,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 }
             }
         } else {
-            Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
-            when (SELECTED_SCHOOL_MENU) {
+            Log.d("SELECTED_SCHOOL_MENU", SELECTED_MENU_ID.toString())
+            when (SELECTED_MENU_ID) {
                 M_HOMEWORK, Constant.M_QUIZ_EXAM -> {
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
@@ -707,7 +762,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     )
                     isSubjectId = if (position != 0) selectedItem.id else null
 
-                    if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
+                    if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
                         if (position != 0) {
                             binding.rytLevelDropDown.visibility = View.VISIBLE
                             isCheckLevel()
@@ -844,7 +899,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
-                        if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU || Constant.M_HOMEWORK == SELECTED_SCHOOL_MENU || Constant.M_LSRW == SELECTED_SCHOOL_MENU) {
+                        if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID || Constant.M_HOMEWORK == SELECTED_MENU_ID || Constant.M_LSRW == SELECTED_MENU_ID) {
                             if (isSubjectId == null) {
                                 Constant.showValidationAlertPopup(
                                     "Alert",
@@ -852,7 +907,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     this
                                 )
                             } else {
-                                if (Constant.M_QUIZ_EXAM == SELECTED_SCHOOL_MENU) {
+                                if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
                                     if (selectedLevelValue == 0) {
                                         Constant.showValidationAlertPopup(
                                             "Alert",
@@ -1031,7 +1086,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.chAllSelect.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
                 binding.subjectlabel.visibility = View.GONE
-                if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                if (SELECTED_MENU_ID == M_COMMUNICATION || SELECTED_MENU_ID == M_ATTACHMENTS) {
                     binding.btnSpecificStudent.visibility = View.VISIBLE
                 } else {
                     binding.btnSpecificStudent.visibility = View.GONE
@@ -1160,11 +1215,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         ProgressDialogHelper.show(this)
         ProgressDialogHelper.updateProgress(0)
 
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW) {
+        if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW) {
             if (Constant.selectedFiles.isNotEmpty()) {
                 Constant.selectedFiles.removeAt(0)
             }
-            Log.d("UploadDebug", "Removed first file due to menu type: $SELECTED_SCHOOL_MENU")
+            Log.d("UploadDebug", "Removed first file due to menu type: $SELECTED_MENU_ID")
         }
 
         isTotalSelectedItem = Constant.selectedFiles.size
@@ -1222,12 +1277,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         okButton.setOnClickListener {
             alertDialog.dismiss()
 
-            when (SELECTED_SCHOOL_MENU) {
+            when (SELECTED_MENU_ID) {
                 M_HOMEWORK, M_ATTACHMENTS, M_SCHOOL_CLASS_EVENTS, M_ASSIGNMENT, M_LSRW -> {
                     if (Constant.selectedFiles.size != 1) {
                         isUploadFilesInServer("file")
                     } else {
-                        when (SELECTED_SCHOOL_MENU) {
+                        when (SELECTED_MENU_ID) {
                             M_HOMEWORK -> isHomeWorkSend()
                             M_SCHOOL_CLASS_EVENTS -> eventsendapi()
                             M_ASSIGNMENT -> isAssignmentSend()
@@ -1334,7 +1389,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (isVideoSelectedArrayList.isEmpty()) {
             ProgressDialogHelper.updateProgress(100)
             ProgressDialogHelper.dismiss()
-            when (SELECTED_SCHOOL_MENU) {
+            when (SELECTED_MENU_ID) {
                 M_HOMEWORK -> {
                     isHomeWorkSend()
                 }
@@ -1385,7 +1440,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
                     ProgressDialogHelper.updateProgress(100)
                     ProgressDialogHelper.dismiss()
-                    when (SELECTED_SCHOOL_MENU) {
+                    when (SELECTED_MENU_ID) {
                         M_HOMEWORK -> {
                             isHomeWorkSend()
                         }
@@ -1453,7 +1508,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM) {
+        if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
             isGetSubjectList(idString)
         }
         binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size
@@ -1486,7 +1541,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_LSRW || SELECTED_SCHOOL_MENU == Constant.M_QUIZ_EXAM) {
+        if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
             isGetSubjectList(idString)
         }
     }
@@ -1521,7 +1576,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (isVideoSelectedArrayList.isEmpty()) {
                 ProgressDialogHelper.updateProgress(100)
                 ProgressDialogHelper.dismiss()
-                when (SELECTED_SCHOOL_MENU) {
+                when (SELECTED_MENU_ID) {
                     M_HOMEWORK -> isHomeWorkSend()
                     M_COMMUNICATION -> voiceSendApi()
                     M_ASSIGNMENT -> isAssignmentSend()
@@ -1614,7 +1669,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.updateProgress(100)
                                         ProgressDialogHelper.dismiss()
-                                        when (SELECTED_SCHOOL_MENU) {
+                                        when (SELECTED_MENU_ID) {
                                             M_HOMEWORK -> isHomeWorkSend()
                                             M_COMMUNICATION -> voiceSendApi()
                                             M_ATTACHMENTS -> attachmentSendApi()
