@@ -30,7 +30,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
@@ -264,9 +264,9 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
                 ProgressDialogHelper.dismiss()
-                if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
+                if (SELECTED_MENU_ID == M_COMMUNICATION) {
                     voiceSendApi()
-                } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                } else if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                     attachmentSendApi()
                 }
             } else {
@@ -343,9 +343,9 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
-                                        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
+                                        if (SELECTED_MENU_ID == M_COMMUNICATION) {
                                             voiceSendApi()
-                                        } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                                        } else if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                                             attachmentSendApi()
                                         }
                                     } else {
@@ -410,8 +410,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         ProgressDialogHelper.show(this)
         ProgressDialogHelper.updateProgress(10)
 
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK ||
-            SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT
+        if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK ||
+            SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT
         ) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
@@ -460,7 +460,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         okButton.setOnClickListener {
             alertDialog.dismiss()
 
-            when (SELECTED_SCHOOL_MENU) {
+            when (SELECTED_MENU_ID) {
                 M_ATTACHMENTS -> {
                     if (Constant.selectedFiles.size != 1) {
                         isUploadFilesInServer("file")
@@ -535,7 +535,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
             if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()
-                if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                     attachmentSendApi()
                 }
             }

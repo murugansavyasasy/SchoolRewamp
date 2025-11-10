@@ -57,7 +57,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
@@ -658,7 +658,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
 
 
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+        if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
         ProgressDialogHelper.updateProgress(50)

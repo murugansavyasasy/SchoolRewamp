@@ -8,11 +8,9 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
-import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -62,7 +60,7 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_login)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
-                        addProperty(APIKeyNames.menu_id,Constant.SELECTED_SCHOOL_MENU )
+                        addProperty(APIKeyNames.menu_id,Constant.SELECTED_MENU_ID )
                     }
                     appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
 

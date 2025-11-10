@@ -59,6 +59,7 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
         binding.lblClose.setOnClickListener(this)
         binding.btnsubmit.setOnClickListener(this)
         binding.lblMayBeLater.setOnClickListener(this)
+        binding.btnBackHome.setOnClickListener(this)
 
         isRatingData = listOf(
             GetRatingData(1, "Unsatisfactory"),
@@ -142,8 +143,12 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
 
 
             R.id.btnsubmit -> {
-                dismiss()
-                startActivity(Intent(requireContext(), RatingSuccess::class.java))
+                binding.rateUs.visibility = View.GONE
+                binding.rateusSuccess.visibility = View.VISIBLE
+            }
+
+            R.id.btnBackHome -> {
+             dismiss()
             }
         }
     }

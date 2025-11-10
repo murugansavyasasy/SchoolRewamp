@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
@@ -25,6 +26,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClic
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -186,6 +188,15 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             if (response != null) {
                 if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
+
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_view_events)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
                 allOngoingEvents = data.on_going

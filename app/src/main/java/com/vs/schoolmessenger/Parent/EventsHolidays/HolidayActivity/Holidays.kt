@@ -5,10 +5,13 @@ import android.graphics.PorterDuff
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HolidayParentBinding
 
@@ -47,6 +50,16 @@ class Holidays : BaseActivity<HolidayParentBinding>(), View.OnClickListener {
 
         appViewModel?.IsGetHolidayReport?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+
+                val mobileNumber = SharedPreference.getMobileNumber(this)
+                val jsonObject = JsonObject().apply {
+                    addProperty(APIKeyNames.mobile_number, mobileNumber)
+                    addProperty(APIKeyNames.activity, Constant.add_points_view_holidays)
+                    addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                    addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                }
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
+
                 binding.calendarFragmentContainer.visibility = View.VISIBLE
                 val calendarFragment = CalendarFragment.newInstance(response.data)
                 supportFragmentManager.beginTransaction()

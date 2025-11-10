@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
@@ -19,6 +20,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableAdapter
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -144,6 +146,15 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             Log.d("response++", response.toString())
             if (response != null) {
                 if (response == null || !response.status || response.data.isNullOrEmpty()) {
+
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_view_exam_schedule)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
                     Constant.hideLoading(this)
                     showErrorUI(response?.message ?: getString(R.string.no_data_available))
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE

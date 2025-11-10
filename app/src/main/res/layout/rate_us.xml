@@ -16,12 +16,15 @@
         android:radius="16dp">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/rate_us"
             android:layout_width="match_parent"
+            android:visibility="visible"
             android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="visible"
                 android:padding="20dp">
 
                 <TextView
@@ -192,7 +195,85 @@
 
 
             </RelativeLayout>
+
+
         </androidx.core.widget.NestedScrollView>
+
+
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/rateus_success"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:padding="20dp">
+
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/thumbs_up"
+                    android:layout_width="@dimen/two_hundred"
+                    android:layout_height="@dimen/two_hundred"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/hundred"
+                    android:layout_centerHorizontal="true"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/thumbs_up" />
+
+                <TextView
+                    android:id="@+id/lblThankyou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/thumbs_up"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:text="@string/lblThankYou"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirty_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/lblSuccessContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblThankyou"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:text="@string/thank_you_message"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/btnBackHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/lblSuccessContent"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty_five"
+                    android:text="@string/Close"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+
+            </RelativeLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
     </androidx.cardview.widget.CardView>
 </FrameLayout>
 

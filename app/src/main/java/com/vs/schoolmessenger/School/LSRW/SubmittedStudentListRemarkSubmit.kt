@@ -11,9 +11,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,10 +20,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkChildAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 import com.vs.schoolmessenger.R
@@ -34,7 +28,7 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LSRW.Adapter.StudentSubmittedListRemarkAdapter
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.StudentlistRemarksubmitBinding
 
@@ -76,7 +70,7 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
 //        binding.descriptionValue.text = data!!.description
 
         val adapter = StudentSubmittedListRemarkAdapter(
-            this, data!!.fileList, data!!.subjectName!!, SELECTED_SCHOOL_MENU, false
+            this, data!!.fileList, data!!.subjectName!!, SELECTED_MENU_ID, false
         )
         binding.rcChildHW.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
