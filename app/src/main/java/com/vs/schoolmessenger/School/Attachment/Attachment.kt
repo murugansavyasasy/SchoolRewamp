@@ -19,7 +19,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
-import android.text.InputFilter
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -59,7 +58,7 @@ import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
@@ -706,7 +705,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
     fun isUploadFilesInServer(isFileType: String?) {
 
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+        if (SELECTED_MENU_ID == M_ATTACHMENTS) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
         ProgressDialogHelper.updateProgress(50)

@@ -86,7 +86,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
 
 object Constant {
@@ -163,8 +162,7 @@ object Constant {
 
     val M_COUPON_PACKET = 40
 
-    var SELECTED_SCHOOL_MENU = 0
-    var SELECTED_PARENT_MENU = 0
+    var SELECTED_MENU_ID = 0
 
     var isEmergencyVoiceNoticeBoard: Boolean? = false
     var isAccessType: Int? = null

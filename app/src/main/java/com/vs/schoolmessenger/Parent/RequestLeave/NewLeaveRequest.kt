@@ -117,6 +117,15 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this@NewLeaveRequest)
+
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_apply_leave)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
                     Constant.showParentDataValidation(
                         resources.getString(R.string.success), response.message, this
                     )
