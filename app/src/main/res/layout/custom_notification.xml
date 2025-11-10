@@ -4,8 +4,7 @@
     android:layout_marginStart="@dimen/five"
     android:layout_marginEnd="@dimen/five"
     android:elevation="@dimen/four"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/notification_icon"
@@ -26,8 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/notification_icon"
         android:layout_toStartOf="@id/notification_icon"
-        android:ellipsize="end"
-        android:maxLines="2"
         android:text="School Chimes"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp" />
@@ -40,8 +37,6 @@
         android:layout_below="@id/notification_title"
         android:layout_marginTop="5dp"
         android:layout_toStartOf="@id/notification_icon"
-        android:ellipsize="end"
-        android:maxLines="3"
         android:text="This is a new message from your school"
         android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp" />

@@ -69,6 +69,9 @@ object SharedPreference {
         sharedPreferences.edit { putBoolean(KEY_FINGERPRINT_ENABLED, enabled) }
     }
 
+
+
+
     fun isFingerprintEnabled(activity: Activity): Boolean {
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,

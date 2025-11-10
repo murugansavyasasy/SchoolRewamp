@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,7 +52,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.relativeLayout.setOnClickListener {
+        binding.back.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         val isChildDetails = SharedPreference.getChildDetails(requireContext())
@@ -64,6 +68,22 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         fetchCouponSummary()
         fetchPauketPoints()
         binding.backtext.text=Constant.isSelectedMenuName
+        binding.imgSearchToolBar.setOnClickListener(this)
+
+        binding.imgSearchToolBar.setOnClickListener {
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            if (binding.linearlayout.visibility == View.VISIBLE) {
+                binding.linearlayout.visibility = View.GONE
+                binding.editSearch.setText("")
+                imm.hideSoftInputFromWindow(binding.editSearch.windowToken, 0)
+            } else {
+                binding.linearlayout.visibility = View.VISIBLE
+                binding.editSearch.setText("")
+                binding.editSearch.requestFocus()
+                imm.showSoftInput(binding.editSearch, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
+
         appViewModel.getcouponmenu?.observe(viewLifecycleOwner) { response ->
             val categoryList = response?.data?.categories
             if (categoryList.isNullOrEmpty()) {
@@ -100,7 +120,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             earnedPoints = response?.data?.firstOrNull()?.earned ?: 0
             pointspercoupon = response?.data?.firstOrNull()?.per_coupon ?: 0
 
-            binding.totalcoins.text = "$earnedPoints"
+            binding.totalcoins.text = "Total Coins" + " : " + "$earnedPoints"
             binding.usedcoins.text = "${getString(R.string.Used)} : $spentPoints"
             binding.availablecoins.text = "${getString(R.string.Available)} : $remainingPoints"
         }
