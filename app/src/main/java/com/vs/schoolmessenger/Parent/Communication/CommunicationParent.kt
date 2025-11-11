@@ -146,14 +146,22 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                     }
                 } else {
                     hasFetchedMore = true
-                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    if (allVoiceData.isNotEmpty()) {
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    } else {
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    }
                     checkAndShowNoData(
                         filteredList = allVoiceData,
                         message = response.message
                     )
                 }
             } else {
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    if (allVoiceData.isNotEmpty()) {
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    } else {
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    }
                 checkAndShowNoData(message = response?.message?:getString(R.string.something_went_wrong_please_try_again_later))
             }
         }
@@ -163,15 +171,14 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         appViewModel?.isGetCommmunicationlistload?.observe(this) { response ->
             if (response != null) {
                 if (response?.status == true) {
-                    if (response.data.size > 0) {
+                    appendData(response.data, archiveFlag = false)
+                    scrollToMessageId(headerId)
+                } else {
+                    if (allVoiceData.isNotEmpty()) {
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     } else {
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     }
-                    appendData(response.data, archiveFlag = false)
-                    scrollToMessageId(headerId)
-                } else {
-                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     checkAndShowNoData(message = response?.message)
                 }
             }
@@ -430,6 +437,12 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             } else {
                 adapter?.setIsFromArchive(archiveFlag)
                 adapter?.updateList(allVoiceData, isSeeMoreClick)
+            }
+
+            if (allVoiceData.isNotEmpty()) {
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+            } else {
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             }
             applyCombinedFilter()
         }

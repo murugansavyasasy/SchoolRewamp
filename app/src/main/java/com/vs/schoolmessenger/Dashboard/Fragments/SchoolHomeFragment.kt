@@ -176,8 +176,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 response.message
                 Constant.isGlobalVariableData=response.data[0]
                 checkContactPermission()
-
-
             }
         }
 

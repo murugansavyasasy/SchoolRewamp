@@ -39,12 +39,16 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
 
 
         binding.btnLoginContinue.setOnClickListener {
+            binding.btnLoginContinue.isEnabled = false
             if (isValidMobileNumber(binding.txtMobileNumber.text.toString())) {
                 Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
                 isValidateUser()
             } else {
                 Toast.makeText(this, resources.getString(R.string.enter_a_valid_mobile_number), Toast.LENGTH_SHORT).show()
             }
+            binding.btnLoginContinue.postDelayed({
+                binding.btnLoginContinue.isEnabled = true
+            }, 500)
         }
 
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint

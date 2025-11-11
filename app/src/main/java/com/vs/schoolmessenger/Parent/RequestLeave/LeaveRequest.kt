@@ -464,7 +464,34 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     }
 
     private fun onLeaveDeletedSuccess(deletedId: String) {
+        //  Remove from adapter (current filtered list)
         mAdapter.removeItemById(deletedId)
+
+        //  Remove from both lists (original + filtered)
+        originalLeaveList = originalLeaveList.mapNotNull { monthData ->
+            val updatedDetails = monthData.details.filterNot { it.id == deletedId }
+            if (updatedDetails.isNotEmpty()) monthData.copy(details = updatedDetails) else null
+        }
+
+        isLeaveList = isLeaveList.mapNotNull { monthData ->
+            val updatedDetails = monthData.details.filterNot { it.id == deletedId }
+            if (updatedDetails.isNotEmpty()) monthData.copy(details = updatedDetails) else null
+        }
+
+        //  Optional: refresh UI if current list becomes empty
+        if (isLeaveList.isEmpty()) {
+            binding.rcyLeaveRequestHistory.visibility = View.GONE
+            binding.lytList.visibility = View.VISIBLE
+            binding.txtNoData.text = getString(R.string.no_data_found)
+            binding.imgSearchBtn.visibility = View.GONE
+            binding.rytSearch.visibility = View.GONE
+
+        } else {
+            binding.imgSearchBtn.visibility = View.VISIBLE
+            binding.rytSearch.visibility = View.VISIBLE
+            binding.lytList.visibility = View.GONE
+            binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
+        }
     }
 
 

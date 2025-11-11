@@ -139,14 +139,13 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
-
         binding.btnNoticeBoardReport.text=getString(R.string.History)+" "+">>"
 
         appViewModel!!.isEditHomeWork?.observe(this) { response ->
             Constant.hideLoading(this@HomeWorkCreate)
             if (response != null) {
                 Log.d("Response", response.status.toString())
-                Constant.showTopAlertPopup1(response.message, this,false)
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
