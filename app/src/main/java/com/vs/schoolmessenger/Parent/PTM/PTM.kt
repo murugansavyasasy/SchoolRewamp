@@ -148,9 +148,11 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 
                     } else {
                         binding.rytNoDataFound.visibility = View.VISIBLE
+                        binding.NoData.text="No meeting found"
                         binding.recyclerViewSlots.visibility = View.GONE
                     }
                 } else {
+                    binding.NoData.text=response.message?:"No meeting found"
                     binding.rytNoDataFound.visibility = View.VISIBLE
                     binding.recyclerViewSlots.visibility = View.GONE
                 }
@@ -173,6 +175,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 
                                 if (isMeetingHistoryAdapter.itemCount == 0) {
                                     binding.rytNoDataFound.visibility = View.VISIBLE
+                                    binding.NoData.text=response.message?:"No meeting found"
                                     binding.rcyMeetingHistory.visibility = View.GONE
                                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                                 } else {
@@ -254,10 +257,12 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                     isLoadMeetingData(response.data)
                 } else {
                     binding.lytList.visibility = View.VISIBLE
+                    binding.txtNoData.text ="No meeting found"
                     binding.rcyMeetingHistory.visibility = View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 }
             } else {
+                binding.txtNoData.text =response?.message?:"No meeting found"
                 binding.lytList.visibility = View.VISIBLE
                 binding.rcyMeetingHistory.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE

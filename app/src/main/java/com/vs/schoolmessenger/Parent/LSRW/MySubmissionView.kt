@@ -83,7 +83,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
                     binding.rcChildHW.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
                     binding.imageslabel.visibility = View.GONE
-                    binding.noDataFound.text = "No attached image available"
+                    binding.noDataFound.text = response.message?:"No attached image available"
                 }
 
             } else {

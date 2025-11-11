@@ -109,11 +109,14 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                     binding.imgSearchBtn.visibility=View.GONE
                     binding.rcyAttendanceReport.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
+                    binding.txtNoData.text=response.message?:getString(R.string.no_data_found)
                 }
             } else {
                 binding.imgSearchBtn.visibility=View.GONE
                 binding.rcyAttendanceReport.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
+                binding.txtNoData.text=getString(R.string.something_went_wrong_please_try_again_later)
+
             }
         }
     }

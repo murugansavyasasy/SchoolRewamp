@@ -144,7 +144,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
                 binding.rcyrecyclerview.visibility = View.GONE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.rlNoDataContainer.visibility = View.VISIBLE
-                binding.noDataFound.text = getString(R.string.no_data_found)
+                binding.noDataFound.text = response.message?:getString(R.string.no_data_found)
             }
         }
         }
@@ -217,6 +217,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
             binding.rcyrecyclerview.visibility = View.GONE
             binding.rlRecyclerContainer.visibility = View.GONE
             binding.rlNoDataContainer.visibility = View.VISIBLE
+            binding.noDataFound.text=getString(R.string.no_data_found)
         }
 
         binding.rcyrecyclerview.scrollToPosition(0)
