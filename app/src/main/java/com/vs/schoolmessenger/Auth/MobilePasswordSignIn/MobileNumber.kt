@@ -119,7 +119,6 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
             R.id.rytBack -> {
                 onBackPressed()
             }
-
         }
     }
 
