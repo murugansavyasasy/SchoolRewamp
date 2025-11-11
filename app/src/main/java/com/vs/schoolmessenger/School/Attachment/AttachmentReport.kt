@@ -90,6 +90,9 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
 //        binding.lnrTabTwoName.setOnClickListener(this)
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+
+            Constant.hideKeyboardIfOpen(this)
+
             if (binding.search.isVisible) {
                 binding.search.visibility = View.GONE
                 binding.edtSearch.text.clear()

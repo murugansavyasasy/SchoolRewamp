@@ -230,13 +230,16 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
             R.id.btnLoginContinue -> {
                 if (isUserNamePasswordValidation()) {
+                    binding.btnLoginContinue.isEnabled = false
                     Mobile_Number = binding.txtMobileNumber.text.toString()
                     Password = binding.txtPassword.text.toString()
-                    isValidateUser(
-                        Mobile_Number!!, Password!!
-                    )
+                    isValidateUser(Mobile_Number!!, Password!!)
+                    binding.btnLoginContinue.postDelayed({
+                        binding.btnLoginContinue.isEnabled = true
+                    }, 500)
                 }
             }
+
 
             R.id.lblForgetPassword -> {
                 if (binding.txtMobileNumber.text.toString() != "" && binding.txtMobileNumber.text.toString().length == Constant.country_details!!.mobile_number_length.toInt()) {

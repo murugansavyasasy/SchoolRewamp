@@ -4,28 +4,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="25dp"
+    android:padding="@dimen/twenty_five"
     android:background="@drawable/rect_shadow_white">
 
 
     <ImageView
         android:id="@+id/imgVoicePlay"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
         android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/eight"
         android:src="@drawable/video_play" />
 
 
     <SeekBar
         android:id="@+id/audioSeekBar"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="@dimen/thirty"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/imgVoicePlay"
         android:layout_toStartOf="@id/lblCurrentDuration"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp" />
+        android:layout_marginStart="@dimen/twele"
+        android:layout_marginEnd="@dimen/twele" />
 
 
     <TextView
@@ -34,10 +34,10 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/eight"
         android:text="0:03"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="@dimen/fourteen_sp"
         android:fontFamily="sans-serif-medium"/>
 
     <TextView
@@ -46,10 +46,10 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/imgVoicePlay"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="@dimen/twele"
         android:text="00:00"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="@dimen/fourteen_sp"
         android:visibility="gone"/>
 
 </RelativeLayout>

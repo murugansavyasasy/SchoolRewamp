@@ -190,7 +190,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Option C"
+                android:text="@string/option_c"
                 android:textSize="@dimen/fourteen_sp" />
 
             <TextView
@@ -226,7 +226,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Option D"
+                android:text="@string/option_d"
                 android:textSize="@dimen/fourteen_sp" />
 
             <TextView
@@ -248,7 +248,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
-            android:hint="Enter Option D"
+            android:hint="@string/enter_option_d"
             android:padding="@dimen/eight" />
 
 

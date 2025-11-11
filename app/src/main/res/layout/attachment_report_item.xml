@@ -19,7 +19,7 @@
         android:layout_width="@dimen/twenty_five"
         android:layout_height="@dimen/twenty_five"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/ten"
         android:layout_below="@id/imgReadUnRead"
         android:layout_marginEnd="@dimen/twenty_five"
         android:src="@drawable/ic_more_vert"/>

@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fileItem"
-    android:layout_width="36dp"
-    android:layout_height="36dp"
+    android:layout_width="@dimen/thirty_six"
+    android:layout_height="@dimen/thirty_six"
     android:layout_marginTop="@dimen/five"
     android:layout_marginBottom="@dimen/five"
     android:background="@drawable/bg_image_background_white_coupon">

@@ -80,7 +80,7 @@
                 android:text="GET 20% OFF THIS SUMMER"
                 style="@style/CustomTextStylePoppinsBold"
                 android:textSize="@dimen/twenty_sp"
-                android:layout_marginStart="5dp" />
+                android:layout_marginStart="@dimen/five" />
 
             <TextView
                 android:id="@+id/expiry_text"
@@ -89,7 +89,7 @@
                 android:text="Expires on 23rd December"
                 android:textColor="@color/clr_red"
                 android:textStyle="normal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_marginStart="@dimen/five" />
         </LinearLayout>
@@ -155,7 +155,7 @@
                     android:layout_marginEnd="@dimen/twele"
                    style="@style/CustomTextStylePoppinsMedium"
                     android:gravity="center"
-                    android:text="Let the staff scan the QR Code or use the coupon code to claim the offer"
+                    android:text="@string/let_the_staff_scan_the_qr_code_or_use_the_coupon_code_to_claim_the_offer"
                     android:textColor="@color/teacher_clr_grey_dark"
                     android:textStyle="normal" />
             </LinearLayout>
@@ -166,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/fourty"
                 android:padding="@dimen/ten"
-                android:text="Here are some important details to remember..."
+                android:text="@string/here_are_some_important_details_to_remember"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/fourteen_sp"
@@ -250,7 +250,7 @@
                     android:id="@+id/expandable_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="How to use content..."
+                    android:text="@string/how_to_use_content"
                     android:textSize="@dimen/fourteen_sp"
                     android:padding="@dimen/ten"
                     android:layout_marginEnd="@dimen/fourty"

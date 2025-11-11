@@ -17,14 +17,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PassWord
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
@@ -356,6 +354,7 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
             }
 
             R.id.btnNext -> {
+                binding.btnNext.isEnabled = false
                 val isOpt = getOtp()
                 if (isOpt.length == 6) {
                     binding.isLoading.visibility = View.GONE
@@ -364,6 +363,10 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                     binding.isLoading.visibility = View.GONE
                     Toast.makeText(this, R.string.EnterTheOtp, Toast.LENGTH_SHORT).show()
                 }
+
+                binding.btnNext.postDelayed({
+                    binding.btnNext.isEnabled = true
+                }, 500)
             }
 
             R.id.lblContactUs -> {

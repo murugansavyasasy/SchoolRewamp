@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="@dimen/ten"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/eight"
@@ -27,9 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="start"
-            android:text="🧑‍🎓 Student Submissions"
+            android:text="@string/student_submissions_2"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/fifteen_sp" />
 
         <ImageView
             android:id="@+id/icon_search"
@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bottom_linearlayout"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/five"
         android:background="@color/white"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/black"

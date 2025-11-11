@@ -200,7 +200,7 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
             }
 
             R.id.btnLoginContinue -> {
-
+                binding.btnLoginContinue.isEnabled = false
                 if (binding.txtPassword.text.toString() != "") {
                     isValidateUser()
                 } else {
@@ -208,6 +208,10 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
                         this, resources.getString(R.string.EnterThePassWord), Toast.LENGTH_SHORT
                     ).show()
                 }
+
+                binding.btnLoginContinue.postDelayed({
+                    binding.btnLoginContinue.isEnabled = true
+                }, 500)
             }
 
             R.id.lblForgetPassword -> {

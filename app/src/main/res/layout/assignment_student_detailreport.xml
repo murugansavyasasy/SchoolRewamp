@@ -20,7 +20,7 @@
         android:layout_below="@+id/toolbarLayout"
         android:layout_marginEnd="@dimen/twenty_five"
         android:gravity="start"
-        android:textSize="20sp"
+        android:textSize="@dimen/twenty_sp"
         android:text="My Submission"
         >
 
