@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -93,6 +94,8 @@ import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuDetails
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 
@@ -176,8 +179,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 response.message
                 Constant.isGlobalVariableData=response.data[0]
                 checkContactPermission()
-
-
             }
         }
 
@@ -195,10 +196,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 if (status) {
                     val isDashboardResponse = response.data
                     isSchoolDashBoardData = isDashboardResponse
+
+                    if(isDashboardResponse.isNotEmpty() && isDashboardResponse[0].is_birthday) {
+                        showBirthdayPopup()
+                    }
                     Log.d("DashboardDataMenus","DashboardData")
-
                     isSchoolContactDetails = isSchoolDashBoardData!![0].contactDetails
-
                     appViewModel!!.isDashBoardCountData(
                         access_token, Constant.staff_, requireActivity()
                     )
@@ -263,6 +266,71 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         return binding.root
+    }
+
+
+    private fun showBirthdayPopup() {
+        val inflater = LayoutInflater.from(requireActivity())
+        val view = inflater.inflate(R.layout.birthday_popup, null)
+
+        val rootView = requireActivity().findViewById<ViewGroup>(android.R.id.content)
+        val dimView = View(requireActivity()).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        )
+
+        rootView.addView(dimView)
+        rootView.addView(view, layoutParams)
+
+        val imgClose: ImageView = view.findViewById(R.id.imgClose)
+        val txtName: TextView = view.findViewById(R.id.txtName)
+        val txtDate: TextView = view.findViewById(R.id.txtDate)
+        val imgProfile: ImageView = view.findViewById(R.id.imgProfile)
+
+        if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+            access_token = staffDetails!!.access_token
+            txtName.text = userDetails!!.staff_details[0].name
+
+
+            Glide.with(this)
+                .load(userDetails!!.staff_details[0].staff_profile)
+                .error(R.drawable.default_profile)
+                .into(imgProfile)
+
+        } else {
+            access_token = userDetails!!.staff_details[0].access_token
+            if (userDetails!!.staff_details.size > 1) {
+                txtName.text  = userDetails!!.staff_details[0].name
+                Glide.with(this)
+                    .load(userDetails!!.staff_details[0].staff_profile)
+                    .error(R.drawable.default_profile)
+                    .into(imgProfile)
+            } else {
+                txtName.text  = userDetails!!.staff_details[0].name
+                Glide.with(this)
+                    .load(userDetails!!.staff_details[0].staff_profile)
+                    .error(R.drawable.default_profile)
+                    .into(imgProfile)
+            }
+        }
+
+        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.getDefault()).format(Date())
+        txtDate.text = currentDate
+
+
+        imgClose.setOnClickListener {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
     }
 
     private fun getGlobalVariables(token: String) {
@@ -465,6 +533,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
+
     }
 
 

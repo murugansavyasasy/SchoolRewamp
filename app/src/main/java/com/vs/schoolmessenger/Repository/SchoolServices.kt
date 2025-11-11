@@ -17,6 +17,8 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.ReviewResponse
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.SubmitReviewResponse
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
@@ -225,6 +227,8 @@ class SchoolServices {
     var isblockstudentlist: MutableLiveData<BlockedStudentsResponse?>
     var isfrequentlyasked: MutableLiveData<FrequentlyModelResponse?>
     var isdeletenotification: MutableLiveData<DeleteNotificationResponse?>
+    var getreviewlist: MutableLiveData<ReviewResponse?>
+    var reviewpost: MutableLiveData<SubmitReviewResponse?>
     var isgetfeature: MutableLiveData<GetFeature?>
 
 
@@ -341,6 +345,8 @@ class SchoolServices {
         isblockstudentlist= MutableLiveData()
         isfrequentlyasked= MutableLiveData()
         isdeletenotification= MutableLiveData()
+        getreviewlist= MutableLiveData()
+        reviewpost= MutableLiveData()
         isgetfeature= MutableLiveData()
     }
 
@@ -4445,6 +4451,93 @@ class SchoolServices {
 
     val getnewfeatureLiveData: LiveData<GetFeature?>
         get() = isgetfeature
+
+
+
+
+
+
+
+    fun getreviewlist(
+        isToken: String,
+        mobile_number: String
+    ) {
+        RestClient.apiInterfaces.getreviewlist(isToken,mobile_number)
+            ?.enqueue(object : Callback<ReviewResponse?> {
+                override fun onResponse(
+                    call: Call<ReviewResponse?>, response: Response<ReviewResponse?>
+                ) {
+                    Log.d(
+                        "GetMessagesStaff Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getreviewlist.postValue(response.body())
+                            } else {
+                                Log.d("GetMessagesStaffData", response.body().toString())
+                                getreviewlist.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ReviewResponse?>, t: Throwable
+                ) {
+                    getreviewlist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getreviewlistLiveData: LiveData<ReviewResponse?>
+        get() = getreviewlist
+
+
+
+
+    fun reviewpost(
+        isToken: String,
+        jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.reviewpost(isToken,jsonObject)
+            ?.enqueue(object : Callback<SubmitReviewResponse?> {
+                override fun onResponse(
+                    call: Call<SubmitReviewResponse?>, response: Response<SubmitReviewResponse?>
+                ) {
+                    Log.d(
+                        "isAddQuestion Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                reviewpost.postValue(response.body())
+                            } else {
+                                Log.d("isAddQuestionData", response.body().toString())
+                                reviewpost.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SubmitReviewResponse?>, t: Throwable
+                ) {
+                    reviewpost.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val reviewpostLiveData: LiveData<SubmitReviewResponse?>
+        get() = reviewpost
 
 
 }

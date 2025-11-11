@@ -119,6 +119,7 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
     private fun showMyCouponSummaryErrorUI(message: String) {
         binding.nomessage.visibility = View.VISIBLE
         binding.txtNoData.visibility = View.VISIBLE
+        binding.txtNoData.text = message
         binding.recyclerView.visibility = View.GONE
     }
 
@@ -162,7 +163,6 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
-
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_matching_coupon_found)

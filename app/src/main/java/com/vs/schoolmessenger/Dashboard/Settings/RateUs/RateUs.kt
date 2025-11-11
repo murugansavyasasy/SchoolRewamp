@@ -9,9 +9,18 @@ import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.ReviewData
+import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateData
+import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.RateUsBinding
 
 class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
@@ -19,6 +28,11 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
     private var isRatingValue = 0
     private var isRatingData: List<GetRatingData> = ArrayList()
     private var inPutRatingContent: ArrayList<String> = ArrayList()
+    private var isAccessToken: String? = null
+    private var appViewModel: App? = null
+    private var isChildDetails: ChildDetails? = null
+    private var isStaffDetails: StaffDetails? = null
+    var userDetails: UserDetails? = null
 
     override fun getViewBinding(): RateUsBinding {
         return RateUsBinding.inflate(layoutInflater)
@@ -33,6 +47,34 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         binding.btnsubmit.setOnClickListener(this)
         binding.lblMayBeLater.setOnClickListener(this)
 
+
+        isChildDetails = SharedPreference.getChildDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        userDetails = SharedPreference.getUserDetails(this)
+
+        isAccessToken = if (Constant.isParentChoose) {
+            isChildDetails?.access_token
+        } else {
+            isStaffDetails?.access_token
+        }
+
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel?.init()
+
+
+        loadrateusdata()
+
+
+        appViewModel?.getreviewlist?.observe(this) { response ->
+            if (response != null && response.status && response.data.isNotEmpty()) {
+                val review = response.data[0]
+                getrateusData(review)
+
+            } else {
+
+                Log.d("Reviewlist loaded failed"," Review list has been not loaded")
+            }
+        }
 
         isRatingData = listOf(
             GetRatingData(1, "Super"),
@@ -106,6 +148,35 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         }
 
     }
+
+
+    private fun loadrateusdata() {
+        if(Constant.isParentChoose){
+            appViewModel!!.getreviewlist(isAccessToken!!, isChildDetails!!.whatsapp_number)
+        }
+        else{
+            appViewModel!!.getreviewlist(isAccessToken!!, Constant.user_details!!.staff_details[0].mobile_no)
+        }
+    }
+
+
+    private fun getrateusData(data: ReviewData) {
+
+        try {
+            binding.ratingBar.rating = data.rating.toFloat()
+            isRatingValue = data.rating
+            binding.edtSuggestions.setText(data.description)
+            getRatingContent(data.rating)
+            isRating()
+            binding.btnsubmit.isEnabled = true
+            isBackRoundFullChange()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("RateUs", "Error binding review data: ${e.message}")
+        }
+
+    }
+
 
     private fun isRating() {
         binding.imgFeedBack.visibility = View.GONE

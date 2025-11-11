@@ -199,6 +199,8 @@ object APIMethods {
 
 
     const val isdeletenotification = "dashboard/api/dashboard/delete-notification"
+    const val reviewlist = "dashboard/api/reviews/list"
+    const val reviewpost = "dashboard/api/reviews/add"
 
 
 }

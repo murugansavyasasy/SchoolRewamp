@@ -19,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -80,6 +81,7 @@ import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
@@ -162,6 +164,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isParentDashBoardData = isDashboardResponse
 
+                    if(isDashboardResponse.isNotEmpty() && isDashboardResponse[0].is_birthday) {
+                        showBirthdayPopup()
+                    }
+
                     isParentContactDetails = isParentDashBoardData!![0].contactDetails
                     isParentMenuDetails = isParentDashBoardData!![0].menus
                     FrequentParentlyUsedMenuItems = isParentDashBoardData!![0].frequently_used
@@ -232,6 +238,51 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
         return binding.root
     }
+
+
+    private fun showBirthdayPopup() {
+        val inflater = LayoutInflater.from(requireActivity())
+        val view = inflater.inflate(R.layout.birthday_popup, null)
+
+        val rootView = requireActivity().findViewById<ViewGroup>(android.R.id.content)
+        val dimView = View(requireActivity()).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        )
+
+        rootView.addView(dimView)
+        rootView.addView(view, layoutParams)
+
+        val imgClose: ImageView = view.findViewById(R.id.imgClose)
+        val txtName: TextView = view.findViewById(R.id.txtName)
+        val txtDate: TextView = view.findViewById(R.id.txtDate)
+        val imgProfile: ImageView = view.findViewById(R.id.imgProfile)
+
+        txtName.text = childDetails!!.name
+        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.getDefault()).format(Date())
+        txtDate.text = currentDate
+
+        Glide.with(this)
+            .load(childDetails!!.profile)
+            .error(R.drawable.default_profile)
+            .into(imgProfile)
+
+
+        imgClose.setOnClickListener {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+    }
+
 
     private fun getGlobalVariables(token: String) {
         val jsonObject = JsonObject()
