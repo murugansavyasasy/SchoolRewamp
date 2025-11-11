@@ -267,7 +267,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                 Log.d("Permission", "Contact granted: $isGranted")
 
             }
-        requestContactPermission()
+      //  requestContactPermission()
 
         isGetAcademicYear()
     }

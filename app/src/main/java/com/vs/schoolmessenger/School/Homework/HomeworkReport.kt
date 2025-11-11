@@ -84,6 +84,8 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+
+            Constant.hideKeyboardIfOpen(this)
             if (binding.search.visibility == View.VISIBLE) {
                 binding.search.visibility = View.GONE
                 binding.edtSearch.text.clear()
@@ -305,6 +307,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         if (filteredList.isEmpty()) {
             binding.rcyHomeWorkReport.visibility = View.GONE
             binding.lytNoDataFound.visibility = View.VISIBLE
+            binding.noDataFound.visibility = View.VISIBLE
             binding.noDataFound.text = getString(R.string.no_matching_homework_found)
         } else {
             binding.rcyHomeWorkReport.visibility = View.VISIBLE

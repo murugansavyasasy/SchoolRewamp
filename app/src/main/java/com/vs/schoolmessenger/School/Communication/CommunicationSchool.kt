@@ -1132,42 +1132,45 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.lnrHistoryList -> {
-                KeyboardUtils.hideKeyboard(this)
-                stopAudioProgressUpdate()
-                when (Constant.isCommunicationType) {
-                    1 -> {
-                        binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
-                        binding.lnrHistoryList.visibility = View.GONE
-                        binding.rlaBackRecord.visibility = View.VISIBLE
-                        binding.gridViewScheduleCall.visibility = View.GONE
-                        binding.rlaRecordVoice.visibility = View.GONE
-                        binding.rlaMessageFromText.visibility = View.GONE
-                        binding.rlaSendText.visibility = View.GONE
-                        isGetVoiceHistory()
-                    }
 
-                    2 -> {
-                        binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
-                        binding.lnrHistoryList.visibility = View.GONE
-                        binding.rlaBackRecord.visibility = View.VISIBLE
-                        binding.gridViewScheduleCall.visibility = View.VISIBLE
-                        binding.rlaRecordVoice.visibility = View.GONE
-                        binding.rlaMessageFromText.visibility = View.GONE
-                        binding.rlaSendText.visibility = View.GONE
-                        isGetVoiceHistory()
-                    }
+                Handler(Looper.getMainLooper()).postDelayed({
+                    KeyboardUtils.hideKeyboard(this)
+                    stopAudioProgressUpdate()
+                    when (Constant.isCommunicationType) {
+                        1 -> {
+                            binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+                            binding.lnrHistoryList.visibility = View.GONE
+                            binding.rlaBackRecord.visibility = View.VISIBLE
+                            binding.gridViewScheduleCall.visibility = View.GONE
+                            binding.rlaRecordVoice.visibility = View.GONE
+                            binding.rlaMessageFromText.visibility = View.GONE
+                            binding.rlaSendText.visibility = View.GONE
+                            isGetVoiceHistory()
+                        }
 
-                    else -> {
-                        binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
-                        binding.lnrHistoryList.visibility = View.GONE
-                        binding.rlaBackRecord.visibility = View.VISIBLE
-                        binding.gridViewScheduleCall.visibility = View.GONE
-                        binding.rlaRecordVoice.visibility = View.GONE
-                        binding.rlaMessageFromText.visibility = View.GONE
-                        binding.rlaSendText.visibility = View.GONE
-                        isGetTextHistory()
+                        2 -> {
+                            binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+                            binding.lnrHistoryList.visibility = View.GONE
+                            binding.rlaBackRecord.visibility = View.VISIBLE
+                            binding.gridViewScheduleCall.visibility = View.VISIBLE
+                            binding.rlaRecordVoice.visibility = View.GONE
+                            binding.rlaMessageFromText.visibility = View.GONE
+                            binding.rlaSendText.visibility = View.GONE
+                            isGetVoiceHistory()
+                        }
+
+                        else -> {
+                            binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+                            binding.lnrHistoryList.visibility = View.GONE
+                            binding.rlaBackRecord.visibility = View.VISIBLE
+                            binding.gridViewScheduleCall.visibility = View.GONE
+                            binding.rlaRecordVoice.visibility = View.GONE
+                            binding.rlaMessageFromText.visibility = View.GONE
+                            binding.rlaSendText.visibility = View.GONE
+                            isGetTextHistory()
+                        }
                     }
-                }
+                }, 500)
             }
         }
     }
