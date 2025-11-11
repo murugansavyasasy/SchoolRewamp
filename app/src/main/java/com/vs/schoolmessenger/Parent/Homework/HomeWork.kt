@@ -177,6 +177,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                     binding.edtSearch.setText("")
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.cytNoDataFound.visibility = View.VISIBLE
+                    binding.lblNoData.text = response.message?:getString(R.string.no_homework_found)
                     binding.recyclerView.visibility = View.GONE
                     isLoadHomeWorkData(emptyList(), "")
                 }

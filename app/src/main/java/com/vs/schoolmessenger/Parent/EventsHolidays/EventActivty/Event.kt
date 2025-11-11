@@ -237,6 +237,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 hideAllSections()
                 binding.lytNoDataFound.visibility = View.VISIBLE
+                binding.txtNoDataFound.text=response.message?:getString(R.string.no_data_found)
             }
         }
         }
@@ -522,6 +523,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 eventcompletedadapter.itemCount == 0
 
         binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+        binding.txtNoDataFound.text=getString(R.string.no_data_found)
 
         updateDotIndicator()
     }

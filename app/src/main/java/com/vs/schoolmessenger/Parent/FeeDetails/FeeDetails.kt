@@ -145,6 +145,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
+                binding.txtNoData.text = response?.message?:getString(R.string.no_data_found)
                 Log.d("FeeDetails_Response", "No invoices found or response null")
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
 

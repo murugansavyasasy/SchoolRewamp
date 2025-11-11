@@ -77,7 +77,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 } else {
                     binding.recyclerView.visibility = View.GONE
                     binding.lnrNoRecords.visibility = View.VISIBLE
-                    binding.txtNoData.text = getString(R.string.no_data_found)
+                    binding.txtNoData.text =response.message?:getString(R.string.no_data_found)
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 }
             }

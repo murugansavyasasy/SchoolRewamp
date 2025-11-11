@@ -154,7 +154,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 }
             } else {
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                checkAndShowNoData(message = response?.message)
+                checkAndShowNoData(message = response?.message?:getString(R.string.something_went_wrong_please_try_again_later))
             }
         }
         }

@@ -144,6 +144,7 @@
                 </ImageView>
 
                 <TextView
+                    android:id="@+id/NoData"
                     style="@style/CustomTextStylePoppinsBold1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
