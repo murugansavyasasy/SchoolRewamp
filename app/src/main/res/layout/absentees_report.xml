@@ -92,7 +92,7 @@
                         android:id="@+id/class_detailname"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
-                        android:layout_height="27dp"
+                        android:layout_height="@dimen/twenty_seven"
                         android:layout_marginStart="@dimen/eight"
                         android:text="Class : II . Section A"
                         android:textColor="@color/black"
@@ -108,8 +108,8 @@
                         style="@style/CustomTextStylePoppinsMedium"
                         android:textColor="@color/red"
                         android:layout_marginStart="@dimen/eight"
-                        android:layout_marginTop="10dp"
-                        android:textSize="13sp"/>
+                        android:layout_marginTop="@dimen/ten"
+                        android:textSize="@dimen/thirteen_sp"/>
 
                     <ProgressBar
                         android:id="@+id/progressAbsent"
@@ -118,9 +118,9 @@
                         android:layout_height="@dimen/eight"
                         android:progress="80"
                         android:max="100"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/ten"
                         android:progressDrawable="@drawable/absentees_custom_progress"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="@dimen/ten"
                         android:layout_marginTop="@dimen/eight" />
 
 
@@ -132,9 +132,9 @@
                         style="@style/CustomTextStylePoppinsMedium"
                         android:textColor="@color/light_gray"
                         android:layout_gravity="end"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginTop="10dp"
-                        android:textSize="13sp"/>
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:textSize="@dimen/thirteen_sp"/>
 
                     <TextView
                         android:id="@+id/absentListTitle"
@@ -186,7 +186,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/twenty"
-                        android:text="No data found"
+                        android:text="@string/no_data_found"
                         android:textSize="@dimen/fifteen_sp">
 
                     </TextView>

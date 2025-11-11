@@ -981,6 +981,7 @@
     <string name="enter_venue">Enter Venue</string>
     <string name="interaction_with_staff">Interaction with staff</string>
     <string name="please_select_at_least_one_question_from_question_bank">Please select at least one question from Question Bank</string>
+    <string name="apply_for_leave">Apply for Leave</string>
 
 
 </resources>

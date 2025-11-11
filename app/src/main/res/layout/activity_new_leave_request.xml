@@ -497,9 +497,9 @@
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="Apply for Leave"
+                android:text="@string/apply_for_leave"
                 android:textColor="@color/white"
-                android:textSize="16sp">
+                android:textSize="@dimen/sixteen_sp">
 
             </TextView>
 
@@ -513,8 +513,8 @@
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="Update Leave"
-                android:textColor="#FFFFFF"
+                android:text="@string/update_leave"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp"
                 android:visibility="gone">
 
