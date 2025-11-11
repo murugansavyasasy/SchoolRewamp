@@ -982,6 +982,21 @@
     <string name="interaction_with_staff">Interaction with staff</string>
     <string name="please_select_at_least_one_question_from_question_bank">Please select at least one question from Question Bank</string>
     <string name="apply_for_leave">Apply for Leave</string>
+    <string name="product_update">PRODUCT UPDATE</string>
+    <string name="what_s_new_2">WHAT\'S NEW ?</string>
+    <string name="option_c">Option C</string>
+    <string name="option_d">Option D</string>
+    <string name="enter_option_d">Enter Option D</string>
+    <string name="student_submissions_2">🧑‍🎓 Student Submissions</string>
+    <string name="how_to_use_content">How to use content...</string>
+    <string name="let_the_staff_scan_the_qr_code_or_use_the_coupon_code_to_claim_the_offer">Let the staff scan the QR Code or use the coupon code to claim the offer</string>
+    <string name="here_are_some_important_details_to_remember">Here are some important details to remember...</string>
+    <string name="enter_your_reason_here">Enter your reason here....</string>
+    <string name="view_submissions">View Submissions</string>
+    <string name="my_submission">My Submission</string>
+    <string name="add_attachments">Add Attachments</string>
+    <string name="add_description">Add description</string>
+    <string name="description2">description</string>
 
 
 </resources>

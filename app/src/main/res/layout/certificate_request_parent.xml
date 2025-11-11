@@ -224,7 +224,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
                     android:background="@drawable/text_bg"
-                    android:hint="Enter your reason here...."
+                    android:hint="@string/enter_your_reason_here"
                     android:padding="@dimen/ten" />
 
                 <Button
