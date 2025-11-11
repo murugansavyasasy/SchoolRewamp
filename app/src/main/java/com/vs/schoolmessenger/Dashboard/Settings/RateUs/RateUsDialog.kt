@@ -46,7 +46,7 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setGravity(Gravity.CENTER)
             attributes = attributes.apply {
-                dimAmount = 0.6f // background dim
+                dimAmount = 0.6f
             }
         }
     }
