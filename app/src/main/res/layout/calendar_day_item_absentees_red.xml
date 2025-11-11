@@ -17,10 +17,10 @@
 
     <View
         android:id="@+id/dot_indicator"
-        android:layout_width="4dp"
-        android:layout_height="4dp"
+        android:layout_width="@dimen/four"
+        android:layout_height="@dimen/four"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="@dimen/two"
         android:background="@drawable/dot_shape"
         android:visibility="gone" />
 

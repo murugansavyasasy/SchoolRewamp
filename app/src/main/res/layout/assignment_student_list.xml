@@ -62,7 +62,7 @@
             android:layout_toEndOf="@id/avatarText"
             android:text="Submitted:"
             android:textColor="@color/grey"
-            android:textSize="13sp" />
+            android:textSize="@dimen/thirteen_sp" />
 
         <TextView
             android:id="@+id/submittedDate"
@@ -74,7 +74,7 @@
             android:layout_toEndOf="@id/submittedLabel"
             android:text="Mon, 11"
             android:textColor="@color/grey"
-            android:textSize="13sp" />
+            android:textSize="@dimen/thirteen_sp" />
 
         <LinearLayout
             android:id="@+id/statusButton"
@@ -85,8 +85,8 @@
             android:background="@drawable/pending_button_bg"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp">
+            android:paddingStart="@dimen/twele"
+            android:paddingEnd="@dimen/twele">
 
             <ImageView
                 android:id="@+id/cancelimage"

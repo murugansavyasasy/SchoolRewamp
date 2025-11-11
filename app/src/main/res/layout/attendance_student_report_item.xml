@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ABC"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />
 
             <TextView
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/three"
                 android:text="Admission No :000"
-                android:textColor="#777777"
+                android:textColor="@color/very_dark_gray2"
                 android:textSize="@dimen/fourteen_sp" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/three"
                 android:text="Roll No : 000"
-                android:textColor="#777777"
+                android:textColor="@color/very_dark_gray2"
                 android:textSize="@dimen/fourteen_sp"
                  />
         </LinearLayout>
@@ -87,7 +87,7 @@
                     android:layout_marginTop="@dimen/seven"
                     android:gravity="center"
                     android:text="FN"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/twele_sp" />
             </LinearLayout>
 

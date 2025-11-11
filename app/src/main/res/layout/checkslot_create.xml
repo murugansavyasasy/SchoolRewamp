@@ -36,7 +36,7 @@
         android:background="@drawable/bg_orange"
         android:gravity="center"
         android:padding="@dimen/ten"
-        android:text="Open Above Slots"
+        android:text="@string/open_above_slots"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp" />
 </RelativeLayout>

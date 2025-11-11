@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_gradient_student_one_primary"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="@dimen/ten">
 
             <TextView
                 android:id="@+id/unblocktextview"
@@ -91,7 +91,7 @@
     <View
         android:id="@+id/viewline"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/one"
         android:layout_below="@id/lytHeader"
         android:layout_marginTop="@dimen/twenty"
         android:background="@color/light_white_4"

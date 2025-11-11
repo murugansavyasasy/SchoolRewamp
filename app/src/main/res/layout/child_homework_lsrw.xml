@@ -41,7 +41,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:text="Task Details :"
                 android:textColor="@color/mild_grey_dark"
-                android:textSize="15sp" />
+                android:textSize="@dimen/fifteen_sp" />
 
             <RelativeLayout
                 android:id="@+id/headerrelative_layout"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/header_label"
                 android:background="@drawable/rect_shadow_white"
-                android:padding="20dp">
+                android:padding="@dimen/twenty">
 
                 <LinearLayout
                     android:id="@+id/iconContainer"
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:text="ENGLISH"
                         android:textColor="@android:color/black"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/sixteen_sp" />
 
                     <TextView
                         android:id="@+id/txtSubTitle"
@@ -91,8 +91,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Speaking"
-                        android:textColor="#007BFF"
-                        android:textSize="14sp" />
+                        android:textColor="@color/bright_Blue_2"
+                        android:textSize="@dimen/fourteen_sp" />
                 </LinearLayout>
 
                 <TextView
@@ -107,7 +107,7 @@
                     android:maxLines="4"
                     android:text="The Only Way I"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <TextView
                     android:id="@+id/txtDescription1"
@@ -118,8 +118,8 @@
                     android:layout_marginTop="@dimen/four"
                     android:layout_marginEnd="@dimen/twenty"
                     android:text="The First Time the two"
-                    android:textColor="#666666"
-                    android:textSize="13sp" />
+                    android:textColor="@color/light_gray_3"
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <LinearLayout
                     android:id="@+id/attachments_container"
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/eight"
                         android:text="Attachments"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/eighteen_sp" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -190,7 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="09 August, 2025"
-                        android:textColor="#444444"
+                        android:textColor="@color/pale_light_gray_7"
                         android:textSize="@dimen/twele_sp" />
 
                     <View
@@ -205,7 +205,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_purple_circle"
                         android:padding="@dimen/ten"
-                        android:text="My Submission"
+                        android:text="@string/my_submission"
                         android:textColor="@color/white"
                         android:textSize="@dimen/twele_sp"
                         android:visibility="gone" />
@@ -220,10 +220,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Add Attachments"
+                android:text="@string/add_attachments"
                 android:visibility="gone"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="@dimen/fifteen_sp" />
 
             <RelativeLayout
                 android:id="@+id/rytRecyclewview"
@@ -250,9 +250,9 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:visibility="gone"
-                android:text="Add description"
+                android:text="@string/add_description"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="@dimen/fifteen_sp" />
 
             <EditText
                 android:id="@+id/edit_description"
@@ -263,9 +263,9 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_edittext_rounded"
-                android:hint="description"
+                android:hint="@string/description2"
                 android:visibility="gone"
-                android:padding="12dp"
+                android:padding="@dimen/twele"
                 android:textSize="@dimen/fifteen_sp" />
 
             <Button
@@ -273,9 +273,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_shadow_light_primary"
-                android:text="Submit"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:text="@string/submit"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fourteen_sp"
                 android:visibility="gone" />
@@ -289,7 +289,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:text="Submitted Students"
                 android:textColor="@color/mild_grey_dark"
-                android:textSize="15sp" />
+                android:textSize="@dimen/fifteen_sp" />
 
             <FrameLayout
                 android:id="@+id/lsrwgragmentcontainer"

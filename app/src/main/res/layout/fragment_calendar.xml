@@ -9,7 +9,6 @@
     android:layout_marginTop="@dimen/zero">
 
     <RelativeLayout
-        android:layout_marginBottom="@dimen/fifteen"
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -182,6 +181,7 @@
 
 
         <LinearLayout
+            android:visibility="gone"
             android:gravity="center"
             android:orientation="vertical"
             android:id="@+id/lnrErrorMsg"
