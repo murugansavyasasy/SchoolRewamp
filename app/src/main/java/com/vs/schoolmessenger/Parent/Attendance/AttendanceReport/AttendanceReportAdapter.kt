@@ -52,7 +52,7 @@
                 val view =
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.attendance_report_student, parent, false)
-                DataViewHolder(view, context) // Pass context to DataViewHolder
+                DataViewHolder(view, context)
             }
         }
 
