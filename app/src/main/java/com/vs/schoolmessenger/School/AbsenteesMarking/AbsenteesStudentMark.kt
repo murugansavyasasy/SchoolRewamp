@@ -264,16 +264,19 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     private fun sortData(sortType: SortType) {
         val sortedList = when (sortType) {
-            SortType.NO_ASC -> studentsList!!.sortedBy { it.admission_no }
-            SortType.NO_DESC -> studentsList!!.sortedByDescending { it.admission_no }
-            SortType.NAME_ASC -> studentsList!!.sortedBy { it.name }
-            SortType.NAME_DESC -> studentsList!!.sortedByDescending { it.name }
-            SortType.REG_ASC -> studentsList!!.sortedBy { it.roll_no }
-            SortType.REG_DSC -> studentsList!!.sortedByDescending { it.roll_no }
+            SortType.NO_ASC -> studentsList!!.sortedWith(compareBy(Constant.naturalComparator) { it.admission_no })
+            SortType.NO_DESC -> studentsList!!.sortedWith(compareByDescending(Constant.naturalComparator) { it.admission_no })
+            SortType.NAME_ASC -> studentsList!!.sortedBy { it.name?.lowercase() }
+            SortType.NAME_DESC -> studentsList!!.sortedByDescending { it.name?.lowercase() }
+            SortType.REG_ASC -> studentsList!!.sortedWith(compareBy(Constant.naturalComparator) { it.roll_no })
+            SortType.REG_DSC -> studentsList!!.sortedWith(compareByDescending(Constant.naturalComparator) { it.roll_no })
         }
 
         mAdapter.updateData(sortedList)
     }
+
+
+
 
     private fun handleSpinnerSelection(
         position: Int,

@@ -985,6 +985,62 @@ object Constant {
 
 
 
+    /**
+     * Natural alphanumeric comparator that sorts mixed admission/roll numbers properly.
+     * Handles:
+     * - Numbers: 1, 12
+     * - Alpha-number: A1, SS1, A-2
+     * - Number-alpha: 12A, 7-B
+     * - Mixed/symbols: SS-01, SS/1
+     * - Empty or null values → sorted last
+     */
+    private fun naturalSortKey(value: String?): Pair<Int, List<Any>> {
+        if (value.isNullOrBlank()) return Pair(4, emptyList())
+
+        val trimmed = value.trim().replace(Regex("[^A-Za-z0-9]"), "") // remove -, /, spaces
+
+        val category = when {
+            Regex("^[0-9]+$").matches(trimmed) -> 0 // Pure number
+            Regex("^[0-9]+[A-Za-z]+").matches(trimmed) -> 1 // Number-first
+            Regex("^[A-Za-z]+[0-9]+").matches(trimmed) -> 2 // Alpha-first
+            Regex("^[A-Za-z]+$").matches(trimmed) -> 3 // Pure alpha
+            else -> 4 // invalid/mixed
+        }
+
+        val parts = Regex("(\\d+|[A-Za-z]+)").findAll(trimmed).map {
+            it.value.toIntOrNull() ?: it.value.lowercase()
+        }.toList()
+
+        return Pair(category, parts)
+    }
+
+    val naturalComparator = Comparator<String?> { a, b ->
+        val (catA, partsA) = naturalSortKey(a)
+        val (catB, partsB) = naturalSortKey(b)
+
+        if (catA != catB) return@Comparator catA.compareTo(catB)
+
+        for (i in 0 until minOf(partsA.size, partsB.size)) {
+            val pa = partsA[i]
+            val pb = partsB[i]
+
+            val result = when {
+                pa is Int && pb is Int -> pa.compareTo(pb)
+                pa is String && pb is String -> pa.compareTo(pb)
+                pa is Int -> -1
+                pb is Int -> 1
+                else -> 0
+            }
+
+            if (result != 0) return@Comparator result
+        }
+
+        partsA.size.compareTo(partsB.size)
+    }
+
+
+
+
     //"dd-MM-yyyy" to "dd MMMM, yyyy"
     fun formatDate(dateStr: String): String {
         val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())

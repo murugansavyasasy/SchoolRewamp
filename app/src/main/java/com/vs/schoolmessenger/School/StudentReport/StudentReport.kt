@@ -255,12 +255,20 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private fun sortList(sortType: SortType) {
         currentSortType = sortType
         val sortedList = when (sortType) {
-            SortType.ROLL_ASC -> currentFilteredList.sortedBy { it.roll_no }
-            SortType.ROLL_DESC -> currentFilteredList.sortedByDescending { it.roll_no }
-            SortType.NO_ASC -> currentFilteredList.sortedBy { it.admission_no }
-            SortType.NO_DESC -> currentFilteredList.sortedByDescending { it.admission_no }
-            SortType.NAME_ASC -> currentFilteredList.sortedBy { it.name }
-            SortType.NAME_DESC -> currentFilteredList.sortedByDescending { it.name }
+            SortType.ROLL_ASC -> currentFilteredList.sortedWith(
+                compareBy(Constant.naturalComparator) { it.roll_no }
+            )
+            SortType.ROLL_DESC -> currentFilteredList.sortedWith(
+                compareByDescending(Constant.naturalComparator) { it.roll_no }
+            )
+            SortType.NO_ASC -> currentFilteredList.sortedWith(
+                compareBy(Constant.naturalComparator) { it.admission_no }
+            )
+            SortType.NO_DESC -> currentFilteredList.sortedWith(
+                compareByDescending(Constant.naturalComparator) { it.admission_no }
+            )
+            SortType.NAME_ASC -> currentFilteredList.sortedBy { it.name?.lowercase() }
+            SortType.NAME_DESC -> currentFilteredList.sortedByDescending { it.name?.lowercase() }
         }
         mAdapter.updateData(sortedList)
 
