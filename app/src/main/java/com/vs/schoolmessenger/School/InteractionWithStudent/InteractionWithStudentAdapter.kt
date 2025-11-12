@@ -108,7 +108,7 @@ class InteractionWithStudentAdapter(
             subjectheader.text = "Class - ${student.name} (${student.section_name})"
 
             unreadcount.text = student.unread_count.toString()
-            lblLogo.text = Constant.getNameInitials(student.name)
+            lblLogo.text = Constant.getNameInitials(student.subject_name)
 
             if (student.last_msg.isNullOrBlank()) {
                 lblDesc.text = "No messages yet"

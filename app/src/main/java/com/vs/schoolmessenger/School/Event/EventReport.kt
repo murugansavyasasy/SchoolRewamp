@@ -425,91 +425,45 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         val selectedId = selectedCategory?.name
         Log.d("selectedId", selectedId.toString())
 
-        val ongoingFiltered: List<SchoolEventItem>?
-        val upcomingFiltered: List<SchoolEventItem>?
-        val completedFiltered: List<SchoolEventItem>?
 
-        if (selectedId.isNullOrEmpty()) {
-            // Reset to all events (global view)
-            ongoingFiltered = allOngoingEvents
-            upcomingFiltered = allUpcomingEvents
-            completedFiltered = allCompletedEvents
-
-            // Update adapters
-            mAdapter.updateList(ongoingFiltered)
-            eventupcomingadapter.updateList(upcomingFiltered)
-            eventcompletedadapter.updateList(completedFiltered)
-
-            // Update visibilities (missing in original code)
-            updateVisibility(ongoingFiltered, binding.rcyongoingevent, binding.headerview)
-            binding.dotindicator.visibility = if ((ongoingFiltered?.size ?: 0) > 1) View.VISIBLE else View.GONE
-            updateVisibility(upcomingFiltered, binding.rcyupcomingevent, binding.upcomingeventHeaderview)
-            updateVisibility(completedFiltered, binding.rcycompletedevent, binding.completedeventHeaderview)
-        } else {
-            Log.d("isComing", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            ongoingFiltered = if (selectedId == "All") {
-                allOngoingEvents
-            } else {
-                allOngoingEvents?.filter { it.category == selectedId }
-            }
-
-            upcomingFiltered = if (selectedId == "All") {
-                allUpcomingEvents
-            } else {
-                allUpcomingEvents?.filter { it.category == selectedId }
-            }
-
-            completedFiltered = if (selectedId == "All") {
-                allCompletedEvents
-            } else {
-                allCompletedEvents?.filter { it.category == selectedId }
-            }
-
-            Log.d("ongoingFiltered", (ongoingFiltered?.size ?: 0).toString())
-            Log.d("ongoingFiltered", ongoingFiltered.toString())
-            Log.d("upcomingFiltered", (upcomingFiltered?.size ?: 0).toString())
-            Log.d("upcomingFiltered", upcomingFiltered.toString())
-            Log.d("completedFiltered", (completedFiltered?.size ?: 0).toString())
-            Log.d("completedFiltered", completedFiltered.toString())
-
-            // Ongoing section
-            if (!ongoingFiltered.isNullOrEmpty()) {
-                mAdapter.updateList(ongoingFiltered)
-                binding.rcyongoingevent.visibility = View.VISIBLE
-                binding.headerview.visibility = View.VISIBLE
-                binding.dotindicator.visibility = if (ongoingFiltered.size > 1) View.VISIBLE else View.GONE
-            } else {
-                binding.rcyongoingevent.visibility = View.GONE
-                binding.headerview.visibility = View.GONE
-                binding.dotindicator.visibility = View.GONE
-            }
-
-            // Upcoming section
-            if ((upcomingFiltered?.size ?: 0) > 0) {
-                eventupcomingadapter.updateList(upcomingFiltered)
-                binding.rcyupcomingevent.visibility = View.VISIBLE
-                binding.upcomingeventHeaderview.visibility = View.VISIBLE
-            } else {
-                binding.rcyupcomingevent.visibility = View.GONE
-                binding.upcomingeventHeaderview.visibility = View.GONE
-            }
-
-            // Completed section
-            if ((completedFiltered?.size ?: 0) > 0) {
-                eventcompletedadapter.updateList(completedFiltered)
-                binding.rcycompletedevent.visibility = View.VISIBLE
-                binding.completedeventHeaderview.visibility = View.VISIBLE
-            } else {
-                binding.rcycompletedevent.visibility = View.GONE
-                binding.completedeventHeaderview.visibility = View.GONE
-            }
+        val ongoingFiltered: List<SchoolEventItem>? = when {
+            selectedId.isNullOrEmpty() -> allOngoingEvents
+            selectedId.equals("All", ignoreCase = true) -> allOngoingEvents
+            else -> allOngoingEvents?.filter { it.category.equals(selectedId, ignoreCase = true) }
         }
 
-        // Common: Check if all sections empty after filtering and update no-data message (missing in original)
-        val isAllEmpty = (ongoingFiltered?.isNullOrEmpty() == true) &&
-                (upcomingFiltered?.isNullOrEmpty() == true) &&
-                (completedFiltered?.isNullOrEmpty() == true)
-        binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+        val upcomingFiltered: List<SchoolEventItem>? = when {
+            selectedId.isNullOrEmpty() -> allUpcomingEvents
+            selectedId.equals("All", ignoreCase = true) -> allUpcomingEvents
+            else -> allUpcomingEvents?.filter { it.category.equals(selectedId, ignoreCase = true) }
+        }
+
+        val completedFiltered: List<SchoolEventItem>? = when {
+            selectedId.isNullOrEmpty() -> allCompletedEvents
+            selectedId.equals("All", ignoreCase = true) -> allCompletedEvents
+            else -> allCompletedEvents?.filter { it.category.equals(selectedId, ignoreCase = true) }
+        }
+
+        mAdapter.updateList(ongoingFiltered)
+        eventupcomingadapter.updateList(upcomingFiltered)
+        eventcompletedadapter.updateList(completedFiltered)
+
+
+        val hasOngoing = !ongoingFiltered.isNullOrEmpty()
+        binding.rcyongoingevent.visibility   = if (hasOngoing) View.VISIBLE else View.GONE
+        binding.headerview.visibility        = if (hasOngoing) View.VISIBLE else View.GONE
+        binding.dotindicator.visibility      = if (hasOngoing && ongoingFiltered!!.size > 1) View.VISIBLE else View.GONE
+
+        val hasUpcoming = !upcomingFiltered.isNullOrEmpty()
+        binding.rcyupcomingevent.visibility        = if (hasUpcoming) View.VISIBLE else View.GONE
+        binding.upcomingeventHeaderview.visibility = if (hasUpcoming) View.VISIBLE else View.GONE
+
+        val hasCompleted = !completedFiltered.isNullOrEmpty()
+        binding.rcycompletedevent.visibility        = if (hasCompleted) View.VISIBLE else View.GONE
+        binding.completedeventHeaderview.visibility = if (hasCompleted) View.VISIBLE else View.GONE
+
+        val allEmpty = !hasOngoing && !hasUpcoming && !hasCompleted
+        binding.lytNoDataFound.visibility = if (allEmpty) View.VISIBLE else View.GONE
     }
 
 

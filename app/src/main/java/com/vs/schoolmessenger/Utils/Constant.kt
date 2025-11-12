@@ -1045,17 +1045,21 @@ object Constant {
         return when {
             parts.isEmpty() -> ""
             parts.size == 1 -> {
-                // Only one word → just first letter
-                parts[0].first().uppercaseChar().toString()
+                // Single word → first two letters
+                val word = parts[0]
+                word.take(2).uppercase()
             }
 
             else -> {
+                // Multiple words → still can use first letter of first + first letter of second (optional)
                 val first = parts.first().first().uppercaseChar()
-                val last = parts.last().last().uppercaseChar()
-                "$first$last"
+                val second = parts.first().drop(1).firstOrNull()?.uppercaseChar()
+                    ?: parts.last().first().uppercaseChar()
+                "$first$second"
             }
         }
     }
+
 
 
     private fun isSameDay(calendar: Calendar, date: Date): Boolean {
