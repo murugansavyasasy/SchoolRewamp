@@ -164,6 +164,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                     weeklyreportLabel.visibility = View.GONE
                     monthlyLabel.visibility = View.GONE
                     studentsLabel.visibility = View.GONE
+                    rcstudents.visibility = View.GONE
                     rvTopPerformance.visibility = View.GONE
                     topperformanceCardview.visibility = View.GONE
                     monthlyReportcardview.visibility = View.GONE

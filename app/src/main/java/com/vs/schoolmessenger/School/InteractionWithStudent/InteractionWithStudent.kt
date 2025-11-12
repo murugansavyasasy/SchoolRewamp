@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,9 +68,15 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
             if (binding.rytsearch1.isVisible) {
                 binding.rytsearch1.visibility = View.GONE
                 binding.txtVideoMenu1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtVideoMenu1.windowToken, 0)
             } else {
                 binding.rytsearch1.visibility = View.VISIBLE
                 binding.txtVideoMenu1.text.clear()
+
+                binding.txtVideoMenu1.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.txtVideoMenu1, InputMethodManager.SHOW_IMPLICIT)
             }
         }
         appViewModel?.getstudentdetailsforchat?.observe(this) { response ->

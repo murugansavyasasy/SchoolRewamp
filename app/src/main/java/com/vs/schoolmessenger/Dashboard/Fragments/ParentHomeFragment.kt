@@ -30,6 +30,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -262,25 +263,25 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         rootView.addView(dimView)
         rootView.addView(view, layoutParams)
 
-        val imgClose: ImageView = view.findViewById(R.id.imgClose)
         val txtName: TextView = view.findViewById(R.id.txtName)
         val txtDate: TextView = view.findViewById(R.id.txtDate)
         val imgProfile: ImageView = view.findViewById(R.id.imgProfile)
+        val lottieView: LottieAnimationView = view.findViewById(R.id.lottieBirthday)
+        lottieView.playAnimation()
+            Glide.with(this)
+                .load(userDetails!!.staff_details[0].staff_profile)
+                .error(R.drawable.default_profile)
+                .into(imgProfile)
 
-        txtName.text = childDetails!!.name
         val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.getDefault()).format(Date())
         txtDate.text = currentDate
 
-        Glide.with(this)
-            .load(childDetails!!.profile)
-            .error(R.drawable.default_profile)
-            .into(imgProfile)
-
-
-        imgClose.setOnClickListener {
+        dimView.setOnClickListener {
             rootView.removeView(view)
             rootView.removeView(dimView)
         }
+        view.alpha = 0f
+        view.animate().alpha(1f).setDuration(300).start()
     }
 
 
