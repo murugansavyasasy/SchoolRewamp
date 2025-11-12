@@ -999,6 +999,43 @@
     <string name="description2">description</string>
     <string name="submitted_students">Submitted Students</string>
     <string name="all_country">All Country</string>
+    <string name="find_your_country">Find your country</string>
+    <string name="powered_by_savyasasy">Powered by savyasasy</string>
+    <string name="history"><![CDATA[History >>]]></string>
+    <string name="listening">Listening</string>
+    <string name="speaking">Speaking</string>
+    <string name="reading">Reading</string>
+    <string name="writing">Writing</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="in_person">In Person</string>
+    <string name="virtual">Virtual</string>
+    <string name="paste_your_text_here">Paste your text here</string>
+    <string name="select_dates">Select Dates</string>
+    <string name="start_with">Start with</string>
+    <string name="end_with">End with</string>
+    <string name="duration_break"><![CDATA[Duration & Break]]></string>
+    <string name="enter">Enter</string>
+    <string name="minutes">Minutes</string>
+    <string name="slot">Slot</string>
+    <string name="break_duration">Break Duration</string>
+    <string name="are_you_sure_you_want_to_delete_this_lesson_plan">Are you sure you want to delete this lesson plan?</string>
+    <string name="block_student">Block Student</string>
+    <string name="block">Block</string>
+    <string name="NO">NO</string>
+    <string name="YES">YES</string>
+    <string name="overall_grade_1">Overall Grade</string>
+    <string name="subject_marks">Subject Marks</string>
+    <string name="other_activities">Other Activities</string>
+    <string name="share">Share</string>
+    <string name="check_in">CHECK-IN</string>
+    <string name="check_out">CHECK-OUT</string>
+    <string name="hours">HOURS</string>
+    <string name="developer_mode_conflict">Developer Mode Conflict</string>
+    <string name="the_app_encountered_as_error_if_you_have_enabled_developer_mode_on_your_device_please_try_disabling_it_and_relaunching_the_app_if_the_issue_presists_please_contact_customer_support_please_follow_the_path_device_settings_search_for_developer_options_toggle_the_switch_to_off"><![CDATA[The app encountered as error. If you have enabled Developer Mode on your device. please try disabling it and relaunching the app. If the issue presists. please contact customer support. Please follow the path: Device Settings > search for Developer options > toggle the switch to off.]]></string>
+    <string name="admin">Admin</string>
+    <string name="monthly_report">Monthly Report</string>
+    <string name="weekly_report">Weekly Report</string>
+    <string name="tasks">Tasks</string>
 
 
 </resources>

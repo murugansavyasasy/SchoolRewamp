@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Monthly Report"
+                android:text="@string/monthly_report"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp" />
 
@@ -93,7 +93,7 @@
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Weekly Report"
+                                android:text="@string/weekly_report"
                                 android:textColor="@color/black" />
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Tasks"
+                android:text="@string/tasks"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp" />
 

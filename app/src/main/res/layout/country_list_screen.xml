@@ -133,7 +133,7 @@
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@+id/vwMobile"
                 android:background="@null"
-                android:hint="Find your country"
+                android:hint="@string/find_your_country"
                 android:inputType="text"
                 android:maxLength="10"
                 android:paddingHorizontal="@dimen/ten"
@@ -299,7 +299,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/grey"
-                android:text="Powered by savyasasy"/>
+                android:text="@string/powered_by_savyasasy"/>
         </RelativeLayout>
 
 

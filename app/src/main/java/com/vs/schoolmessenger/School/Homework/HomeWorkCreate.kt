@@ -139,7 +139,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
-        binding.btnNoticeBoardReport.text=getString(R.string.History)+" "+">>"
+        binding.btnNoticeBoardReport.text=getString(R.string.History)
 
         appViewModel!!.isEditHomeWork?.observe(this) { response ->
             Constant.hideLoading(this@HomeWorkCreate)

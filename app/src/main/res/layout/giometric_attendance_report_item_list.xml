@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/mild_grey_dark"
                     android:textSize="@dimen/thirteen_sp"
-                    android:text="CHECK-IN"/>
+                    android:text="@string/check_in"/>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -226,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/mild_grey_dark"
                     android:textSize="@dimen/thirteen_sp"
-                    android:text="CHECK-OUT"/>
+                    android:text="@string/check_out"/>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -255,7 +255,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/mild_grey_dark"
                     android:textSize="@dimen/thirteen_sp"
-                    android:text="HOURS"/>
+                    android:text="@string/hours"/>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
