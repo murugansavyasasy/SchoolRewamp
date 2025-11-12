@@ -1036,6 +1036,11 @@
     <string name="monthly_report">Monthly Report</string>
     <string name="weekly_report">Weekly Report</string>
     <string name="tasks">Tasks</string>
+    <string name="dashboard_overview">Dashboard Overview</string>
+    <string name="new_task">+ New Task</string>
+    <string name="active_tasks">Active Tasks</string>
+    <string name="completed_tasks">Completed Tasks</string>
+    <string name="appointment_booking_details">Appointment Booking Details</string>
 
 
 </resources>
