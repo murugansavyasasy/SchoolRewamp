@@ -20,6 +20,8 @@ import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.ReviewResponse
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.SubmitReviewResponse
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionDeleteResponse
@@ -406,6 +408,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isdeletenotification: LiveData<DeleteNotificationResponse?>? = null
         private set
     var getNewFeature: LiveData<GetFeature?>? = null
+    var getreviewlist: LiveData<ReviewResponse?>? = null
+    var reviewpost: LiveData<SubmitReviewResponse?>? = null
 
 
 
@@ -579,6 +583,8 @@ class App(application: Application) : AndroidViewModel(application) {
         getNewFeature = apiSchoolRepositories.getnewfeatureLiveData
         getAttendanceStudentList = apiSchoolRepositories.getAttendanceStudentListLiveData
         isdeletenotification = apiSchoolRepositories.isdeletenotificationLiveData
+        getreviewlist = apiSchoolRepositories.getreviewlistLiveData
+        reviewpost = apiSchoolRepositories.reviewpostLiveData
 
 
     }
@@ -1498,6 +1504,23 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isGetFeature() {
         apiSchoolRepositories.isgetfeature()
     }
+
+
+    fun getreviewlist(
+        isToken: String,
+        mobile_number: String
+    ) {
+        apiSchoolRepositories.getreviewlist(isToken, mobile_number)
+    }
+
+
+    fun reviewpost(
+        isToken: String,
+        jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.reviewpost(isToken, jsonObject)
+    }
+
 
 }
 

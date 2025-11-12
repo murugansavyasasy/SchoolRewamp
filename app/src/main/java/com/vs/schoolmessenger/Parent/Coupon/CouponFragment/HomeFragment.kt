@@ -167,10 +167,12 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
     private fun showCouponSummaryErrorUI(message: String) {
         updateNoDataView(false)
         binding.lblNoRecord.visibility = View.VISIBLE
+        binding.lblNoRecord.text = message
     }
 
     private fun showCategorySummaryErrorUI(message: String) {
         binding.lblNoRecord.visibility = View.VISIBLE
+        binding.lblNoRecord.text = message
         binding.recyclerView.visibility = View.GONE
     }
 

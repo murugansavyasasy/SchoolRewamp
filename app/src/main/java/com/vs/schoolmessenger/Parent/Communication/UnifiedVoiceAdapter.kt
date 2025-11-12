@@ -6,6 +6,7 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -140,6 +141,7 @@ class UnifiedVoiceAdapter(
             listener: VoiceClickListener,
             adapter: UnifiedVoiceAdapter
         ) {
+
             if (position == adapter.itemCount - 1 && adapter.isSeeMoreClick) {
                 lblSeeMoreClick.visibility = View.VISIBLE
             } else {
@@ -217,41 +219,53 @@ class UnifiedVoiceAdapter(
                 if (data.is_unread == true) {
                     lblnewiconText.visibility = View.VISIBLE
                     lblSeeMore.visibility = View.VISIBLE
+                    lblSeeMore.text=context.getString(R.string.view)
                 } else {
                     lblnewiconText.visibility = View.GONE
                     if (lblContentText.lineCount > 3) {
                         lblSeeMore.visibility = View.VISIBLE
-                        lblnewiconText.visibility = View.GONE
+//                        lblnewiconText.visibility = View.GONE //san
                         lblContentText.maxLines = 3
                         lblContentText.ellipsize = TextUtils.TruncateAt.END
                         lblSeeMore.text = context.getString(R.string.see_more_2)
                     } else {
-                        lblSeeMore.visibility = View.GONE
+//                        lblSeeMore.visibility = View.GONE//san
+                        lblContentText.maxLines = Int.MAX_VALUE
+                        lblSeeMore.text = context.getString(R.string.see_less)
+                        Log.d("Gone","Gone...................")
                     }
                 }
 
                 isSeeMoreVisibility(lblContentText, lblSeeMore)
 
                 rlaText.setOnClickListener {
-                    isExpanded = !isExpanded
-                    if (data.is_unread == true) {
-                        if (data.is_archive == true)
-                            listener.onUpdateArchiveStatus(data.type, data.id)
-                        else
-                            listener.onUpdateCommunicationStatus(data.type, data.id)
-                        data.is_unread = false
-                    }
-                    listener.onItemClick(data, this@DataViewHolder)
+//                    isExpanded = !isExpanded //san
+//                    if (data.is_unread == true) {
+//                        lblnewiconText.visibility=View.GONE//san
+//                        if (data.is_archive == true)
+//                            listener.onUpdateArchiveStatus(data.type, data.id)
+//                        else
+//                            listener.onUpdateCommunicationStatus(data.type, data.id)
+//                        data.is_unread = false
+//                    }
+//                    listener.onItemClick(data, this@DataViewHolder)
+                    lblSeeMore.performClick()
                 }
 
                 lblSeeMore.setOnClickListener {
                     lblnewiconText.visibility = View.GONE
                     isExpanded = !isExpanded
-                    lblSeeMore.visibility = View.GONE
+//                    lblSeeMore.visibility = View.GONE //san
                     if (isExpanded) {
+                        Log.d("ShowALl","ShowAll")
                         lblContentText.maxLines = Int.MAX_VALUE
+                        lblSeeMore.text=context.getString(R.string.see_less) //san
+
                     } else {
+                        Log.d("ShowALl","SeeLess")
                         lblContentText.maxLines = 3
+                        lblSeeMore.text=context.getString(R.string.see_more_2) //san
+
                     }
 
                     if (data.is_unread == true) {

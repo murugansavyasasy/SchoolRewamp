@@ -25,6 +25,8 @@ import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.ReviewResponse
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.SubmitReviewResponse
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionDeleteResponse
@@ -1222,5 +1224,23 @@ interface ApiInterfaces {
 
     @GET(APIMethods.isgetfeature)
     fun isgetfeature(): Call<GetFeature?>?
+
+
+
+    @GET(APIMethods.reviewlist)
+    fun getreviewlist(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.mobile_number ) mobile_number : String
+    ): Call<ReviewResponse>
+
+
+
+
+    @POST(APIMethods.reviewpost)
+    fun reviewpost(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<SubmitReviewResponse?>?
+
 
 }
