@@ -9,6 +9,8 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.PopupMenu
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -90,13 +92,6 @@ class LessonPlanAdapter(
             recyclerView.adapter = LessonPlanDetailAdapter(item.details,context)
 
 
-
-            if (requestType == Constant.allclass) {
-                btndelete.visibility = View.GONE
-            } else {
-                btndelete.visibility = View.VISIBLE
-            }
-
             when (item.lesson_plan_status) {
                 3 -> {
                     status_text1label.setImageResource(R.drawable.completed_icon_3)
@@ -117,8 +112,39 @@ class LessonPlanAdapter(
 
                 }
             }
-            btnedit.setOnClickListener { listener.onEditItem(item) }
-            btndelete.setOnClickListener { listener.onDeleteItem(item) }
+
+            btnedit.setOnClickListener {
+
+                val popupView = LayoutInflater.from(context).inflate(R.layout.popup_edit_delete, null)
+                val popupWindow = PopupWindow(
+                    popupView,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    true
+                )
+                popupWindow.elevation = 10f
+
+                val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+                val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+
+                layoutDelete.visibility = if (requestType == Constant.myclass) View.VISIBLE else View.GONE
+
+                layoutEdit.setOnClickListener {
+                    listener.onEditItem(item)
+                    popupWindow.dismiss()
+                }
+
+                layoutDelete.setOnClickListener {
+                    listener.onDeleteItem(item)
+                    popupWindow.dismiss()
+                }
+
+                popupWindow.showAsDropDown(btnedit, 0, 10)
+            }
+
+
+
         }
     }
 
