@@ -70,10 +70,14 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
         isStaffDetails = SharedPreference.getStaffDetails(this)
         userDetails = SharedPreference.getUserDetails(this)
 
-        isAccessToken = if (Constant.isParentChoose) {
-            isChildDetails?.access_token
+        if (Constant.isParentChoose) {
+            isAccessToken = isChildDetails?.access_token
         } else {
-            isStaffDetails?.access_token
+            if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                isAccessToken = isStaffDetails!!.access_token
+            } else {
+                isAccessToken = userDetails!!.staff_details[0].access_token
+            }
         }
 
         appViewModel = ViewModelProvider(this)[App::class.java]

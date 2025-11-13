@@ -268,14 +268,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         val imgProfile: ImageView = view.findViewById(R.id.imgProfile)
         val lottieView: LottieAnimationView = view.findViewById(R.id.lottieBirthday)
         lottieView.playAnimation()
-            Glide.with(this)
-                .load(userDetails!!.staff_details[0].staff_profile)
-                .error(R.drawable.default_profile)
-                .into(imgProfile)
-
+        txtName.text = childDetails!!.name
         val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.getDefault()).format(Date())
         txtDate.text = currentDate
-
+        Glide.with(this)
+            .load(childDetails!!.profile)
+            .error(R.drawable.default_profile)
+            .into(imgProfile)
         dimView.setOnClickListener {
             rootView.removeView(view)
             rootView.removeView(dimView)

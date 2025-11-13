@@ -977,7 +977,7 @@ object Constant {
 
     fun formatDatepostedby(dateStr: String): String {
         val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
 
         val inputDate = inputFormat.parse(dateStr) ?: return dateStr
         return outputFormat.format(inputDate)
@@ -2031,7 +2031,7 @@ object Constant {
 
         return try {
             val inputFormatFull = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 
             val date = try {
                 inputFormatFull.parse(input)
@@ -2096,7 +2096,7 @@ object Constant {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
 
 
-            val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
 
             val date = inputFormat.parse(input)
             date?.let { outputFormat.format(it) } ?: "--"
@@ -2599,6 +2599,18 @@ object Constant {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             val outputFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // fallback if parsing fails
+        }
+    }
+
+
+    fun convertEventDateTimeFormat(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {

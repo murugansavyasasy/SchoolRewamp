@@ -146,7 +146,7 @@ class SchoolEventAdapter(
         fun bind(data: SchoolEventItem, listener: SchoolEventClickListener, context: Context) {
             event_header.text = data.title
             event_time.text =
-                "${data.category} ${data.time} - ${Constant.convertDateTimeFormat(data.date)}"
+                "${data.category} ${data.time} - ${Constant.convertEventDateTimeFormat(data.date)}"
             event_location.text = data.venue
             status_event.text = context.getString(R.string.today_s_event)
             eventdesc.text = data.description
