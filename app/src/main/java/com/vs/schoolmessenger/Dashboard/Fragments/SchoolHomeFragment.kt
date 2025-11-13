@@ -300,14 +300,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         lottieView.playAnimation()
 
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-            access_token = staffDetails!!.access_token
             txtName.text = userDetails!!.staff_details[0].name
             Glide.with(this)
                 .load(userDetails!!.staff_details[0].staff_profile)
                 .error(R.drawable.default_profile)
                 .into(imgProfile)
         } else {
-            access_token = userDetails!!.staff_details[0].access_token
             txtName.text = userDetails!!.staff_details[0].name
             Glide.with(this)
                 .load(userDetails!!.staff_details[0].staff_profile)
