@@ -21,7 +21,7 @@
         android:layout_marginEnd="@dimen/twenty_five"
         android:gravity="start"
         android:textSize="@dimen/twenty_sp"
-        android:text="My Submission"
+        android:text="Submission"
         >
 
     </TextView>

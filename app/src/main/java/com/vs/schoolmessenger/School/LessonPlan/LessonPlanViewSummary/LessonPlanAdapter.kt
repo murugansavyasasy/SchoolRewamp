@@ -79,7 +79,7 @@ class LessonPlanAdapter(
             val activityDetail = item.details.find { it.name.equals(Constant.Activity, ignoreCase = true) }
             val topicDetail = item.details.find { it.name.equals(Constant.Topic, ignoreCase = true) }
 
-            lblSubjectId.text = subject_name + " Language Teaching"
+            lblSubjectId.text = subject_name
             lblTeaching.text = "Chapters Completed "+ completed_items + " - " + total_items
             lblLevel.text = item.lesson_plan_status.toString()?: ""
 

@@ -145,23 +145,20 @@ class MySubmissionAdapter(
                 val parsedDate = apiFormat.parse(data.submitted_on)
 
                 if (parsedDate != null) {
+                    val displayFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+                    val formattedDate = displayFormat.format(parsedDate)
 
-                    submitteddetails.text = "${context.getString(R.string.submitted1)}: ${DateUtils.getRelativeTimeSpanString(
-                        parsedDate.time,
-                        System.currentTimeMillis(),
-                        DateUtils.MINUTE_IN_MILLIS
-                    )}"
+                    submitteddetails.text = "${context.getString(R.string.submitted1)}: $formattedDate"
 
-
-                    val shortDateFormat = SimpleDateFormat(Constant.dd_MMM, Locale.getDefault())
+                    val shortDateFormat = SimpleDateFormat("d MMM", Locale.getDefault())
                     datevalue.text = shortDateFormat.format(parsedDate)
                 } else {
-                    submitteddetails.text = data.submitted_on
+                    submitteddetails.text = "${context.getString(R.string.submitted1)}: ${data.submitted_on}"
                     datevalue.text = data.submitted_on
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                submitteddetails.text = data.submitted_on
+                submitteddetails.text = "${context.getString(R.string.submitted1)}: ${data.submitted_on}"
                 datevalue.text = data.submitted_on
             }
 
@@ -183,6 +180,8 @@ class MySubmissionAdapter(
                     title = title.toString(),
                     description = data.description,
                     subjectName = subject,
+                    created_date = data.submitted_on,
+                    my_submissionadapter = true,
                     sentBy = "",
                     thumbnail = data.thumbnail,
                     isUnread = true,
@@ -212,6 +211,8 @@ class MySubmissionAdapter(
                     title = title.toString(),
                     description = data.description,
                     subjectName = subject,
+                    created_date = data.submitted_on,
+                    my_submissionadapter = true,
                     sentBy = "",
                     thumbnail = data.thumbnail,
                     isUnread = true,
@@ -247,6 +248,8 @@ class MySubmissionAdapter(
                                 title = title.toString(),
                                 description = data.description,
                                 subjectName = subject,
+                                created_date = data.submitted_on,
+                                my_submissionadapter = true,
                                 sentBy = "",
                                 thumbnail = data.thumbnail,
                                 isUnread = true,

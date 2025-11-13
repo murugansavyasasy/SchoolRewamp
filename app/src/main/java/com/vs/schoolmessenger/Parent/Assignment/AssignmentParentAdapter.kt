@@ -137,8 +137,8 @@ class AssignmentParentAdapter(
             lblTitle.text = data.title
             lblCategory.text = data.category
             lblsubject.text = data.subject
-            lblassigned.text = "${context.getString(R.string.Assigned)} : ${ Constant.convertToReadableDate(data?.created_date ?: "")}"
-            lbldeadline.text = "${context.getString(R.string.Deadline)} ${ Constant.convertToReadableDate(data?.end_date ?: "")}"
+            lblassigned.text = "${context.getString(R.string.Assigned)} - ${ Constant.convertToReadableDate(data?.created_date ?: "")}"
+            lbldeadline.text = "${context.getString(R.string.Deadline)} - ${ Constant.convertToReadableDate(data?.end_date ?: "")}"
 
             if(data.submitted_count == 0) {
                 lblSubmitted.visibility = View.GONE
