@@ -207,7 +207,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/txtProfile"
         android:layout_alignParentEnd="true"
-        android:text="START"
+        android:text="@string/Start"
         android:layout_marginTop="10dp"
         android:textSize="14sp"
         style="@style/CustomTextStylePoppinsBold"

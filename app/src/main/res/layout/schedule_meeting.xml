@@ -19,7 +19,7 @@
                 android:id="@+id/selectDate"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_width="match_parent"
-                android:text="Select Date"
+                android:text="@string/select_date"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:textStyle="bold"

@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Explore"
+                android:text="@string/explore"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_weight="1"
-                android:text="&lt;&lt; Previous"
+                android:text="@string/lt_lt_previous"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />
 
@@ -116,7 +116,7 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Next &gt;&gt;"
+                android:text="@string/next_gt_gt"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />
         </LinearLayout>

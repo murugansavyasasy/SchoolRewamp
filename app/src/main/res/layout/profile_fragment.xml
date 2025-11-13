@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/twenty"
-                    android:text="No data found"
+                    android:text="@string/no_data_found"
                     android:textSize="@dimen/fifteen_sp" />
             </LinearLayout>
 

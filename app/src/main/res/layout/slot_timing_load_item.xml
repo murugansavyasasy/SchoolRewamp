@@ -24,7 +24,7 @@
         android:layout_below="@+id/lblTiming"
         android:layout_marginTop="@dimen/five"
         android:gravity="center"
-        android:text="Available"
+        android:text="@string/Available"
         android:textColor="@color/green"
         android:textSize="@dimen/eight" />
 

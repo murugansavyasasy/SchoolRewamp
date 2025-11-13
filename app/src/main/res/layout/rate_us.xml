@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/ten"
-                    android:text="Close"
+                    android:text="@string/Close"
                     android:padding="@dimen/five"
                     style="@style/CustomTextStylePoppinsBold"
                     android:textColor="@color/red"

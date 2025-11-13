@@ -28,7 +28,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="PTM"
+            android:text="@string/ptm"
             android:textColor="@color/white"
             android:textSize="@dimen/twenty"></TextView>
 
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/fifteen"
-                android:text="All"
+                android:text="@string/all"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -183,7 +183,7 @@
                 android:layout_below="@+id/rcyToday"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Upcoming Meetings"
+                android:text="@string/upcoming_meetings"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"></TextView>
 
@@ -240,7 +240,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:gravity="center"
                 android:padding="@dimen/twenty"
-                android:text="No Meeting Found"
+                android:text="@string/no_meeting_found"
                 android:textSize="@dimen/sixteen_sp"
                 android:visibility="gone" />
         </RelativeLayout>

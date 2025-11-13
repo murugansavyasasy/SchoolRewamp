@@ -126,7 +126,7 @@
             android:id="@+id/slideText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="decline or slide to answer"
+            android:text="@string/decline_or_slide_to_answer"
             android:textColor="@color/gray"
             android:textSize="@dimen/sixteen_sp"
             app:layout_constraintBottom_toBottomOf="parent"

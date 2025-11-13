@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total"
+                    android:text="@string/total"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     style="@style/CustomTextStylePoppinsMedium"
@@ -156,7 +156,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Students"
+                    android:text="@string/Students"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     style="@style/CustomTextStylePoppinsMedium"
@@ -265,7 +265,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Staff"
+                    android:text="@string/staff"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     style="@style/CustomTextStylePoppinsMedium"

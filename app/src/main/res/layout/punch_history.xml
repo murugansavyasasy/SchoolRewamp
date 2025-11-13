@@ -59,7 +59,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Staff Information"
+                android:text="@string/staff_information"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen" />
 
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
-                android:text="Personal Institutional details information"
+                android:text="@string/personal_institutional_details_information"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -124,7 +124,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:text="Institution"
+                    android:text="@string/institution"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -181,7 +181,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:text="Staff Name"
+                    android:text="@string/staff_name"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -237,7 +237,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:text="Designation"
+                    android:text="@string/designation"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -282,7 +282,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_toEndOf="@+id/imgDate"
-                    android:text="Date"
+                    android:text="@string/date"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/fifteen" />
 
@@ -363,7 +363,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Active"
+                android:text="@string/active"
                 android:textColor="@color/green"
                 android:textSize="@dimen/thirteen_sp" />
         </RelativeLayout>
