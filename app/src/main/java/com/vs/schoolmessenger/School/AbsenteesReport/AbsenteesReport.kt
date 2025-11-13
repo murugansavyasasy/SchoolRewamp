@@ -88,14 +88,14 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                 updateCalendarWithAbsentDates()
                 setDefaultDateData()
             } else {
-                showErrorUI(response.message ?: "No data available")
+                showErrorUI(response.message ?: getString(R.string.no_data_available))
             }
         }
 
         appViewModel?.getabsenteesstudentbydate?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response == null) {
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
                 return@observe
             }
             if (response.status) {
@@ -103,7 +103,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                 bindStudentList(studentList)
             } else {
                 errorMessage = response.message
-                Toast.makeText(this, response.message ?: "No students found", Toast.LENGTH_SHORT)
+                Toast.makeText(this, response.message ?: getString(R.string.no_student_found), Toast.LENGTH_SHORT)
                     .show()
                 bindStudentList(emptyList())
             }
@@ -188,8 +188,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                     showStudentShimmer()
 
                     // Update basic info
-                    binding.absenteecount.text = "Absentees : $absent"
-                    binding.totalstudentscount.text = "Total students : $student_counts"
+                    binding.absenteecount.text = "${getString(R.string.Absentees)} : $absent"
+                    binding.totalstudentscount.text = "${getString(R.string.total_students)} : $student_counts"
                     binding.classDetailname.text = "$classname - $sectionname"
 
                     // Safely parse to Int
@@ -221,8 +221,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             val total = sectionWise.student_counts.toIntOrNull() ?: 1
             val sectiontotal = sectionWise.student_counts.toIntOrNull() ?: 1
             // Set initial UI values for the first item
-            binding.absenteecount.text = "Absentees : $absent"
-            binding.totalstudentscount.text = "Total students : $sectiontotal"
+            binding.absenteecount.text = "${getString(R.string.Absentees)} : $absent"
+            binding.totalstudentscount.text = "${getString(R.string.total_students)} : $sectiontotal"
             binding.classDetailname.text = "${classWise.class_name} - ${sectionWise.section_name}"
 
             binding.progressAbsent.max = total
@@ -296,7 +296,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
-            Toast.makeText(this, "No students found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_student_found), Toast.LENGTH_SHORT).show()
         }
     }
 

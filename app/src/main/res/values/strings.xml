@@ -1075,8 +1075,18 @@
     <string name="join_now">Join Now</string>
     <string name="you_have_been_blocked_by_the_staff">You have been blocked by the staff</string>
     <string name="explore">Explore</string>
+    <string name="Late_2">Late</string>
+    <string name="OD">OD</string>
     <string name="lt_lt_previous"><![CDATA[<< Previous]]></string>
     <string name="next_gt_gt"><![CDATA[Next >>]]></string>
+    <string name="students_found">students found!</string>
+    <string name="not_taken">Not Taken</string>
+    <string name="forenoon">ForeNoon</string>
+    <string name="afternoon">AfterNoon</string>
+    <string name="Absentees">Absentees</string>
+    <string name="total_students">Total students</string>
+    <string name="select_the_time">"Select the time "</string>
+    <string name="you_cannot_select_a_past_time_for_today">You cannot select a past time for today.</string>
 
 
 </resources>

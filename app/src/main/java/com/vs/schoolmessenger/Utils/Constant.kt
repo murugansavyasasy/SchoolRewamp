@@ -189,6 +189,8 @@ object Constant {
     var fromNotification = "fromNotification"
 
     var school = "A"
+    var Late = "P~"
+    var OD = "OD"
     var P = "P"
     var standard = "C"
     var section = "S"

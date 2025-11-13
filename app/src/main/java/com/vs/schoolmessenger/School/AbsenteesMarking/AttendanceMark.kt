@@ -311,15 +311,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     }
 
                 } else {
-                    if (response.data.get(0).holiday_message!=""){
-                        binding.marqueeText.visibility= View.VISIBLE
-                        binding.marqueeText.isSelected = true
-                        setMarqueeText(binding.marqueeText,response.data.get(0).holiday_message)
-
-                    }
-                    else{
-                        binding.marqueeText.visibility= View.GONE
-                    }
+                    binding.marqueeText.visibility= View.GONE
 
                     if (response.message==Constant.Attendance_has_not_been_taken_yet){
                         ErrorMessage(response.message,R.drawable.no_attendance_taken)
@@ -844,11 +836,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         val container = popupView.findViewById<LinearLayout>(R.id.containerIcons)
 
         val items = listOf(
-            Triple("-", "Not Taken", R.drawable.report_nottaken_icon),
-            Triple("P", "Present", R.drawable.report_present_icon),
-            Triple("OD", "OD", R.drawable.report_od_icon),
-            Triple("LA", "Late", R.drawable.report_latercomer_icon),
-            Triple("A", "Absent", R.drawable.report_absent_icon),
+            Triple("-", getString(R.string.not_taken), R.drawable.report_nottaken_icon),
+            Triple("P", getString(R.string.present), R.drawable.report_present_icon),
+            Triple("OD", getString(R.string.OD), R.drawable.report_od_icon),
+            Triple("LA", getString(R.string.Late_2), R.drawable.report_latercomer_icon),
+            Triple("A", getString(R.string.absent), R.drawable.report_absent_icon),
         )
 
         val popupWindow = PopupWindow(
@@ -866,9 +858,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             val text = SpannableStringBuilder()
 
             val fnLabel = "FN : "
-            val fnValue = "ForeNoon"
+            val fnValue = context.getString(R.string.forenoon)
             val anLabel = " / AN : "
-            val anValue = "AfterNoon"
+            val anValue = context.getString(R.string.afternoon)
 
             val fnLabelStart = text.length
             text.append(fnLabel)

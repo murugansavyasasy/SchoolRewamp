@@ -939,7 +939,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 } else {
                                     Constant.showValidationAlertPopup(
                                         getString(R.string.alert),
-                                        "Select the time ",
+                                        getString(R.string.select_the_time),
                                         this
                                     )
                                 }
@@ -973,7 +973,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 } else {
                                     Constant.showValidationAlertPopup(
                                         getString(R.string.alert),
-                                        "Select the time ",
+                                        getString(R.string.select_the_time),
                                         this
                                     )
                                 }
@@ -1241,7 +1241,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             if (selectedCal.before(calNow)) {
-                Toast.makeText(this, "You cannot select a past time for today.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.you_cannot_select_a_past_time_for_today), Toast.LENGTH_SHORT).show()
 
                 // Clear the respective label
                 if (isFromTime) {
