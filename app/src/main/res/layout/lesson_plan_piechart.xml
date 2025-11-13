@@ -79,25 +79,13 @@
 
                     </TextView>
 
-                    <TextView
-                        android:id="@+id/lblSection"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/lblSubject"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginTop="@dimen/four"
-                        android:text="XII - A"
-                      >
-
-                    </TextView>
 
                     <TextView
                         android:id="@+id/lblStaffName"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/lblSection"
+                        android:layout_below="@+id/lblSubject"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/four"
                         android:text="Sathish"
@@ -105,12 +93,27 @@
 
                     </TextView>
 
+
+                    <TextView
+                        android:id="@+id/lblSection"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblStaffName"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/four"
+                        android:text="XII - A"
+                      >
+
+                    </TextView>
+
+
                     <TextView
                         android:id="@+id/lblStatus"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/lblStaffName"
+                        android:layout_below="@+id/lblSection"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/four"
                         android:gravity="start"

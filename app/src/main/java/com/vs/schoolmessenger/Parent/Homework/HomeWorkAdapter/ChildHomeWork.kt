@@ -202,6 +202,27 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
+        if(SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.my_submissionadapter == true) {
+            binding.toolbarLayout.lblSubjectName.visibility = View.GONE
+
+            binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
+            val params =
+                binding.toolbarLayout.rlaStudentName.layoutParams as RelativeLayout.LayoutParams
+            params.removeRule(RelativeLayout.START_OF)
+            params.addRule(
+                RelativeLayout.START_OF, R.id.lblPostedOn
+            )
+            binding.toolbarLayout.rlaStudentName.layoutParams = params
+            binding.toolbarLayout.lblPostedOn.text =
+                "Posted On : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
+            Log.d("Posted On isStudentlistdetail", data!!.created_date.toString())
+
+            if (data!!.sentBy != "") {
+                binding.lblPostedBy.visibility = View.VISIBLE
+                binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
+            }
+        }
+
         if (SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.isParentAssignment == false) {
             binding.sendtostandardLabel.visibility = View.VISIBLE
             loadAssignemntChildHomewordStandard()
