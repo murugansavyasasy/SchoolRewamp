@@ -77,6 +77,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
 
+
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
@@ -306,6 +307,11 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
 
     private fun isGetNoticeBoardList() {
         Constant.showLoading(this)
+
+        binding.nomessage.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
+        binding.rcyNoticeBoard.visibility = View.VISIBLE
+
         binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
         noticeboardadapter.isLoading = true
@@ -313,6 +319,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
 
         appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
     }
+
 
     fun showEditDeletePopup(data: NoticeStaffData, anchor: View) {
         val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
