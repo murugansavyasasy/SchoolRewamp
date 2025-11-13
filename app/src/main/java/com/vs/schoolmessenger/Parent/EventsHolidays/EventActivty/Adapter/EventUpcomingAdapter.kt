@@ -146,7 +146,6 @@ class EventUpcomingAdapter(
             event_time.text = data.category +" "+data.time + " - " + Constant.convertEventDateTimeFormat(data.date)
             event_location.text = data.venue
             eventdesc.text = data.description
-
             loadingBar.visibility = View.GONE
 
             setupPreviewListeners(data)
