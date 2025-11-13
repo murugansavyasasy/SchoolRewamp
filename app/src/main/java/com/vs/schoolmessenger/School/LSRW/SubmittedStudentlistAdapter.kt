@@ -68,7 +68,7 @@ class SubmittedStudentlistAdapter (
             lblStudentName.text = item.student_name
             sectionlabel.text = item.standard +" - "+ item.section
 
-            if (item.submitted_date == Constant.double_iffin) {
+            if (item.submit_status == Constant.NOTSUBMITTED) {
                 submittedDate.text = item.submit_status
                 submittedLabel.text = ""
             } else {

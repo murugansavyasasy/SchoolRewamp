@@ -66,6 +66,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
 
 
         appViewModel?.islsrwstats?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
 
@@ -298,6 +299,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     }
 
     private fun fetchLsrwstatsReportData(month: Int) {
+        Constant.showLoading(this)
         binding.rclsrwheader.visibility = View.VISIBLE
         appViewModel?.islsrwstats(isAccessToken ?: "", month)
     }

@@ -2600,7 +2600,7 @@ object Constant {
     fun convertDateTimeFormat(input: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
