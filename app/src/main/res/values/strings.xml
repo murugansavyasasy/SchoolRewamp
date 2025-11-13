@@ -1041,6 +1041,42 @@
     <string name="active_tasks">Active Tasks</string>
     <string name="completed_tasks">Completed Tasks</string>
     <string name="appointment_booking_details">Appointment Booking Details</string>
+    <string name="_5_mins">5 mins</string>
+    <string name="_10_mins">10 mins</string>
+    <string name="_20_mins">20 mins</string>
+    <string name="_30_mins">30 mins</string>
+    <string name="clear_all">Clear All</string>
+    <string name="decline_or_slide_to_answer">decline or slide to answer</string>
+    <string name="staff_and_subject_details">Staff And Subject Details</string>
+    <string name="available_slots">Available Slots</string>
+    <string name="payment_done">Payment Done!!</string>
+    <string name="student_name_">Student Name</string>
+    <string name="document_name">Document Name</string>
+    <string name="plus_add">+ Add</string>
+    <string name="no_meeting_found">No meeting found.</string>
+    <string name="search_meetings">Search meetings...</string>
+    <string name="upcoming_meetings">Upcoming Meetings</string>
+    <string name="function_meeting">Function Meeting</string>
+    <string name="slot_duration">Slot Duration</string>
+    <string name="mode_">Mode</string>
+    <string name="classes">Classes</string>
+    <string name="join_meeting">Join Meeting</string>
+    <string name="meeting_slots">Meeting slots</string>
+    <string name="staff_information">Staff Information</string>
+    <string name="personal_institutional_details_information">Personal Institutional details information</string>
+    <string name="institution">Institution</string>
+    <string name="max_marks">Max marks</string>
+    <string name="optional">(Optional)</string>
+    <string name="please_save_contact_to_avoid_spam_calls">Please save contact to avoid spam calls</string>
+    <string name="save_contacts">Save Contacts?</string>
+    <string name="proceed_to_save_contacts">Proceed to save contacts</string>
+    <string name="summary_statics">SUMMARY STATICS</string>
+    <string name="school_strength_visualization">SCHOOL STRENGTH VISUALIZATION</string>
+    <string name="join_now">Join Now</string>
+    <string name="you_have_been_blocked_by_the_staff">You have been blocked by the staff</string>
+    <string name="explore">Explore</string>
+    <string name="lt_lt_previous"><![CDATA[<< Previous]]></string>
+    <string name="next_gt_gt"><![CDATA[Next >>]]></string>
 
 
 </resources>

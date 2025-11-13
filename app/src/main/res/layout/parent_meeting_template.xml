@@ -27,7 +27,7 @@
             android:id="@+id/staffandsubjectdetails"
             android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
-            android:text="Staff And Subject Details"
+            android:text="@string/staff_and_subject_details"
             android:textStyle="bold"
             android:textSize="@dimen/fourteen_sp"
             android:layout_height="wrap_content">
@@ -35,7 +35,7 @@
         <TextView
             android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
-            android:text="Phone Call"
+            android:text="@string/phone_call"
             android:drawableStart="@drawable/phone_call"
             android:textColor="@color/azure_radiance"
             android:textStyle="bold"
@@ -45,7 +45,7 @@
         <TextView
             android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
-            android:text="Available Slots"
+            android:text="@string/available_slots"
             android:drawableStart="@drawable/available_slots"
             android:textStyle="bold"
             android:drawablePadding="@dimen/ten"

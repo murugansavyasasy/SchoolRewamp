@@ -375,7 +375,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/five"
                             android:layout_marginTop="@dimen/ten"
-                            android:text="(Optional)"
+                            android:text="@string/optional"
                             android:textColor="@color/grey"
                             />
 

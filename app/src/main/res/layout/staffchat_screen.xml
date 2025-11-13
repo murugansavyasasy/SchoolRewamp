@@ -118,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/red"
-            android:text="You have been blocked by the staff"
+            android:text="@string/you_have_been_blocked_by_the_staff"
             android:gravity="center"
             android:padding="10dp"
             android:textColor="@color/white"

@@ -39,7 +39,7 @@
                 android:gravity="center"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
-                android:text="View Details"
+                android:text="@string/view_details"
                 style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/white"
                 android:textSize="14sp" />

@@ -658,7 +658,7 @@
                             android:background="@drawable/rounded_bg"
                             android:gravity="center"
                             android:padding="@dimen/five"
-                            android:text="5 mins"
+                            android:text="@string/_5_mins"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -672,7 +672,7 @@
                             android:background="@drawable/rounded_bg"
                             android:gravity="center"
                             android:padding="@dimen/five"
-                            android:text="10 mins"
+                            android:text="@string/_10_mins"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -686,7 +686,7 @@
                             android:background="@drawable/rounded_bg"
                             android:gravity="center"
                             android:padding="@dimen/five"
-                            android:text="20 mins"
+                            android:text="@string/_20_mins"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -700,7 +700,7 @@
                             android:background="@drawable/rounded_bg"
                             android:gravity="center"
                             android:padding="@dimen/five"
-                            android:text="30 mins"
+                            android:text="@string/_30_mins"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"></TextView>
                     </LinearLayout>

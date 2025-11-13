@@ -139,7 +139,7 @@
                 android:background="@drawable/background_radius_button"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="Report a bug"
+                android:text="@string/lblReportbug"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp" />
 
