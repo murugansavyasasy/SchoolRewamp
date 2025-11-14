@@ -8,6 +8,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordCreationResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordResetResponse
+import com.vs.schoolmessenger.Auth.Logout.LogoutResponse
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationResponse
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
@@ -48,6 +49,9 @@ class Auth(application: Application) : AndroidViewModel(application) {
     var isDeviceToken: LiveData<DeviceToken?>? = null
         private set
 
+    var isLogout: LiveData<LogoutResponse?>? = null
+        private set
+
 
     fun init() {
         apiRepositories = AuthServices()
@@ -61,6 +65,7 @@ class Auth(application: Application) : AndroidViewModel(application) {
         isPasswordReset = apiRepositories!!.isPasswordResetLiveData
         isCreateNewPassword = apiRepositories!!.isCreatePassWordLiveData
         isDeviceToken = apiRepositories!!.isUpdateDeviceTokenLiveData
+        isLogout = apiRepositories!!.isLogoutLiveData
     }
 
     fun isCountryList() {
@@ -113,5 +118,9 @@ class Auth(application: Application) : AndroidViewModel(application) {
 
     fun isDeviceToken(jsonObject: JsonObject, activity: Activity) {
         apiRepositories!!.isDeviceToken(jsonObject, activity)
+    }
+
+    fun isLogout(jsonObject: JsonObject, activity: Activity) {
+        apiRepositories!!.isLogout(jsonObject, activity)
     }
 }

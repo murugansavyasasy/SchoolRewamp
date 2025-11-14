@@ -40,6 +40,7 @@ import android.widget.GridView
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -2661,6 +2662,8 @@ object Constant {
 //
 //        datePicker.show()
 //    }
+
+
 
 
     fun setupEditTextWithScroll(context: Context, scrollView: ScrollView, editText: EditText) {

@@ -254,9 +254,10 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
     private fun fetchAssignmentReportData() {
         Constant.showLoading(this@AssignmentReport)
+        binding.toolbarLayout.rytSearch.visibility = View.GONE
+        binding.toolbarLayout.txtSearch.setText("")
         binding.lytNoDataFound.visibility = View.GONE
         binding.rcyAssignmentReport.visibility = View.VISIBLE
-
         val shimmerLoading = !Constant.isShimmerViewDisable
         isAssignmentAdapter = AssignmentAdapter(mutableListOf(), this, this, shimmerLoading)
         binding.rcyAssignmentReport.layoutManager = LinearLayoutManager(this)
@@ -415,4 +416,11 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        fetchAssignmentReportData()
+        binding.toolbarLayout.rytSearch.visibility = View.GONE
+        binding.toolbarLayout.txtSearch.setText("")
+    }
 }

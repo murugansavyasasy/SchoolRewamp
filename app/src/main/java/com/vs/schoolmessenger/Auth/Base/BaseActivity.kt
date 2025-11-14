@@ -39,6 +39,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
@@ -47,6 +48,8 @@ import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.LocalHelperForLanguage
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -82,6 +85,37 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     fun changeLanguage(lang: String) {
         SharedPreference.putLanguage(this, lang)
         recreate()
+    }
+
+    fun isLogout(
+        activity: AppCompatActivity,
+        viewModel: Auth?,
+        secure_id: String,
+        device_type: String,
+        mobile_number: String,
+        onResult: (Boolean, String) -> Unit
+    ) {
+
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.Req_mobile_number, mobile_number)
+            addProperty(APIKeyNames.Req_device_type, device_type)
+            addProperty(APIKeyNames.Req_secure_id, secure_id)
+        }
+
+        // Call API
+        viewModel!!.isLogout(jsonObject, activity)
+        Constant.showLoading(activity)
+
+        // Observe API response
+        viewModel!!.isLogout?.observe(activity) { response ->
+            Constant.hideLoading(activity)
+
+            if (response != null && response.status) {
+                onResult(true, response.message ?: "Success")
+            } else {
+                onResult(false, response?.message ?: "Something went wrong")
+            }
+        }
     }
 
     open fun setupViews() {
@@ -805,43 +839,43 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         listener: OnDateSelectedListener,
         isFromDate: Boolean,
         fromDateMillis: Long,
-        preSelectedDate: String? = null // 👈 add optional pre-selected date
+        preSelectedDate: String? = null
     ) {
         val calendar = Calendar.getInstance()
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
-        // ✅ If a pre-selected date is provided, open the picker with that date
         if (!preSelectedDate.isNullOrEmpty()) {
             try {
-                val parsedDate = sdf.parse(preSelectedDate)
-                if (parsedDate != null) calendar.time = parsedDate
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+                val parsed = sdf.parse(preSelectedDate)
+                if (parsed != null) calendar.time = parsed
+            } catch (e: Exception) {}
         }
 
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(
+        val dialog = DatePickerDialog(
             context,
-            { _, selectedYear, selectedMonth, selectedDay ->
+            { _, y, m, d ->
                 val cal = Calendar.getInstance()
-                cal.set(selectedYear, selectedMonth, selectedDay)
-                val formattedDate = sdf.format(cal.time)
-                listener.onDateSelected(formattedDate)
+                cal.set(y, m, d)
+                listener.onDateSelected(sdf.format(cal.time))
             },
             year, month, day
         )
 
-        // 🚫 Restrict TO-DATE picker’s minimum date
+        // 🚫 Block FUTURE DATES
+        dialog.datePicker.maxDate = System.currentTimeMillis()
+
+        // 🚫 Restrict To-Date minimum date
         if (!isFromDate) {
-            datePickerDialog.datePicker.minDate = fromDateMillis
+            dialog.datePicker.minDate = fromDateMillis
         }
 
-        datePickerDialog.show()
+        dialog.show()
     }
+
 
 
 

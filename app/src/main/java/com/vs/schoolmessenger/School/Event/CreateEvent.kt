@@ -103,6 +103,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     var isFromTime = true
     private var isStaffDetails: StaffDetails? = null
 
+    private var lastSelectedDate: Calendar? = null
+
+
     var selectedDate: Calendar? = null
     private var selectedDateField: Int = 0
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
@@ -149,10 +152,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
         val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
         binding.lblDay.text = dayOfWeek
-
         binding.txtStartDate.text = fullDate
 
-        selectedDate = Calendar.getInstance()
+        lastSelectedDate = Calendar.getInstance()
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -421,9 +423,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     override fun onDateSelected(date: String) {
         when (selectedDateField) {
             1 -> binding.txtStartDate.text = date
-
         }
     }
+
 
     override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
         if (isFromTime) {
@@ -439,6 +441,42 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         if (position == 0) {
             showBottomDialog()
         }
+    }
+
+
+
+    fun showDatePicker11(
+        context: Context,
+        dateFormatType: Boolean,
+        onDateSelected: (String) -> Unit
+    ) {
+        val calendar = lastSelectedDate ?: Calendar.getInstance()
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedCalendar = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+
+                // Save for next time
+                lastSelectedDate = selectedCalendar
+
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(selectedCalendar.time)
+                onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        // Prevent past dates
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+
+        datePickerDialog.show()
     }
 
 
@@ -494,37 +532,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
         timePickerDialog.show()
     }
-    fun showDatePicker11(
-        context: Context,
-        dateFormatType: Boolean,  // Unused now, but kept for compatibility
-        onDateSelected: (String) -> Unit
-    ) {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedCalendar = Calendar.getInstance().apply {
-                    set(selectedYear, selectedMonth, selectedDay)
-                }
-                selectedDate = selectedCalendar  // Store for time restrictions
 
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val formattedDate = sdf.format(selectedCalendar.time)
-                onDateSelected(formattedDate)
-            },
-            year, month, day
-        )
 
-        // FIXED: Always set minDate to now (no past dates). Ignore dateFormatType for maxDate unless needed.
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
-        // If you want a maxDate (e.g., 1 year future), add: datePickerDialog.datePicker.maxDate = calendar.timeInMillis + (365L * 24 * 60 * 60 * 1000)
 
-        datePickerDialog.show()
-    }
     private fun showBottomDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

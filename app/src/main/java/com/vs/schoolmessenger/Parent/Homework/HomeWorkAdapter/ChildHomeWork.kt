@@ -611,15 +611,34 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         appViewModel?.islsrwSkillSubmit?.observe(this) { response ->
             Constant.hideLoading(this@ChildHomeWork)
+            binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
             response?.let {
                 Log.d("Response", it.status.toString())
-                showTopAlertParentPopup(it.message, this)
                 if (it.status) {
+                    binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.rcyImages.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
+
+                    val submittedFiles = Constant.isAwsUploadedFiles.map { aws ->
+                        FileItem(aws.isFileUrl, FileType.valueOf(aws.isFileType))
+                    }
+
+                    if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
+                        Constant.selectedFiles.removeAll { it.path == dummyPath }
+                    }
+
                     Constant.selectedFiles.clear()
+                    Constant.selectedFiles.addAll(submittedFiles)
+                    mAdapter?.notifyDataSetChanged()
+
                     Constant.isAwsUploadedFiles.clear()
                     isVideoSelectedArrayList.clear()
-                    mAdapter?.notifyDataSetChanged()
                 }
+                showTopAlertParentPopup(it.message, this)
             }
         }
 
@@ -887,7 +906,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun LsrwSubmitSkill() {
-        binding.rytRecyclewview.visibility = View.VISIBLE
+        binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
         val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
         if (description.isEmpty()) {
@@ -1519,6 +1538,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun showTopAlertParentPopup(message: String, activity: Activity) {
+        binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
 
