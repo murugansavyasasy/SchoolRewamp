@@ -76,16 +76,23 @@ class ImagePickingAdapter(
         }
 
 
-        Glide.with(holder.img.context)
+        Glide.with(context)
             .load(fileUri)
-            .apply(
-                RequestOptions()
-                    .centerCrop()
-                    .dontTransform()
-                    .skipMemoryCache(true) // bypass memory cache
-                    .diskCacheStrategy(DiskCacheStrategy.NONE) // bypass disk cache
-            )
+            .placeholder(placeholderRes)
+            .apply(RequestOptions().dontTransform())
+            .error(placeholderRes)
             .into(holder.img)
+
+//        Glide.with(holder.img.context)
+//            .load(fileUri)
+//            .apply(
+//                RequestOptions()
+//                    .centerCrop()
+//                    .dontTransform()
+//                    .skipMemoryCache(true) // bypass memory cache
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE) // bypass disk cache
+//            )
+//            .into(holder.img)
 
         holder.del.visibility = if (pos == 0) GONE else VISIBLE
         holder.del.setOnClickListener {
