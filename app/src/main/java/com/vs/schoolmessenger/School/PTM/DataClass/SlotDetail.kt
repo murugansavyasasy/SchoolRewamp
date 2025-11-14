@@ -11,7 +11,7 @@ data class SlotDetail(
     val break_duration: String,
     val start_time: String,
     val end_time: String,
-    val profiles: List<Any>,
+    val profiles: List<String>,
     val slots: List<Slot>,
     val std_sec_details: List<ClassSection>,
     val join_url: String?,

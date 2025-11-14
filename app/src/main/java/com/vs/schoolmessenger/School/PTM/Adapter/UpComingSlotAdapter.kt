@@ -75,18 +75,14 @@ class UpComingSlotAdapter(
             lblTime.text = "${data.start_time} - ${data.end_time}"
 
             val profiles = data.profiles.map { it.toString() }
-            if (profiles.isEmpty()) {
-                img1.visibility = View.GONE
-                img2.visibility = View.GONE
-                img3.visibility = View.GONE
-                lblCount.visibility = View.GONE
+            img1.visibility = View.GONE
+            img2.visibility = View.GONE
+            img3.visibility = View.GONE
+            lblCount.visibility = View.GONE
+            if (data.profiles.isEmpty()) {
                 tvNoProfiles.visibility = View.VISIBLE
             } else {
                 tvNoProfiles.visibility = View.GONE
-                img1.visibility = View.GONE
-                img2.visibility = View.GONE
-                img3.visibility = View.GONE
-                lblCount.visibility = View.GONE
 
                 for (i in profiles.indices.take(3)) {
                     val imageView = when (i) {

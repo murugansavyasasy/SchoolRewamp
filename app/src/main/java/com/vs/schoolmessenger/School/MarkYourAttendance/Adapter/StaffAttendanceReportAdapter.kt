@@ -58,8 +58,6 @@ class StaffAttendanceReportAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-
-
         private val lblName: TextView = itemView.findViewById(R.id.lblName)
         private val lblRole: TextView = itemView.findViewById(R.id.lblRole)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)

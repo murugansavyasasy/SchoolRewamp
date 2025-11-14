@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.PTM.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,16 +60,18 @@ class ParentMeetingAdapter(
 
         val mode = meeting.slots.firstOrNull()?.event_mode ?: "Meeting"
         holder.btnMeetingType.text = mode
+        Log.d("mode",mode)
 
         val firstLetter = meeting.staff_name?.trim()?.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
         holder.tvProfileIcon.text = firstLetter
 
         val modeIconRes = when (mode.lowercase()) {
-            "In person" -> R.drawable.person_white_bg
-            "Phone call" -> R.drawable.phone_icon_bg
-            "Virtual" -> R.drawable.network
+            "in person", "in-person", "person" -> R.drawable.person_white_bg
+            "phone call", "call", "phone" -> R.drawable.phone_icon_bg
+            "virtual", "online", "video call", "zoom" -> R.drawable.network
             else -> R.drawable.phone_icon_bg
         }
+
         holder.imgMeetingType.setImageResource(modeIconRes)
 
         holder.rvSlots.layoutManager = GridLayoutManager(holder.itemView.context, 2)

@@ -134,7 +134,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     Constant.showTopAlertPopup1(
                         response.message?:"No standards found for selected academic year",
                         this,
-                        false
+                        true
                     )
                 }
             }
@@ -233,6 +233,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
+
 
     private fun isGetStandardSection() {
         appViewModel!!.isGetStandardSection(isAccessToken!!, isAcademicYearId, this)

@@ -80,7 +80,12 @@ class StaffSlotStatusAdapter(
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: Slot, position: Int, listener: StaffSlotCancelReOpenClickListener) {
             lblBookedName.text = data.booked_by
-            lblStatus.text = data.status
+
+            if (data.status == "Upcoming") {
+                lblStatus.text = "Booked"
+            } else {
+                lblStatus.text = data.status
+            }
             lblDuration.text = "Duration - ${data.meeting_duration} Minutes"
             lblTime.text = data.from_time + " - " + data.to_time
             lblStandardAndSection.text = "${data.my_class} - ${data.my_section}"
@@ -99,7 +104,7 @@ class StaffSlotStatusAdapter(
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.exclamationmark_circle))
                     imgDot.visibility = if (data.can_cancel && shouldShowImgDot(
                             data.date,
-                            data.to_time
+                            data.from_time
                         ) == View.VISIBLE
                     )
                         View.VISIBLE else View.GONE
@@ -164,7 +169,7 @@ class StaffSlotStatusAdapter(
                     lblBookedName.text = data.booked_by
                     imgDot.visibility = if (data.can_cancel && shouldShowImgDot(
                             data.date,
-                            data.to_time
+                            data.from_time
                         ) == View.VISIBLE
                     ) View.VISIBLE else View.GONE
                     imgDot.setOnClickListener {

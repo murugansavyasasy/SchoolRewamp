@@ -66,6 +66,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         appViewModel!!.init()
 
         binding.lblMeetingTitle.text = isSlotsDetails.event_name
+        binding.lblHostName.text = isSlotsDetails.meeting_duration.toString() + " Minutes"
         binding.lblMeetingMode.text = "Mode" + " - " + isSlotsDetails.event_mode
         binding.lblModeMeeting.text = isSlotsDetails.event_mode
         binding.lblDate.text = formatApiDateToDisplay(isSlotsDetails.date)
