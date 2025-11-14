@@ -887,6 +887,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun LsrwSubmitSkill() {
+        binding.rytRecyclewview.visibility = View.VISIBLE
         val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
         if (description.isEmpty()) {
