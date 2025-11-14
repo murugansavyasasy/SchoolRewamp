@@ -85,7 +85,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
                 if (response.status) {
                     showDataValidation(
                         resources.getString(R.string.success),
-                        response.message ?: "Updated successfully", requireActivity()
+                        response.message ?: getString(R.string.updated_successfully), requireActivity()
                     )
                 } else {
                     showDataValidation(
@@ -107,7 +107,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
                 binding.lytList.visibility = View.GONE
             } else {
 
-                showErrorUI(response?.message ?: "No blocked data available")
+                showErrorUI(response?.message ?: getString(R.string.no_blocked_data_available))
             }
         }
     }

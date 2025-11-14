@@ -282,7 +282,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     if (response.data.get(0).holiday_message!=""){
                         binding.marqueeText.visibility= View.VISIBLE
                         binding.marqueeText.isSelected = true
-                        setMarqueeText(binding.marqueeText,response.data.get(0).holiday_message)
+                        setMarqueeText(binding.marqueeText,"📢 ${response.data.get(0).holiday_message}")
                     }
                     else{
                         binding.marqueeText.visibility= View.GONE

@@ -381,9 +381,9 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         val today = LocalDate.now()
 
         return when {
-            selectedDate.isEqual(today) -> "Today"
-            selectedDate.isEqual(today.plusDays(1)) -> "Tomorrow"
-            selectedDate.isEqual(today.minusDays(1)) -> "Yesterday"
+            selectedDate.isEqual(today) -> getString(R.string.today)
+            selectedDate.isEqual(today.plusDays(1)) -> getString(R.string.tomorrow)
+            selectedDate.isEqual(today.minusDays(1)) -> getString(R.string.yesterday)
             else -> selectedDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
         }
     }

@@ -1086,6 +1086,15 @@
     <string name="Absentees">Absentees</string>
    <string name="select_the_time">Select the time</string>
     <string name="you_cannot_select_a_past_time_for_today">You cannot select a past time for today.</string>
+    <string name="mic_announcement">📢</string>
+    <string name="Unknown">Unknown</string>
+    <string name="Added">Added</string>
+    <string name="file">file</string>
+    <string name="you_have_reached_the_maximum_file_limit">You have reached the maximum file limit.</string>
+    <string name="time_cannot_be_past">Time cannot be past</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="updated_successfully">Updated successfully</string>
+    <string name="no_blocked_data_available">No blocked data available</string>
 
 
 </resources>

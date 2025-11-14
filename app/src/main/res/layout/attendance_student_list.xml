@@ -24,26 +24,26 @@
 
             <TextView
                 android:id="@+id/lblName"
-                style="@style/CustomTextStylePoppinsBold"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Murugan"
-                android:textSize="@dimen/twele_sp" />
+                android:textSize="@dimen/seventeen_sp" />
 
             <TextView
                 android:id="@+id/lblAdmissionNoValue"
-                style="@style/CustomTextStylePoppinsBold"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
                 android:text="123456"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/ten_sp"
+                android:textSize="@dimen/twele_sp"
                 />
 
             <TextView
                 android:id="@+id/lblRollNo"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

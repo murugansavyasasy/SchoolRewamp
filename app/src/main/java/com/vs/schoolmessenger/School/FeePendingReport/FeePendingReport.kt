@@ -126,14 +126,14 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                 if (!item.category.isNullOrEmpty()) {
                     val feeList = item.pending_data?.map { fee ->
                         FeePendingCollectionDisplayItem.Fee(
-                            fee.type_name ?: "Unknown",
+                            fee.type_name ?: getString(R.string.Unknown),
                             fee.amount ?: "0"
                         )
                     } ?: emptyList()
 
                     flatList.add(
                         FeePendingCollectionDisplayItem.Header(
-                            item.category ?: "Unknown",
+                            item.category ?: getString(R.string.Unknown),
                             item.total ?: "0",
                             feeList
                         )

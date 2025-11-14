@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/light_white">
+    android:background="@color/light_white_2">
 
     <View
         android:id="@+id/statusBarBackground"
@@ -709,7 +709,7 @@
                                     android:layout_centerVertical="true"
                                     android:layout_alignParentStart="true"
                                     android:layout_width="@dimen/fourty"
-                                    android:src="@drawable/report_latecomer_2"
+                                    android:src="@drawable/latecomer_icon_4"
                                     android:layout_height="@dimen/fourty">
 
                                 </ImageView>

@@ -44,12 +44,21 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
             PorterDuff.Mode.SRC_IN
         )
 
+        if (childDetails!!.profile!=""){
+            Glide.with(this)
+                .load(childDetails!!.profile)
+                .placeholder(R.drawable.user_vector_icon)
+                .error(R.drawable.user_vector_icon)
+                .into(binding.profileImage1)
+        }
+        else{
+            Glide.with(this)
+                .load(binding.profileImage1)
+                .placeholder(R.drawable.user_vector_icon)
+                .error(R.drawable.user_vector_icon)
+                .into(binding.profileImage1)
+        }
 
-        Glide.with(this)
-            .load(childDetails!!.profile)
-            .placeholder(R.drawable.user_vector_icon)
-            .error(R.drawable.user_vector_icon)
-            .into(binding.profileImage1)
 
         binding.tvName.text = Constant.isLeaveData!!.student_name
         binding.isLeaveApplyOn.text =

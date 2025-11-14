@@ -129,14 +129,14 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                 if (!item.category.isNullOrEmpty()) {
                     val feeList = item.fee_data?.map { fee ->
                         DailyCollectionDisplayItem.Fee(
-                            fee.type_name ?: "Unknown",
+                            fee.type_name ?: getString(R.string.Unknown),
                             fee.amount ?: "0"
                         )
                     } ?: emptyList()
 
                     flatList.add(
                         DailyCollectionDisplayItem.Header(
-                            item.category ?: "Unknown",
+                            item.category ?: getString(R.string.Unknown),
                             item.total ?: Constant.zero,
                             feeList
                         )

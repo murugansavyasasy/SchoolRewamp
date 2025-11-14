@@ -82,26 +82,19 @@ class CalendarAdapter(
             dateBox.setTextColor(Color.BLACK)
             dateBox.isClickable = true
 
-
+            //below we can able to click the sunday also
             val isBeforeMin = minDate != null && date.isBefore(minDate)
             val isAfterMax = maxDate != null && date.isAfter(maxDate)
             val isSunday = date.dayOfWeek == java.time.DayOfWeek.SUNDAY
-            val isDisabled = isBeforeMin || isAfterMax || isSunday
+
+            val isDisabled = isBeforeMin || isAfterMax   // Sundays NOT disabled
 
             if (isDisabled) {
-                when {
-                    isSunday -> {
-                        dateBox.setTextColor(Color.RED)
-                        dateBox.setBackgroundResource(0)
-                        dateBox.isClickable = false
-                    }
-                    else -> {
-                        dateBox.setTextColor(Color.LTGRAY)
-                        dateBox.setBackgroundResource(0)
-                        dateBox.isClickable = false
-                    }
-                }
-            } else {
+                dateBox.setTextColor(Color.LTGRAY)
+                dateBox.setBackgroundResource(0)
+                dateBox.isClickable = false
+            }
+            else {
                 when {
                     selectedDate == date -> {
                         dateBox.setBackgroundResource(R.drawable.bg_today_primary)
@@ -111,11 +104,50 @@ class CalendarAdapter(
                         dateBox.setBackgroundResource(R.drawable.light_primary_selected_today)
                         dateBox.setTextColor(Color.WHITE)
                     }
+                    isSunday -> {
+                        dateBox.setTextColor(Color.RED)   //  Sunday in red, clickable
+                        dateBox.setBackgroundResource(0)
+                    }
                     else -> {
                         dateBox.setBackgroundResource(0)
                         dateBox.setTextColor(Color.BLACK)
                     }
                 }
+
+            // here below code we have restrict the click functionailty for sunday also!
+//            val isBeforeMin = minDate != null && date.isBefore(minDate)
+//            val isAfterMax = maxDate != null && date.isAfter(maxDate)
+//            val isSunday = date.dayOfWeek == java.time.DayOfWeek.SUNDAY
+//            val isDisabled = isBeforeMin || isAfterMax || isSunday
+//
+//            if (isDisabled) {
+//                when {
+//                    isSunday -> {
+//                        dateBox.setTextColor(Color.RED)
+//                        dateBox.setBackgroundResource(0)
+//                        dateBox.isClickable = false
+//                    }
+//                    else -> {
+//                        dateBox.setTextColor(Color.LTGRAY)
+//                        dateBox.setBackgroundResource(0)
+//                        dateBox.isClickable = false
+//                    }
+//                }
+//            } else {
+//                when {
+//                    selectedDate == date -> {
+//                        dateBox.setBackgroundResource(R.drawable.bg_today_primary)
+//                        dateBox.setTextColor(Color.WHITE)
+//                    }
+//                    date == today -> {
+//                        dateBox.setBackgroundResource(R.drawable.light_primary_selected_today)
+//                        dateBox.setTextColor(Color.WHITE)
+//                    }
+//                    else -> {
+//                        dateBox.setBackgroundResource(0)
+//                        dateBox.setTextColor(Color.BLACK)
+//                    }
+//                }
 
                 dateBox.setOnClickListener {
                     onDateClicked(date)

@@ -208,14 +208,15 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
                         Toast.makeText(
                             this,
-                            "Added $addedCount file${if (addedCount > 1) "s" else ""}",
+                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)} ${if (addedCount > 1) "s" else ""}",
                             Toast.LENGTH_SHORT
                         ).show()
 
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                        Toast.makeText(this, "You have reached the maximum file limit.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,
+                            getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -475,7 +476,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         else currentCal.get(Calendar.HOUR_OF_DAY)
                         val resetAmPm = if (currentCal.get(Calendar.HOUR_OF_DAY) < 12) Constant.AM else Constant.PM
                         listener.onTimeSelected(resetHour12, currentCal.get(Calendar.MINUTE), resetAmPm)
-                        Toast.makeText(context, "Time cannot be past", Toast.LENGTH_SHORT).show()  // Add this string to strings.xml: "Time cannot be in the past"
+                        Toast.makeText(context,
+                            getString(R.string.time_cannot_be_past), Toast.LENGTH_SHORT).show()  // Add this string to strings.xml: "Time cannot be in the past"
                         return@TimePickerDialog
                     }
                 }
