@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
 import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
+import com.vs.schoolmessenger.Auth.Logout.LogoutResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
@@ -206,6 +207,11 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject,
         @Header(APIKeyNames.Authorization) token: String  // Pass token as a header
     ): Call<GlobalVariableResponse?>
+
+    @POST(APIMethods.isLogout)
+    fun isLogout(
+        @Body jsonObject: JsonObject
+    ): Call<LogoutResponse?>?
 
 
     //Old Dashboard api call

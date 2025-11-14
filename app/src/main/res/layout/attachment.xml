@@ -102,7 +102,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/imgHistory"
-                                android:text=""
+                                android:text="@string/history"
                                 android:textColor="@color/PrimaryColor" />
 
                         </RelativeLayout>

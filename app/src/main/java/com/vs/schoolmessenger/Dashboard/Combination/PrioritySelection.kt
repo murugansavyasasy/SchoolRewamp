@@ -11,6 +11,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -21,6 +22,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SchoolClickListener
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -34,6 +36,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     override fun getViewBinding(): RoleSelecionBinding {
         return RoleSelecionBinding.inflate(layoutInflater)
     }
+    var authViewModel: Auth? = null
+
 
     private var userDetails: UserDetails? = null
 
@@ -45,6 +49,9 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         binding.lblTeacher.setOnClickListener(this)
         binding.btnGo.setOnClickListener(this)
         binding.lytLogout.setOnClickListener(this)
+
+        authViewModel = ViewModelProvider(this).get(Auth::class.java)
+        authViewModel!!.init()
 
 
         userDetails = SharedPreference.getUserDetails(this@PrioritySelection)
@@ -193,11 +200,32 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
 
         rlaLogout.setOnClickListener {
-            SharedPreference.putLogout(this, true)
-            SharedPreference.setLoggedIn(this, false)
-            val intent = Intent(this, Login::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+
+            isLogout(
+                activity = this,
+                viewModel =authViewModel,
+                secure_id = Constant.getAndroidSecureId(this) ,
+                device_type = Constant.isDeviceType,
+                mobile_number = SharedPreference.getMobileNumber(this).toString()
+            ) { isSuccess, message ->
+
+                if (isSuccess) {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    SharedPreference.putLogout(this, true)
+                    SharedPreference.setLoggedIn(this, false)
+                    val intent = Intent(this, Login::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+//            SharedPreference.putLogout(this, true)
+//            SharedPreference.setLoggedIn(this, false)
+//            val intent = Intent(this, Login::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(intent)
 
         }
 

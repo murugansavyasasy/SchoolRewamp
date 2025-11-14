@@ -10,6 +10,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordCreationResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordResetResponse
+import com.vs.schoolmessenger.Auth.Logout.LogoutResponse
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetailsResponse
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationResponse
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
@@ -37,6 +38,8 @@ class AuthServices {
     var isDeviceTokenUpdate: MutableLiveData<DeviceToken?>
     var isDashBoard: MutableLiveData<DashboardResponse?>
 
+    var isLogout: MutableLiveData<LogoutResponse?>
+
     init {
         client_auth = RestClient()
         isCountryList = MutableLiveData()
@@ -50,6 +53,7 @@ class AuthServices {
         isCreatePassWord = MutableLiveData()
         isDeviceTokenUpdate = MutableLiveData()
         isDashBoard = MutableLiveData()
+        isLogout = MutableLiveData()
     }
 
     fun isCountryList() {
@@ -399,6 +403,48 @@ class AuthServices {
 
     val isUpdateDeviceTokenLiveData: LiveData<DeviceToken?>
         get() = isDeviceTokenUpdate
+
+
+
+    fun isLogout(jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.isLogout(jsonObject)
+            ?.enqueue(object : Callback<LogoutResponse?> {
+                override fun onResponse(
+                    call: Call<LogoutResponse?>,
+                    response: Response<LogoutResponse?>
+                ) {
+                    Log.d(
+                        "LogoutResponse",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isLogout.postValue(response.body())
+                            } else {
+                                isLogout.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isLogout.postValue(null)
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<LogoutResponse?>, t: Throwable) {
+                    isLogout.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isLogoutLiveData: LiveData<LogoutResponse?>
+        get() = isLogout
+
 
 
 }

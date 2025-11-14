@@ -39,6 +39,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
@@ -47,6 +48,8 @@ import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.LocalHelperForLanguage
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -82,6 +85,37 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     fun changeLanguage(lang: String) {
         SharedPreference.putLanguage(this, lang)
         recreate()
+    }
+
+    fun isLogout(
+        activity: AppCompatActivity,
+        viewModel: Auth?,
+        secure_id: String,
+        device_type: String,
+        mobile_number: String,
+        onResult: (Boolean, String) -> Unit
+    ) {
+
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.Req_mobile_number, mobile_number)
+            addProperty(APIKeyNames.Req_device_type, device_type)
+            addProperty(APIKeyNames.Req_secure_id, secure_id)
+        }
+
+        // Call API
+        viewModel!!.isLogout(jsonObject, activity)
+        Constant.showLoading(activity)
+
+        // Observe API response
+        viewModel!!.isLogout?.observe(activity) { response ->
+            Constant.hideLoading(activity)
+
+            if (response != null && response.status) {
+                onResult(true, response.message ?: "Success")
+            } else {
+                onResult(false, response?.message ?: "Something went wrong")
+            }
+        }
     }
 
     open fun setupViews() {

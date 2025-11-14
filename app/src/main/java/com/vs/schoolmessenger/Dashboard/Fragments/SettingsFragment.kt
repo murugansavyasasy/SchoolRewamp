@@ -31,12 +31,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.BuildConfig
 import com.google.android.gms.tasks.Task
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.testing.FakeReviewManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
@@ -48,6 +50,8 @@ import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUsDialog
 import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -76,7 +80,13 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     private lateinit var chHindi: CheckBox
     private lateinit var chArabic: CheckBox
     private lateinit var btnConfirm: TextView
+
+    var authViewModel: Auth? = null
+
     private var isChecking = false
+
+    private var popupWindow: PopupWindow? = null
+
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreateView(
@@ -103,6 +113,32 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         val versionCode = pInfo.longVersionCode
         binding.lblAppVersion.text = "App Version - $versionName"
 
+        authViewModel = ViewModelProvider(this).get(Auth::class.java)
+        authViewModel!!.init()
+
+
+        authViewModel!!.isLogout?.observe(requireActivity()) { response ->
+            Constant.hideLoading(requireActivity())
+            if (response != null && response.status) {
+
+                // Dismiss popup to prevent WindowLeaked
+                popupWindow?.dismiss()
+                popupWindow = null
+                clearDim()
+
+                SharedPreference.putLogout(requireActivity(), true)
+                SharedPreference.setLoggedIn(requireActivity(), false)
+
+                val intent = Intent(requireActivity(), Login::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                requireActivity().finish()
+                Toast.makeText(requireActivity(), response.message, Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(requireActivity(), response?.message?:getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
+            }
+        }
 
         if (Constant.checkBiometricSupport(requireActivity())) {
             binding.lnrEnableFingerPrint.visibility = View.VISIBLE
@@ -274,39 +310,64 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
 
     private fun isShowLogoutPopup() {
+
+        if (!isAdded || requireActivity().isFinishing || requireActivity().isDestroyed) {
+            return
+        }
+
         val inflater = LayoutInflater.from(requireContext())
         val popupView = inflater.inflate(R.layout.logout_popup, null)
 
-        val popupWindow = PopupWindow(
+        popupWindow = PopupWindow(
             popupView,
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT,
             true
         )
 
-        dimBehind(popupWindow)
+        dimBehind(popupWindow!!)
         val btnCancel: TextView = popupView.findViewById(R.id.btnCancel)
         val rlaLogout: RelativeLayout = popupView.findViewById(R.id.rlaLogout)
         btnCancel.setOnClickListener {
             clearDim()
-            popupWindow.dismiss()
+            popupWindow!!.dismiss()
         }
 
         rlaLogout.setOnClickListener {
-            SharedPreference.putLogout(requireActivity(), true)
-            SharedPreference.setLoggedIn(requireActivity(), false)
 
-            val intent = Intent(requireActivity(), Login::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            requireActivity().finish()
+            val jsonObject = JsonObject().apply {
+                addProperty(APIKeyNames.Req_mobile_number,SharedPreference.getMobileNumber(requireActivity()).toString())
+                addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
+                addProperty(APIKeyNames.Req_secure_id, Constant.getAndroidSecureId(requireActivity()))
+            }
+
+            authViewModel!!.isLogout(jsonObject, requireActivity())
+            Constant.showLoading(requireActivity())
+
+//            SharedPreference.putLogout(requireActivity(), true)
+//            SharedPreference.setLoggedIn(requireActivity(), false)
+//
+//            val intent = Intent(requireActivity(), Login::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+//            startActivity(intent)
+//            requireActivity().finish()
 
         }
 
-        val rootView = requireActivity().window.decorView.rootView
-        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0)
+//        val rootView = requireActivity().window.decorView.rootView
+//        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0)
+//
+//        popupWindow.setOnDismissListener {
+//            clearDim()
+//        }
 
-        popupWindow.setOnDismissListener {
+        val activity = activity ?: return
+        if (activity.isFinishing || activity.isDestroyed) return
+
+        val rootView = activity.window?.decorView?.rootView ?: return
+        popupWindow!!.showAtLocation(rootView, Gravity.CENTER, 0, 0)
+
+        popupWindow!!.setOnDismissListener {
             clearDim()
         }
     }
