@@ -81,6 +81,7 @@ class AssignmentStudentListDetailAdapter(
         private val lbltitle: TextView = itemView.findViewById(R.id.lbltitle)
         private val lblassignmentsubject: TextView = itemView.findViewById(R.id.lblassignmentsubject)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
+        private val rlarelativelayout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
@@ -175,6 +176,38 @@ class AssignmentStudentListDetailAdapter(
                 context.startActivity(intent)
             }
 
+            rlarelativelayout.setOnClickListener {
+                val convertedList = data.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
+                }
+                val isHomeWorkData = FilePreview(
+                    id = data.id,
+                    title =title,
+                    description = data.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = data.thumbnail,
+                    created_date = data.submitted_on,
+                    isUnread = true,
+                    isCompleted = true,
+                    isMenuType = Constant.M_ASSIGNMENT,
+                    fileList = convertedList,
+                    submittedCount = 0,
+                    assignmentid = data.id,
+                    isStudentlistdetail = true,
+                    category = "",
+                    assignmentsubject = ""
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
+            }
+
             rcyAssignment.addOnItemTouchListener(
                 object : RecyclerView.SimpleOnItemTouchListener() {
                     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
@@ -214,6 +247,8 @@ class AssignmentStudentListDetailAdapter(
                         return false
                     }
                 }
+
+
             )
 
 

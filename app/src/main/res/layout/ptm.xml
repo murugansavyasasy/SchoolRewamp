@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fifteen"
                 android:gravity="center"
-                android:text="No meeting found."
+                android:text="@string/no_meeting_found"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
 
@@ -169,7 +169,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/ten"
             android:paddingHorizontal="@dimen/sixteen"
-            android:text="Book Slot"
+            android:text="@string/book_slot"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone">
@@ -213,7 +213,7 @@
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/imgSearch1"
                 android:background="@android:color/transparent"
-                android:hint="Search meetings..."
+                android:hint="@string/search_meetings"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLines="1"
@@ -244,7 +244,7 @@
                 android:id="@+id/txtNoData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No meeting found."
+                android:text="@string/no_meeting_found"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />

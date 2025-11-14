@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingBottom="10dp"
-        android:text="Block Student"
+        android:text="@string/block_student"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_edittext"
         android:gravity="top"
-        android:hint="Enter reason"
+        android:hint="@string/enter_reason"
         android:minHeight="80dp"
         android:padding="12dp"
         android:textColor="@color/black" />
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Cancel"
+            android:text="@string/Cancel"
             android:textColor="@color/black" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:padding="10dp"
-            android:text="Block"
+            android:text="@string/block"
             android:textColor="@color/black"
             android:textStyle="bold" />
     </LinearLayout>

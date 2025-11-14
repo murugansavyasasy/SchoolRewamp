@@ -95,7 +95,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
                     android:background="@drawable/field_background"
-                    android:hint="Purpose of Meeting"
+                    android:hint="@string/purpose_of_meeting"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp">
                 </EditText>
@@ -134,7 +134,7 @@
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/ten"
                         android:paddingVertical="@dimen/seven"
-                        android:text="In Person"
+                        android:text="@string/in_person"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"></TextView>
 
@@ -149,7 +149,7 @@
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/ten"
                         android:paddingVertical="@dimen/seven"
-                        android:text="Phone Call"
+                        android:text="@string/phone_call"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"></TextView>
 
@@ -164,7 +164,7 @@
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/ten"
                         android:paddingVertical="@dimen/seven"
-                        android:text="Virtual"
+                        android:text="@string/virtual"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"></TextView>
                 </LinearLayout>
@@ -177,7 +177,7 @@
                     android:layout_below="@+id/meetingMode"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="Meeting link"
+                    android:text="@string/Meetinglink"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp"
                     android:visibility="gone"></TextView>
@@ -192,7 +192,7 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:layout_marginBottom="@dimen/ten"
                     android:background="@drawable/outline_gray"
-                    android:hint="Paste your text here"
+                    android:hint="@string/paste_your_text_here"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp"
                     android:visibility="gone"/>
@@ -320,7 +320,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_toEndOf="@+id/imgCalender"
-                        android:text="Select Dates"
+                        android:text="@string/select_dates"
                         android:textColor="@color/black"></TextView>
 
                     <ImageView
@@ -378,7 +378,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_toStartOf="@+id/imgFromTimeDownArrow"
                             android:layout_toEndOf="@+id/imgFromTime"
-                            android:text="Start with"
+                            android:text="@string/start_with"
                             android:textColor="@color/black"></TextView>
 
                         <ImageView
@@ -420,7 +420,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_toStartOf="@+id/imgDownArrowToTime"
                             android:layout_toEndOf="@+id/imgToTime"
-                            android:text="End with"
+                            android:text="@string/end_with"
                             android:textColor="@color/black"></TextView>
 
                         <ImageView
@@ -453,7 +453,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:text="Duration &amp; Break"
+                    android:text="@string/duration_break"
                     android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <LinearLayout
@@ -517,7 +517,7 @@
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_toStartOf="@+id/lblSlotDuration"
                             android:gravity="center"
-                            android:hint="Enter"
+                            android:hint="@string/enter"
                             android:inputType="number"
                             android:maxLines="5"></EditText>
 
@@ -528,7 +528,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:text="Minutes"
+                            android:text="@string/minutes"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"></TextView>
                     </RelativeLayout>
@@ -623,7 +623,7 @@
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginBottom="@dimen/ten"
                         android:layout_toEndOf="@+id/rytBreakPick"
-                        android:text="Slot"
+                        android:text="@string/slot"
                         android:textColor="@color/black"></TextView>
 
                     <TextView
@@ -635,7 +635,7 @@
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginBottom="@dimen/ten"
-                        android:text="Break Duration"
+                        android:text="@string/break_duration"
                         android:textColor="@color/black"></TextView>
 
                     <LinearLayout
@@ -658,7 +658,7 @@
                             android:background="@drawable/rounded_bg"
                             android:gravity="center"
                             android:padding="@dimen/five"
-                            android:text="5 mins"
+                            android:text="@string/_5_mins"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -672,7 +672,7 @@
                             android:background="@drawable/rounded_bg"
                             android:gravity="center"
                             android:padding="@dimen/five"
-                            android:text="10 mins"
+                            android:text="@string/_10_mins"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -686,7 +686,7 @@
                             android:background="@drawable/rounded_bg"
                             android:gravity="center"
                             android:padding="@dimen/five"
-                            android:text="20 mins"
+                            android:text="@string/_20_mins"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -700,7 +700,7 @@
                             android:background="@drawable/rounded_bg"
                             android:gravity="center"
                             android:padding="@dimen/five"
-                            android:text="30 mins"
+                            android:text="@string/_30_mins"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"></TextView>
                     </LinearLayout>

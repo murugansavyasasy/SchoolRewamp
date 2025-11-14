@@ -169,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytList"
                 android:layout_marginStart="@dimen/twenty_five"
-                android:textColor="@color/red"
+                android:textColor="@color/bpTransparent_black"
                 android:text="I">
 
             </TextView>

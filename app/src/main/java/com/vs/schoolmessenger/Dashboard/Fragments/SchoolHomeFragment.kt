@@ -37,6 +37,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -291,47 +292,38 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         rootView.addView(dimView)
         rootView.addView(view, layoutParams)
 
-        val imgClose: ImageView = view.findViewById(R.id.imgClose)
         val txtName: TextView = view.findViewById(R.id.txtName)
         val txtDate: TextView = view.findViewById(R.id.txtDate)
         val imgProfile: ImageView = view.findViewById(R.id.imgProfile)
+        val lottieView: LottieAnimationView = view.findViewById(R.id.lottieBirthday)
+
+        lottieView.playAnimation()
 
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-            access_token = staffDetails!!.access_token
+            txtName.text = staffDetails!!.name
+            Glide.with(this)
+                .load(staffDetails!!.staff_profile)
+                .error(R.drawable.default_profile)
+                .into(imgProfile)
+        } else {
             txtName.text = userDetails!!.staff_details[0].name
-
-
             Glide.with(this)
                 .load(userDetails!!.staff_details[0].staff_profile)
                 .error(R.drawable.default_profile)
                 .into(imgProfile)
-
-        } else {
-            access_token = userDetails!!.staff_details[0].access_token
-            if (userDetails!!.staff_details.size > 1) {
-                txtName.text  = userDetails!!.staff_details[0].name
-                Glide.with(this)
-                    .load(userDetails!!.staff_details[0].staff_profile)
-                    .error(R.drawable.default_profile)
-                    .into(imgProfile)
-            } else {
-                txtName.text  = userDetails!!.staff_details[0].name
-                Glide.with(this)
-                    .load(userDetails!!.staff_details[0].staff_profile)
-                    .error(R.drawable.default_profile)
-                    .into(imgProfile)
-            }
         }
 
         val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.getDefault()).format(Date())
         txtDate.text = currentDate
 
-
-        imgClose.setOnClickListener {
+        dimView.setOnClickListener {
             rootView.removeView(view)
             rootView.removeView(dimView)
         }
+        view.alpha = 0f
+        view.animate().alpha(1f).setDuration(300).start()
     }
+
 
     private fun getGlobalVariables(token: String) {
         val jsonObject = JsonObject()

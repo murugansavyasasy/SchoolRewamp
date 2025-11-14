@@ -30,7 +30,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Student Name"
+                android:text="@string/student_name_"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fourteen_sp" />
 
@@ -133,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/eight"
-                android:text="Gender"
+                android:text="@string/Gender"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/thirteen_sp"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:text="Male" />
+                    android:text="@string/male" />
 
                 <RadioButton
                     android:id="@+id/radioFemale"
@@ -164,7 +164,7 @@
                     android:background="@drawable/field_background"
                     android:textSize="@dimen/thirteen_sp"
                     android:layout_marginStart="@dimen/sixteen"
-                    android:text="Female" />
+                    android:text="@string/female" />
 
                 <RadioButton
                     android:id="@+id/radioOthers"
@@ -176,7 +176,7 @@
                     android:paddingHorizontal="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp"
                     android:layout_marginStart="@dimen/sixteen"
-                    android:text="Others" />
+                    android:text="@string/others" />
             </RadioGroup>
         </LinearLayout>
 
@@ -240,7 +240,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remarks"
+                android:text="@string/Remarks"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -283,7 +283,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
-                    android:text="Document Name"
+                    android:text="@string/document_name"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -295,7 +295,7 @@
                     android:layout_weight="0.2"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="+ Add"
+                    android:text="@string/plus_add"
                     android:background="@drawable/background_radius_button"
                     android:textColor="@color/white"
                     android:textSize="14sp" />

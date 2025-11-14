@@ -84,22 +84,19 @@ class CalendarAbsenteesAdapter(
             val isBeforeMin = minDate != null && date.isBefore(minDate)
             val isAfterMax = maxDate != null && date.isAfter(maxDate)
             val isSunday = date.dayOfWeek == java.time.DayOfWeek.SUNDAY
-            val isDisabled = isBeforeMin || isAfterMax || isSunday
+            val isDisabled = isBeforeMin || isAfterMax
 
             if (isDisabled) {
-                when {
-                    isSunday -> {
-                        dateBox.setTextColor(Color.RED)
-                        dateBox.setBackgroundResource(0)
-                        dateBox.isClickable = false
-                    }
-                    else -> {
-                        dateBox.setTextColor(Color.LTGRAY)
-                        dateBox.setBackgroundResource(0)
-                        dateBox.isClickable = false
-                    }
-                }
+                // Only min/max restricted dates are disabled
+                dateBox.setTextColor(Color.LTGRAY)
+                dateBox.setBackgroundResource(0)
+                dateBox.isClickable = false
             } else {
+                // Sundays are clickable and shown in red
+                if (isSunday) {
+                    dateBox.setTextColor(Color.RED)
+                }
+
                 when {
                     selectedDate == date -> {
                         dateBox.setBackgroundResource(R.drawable.bg_today_red)
@@ -110,8 +107,10 @@ class CalendarAbsenteesAdapter(
                         dateBox.setTextColor(Color.WHITE)
                     }
                     else -> {
+                        if (!isSunday) {
+                            dateBox.setTextColor(Color.BLACK)
+                        }
                         dateBox.setBackgroundResource(0)
-                        dateBox.setTextColor(Color.BLACK)
                     }
                 }
 
@@ -120,6 +119,7 @@ class CalendarAbsenteesAdapter(
                 }
             }
 
+            // Dot for absentees (only for report mode)
             if (isAbsenteesReport && !isDisabled && absentDates.contains(date)) {
                 dotIndicator?.visibility = View.VISIBLE
                 dotIndicator?.setBackgroundColor(Color.RED)

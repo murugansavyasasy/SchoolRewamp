@@ -220,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/five"
                     android:layout_toEndOf="@id/imgAdd"
-                    android:text="Create"
+                    android:text="@string/lblCreate"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen" />
 

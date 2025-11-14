@@ -139,19 +139,24 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         val pendingFilter = "Pending"
         val completedFilter = "Completed"
 
-        // Extract dynamic filters and reverse them
-        val dynamicFilters = (active + completed)
+
+        val availableFilters = (active + completed)
             .map { it.activity_type }
             .distinct()
-            .reversed()
 
-        // Build final order: All first, dynamic reversed, Pending & Completed last
-        val rearrangedFilters = mutableListOf<String>().apply {
-            add(allFilter)
-            addAll(dynamicFilters)
-            add(pendingFilter)
-            add(completedFilter)
-        }
+
+        val desiredOrder = listOf(
+            allFilter,
+            "Listening",
+            "Speaking",
+            "Reading",
+            "Writing",
+            pendingFilter,
+            completedFilter
+        )
+
+
+        val rearrangedFilters = desiredOrder.filter { it in availableFilters || it in listOf(allFilter, pendingFilter, completedFilter) }
 
         filterAdapter = LsrwFilterAdapter(rearrangedFilters) { selectedFilter ->
             val filteredActive: List<LsrwTask>
@@ -178,13 +183,14 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
 
             adapter.updateList(filteredActive)
             completedviewadapter.updateList(filteredCompleted)
-            handleVisibility(filteredActive, filteredCompleted,getString(R.string.no_data_found))
+            handleVisibility(filteredActive, filteredCompleted, getString(R.string.no_data_found))
         }
 
         binding.rcyFilter.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcyFilter.adapter = filterAdapter
     }
+
 
 
 

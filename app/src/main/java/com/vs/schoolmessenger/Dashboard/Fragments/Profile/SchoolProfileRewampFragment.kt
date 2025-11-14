@@ -35,7 +35,14 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     ): View {
         binding = ProfileFragmentBinding.inflate(layoutInflater)
         isStaffDetails = SharedPreference.getStaffDetails(requireContext())
-        isAccessToken = isStaffDetails!!.access_token
+        userDetails = SharedPreference.getUserDetails(requireContext())
+
+        if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+            isAccessToken = isStaffDetails!!.access_token
+
+        } else {
+            isAccessToken = userDetails!!.staff_details[0].access_token
+        }
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()

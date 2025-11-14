@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
                     android:padding="10dp"
-                    android:text="Listening"
+                    android:text="@string/listening"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
                     android:padding="10dp"
-                    android:text="Speaking"
+                    android:text="@string/speaking"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
                     android:padding="10dp"
-                    android:text="Reading"
+                    android:text="@string/reading"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
                     android:padding="10dp"
-                    android:text="Writing"
+                    android:text="@string/writing"
                     android:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>
@@ -306,7 +306,7 @@
                 android:layout_below="@+id/lblTextCount"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Submission Date"
+                android:text="@string/SubmissionDate"
                 android:textSize="@dimen/fifteen_sp" />
 
             <TextView
@@ -324,7 +324,7 @@
                 android:drawablePadding="8dp"
                 android:focusable="false"
                 android:gravity="start|center_vertical"
-                android:hint="dd/mm/yyyy"
+                android:hint="@string/dd_mm_yyyy"
                 android:padding="@dimen/ten"
                 android:textSize="@dimen/thirteen_sp" />
 

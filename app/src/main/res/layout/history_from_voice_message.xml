@@ -66,7 +66,7 @@
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten_sp"
                         android:layout_toEndOf="@+id/imgEmergencyIndicator"
-                        android:text="Emergency voice"
+                        android:text="@string/emergency_voice"
                         android:textColor="@color/red"
                         android:textSize="@dimen/thirteen_sp">
 

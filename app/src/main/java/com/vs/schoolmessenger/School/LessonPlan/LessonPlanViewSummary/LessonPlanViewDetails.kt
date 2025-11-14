@@ -255,6 +255,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             R.id.imgBack -> onBackPressed()
             R.id.allbutton1 -> {
                 binding.txtSearchMenu1.text.clear()
+                binding.rytSearch1.visibility = View.GONE
+                binding.root.hideKeyboard()
                 currentStatus = 0
                 highlightSelectedTab(binding.allbutton1)
                 filterAndShowData(currentStatus)
@@ -262,6 +264,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
             R.id.ytsbutton1 -> {
                 binding.txtSearchMenu1.text.clear()
+                binding.rytSearch1.visibility = View.GONE
+                binding.root.hideKeyboard()
                 currentStatus = 1
                 highlightSelectedTab(binding.ytsbutton1)
                 filterAndShowData(currentStatus)
@@ -270,6 +274,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
             R.id.inprogressbutton1 -> {
                 binding.txtSearchMenu1.text.clear()
+                binding.rytSearch1.visibility = View.GONE
+                binding.root.hideKeyboard()
                 currentStatus = 2
                 highlightSelectedTab(binding.inprogressbutton1)
                 filterAndShowData(currentStatus)
@@ -277,6 +283,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
             R.id.completedbutton1 -> {
                 binding.txtSearchMenu1.text.clear()
+                binding.rytSearch1.visibility = View.GONE
+                binding.root.hideKeyboard()
                 currentStatus = 3
                 highlightSelectedTab(binding.completedbutton1)
                 filterAndShowData(currentStatus)

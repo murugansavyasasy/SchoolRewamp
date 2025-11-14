@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty_five"
-                android:text="Function Meeting"
+                android:text="@string/function_meeting"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp"></TextView>
 
@@ -73,7 +73,7 @@
                         android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/eight"
                         android:layout_toEndOf="@+id/imgCalender"
-                        android:text="Date"
+                        android:text="@string/date"
                         android:textColor="@color/light_gray_5"
                         android:textSize="@dimen/fourteen_sp"></TextView>
 
@@ -106,7 +106,7 @@
                         android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/twenty_three"
                         android:layout_toEndOf="@+id/imgCalender"
-                        android:text="Slot Duration"
+                        android:text="@string/slot_duration"
                         android:textColor="@color/light_gray_5"
                         android:textSize="@dimen/fourteen_sp"></TextView>
 
@@ -143,7 +143,7 @@
                         android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/eight"
                         android:layout_toEndOf="@id/imgTime"
-                        android:text="Time"
+                        android:text="@string/time"
                         android:textColor="@color/light_gray_5"
                         android:textSize="@dimen/fourteen_sp" />
 
@@ -177,7 +177,7 @@
                         android:layout_marginTop="@dimen/one"
                         android:layout_toEndOf="@id/imgMode"
                         android:includeFontPadding="false"
-                        android:text="Mode"
+                        android:text="@string/mode_"
                         android:textColor="@color/light_gray_5"
                         android:textSize="@dimen/fourteen_sp" />
 
@@ -212,7 +212,7 @@
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginTop="@dimen/twenty_five"
                 android:layout_toEndOf="@+id/imgSlotClasses"
-                android:text="Classes"
+                android:text="@string/classes"
                 android:textColor="@color/light_gray_5"
                 android:textSize="@dimen/fourteen_sp"></TextView>
 
@@ -243,7 +243,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:padding="@dimen/ten"
                     android:layout_centerHorizontal="true"
-                    android:text="Join Meeting"
+                    android:text="@string/join_meeting"
                     android:textColor="@color/white"
                     android:textSize="@dimen/eighteen"></TextView>
 
@@ -269,7 +269,7 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/twenty"
-                android:text="Meeting slots"
+                android:text="@string/meeting_slots"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fourteen_sp"></TextView>
 

@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/twenty"
         android:gravity="center"
-        android:text="Developer Mode Conflict "
+        android:text="@string/developer_mode_conflict"
         android:textColor="@color/black"
         android:textSize="@dimen/twenty_sp"
         android:textStyle="bold"></TextView>
@@ -37,7 +37,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:padding="@dimen/ten"
         android:lineSpacingExtra="@dimen/five"
-        android:text="The app encountered as error. If you have enabled Developer Mode on your device. please try disabling it and relaunching the app. If the issue presists. please contact customer support. Please follow the path: Device Settings > search for Developer options > toggle the switch to off."
+        android:text="@string/the_app_encountered_as_error_if_you_have_enabled_developer_mode_on_your_device_please_try_disabling_it_and_relaunching_the_app_if_the_issue_presists_please_contact_customer_support_please_follow_the_path_device_settings_search_for_developer_options_toggle_the_switch_to_off"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
         android:textStyle="normal"></TextView>

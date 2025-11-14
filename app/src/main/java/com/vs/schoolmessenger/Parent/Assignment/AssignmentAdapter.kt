@@ -157,7 +157,7 @@ class AssignmentAdapter(
             createddate.text = Constant.convertToReadableDate(data.created_date)
             lblSubject.text = data.subject
             lbldeadline.text =
-                "${context.getString(R.string.Submission_date)} ${Constant.convertToReadableDate(data.end_date)}"
+                "${context.getString(R.string.Deadline)} - ${Constant.convertToReadableDate(data.end_date)}"
             lblSendby.text = data.created_date
 
             lblSubmitted.text = "${context.getString(R.string.submitted)} - ${data.submitted_count}"

@@ -79,7 +79,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
             if (response.status) {
                 isLoadDailyCollectionData(response.data)
             } else {
-                showErrorUI(response.message ?: "No data available")
+                showErrorUI(response.message ?:getString(R.string.no_data_available))
             }
         }
 

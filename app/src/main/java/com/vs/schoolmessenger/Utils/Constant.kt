@@ -189,6 +189,8 @@ object Constant {
     var fromNotification = "fromNotification"
 
     var school = "A"
+    var Late = "P~"
+    var OD = "OD"
     var P = "P"
     var standard = "C"
     var section = "S"
@@ -977,11 +979,67 @@ object Constant {
 
     fun formatDatepostedby(dateStr: String): String {
         val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
 
         val inputDate = inputFormat.parse(dateStr) ?: return dateStr
         return outputFormat.format(inputDate)
     }
+
+
+
+    /**
+     * Natural alphanumeric comparator that sorts mixed admission/roll numbers properly.
+     * Handles:
+     * - Numbers: 1, 12
+     * - Alpha-number: A1, SS1, A-2
+     * - Number-alpha: 12A, 7-B
+     * - Mixed/symbols: SS-01, SS/1
+     * - Empty or null values → sorted last
+     */
+    private fun naturalSortKey(value: String?): Pair<Int, List<Any>> {
+        if (value.isNullOrBlank()) return Pair(4, emptyList())
+
+        val trimmed = value.trim().replace(Regex("[^A-Za-z0-9]"), "") // remove -, /, spaces
+
+        val category = when {
+            Regex("^[0-9]+$").matches(trimmed) -> 0 // Pure number
+            Regex("^[0-9]+[A-Za-z]+").matches(trimmed) -> 1 // Number-first
+            Regex("^[A-Za-z]+[0-9]+").matches(trimmed) -> 2 // Alpha-first
+            Regex("^[A-Za-z]+$").matches(trimmed) -> 3 // Pure alpha
+            else -> 4 // invalid/mixed
+        }
+
+        val parts = Regex("(\\d+|[A-Za-z]+)").findAll(trimmed).map {
+            it.value.toIntOrNull() ?: it.value.lowercase()
+        }.toList()
+
+        return Pair(category, parts)
+    }
+
+    val naturalComparator = Comparator<String?> { a, b ->
+        val (catA, partsA) = naturalSortKey(a)
+        val (catB, partsB) = naturalSortKey(b)
+
+        if (catA != catB) return@Comparator catA.compareTo(catB)
+
+        for (i in 0 until minOf(partsA.size, partsB.size)) {
+            val pa = partsA[i]
+            val pb = partsB[i]
+
+            val result = when {
+                pa is Int && pb is Int -> pa.compareTo(pb)
+                pa is String && pb is String -> pa.compareTo(pb)
+                pa is Int -> -1
+                pb is Int -> 1
+                else -> 0
+            }
+
+            if (result != 0) return@Comparator result
+        }
+
+        partsA.size.compareTo(partsB.size)
+    }
+
 
 
 
@@ -1045,17 +1103,21 @@ object Constant {
         return when {
             parts.isEmpty() -> ""
             parts.size == 1 -> {
-                // Only one word → just first letter
-                parts[0].first().uppercaseChar().toString()
+                // Single word → first two letters
+                val word = parts[0]
+                word.take(2).uppercase()
             }
 
             else -> {
+                // Multiple words → still can use first letter of first + first letter of second (optional)
                 val first = parts.first().first().uppercaseChar()
-                val last = parts.last().last().uppercaseChar()
-                "$first$last"
+                val second = parts.first().drop(1).firstOrNull()?.uppercaseChar()
+                    ?: parts.last().first().uppercaseChar()
+                "$first$second"
             }
         }
     }
+
 
 
     private fun isSameDay(calendar: Calendar, date: Date): Boolean {
@@ -1971,7 +2033,7 @@ object Constant {
 
         return try {
             val inputFormatFull = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 
             val date = try {
                 inputFormatFull.parse(input)
@@ -2036,7 +2098,7 @@ object Constant {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
 
 
-            val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
 
             val date = inputFormat.parse(input)
             date?.let { outputFormat.format(it) } ?: "--"
@@ -2538,7 +2600,19 @@ object Constant {
     fun convertDateTimeFormat(input: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // fallback if parsing fails
+        }
+    }
+
+
+    fun convertEventDateTimeFormat(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {

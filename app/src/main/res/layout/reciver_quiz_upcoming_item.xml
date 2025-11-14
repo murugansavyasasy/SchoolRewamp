@@ -173,7 +173,7 @@
                         android:textSize="@dimen/twele_sp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Max marks" />
+                        android:text="@string/max_marks" />
 
                     <TextView
                         style="@style/CustomTextStylePoppinsMedium"

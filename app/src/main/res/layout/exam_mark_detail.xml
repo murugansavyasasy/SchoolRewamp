@@ -79,7 +79,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Marks"
+                android:text="@string/Marks"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
             </TextView>
@@ -139,7 +139,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:textSize="@dimen/twenty_sp"
-                android:text="Overall Grade"></TextView>
+                android:text="@string/overall_grade_1"></TextView>
 
             <TextView
                 android:id="@+id/lblRemark"
@@ -172,7 +172,7 @@
                 android:layout_below="@+id/line1"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Subject Marks"
+                android:text="@string/subject_marks"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -204,7 +204,7 @@
                 android:layout_below="@+id/ExamMarkRV"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/five"
-                android:text="Other Activities"
+                android:text="@string/other_activities"
                 android:textColor="@color/black">
 
             </TextView>

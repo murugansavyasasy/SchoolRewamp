@@ -192,7 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
-            android:text="Powered by savyasasy"
+            android:text="@string/powered_by_savyasasy"
             android:textColor="@color/grey"
             android:textSize="@dimen/twele_sp" />
     </LinearLayout>

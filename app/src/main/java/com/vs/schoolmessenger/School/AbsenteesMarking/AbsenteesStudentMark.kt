@@ -264,16 +264,19 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     private fun sortData(sortType: SortType) {
         val sortedList = when (sortType) {
-            SortType.NO_ASC -> studentsList!!.sortedBy { it.admission_no }
-            SortType.NO_DESC -> studentsList!!.sortedByDescending { it.admission_no }
-            SortType.NAME_ASC -> studentsList!!.sortedBy { it.name }
-            SortType.NAME_DESC -> studentsList!!.sortedByDescending { it.name }
-            SortType.REG_ASC -> studentsList!!.sortedBy { it.roll_no }
-            SortType.REG_DSC -> studentsList!!.sortedByDescending { it.roll_no }
+            SortType.NO_ASC -> studentsList!!.sortedWith(compareBy(Constant.naturalComparator) { it.admission_no })
+            SortType.NO_DESC -> studentsList!!.sortedWith(compareByDescending(Constant.naturalComparator) { it.admission_no })
+            SortType.NAME_ASC -> studentsList!!.sortedBy { it.name?.lowercase() }
+            SortType.NAME_DESC -> studentsList!!.sortedByDescending { it.name?.lowercase() }
+            SortType.REG_ASC -> studentsList!!.sortedWith(compareBy(Constant.naturalComparator) { it.roll_no })
+            SortType.REG_DSC -> studentsList!!.sortedWith(compareByDescending(Constant.naturalComparator) { it.roll_no })
         }
 
         mAdapter.updateData(sortedList)
     }
+
+
+
 
     private fun handleSpinnerSelection(
         position: Int,
@@ -370,8 +373,8 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             binding.cbSelect.isChecked = studentsList?.all { student ->
                 val parts = student.att_status.split("/")
                 when (isCurrentAttendanceType) {
-                    "SH" -> parts.getOrNull(1)?.equals("A", ignoreCase = true) == true
-                    "FH", "F" -> parts.getOrNull(0)?.equals("A", ignoreCase = true) == true
+                    Constant.secondHalf -> parts.getOrNull(1)?.equals(Constant.school, ignoreCase = true) == true
+                    Constant.firstHalf, Constant.fullDay -> parts.getOrNull(0)?.equals(Constant.school, ignoreCase = true) == true
                     else -> false
                 }
             } == true
@@ -423,9 +426,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
         // Lists that persist user changes
         val removedStudents = mutableListOf<GetAttendanceStudentListData>()
-        val absenteesList = filterByType(selectedFinalList, "A").toMutableList()
-        val lateComerList = filterByType(selectedFinalList, "P~").toMutableList()
-        val odList = filterByType(selectedFinalList, "OD").toMutableList()
+        val absenteesList = filterByType(selectedFinalList, Constant.school).toMutableList()
+        val lateComerList = filterByType(selectedFinalList, Constant.Late).toMutableList()
+        val odList = filterByType(selectedFinalList, Constant.OD).toMutableList()
 
         var activeTab = 1 // 1 = Absent, 2 = Late, 3 = OD
 
@@ -454,9 +457,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 rcFinalList.visibility = View.GONE
                 lytNoDataFound.visibility = View.VISIBLE
                 noDataFound.text = getString(R.string.All_students_are_marked_as_present)
-                tabOneName.text = "Absent (${absenteesList.size})"
-                tabTwoName.text = "Late (${lateComerList.size})"
-                tabThreeName.text = "OD (${odList.size})"
+                tabOneName.text = "${getString(R.string.absent)} (${absenteesList.size})"
+                tabTwoName.text = "${getString(R.string.Late_2)} (${lateComerList.size})"
+                tabThreeName.text = "${getString(R.string.OD)} (${odList.size})"
                 return
             }
 
@@ -464,18 +467,18 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             if (list.isEmpty()) {
                 rcFinalList.visibility = View.GONE
                 lytNoDataFound.visibility = View.VISIBLE
-                tabOneName.text = "Absent (${absenteesList.size})"
-                tabTwoName.text = "Late (${lateComerList.size})"
-                tabThreeName.text = "OD (${odList.size})"
-                noDataFound.text = "No $label students found!"
+                tabOneName.text = "${getString(R.string.absent)} (${absenteesList.size})"
+                tabTwoName.text = "${getString(R.string.Late_2)} (${lateComerList.size})"
+                tabThreeName.text = "${getString(R.string.OD)} (${odList.size})"
+                noDataFound.text = "${getString(R.string.No)} $label ${getString(R.string.students_found)}"
                 return
             }
 
             rcFinalList.visibility = View.VISIBLE
             lytNoDataFound.visibility = View.GONE
-            tabOneName.text = "Absent (${absenteesList.size})"
-            tabTwoName.text = "Late (${lateComerList.size})"
-            tabThreeName.text = "OD (${odList.size})"
+            tabOneName.text = "${getString(R.string.absent)} (${absenteesList.size})"
+            tabTwoName.text = "${getString(R.string.Late_2)} (${lateComerList.size})"
+            tabThreeName.text = "${getString(R.string.OD)} (${odList.size})"
 
             rcFinalList.layoutManager = LinearLayoutManager(activity)
             rcFinalList.adapter = AbsenteesFinalListAdapter(
@@ -485,9 +488,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 onRemove = { data ->
                     removedStudents.add(data)
                     when (activeTab) {
-                        1 -> tabOneName.text = "Absent (${absenteesList.size})"
-                        2 -> tabTwoName.text = "Late (${lateComerList.size})"
-                        3 -> tabThreeName.text = "OD (${odList.size})"
+                        1 -> tabOneName.text = "${getString(R.string.absent)} (${absenteesList.size})"
+                        2 -> tabTwoName.text = "${getString(R.string.Late_2)}  (${lateComerList.size})"
+                        3 -> tabThreeName.text = "${getString(R.string.OD)} (${odList.size})"
                     }
 
                     // Handle "no data" case
@@ -497,11 +500,11 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     ) {
                         rcFinalList.visibility = View.GONE
                         lytNoDataFound.visibility = View.VISIBLE
-                        noDataFound.text = "No ${when (activeTab) {
-                            1 -> "Absent"
-                            2 -> "Late"
-                            else -> "OD"
-                        }} students found!"
+                        noDataFound.text = "${R.string.No} ${when (activeTab) {
+                            1 -> "${getString(R.string.absent)}"
+                            2 -> "${getString(R.string.Late_2)}"
+                            else -> "${getString(R.string.OD)}"
+                        }} ${getString(R.string.students_found)}"
                     }
 
                     // Also re-check after removal if all are now empty
@@ -509,17 +512,17 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                         rcFinalList.visibility = View.GONE
                         lytNoDataFound.visibility = View.VISIBLE
                         noDataFound.text = getString(R.string.All_students_are_marked_as_present)
-                        tabOneName.text = "Absent (${absenteesList.size})"
-                        tabTwoName.text = "Late (${lateComerList.size})"
-                        tabThreeName.text = "OD (${odList.size})"
+                        tabOneName.text = "${getString(R.string.absent)} (${absenteesList.size})"
+                        tabTwoName.text = "${getString(R.string.Late_2)} (${lateComerList.size})"
+                        tabThreeName.text = "${getString(R.string.OD)} (${odList.size})"
                     }
 
                 },
                 onListCountChange = { count ->
                     when (activeTab) {
-                        1 -> tabOneName.text = "Absent ($count)"
-                        2 -> tabTwoName.text = "Late ($count)"
-                        3 -> tabThreeName.text = "OD ($count)"
+                        1 -> tabOneName.text = "${getString(R.string.absent)} ($count)"
+                        2 -> tabTwoName.text = "${getString(R.string.Late_2)} ($count)"
+                        3 -> tabThreeName.text = "${getString(R.string.OD)} ($count)"
                     }
                 }
             )
@@ -527,25 +530,25 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
         // Initial
         updateTabUI(1)
-        updateAdapter(absenteesList, "Absent")
+        updateAdapter(absenteesList,getString(R.string.absent))
 
         // Tab click listeners
         lnrTabOneName.setOnClickListener {
             activeTab = 1
             updateTabUI(1)
-            updateAdapter(absenteesList, "Absent")
+            updateAdapter(absenteesList, getString(R.string.absent))
         }
 
         lnrTabTwoName.setOnClickListener {
             activeTab = 2
             updateTabUI(2)
-            updateAdapter(lateComerList, "Late")
+            updateAdapter(lateComerList, getString(R.string.Late_2))
         }
 
         lnrTabThreeName.setOnClickListener {
             activeTab = 3
             updateTabUI(3)
-            updateAdapter(odList, "OD")
+            updateAdapter(odList, getString(R.string.OD))
         }
 
 
@@ -574,8 +577,8 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         return list.filter { student ->
             val parts = student.att_status.split("/")
             val status = when (isCurrentAttendanceType) {
-                "SH" -> parts.getOrNull(1)?.trim()
-                "FH", "F" -> parts.getOrNull(0)?.trim()
+                Constant.secondHalf -> parts.getOrNull(1)?.trim()
+                Constant.firstHalf, Constant.fullDay -> parts.getOrNull(0)?.trim()
                 else -> parts.getOrNull(0)?.trim()
             }
             status.equals(type, ignoreCase = true)
@@ -601,10 +604,10 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 val allPresent = studentsList?.all { student ->
                     val parts = student.att_status.split("/")
                     val currentStatus = when (isCurrentAttendanceType) {
-                        "SH" -> parts.getOrNull(1) ?: "P"  // second half
-                        else -> parts.getOrNull(0) ?: "P"  // first half or full day
+                        Constant.secondHalf -> parts.getOrNull(1) ?: Constant.P  // second half
+                        else -> parts.getOrNull(0) ?: Constant.P  // first half or full day
                     }
-                    currentStatus.equals("P", ignoreCase = true)
+                    currentStatus.equals(Constant.P, ignoreCase = true)
 //                            currentStatus.equals("P~", ignoreCase = true) // allow Latecomer as present
                 } == true
 
@@ -637,9 +640,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         val hasAbsent = studentsList!!.any { student ->
             val attStatus = student.att_status ?: ""
             when (isCurrentAttendanceType) {
-                "F" -> attStatus.contains("A", ignoreCase = true)
-                "FH" -> attStatus.split("/").firstOrNull()?.equals("A", true) == true
-                "SH" -> attStatus.split("/").getOrNull(1)?.equals("A", true) == true
+                Constant.fullDay -> attStatus.contains(Constant.school, ignoreCase = true)
+                Constant.firstHalf -> attStatus.split("/").firstOrNull()?.equals(Constant.school, true) == true
+                Constant.secondHalf -> attStatus.split("/").getOrNull(1)?.equals(Constant.school, true) == true
                 else -> false
             }
         }

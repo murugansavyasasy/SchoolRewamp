@@ -277,7 +277,17 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             Constant.hideLoading(this@AttendanceMark)
             if (response != null) {
                 if (response.status) {
-                    studentsList = response.data
+                    studentsList = response.data.get(0).attd_report
+
+                    if (response.data.get(0).holiday_message!=""){
+                        binding.marqueeText.visibility= View.VISIBLE
+                        binding.marqueeText.isSelected = true
+                        setMarqueeText(binding.marqueeText,response.data.get(0).holiday_message)
+                    }
+                    else{
+                        binding.marqueeText.visibility= View.GONE
+                    }
+
                     studentsList?.size?.let {
                         if (it > 0) {
 //                            studentsList = isStudentAttendanceReportResponseData
@@ -301,6 +311,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     }
 
                 } else {
+                    binding.marqueeText.visibility= View.GONE
+
                     if (response.message==Constant.Attendance_has_not_been_taken_yet){
                         ErrorMessage(response.message,R.drawable.no_attendance_taken)
                     }
@@ -321,7 +333,35 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 binding.lnrAttendancePercentageRate.visibility=View.GONE
             }
         }
+
+
     }
+
+    private fun setMarqueeText(textView: TextView, message: String) {
+        textView.apply {
+            text = message
+            visibility = View.VISIBLE
+            isSelected = true // start marquee
+
+            //  Force marquee even if text is short
+            post {
+                val textWidth = paint.measureText(message)
+                val viewWidth = width.toFloat()
+
+                if (textWidth <= viewWidth) {
+                    // Repeat text with spaces to make it scroll continuously
+                    val repeatCount = ((viewWidth / textWidth) + 8).toInt().coerceAtLeast(3)
+                    val repeatedText = (message + "     ").repeat(repeatCount)
+                    text = repeatedText
+                }
+
+                // Re-enable marquee indefinitely
+                isSelected = true
+                marqueeRepeatLimit = -1 // -1 = infinite loop
+            }
+        }
+    }
+
 
     private fun filter(text: String) {
         val filteredList = if (text.isBlank()) {
@@ -796,11 +836,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         val container = popupView.findViewById<LinearLayout>(R.id.containerIcons)
 
         val items = listOf(
-            Triple("-", "Not Taken", R.drawable.report_nottaken_icon),
-            Triple("P", "Present", R.drawable.report_present_icon),
-            Triple("OD", "OD", R.drawable.report_od_icon),
-            Triple("LA", "Late", R.drawable.report_latercomer_icon),
-            Triple("A", "Absent", R.drawable.report_absent_icon),
+            Triple("-", getString(R.string.not_taken), R.drawable.report_nottaken_icon),
+            Triple("P", getString(R.string.present), R.drawable.report_present_icon),
+            Triple("OD", getString(R.string.OD), R.drawable.report_od_icon),
+            Triple("LA", getString(R.string.Late_2), R.drawable.report_latercomer_icon),
+            Triple("A", getString(R.string.absent), R.drawable.report_absent_icon),
         )
 
         val popupWindow = PopupWindow(
@@ -818,9 +858,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             val text = SpannableStringBuilder()
 
             val fnLabel = "FN : "
-            val fnValue = "ForeNoon"
+            val fnValue = context.getString(R.string.forenoon)
             val anLabel = " / AN : "
-            val anValue = "AfterNoon"
+            val anValue = context.getString(R.string.afternoon)
 
             val fnLabelStart = text.length
             text.append(fnLabel)

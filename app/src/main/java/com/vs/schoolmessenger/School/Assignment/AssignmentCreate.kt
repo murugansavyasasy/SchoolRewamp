@@ -168,7 +168,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        binding.btnNoticeBoardReport.text=getString(R.string.History)+" "+">>"
+        binding.btnNoticeBoardReport.text=getString(R.string.History)
 
 
         saveDrawableToCache(R.drawable.attachment_with_bg)?.let {

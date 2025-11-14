@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Monthly Report"
+                android:text="@string/monthly_report"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp" />
 
@@ -93,16 +93,24 @@
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Weekly Report"
+                                android:text="@string/weekly_report"
                                 android:textColor="@color/black" />
+
+                            <FrameLayout
+                                android:layout_width="@dimen/three_fifty"
+                                android:layout_height="250dp"
+                                android:layout_marginTop="@dimen/eight"
+                                android:clipToOutline="true">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rvWeekly"
                                 android:layout_width="@dimen/three_fifty"
-                                android:layout_height="wrap_content"
+                                android:layout_height="250dp"
                                 android:nestedScrollingEnabled="false"
                                 android:overScrollMode="never"
                                 android:visibility="visible" />
+
+                            </FrameLayout>
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -131,14 +139,21 @@
                                 android:text="Top Performance"
                                 android:textColor="@color/black" />
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rvTopPerformance"
+                            <FrameLayout
                                 android:layout_width="@dimen/three_fifty"
-                                android:layout_height="wrap_content"
+                                android:layout_height="250dp"
                                 android:layout_marginTop="@dimen/eight"
-                                android:nestedScrollingEnabled="false"
-                                android:overScrollMode="never"
-                                android:visibility="visible" />
+                                android:clipToOutline="true">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvTopPerformance"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scrollbars="vertical"
+                                    android:overScrollMode="never"
+                                    android:nestedScrollingEnabled="true" />
+                            </FrameLayout>
+
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -154,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Tasks"
+                android:text="@string/tasks"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp" />
 

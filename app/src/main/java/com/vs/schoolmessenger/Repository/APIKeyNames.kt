@@ -2,8 +2,10 @@ package com.vs.schoolmessenger.Repository
 
 object APIKeyNames {
     const val message = "message"
+    const val holiday_message = "holiday_message"
     const val status = "status"
     const val data = "data"
+    const val attd_report = "attd_report"
     const val title = "title"
     const val description = "description"
     const val submission_date = "submission_date"

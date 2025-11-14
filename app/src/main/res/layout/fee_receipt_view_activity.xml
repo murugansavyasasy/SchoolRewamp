@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/five"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:textColor="@color/sky_blue"
                     android:textSize="@dimen/fourteen_sp" />
 
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/five"
-                android:text="Download"
+                android:text="@string/download"
                 android:textColor="@color/sky_blue"
                 android:textSize="@dimen/fourteen_sp" />
 
