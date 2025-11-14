@@ -12,6 +12,8 @@ object APIMethods {
     const val isResetPassword = "app/api/cred/reset-password"
     const val isCreateNewPassword = "app/api/cred/create-new-password"
     const val isDeviceToken = "app/api/auth/device-token"
+
+    const val isLogout = "app/api/auth/logout"
     const val isGlobalVariables = "app/api/global/global-variables"
 
     //    const val isGetDashBoard = "dashboard/api/dashboard/get-dashboard-details"

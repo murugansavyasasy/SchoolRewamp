@@ -301,5 +301,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     override fun onResume() {
         super.onResume()
         fetchAssignmentReportData()
+        binding.toolbarLayout.rytSearch.visibility = View.GONE
+        binding.toolbarLayout.txtVideoMenu.setText("")
     }
 }

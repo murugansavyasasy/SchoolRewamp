@@ -168,7 +168,7 @@
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:text="@string/history"
                         android:textColor="@color/PrimaryColor" />
 
                 </RelativeLayout>

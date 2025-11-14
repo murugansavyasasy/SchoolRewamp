@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.GravityCompat
@@ -230,11 +231,32 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         }
 
         rlaLogout.setOnClickListener {
-//            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
-            SharedPreference.putLogout(this, true)
-            SharedPreference.setLoggedIn(this, false)
-//            SharedPreference.setFingerprintEnabled(requireActivity(), false)
-            startActivity(Intent(this, Login::class.java))
+            isLogout(
+                activity = this,
+                viewModel =authViewModel,
+                secure_id = Constant.getAndroidSecureId(this) ,
+                device_type = Constant.isDeviceType,
+                mobile_number = SharedPreference.getMobileNumber(this).toString()
+            ) { isSuccess, message ->
+
+                if (isSuccess) {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    //            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
+                    SharedPreference.putLogout(this, true)
+                    SharedPreference.setLoggedIn(this, false)
+                    //            SharedPreference.setFingerprintEnabled(requireActivity(), false)
+                    startActivity(Intent(this, Login::class.java))
+                } else {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+////            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
+//            SharedPreference.putLogout(this, true)
+//            SharedPreference.setLoggedIn(this, false)
+////            SharedPreference.setFingerprintEnabled(requireActivity(), false)
+//            startActivity(Intent(this, Login::class.java))
         }
 
         val rootView = this.window.decorView.rootView

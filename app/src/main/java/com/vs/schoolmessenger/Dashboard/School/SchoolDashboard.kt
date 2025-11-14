@@ -275,9 +275,27 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         }
 
         rlaLogout.setOnClickListener {
-            SharedPreference.putLogout(this, true)
-            SharedPreference.setLoggedIn(this, false)
-            startActivity(Intent(this, Login::class.java))
+            isLogout(
+                activity = this,
+                viewModel =authViewModel,
+                secure_id = Constant.getAndroidSecureId(this) ,
+                device_type = Constant.isDeviceType,
+                mobile_number = SharedPreference.getMobileNumber(this).toString()
+            ) { isSuccess, message ->
+
+                if (isSuccess) {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    SharedPreference.putLogout(this, true)
+                    SharedPreference.setLoggedIn(this, false)
+                    startActivity(Intent(this, Login::class.java))
+                } else {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+//            SharedPreference.putLogout(this, true)
+//            SharedPreference.setLoggedIn(this, false)
+//            startActivity(Intent(this, Login::class.java))
         }
 
         val rootView = this.window.decorView.rootView
