@@ -40,6 +40,9 @@
         android:src="@drawable/del_icon">
 
     </ImageView>
+
+
+
 </RelativeLayout>
 
 

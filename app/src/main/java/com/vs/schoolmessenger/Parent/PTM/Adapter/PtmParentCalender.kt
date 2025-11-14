@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import kotlin.collections.find
-
 class PtmParentCalender(
     private val dates: List<Triple<String, Int, Int>>, // month, day, year
     private val slotCounts: List<SlotCountData>,

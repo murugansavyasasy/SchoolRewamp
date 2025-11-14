@@ -459,6 +459,8 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
         val allEmpty = !hasOngoing && !hasUpcoming && !hasCompleted
         binding.lytNoDataFound.visibility = if (allEmpty) View.VISIBLE else View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility = if (allEmpty) View.GONE else View.VISIBLE
+        binding.toolbarLayout.rytSearch.visibility = if (allEmpty) View.GONE else View.VISIBLE
     }
 
 

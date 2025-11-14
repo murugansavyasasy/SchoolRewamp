@@ -839,43 +839,43 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         listener: OnDateSelectedListener,
         isFromDate: Boolean,
         fromDateMillis: Long,
-        preSelectedDate: String? = null // 👈 add optional pre-selected date
+        preSelectedDate: String? = null
     ) {
         val calendar = Calendar.getInstance()
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
-        // ✅ If a pre-selected date is provided, open the picker with that date
         if (!preSelectedDate.isNullOrEmpty()) {
             try {
-                val parsedDate = sdf.parse(preSelectedDate)
-                if (parsedDate != null) calendar.time = parsedDate
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+                val parsed = sdf.parse(preSelectedDate)
+                if (parsed != null) calendar.time = parsed
+            } catch (e: Exception) {}
         }
 
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(
+        val dialog = DatePickerDialog(
             context,
-            { _, selectedYear, selectedMonth, selectedDay ->
+            { _, y, m, d ->
                 val cal = Calendar.getInstance()
-                cal.set(selectedYear, selectedMonth, selectedDay)
-                val formattedDate = sdf.format(cal.time)
-                listener.onDateSelected(formattedDate)
+                cal.set(y, m, d)
+                listener.onDateSelected(sdf.format(cal.time))
             },
             year, month, day
         )
 
-        // 🚫 Restrict TO-DATE picker’s minimum date
+        // 🚫 Block FUTURE DATES
+        dialog.datePicker.maxDate = System.currentTimeMillis()
+
+        // 🚫 Restrict To-Date minimum date
         if (!isFromDate) {
-            datePickerDialog.datePicker.minDate = fromDateMillis
+            dialog.datePicker.minDate = fromDateMillis
         }
 
-        datePickerDialog.show()
+        dialog.show()
     }
+
 
 
 

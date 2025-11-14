@@ -379,7 +379,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             isMeetingHistoryAdapter = adapter
             binding.rcyMeetingHistory.adapter = adapter
         }
-
     }
 
     fun isScheduleCallList() {
@@ -407,7 +406,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.lblScheduleMeeting -> {
-                Constant.hideKeyboardIfOpen(this)
                 isChangeBackGroundTab(binding.lblScheduleMeeting)
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
 
@@ -454,11 +452,12 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     }
 
     fun isChangeBackGroundTab(isSelectedTab: TextView) {
+        Constant.hideKeyboardIfOpen(this)
         binding.lblScheduleMeeting.background = null
         binding.lblYourMeeting.background = null
         isSelectedTab.background = this.getDrawable(R.drawable.white_radious)
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(binding.txtSearchMeeting, InputMethodManager.SHOW_IMPLICIT)
+//        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.showSoftInput(binding.txtSearchMeeting, InputMethodManager.SHOW_IMPLICIT)
 
         if (isSelectedTab == binding.lblYourMeeting) {
             binding.rytScheduleMeeting.visibility = View.GONE

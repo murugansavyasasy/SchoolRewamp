@@ -42,37 +42,38 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
     override fun setupViews() {
         super.setupViews()
+
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.className.setOnClickListener(this)
         binding.modeName.setOnClickListener(this)
         binding.categoryName.setOnClickListener(this)
         binding.linearLayout3.setOnClickListener(this)
         binding.linearLayout5.setOnClickListener(this)
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
-
+        // ✨ Set today as default From and To date
         val calendar = Calendar.getInstance()
-
         val currentDate = dateFormat.format(calendar.time)
+
         to_Date = currentDate
+        from_Date = currentDate
+
+        binding.fromDate2.text = Constant.convertToReadableDate1(currentDate)
         binding.fromDate3.text = Constant.convertToReadableDate1(currentDate)
 
-        from_Date = currentDate
-        binding.fromDate2.text = Constant.convertToReadableDate1(currentDate)
-
-
-        // Convert currentDate string into millis
+        // Convert to millis
         val parsedDate = dateFormat.parse(currentDate)
         val currentMillis = parsedDate?.time ?: calendar.timeInMillis
 
-        // Initialize fromDateMillis and toDateMillis
         fromDateMillis = currentMillis
         toDateMillis = currentMillis
 
@@ -86,7 +87,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
         appViewModel?.isGetDailyCollectionReport?.observe(this) { response ->
             Constant.hideLoading(this@DailyCollection)
-            Log.d("response++", response.toString())
 
             if (response == null) {
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
@@ -109,7 +109,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.txtNoData.visibility = View.VISIBLE
         binding.totalsummary1.visibility = View.GONE
         binding.relativeLayout5.visibility = View.GONE
-
     }
 
 
@@ -126,7 +125,9 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
         data.forEach { collectionData ->
             collectionData.collections.forEach { item ->
+
                 if (!item.category.isNullOrEmpty()) {
+
                     val feeList = item.fee_data?.map { fee ->
                         DailyCollectionDisplayItem.Fee(
                             fee.type_name ?: getString(R.string.Unknown),
@@ -142,7 +143,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                         )
                     )
                 }
-
             }
         }
 
@@ -163,13 +163,11 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
             val totalCollectionSum = data[0].total_collection
             binding.totalCollection.text = totalCollectionSum.toString()
-
         }
     }
 
 
     private fun isGetDailyCollection() {
-
         if (from_Date.isNullOrEmpty() || to_Date.isNullOrEmpty()) return
 
         binding.totalsummary1.visibility = View.GONE
@@ -177,30 +175,13 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.txtNoData.visibility = View.GONE
         binding.relativeLayout5.visibility = View.GONE
 
-
         mAdapter?.clearData()
         mAdapter = DcfAdapter(emptyList(), this)
         binding.totalsummary1.layoutManager = LinearLayoutManager(this)
         binding.totalsummary1.adapter = mAdapter
 
-
-        if (selectedType == Constant.one) {
-            binding.categoryName.isEnabled = false
-            binding.className.isEnabled = true
-            binding.modeName.isEnabled = true
-        }
-        if (selectedType == Constant.two) {
-            binding.className.isEnabled = false
-            binding.categoryName.isEnabled = true
-            binding.modeName.isEnabled = true
-        }
-        if (selectedType == Constant.three) {
-            binding.modeName.isEnabled = false
-            binding.categoryName.isEnabled = true
-            binding.className.isEnabled = true
-        }
-
         Constant.showLoading(this@DailyCollection)
+
         appViewModel?.isGetDailyCollectionReport(
             isAccessToken ?: "",
             selectedType,
@@ -208,24 +189,20 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             to_Date ?: "",
             this
         )
-
     }
 
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgBack -> {
-                onBackPressed()
-            }
 
             R.id.class_name -> {
                 selectedType = Constant.two
                 binding.className.setBackgroundResource(R.drawable.bg_primary)
                 binding.className.setTextColor(Color.WHITE)
-                binding.modeName.setTextColor(Color.BLACK)
-                binding.categoryName.setTextColor(Color.BLACK)
                 binding.modeName.setBackgroundResource(R.drawable.gray_bg_radius)
                 binding.categoryName.setBackgroundResource(R.drawable.gray_bg_radius)
+                binding.modeName.setTextColor(Color.BLACK)
+                binding.categoryName.setTextColor(Color.BLACK)
 
                 isGetDailyCollection()
             }
@@ -234,11 +211,11 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                 selectedType = Constant.three
                 binding.modeName.setBackgroundResource(R.drawable.bg_primary)
                 binding.modeName.setTextColor(Color.WHITE)
+                binding.className.setBackgroundResource(R.drawable.gray_bg_radius)
+                binding.categoryName.setBackgroundResource(R.drawable.gray_bg_radius)
                 binding.className.setTextColor(Color.BLACK)
                 binding.categoryName.setTextColor(Color.BLACK)
 
-                binding.className.setBackgroundResource(R.drawable.gray_bg_radius)
-                binding.categoryName.setBackgroundResource(R.drawable.gray_bg_radius)
                 isGetDailyCollection()
             }
 
@@ -246,14 +223,15 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                 selectedType = Constant.one
                 binding.categoryName.setBackgroundResource(R.drawable.bg_primary)
                 binding.categoryName.setTextColor(Color.WHITE)
+                binding.className.setBackgroundResource(R.drawable.gray_bg_radius)
+                binding.modeName.setBackgroundResource(R.drawable.gray_bg_radius)
                 binding.modeName.setTextColor(Color.BLACK)
                 binding.className.setTextColor(Color.BLACK)
 
-                binding.modeName.setBackgroundResource(R.drawable.gray_bg_radius)
-                binding.className.setBackgroundResource(R.drawable.gray_bg_radius)
                 isGetDailyCollection()
             }
 
+            // FROM DATE
             R.id.linear_layout3 -> {
                 selectedDateTarget = R.id.linear_layout3
                 dailycollectionshowDatePickerDialog(
@@ -265,6 +243,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                 )
             }
 
+            // TO DATE
             R.id.linear_layout5 -> {
                 selectedDateTarget = R.id.linear_layout5
                 dailycollectionshowDatePickerDialog(
@@ -280,21 +259,23 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
     override fun onDateSelected(date: String) {
         when (selectedDateTarget) {
+
+            // FROM DATE
             R.id.linear_layout3 -> {
                 binding.fromDate2.text = Constant.convertToReadableDate1(date)
                 from_Date = date
 
-                // update fromDateMillis
                 val parsed = dateFormat.parse(date)
                 fromDateMillis = parsed?.time ?: 0L
             }
 
+            // TO DATE
             R.id.linear_layout5 -> {
                 binding.fromDate3.text = Constant.convertToReadableDate1(date)
                 to_Date = date
             }
         }
+
         isGetDailyCollection()
     }
-
 }
