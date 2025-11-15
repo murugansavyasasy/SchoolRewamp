@@ -32,27 +32,31 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
 
         // Toolbar setup
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblParentToolBar.text = getString(R.string.leave_history)
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        binding.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.imgBack.setColorFilter(
+        binding.toolbarLayout.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.toolbarLayout.imgBack.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
         )
-        binding.imgSearchBtn.setColorFilter(
+        binding.toolbarLayout.imgSearchToolBar.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
         )
 
-        binding.imgSearchBtn.setOnClickListener {
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch.visibility == View.VISIBLE) {
                 binding.rytSearch.visibility = View.GONE
                 binding.txtVideoMenu.text.clear()
@@ -91,7 +95,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
             if (response != null && response.status) {
                 val dataList = response.data
                 if (!dataList.isNullOrEmpty()) {
-                    binding.imgSearchBtn.visibility=View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
                     binding.rcyAttendanceReport.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
 
@@ -105,13 +109,13 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                     binding.rcyAttendanceReport.layoutManager = GridLayoutManager(this, 2)
                     binding.rcyAttendanceReport.adapter = mAdapter
                 } else {
-                    binding.imgSearchBtn.visibility=View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                     binding.rcyAttendanceReport.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
                     binding.txtNoData.text=response.message?:getString(R.string.no_data_found)
                 }
             } else {
-                binding.imgSearchBtn.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.rcyAttendanceReport.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
                 binding.txtNoData.text=response?.message?:getString(R.string.something_went_wrong_please_try_again_later)
