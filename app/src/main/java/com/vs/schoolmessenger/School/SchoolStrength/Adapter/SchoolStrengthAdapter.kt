@@ -79,10 +79,10 @@ class SchoolStrengthAdapter(
             position: Int,
             adapter: SchoolStrengthAdapter
         ) {
-            boyslabel.text = "Boys : ${data.boys_count}"
-            girlslabel.text = "Girls : ${data.girls_count}"
-            totallabel.text = "Total Students : ${data.total_students}"
-            header1.text = "Standard" + " - " + data.name
+            boyslabel.text = "${context.getString(R.string.boys)} : ${data.boys_count}"
+            girlslabel.text = "${context.getString(R.string.girls)} : ${data.girls_count}"
+            totallabel.text = "${context.getString(R.string.total_students)} : ${data.total_students}"
+            header1.text = "${context.getString(R.string.Standard)} - ${data.name}"
 
 
             if (data.girls_count == "0" && data.boys_count == "0") {

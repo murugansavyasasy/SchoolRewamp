@@ -59,7 +59,7 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
-        binding.toolbarLayout.lblParentToolBar.text = "Create Lesson Plan"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.create_lesson_plan)
         binding.toolbarLayout.lblSchoolName.apply {
             visibility = View.VISIBLE
             text = isStaffDetails?.school_name
@@ -101,7 +101,7 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
                 } else {
                     Log.w("Createfailed", "Lesson plan Create failed: ${response.message}")
                     showTopLessonPlanAlertPopup(
-                        response.message ?: "Create failed. Try again later.", this
+                        response.message ?: getString(R.string.create_failed_try_again_later), this
                     )
                 }
             } else {
@@ -198,7 +198,7 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
 
         if (keyValueData.length() == 0) {
             Toast.makeText(
-                this, "No data to update",
+                this, getString(R.string.no_data_to_update),
                 Toast.LENGTH_SHORT
             ).show()
             return

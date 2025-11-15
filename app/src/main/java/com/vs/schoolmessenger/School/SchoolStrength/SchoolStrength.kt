@@ -162,9 +162,9 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
 
         binding.progressBarGender.staffPercentage.text =
-            "${firstItem.totalStaffStrength} Staffs (${String.format("%.1f", staffPercentage)}%)"
+            "${firstItem.totalStaffStrength} ${getString(R.string.Staffs)} (${String.format("%.1f", staffPercentage)}%)"
         binding.progressBarGender.studentPercentage.text =
-            "${firstItem.totalStudentStrength} Students (${
+            "${firstItem.totalStudentStrength} ${getString(R.string.Students)} (${
                 String.format(
                     "%.1f", studentPercentage
                 )
@@ -209,9 +209,9 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         binding.summaryStaticscardview.staffCount.text = firstItem.totalStaffStrength
 
         binding.summaryStaticscardview.malestaffCount.text =
-            "male" + " " + firstItem.totalmalestaffsstrength
+            getString(R.string.male_) + " " + firstItem.totalmalestaffsstrength
         binding.summaryStaticscardview.femaleStaffcount.text =
-            "female" + " " + firstItem.totalfemalestaffsstrength
+            getString(R.string.female_) + " " + firstItem.totalfemalestaffsstrength
 
 
         val malestaffStrength = firstItem.totalmalestaffsstrength.toIntOrNull() ?: 0
@@ -229,14 +229,14 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
 
         binding.progressBarGender.othersCount.text =
-            "Unspecified " + (firstItem.totalOthersStrength)
-        binding.summaryStaticscardview.totalMale.text = "Staffs " + firstItem.totalStaffStrength
+            getString(R.string.Unspecified)+" "+ (firstItem.totalOthersStrength)
+        binding.summaryStaticscardview.totalMale.text = getString(R.string.Staffs)+" "+ firstItem.totalStaffStrength
         binding.summaryStaticscardview.totalFemale.text =
-            "Students " + firstItem.totalStudentStrength
+            getString(R.string.Students)+" "+ firstItem.totalStudentStrength
         binding.summaryStaticscardview.othersCount.text = firstItem.totalOthersStrength
-        binding.summaryStaticscardview.boyscount1.text = "boys" + " " + firstItem.totalBoysStrength
+        binding.summaryStaticscardview.boyscount1.text = getString(R.string.boys)+ " " + firstItem.totalBoysStrength
         binding.summaryStaticscardview.girlscount1.text =
-            "girls" + " " + firstItem.totalGirlsStrength
+            getString(R.string.girls) + " " + firstItem.totalGirlsStrength
         binding.summaryStaticscardview.othersCount.text =
             ((firstItem.totalStaffStrength?.toIntOrNull()
                 ?: 0) + (firstItem.totalStudentStrength?.toIntOrNull()
@@ -247,16 +247,16 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             binding.summaryStaticscardview.growthValue3.text =
                 ((firstItem.previous.total_staff_strength.toIntOrNull()
                     ?: 0) + (firstItem.previous.total_student_strength.toIntOrNull()
-                    ?: 0)).toString() + " " + "from last year"
+                    ?: 0)).toString() + " " + getString(R.string.from_last_year)
 
             binding.summaryStaticscardview.growthValue1.text =
                 ((firstItem.previous.total_student_strength.toIntOrNull()
-                    ?: 0)).toString() + " " + "from last year"
+                    ?: 0)).toString() + " " + getString(R.string.from_last_year)
 
 
             binding.summaryStaticscardview.growthValue2.text =
                 ((firstItem.previous.total_staff_strength.toIntOrNull()
-                    ?: 0)).toString() + " " + "from last year"
+                    ?: 0)).toString() + " " +getString(R.string.from_last_year)
 
         } else {
             binding.summaryStaticscardview.growthValue3.text = firstItem.previous.message

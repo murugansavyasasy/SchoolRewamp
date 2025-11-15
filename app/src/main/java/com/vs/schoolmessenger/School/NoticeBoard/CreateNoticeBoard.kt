@@ -225,14 +225,14 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
                         Toast.makeText(
                             this,
-                            "Added $addedCount file${if (addedCount > 1) "s" else ""}",
+                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${if (addedCount > 1) "${getString(R.string.s_)}" else ""}",
                             Toast.LENGTH_SHORT
                         ).show()
 
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                        Toast.makeText(this, "You have reached the maximum file limit.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -453,7 +453,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 selectedDateField = 2
 
                 if (txtStartDate.isNullOrEmpty()) {
-                    Toast.makeText(this, "Please select a start date first", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.please_select_a_start_date_first), Toast.LENGTH_SHORT).show()
                     return
                 }
 
