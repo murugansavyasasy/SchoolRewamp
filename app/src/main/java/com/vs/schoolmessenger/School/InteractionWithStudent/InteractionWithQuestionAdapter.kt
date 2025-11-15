@@ -79,9 +79,9 @@ class InteractionWithQuestionAdapter(
             answerText.text = chat.answer
             student_name.text = chat.student_name
             if (chat.reply_type == "1") {
-                reply_type.text = "Public Reply"
+                reply_type.text = context.getString(R.string.public_reply)
             } else if (chat.reply_type == "2") {
-                reply_type.text = "Private Reply"
+                reply_type.text = context.getString(R.string.private_reply)
             } else {
                 reply_type.visibility = View.GONE
             }
@@ -125,7 +125,7 @@ class InteractionWithQuestionAdapter(
 
             // ✅ Set correct menu title dynamically
             val blockItem = popup.menu.findItem(R.id.block_student)
-            blockItem.title = if (chat.is_blocked == true) "Unblock" else "Block"
+            blockItem.title = if (chat.is_blocked == true) context.getString(R.string.unblock) else context.getString(R.string.block)
 
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
@@ -167,7 +167,7 @@ class InteractionWithQuestionAdapter(
 
         with(dialogBinding) {
 
-            headerLabel.text = "Block" + " " + chat.student_name
+            headerLabel.text = context.getString(R.string.block) + " " + chat.student_name
 
             btnCancel.setOnClickListener { dialog.dismiss() }
             btnBlock.setOnClickListener {

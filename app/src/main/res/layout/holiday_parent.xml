@@ -1,88 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_white"
-   >
+    android:id="@+id/main"
+    >
 
-    <RelativeLayout
-        android:id="@+id/rytHeader"
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_header_rounded"
-        android:paddingBottom="@dimen/thirty"
-        >
-        <RelativeLayout
-            android:id="@+id/rytHeaderDetail"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/parent_side_tool_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/lblParentToolBar"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/HoliDay"
+            android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
+            android:layout_below="@+id/rytHeader"
+            android:textSize="@dimen/twenty">
+
+        </TextView>
+
+        <FrameLayout
+            android:layout_margin="@dimen/fifteen"
+            android:id="@+id/calendarFragmentContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="@dimen/thirty_five"
-                android:layout_height="@dimen/thirty_five"
-                android:layout_centerVertical="true"
-                android:src="@drawable/left_arrow">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/lblParentToolBar"
+            />
+    </LinearLayout>
 
-            </ImageView>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:id="@+id/lytTitleAndName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/imgBack"
-                android:orientation="vertical">
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/relative_layout"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="@color/gray_white"-->
+<!--   >-->
 
-                <TextView
-                    android:id="@+id/lblStudentName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/fifteen_sp">
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/rytHeader"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/bg_header_rounded"-->
+<!--        android:paddingBottom="@dimen/thirty"-->
+<!--        >-->
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rytHeaderDetail"-->
+<!--            android:layout_marginTop="@dimen/ten"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            <ImageView-->
+<!--                android:id="@+id/imgBack"-->
+<!--                android:layout_width="@dimen/thirty_five"-->
+<!--                android:layout_height="@dimen/thirty_five"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:src="@drawable/left_arrow">-->
 
-                </TextView>
+<!--            </ImageView>-->
 
-                <TextView
-                    android:id="@+id/lblStudentSection"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:visibility="visible"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/twele_sp">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/lytTitleAndName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_toEndOf="@+id/imgBack"-->
+<!--                android:orientation="vertical">-->
 
-                </TextView>
+<!--                <TextView-->
+<!--                    android:id="@+id/lblStudentName"-->
+<!--                    style="@style/CustomTextStylePoppinsBold"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/fifteen_sp">-->
 
-            </LinearLayout>
+<!--                </TextView>-->
 
-        </RelativeLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/lblStudentSection"-->
+<!--                    style="@style/CustomTextStylePoppinsBold"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text=""-->
+<!--                    android:visibility="visible"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/twele_sp">-->
 
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/lblParentToolBar"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/HoliDay"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_below="@+id/rytHeader"
-        android:textSize="@dimen/twenty">
+<!--                </TextView>-->
 
-    </TextView>
+<!--            </LinearLayout>-->
 
-    <FrameLayout
-        android:layout_margin="@dimen/fifteen"
-        android:id="@+id/calendarFragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/lblParentToolBar"
-        />
+<!--        </RelativeLayout>-->
 
-</RelativeLayout>
+<!--    </RelativeLayout>-->
+<!--    <TextView-->
+<!--        android:id="@+id/lblParentToolBar"-->
+<!--        style="@style/CustomTextStylePoppinsBold"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/HoliDay"-->
+<!--        android:layout_marginStart="@dimen/fifteen"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:layout_below="@+id/rytHeader"-->
+<!--        android:textSize="@dimen/twenty">-->
+
+<!--    </TextView>-->
+
+<!--    <FrameLayout-->
+<!--        android:layout_margin="@dimen/fifteen"-->
+<!--        android:id="@+id/calendarFragmentContainer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@+id/lblParentToolBar"-->
+<!--        />-->
+
+<!--</RelativeLayout>-->

@@ -171,7 +171,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
 
     private fun isLoadStaffData(data: List<BlockedStudent>?) {
         if (data.isNullOrEmpty()) {
-            showErrorUI("No blocked students found")
+            showErrorUI(getString(R.string.no_blocked_students_found))
             return
         }
 
@@ -195,7 +195,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
         if (data.id.isNullOrEmpty()) {
             Constant.showDataValidation(
                 getString(R.string.error),
-                "Invalid student id",
+                getString(R.string.invalid_student_id),
                 requireActivity()
             )
             return

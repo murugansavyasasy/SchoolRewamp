@@ -86,7 +86,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
         binding.toolbarLayout.lblStudentName.text=Constant.isCertificateData?.type.toString()
 
 
-        val requestedOn=Constant.formatDate(Constant.isCertificateData?.requested_on.toString())
+        val requestedOn=Constant.isFormatDate(Constant.isCertificateData?.requested_on.toString())
         binding.lblRequestedOnDate.text =  requestedOn ?: ""
 
 
@@ -96,7 +96,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
             binding.lblCertificateDate.visibility = View.VISIBLE
 //            binding.imgMoreOptions.visibility = View.VISIBLE
             binding.rytWaitingProcess.visibility = View.GONE
-            val issuedOn=Constant.formatDate(Constant.isCertificateData?.issued_on.toString())
+            val issuedOn=Constant.isFormatDate(Constant.isCertificateData?.issued_on.toString())
             binding.lblCertificateDate.text = issuedOn?: ""
 
             binding.loadingBar.visibility = View.VISIBLE
