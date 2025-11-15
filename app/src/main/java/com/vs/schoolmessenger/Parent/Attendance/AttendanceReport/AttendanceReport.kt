@@ -90,7 +90,6 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         appViewModel!!.isChildAttendanceReport?.observe(this) { response ->
             if (response != null && response.status) {
                 val dataList = response.data
-
                 if (!dataList.isNullOrEmpty()) {
                     binding.imgSearchBtn.visibility=View.VISIBLE
                     binding.rcyAttendanceReport.visibility = View.VISIBLE
@@ -115,7 +114,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                 binding.imgSearchBtn.visibility=View.GONE
                 binding.rcyAttendanceReport.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
-                binding.txtNoData.text=getString(R.string.something_went_wrong_please_try_again_later)
+                binding.txtNoData.text=response?.message?:getString(R.string.something_went_wrong_please_try_again_later)
 
             }
         }
