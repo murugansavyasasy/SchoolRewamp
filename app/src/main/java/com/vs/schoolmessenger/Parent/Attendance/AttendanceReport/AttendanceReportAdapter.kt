@@ -114,11 +114,10 @@
                 adapter: AttendanceReportAdapter
             ) {
 
-                if (data.type == Constant.Absent) {
-//                    lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle))
+                if (data.type == "A/A") {
                     tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge))
                     tvFullDate.text = Constant.convertDateTimeFormat2(data.date)
-                    tvStatus.text = data.type
+                    tvStatus.text = "Absent"
                     tvDayName.text = data.day
 
                     val inputDate = data.date
@@ -135,10 +134,28 @@
                         tvMonth.text = ""
                         tvDay.text = ""
                     }
-
                 } else {
                     lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle_light_green))
                     tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge_green))
+
+                    tvFullDate.text = Constant.convertDateTimeFormat2(data.date)
+                    tvStatus.text = "Present"
+                    tvDayName.text = data.day
+
+                    val inputDate = data.date
+                    val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+                    val outputMonthFormat = SimpleDateFormat(Constant.MMM_, Locale.getDefault())
+                    val outputDayFormat = SimpleDateFormat(Constant.dd, Locale.getDefault())
+
+                    try {
+                        val dateObj = inputFormat.parse(inputDate)
+                        tvMonth.text = outputMonthFormat.format(dateObj)
+                        tvDay.text = outputDayFormat.format(dateObj)
+                    } catch (e: ParseException) {
+                        e.printStackTrace()
+                        tvMonth.text = ""
+                        tvDay.text = ""
+                    }
                 }
 
 
