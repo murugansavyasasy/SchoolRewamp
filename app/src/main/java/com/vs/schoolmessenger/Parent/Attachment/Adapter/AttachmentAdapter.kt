@@ -262,7 +262,7 @@ class AttachmentAdapter(
                     title = data.title,
                     description = data.description,
                     subjectName = "",
-                    sentBy = "",
+                    sentBy = data.sent_by,
                     thumbnail = data.thumbnail,
                     isUnread = true,
                     created_date = data.date,
