@@ -1095,6 +1095,22 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="updated_successfully">Updated successfully</string>
     <string name="no_blocked_data_available">No blocked data available</string>
+    <string name="no_blocked_students_found">No blocked students found</string>
+    <string name="invalid_student_id">Invalid student id</string>
+    <string name="Blocked_on">Blocked on </string>
+    <string name="unblock_student">Unblock Student</string>
+    <string name="are_you_sure_you_want_to_unblock_this_student">Are you sure you want to unblock this student?</string>
+    <string name="public_reply">Public Reply</string>
+    <string name="private_reply">Private Reply</string>
+    <string name="unblock">Unblock</string>
+    <string name="Class_1">Class</string>
+    <string name="no_messages_yet">No messages yet</string>
+    <string name="just_now">Just now</string>
+    <string name="min_ago">min ago</string>
+    <string name="hr_ago">hr ago</string>
+    <string name="day_">day</string>
+    <string name="s_">s</string>
+    <string name="ago">ago</string>
 
 
 </resources>
