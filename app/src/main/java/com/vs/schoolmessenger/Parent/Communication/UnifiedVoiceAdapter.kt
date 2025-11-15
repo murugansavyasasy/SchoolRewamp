@@ -260,7 +260,6 @@ class UnifiedVoiceAdapter(
                         Log.d("ShowALl","ShowAll")
                         lblContentText.maxLines = Int.MAX_VALUE
                         lblSeeMore.text=context.getString(R.string.see_less) //san
-
                     } else {
                         Log.d("ShowALl","SeeLess")
                         lblContentText.maxLines = 3
@@ -303,6 +302,7 @@ class UnifiedVoiceAdapter(
                 if (lblContent.lineCount > 3) {
                     tvSeeMore.visibility = View.VISIBLE
                   //  lblnewiconText.visibility = View.GONE
+                    lblSeeMore.text = context.getString(R.string.see_more_2)
                     lblContent.maxLines = 3
                     lblContent.ellipsize = TextUtils.TruncateAt.END
                 }

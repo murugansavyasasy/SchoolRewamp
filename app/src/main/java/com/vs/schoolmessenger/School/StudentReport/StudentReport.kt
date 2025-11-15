@@ -492,7 +492,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             isSectionID = null
             isSection = null
             binding.tabLayout.visibility = View.GONE
-            ErrorMessage("No Section Found in '${standard.name}'")
+            ErrorMessage("${getString(R.string.No_Section_Found_in)} '${standard.name}'")
             return
         }
     }

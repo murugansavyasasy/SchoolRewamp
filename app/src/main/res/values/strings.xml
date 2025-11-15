@@ -1111,6 +1111,22 @@
     <string name="day_">day</string>
     <string name="s_">s</string>
     <string name="ago">ago</string>
+    <string name="create_lesson_plan">Create Lesson Plan</string>
+    <string name="create_failed_try_again_later">Create failed. Try again later.</string>
+    <string name="no_data_to_update">No data to update</string>
+    <string name="update_failed_try_again_later">Update failed. Try again later.</string>
+    <string name="chapters_completed">"Chapters Completed "</string>
+    <string name="please_select_a_start_date_first">Please select a start date first</string>
+    <string name="please_select_correct_option">Please select correct option</string>
+    <string name="Total_student">Total student</string>
+    <string name="Unspecified">Unspecified</string>
+    <string name="Staffs">Staffs</string>
+    <string name="male_">male</string>
+    <string name="female_">female</string>
+    <string name="boys_">boys</string>
+    <string name="girls_">girls</string>
+    <string name="from_last_year">from last year</string>
+    <string name="No_Section_Found_in">No Section Found in </string>
 
 
 </resources>

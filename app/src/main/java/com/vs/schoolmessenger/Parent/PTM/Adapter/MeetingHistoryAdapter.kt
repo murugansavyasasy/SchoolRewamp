@@ -131,12 +131,6 @@ class MeetingHistoryAdapter(
                 tvMode.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
             }
 
-
-//            tvStatus.setBackgroundColor(
-//                if (meeting.status.equals("Completed", true)) Color.parseColor("#5cc885")
-//                else Color.parseColor("#4085ef")
-//            )
-
             val bgDrawable = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 16f

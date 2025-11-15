@@ -65,30 +65,30 @@ class SchoolStrengthDetailAdapter(
         fun bind(
             data: Section, position: Int, adapter: SchoolStrengthDetailAdapter
         ) {
-            sectionname.text = "Section " + "-" + data.name
+            sectionname.text = context.getString(R.string.Section)+ "-" + data.name
             val studentCount = data.total_students.toIntOrNull() ?: 0
 
             val count = studentCount ?: 0
             totalcount.text =
-                if (count <= 1) "Total student - $count" else "Total students - $count"
+                if (count <= 1) "${context.getString(R.string.Total_student)} - $count" else "${context.getString(R.string.total_students)} - $count"
 
 
 
 
 
             boyscount.text = HtmlCompat.fromHtml(
-                "<font color='#808080'> Boys :</font> ${data.boys_count}",
+                "<font color='#808080'> ${context.getString(R.string.boys)} :</font> ${data.boys_count}",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
 
             girlscount.text = HtmlCompat.fromHtml(
-                "<font color='#808080'> Girls :</font> ${data.girls_count}",
+                "<font color='#808080'>  ${context.getString(R.string.girls)} :</font> ${data.girls_count}",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
 
             val othersCountValue = data.other_count?.takeIf { it.isNotBlank() } ?: "0"
             otherscount.text = HtmlCompat.fromHtml(
-                "<font color='#808080'>Unspecified :</font> $othersCountValue",
+                "<font color='#808080'>${context.getString(R.string.Unspecified)} :</font> $othersCountValue",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
 

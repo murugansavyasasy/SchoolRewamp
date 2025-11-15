@@ -99,7 +99,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
                 } else {
                     Log.w("UpdateFailed", "Lesson plan update failed: ${response.message}")
                     showTopLessonPlanAlertPopup(
-                        response.message ?: "Update failed. Try again later.", this
+                        response.message ?: getString(R.string.update_failed_try_again_later), this
                     )
                 }
             } else {

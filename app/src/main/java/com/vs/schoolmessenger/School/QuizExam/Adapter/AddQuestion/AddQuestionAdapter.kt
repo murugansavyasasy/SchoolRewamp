@@ -183,7 +183,8 @@ class AddQuestionAdapter(
 
                 //here "0" means means option if option is 0 need to show Please select correct option
                 item.answer.isBlank() || item.answer == "0" -> {
-                    Toast.makeText(context, "Please select correct option", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,
+                        context.getString(R.string.please_select_correct_option), Toast.LENGTH_SHORT).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }

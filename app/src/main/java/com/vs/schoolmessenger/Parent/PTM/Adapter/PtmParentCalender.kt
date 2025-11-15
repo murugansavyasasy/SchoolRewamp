@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.PTM.Adapter
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +20,7 @@ class PtmParentCalender(
     private val onDateClick: (String) -> Unit
 ) : RecyclerView.Adapter<PtmParentCalender.DateViewHolder>() {
 
-
     private var selectedPos = -1
-    private val currentYear = Calendar.getInstance().get(Calendar.YEAR)
 
     inner class DateViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tvMonth: TextView = view.findViewById(R.id.tvMonth)
@@ -56,7 +55,9 @@ class PtmParentCalender(
             holder.lblSlotCount.visibility = View.VISIBLE
             (holder.lblSlotCount as TextView).text = countData.count
         } else {
-            holder.lblSlotCount.visibility = View.GONE
+//            holder.lblSlotCount.visibility = View.GONE
+            holder.lblSlotCount.visibility = View.INVISIBLE
+            holder.lblSlotCount.text = ""
         }
 
         // Handle click
@@ -65,6 +66,7 @@ class PtmParentCalender(
             selectedPos = position
             notifyItemChanged(prevPos)
             notifyItemChanged(selectedPos)
+            notifyDataSetChanged()
             onDateClick(formattedDate)
         }
     }

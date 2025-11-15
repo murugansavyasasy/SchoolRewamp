@@ -82,7 +82,7 @@ class LessonPlanAdapter(
             val topicDetail = item.details.find { it.name.equals(Constant.Topic, ignoreCase = true) }
 
             lblSubjectId.text = subject_name
-            lblTeaching.text = "Chapters Completed "+ completed_items + " - " + total_items
+            lblTeaching.text = context.getString(R.string.chapters_completed)+ completed_items + " - " + total_items
             lblLevel.text = item.lesson_plan_status.toString()?: ""
 
             val btnedit = itemView.findViewById<LinearLayout>(R.id.btnEditContainer)

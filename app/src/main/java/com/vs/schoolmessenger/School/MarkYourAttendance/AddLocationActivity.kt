@@ -408,9 +408,9 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         }
         messageText.text = message
         if (isDeleteLocation == "isUpdate") {
-            alertTitle.text = "Update"
+            alertTitle.text = getString(R.string.Update)
         } else {
-            alertTitle.text = "Delete"
+            alertTitle.text = getString(R.string.delete)
         }
 
         val dimView = View(this).apply {
