@@ -58,8 +58,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     var isClassTeacherId = "0"
     var isSubjectId = "0"
     var isManagement = false
-
-
     private var msg_id: Int = -1
     private var headerId: String? = null
     private var receiverId: String? = null

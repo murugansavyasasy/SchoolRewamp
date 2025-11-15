@@ -30,7 +30,7 @@
                     android:layout_width="@dimen/fourty"
                     android:layout_height="@dimen/fourty"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/circle_bg_light_blue"
+                    android:background="@drawable/bg_light_blue1"
                     android:orientation="vertical">
 
                     <ImageView
@@ -67,7 +67,7 @@
                     android:layout_height="@dimen/fourty"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/rytImgDelete"
-                    android:background="@drawable/circle_bg_light_blue"
+                    android:background="@drawable/bg_light_blue1"
                     android:orientation="vertical">
 
                     <ImageView
