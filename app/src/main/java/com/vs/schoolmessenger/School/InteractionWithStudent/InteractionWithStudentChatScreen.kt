@@ -78,7 +78,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             if (response.status) {
                 isLoadChatQuestionData(response.data)
             } else {
-                showErrorUI(response.message ?: "No data available")
+                showErrorUI(response.message ?: getString(R.string.no_data_available))
             }
         }
 
@@ -99,7 +99,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
                 if (response.status) {
                     showDataValidation(
                         resources.getString(R.string.success),
-                        response.message ?: "Updated successfully", this
+                        response.message ?: getString(R.string.updated_successfully), this
                     )
                     fetchQuestionData()
                 } else {
@@ -304,7 +304,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         if (chat.student_id.isNullOrEmpty()) {
             Constant.showDataValidation(
                 getString(R.string.error),
-                "Invalid student id",
+                getString(R.string.invalid_student_id),
                 this
             )
             return

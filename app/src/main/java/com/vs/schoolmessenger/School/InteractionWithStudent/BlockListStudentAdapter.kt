@@ -105,18 +105,18 @@ class BlockListStudentAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun bind(student: BlockedStudent, position: Int, adapter: BlockListStudentAdapter) {
             nameheader.text = student.name
-            blocked_on.text = "Blocked on : " + student.blocked_on
+            blocked_on.text = "${context.getString(R.string.Blocked_on)}: "+student.blocked_on
             lblLogo.text = Constant.getNameInitials(student.name)
 
             lytunblock.setOnClickListener {
                 AlertDialog.Builder(itemView.context)
-                    .setTitle("Unblock Student")
-                    .setMessage("Are you sure you want to unblock this student?")
-                    .setPositiveButton("Yes") { dialog, _ ->
+                    .setTitle(context.getString(R.string.unblock_student))
+                    .setMessage(context.getString(R.string.are_you_sure_you_want_to_unblock_this_student))
+                    .setPositiveButton(context.getString(R.string.Yes)) { dialog, _ ->
                         listener.onUnblockClick(student, adapterPosition)
                         dialog.dismiss()
                     }
-                    .setNegativeButton("No") { dialog, _ ->
+                    .setNegativeButton(context.getString(R.string.No)) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .show()

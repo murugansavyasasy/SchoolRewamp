@@ -59,24 +59,28 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbarBlueWhite()
+//        setupToolbarBlueWhite()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnupdate.setOnClickListener(this)
         binding.btnApplyLeave.setOnClickListener(this)
         binding.lblParentToolBar.text = getString(R.string.new_leave)
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        binding.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.toolbarLayout.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-        binding.imgBack.setColorFilter(
+        binding.toolbarLayout.imgBack.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
         )

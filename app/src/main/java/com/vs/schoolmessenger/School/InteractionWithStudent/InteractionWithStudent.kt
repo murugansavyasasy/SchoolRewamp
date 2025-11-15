@@ -89,7 +89,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
             if (response.status) {
                 isLoadStaffData(response.data)
             } else {
-                showErrorUI(response.message ?: "No data available")
+                showErrorUI(response.message ?: getString(R.string.no_data_available))
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rytsearch1.visibility = View.GONE
 

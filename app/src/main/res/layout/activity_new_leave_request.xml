@@ -1,527 +1,1023 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     android:background="@color/white">
 
-    <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_header_rounded"
-        android:paddingBottom="@dimen/thirty">
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <RelativeLayout
-            android:id="@+id/rytHeaderDetail"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/parent_side_tool_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/lblParentToolBar"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:text="@string/leave_requests"
+            android:textSize="@dimen/twenty">
+
+        </TextView>
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten">
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="@dimen/thirty_five"
-                android:layout_height="@dimen/thirty_five"
-                android:layout_centerVertical="true"
-                android:src="@drawable/left_arrow">
-
-            </ImageView>
-
-            <LinearLayout
-                android:id="@+id/lytTitleAndName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/imgBack"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/lblStudentName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/fifteen_sp">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/lblStudentSection"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/twele_sp"
-                    android:visibility="visible">
-
-                </TextView>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/lblParentToolBar"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rytHeader"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/ten"
-        android:text="@string/leave_requests"
-        android:textSize="@dimen/twenty">
-
-    </TextView>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblParentToolBar"
-        android:clipToPadding="false">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fifteen"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/thirty">
+            android:layout_below="@+id/lblParentToolBar"
+            android:clipToPadding="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_top_rounded_container"
+                android:layout_margin="@dimen/fifteen"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/fifteen">
+                android:paddingBottom="@dimen/thirty">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/ten">
+                    android:background="@drawable/bg_top_rounded_container"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/fifteen">
 
                     <LinearLayout
-                        android:layout_width="@dimen/fourty"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_marginEnd="@dimen/twele"
-                        android:background="@drawable/background_radius_button"
-                        android:gravity="center">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/ten">
 
-                        <ImageView
+                        <LinearLayout
                             android:layout_width="@dimen/fourty"
                             android:layout_height="@dimen/fourty"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/grid_view" />
+                            android:layout_marginEnd="@dimen/twele"
+                            android:background="@drawable/background_radius_button"
+                            android:gravity="center">
 
-                    </LinearLayout>
+                            <ImageView
+                                android:layout_width="@dimen/fourty"
+                                android:layout_height="@dimen/fourty"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/grid_view" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/CustomTextStylePoppinsRegular"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/type"
-                            android:textColor="@color/light_gray_2"
-                            android:textSize="@dimen/fourteen_sp" />
-
-                        <Spinner
-                            android:id="@+id/isLeaveCategories"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:spinnerMode="dropdown" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/ten"
-                    android:background="@color/gray4" />
-                <!-- Reason -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/ten">
-
-                    <LinearLayout
-                        android:layout_width="@dimen/fourty"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_marginEnd="@dimen/twele"
-                        android:background="@drawable/background_radius_button"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
-                            android:background="@drawable/marker_border"
-                            android:scaleType="centerInside" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/CustomTextStylePoppinsMedium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/cause"
-                            android:textColor="@color/light_gray_2"
-                            android:textSize="@dimen/fourteen_sp" />
-
-                        <EditText
-                            android:id="@+id/etLeaveReason"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:hint="@string/enter_reason"
-                            android:inputType="textCapSentences"
-                            android:paddingTop="@dimen/four"
-                            android:paddingBottom="@dimen/four"
-                            android:text=""
-                            android:textColorHint="@color/light_gray_2"
-                            android:textSize="@dimen/thirteen_sp" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/ten"
-                    android:background="@color/gray4" />
-                <!-- From Date -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/ten">
-
-                    <!-- Icon -->
-                    <LinearLayout
-                        android:layout_width="@dimen/fourty"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_marginEnd="@dimen/twele"
-                        android:background="@drawable/background_radius_button"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/from_icon" />
-                    </LinearLayout>
-
-                    <!-- Date & Session Layout -->
-                    <LinearLayout
-                        android:layout_width="@dimen/zero"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <!-- From Date -->
-                        <LinearLayout
-                            android:id="@+id/lnrFromDate"
-                            android:layout_width="@dimen/zero"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.45"
-                            android:orientation="vertical"
-                            android:paddingEnd="@dimen/eight">
-
-                            <TextView
-                                style="@style/CustomTextStylePoppinsRegular"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/from"
-                                android:textColor="@color/light_gray_2"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <TextView
-                                android:id="@+id/tvFromDate"
-                                style="@style/CustomTextStylePoppinsBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:drawableEnd="@drawable/down_arrow_3"
-                                android:drawablePadding="@dimen/five"
-                                android:text="@string/select_date"
-                                android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
 
-                        <!-- Divider -->
-                        <View
-                            android:layout_width="@dimen/one"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray4" />
-
-                        <!-- Session Spinner -->
                         <LinearLayout
-                            android:layout_width="@dimen/zero"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.555"
-                            android:orientation="vertical"
-                            android:paddingStart="@dimen/eight">
+                            android:orientation="vertical">
 
                             <TextView
                                 style="@style/CustomTextStylePoppinsRegular"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/session"
+                                android:text="@string/type"
                                 android:textColor="@color/light_gray_2"
                                 android:textSize="@dimen/fourteen_sp" />
 
                             <Spinner
-                                android:id="@+id/isFromSession"
+                                android:id="@+id/isLeaveCategories"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:spinnerMode="dropdown" />
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/ten"
-                    android:background="@color/gray4" />
-                <!--            <CalendarView-->
-
-                <LinearLayout
-                    android:id="@+id/activityMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/sixteen"
-                    android:paddingBottom="@dimen/sixteen"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/lblSelect"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/ten"
-                        android:gravity="center"
-                        android:text="Select Date"
-                        android:textSize="@dimen/sixteen_sp">
-
-                    </TextView>
-
-                    <FrameLayout
-                        android:id="@+id/calendarFromFragmentContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/fifteen"
-                        android:paddingEnd="@dimen/fifteen" />
-
-                    <TextView
-                        android:id="@+id/FromDone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="@dimen/five"
-                        android:layout_marginEnd="@dimen/fifteen"
-                        android:background="@drawable/button_radius_bg"
-                        android:paddingStart="@dimen/ten"
-                        android:paddingTop="@dimen/five"
-                        android:paddingEnd="@dimen/ten"
-                        android:paddingBottom="@dimen/five"
-                        android:text="@string/done"
-                        android:textColor="@color/white"
-                        android:visibility="gone">
-                    </TextView>
-
-                    <FrameLayout
-                        android:id="@+id/calendarToFragmentContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/fifteen"
-                        android:paddingEnd="@dimen/fifteen" />
-
-                    <TextView
-                        android:id="@+id/ToDone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="@dimen/five"
-                        android:layout_marginEnd="@dimen/fifteen"
-                        android:background="@drawable/button_radius_bg"
-                        android:paddingStart="@dimen/ten"
-                        android:paddingTop="@dimen/five"
-                        android:paddingEnd="@dimen/ten"
-                        android:paddingBottom="@dimen/five"
-                        android:text="@string/done"
-                        android:textColor="@color/white"
-                        android:visibility="gone">
-                    </TextView>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/one"
                         android:layout_marginTop="@dimen/ten"
                         android:background="@color/gray4" />
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/ten">
-
-                    <!-- Icon -->
+                    <!-- Reason -->
                     <LinearLayout
-                        android:layout_width="@dimen/fourty"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_marginEnd="@dimen/twele"
-                        android:background="@drawable/background_radius_button"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/from_to_icom" />
-                    </LinearLayout>
-
-                    <!-- Date & Session Container -->
-                    <LinearLayout
-                        android:layout_width="@dimen/zero"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="@dimen/ten">
 
-                        <!-- To Date -->
                         <LinearLayout
-                            android:id="@+id/lnrToDate"
-                            android:layout_width="@dimen/zero"
+                            android:layout_width="@dimen/fourty"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_marginEnd="@dimen/twele"
+                            android:background="@drawable/background_radius_button"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="@dimen/twenty"
+                                android:layout_height="@dimen/twenty"
+                                android:background="@drawable/marker_border"
+                                android:scaleType="centerInside" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/three"
-                            android:layout_weight="0.45"
                             android:orientation="vertical">
 
                             <TextView
-                                style="@style/CustomTextStylePoppinsRegular"
-                                android:layout_width="wrap_content"
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/to"
+                                android:text="@string/cause"
                                 android:textColor="@color/light_gray_2"
                                 android:textSize="@dimen/fourteen_sp" />
 
-                            <TextView
-                                android:id="@+id/tvToDate"
+                            <EditText
+                                android:id="@+id/etLeaveReason"
                                 style="@style/CustomTextStylePoppinsBold"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:drawableEnd="@drawable/down_arrow_3"
-                                android:drawablePadding="@dimen/five"
-                                android:text="@string/select_date"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/enter_reason"
+                                android:inputType="textCapSentences"
+                                android:paddingTop="@dimen/four"
+                                android:paddingBottom="@dimen/four"
+                                android:text=""
+                                android:textColorHint="@color/light_gray_2"
                                 android:textSize="@dimen/thirteen_sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@color/gray4" />
+                    <!-- From Date -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/ten">
+
+                        <!-- Icon -->
+                        <LinearLayout
+                            android:layout_width="@dimen/fourty"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_marginEnd="@dimen/twele"
+                            android:background="@drawable/background_radius_button"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/twenty"
+                                android:layout_height="@dimen/twenty"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/from_icon" />
                         </LinearLayout>
 
-                        <!-- Divider -->
+                        <!-- Date & Session Layout -->
+                        <LinearLayout
+                            android:layout_width="@dimen/zero"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <!-- From Date -->
+                            <LinearLayout
+                                android:id="@+id/lnrFromDate"
+                                android:layout_width="@dimen/zero"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.45"
+                                android:orientation="vertical"
+                                android:paddingEnd="@dimen/eight">
+
+                                <TextView
+                                    style="@style/CustomTextStylePoppinsRegular"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/from"
+                                    android:textColor="@color/light_gray_2"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <TextView
+                                    android:id="@+id/tvFromDate"
+                                    style="@style/CustomTextStylePoppinsBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawableEnd="@drawable/down_arrow_3"
+                                    android:drawablePadding="@dimen/five"
+                                    android:text="@string/select_date"
+                                    android:textSize="@dimen/thirteen_sp" />
+                            </LinearLayout>
+
+                            <!-- Divider -->
+                            <View
+                                android:layout_width="@dimen/one"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray4" />
+
+                            <!-- Session Spinner -->
+                            <LinearLayout
+                                android:layout_width="@dimen/zero"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.555"
+                                android:orientation="vertical"
+                                android:paddingStart="@dimen/eight">
+
+                                <TextView
+                                    style="@style/CustomTextStylePoppinsRegular"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/session"
+                                    android:textColor="@color/light_gray_2"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <Spinner
+                                    android:id="@+id/isFromSession"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:spinnerMode="dropdown" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@color/gray4" />
+                    <!--            <CalendarView-->
+
+                    <LinearLayout
+                        android:id="@+id/activityMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/sixteen"
+                        android:paddingBottom="@dimen/sixteen"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/lblSelect"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ten"
+                            android:gravity="center"
+                            android:text="Select Date"
+                            android:textSize="@dimen/sixteen_sp">
+
+                        </TextView>
+
+                        <FrameLayout
+                            android:id="@+id/calendarFromFragmentContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/fifteen"
+                            android:paddingEnd="@dimen/fifteen" />
+
+                        <TextView
+                            android:id="@+id/FromDone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/five"
+                            android:layout_marginEnd="@dimen/fifteen"
+                            android:background="@drawable/button_radius_bg"
+                            android:paddingStart="@dimen/ten"
+                            android:paddingTop="@dimen/five"
+                            android:paddingEnd="@dimen/ten"
+                            android:paddingBottom="@dimen/five"
+                            android:text="@string/done"
+                            android:textColor="@color/white"
+                            android:visibility="gone">
+                        </TextView>
+
+                        <FrameLayout
+                            android:id="@+id/calendarToFragmentContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/fifteen"
+                            android:paddingEnd="@dimen/fifteen" />
+
+                        <TextView
+                            android:id="@+id/ToDone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/five"
+                            android:layout_marginEnd="@dimen/fifteen"
+                            android:background="@drawable/button_radius_bg"
+                            android:paddingStart="@dimen/ten"
+                            android:paddingTop="@dimen/five"
+                            android:paddingEnd="@dimen/ten"
+                            android:paddingBottom="@dimen/five"
+                            android:text="@string/done"
+                            android:textColor="@color/white"
+                            android:visibility="gone">
+                        </TextView>
+
                         <View
-                            android:layout_width="@dimen/one"
-                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/one"
+                            android:layout_marginTop="@dimen/ten"
                             android:background="@color/gray4" />
 
-                        <!-- To Session -->
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/ten">
+
+                        <!-- Icon -->
+                        <LinearLayout
+                            android:layout_width="@dimen/fourty"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_marginEnd="@dimen/twele"
+                            android:background="@drawable/background_radius_button"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="@dimen/twenty"
+                                android:layout_height="@dimen/twenty"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/from_to_icom" />
+                        </LinearLayout>
+
+                        <!-- Date & Session Container -->
                         <LinearLayout
                             android:layout_width="@dimen/zero"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/three"
-                            android:layout_weight="0.55"
-                            android:orientation="vertical">
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="match_parent"
+                            <!-- To Date -->
+                            <LinearLayout
+                                android:id="@+id/lnrToDate"
+                                android:layout_width="@dimen/zero"
                                 android:layout_height="wrap_content"
-                                android:text="@string/session"
-                                android:textColor="@color/light_gray_2"
-                                android:textSize="@dimen/fourteen_sp" />
+                                android:layout_marginEnd="@dimen/three"
+                                android:layout_weight="0.45"
+                                android:orientation="vertical">
 
-                            <Spinner
-                                android:id="@+id/isToSession"
-                                android:layout_width="match_parent"
+                                <TextView
+                                    style="@style/CustomTextStylePoppinsRegular"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/to"
+                                    android:textColor="@color/light_gray_2"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <TextView
+                                    android:id="@+id/tvToDate"
+                                    style="@style/CustomTextStylePoppinsBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawableEnd="@drawable/down_arrow_3"
+                                    android:drawablePadding="@dimen/five"
+                                    android:text="@string/select_date"
+                                    android:textSize="@dimen/thirteen_sp" />
+                            </LinearLayout>
+
+                            <!-- Divider -->
+                            <View
+                                android:layout_width="@dimen/one"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray4" />
+
+                            <!-- To Session -->
+                            <LinearLayout
+                                android:layout_width="@dimen/zero"
                                 android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:spinnerMode="dropdown" />
+                                android:layout_marginStart="@dimen/three"
+                                android:layout_weight="0.55"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/session"
+                                    android:textColor="@color/light_gray_2"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <Spinner
+                                    android:id="@+id/isToSession"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:spinnerMode="dropdown" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/lblErrorMessage"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/five"
+                    android:text=""
+                    android:textColor="@color/red" />
+
+
+                <!-- Submit Button -->
+
+                <TextView
+                    android:id="@+id/btnApplyLeave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:background="@drawable/background_radius_button"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="@string/apply_for_leave"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sixteen_sp">
+
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/btnupdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:background="@drawable/background_radius_button"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="@string/update_leave"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:visibility="gone">
+
+                </TextView>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/lblErrorMessage"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/five"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/five"
-                android:text=""
-                android:textColor="@color/red" />
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <!-- Submit Button -->
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="@color/white">-->
 
-            <TextView
-                android:id="@+id/btnApplyLeave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fifteen"
-                android:background="@drawable/background_radius_button"
-                android:fontFamily="@font/poppins_bold"
-                android:gravity="center"
-                android:padding="@dimen/ten"
-                android:text="@string/apply_for_leave"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sixteen_sp">
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/rytHeader"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/bg_header_rounded"-->
+<!--        android:paddingBottom="@dimen/thirty">-->
 
-            </TextView>
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rytHeaderDetail"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/ten">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imgBack"-->
+<!--                android:layout_width="@dimen/thirty_five"-->
+<!--                android:layout_height="@dimen/thirty_five"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:src="@drawable/left_arrow">-->
+
+<!--            </ImageView>-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/lytTitleAndName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_toEndOf="@+id/imgBack"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/lblStudentName"-->
+<!--                    style="@style/CustomTextStylePoppinsBold"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/fifteen_sp">-->
+
+<!--                </TextView>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/lblStudentSection"-->
+<!--                    style="@style/CustomTextStylePoppinsBold"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/twele_sp"-->
+<!--                    android:visibility="visible">-->
+
+<!--                </TextView>-->
+
+<!--            </LinearLayout>-->
+
+<!--        </RelativeLayout>-->
+
+<!--    </RelativeLayout>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/lblParentToolBar"-->
+<!--        style="@style/CustomTextStylePoppinsBold"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/rytHeader"-->
+<!--        android:layout_marginStart="@dimen/fifteen"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:text="@string/leave_requests"-->
+<!--        android:textSize="@dimen/twenty">-->
+
+<!--    </TextView>-->
+
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/lblParentToolBar"-->
+<!--        android:clipToPadding="false">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="@dimen/fifteen"-->
+<!--            android:orientation="vertical"-->
+<!--            android:paddingBottom="@dimen/thirty">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/bg_top_rounded_container"-->
+<!--                android:orientation="vertical"-->
+<!--                android:paddingBottom="@dimen/fifteen">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="@dimen/ten"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:padding="@dimen/ten">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="@dimen/fourty"-->
+<!--                        android:layout_height="@dimen/fourty"-->
+<!--                        android:layout_marginEnd="@dimen/twele"-->
+<!--                        android:background="@drawable/background_radius_button"-->
+<!--                        android:gravity="center">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/fourty"-->
+<!--                            android:layout_height="@dimen/fourty"-->
+<!--                            android:scaleType="centerInside"-->
+<!--                            android:src="@drawable/grid_view" />-->
+
+<!--                    </LinearLayout>-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <TextView-->
+<!--                            style="@style/CustomTextStylePoppinsRegular"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/type"-->
+<!--                            android:textColor="@color/light_gray_2"-->
+<!--                            android:textSize="@dimen/fourteen_sp" />-->
+
+<!--                        <Spinner-->
+<!--                            android:id="@+id/isLeaveCategories"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@null"-->
+<!--                            android:spinnerMode="dropdown" />-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/one"-->
+<!--                    android:layout_marginTop="@dimen/ten"-->
+<!--                    android:background="@color/gray4" />-->
+<!--                &lt;!&ndash; Reason &ndash;&gt;-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:padding="@dimen/ten">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="@dimen/fourty"-->
+<!--                        android:layout_height="@dimen/fourty"-->
+<!--                        android:layout_marginEnd="@dimen/twele"-->
+<!--                        android:background="@drawable/background_radius_button"-->
+<!--                        android:gravity="center">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/twenty"-->
+<!--                            android:layout_height="@dimen/twenty"-->
+<!--                            android:background="@drawable/marker_border"-->
+<!--                            android:scaleType="centerInside" />-->
+<!--                    </LinearLayout>-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <TextView-->
+<!--                            style="@style/CustomTextStylePoppinsMedium"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/cause"-->
+<!--                            android:textColor="@color/light_gray_2"-->
+<!--                            android:textSize="@dimen/fourteen_sp" />-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/etLeaveReason"-->
+<!--                            style="@style/CustomTextStylePoppinsBold"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@android:color/transparent"-->
+<!--                            android:hint="@string/enter_reason"-->
+<!--                            android:inputType="textCapSentences"-->
+<!--                            android:paddingTop="@dimen/four"-->
+<!--                            android:paddingBottom="@dimen/four"-->
+<!--                            android:text=""-->
+<!--                            android:textColorHint="@color/light_gray_2"-->
+<!--                            android:textSize="@dimen/thirteen_sp" />-->
+
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/one"-->
+<!--                    android:layout_marginTop="@dimen/ten"-->
+<!--                    android:background="@color/gray4" />-->
+<!--                &lt;!&ndash; From Date &ndash;&gt;-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:padding="@dimen/ten">-->
+
+<!--                    &lt;!&ndash; Icon &ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="@dimen/fourty"-->
+<!--                        android:layout_height="@dimen/fourty"-->
+<!--                        android:layout_marginEnd="@dimen/twele"-->
+<!--                        android:background="@drawable/background_radius_button"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/twenty"-->
+<!--                            android:layout_height="@dimen/twenty"-->
+<!--                            android:scaleType="centerInside"-->
+<!--                            android:src="@drawable/from_icon" />-->
+<!--                    </LinearLayout>-->
+
+<!--                    &lt;!&ndash; Date & Session Layout &ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="@dimen/zero"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="horizontal">-->
+
+<!--                        &lt;!&ndash; From Date &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/lnrFromDate"-->
+<!--                            android:layout_width="@dimen/zero"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="0.45"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:paddingEnd="@dimen/eight">-->
+
+<!--                            <TextView-->
+<!--                                style="@style/CustomTextStylePoppinsRegular"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="@string/from"-->
+<!--                                android:textColor="@color/light_gray_2"-->
+<!--                                android:textSize="@dimen/fourteen_sp" />-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/tvFromDate"-->
+<!--                                style="@style/CustomTextStylePoppinsBold"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:drawableEnd="@drawable/down_arrow_3"-->
+<!--                                android:drawablePadding="@dimen/five"-->
+<!--                                android:text="@string/select_date"-->
+<!--                                android:textSize="@dimen/thirteen_sp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        &lt;!&ndash; Divider &ndash;&gt;-->
+<!--                        <View-->
+<!--                            android:layout_width="@dimen/one"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:background="@color/gray4" />-->
+
+<!--                        &lt;!&ndash; Session Spinner &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="@dimen/zero"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="0.555"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:paddingStart="@dimen/eight">-->
+
+<!--                            <TextView-->
+<!--                                style="@style/CustomTextStylePoppinsRegular"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="@string/session"-->
+<!--                                android:textColor="@color/light_gray_2"-->
+<!--                                android:textSize="@dimen/fourteen_sp" />-->
+
+<!--                            <Spinner-->
+<!--                                android:id="@+id/isFromSession"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:background="@null"-->
+<!--                                android:spinnerMode="dropdown" />-->
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
 
 
-            <TextView
-                android:id="@+id/btnupdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fifteen"
-                android:background="@drawable/background_radius_button"
-                android:fontFamily="@font/poppins_bold"
-                android:gravity="center"
-                android:padding="@dimen/ten"
-                android:text="@string/update_leave"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sixteen_sp"
-                android:visibility="gone">
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/one"-->
+<!--                    android:layout_marginTop="@dimen/ten"-->
+<!--                    android:background="@color/gray4" />-->
+<!--                &lt;!&ndash;            <CalendarView&ndash;&gt;-->
 
-            </TextView>
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/activityMain"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:paddingTop="@dimen/sixteen"-->
+<!--                    android:paddingBottom="@dimen/sixteen"-->
+<!--                    android:visibility="gone">-->
 
-        </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblSelect"-->
+<!--                        style="@style/CustomTextStylePoppinsBold"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="@dimen/ten"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="Select Date"-->
+<!--                        android:textSize="@dimen/sixteen_sp">-->
 
-    </ScrollView>
+<!--                    </TextView>-->
 
-</RelativeLayout>
+<!--                    <FrameLayout-->
+<!--                        android:id="@+id/calendarFromFragmentContainer"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:paddingStart="@dimen/fifteen"-->
+<!--                        android:paddingEnd="@dimen/fifteen" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/FromDone"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="end"-->
+<!--                        android:layout_marginTop="@dimen/five"-->
+<!--                        android:layout_marginEnd="@dimen/fifteen"-->
+<!--                        android:background="@drawable/button_radius_bg"-->
+<!--                        android:paddingStart="@dimen/ten"-->
+<!--                        android:paddingTop="@dimen/five"-->
+<!--                        android:paddingEnd="@dimen/ten"-->
+<!--                        android:paddingBottom="@dimen/five"-->
+<!--                        android:text="@string/done"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:visibility="gone">-->
+<!--                    </TextView>-->
+
+<!--                    <FrameLayout-->
+<!--                        android:id="@+id/calendarToFragmentContainer"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:paddingStart="@dimen/fifteen"-->
+<!--                        android:paddingEnd="@dimen/fifteen" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/ToDone"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="end"-->
+<!--                        android:layout_marginTop="@dimen/five"-->
+<!--                        android:layout_marginEnd="@dimen/fifteen"-->
+<!--                        android:background="@drawable/button_radius_bg"-->
+<!--                        android:paddingStart="@dimen/ten"-->
+<!--                        android:paddingTop="@dimen/five"-->
+<!--                        android:paddingEnd="@dimen/ten"-->
+<!--                        android:paddingBottom="@dimen/five"-->
+<!--                        android:text="@string/done"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:visibility="gone">-->
+<!--                    </TextView>-->
+
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/one"-->
+<!--                        android:layout_marginTop="@dimen/ten"-->
+<!--                        android:background="@color/gray4" />-->
+
+
+<!--                </LinearLayout>-->
+
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:padding="@dimen/ten">-->
+
+<!--                    &lt;!&ndash; Icon &ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="@dimen/fourty"-->
+<!--                        android:layout_height="@dimen/fourty"-->
+<!--                        android:layout_marginEnd="@dimen/twele"-->
+<!--                        android:background="@drawable/background_radius_button"-->
+<!--                        android:gravity="center">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/twenty"-->
+<!--                            android:layout_height="@dimen/twenty"-->
+<!--                            android:scaleType="centerInside"-->
+<!--                            android:src="@drawable/from_to_icom" />-->
+<!--                    </LinearLayout>-->
+
+<!--                    &lt;!&ndash; Date & Session Container &ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="@dimen/zero"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="horizontal">-->
+
+<!--                        &lt;!&ndash; To Date &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/lnrToDate"-->
+<!--                            android:layout_width="@dimen/zero"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginEnd="@dimen/three"-->
+<!--                            android:layout_weight="0.45"-->
+<!--                            android:orientation="vertical">-->
+
+<!--                            <TextView-->
+<!--                                style="@style/CustomTextStylePoppinsRegular"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="@string/to"-->
+<!--                                android:textColor="@color/light_gray_2"-->
+<!--                                android:textSize="@dimen/fourteen_sp" />-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/tvToDate"-->
+<!--                                style="@style/CustomTextStylePoppinsBold"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:drawableEnd="@drawable/down_arrow_3"-->
+<!--                                android:drawablePadding="@dimen/five"-->
+<!--                                android:text="@string/select_date"-->
+<!--                                android:textSize="@dimen/thirteen_sp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        &lt;!&ndash; Divider &ndash;&gt;-->
+<!--                        <View-->
+<!--                            android:layout_width="@dimen/one"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:background="@color/gray4" />-->
+
+<!--                        &lt;!&ndash; To Session &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="@dimen/zero"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="@dimen/three"-->
+<!--                            android:layout_weight="0.55"-->
+<!--                            android:orientation="vertical">-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="@string/session"-->
+<!--                                android:textColor="@color/light_gray_2"-->
+<!--                                android:textSize="@dimen/fourteen_sp" />-->
+
+<!--                            <Spinner-->
+<!--                                android:id="@+id/isToSession"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:background="@null"-->
+<!--                                android:spinnerMode="dropdown" />-->
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+
+<!--            </LinearLayout>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblErrorMessage"-->
+<!--                style="@style/CustomTextStylePoppinsMedium"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/five"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:layout_marginEnd="@dimen/five"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/red" />-->
+
+
+<!--            &lt;!&ndash; Submit Button &ndash;&gt;-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/btnApplyLeave"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/fifteen"-->
+<!--                android:background="@drawable/background_radius_button"-->
+<!--                android:fontFamily="@font/poppins_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:padding="@dimen/ten"-->
+<!--                android:text="@string/apply_for_leave"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="@dimen/sixteen_sp">-->
+
+<!--            </TextView>-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/btnupdate"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/fifteen"-->
+<!--                android:background="@drawable/background_radius_button"-->
+<!--                android:fontFamily="@font/poppins_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:padding="@dimen/ten"-->
+<!--                android:text="@string/update_leave"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="@dimen/sixteen_sp"-->
+<!--                android:visibility="gone">-->
+
+<!--            </TextView>-->
+
+<!--        </LinearLayout>-->
+
+<!--    </ScrollView>-->
+
+<!--</RelativeLayout>-->

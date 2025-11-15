@@ -28,22 +28,27 @@ class Holidays : BaseActivity<HolidayParentBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+//        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
 
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblParentToolBar.text = getString(R.string.HoliDay)
-        binding.imgBack.setColorFilter(
+        binding.toolbarLayout.imgBack.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
         )
 
-        binding.lblStudentName.text = isChildDetails?.name
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
         loadHolidayData()
         loadCalendarFragment()

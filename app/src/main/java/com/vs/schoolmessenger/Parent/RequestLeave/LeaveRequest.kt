@@ -59,12 +59,16 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+//        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
         val isChildDetails = SharedPreference.getChildDetails(this)
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
         binding.rytEnd.setOnClickListener(this)
@@ -76,7 +80,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.btnNext.setOnClickListener(this)
         binding.btnupdate.setOnClickListener(this)
         binding.btncancel.setOnClickListener(this)
-        binding.imgBack.setColorFilter(
+        binding.toolbarLayout.imgBack.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
         )
@@ -101,17 +105,17 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.lblTotalDays.text = "${getString(R.string.No_of_Days)} - $totalLeaveDays"
 
 
-        binding.lblParentToolBar.text = getString(R.string.leave_requests)
+        binding.lblParentToolBar12.text = getString(R.string.leave_requests)
         isAccessToken = isChildDetails?.access_token
 
-        binding.lblStudentName.text = isChildDetails!!.name
-        binding.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
         binding.rlaCreateLeaveRequest.visibility = View.GONE
         binding.rlaHistory.visibility = View.VISIBLE
 
-        binding.imgSearchBtn.setOnClickListener {
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch.visibility == View.VISIBLE) {
                 binding.rytSearch.visibility = View.GONE
                 binding.txtVideoMenu.text.clear()
@@ -150,12 +154,12 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 originalLeaveList = response.data
                 isLeaveList=response.data
                 isloadleaverequestData(isLeaveList)
-                binding.imgSearchBtn.visibility=View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
                 binding.lytList.visibility=View.VISIBLE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
-                binding.imgSearchBtn.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
                 binding.rytSearch.visibility=View.GONE
             }
         }
@@ -229,13 +233,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 mAdapter.updateData(isLeaveList)
 
                 if (mAdapter.itemCount == 0) {
-                    binding.imgSearchBtn.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.rytSearch.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
                     binding.rcyLeaveRequestHistory.visibility = View.GONE
                 } else {
                     binding.lytList.visibility = View.GONE
-                    binding.imgSearchBtn.visibility = View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
                 }
             }
@@ -483,11 +487,11 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             binding.rcyLeaveRequestHistory.visibility = View.GONE
             binding.lytList.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_data_found)
-            binding.imgSearchBtn.visibility = View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rytSearch.visibility = View.GONE
 
         } else {
-            binding.imgSearchBtn.visibility = View.VISIBLE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.rytSearch.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
             binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
