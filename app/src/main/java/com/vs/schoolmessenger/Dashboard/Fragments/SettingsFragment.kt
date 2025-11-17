@@ -111,7 +111,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
         val versionName = pInfo.versionName
         val versionCode = pInfo.longVersionCode
-        binding.lblAppVersion.text = "App Version - $versionName"
+        binding.lblAppVersion.text = "${getString(R.string.App_Version)} - $versionName"
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
@@ -152,7 +152,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             SharedPreference.setFingerprintEnabled(requireActivity(), isChecked)
             Toast.makeText(
                 requireActivity(),
-                "Fingerprint login ${if (isChecked) "enabled" else "disabled"}",
+                "${getString(R.string.Fingerprint_login)} ${if (isChecked) getString(R.string.enabled) else getString(
+                    R.string.disabled
+                )}",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -251,10 +253,12 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 val reviewInfo: ReviewInfo = task.result
                 val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
                 flow.addOnCompleteListener {
-                    Toast.makeText(requireActivity(), "Review flow completed (debug simulation)", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(),
+                        getString(R.string.review_flow_completed_debug_simulation), Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(requireActivity(), "Failed to start review flow", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(),
+                    getString(R.string.failed_to_start_review_flow), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -65,7 +65,7 @@ class DocumentImageAdapter(
             "AUD" -> "Audio"
             else -> "File"
         }
-        holder.txtFileSize.text = "Unknown Size, $typeText"
+        holder.txtFileSize.text = "${context.getString(R.string.Unknown_Size)}, $typeText"
 
         val clickListener = View.OnClickListener {
             Constant.commonFileList = files.toMutableList()

@@ -308,7 +308,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         pendingChangedData = if (changedData.entrySet().isEmpty()) null else changedData
         if (pendingChangedData == null && profilePhotoFileItem == null && Constant.selectedFiles.isEmpty()) {
             showDataValidation(
-                getString(R.string.Oops), "No changes detected", requireActivity()
+                getString(R.string.Oops), getString(R.string.no_changes_detected), requireActivity()
             )
             return
         }
@@ -329,7 +329,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     } else {
                         showDataValidation(
                             getString(R.string.Oops),
-                            "Profile photo upload failed",
+                            getString(R.string.profile_photo_upload_failed),
                             requireActivity()
                         )
                         if (textPayload.entrySet().isEmpty()) return@uploadProfilePhoto
@@ -375,7 +375,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     payload.addProperty("photoPath", url)
                 } else {
                     showDataValidation(
-                        getString(R.string.Oops), "Profile photo upload failed", requireActivity()
+                        getString(R.string.Oops), getString(R.string.profile_photo_upload_failed), requireActivity()
                     )
                 }
                 if (payload.entrySet().isEmpty()) return@uploadProfilePhoto
@@ -691,11 +691,11 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                                 .error(defaultProfileRes).into(binding.imgProfile)
                         } else {
                             Toast.makeText(
-                                requireContext(), "Camera image file not found.", Toast.LENGTH_SHORT
+                                requireContext(), getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT
                             ).show()
                         }
                     } ?: run {
-                        Toast.makeText(requireContext(), "Camera image failed", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), getString(R.string.camera_image_failed), Toast.LENGTH_SHORT)
                             .show()
                     }
                     currentEditMode = null
@@ -714,11 +714,11 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                             addPath(uri)
                         } else {
                             Toast.makeText(
-                                requireContext(), "Camera image file not found.", Toast.LENGTH_SHORT
+                                requireContext(), getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT
                             ).show()
                         }
                     } ?: run {
-                        Toast.makeText(requireContext(), "Camera image failed", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), getString(R.string.camera_image_failed), Toast.LENGTH_SHORT)
                             .show()
                     }
                 }

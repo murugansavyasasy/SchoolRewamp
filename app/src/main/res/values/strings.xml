@@ -1195,6 +1195,40 @@
     <string name="failed_to_reopen_slot">Failed to reopen slot</string>
     <string name="are_you_sure_want_to_reopen_this_slot">Are you sure want to reopen this slot?</string>
     <string name="are_you_sure_want_to_cancel_this_slot">Are you sure want to cancel this slot?</string>
+    <string name="let_s_go">Let\'s Go</string>
+    <string name="password_is_required">Password is required</string>
+    <string name="please_select_a_recipient_all_staff_student">Please select a recipient (All / Staff / Student)</string>
+    <string name="select_the_subject">Select the subject</string>
+    <string name="select_the_level">Select the level</string>
+    <string name="invalid_vimeo_url">Invalid Vimeo URL</string>
+    <string name="no_downloadable_mp4_found">No downloadable .mp4 found</string>
+    <string name="please_download_an_app_to_view_this_file">Please download an app to view this file.</string>
+    <string name="Unknown_Size">Unknown Size</string>
+    <string name="profile_photo_upload_failed">Profile photo upload failed</string>
+    <string name="App_Version">App Version</string>
+    <string name="Fingerprint_login">Fingerprint login</string>
+    <string name="enabled">enabled</string>
+    <string name="disabled">disabled</string>
+    <string name="review_flow_completed_debug_simulation">Review flow completed (debug simulation)</string>
+    <string name="failed_to_start_review_flow">Failed to start review flow</string>
+    <string name="no_notification_received">No notification received</string>
+    <string name="no_notifications_to_clear">No notifications to clear</string>
+    <string name="no_valid_notification_ids_found">No valid notification IDs found</string>
+    <string name="submission_failed">Submission failed</string>
+    <string name="mobile_number_not_found">Mobile number not found</string>
+    <string name="select_the_menu">Select the menu</string>
+    <string name="gmail_not_installed">Gmail not installed</string>
+    <string name="permission_denied_please_allow_access_to_images">Permission denied. Please allow access to images.</string>
+    <string name="this_app_requires_permission_to_access_your_images_please_enable_it_in_the_app_settings">This app requires permission to access your images. Please enable it in the app settings.</string>
+    <string name="no_more_updates">No more updates →</string>
+    <string name="you_re_at_the_start">You\'re at the start ←</string>
+    <string name="unable_to_open_link">Unable to open link</string>
+    <string name="no_redirect_link_available">No redirect link available</string>
+    <string name="Selected_Files">Selected Files</string>
+    <string name="storage_permission_is_required_to_load_files_please_enable_it_in_settings">Storage permission is required to load files. Please enable it in settings.</string>
+    <string name="cannot_select_videos_larger_than_500_mb">Cannot select videos larger than 500 MB</string>
+    <string name="You_can_select_up_to">You can select up to</string>
+    <string name="items_only">items only</string>
 
 
 </resources>

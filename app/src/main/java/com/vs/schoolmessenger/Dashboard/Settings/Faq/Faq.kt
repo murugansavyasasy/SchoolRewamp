@@ -40,7 +40,7 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
         isStaffDetails = SharedPreference.getStaffDetails(this)
         userDetails = SharedPreference.getUserDetails(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = "FAQ"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblFAQ)
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         if (Constant.isParentChoose) {

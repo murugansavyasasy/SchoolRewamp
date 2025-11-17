@@ -45,7 +45,7 @@ class WhatsNewAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
             val totalCount = itemList?.size ?: 0
-            itemList?.get(position)?.let { holder.bind(it, totalCount, position) }
+            itemList?.get(position)?.let { holder.bind(it, totalCount, position,context) }
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
@@ -67,7 +67,7 @@ class WhatsNewAdapter(
         private val swipeMoreLeft = itemView.findViewById<TextView>(R.id.swipemore)
         private val swipeMoreRight = itemView.findViewById<TextView>(R.id.swipemoredata)
 
-        fun bind(data: WhatsNewUpdateData, totalCount: Int, position: Int) {
+        fun bind(data: WhatsNewUpdateData, totalCount: Int, position: Int,context: Context) {
             titleText.text = data.name
             descText.text = data.description
 
@@ -118,7 +118,8 @@ class WhatsNewAdapter(
                 if (nextPos < totalCount) {
                     recyclerView.smoothScrollToPosition(nextPos)
                 } else {
-                    Toast.makeText(itemView.context, "No more updates →", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(itemView.context,
+                        context.getString(R.string.no_more_updates), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -127,7 +128,8 @@ class WhatsNewAdapter(
                 if (prevPos >= 0) {
                     recyclerView.smoothScrollToPosition(prevPos)
                 } else {
-                    Toast.makeText(itemView.context, "You're at the start ←", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(itemView.context,
+                        context.getString(R.string.you_re_at_the_start), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -139,13 +141,14 @@ class WhatsNewAdapter(
                         itemView.context.startActivity(intent)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        Toast.makeText(itemView.context, "Unable to open link", Toast.LENGTH_SHORT)
+                        Toast.makeText(itemView.context,
+                            context.getString(R.string.unable_to_open_link), Toast.LENGTH_SHORT)
                             .show()
                     }
                 } else {
                     Toast.makeText(
                         itemView.context,
-                        "No redirect link available",
+                        context.getString(R.string.no_redirect_link_available),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

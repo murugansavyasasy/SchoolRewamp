@@ -120,7 +120,7 @@ class ProfileImagePickingAdapter(
                     } else {
                         Toast.makeText(
                             context,
-                            "Please download an app to view this file.",
+                            context.getString(R.string.please_download_an_app_to_view_this_file),
                             Toast.LENGTH_SHORT
                         ).show()
                     }

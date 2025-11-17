@@ -64,7 +64,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
         )
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = "Notifications"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblNotifications)
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -139,7 +139,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
                 binding.rcyNotification.visibility = View.GONE
                 binding.btnClearall.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No notification received"
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_notification_received)
             }
         }
 
@@ -210,14 +210,15 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
 
     private fun NotificationClear() {
         if (isNotificationItems.isEmpty()) {
-            Toast.makeText(this, "No notifications to clear", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_notifications_to_clear), Toast.LENGTH_SHORT).show()
             return
         }
 
         val ids = isNotificationItems.mapNotNull { it.id?.toString() }.toList()
 
         if (ids.isEmpty()) {
-            Toast.makeText(this, "No valid notification IDs found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.no_valid_notification_ids_found), Toast.LENGTH_SHORT).show()
             return
         }
 

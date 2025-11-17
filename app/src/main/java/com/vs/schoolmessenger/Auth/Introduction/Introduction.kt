@@ -121,7 +121,7 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
     }
     private fun updateButtonText(position: Int) {
         val isLastPage = position == adapter.itemCount - 1
-        binding.btnNext.text = if (isLastPage) "Let's Go" else "Next"
+        binding.btnNext.text = if (isLastPage) getString(R.string.let_s_go) else getString(R.string.next)
         binding.btnSkip.visibility = if (isLastPage) View.GONE else View.VISIBLE
 
     }

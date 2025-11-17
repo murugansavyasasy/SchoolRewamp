@@ -237,7 +237,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
     private fun fetchAndDownloadVimeoVideo(vimeoUrl: String) {
         val videoId = extractVimeoVideoId(vimeoUrl)
         if (videoId.isNullOrEmpty()) {
-            Toast.makeText(this, "Invalid Vimeo URL", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.invalid_vimeo_url), Toast.LENGTH_SHORT).show()
             binding.lnrDownloadStatus.visibility = View.GONE
             return
         }
@@ -256,7 +256,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
                                 this@FilesViewActivity,
-                                "No downloadable .mp4 found",
+                                getString(R.string.no_downloadable_mp4_found),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -331,7 +331,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 withContext(Dispatchers.Main) {
                     binding.lnrDownloadStatus.visibility = View.GONE
                     Constant.showValidationAlertPopup(
-                        "Successfully Download...✅",
+                        getString(R.string.successfully_downloaded),
                         "File saved to Downloads/$baseFolderName/$subFolderPath/$fileName",
                         this@FilesViewActivity
                     )
@@ -343,7 +343,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                     binding.lnrDownloadStatus.visibility = View.GONE
                     Toast.makeText(
                         this@FilesViewActivity,
-                        "Download failed",
+                        getString(R.string.Download_failed_2),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -394,7 +394,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@FilesViewActivity,
-                        "Failed to share file",
+                        getString(R.string.failed_to_share_file),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -459,7 +459,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
     private fun fetchAndShareVimeoVideoFromUrl(vimeoUrl: String) {
         val videoId = extractVimeoVideoId(vimeoUrl)
         if (videoId.isNullOrEmpty()) {
-            Toast.makeText(this, "Invalid Vimeo URL", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.invalid_vimeo_url), Toast.LENGTH_SHORT).show()
             return
         }
         CoroutineScope(Dispatchers.IO).launch {
@@ -479,7 +479,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
                                 this@FilesViewActivity,
-                                "No downloadable .mp4 found",
+                                getString(R.string.no_downloadable_mp4_found),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }

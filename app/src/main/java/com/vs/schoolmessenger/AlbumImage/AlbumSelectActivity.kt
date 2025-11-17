@@ -57,12 +57,12 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         setupDocumentPicker()
 
         binding.toolbarLayout.tvSelectionCount.text =
-            "Selected Files : 0 / ${Constant.isFileLimit}"
+            "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
         binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
 
                 adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =
-                "Selected Files : ${selectedUris.size} / ${Constant.isFileLimit}"
+                "${getString(R.string.Selected_Files)} : ${selectedUris.size} / ${Constant.isFileLimit}"
             binding.toolbarLayout.btnDone.visibility =
                 if (selectedUris.isEmpty()) View.GONE else View.VISIBLE
         }, onItemClicked = { uri ->
@@ -180,16 +180,16 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 
     private fun showPermissionRequiredDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Permission Required")
-            .setMessage("Storage permission is required to load files. Please enable it in settings.")
+            .setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.storage_permission_is_required_to_load_files_please_enable_it_in_settings))
             .setCancelable(false)
-            .setPositiveButton("Go to Settings") { _, _ ->
+            .setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
                 openedSettings = true
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 intent.data = Uri.parse("package:$packageName")
                 startActivity(intent)
             }
-            .setNegativeButton("Cancel") { _, _ -> finish() }
+            .setNegativeButton(getString(R.string.Cancel)) { _, _ -> finish() }
             .show()
     }
 

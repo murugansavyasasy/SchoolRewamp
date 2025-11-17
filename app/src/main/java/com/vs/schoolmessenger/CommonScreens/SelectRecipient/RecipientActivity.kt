@@ -902,16 +902,16 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID || Constant.M_HOMEWORK == SELECTED_MENU_ID || Constant.M_LSRW == SELECTED_MENU_ID) {
                             if (isSubjectId == null) {
                                 Constant.showValidationAlertPopup(
-                                    "Alert",
-                                    "Select the subject",
+                                    getString(R.string.alert),
+                                    getString(R.string.select_the_subject),
                                     this
                                 )
                             } else {
                                 if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
                                     if (selectedLevelValue == 0) {
                                         Constant.showValidationAlertPopup(
-                                            "Alert",
-                                            "Select the level",
+                                            getString(R.string.alert),
+                                            getString(R.string.select_the_level),
                                             this
                                         )
                                     } else {
