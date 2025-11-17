@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -70,39 +71,33 @@ import kotlin.text.ifEmpty
 
 class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickListener,
     OnDateSelectedListener, OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
-
     override fun getViewBinding(): CreateNewtaskLsrwBinding {
         return CreateNewtaskLsrwBinding.inflate(layoutInflater)
     }
-
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     var isSelectedDate = ""
-
     var isCreateNewTaskPosition = 0
     var isTotalSelectedItem = 0
-
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
-
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
-
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
-
     private var selectedSkill: String = Constant.Listening
-
     private lateinit var tabList: List<LinearLayout>
+    private var mediaPlayer: MediaPlayer? = null
+     var currentlyPlayingPosition: Int? = null
+    private var isPlaying = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -170,7 +165,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                         if (Constant.Remaining != 10){
                             Toast.makeText(
                                 this,
-                                getString(R.string.Only)+" "+ Constant.Remaining + " "+getString(R.string.Added),
+                                "Only " + Constant.Remaining + " Added",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -181,12 +176,10 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                                 Constant.file_ -> uri.path
                                 else -> getPathFromUri(uri)
                             }
-
                             if (path == null) {
                                 Log.w("addPath", "Could not resolve path from URI: $uri")
                                 return@forEach
                             }
-
                             val fileName = getFileName(uri).ifEmpty { File(path).name }
                             val type = when {
                                 mimeType?.startsWith("image/") == true -> FileType.IMAGE
@@ -196,15 +189,12 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                                 fileName.endsWith(".doc", true) || fileName.endsWith(
                                     ".docx", true
                                 ) -> FileType.DOC
-
                                 fileName.endsWith(".xls", true) || fileName.endsWith(
                                     ".xlsx", true
                                 ) -> FileType.EXCEL
-
                                 fileName.endsWith(".ppt", true) || fileName.endsWith(
                                     ".pptx", true
                                 ) -> FileType.PPT
-
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
@@ -214,17 +204,14 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                             else{
                                 Constant.Remaining = 0
                             }
-
                             Log.d("SelectedFile", "URI: $uri, Type: $type")
                         }
                         mAdapter!!.notifyDataSetChanged()
-
-
                     }
                 }
             }
-
     }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -269,7 +256,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         ) {
             openCameraIntent()
         } else {
-
             if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
                     this, Manifest.permission.CAMERA
                 )
@@ -318,7 +304,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
-
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
@@ -341,51 +326,119 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     }
 
     override fun onBackPressed() {
+        mediaPlayer?.release()
+        mediaPlayer = null
+        currentlyPlayingPosition = null
+        isPlaying = false
         Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         Constant.Remaining = MAX_FILES
-
         super.onBackPressed()
     }
 
+
     override fun onPause() {
         super.onPause()
+        if (isPlaying) {
+            mediaPlayer?.pause()
+        }
         Constant.stopDelay()
+    }
+    override fun onResume() {
+        super.onResume()
+        if (currentlyPlayingPosition != null && mediaPlayer != null) {
+            mediaPlayer?.start()
+            isPlaying = true
+        }
     }
 
     override fun onImageClick(position: Int) {
         if (position == 0) {
             showBottomDialog()
+        } else {
+            // Handle click on selected file
+            val item = Constant.selectedFiles[position]
+            when (item.type) {
+                FileType.AUDIO -> {
+                    toggleAudioPlayback(position, item.path)
+                }
+                // Add handling for other types if needed (e.g., view image, play video)
+                else -> {
+                    // Default handling, e.g., open full view
+                    Toast.makeText(this, "Clicked on ${item.type}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
+
+    private fun toggleAudioPlayback(position: Int, audioPath: String) {
+        if (currentlyPlayingPosition == position && isPlaying) {
+            // Pause current
+            mediaPlayer?.pause()
+            isPlaying = false
+            // Update adapter to show pause icon -> play icon (adapter should handle icon change based on isPlaying flag)
+            mAdapter?.notifyItemChanged(position)
+            return
+        }
+
+        // Stop current if any
+        mediaPlayer?.release()
+        mediaPlayer = null
+        currentlyPlayingPosition?.let { prevPos ->
+            mAdapter?.notifyItemChanged(prevPos)
+        }
+
+        try {
+            mediaPlayer = MediaPlayer().apply {
+                setDataSource(audioPath)
+                prepareAsync()
+                setOnPreparedListener {
+                    start()
+                    this@CreateNewTask.isPlaying = true
+                    currentlyPlayingPosition = position
+                    // Update adapter to show play icon as pause or progress
+                    mAdapter?.notifyItemChanged(position)
+                }
+                setOnCompletionListener {
+                    this@CreateNewTask.isPlaying = false
+                    currentlyPlayingPosition = null
+                    mAdapter?.notifyItemChanged(position)
+                }
+                setOnErrorListener { _, _, _ ->
+                    Toast.makeText(this@CreateNewTask, "Error playing audio", Toast.LENGTH_SHORT).show()
+                    this@CreateNewTask.isPlaying = false
+                    currentlyPlayingPosition = null
+                    mAdapter?.notifyItemChanged(position)
+                    true
+                }
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Failed to play audio: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     private fun showBottomDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.filepick_bottom_sheet)
-
         val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
         val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
         val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
-
         rlaVoice.visibility = View.VISIBLE
-
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
             Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())
-
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
-
         rlaVoice.setOnClickListener {
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
-
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
@@ -400,18 +453,15 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 dialog.dismiss()
             }
         }
-
         rlaDocument.setOnClickListener {
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
-
         rlaCamera.setOnClickListener {
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
-
         dialog.window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -420,7 +470,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
         dialog.show()
     }
-
 
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -431,7 +480,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 ex.printStackTrace()
                 null
             }
-
             if (photoFile != null) {
                 val photoURI = FileProvider.getUriForFile(
                     this, "${applicationContext.packageName}.fileprovider", photoFile
@@ -449,23 +497,18 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (resultCode != RESULT_OK) return
-
         if (Constant.Remaining!! == 0) {
             Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
             return
         }
-
         fun addPath(uri: Uri) {
             Log.d("isFilePickingUrl", uri.toString())
-
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
                 Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
                 return
             }
-
             val fileName = getFileName(uri)
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
@@ -473,7 +516,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 fileName.endsWith(".xls", true) || fileName.endsWith(
                     ".xlsx", true
                 ) -> FileType.EXCEL
-
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
@@ -489,7 +531,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
             }
         }
-
         when (requestCode) {
             CreateEvent.Companion.CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
@@ -504,32 +545,27 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                         }
                         val uri = Uri.fromFile(file)
                         Constant.Remaining = Constant.Remaining - 1
-
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
+                        Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
                 }
             }
-
             CreateNewTask.Companion.PICK_DOCUMENT_REQUEST -> {
                 val clipData = data?.clipData
                 val singleUri = data?.data
-
                 if (clipData != null) {
                     for (i in 0 until clipData.itemCount) {
                         val uri = clipData.getItemAt(i).uri
                         addPath(uri)
                     }
                     Constant.Remaining = Constant.Remaining - clipData.itemCount
-
                 } else if (singleUri != null) {
                     addPath(singleUri)
                     Constant.Remaining = Constant.Remaining - 1
-
                 }
             }
         }
@@ -547,7 +583,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 }
             }
         }
-
         // File scheme fallback
         if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
             return uri.path
@@ -575,7 +610,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
         return result ?: ""
     }
-
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
@@ -598,19 +632,17 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             binding.edtDescription.requestFocus()
             return
         }
-
         if (edtdate.isEmpty()) {
             binding.edtdate.error = getString(R.string.This_field_required)
             binding.edtdate.requestFocus()
             return
         }
-
         val isLsrwnewTaskSendingData = LsrwnewTaskSendingData(
             title,
             description,
             selectedSkill,
             edtdate,
-            )
+        )
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.lsrwskill_data, isLsrwnewTaskSendingData)
         startActivity(intent)
@@ -633,7 +665,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 iterator.remove()
             }
         }
-
         when {
             Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
@@ -658,12 +689,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 iterator.remove()
             }
         }
-
         val isCountryId = SharedPreference.getCountryId(this)
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
                 ProgressDialogHelper.dismiss()
-                //   isUpdateEvent()
+                // isUpdateEvent()
             } else {
                 videoUploading()
             }
@@ -694,12 +724,10 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                         } catch (e: Exception) {
                             0L
                         }
-
                         Log.d(
                             "Compressor",
                             "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
                         )
-
                         newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
@@ -709,7 +737,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                     Constant.selectedFiles.clear()
                     Constant.selectedFiles.addAll(newSelectedFiles)
                     val isAwsUploadingFile = ArrayList<String>()
-
                     val isSelectedFileCount = Constant.selectedFiles.size
                     for (i in Constant.selectedFiles.indices) {
                         isAwsUploadingPreSigned?.getPreSignedUrl(
@@ -721,7 +748,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                             true,
                             false,
                             object : UploadCallback {
-
                                 override fun onUploadSuccess(
                                     response: String?, isFileUploaded: String?
                                 ) {
@@ -732,23 +758,20 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                                             isFileType = Constant.selectedFiles[i].type.name
                                         )
                                     )
-
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
-                                        //   isUpdateEvent()
+                                        // isUpdateEvent()
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
                                             videoUploading()
                                         }
                                     }
                                 }
-
                                 override fun onUploadError(error: String?) {
                                     Log.d("isUploadIssue", error.toString())
                                 }
                             })
                     }
-
                     Log.d("Compressor", "All files compressed and uploaded.")
                 })
         }
@@ -776,10 +799,8 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             }
         } else {
             ProgressDialogHelper.dismiss()
-
         }
     }
-
     override fun onUploadComplete(
         success: Boolean, iframe: String?, link: String?
     ) {
@@ -790,10 +811,8 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                     isFileUrl = link.toString(), isFileType = Constant.VIDEO
                 )
             )
-
             if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()
-
             }
         }
     }
@@ -803,5 +822,10 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
         }
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 }
