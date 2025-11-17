@@ -74,12 +74,18 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     private lateinit var imgEnglish: ImageView
     private lateinit var imgThai: ImageView
     private lateinit var imgHindi: ImageView
+    private lateinit var imgArabic: ImageView
     private lateinit var chEnglish: CheckBox
     private lateinit var chTamil: CheckBox
     private lateinit var chThai: CheckBox
     private lateinit var chHindi: CheckBox
     private lateinit var chArabic: CheckBox
     private lateinit var btnConfirm: TextView
+    private lateinit var rlaEnglish: RelativeLayout
+    private lateinit var rlaTamil: RelativeLayout
+    private lateinit var rlaThai: RelativeLayout
+    private lateinit var rlaHindi: RelativeLayout
+    private lateinit var rlaArabic: RelativeLayout
 
     var authViewModel: Auth? = null
 
@@ -402,6 +408,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             .setCancelable(true)
             .create()
 
+
+
         imgClose = dialogView.findViewById(R.id.imgClose)
 
         chEnglish = dialogView.findViewById(R.id.chEnglish)
@@ -416,8 +424,44 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         imgEnglish = dialogView.findViewById(R.id.imgEnglish)
         imgThai = dialogView.findViewById(R.id.imgThai)
         imgHindi = dialogView.findViewById(R.id.imgHindi)
+        imgArabic = dialogView.findViewById(R.id.imgArabic)
+
+        rlaEnglish = dialogView.findViewById(R.id.rlaEnglish)
+        rlaTamil = dialogView.findViewById(R.id.rlaTamil)
+        rlaThai = dialogView.findViewById(R.id.rlaThai)
+        rlaHindi = dialogView.findViewById(R.id.rlaHindi)
+        rlaArabic = dialogView.findViewById(R.id.rlaArabic)
+
+        chTamil.buttonTintList=null
+        chEnglish.buttonTintList=null
+        chHindi.buttonTintList=null
+        chArabic.buttonTintList=null
+        chThai.buttonTintList=null
+
 
         isRemoveCheckBox()
+
+        rlaEnglish.setOnClickListener {
+            chEnglish.performClick()
+        }
+
+        rlaTamil.setOnClickListener {
+            chTamil.performClick()
+        }
+
+        rlaThai.setOnClickListener {
+            chThai.performClick()
+        }
+
+        rlaHindi.setOnClickListener {
+            chHindi.performClick()
+        }
+
+        rlaArabic.setOnClickListener {
+            chArabic.performClick()
+        }
+
+
         chEnglish.setOnCheckedChangeListener { _, isChecked ->
             isRemoveCheckBox()
             if (isChecked) {
@@ -427,6 +471,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isSelectedImageSetting(imgEnglish)
             } else {
                 isChecking = false
+                isResetBackgroud()
             }
         }
 
@@ -439,6 +484,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isSelectedImageSetting(imgTamil)
             } else {
                 isChecking = false
+                isResetBackgroud()
             }
         }
 
@@ -451,6 +497,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isSelectedImageSetting(imgThai)
             } else {
                 isChecking = false
+                isResetBackgroud()
             }
         }
 
@@ -463,6 +510,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isSelectedImageSetting(imgHindi)
             } else {
                 isChecking = false
+                isResetBackgroud()
             }
         }
 
@@ -472,9 +520,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = true
                 isSelectedLanguage = Constant.ar
                 chArabic.isChecked = true
-                isSelectedImageSetting(imgHindi)
+                isSelectedImageSetting(imgArabic)
             } else {
                 isChecking = false
+                isResetBackgroud()
             }
         }
 
@@ -518,13 +567,23 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         imgEnglish.setImageResource(R.drawable.en_language_gray)
         imgThai.setImageResource(R.drawable.th_language_gray)
         imgHindi.setImageResource(R.drawable.hi_language_gray)
+        imgArabic.setImageResource(R.drawable.ara_language_gray)
 
         when (isSelectedImage) {
             imgTamil -> imgTamil.setImageResource(R.drawable.ta_language_orange)
             imgEnglish -> imgEnglish.setImageResource(R.drawable.en_language_orange)
             imgThai -> imgThai.setImageResource(R.drawable.th_language_orange)
             imgHindi -> imgHindi.setImageResource(R.drawable.hi_language_orange)
+            imgArabic -> imgArabic.setImageResource(R.drawable.ara_language_orange)
         }
+    }
+
+    private fun isResetBackgroud() {
+        imgTamil.setImageResource(R.drawable.ta_language_gray)
+        imgEnglish.setImageResource(R.drawable.en_language_gray)
+        imgThai.setImageResource(R.drawable.th_language_gray)
+        imgHindi.setImageResource(R.drawable.hi_language_gray)
+        imgArabic.setImageResource(R.drawable.ara_language_gray)
     }
 
     private fun isRemoveCheckBox() {

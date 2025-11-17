@@ -60,6 +60,7 @@
                 android:padding="@dimen/five"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomCheckbox"
                 tools:ignore="MissingConstraints" />
 
 
@@ -73,7 +74,6 @@
                     android:id="@+id/lblEnglish"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:text="@string/lblEnglish"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
@@ -84,9 +84,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblEnglish"
                     android:text="@string/lblEnglish"
+                    android:layout_marginTop="@dimen/ten"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:visibility="gone"></TextView>
+                   ></TextView>
 
                 <ImageView
                     android:id="@+id/imgEnglish"
@@ -128,6 +129,7 @@
                 android:padding="@dimen/five"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomCheckbox"
                 tools:ignore="MissingConstraints" />
 
 
@@ -195,6 +197,7 @@
                 android:padding="@dimen/five"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomCheckbox"
                 tools:ignore="MissingConstraints" />
 
 
@@ -259,6 +262,7 @@
                 android:padding="@dimen/five"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomCheckbox"
                 tools:ignore="MissingConstraints" />
 
 
@@ -322,6 +326,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/five"
+                style="@style/CustomCheckbox"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 tools:ignore="MissingConstraints" />
