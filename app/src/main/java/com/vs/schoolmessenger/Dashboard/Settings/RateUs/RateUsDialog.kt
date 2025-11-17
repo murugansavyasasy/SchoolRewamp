@@ -141,7 +141,7 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    response?.message ?: "Submission failed",
+                    response?.message ?: getString(R.string.submission_failed),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -193,7 +193,8 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
         val description = binding.edtSuggestions.text.toString().trim()
 
         if (mobileNumber.isBlank()) {
-            Toast.makeText(requireContext(), "Mobile number not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                getString(R.string.mobile_number_not_found), Toast.LENGTH_SHORT).show()
             return
         }
 

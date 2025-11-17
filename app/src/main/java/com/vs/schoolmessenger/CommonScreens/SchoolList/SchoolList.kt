@@ -115,8 +115,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-        binding.toolbarLayout.lblParentToolBar.text = "School Selection"
-        binding.toolbarLayout.lblSchoolName.text = "choose your preferred school"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.school_selection)
+        binding.toolbarLayout.lblSchoolName.text = getString(R.string.choose_your_preferred_school)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
 
 
@@ -297,7 +297,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         if (selectedRadioId == -1) {
                             Toast.makeText(
                                 this,
-                                "Please select a recipient (All / Staff / Student)",
+                                getString(R.string.please_select_a_recipient_all_staff_student),
                                 Toast.LENGTH_SHORT
                             ).show()
                             return

@@ -111,8 +111,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         binding.lblName.text = name
         binding.lblSchoolName.text = school_name
         binding.lblRegisterNo.text = roll_no
-        binding.lblStandard.text = "Standard : " + standard
-        binding.lblSection.text = "Section : " + section
+        binding.lblStandard.text = "${getString(R.string.Standard)} : " + standard
+        binding.lblSection.text = "${getString(R.string.Section)} : " + section
     }
 
     override fun onClick(v: View?) {

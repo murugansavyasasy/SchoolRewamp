@@ -78,7 +78,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         )
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = "Report a bug"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblReportbug)
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -176,7 +176,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                 if (selectedMenu != "Select the menu") {
                     sendMailWithAttachment()
                 } else {
-                    Toast.makeText(this, "Select the menu", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.select_the_menu), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -237,7 +237,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
             startActivity(intent)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Gmail not installed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.gmail_not_installed), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -258,7 +258,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                         // If the user denied the permission but didn't check "Don't ask again"
                         Toast.makeText(
                             this,
-                            "Permission denied. Please allow access to images.",
+                            getString(R.string.permission_denied_please_allow_access_to_images),
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
@@ -272,14 +272,14 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
     // Show a dialog explaining why the permission is needed and guide the user to app settings
     private fun showPermissionDeniedDialog() {
-        AlertDialog.Builder(this).setTitle("Permission Required")
-            .setMessage("This app requires permission to access your images. Please enable it in the app settings.")
-            .setPositiveButton("Go to Settings") { _, _ ->
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.this_app_requires_permission_to_access_your_images_please_enable_it_in_the_app_settings))
+            .setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }.setNegativeButton("Cancel", null).show()
+            }.setNegativeButton(getString(R.string.Cancel), null).show()
     }
 
     override fun onBackPressed() {

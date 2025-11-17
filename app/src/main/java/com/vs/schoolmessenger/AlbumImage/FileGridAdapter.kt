@@ -125,7 +125,7 @@ class FileGridAdapter(
             if (nonSelectableUris.contains(uri)) {
                 Toast.makeText(
                     context,
-                    "Cannot select videos larger than 500 MB",
+                    context.getString(R.string.cannot_select_videos_larger_than_500_mb),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -139,7 +139,7 @@ class FileGridAdapter(
                 if (selected.size >= limit) {
                     Toast.makeText(
                         context,
-                        "You can select up to $limit items only",
+                        "${context.getString(R.string.You_can_select_up_to)} $limit ${context.getString(R.string.items_only)}",
                         Toast.LENGTH_SHORT
                     ).show()
                     return@setOnClickListener
