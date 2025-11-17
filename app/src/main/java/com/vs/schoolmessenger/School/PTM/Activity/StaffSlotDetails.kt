@@ -70,8 +70,8 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         appViewModel!!.init()
 
         binding.lblMeetingTitle.text = isSlotsDetails.event_name
-        binding.lblHostName.text = isSlotsDetails.meeting_duration.toString() + " Minutes"
-        binding.lblMeetingMode.text = "Mode" + " - " + isSlotsDetails.event_mode
+        binding.lblHostName.text = isSlotsDetails.meeting_duration.toString() + " "+getString(R.string.minutes)
+        binding.lblMeetingMode.text = getString(R.string.mode_2) + " - " + isSlotsDetails.event_mode
         binding.lblModeMeeting.text = isSlotsDetails.event_mode
         binding.lblDate.text = formatApiDateToDisplay(isSlotsDetails.date)
 
@@ -88,7 +88,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(joinUrl))
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "Join URL not available", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.join_url_not_available), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -103,7 +103,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         appViewModel!!.isPtmSlotCancelClose?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null) {
-                val message = response.message ?: "Failed to cancel slot"
+                val message = response.message ?: getString(R.string.failed_to_cancel_slot)
                 Constant.showTopAlertPopup1(message, this, true)
             } else {
                 Constant.showTopAlertPopup1(getString(R.string.something_went_wrong_please_try_again_later), this, true)
@@ -115,7 +115,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             Constant.hideLoading(this)
 
             if (response != null) {
-                val message = response.message ?: "Failed to reopen slot"
+                val message = response.message ?: getString(R.string.failed_to_reopen_slot)
                 Constant.showTopAlertPopup1(message, this, true)
             } else {
                 Constant.showTopAlertPopup1(getString(R.string.something_went_wrong_please_try_again_later), this, true)
@@ -271,9 +271,9 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
         if (isSlotReOpen) {
-            alertMessage.text = "Are you sure want to reopen this slot?"
+            alertMessage.text = getString(R.string.are_you_sure_want_to_reopen_this_slot)
         } else {
-            alertMessage.text = "Are you sure want to cancel this slot?"
+            alertMessage.text = getString(R.string.are_you_sure_want_to_cancel_this_slot)
         }
 
         lblSelectTarget.visibility = View.GONE

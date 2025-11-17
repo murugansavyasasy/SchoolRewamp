@@ -1157,6 +1157,44 @@
     <string name="not_available">Not Available</string>
     <string name="time_conflict">Time Conflict</string>
     <string name="awaiting">Awaiting</string>
+    <string name="no_changes_detected">No changes detected</string>
+    <string name="no_subject_available">No subject available</string>
+    <string name="no_standards_found_for_selected_academic_year">No standards found for selected academic year</string>
+    <string name="slot_creation_failed">Slot creation failed!</string>
+    <string name="cannot_select_past_time_when_today_is_selected">Cannot select past time when today is selected</string>
+    <string name="please_select_start_time_first">Please select Start Time first</string>
+    <string name="end_time_cannot_be_before_start_time">End Time cannot be before Start Time</string>
+    <string name="start_time_and_end_time_cannot_be_the_same">Start Time and End Time cannot be the same</string>
+    <string name="no_slots_found_for_selected_date_s_and_time">No slots found for selected date(s) and time</string>
+    <string name="please_select_at_least_one_available_slot">Please select at least one available slot</string>
+    <string name="confirm_slot_creation">Confirm Slot Creation</string>
+    <string name="are_you_sure_you_want_to_create_slots_for_the_selected_dates">Are you sure you want to create slots for the selected dates?</string>
+    <string name="enter_the_purpose_of_meeting">Enter the Purpose of meeting</string>
+    <string name="paste_the_meeting_link">Paste the meeting link</string>
+    <string name="select_section_and_standard">Select section and standard</string>
+    <string name="kindly_select_the_date">Kindly select the date</string>
+    <string name="kindly_select_the_start_time">Kindly select the start time</string>
+    <string name="kindly_select_the_end_time">Kindly select the end time</string>
+    <string name="kindly_select_the_slot_duration">Kindly select the slot duration</string>
+    <string name="enter_the_slot_duration">Enter the slot duration</string>
+    <string name="minutes_should_greater_then_zero">Minutes should greater then zero</string>
+    <string name="select_the_break_duration">Select the break duration</string>
+    <string name="cannot_select_today_because_from_time_is_already_past">Cannot select today because From Time is already past</string>
+    <string name="cannot_select_today_because_to_time_is_already_past">Cannot select today because To Time is already past</string>
+    <string name="paste_the_meeting_link_here">Paste the meeting link here</string>
+    <string name="no_meeting_available">No Meeting Available</string>
+    <string name="You_have">You have</string>
+    <string name="meeting_s_today">meeting\'s today</string>
+    <string name="you_have_0_meeting_s_today">You have 0 meeting\'s today</string>
+    <string name="cancel_slot">Cancel Slot</string>
+    <string name="are_you_sure_you_want_to_cancel_this_slot">Are you sure you want to cancel this slot?</string>
+    <string name="invalid_request">Invalid request</string>
+    <string name="mode_2">Mode</string>
+    <string name="join_url_not_available">Join URL not available</string>
+    <string name="failed_to_cancel_slot">Failed to cancel slot</string>
+    <string name="failed_to_reopen_slot">Failed to reopen slot</string>
+    <string name="are_you_sure_want_to_reopen_this_slot">Are you sure want to reopen this slot?</string>
+    <string name="are_you_sure_want_to_cancel_this_slot">Are you sure want to cancel this slot?</string>
 
 
 </resources>

@@ -351,7 +351,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             binding.rcyAssignmentReport.visibility = View.GONE
             binding.lytNoDataFound.visibility = View.VISIBLE
             binding.noDataFound.text = if (binding.toolbarLayout.txtSearch.text.toString().trim().isNotEmpty()) {
-                "No data found"
+                getString(R.string.no_data_found)
             } else {
                 getString(R.string.no_data_found)
             }

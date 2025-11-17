@@ -36,7 +36,7 @@ class StudentListAdapter(
 
         holder.binding.apply {
             if (item.subject.isNullOrBlank()) {
-                txtTitle.text = "No subject available"
+                txtTitle.text = context.getString(R.string.no_subject_available)
             } else {
                 txtTitle.text = item.subject
             }
@@ -44,7 +44,7 @@ class StudentListAdapter(
             txtDescription.text = item.title
             txtsubdesc.text = item.description
             if (item.created_on.isNullOrBlank()) {
-                txtDate.text = "No date available"
+                txtDate.text = context.getString(R.string.no_data_available)
             } else {
                 txtDate.text = Constant.convertDateTimeFormat(item.created_on)
             }

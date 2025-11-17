@@ -170,7 +170,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                         if (Constant.Remaining != 10){
                             Toast.makeText(
                                 this,
-                                "Only " + Constant.Remaining + " Added",
+                                getString(R.string.Only)+" "+ Constant.Remaining + " "+getString(R.string.Added),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -507,11 +507,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
                 }
             }
 

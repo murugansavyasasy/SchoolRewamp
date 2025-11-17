@@ -247,14 +247,14 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
                         Toast.makeText(
                             this,
-                            "Added $addedCount file${if (addedCount > 1) "s" else ""}",
+                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${if (addedCount > 1) "${getString(R.string.s_)}" else ""}",
                             Toast.LENGTH_SHORT
                         ).show()
 
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                        Toast.makeText(this, "You have reached the maximum file limit.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -299,7 +299,8 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             R.id.btnChooseRecipient -> {
                 if (binding.btnChooseRecipient.text.toString() == getString(R.string.update_assignment)) {
                     if (!hasChanges()) {
-                        Toast.makeText(this, "No changes detected", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,
+                            getString(R.string.no_changes_detected), Toast.LENGTH_SHORT).show()
                     } else {
                         showSendConfirmationDialog(true)
                     }

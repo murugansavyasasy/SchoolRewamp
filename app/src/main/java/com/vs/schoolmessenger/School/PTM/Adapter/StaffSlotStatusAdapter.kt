@@ -82,11 +82,11 @@ class StaffSlotStatusAdapter(
             lblBookedName.text = data.booked_by
 
             if (data.status == "Upcoming") {
-                lblStatus.text = "Booked"
+                lblStatus.text = context.getString(R.string.booked)
             } else {
                 lblStatus.text = data.status
             }
-            lblDuration.text = "Duration - ${data.meeting_duration} Minutes"
+            lblDuration.text = "${context.getString(R.string.Duration)} - ${data.meeting_duration} ${context.getString(R.string.minutes)}"
             lblTime.text = data.from_time + " - " + data.to_time
             lblStandardAndSection.text = "${data.my_class} - ${data.my_section}"
             val profileUrl = data.profile_url

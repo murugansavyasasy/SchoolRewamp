@@ -136,7 +136,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     selectedSlots = emptyList()
                     isSelectedList.clear()
                     Constant.showTopAlertPopup1(
-                        response.message?:"No standards found for selected academic year",
+                        response.message?: getString(R.string.no_standards_found_for_selected_academic_year),
                         this,
                         true
                     )
@@ -153,7 +153,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 if (response.status) {
                     Constant.showTopAlertPopup(response.message, this)
                 } else {
-                    Constant.showTopAlertPopup("Slot creation failed!", this)
+                    Constant.showTopAlertPopup(getString(R.string.slot_creation_failed), this)
                 }
             }
         }
@@ -336,7 +336,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             if (chosenTime.before(nowTime)) {
                                 Toast.makeText(
                                     this,
-                                    "Cannot select past time when today is selected",
+                                    getString(R.string.cannot_select_past_time_when_today_is_selected),
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 return@TimePickerDialog
@@ -363,7 +363,8 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
             R.id.rytToTime -> {
                 if (startCalendar == null) {
-                    Toast.makeText(this, "Please select Start Time first", Toast.LENGTH_SHORT)
+                    Toast.makeText(this,
+                        getString(R.string.please_select_start_time_first), Toast.LENGTH_SHORT)
                         .show()
                     return
                 }
@@ -383,7 +384,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             endCalendar!!.before(startCalendar) -> {
                                 Toast.makeText(
                                     this,
-                                    "End Time cannot be before Start Time",
+                                    getString(R.string.end_time_cannot_be_before_start_time),
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 binding.lblToTime.text = "End with"
@@ -393,7 +394,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             endCalendar!!.timeInMillis == startCalendar!!.timeInMillis -> {
                                 Toast.makeText(
                                     this,
-                                    "Start Time and End Time cannot be the same",
+                                    getString(R.string.start_time_and_end_time_cannot_be_the_same),
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 binding.lblToTime.text = "End with"
@@ -654,7 +655,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         val allSlotsList = data.filter { it.slots.isNotEmpty() }
 
         if (allSlotsList.isEmpty()) {
-            Constant.showTopAlertPopup1("No slots found for selected date(s) and time", this, false)
+            Constant.showTopAlertPopup1(getString(R.string.no_slots_found_for_selected_date_s_and_time), this, false)
             return
         }
 
@@ -694,16 +695,16 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             if (availableSlots.isEmpty()) {
                 Toast.makeText(
                     this,
-                    "Please select at least one available slot",
+                    getString(R.string.please_select_at_least_one_available_slot),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
             }
 
             val dialogBuilder = AlertDialog.Builder(this)
-            dialogBuilder.setTitle("Confirm Slot Creation")
-            dialogBuilder.setMessage("Are you sure you want to create slots for the selected dates?")
-            dialogBuilder.setPositiveButton("Yes") { dialog, _ ->
+            dialogBuilder.setTitle(getString(R.string.confirm_slot_creation))
+            dialogBuilder.setMessage(getString(R.string.are_you_sure_you_want_to_create_slots_for_the_selected_dates))
+            dialogBuilder.setPositiveButton(getString(R.string.Yes)) { dialog, _ ->
                 isSlotCreateValues = availableSlots
                     .groupBy { it.first } // date
                     .map { (date, slots) -> date to slots.map { it.second } }
@@ -713,7 +714,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 isCreateSlots()
                 dialog.dismiss()
             }
-            dialogBuilder.setNegativeButton("No") { dialog, _ ->
+            dialogBuilder.setNegativeButton(getString(R.string.No)) { dialog, _ ->
                 dialog.dismiss()
             }
             dialogBuilder.create().show()
@@ -746,58 +747,61 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
     private fun validateMeetingInputs(): MeetingCreationData? {
         if (binding.edtPurPose.text.toString().isEmpty()) {
 
-            binding.edtPurPose.error = "Enter the Purpose of meeting"
+            binding.edtPurPose.error = getString(R.string.enter_the_purpose_of_meeting)
             return null
         }
 
         if (isMeetingMode.isEmpty()) {
-            Toast.makeText(this, "Select meeting mode", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.select_meeting_mode), Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (isOnlineMeeting && binding.edtMobileOrLink.text.toString().isEmpty()) {
 
-            binding.edtMobileOrLink.error = "Paste the meeting link"
+            binding.edtMobileOrLink.error = getString(R.string.paste_the_meeting_link)
             return null
         }
 
         if (isSelectedList.isEmpty()) {
-            Toast.makeText(this, "Select section and standard", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.select_section_and_standard), Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (selectedDates.isEmpty()) {
-            Toast.makeText(this, "Kindly select the date", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.kindly_select_the_date), Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (binding.lblFromTime.text.toString() == "Start with") {
-            Toast.makeText(this, "Kindly select the start time", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.kindly_select_the_start_time), Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (binding.lblToTime.text.toString() == "End with") {
-            Toast.makeText(this, "Kindly select the end time", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.kindly_select_the_end_time), Toast.LENGTH_SHORT).show()
             return null
         }
         if (isSlotDuration == "Select Slot Duration") {
-            Toast.makeText(this, "Kindly select the slot duration", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.kindly_select_the_slot_duration), Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (isSlotDurationCustom && binding.edtSlotCustomDuration.text.toString().isEmpty()) {
 
-            binding.edtSlotCustomDuration.error = "Enter the slot duration"
+            binding.edtSlotCustomDuration.error = getString(R.string.enter_the_slot_duration)
             return null
         }
 
         if (binding.edtSlotCustomDuration.text.toString() == "0") {
-            Toast.makeText(this, "Minutes should greater then zero", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.minutes_should_greater_then_zero), Toast.LENGTH_SHORT).show()
             return null
         }
 
         if (binding.switchBreak.isChecked() && isBreakDuration.isEmpty()) {
-            Toast.makeText(this, "Select the break duration", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.select_the_break_duration), Toast.LENGTH_SHORT).show()
             return null
         }
         if (isSlotDurationCustom) {
@@ -881,7 +885,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                         if (startCalendar != null && startCalendar!!.before(now)) {
                             Toast.makeText(
                                 this,
-                                "Cannot select today because From Time is already past",
+                                getString(R.string.cannot_select_today_because_from_time_is_already_past),
                                 Toast.LENGTH_SHORT
                             ).show()
                             continue
@@ -889,7 +893,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                         if (endCalendar != null && endCalendar!!.before(now)) {
                             Toast.makeText(
                                 this,
-                                "Cannot select today because To Time is already past",
+                                getString(R.string.cannot_select_today_because_to_time_is_already_past),
                                 Toast.LENGTH_SHORT
                             ).show()
                             continue
@@ -963,8 +967,8 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         if (isMeetingMode.equals("Virtual", ignoreCase = true)) {
             binding.lblLinkOrNumber.visibility = View.VISIBLE
             binding.edtMobileOrLink.visibility = View.VISIBLE
-            binding.lblLinkOrNumber.text = "Paste the meeting link"
-            binding.edtMobileOrLink.hint = "Paste the meeting link here"
+            binding.lblLinkOrNumber.text = getString(R.string.paste_the_meeting_link)
+            binding.edtMobileOrLink.hint = getString(R.string.paste_the_meeting_link_here)
             isOnlineMeeting = true
         } else {
             binding.lblLinkOrNumber.visibility = View.GONE

@@ -64,7 +64,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 isLoadData(isSlotCategory)
             } else {
                 binding.tvNoData.visibility = View.VISIBLE
-                binding.tvNoData.text=response!!.message?:"No Meeting Available"
+                binding.tvNoData.text=response!!.message?: getString(R.string.no_meeting_available)
                 binding.rcyToday.adapter = null
                 binding.rcyUpcoming.adapter = null
                 binding.rcyComplete.adapter = null
@@ -82,7 +82,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                     Toast.makeText(this, "${result.message}", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -148,9 +148,9 @@ class PTM : BaseActivity<PtmStaffBinding>(),
 
         binding.lblSlotCount.visibility = View.VISIBLE
         binding.lblSlotCount.text = if (todayList.isNotEmpty()) {
-            "You have ${todayList.size} meeting's today"
+            "${getString(R.string.You_have)} ${todayList.size} ${getString(R.string.meeting_s_today)}"
         } else {
-            "You have 0 meeting's today"
+            getString(R.string.you_have_0_meeting_s_today)
         }
     }
 
@@ -180,11 +180,11 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         layoutCancel.setOnClickListener {
             showSendConfirmationDialog(
                 this,
-                "Cancel Slot",
-                "Yes",
-                "No",
+                getString(R.string.cancel_slot),
+                getString(R.string.Yes),
+                getString(R.string.No),
                 "",
-                "Are you sure you want to cancel this slot?"
+                getString(R.string.are_you_sure_you_want_to_cancel_this_slot)
             ) { confirmed ->
                 if (confirmed) callCancelReopenApi(data, "Cancel")
             }
@@ -203,7 +203,7 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             appViewModel.isSlotCancelClose(isAccessToken!!, json)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Invalid request", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.invalid_request), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -244,8 +244,8 @@ class LsrwAdapter(
                 val yesterday = today.minusDays(1)
 
                 return when {
-                    date == today -> "Today"
-                    date == yesterday -> "Yesterday"
+                    date == today -> context.getString(R.string.today)
+                    date == yesterday -> context.getString(R.string.yesterday)
                     else -> Constant.convertToReadableDate(dateString)
                 }
             } catch (e: DateTimeParseException) {

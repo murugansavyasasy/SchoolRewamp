@@ -53,9 +53,9 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
 
 
         binding.tabLayout.apply {
-            addTab(newTab().setText("All Students"))
-            addTab(newTab().setText("Submitted"))
-            addTab(newTab().setText("Pending"))
+            addTab(newTab().setText(getString(R.string.All_Students)))
+            addTab(newTab().setText(getString(R.string.submitted)))
+            addTab(newTab().setText(getString(R.string.pending)))
         }
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

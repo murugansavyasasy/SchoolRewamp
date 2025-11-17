@@ -106,7 +106,7 @@ class AssignmentStudentListDetailAdapter(
                 data.submitted_on // fallback if parsing fails
             }
 
-            sectionlabel.text = "Submitted $formattedDate"
+            sectionlabel.text = "${context.getString(R.string.submitted)} $formattedDate"
 
             val hasFiles = !data.file_path.isNullOrEmpty()
 
