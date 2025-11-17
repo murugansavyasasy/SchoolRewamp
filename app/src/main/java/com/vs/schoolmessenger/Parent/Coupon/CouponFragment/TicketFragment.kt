@@ -28,6 +28,7 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
     private lateinit var appViewModel: App
     private lateinit var ticketcouponadapter: TicketCouponAdapter
     private var previouslySelectedView: View? = null
+    private var currentStatus: String = Constant.all__  // Added to track current tab status for race condition prevention
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -66,14 +67,24 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
 
         fetchticketsummary(Constant.all__)
 
-
-
         appViewModel.getmycouponsSummary?.observe(viewLifecycleOwner) { response ->
             hideProgressBar()
-            val couponList = response?.data?.coupon_list?.data?.filterNotNull()
-            if (couponList.isNullOrEmpty()) {
-                showMyCouponSummaryErrorUI(getString(R.string.no_coupon_summary_data_available))
+            val couponList = response?.data?.coupon_list?.data?.filterNotNull() ?: emptyList()
+            if (response?.data?.totalpages == 0) {
+                binding.nomessage.visibility = View.VISIBLE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.imgSearchToolBar.visibility = View.GONE
+                binding.linearlayout.visibility = View.GONE
+                binding.root.hideKeyboard()
+                binding.txtNoData.text = getString(R.string.no_coupon_summary_data_available)
+                binding.recyclerView.visibility = View.GONE
             } else {
+                if (couponList.isNotEmpty()) {
+                    val sampleStatus = couponList.first().coupon_status
+                    if (sampleStatus != currentStatus && currentStatus != Constant.all__) {
+                        return@observe
+                    }
+                }
                 isLoadCouponSummaryData(couponList)
             }
         }
@@ -93,9 +104,11 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
     }
 
     private fun fetchticketsummary(couponstatus: String) {
+        currentStatus = couponstatus
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
         binding.lblNoRecord.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
         showProgressBar()
         appViewModel.getmycouponsSummary(
             couponstatus,
@@ -105,22 +118,24 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         )
     }
 
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+
+
     private fun isLoadCouponSummaryData(data: List<TicketSummary>) {
         // Hide “no data” message
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
         binding.lblNoRecord.visibility = View.GONE
+        binding.imgSearchToolBar.visibility = View.VISIBLE
+
 
         binding.recyclerView.visibility = View.VISIBLE
         ticketcouponadapter = TicketCouponAdapter(data, this, requireContext(), false)
         binding.recyclerView.adapter = ticketcouponadapter
-    }
-
-    private fun showMyCouponSummaryErrorUI(message: String) {
-        binding.nomessage.visibility = View.VISIBLE
-        binding.txtNoData.visibility = View.VISIBLE
-        binding.txtNoData.text = message
-        binding.recyclerView.visibility = View.GONE
     }
 
     private fun showProgressBar() {
@@ -138,15 +153,12 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
             previouslySelectedView?.setBackgroundResource(0)
             v.setBackgroundResource(R.drawable.green_radious)
             previouslySelectedView = v
-
             binding.editSearch.setText("")
-
-            // Hide “no data” before switching tabs
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
             binding.lblNoRecord.visibility = View.GONE
-
-            // Reset the adapter
+            binding.recyclerView.visibility = View.GONE
+            binding.root.hideKeyboard()
             if (::ticketcouponadapter.isInitialized) {
                 ticketcouponadapter.filter.filter("")
             }
@@ -155,8 +167,8 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
             when (v.id) {
                 R.id.alltext -> fetchticketsummary(Constant.all__)
                 R.id.activetext -> fetchticketsummary(Constant.activated)
-                R.id.expiredtext -> fetchticketsummary(Constant.claimed)
-                R.id.redeemedtext -> fetchticketsummary(Constant.expired)
+                R.id.expiredtext -> fetchticketsummary(Constant.expired)  // Fixed: Correct mapping for expired tab
+                R.id.redeemedtext -> fetchticketsummary(Constant.claimed)  // Fixed: Correct mapping for redeemed tab
             }
         }
     }
@@ -186,4 +198,3 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         // TODO: Handle item click
     }
 }
-

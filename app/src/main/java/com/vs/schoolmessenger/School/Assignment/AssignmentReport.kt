@@ -88,9 +88,9 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         )
 
         val params = binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
-        params.removeRule(RelativeLayout.START_OF)// Remove the old rule
-        params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)// Add the new rule -> align to start of rlaSpinner
-        binding.toolbarLayout.lytTitleAndName.layoutParams = params// Re-apply params
+        params.removeRule(RelativeLayout.START_OF)
+        params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)
+        binding.toolbarLayout.lytTitleAndName.layoutParams = params
 
 
         appViewModel = ViewModelProvider(this)[App::class.java]
