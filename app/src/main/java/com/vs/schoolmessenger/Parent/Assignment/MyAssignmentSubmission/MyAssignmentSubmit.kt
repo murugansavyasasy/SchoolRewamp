@@ -121,7 +121,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         if (submissionData != null) {
-            binding.toolbarLayout.lblParentToolBar.text = "Edit your assignment"
+            binding.toolbarLayout.lblParentToolBar.text = getString(R.string.edit_your_assignment)
         } else {
             binding.toolbarLayout.lblParentToolBar.text = getString(R.string.submit_your_assignment)
         }
@@ -377,9 +377,9 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 val originalFileSet = submissionData!!.file_path.map { it.url to it.type }.toSet()
                 if (currentFileSet == originalFileSet) {
                     AlertDialog.Builder(this)
-                        .setTitle("No Changes")
-                        .setMessage("No changes have been detected.")
-                        .setPositiveButton("OK", null)
+                        .setTitle(getString(R.string.no_changes))
+                        .setMessage(getString(R.string.no_changes_have_been_detected))
+                        .setPositiveButton(getString(R.string.OK_2), null)
                         .show()
                     return
                 }

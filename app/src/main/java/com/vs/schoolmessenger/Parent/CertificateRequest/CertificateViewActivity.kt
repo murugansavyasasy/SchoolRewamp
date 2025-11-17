@@ -342,7 +342,7 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@CertificateViewActivity,
-                        "Failed to share file",
+                        getString(R.string.failed_to_share_file),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

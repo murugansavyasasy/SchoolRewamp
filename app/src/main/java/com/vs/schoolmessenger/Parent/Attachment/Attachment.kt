@@ -379,7 +379,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             binding.recycleracademic.visibility = View.GONE
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No data found"
+            binding.txtNoData.text = getString(R.string.no_data_found)
         } else {
             Log.d("NoDta", "data")
             binding.recycleracademic.visibility = View.VISIBLE

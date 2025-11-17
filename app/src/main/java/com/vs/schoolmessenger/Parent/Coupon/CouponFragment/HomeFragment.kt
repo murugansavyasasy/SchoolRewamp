@@ -120,7 +120,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             earnedPoints = response?.data?.firstOrNull()?.earned ?: 0
             pointspercoupon = response?.data?.firstOrNull()?.per_coupon ?: 0
 
-            binding.totalcoins.text = "Total Coins" + " : " + "$earnedPoints"
+            binding.totalcoins.text = getString(R.string.total_coins) + " : " + "$earnedPoints"
             binding.usedcoins.text = "${getString(R.string.Used)} : $spentPoints"
             binding.availablecoins.text = "${getString(R.string.Available)} : $remainingPoints"
         }

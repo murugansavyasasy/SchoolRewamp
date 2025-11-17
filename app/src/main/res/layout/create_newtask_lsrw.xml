@@ -22,7 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
-
     <HorizontalScrollView
         android:id="@+id/horizontal_scrollview"
         android:layout_width="match_parent"
@@ -145,7 +144,6 @@
             </LinearLayout>
         </LinearLayout>
     </HorizontalScrollView>
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -399,4 +397,5 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
