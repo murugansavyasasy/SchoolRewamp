@@ -117,7 +117,7 @@
                 if (data.type == "A/A") {
                     tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge))
                     tvFullDate.text = Constant.convertDateTimeFormat2(data.date)
-                    tvStatus.text = "Absent"
+                    tvStatus.text = context.getString(R.string.absent)
                     tvDayName.text = data.day
 
                     val inputDate = data.date
@@ -139,7 +139,7 @@
                     tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge_green))
 
                     tvFullDate.text = Constant.convertDateTimeFormat2(data.date)
-                    tvStatus.text = "Present"
+                    tvStatus.text = context.getString(R.string.present)
                     tvDayName.text = data.day
 
                     val inputDate = data.date
