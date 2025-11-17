@@ -78,7 +78,7 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
                     Constant.hideLoading(this@FeeReceiptViewActivity)
                     Toast.makeText(
                         this@FeeReceiptViewActivity,
-                        "Failed to load receipt. Please try again.",
+                        context.getString(R.string.failed_to_load_receipt_please_try_again),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -137,14 +137,14 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
 
                         if (alreadyExists) {
                             Constant.showValidationAlertPopup(
-                                "Already Downloaded",
-                                "This file already exists at:\n${file.absolutePath}",
+                                getString(R.string.already_downloaded),
+                                "${getString(R.string.This_file_already_exists_at)}:\n${file.absolutePath}",
                                 this@FeeReceiptViewActivity
                             )
                         } else {
                             Constant.showValidationAlertPopup(
-                                "Successfully Downloaded ✅",
-                                "File saved to:\n${file.absolutePath}",
+                                getString(R.string.successfully_downloaded),
+                                "${getString(R.string.File_saved_to)}:\n${file.absolutePath}",
                                 this@FeeReceiptViewActivity
                             )
                         }
@@ -154,7 +154,7 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
                         Constant.hideLoading(this@FeeReceiptViewActivity)
                         Toast.makeText(
                             this@FeeReceiptViewActivity,
-                            "Download failed: ${e.message}",
+                            "${getString(R.string.Download_failed_2)}: ${e.message}",
                             Toast.LENGTH_LONG
                         ).show()
                         binding.lytDownload.visibility = View.GONE
@@ -215,7 +215,7 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
                         Constant.hideLoading(this@FeeReceiptViewActivity)
                         Toast.makeText(
                             this@FeeReceiptViewActivity,
-                            "Share failed: ${e.message}",
+                            "${getString(R.string.Share_failed)}: ${e.message}",
                             Toast.LENGTH_LONG
                         ).show()
                     }

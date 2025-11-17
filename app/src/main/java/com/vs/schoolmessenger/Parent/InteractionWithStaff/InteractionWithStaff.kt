@@ -134,7 +134,7 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
             if (response.status) {
                 isLoadStaffData(response.data)
             } else {
-                showErrorUI(response.message ?: "No data available")
+                showErrorUI(response.message ?: getString(R.string.no_data_available))
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
             }
         }

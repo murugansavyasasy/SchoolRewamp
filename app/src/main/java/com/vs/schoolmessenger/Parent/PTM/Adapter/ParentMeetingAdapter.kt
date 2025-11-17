@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.PTM.Adapter
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.vs.schoolmessenger.R
 
 class ParentMeetingAdapter(
     private val meetings: List<MeetingData>,
+    private val context: Context,
     private val onSlotSelected: (MeetingData, SlotData?, Boolean) -> Unit
 ) : RecyclerView.Adapter<ParentMeetingAdapter.ParentMeetingViewHolder>() {
 
@@ -54,11 +56,11 @@ class ParentMeetingAdapter(
             .flatMap { it.subject_name ?: emptyList() }
             .distinct()
             .joinToString(", ")
-        holder.tvSubject.text = subjectNames.ifEmpty { "No Subject" }
+        holder.tvSubject.text = subjectNames.ifEmpty { context.getString(R.string.no_subject) }
 
 
 
-        val mode = meeting.slots.firstOrNull()?.event_mode ?: "Meeting"
+        val mode = meeting.slots.firstOrNull()?.event_mode ?: context.getString(R.string.meeting)
         holder.btnMeetingType.text = mode
         Log.d("mode",mode)
 
@@ -82,6 +84,7 @@ class ParentMeetingAdapter(
 
         val slotAdapter = ParentSlotTimingAdapter(
             slots = meeting.slots,
+            context,
             allSlots = allSlotsList,
             allSelectedSlots = selectedSlotsMap.values.filterNotNull()
         ) { clickedSlot ->

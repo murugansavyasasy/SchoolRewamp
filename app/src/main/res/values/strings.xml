@@ -1132,6 +1132,30 @@
     <string name="no_changes_have_been_detected">No changes have been detected.</string>
     <string name="failed_to_share_file">Failed to share file</string>
     <string name="total_coins">Total Coins</string>
+    <string name="payment_successful_view_download_receipt_on_receipt_tab">Payment Successful. View/Download Receipt on Receipt Tab.</string>
+    <string name="payment_failed">Payment failed..</string>
+    <string name="please_try_again_later">Please try again later!!</string>
+    <string name="unable_to_fetch_invoice">Unable to fetch invoice</string>
+    <string name="InvoiceNo">InvoiceNo</string>
+    <string name="Invoice_Amount">Invoice Amount</string>
+    <string name="failed_to_load_receipt_please_try_again">Failed to load receipt. Please try again.</string>
+    <string name="This_file_already_exists_at">This file already exists at</string>
+    <string name="already_downloaded">Already Downloaded</string>
+    <string name="successfully_downloaded">Successfully Downloaded ✅</string>
+    <string name="Download_failed_2">Download failed</string>
+    <string name="File_saved_to">File saved to</string>
+    <string name="Share_failed">Share failed</string>
+    <string name="click_here_when_you_re_done">"Click \"here\" when you're done "</string>
+    <string name="that_s_it_homework_done_you_re_amazing">That\'s it! Homework done you\'re amazing</string>
+    <string name="at_least_one_attachment_is_required">At least one attachment is required</string>
+    <string name="no_attached_image_available">No attached image available</string>
+    <string name="no_subject">No Subject</string>
+    <string name="meeting">Meeting</string>
+    <string name="are_you_sure_want_to_book_this_slots">Are you sure want to book this slots?</string>
+    <string name="booked">Booked</string>
+    <string name="not_available">Not Available</string>
+    <string name="time_conflict">Time Conflict</string>
+    <string name="awaiting">Awaiting</string>
 
 
 </resources>

@@ -73,7 +73,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
             if (response.status) {
                 isLoadChatData(response.data)
             } else {
-                showErrorUI(response.message ?: "No data available")
+                showErrorUI(response.message ?: getString(R.string.no_data_available))
             }
         }
 
@@ -110,7 +110,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         if (staffData!!.is_blocked == true) {
             binding.bottomChatInput.visibility = View.GONE
             binding.blockdetails.visibility = View.VISIBLE
-            binding.reasontext.text = "Reason : " + staffData!!.reason
+            binding.reasontext.text = "${getString(R.string.reason)} : ${staffData!!.reason}"
         } else {
             binding.bottomChatInput.visibility = View.VISIBLE
             binding.blockdetails.visibility = View.GONE

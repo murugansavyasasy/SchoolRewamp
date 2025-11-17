@@ -115,7 +115,7 @@ class InteractionWithStaffAdapter(
             yesterdayheader.text = getRelativeTime(staff.last_msg_time)
 
             if (staff.last_msg.isNullOrBlank()) {
-                lblDesc.text = "No messages yet"
+                lblDesc.text = context.getString(R.string.no_messages_yet)
             } else {
                 lblDesc.text = staff.last_msg
 
@@ -159,10 +159,10 @@ class InteractionWithStaffAdapter(
                 val days = TimeUnit.MILLISECONDS.toDays(diffInMillis)
 
                 when {
-                    minutes < 1 -> "Just now"
-                    minutes < 60 -> "$minutes min ago"
-                    hours < 24 -> "$hours hr ago"
-                    days < 7 -> "$days day${if (days > 1) "s" else ""} ago"
+                    minutes < 1 -> context.getString(R.string.just_now)
+                    minutes < 60 -> "$minutes ${context.getString(R.string.min_ago)}"
+                    hours < 24 -> "$hours ${context.getString(R.string.hr_ago)}"
+                    days < 7 -> "$days ${context.getString(R.string.day_)}${if (days > 1) "${context.getString(R.string.s_)}" else ""} ${context.getString(R.string.ago)}"
                     else -> SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
                 }
             } catch (e: Exception) {

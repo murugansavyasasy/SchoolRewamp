@@ -271,7 +271,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     }
 
     fun isLoadData(data: List<MeetingData>) {
-        val adapter = ParentMeetingAdapter(data) { meeting, slot, isSelected ->
+        val adapter = ParentMeetingAdapter(data,this) { meeting, slot, isSelected ->
             slot?.let {
                 if (isSelected) {
                     if (!selectedSlotIds.contains(it.id)) {
@@ -415,7 +415,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             }
 
             R.id.lblBookSlots -> {
-                showSendConfirmationDialog("Are you sure want to book this slots?")
+                showSendConfirmationDialog(getString(R.string.are_you_sure_want_to_book_this_slots))
             }
         }
     }

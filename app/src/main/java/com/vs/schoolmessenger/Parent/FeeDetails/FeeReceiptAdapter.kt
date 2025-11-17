@@ -100,7 +100,7 @@ class FeeReceiptAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(data: FeeInvoiceResponse.InvoiceData, listener: InvoiceClickListener) {
 
-            lblInvoiceNo.text = "InvoiceNo: ${data.invoice_no ?: "-"}"
+            lblInvoiceNo.text = "${context.getString(R.string.InvoiceNo)}: ${data.invoice_no ?: "-"}"
             val dateTime = data.invoice_date?.split(" ") ?: listOf()
             val rawDate = dateTime.getOrNull(0) ?: "-"
             val time = dateTime.drop(1).joinToString(" ")
@@ -108,7 +108,7 @@ class FeeReceiptAdapter(
             val formattedDate = isFormatDate(rawDate)
             lblInvoiceDate.text = formattedDate
             lblInvoiceTime.text = time
-            lblInvoiceAmount.text = "Invoice Amount: ${data.invoice_amount ?: "-"}"
+            lblInvoiceAmount.text = "${context.getString(R.string.Invoice_Amount)}: ${data.invoice_amount ?: "-"}"
             imgPdf.setImageResource(R.drawable.pdf_icon)
 
             rytView.setOnClickListener { listener.onItemClick(data, this@DataViewHolder) }

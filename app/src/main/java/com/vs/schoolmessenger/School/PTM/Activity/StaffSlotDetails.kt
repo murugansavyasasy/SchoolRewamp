@@ -52,7 +52,11 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+//        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
         isSlot = intent.getSerializableExtra("isSlot") as? ArrayList<Slot>
         val isSlotsDetails = intent.getSerializableExtra("isSlotDetails") as SlotDetail

@@ -302,13 +302,14 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 when {
                     url.contains("/#/paymentsucccess/success") -> {
                         paymentSuccess(
-                            "Payment Done!!",
-                            "Payment Successful. View/Download Receipt on Receipt Tab."
+                            getString(R.string.payment_done),
+                            getString(R.string.payment_successful_view_download_receipt_on_receipt_tab)
                         )
                     }
 
                     url.contains("/#/paymentsucccess/failed") -> {
-                        paymentFailed("Payment failed..", "Please try again later!!")
+                        paymentFailed(getString(R.string.payment_failed),
+                            getString(R.string.please_try_again_later))
                     }
                 }
             }
@@ -331,7 +332,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             } else {
                 Toast.makeText(
                     this,
-                    response?.message ?: "Unable to fetch invoice",
+                    response?.message ?: getString(R.string.unable_to_fetch_invoice),
                     Toast.LENGTH_SHORT
                 ).show()
             }

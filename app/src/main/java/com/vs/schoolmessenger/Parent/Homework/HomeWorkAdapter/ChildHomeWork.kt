@@ -215,12 +215,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             )
             binding.toolbarLayout.rlaStudentName.layoutParams = params
             binding.toolbarLayout.lblPostedOn.text =
-                "Posted On : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
+                "${getString(R.string.posted_on)} : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
             Log.d("Posted On isStudentlistdetail", data!!.created_date.toString())
 
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
-                binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
+                binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
             }
         }
 
@@ -243,7 +243,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             )
             binding.toolbarLayout.rlaStudentName.layoutParams = params
             binding.toolbarLayout.lblPostedOn.text =
-                "Posted On : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
+                "${getString(R.string.posted_on)} : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
             Log.d("Posted On isStudentlistdetail", data!!.created_date.toString())
 
         } else {
@@ -297,10 +297,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             } else {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.questionmark)
             }
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
-                "Listening,Speaking,Reading,Writing"
+               getString(R.string.listening_speaking_reading_writing)
 
             binding.toolbarLayout.imgBack.visibility = View.VISIBLE
             binding.scrollView.visibility = View.GONE
@@ -333,10 +333,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
 
         } else if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = "LSRW"
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
-                "Listening,Speaking,Reading,Writing"
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =getString(R.string.listening_speaking_reading_writing)
             binding.toolbarLayout.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.footerLabel.visibility = View.GONE
@@ -524,12 +523,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.toolbarLayout.rlaStudentName.layoutParams =
                 params // Apply the updated layout params
             binding.toolbarLayout.lblPostedOn.text =
-                "Posted On : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
+                "${getString(R.string.posted_on)} : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
 
 
             if (!data!!.isCompleted) {
                 binding.lblClickComplete.visibility = View.VISIBLE
-                binding.lblClickComplete.text = "Click \"here\" when you're done "
+                binding.lblClickComplete.text = getString(R.string.click_here_when_you_re_done)
                 binding.thumbContainer.visibility = View.VISIBLE
             } else {
                 binding.lblClickComplete.visibility = View.GONE
@@ -538,7 +537,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
-                binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
+                binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
             }
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS) {
 
@@ -558,7 +557,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 params // Apply the updated layout params
             Log.d("data!!.created_date", data!!.created_date.toString())
             binding.toolbarLayout.lblPostedOn.text =
-                "Posted On : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
+                "${getString(R.string.posted_on)} : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
 
             binding.lblClickComplete.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
@@ -566,7 +565,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
-                binding.lblPostedBy.text = "Posted by : " + data!!.sentBy
+                binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
             }
         }
 
@@ -870,10 +869,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     fun isSuccessFullCompleteHomework() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("That's it! Homework done you're amazing")
-        builder.setTitle("Well done!")
+        builder.setMessage(getString(R.string.that_s_it_homework_done_you_re_amazing))
+        builder.setTitle(getString(R.string.Well_done))
         builder.setCancelable(false)
-        builder.setPositiveButton("Ok") { dialog, which ->
+        builder.setPositiveButton(getString(R.string.OK_2)) { dialog, which ->
             Constant.isCompletedHomeworkId = isHomeworkId
             finish()
         }
@@ -894,8 +893,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             val yesterday = today.minusDays(1)
 
             return when {
-                date == today -> "Today"
-                date == yesterday -> "Yesterday"
+                date == today -> getString(R.string.today)
+                date == yesterday -> getString(R.string.yesterday)
                 else -> Constant.convertToReadableDate(dateString)
             }
         } catch (e: DateTimeParseException) {
@@ -910,13 +909,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
         if (description.isEmpty()) {
-            binding.childlsrwlayoutxml.editDescription.error = "Description is required"
+            binding.childlsrwlayoutxml.editDescription.error = getString(R.string.Description_required)
             binding.childlsrwlayoutxml.editDescription.requestFocus()
             return
         }
         val totalSizeKB = file_size.split(" ")[0].toIntOrNull() ?: 0
         if (totalSizeKB <= 0) {
-            Toast.makeText(this, "At least one attachment is required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.at_least_one_attachment_is_required), Toast.LENGTH_SHORT).show()
             return
         }
         Constant.showLoading(this@ChildHomeWork)
@@ -1137,7 +1137,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -1191,14 +1191,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun showCameraPermissionSettingsDialog() {
-        AlertDialog.Builder(this).setTitle("Permission Required")
-            .setMessage("Camera permission is permanently denied. Please enable it from app settings.")
-            .setCancelable(false).setPositiveButton("Go to Settings") { _, _ ->
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.camera_permission_is_permanently_denied_please_enable_it_from_app_settings))
+            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }.setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }.show()
     }
@@ -1337,7 +1337,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -1388,10 +1388,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -1460,11 +1460,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
                 }
             }
 

@@ -123,7 +123,7 @@ class LeaveRequestAdapter(
                 Constant.waiting_for_approval -> {
                     btnApprove.apply {
                         visibility = View.VISIBLE
-                        text = "Awaiting"
+                        text = context.getString(R.string.awaiting)
                         lblGetOutPass.visibility = View.GONE
                         applyTintedBackground(
                             btnApprove,
@@ -139,7 +139,7 @@ class LeaveRequestAdapter(
                 Constant.approved -> {
                     btnApprove.apply {
                         visibility = View.VISIBLE
-                        text = "Approved"
+                        text = context.getString(R.string.approved)
                         lblGetOutPass.visibility = View.VISIBLE
                         applyTintedBackground(
                             btnApprove,
@@ -156,7 +156,7 @@ class LeaveRequestAdapter(
                 Constant.rejected -> {
                     btnApprove.apply {
                         visibility = View.VISIBLE
-                        text = "Rejected"
+                        text = context.getString(R.string.rejected)
                         lblGetOutPass.visibility = View.GONE
                         applyTintedBackground(
                             btnApprove,

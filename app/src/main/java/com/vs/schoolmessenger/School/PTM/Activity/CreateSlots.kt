@@ -85,7 +85,11 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+//        setupToolbarBlueWhite()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -105,7 +109,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         binding.lblThirtyMin.setOnClickListener(this)
 
         isAccessToken = isStaffDetails!!.access_token
-        binding.lblSchoolName.text = isStaffDetails!!.school_name
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         isChangeTheBackRound(binding.lblPerson)
         isChangeTheBackRoundBreakDuration(binding.lblFiveMin)
@@ -116,11 +120,11 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isGetStandardSection()
-        binding.imgBack.setOnClickListener {
+        binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
 
-        binding.lblMenuName.text = Constant.isSelectedMenuName
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             if (response != null) {
                 if (response.status && response.data.isNotEmpty()) {
