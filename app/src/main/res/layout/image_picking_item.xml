@@ -1,50 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/ninety"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/ninety"
     android:layout_marginStart="@dimen/twenty"
     android:layout_marginTop="@dimen/ten"
-    android:layout_marginEnd="@dimen/twenty"
-    >
+    android:layout_marginEnd="@dimen/twenty">
 
     <ImageView
         android:id="@+id/imgPicking"
-        android:layout_width="match_parent"
+        android:layout_width="90dp"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
-
         android:scaleType="centerCrop"
+        android:visibility="visible"
         android:adjustViewBounds="true"
-        android:src="@drawable/add_image">
-
-    </ImageView>
-
-    <ImageView
-        android:id="@+id/imgVideoPlay"
-        android:layout_width="@dimen/twenty_five"
-        android:layout_height="@dimen/twenty_five"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:background="@drawable/white_circle_bg"
-        android:src="@drawable/video_play">
-
-    </ImageView>
-
+        android:src="@drawable/add_image" />
     <ImageView
         android:id="@+id/imgDelete"
         android:layout_width="@dimen/twenty_five"
         android:layout_height="@dimen/twenty_five"
-        android:layout_alignParentEnd="true"
+        android:layout_alignEnd="@+id/imgPicking"
         android:background="@drawable/white_circle_bg"
-        android:src="@drawable/del_icon">
-
-    </ImageView>
+        android:src="@drawable/del_icon" />
 
 
+    <RelativeLayout
+        android:id="@+id/audioBubble"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/twenty_five"
+        android:visibility="gone"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/rect_shadow_white">
+
+
+        <ImageView
+            android:id="@+id/imgVideoPlay"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/eight"
+            android:src="@drawable/video_play" />
+
+
+        <SeekBar
+            android:id="@+id/tvDuration"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/lblTime"
+            android:layout_toStartOf="@id/lblCurrentDuration"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="@dimen/twele" />
+
+
+        <TextView
+            android:id="@+id/lblCurrentDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/eight"
+            android:text="0:03"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fourteen_sp"
+            android:fontFamily="sans-serif-medium"/>
+
+        <TextView
+            android:id="@+id/lblTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imgVideoPlay"
+            android:layout_marginStart="@dimen/twele"
+            android:text="00:00"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fourteen_sp"
+            android:visibility="visible"/>
+
+    </RelativeLayout>
+
+
+
+    <!-- Delete Icon (Overlays everything) -->
+    <ImageView
+        android:id="@+id/imgaudiodelete"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:background="@drawable/white_circle_bg"
+        android:src="@drawable/del_icon" />
 
 </RelativeLayout>
-
-
-
-
