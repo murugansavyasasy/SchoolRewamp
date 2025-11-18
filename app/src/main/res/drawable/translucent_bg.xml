@@ -1,0 +1,5 @@
+<!-- res/drawable/translucent_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#80FFFFFF" />
+    <corners android:radius="4dp" />
+</shape>
