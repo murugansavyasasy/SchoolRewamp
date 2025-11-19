@@ -1228,6 +1228,18 @@
     <string name="items_only">عناصر فقط</string>
     <string name="whats_new_updates">ما الجديد</string>
     <string name="UpdateProfile">تحديث الملف الشخصي</string>
+    <string name="Feedback_2">ملاحظات</string>
+    <string name="how_to_use_2">كيفية الاستخدام؟</string>
+    <string name="about_the_app">حول التطبيق</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="enable_fingerprint_login">تفعيل تسجيل الدخول بالبصمة</string>
+    <string name="preferences">التفضيلات</string>
+    <string name="view_profile">عرض الملف الشخصي</string>
+    <string name="settings">الإعدادات</string>
+    <string name="switch_role">تغيير الدور</string>
+    <string name="logout">تسجيل الخروج</string>
+
+
 
 
 

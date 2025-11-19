@@ -155,7 +155,7 @@
                             android:textSize="@dimen/thirteen_sp"
                             android:textColor="@color/black"
                             style="@style/CustomTextStylePoppinsRegular"
-                            android:text="Enable Fingerprint Login" />
+                            android:text="@string/enable_fingerprint_login" />
 
                         <Switch
                             android:layout_weight="0.8"
@@ -186,7 +186,7 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty"
                 style="@style/CustomTextStylePoppinsBold"
-                android:text="Preferences"
+                android:text="@string/preferences"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
@@ -500,7 +500,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        android:text="Privacy Policy"
+                        android:text="@string/privacy_policy"
                         style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
@@ -553,7 +553,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        android:text="About the App"
+                        android:text="@string/about_the_app"
                         style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
@@ -605,7 +605,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        android:text="How to Use?"
+                        android:text="@string/how_to_use_2"
                         style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
@@ -688,7 +688,7 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 style="@style/CustomTextStylePoppinsBold"
-                android:text="Feedback"
+                android:text="@string/Feedback_2"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>

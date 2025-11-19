@@ -1228,6 +1228,16 @@
     <string name="items_only">आइटम ही</string>
     <string name="whats_new_updates">नया क्या है</string>
     <string name="UpdateProfile">प्रोफ़ाइल अपडेट करें</string>
+    <string name="Feedback_2">प्रतिक्रिया</string>
+    <string name="how_to_use_2">कैसे उपयोग करें?</string>
+    <string name="about_the_app">ऐप के बारे में</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="enable_fingerprint_login">เปิดใช้งานการเข้าสู่ระบบด้วยลายนิ้วมือ</string>
+    <string name="preferences">การตั้งค่า</string>
+    <string name="view_profile">ดูโปรไฟล์</string>
+    <string name="settings">การตั้งค่า</string>
+    <string name="switch_role">สลับบทบาท</string>
+    <string name="logout">ออกจากระบบ</string>
 
 
 

@@ -1,22 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/dashboard_view"
-        android:title="Dashboard"
+        android:title="@string/dashboard"
         android:icon="@drawable/ic_home"/>
     <item android:id="@+id/view_profile"
-        android:title="View Profile"
+        android:title="@string/view_profile"
         android:icon="@drawable/person_circle"/>
     <item android:id="@+id/setting_click"
-        android:title="Settings"
+        android:title="@string/settings"
         android:icon="@drawable/gear"/>
     <item android:id="@+id/help_click"
-        android:title="Help"
+        android:title="@string/lblHelp"
         android:visible="false"
         android:icon="@drawable/questionmark_circle"/>
     <item android:id="@+id/role_click"
-        android:title="Switch Role"
+        android:title="@string/switch_role"
         android:icon="@drawable/arrow_squarepath"/>
 
     <item android:id="@+id/log_out"
-        android:title="Logout"
+        android:title="@string/logout"
         android:icon="@drawable/logout"/>
 </menu>

@@ -1228,6 +1228,10 @@
     <string name="items_only">รายการเท่านั้น</string>
     <string name="whats_new_updates">มีอะไรใหม่</string>
     <string name="UpdateProfile">อัปเดตโปรไฟล์</string>
+    <string name="Feedback_2">ข้อเสนอแนะ</string>
+    <string name="how_to_use_2">วิธีการใช้งาน?</string>
+    <string name="about_the_app">เกี่ยวกับแอป</string>
+    <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
 
 
 

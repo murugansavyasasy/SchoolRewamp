@@ -1228,6 +1228,17 @@
     <string name="items_only">உருப்படிகள் மட்டுமே</string>
     <string name="whats_new_updates">புதியவை</string>
     <string name="UpdateProfile">சுயவிவரத்தை புதுப்பிக்கவும்</string>
+    <string name="Feedback_2">கருத்து</string>
+    <string name="how_to_use_2">எப்படி பயன்படுத்துவது?</string>
+    <string name="about_the_app">ஆப்பைப் பற்றி</string>
+    <string name="privacy_policy">தனியுரிமைக் கொள்கை</string>
+    <string name="enable_fingerprint_login">விரல் ரேகை உள்நுழைவை இயக்கு</string>
+    <string name="preferences">விருப்பங்கள்</string>
+    <string name="view_profile">சுயவிவரத்தை பார்க்க</string>
+    <string name="settings">அமைப்புகள்</string>
+    <string name="switch_role">பாத்திரத்தை மாற்று</string>
+    <string name="logout">வெளியேறு</string>
+
 
 
 
