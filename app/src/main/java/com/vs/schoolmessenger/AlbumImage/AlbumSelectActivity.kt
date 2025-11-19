@@ -60,21 +60,41 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
             "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
         binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
 
-                adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
+        if (!isReportTheBugMenu) {
+            binding.toolbarLayout.tvSelectedFiles.text =
+                "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+        } else {
+            binding.toolbarLayout.tvSelectedFiles.text =
+                "Total Selected Files : ${Constant.selectedFiles.size}"
+        }
+
+        adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =
-                "${getString(R.string.Selected_Files)} : ${selectedUris.size} / ${Constant.isFileLimit}"
+                "Selected Files : ${selectedUris.size} / ${Constant.isFileLimit}"
             binding.toolbarLayout.btnDone.visibility =
                 if (selectedUris.isEmpty()) View.GONE else View.VISIBLE
         }, onItemClicked = { uri ->
             Log.d("AlbumSelectActivity", "Clicked file: $uri")
         })
 
+//        adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
+//            binding.toolbarLayout.tvSelectionCount.text =
+//                "${getString(R.string.Selected_Files)} : ${selectedUris.size} / ${Constant.isFileLimit}"
+//            binding.toolbarLayout.btnDone.visibility =
+//                if (selectedUris.isEmpty()) View.GONE else View.VISIBLE
+//        }, onItemClicked = { uri ->
+//            Log.d("AlbumSelectActivity", "Clicked file: $uri")
+//        })
+
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerView.adapter = adapter
 
         requestPermission()
 
-        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            isReportTheBugMenu = false
+            onBackPressed()
+        }
 
         binding.toolbarLayout.btnDone.setOnClickListener {
             val selectedUris = adapter.getSelectedItems()
@@ -361,20 +381,6 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         return list
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //package com.vs.schoolmessenger.AlbumImage

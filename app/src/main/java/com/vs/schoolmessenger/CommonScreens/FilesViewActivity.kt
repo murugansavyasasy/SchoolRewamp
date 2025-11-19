@@ -132,6 +132,11 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         currentPosition = Constant.selectedFileIndex
         scrollToPosition(currentPosition)
         updateNavButtons()
+
+        binding.imgBack.setOnClickListener {
+            Constant.commonFileList.clear()
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
 
@@ -174,7 +179,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgBack -> onBackPressed()
             R.id.imgMoreOptions -> showFileOptions(isFilesList[currentPosition].path)
 
             R.id.lnrNext -> if (currentPosition < isFilesList.size - 1) {
@@ -189,6 +193,11 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 updateNavButtons()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Constant.commonFileList.clear()
     }
 
     private fun showFileOptions(url: String) {
