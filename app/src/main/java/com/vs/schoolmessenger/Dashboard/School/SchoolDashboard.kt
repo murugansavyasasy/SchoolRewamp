@@ -82,19 +82,34 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         super.setupViews()
         userDetails = SharedPreference.getUserDetails(this)
         access_token = userDetails!!.staff_details[0].access_token
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
+//
+//        ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            view.updateLayoutParams { height = systemBars.top }
+//            WindowInsetsCompat.CONSUMED
+//        }
+//
+//        ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            view.updatePadding(bottom = systemBars.bottom)
+//            insets
+//        }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updateLayoutParams { height = systemBars.top }
-            WindowInsetsCompat.CONSUMED
+            val top = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            view.updateLayoutParams { height = top }
+            insets
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(bottom = systemBars.bottom)
-            insets
+            val bottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = bottom
+            }
+            WindowInsetsCompat.CONSUMED
         }
+
 
         Constant.isParentChoose = false
 
