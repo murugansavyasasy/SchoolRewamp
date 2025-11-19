@@ -355,4 +355,11 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     override fun onClick(v: View?) {
         TODO("Not yet implemented")
     }
+
+    override fun onResume() {
+        super.onResume()
+        enableEdgeToEdge()
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+    }
 }
