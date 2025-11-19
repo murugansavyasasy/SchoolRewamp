@@ -748,7 +748,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/rlaAddLocalFile"
                             android:layout_marginTop="@dimen/ten"
-                            android:visibility="gone">
+                            android:visibility="">
 
                             <ImageView
                                 android:id="@+id/imgClose"
