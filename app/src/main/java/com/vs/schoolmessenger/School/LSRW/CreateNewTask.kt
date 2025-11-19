@@ -37,13 +37,12 @@ import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-
 import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.LSRW.Adapter.LSRWImagePickingAdapter
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
@@ -71,34 +70,45 @@ import kotlin.text.ifEmpty
 
 class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickListener,
     OnDateSelectedListener, OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
+
     override fun getViewBinding(): CreateNewtaskLsrwBinding {
         return CreateNewtaskLsrwBinding.inflate(layoutInflater)
     }
+
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     var isSelectedDate = ""
+
     var isCreateNewTaskPosition = 0
     var isTotalSelectedItem = 0
+
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
+
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
-    private var audioPermissionDeniedCount = 0
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
+
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
-    private val AUDIO_PERMISSION_REQUEST_CODE = 201
-    private var mAdapter: ImagePickingAdapter? = null
+    private var mAdapter: LSRWImagePickingAdapter? = null
+
     private var selectedSkill: String = Constant.Listening
+
     private lateinit var tabList: List<LinearLayout>
+
     private var mediaRecorder: MediaRecorder? = null
-    private var recordedAudioPath: String? = null
+    private var recordingFilePath: String? = null
+    private var isRecording = false
+    private val RECORD_AUDIO_PERMISSION_REQUEST_CODE = 201
+    private var audioPermissionDeniedCount = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -129,16 +139,20 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
 
         binding.btnChooseRecipient.setOnClickListener(this)
+
         tabList = listOf(
             binding.listeningLayout,
             binding.speakingLayout,
             binding.readingLayout,
             binding.writingLayout
         )
+
         tabList.forEach { layout ->
             layout.setOnClickListener { setSelectedTab(layout) }
         }
+
         setSelectedTab(binding.listeningLayout)
+
         saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -149,22 +163,10 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
         binding.rcyImages.visibility = View.VISIBLE
 
-        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
-        binding.rcyImages.visibility = View.VISIBLE
-        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
-        binding.rcyImages.layoutManager = GridLayoutManager(this, 3).apply {
-            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    if (position == 0) return 1
-                    val item = Constant.selectedFiles.getOrNull(position - 1) ?: return 1
-                    return if (item.type == FileType.AUDIO || item.type == FileType.VIDEO) {
-                        spanCount // Full width automatically
-                    } else {
-                        1
-                    }
-                }
-            }
-        }
+        mAdapter = LSRWImagePickingAdapter(this, Constant.selectedFiles!!, this)
+        binding.rcyImages.layoutManager = GridLayoutManager(this, 1)
+        binding.rcyImages.adapter = mAdapter
+
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
@@ -287,6 +289,26 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
     }
 
+    private fun checkRecordPermissionAndStartRecording() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            startVoiceRecording()
+        } else {
+            if (audioPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
+                    this, Manifest.permission.RECORD_AUDIO
+                )
+            ) {
+                showAudioPermissionSettingsDialog()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.RECORD_AUDIO), RECORD_AUDIO_PERMISSION_REQUEST_CODE
+                )
+            }
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -306,6 +328,21 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 }
             }
         }
+        if (requestCode == RECORD_AUDIO_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startVoiceRecording()
+            } else {
+                audioPermissionDeniedCount++
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        this, Manifest.permission.RECORD_AUDIO
+                    )
+                ) {
+                    showAudioPermissionSettingsDialog()
+                } else {
+                    Toast.makeText(this, getString(R.string.microphone_permission_is_required), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun showCameraPermissionSettingsDialog() {
@@ -321,14 +358,110 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             }.show()
     }
 
+    private fun showAudioPermissionSettingsDialog() {
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.microphone_permission_is_permanently_denied_please_enable_it_from_app_settings))
+            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.parse("package:$packageName")
+                }
+                startActivity(intent)
+            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+    }
+
+    private fun startVoiceRecording() {
+        if (isRecording) return
+
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File = getExternalFilesDir("recordings") ?: cacheDir
+        val audioFile: File = try {
+            File.createTempFile("AUDIO_${timeStamp}_", ".m4a", storageDir)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            Toast.makeText(this, getString(R.string.could_not_create_file_for_audio), Toast.LENGTH_SHORT).show()
+            return
+        }
+        recordingFilePath = audioFile.absolutePath
+
+        mediaRecorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setOutputFile(recordingFilePath)
+            try {
+                prepare()
+                start()
+                isRecording = true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                releaseRecorder()
+                Toast.makeText(this@CreateNewTask, getString(R.string.failed_to_start_recording), Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
+        val builder = AlertDialog.Builder(this)
+            .setTitle(getString(R.string.voice_recording))
+            .setMessage(getString(R.string.recording_in_progress_tap_stop_to_finish))
+            .setPositiveButton(getString(R.string.stop)) { _, _ ->
+                stopVoiceRecording()
+            }
+            .setCancelable(false)
+            .setOnCancelListener {
+                stopVoiceRecording()
+            }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun stopVoiceRecording() {
+        if (!isRecording) return
+        isRecording = false
+        try {
+            mediaRecorder?.stop()
+        } catch (e: RuntimeException) {
+            // Handle stop exception if needed
+        }
+        mediaRecorder?.release()
+        mediaRecorder = null
+
+        recordingFilePath?.let { path ->
+            val file = File(path)
+            if (file.exists() && file.length() > 0) {
+                if (Constant.Remaining!! > 0) {
+                    Constant.Remaining = Constant.Remaining!! - 1
+                    Constant.selectedFiles.add(FileItem(path, FileType.AUDIO))
+                    mAdapter?.notifyDataSetChanged()
+                    Toast.makeText(this, getString(R.string.audio_recorded_and_added), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+                    file.delete()
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.recording_failed_file_empty), Toast.LENGTH_SHORT).show()
+                file.delete()
+            }
+        }
+        recordingFilePath = null
+    }
+
+    private fun releaseRecorder() {
+        if (isRecording) {
+            stopVoiceRecording()
+        } else {
+            mediaRecorder?.release()
+            mediaRecorder = null
+        }
+    }
+
     private fun openAlbumSelectActivity(isFileType: String) {
 
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
             openSystemDocumentPicker()
-        } else if(isFileType == Constant.VOICERECORD) {
-
         } else {
             val intent = Intent(this, AlbumSelectActivity::class.java)
             intent.putExtra(Constant.isFileType, isFileType)
@@ -356,7 +489,15 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
     override fun onPause() {
         super.onPause()
+        if (isRecording) {
+            stopVoiceRecording()
+        }
         Constant.stopDelay()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releaseRecorder()
     }
 
     override fun onImageClick(position: Int) {
@@ -374,8 +515,8 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
         val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
-        val rlavoicerecorder = dialog.findViewById<RelativeLayout>(R.id.rlavoicerecorder)
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
+        val rlavoicerecorder = dialog.findViewById<RelativeLayout>(R.id.rlavoicerecorder)
 
         rlaVoice.visibility = View.VISIBLE
         rlavoicerecorder.visibility = View.VISIBLE
@@ -394,10 +535,9 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             dialog.dismiss()
         }
 
-
         rlavoicerecorder.setOnClickListener {
             Constant.isFileLimit = 10
-            openAlbumSelectActivity(Constant.VOICERECORD)
+            openVoiceRecorder()
             dialog.dismiss()
         }
 
@@ -436,6 +576,10 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         dialog.show()
     }
 
+
+    private fun openVoiceRecorder() {
+        checkRecordPermissionAndStartRecording()
+    }
 
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -625,7 +769,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             description,
             selectedSkill,
             edtdate,
-            )
+        )
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.lsrwskill_data, isLsrwnewTaskSendingData)
         startActivity(intent)

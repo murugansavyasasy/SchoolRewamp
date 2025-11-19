@@ -1230,6 +1230,15 @@
     <string name="You_can_select_up_to">You can select up to</string>
     <string name="items_only">items only</string>
     <string name="voice_record">Voice Record</string>
+    <string name="microphone_permission_is_required">Microphone Permission Required</string>
+    <string name="microphone_permission_is_permanently_denied_please_enable_it_from_app_settings">Microphone Permission is denied please enable it</string>
+    <string name="could_not_create_file_for_audio">Could not create for Audio File</string>
+    <string name="failed_to_start_recording">Failed to start recording</string>
+    <string name="voice_recording">Voice Recording</string>
+    <string name="recording_in_progress_tap_stop_to_finish">Recording in progress tap to finish</string>
+    <string name="stop">Stop</string>
+    <string name="audio_recorded_and_added">Audio recorded and added</string>
+    <string name="recording_failed_file_empty">Recording Failed</string>
 
 
 </resources>
