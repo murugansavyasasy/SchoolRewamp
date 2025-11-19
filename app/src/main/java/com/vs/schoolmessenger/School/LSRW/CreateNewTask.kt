@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -70,39 +71,34 @@ import kotlin.text.ifEmpty
 
 class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickListener,
     OnDateSelectedListener, OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
-
     override fun getViewBinding(): CreateNewtaskLsrwBinding {
         return CreateNewtaskLsrwBinding.inflate(layoutInflater)
     }
-
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     var isSelectedDate = ""
-
     var isCreateNewTaskPosition = 0
     var isTotalSelectedItem = 0
-
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
-
+    private var audioPermissionDeniedCount = 0
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
-
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
+    private val AUDIO_PERMISSION_REQUEST_CODE = 201
     private var mAdapter: ImagePickingAdapter? = null
-
     private var selectedSkill: String = Constant.Listening
-
     private lateinit var tabList: List<LinearLayout>
+    private var mediaRecorder: MediaRecorder? = null
+    private var recordedAudioPath: String? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -133,20 +129,16 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
 
         binding.btnChooseRecipient.setOnClickListener(this)
-
         tabList = listOf(
             binding.listeningLayout,
             binding.speakingLayout,
             binding.readingLayout,
             binding.writingLayout
         )
-
         tabList.forEach { layout ->
             layout.setOnClickListener { setSelectedTab(layout) }
         }
-
         setSelectedTab(binding.listeningLayout)
-
         saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -158,9 +150,21 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         binding.rcyImages.visibility = View.VISIBLE
 
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
-        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-        binding.rcyImages.adapter = mAdapter
-
+        binding.rcyImages.visibility = View.VISIBLE
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+        binding.rcyImages.layoutManager = GridLayoutManager(this, 3).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    if (position == 0) return 1
+                    val item = Constant.selectedFiles.getOrNull(position - 1) ?: return 1
+                    return if (item.type == FileType.AUDIO || item.type == FileType.VIDEO) {
+                        spanCount // Full width automatically
+                    } else {
+                        1
+                    }
+                }
+            }
+        }
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
@@ -323,6 +327,8 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
             openSystemDocumentPicker()
+        } else if(isFileType == Constant.VOICERECORD) {
+
         } else {
             val intent = Intent(this, AlbumSelectActivity::class.java)
             intent.putExtra(Constant.isFileType, isFileType)
@@ -368,9 +374,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
         val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
+        val rlavoicerecorder = dialog.findViewById<RelativeLayout>(R.id.rlavoicerecorder)
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaVoice.visibility = View.VISIBLE
+        rlavoicerecorder.visibility = View.VISIBLE
 
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
@@ -383,6 +391,13 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         rlaVoice.setOnClickListener {
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.AUDIO)
+            dialog.dismiss()
+        }
+
+
+        rlavoicerecorder.setOnClickListener {
+            Constant.isFileLimit = 10
+            openAlbumSelectActivity(Constant.VOICERECORD)
             dialog.dismiss()
         }
 

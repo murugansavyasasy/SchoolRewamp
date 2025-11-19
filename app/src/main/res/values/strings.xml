@@ -1229,6 +1229,7 @@
     <string name="cannot_select_videos_larger_than_500_mb">Cannot select videos larger than 500 MB</string>
     <string name="You_can_select_up_to">You can select up to</string>
     <string name="items_only">items only</string>
+    <string name="voice_record">Voice Record</string>
 
 
 </resources>

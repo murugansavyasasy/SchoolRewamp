@@ -74,20 +74,20 @@ class ImagePickingAdapter(
         holder.imgVideoPlay.visibility = if (isMedia) View.VISIBLE else View.GONE
 
         // NEW: Dynamically set root margins for full width on audio items
+        // In onBindViewHolder, your existing code is good, but confirm this block:
         val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
         if (isAudio) {
-            // Full width: 0 start/end margins, keep top margin
+            // Full width: 0 start/end margins, optional reduced top margin for full-row items
             layoutParams.marginStart = 0
             layoutParams.marginEnd = 0
-            layoutParams.topMargin = defaultTopMargin
+            layoutParams.topMargin = defaultTopMargin  // Or 0 if no top spacing wanted
         } else {
-            // Original constrained width: restore margins
+            // Standard grid cell: margins on sides
             layoutParams.marginStart = defaultStartEndMargin
             layoutParams.marginEnd = defaultStartEndMargin
             layoutParams.topMargin = defaultTopMargin
         }
         holder.itemView.layoutParams = layoutParams
-
         if (isAudio) {
             holder.lblTime.visibility = View.VISIBLE
 
