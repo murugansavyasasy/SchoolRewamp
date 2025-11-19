@@ -220,16 +220,28 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         }
 
                         if (adapter!!.getCurrentListSize() > 0) {
+                            Log.d("Item","Item There")
                             binding.rytSearch1.visibility = View.GONE
                             binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                             binding.txtSearch1.text.clear()
+
+
+                            binding.rcMessageStaff.visibility = View.VISIBLE//last fix
+                            binding.lytList.visibility = View.GONE//last fix
+
+
                         } else {
+                            Log.d("Item"," No Item")
+
                             binding.rytSearch1.visibility = View.GONE
                             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                             binding.txtSearch1.text.clear()
+
+                            binding.rcMessageStaff.visibility = View.GONE//last fix
+                            binding.lytList.visibility = View.VISIBLE//last fix
                         }
 
-                        ShowData()
+//                        ShowData() //last fix
                         binding.txtSearch1.text.clear()
                         binding.isArchiveErrorMsg.visibility = View.GONE
                     } else {
@@ -489,6 +501,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         binding.rcMessageStaff.visibility = View.VISIBLE
         binding.lytList.visibility = View.GONE
     }
+
 
     private fun isLoadMsgStaff(data: List<GetMessagesStaffData>) {
         if (data.isNotEmpty()) {
