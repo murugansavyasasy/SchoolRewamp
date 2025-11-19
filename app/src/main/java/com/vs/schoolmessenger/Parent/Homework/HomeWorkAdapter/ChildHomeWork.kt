@@ -398,14 +398,15 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
                 }
             }
-            dummyPath = saveDrawableToCache(R.drawable.attachment_with_bg)
-            dummyPath?.let {
-                Constant.selectedFiles.add(
-                    FileItem(
-                        it, FileType.IMAGE
-                    )
-                )
-            }
+//            dummyPath = saveDrawableToCache(R.drawable.attachment_with_bg)
+//            dummyPath?.let {
+//                Constant.selectedFiles.add(
+//                    FileItem(
+//                        it, FileType.IMAGE
+//                    )
+//                )
+//            }
+
             mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
             binding.childlsrwlayoutxml.rcyImages.layoutManager = GridLayoutManager(this, 3)
             binding.childlsrwlayoutxml.rcyImages.adapter = mAdapter
@@ -626,9 +627,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         FileItem(aws.isFileUrl, FileType.valueOf(aws.isFileType))
                     }
 
-                    if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
-                        Constant.selectedFiles.removeAll { it.path == dummyPath }
-                    }
+//                    if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
+//                        Constant.selectedFiles.removeAll { it.path == dummyPath }
+//                    }
 
                     Constant.selectedFiles.clear()
                     Constant.selectedFiles.addAll(submittedFiles)
@@ -1229,11 +1230,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     private fun calculateFileSize(): String {
         var totalSize = 0L
-        Constant.selectedFiles.filter { it.path != dummyPath }.forEach { fileItem ->
-            val size = getFileSize(Uri.parse(fileItem.path))
-            Log.d("FileSizeDebug", "File: ${fileItem.path}, Size: $size bytes")
-            totalSize += size
-        }
+//        Constant.selectedFiles.filter { it.path != dummyPath }.forEach { fileItem ->
+//            val size = getFileSize(Uri.parse(fileItem.path))
+//            Log.d("FileSizeDebug", "File: ${fileItem.path}, Size: $size bytes")
+//            totalSize += size
+//        }
         val sizeInKB = totalSize / 1024
         Log.d("FileSizeDebug", "Total Size: $sizeInKB KB")
         return "$sizeInKB KB"
@@ -1253,7 +1254,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     override fun onBackPressed() {
-        Constant.selectedFiles.clear()
+      //  Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         isVideoSelectedArrayList.clear()
         Constant.Remaining = MAX_FILES
