@@ -96,6 +96,9 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             insets
         }
 
+
+
+
         Constant.isParentChoose = false
 
         appViewModel = ViewModelProvider(this)[App::class.java]

@@ -266,8 +266,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             }
         }
-
-
     }
 
     fun isLoadData(data: List<MeetingData>) {

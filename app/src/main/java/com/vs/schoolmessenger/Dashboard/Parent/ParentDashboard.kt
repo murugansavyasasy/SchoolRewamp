@@ -59,35 +59,19 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-//        enableEdgeToEdge()
-
-//        ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            view.updateLayoutParams { height = systemBars.top }
-//            WindowInsetsCompat.CONSUMED
-//        }
-
-//        ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            view.updatePadding(bottom = systemBars.bottom)
-//            insets
-//        }   android:fitsSystemWindows="false" try to remove this from xml if below code is not
-
+        enableEdgeToEdge()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
-            val top = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            view.updateLayoutParams { height = top }
-            insets
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
-            val bottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = bottom
-            }
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updateLayoutParams { height = systemBars.top }
             WindowInsetsCompat.CONSUMED
         }
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(bottom = systemBars.bottom)
+            insets
+        }
 
 
         Constant.isParentChoose = true
