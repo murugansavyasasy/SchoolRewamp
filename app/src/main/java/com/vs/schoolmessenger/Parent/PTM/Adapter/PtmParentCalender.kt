@@ -19,9 +19,7 @@ class PtmParentCalender(
     private val slotCounts: List<SlotCountData>,
     private val onDateClick: (String) -> Unit
 ) : RecyclerView.Adapter<PtmParentCalender.DateViewHolder>() {
-
     private var selectedPos = -1
-
     inner class DateViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tvMonth: TextView = view.findViewById(R.id.tvMonth)
         val tvDay: TextView = view.findViewById(R.id.tvDay)
@@ -56,7 +54,7 @@ class PtmParentCalender(
             (holder.lblSlotCount as TextView).text = countData.count
         } else {
 //            holder.lblSlotCount.visibility = View.GONE
-            holder.lblSlotCount.visibility = View.INVISIBLE
+//            holder.lblSlotCount.visibility = View.INVISIBLE
             holder.lblSlotCount.text = ""
         }
 
