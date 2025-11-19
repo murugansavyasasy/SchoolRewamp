@@ -78,6 +78,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     override fun getViewBinding(): AttachmentBinding {
         return AttachmentBinding.inflate(layoutInflater)
     }
+
     private var cameraPermissionDeniedCount = 0
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
 
@@ -99,7 +100,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
-
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
@@ -182,9 +182,21 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                                 mimeType?.startsWith("video/") == true -> FileType.VIDEO
                                 mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                                 fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx",
+                                    true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx",
+                                    true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx",
+                                    true
+                                ) -> FileType.PPT
+
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
@@ -205,20 +217,26 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
                         Toast.makeText(
                             this,
-                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${if (addedCount > 1) "${getString(R.string.s_)}" else ""}",
+                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${
+                                if (addedCount > 1) "${
+                                    getString(
+                                        R.string.s_
+                                    )
+                                }" else ""
+                            }",
                             Toast.LENGTH_SHORT
                         ).show()
 
-
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                        Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            getString(R.string.you_have_reached_the_maximum_file_limit),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
-
-
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -272,7 +290,11 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -358,7 +380,11 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.only_2_videos_are_allowed),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -411,7 +437,11 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.could_not_create_file_for_photo),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
@@ -422,7 +452,11 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != RESULT_OK) return
         if (Constant.Remaining!! == 0) {
-            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -448,10 +482,9 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 else -> FileType.OTHER
             }
 
-            if(Constant.selectedFiles.size < MAX_FILES +1) {
+            if (Constant.selectedFiles.size < MAX_FILES + 1) {
                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
-            }
-            else{
+            } else {
                 Constant.Remaining = 0
             }
             for (item in Constant.selectedFiles) {
@@ -487,7 +520,11 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                         addPath(uri)
 
                     } else {
-                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this,
+                            getString(R.string.camera_image_file_not_found),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 } ?: run {
@@ -558,7 +595,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     }
 
 
-
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
         if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
@@ -604,7 +640,11 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         val timeStamp: String =
             SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
+        return File.createTempFile(
+            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
+            ".jpg",
+            storageDir
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -612,7 +652,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
 
-            R.id.rytHistory ->  startActivity(Intent(this, AttachmentReport::class.java))
+            R.id.rytHistory -> startActivity(Intent(this, AttachmentReport::class.java))
 
             R.id.btnChooseRecipient -> {
                 Log.d("Final_selection", Constant.selectedFiles.size.toString())
@@ -627,7 +667,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
         }
     }
-
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -688,16 +727,16 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-            alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_attachment)
+        alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_attachment)
 
 
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-                ProgressDialogHelper.show(this)
-                ProgressDialogHelper.updateProgress(10)
-                isUploadFilesInServer(Constant.file_)
+            ProgressDialogHelper.show(this)
+            ProgressDialogHelper.updateProgress(10)
+            isUploadFilesInServer(Constant.file_)
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
