@@ -59,19 +59,36 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
+
+//        ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            view.updateLayoutParams { height = systemBars.top }
+//            WindowInsetsCompat.CONSUMED
+//        }
+
+//        ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            view.updatePadding(bottom = systemBars.bottom)
+//            insets
+//        }   android:fitsSystemWindows="false" try to remove this from xml if below code is not
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updateLayoutParams { height = systemBars.top }
-            WindowInsetsCompat.CONSUMED
+            val top = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            view.updateLayoutParams { height = top }
+            insets
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(bottom = systemBars.bottom)
-            insets
+            val bottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = bottom
+            }
+            WindowInsetsCompat.CONSUMED
         }
+
+
 
         Constant.isParentChoose = true
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
@@ -279,6 +296,8 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
+
+
 
     fun openDrawer() {
         if (::drawerLayout.isInitialized) {

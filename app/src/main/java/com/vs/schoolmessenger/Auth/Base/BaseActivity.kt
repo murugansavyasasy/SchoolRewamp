@@ -76,6 +76,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     }
 
+
+
+
     override fun attachBaseContext(newBase: Context) {
         var isAppLanguage = SharedPreference.getLanguage(newBase)?: "en"
         val context = LocalHelperForLanguage.wrapContext(newBase, isAppLanguage.toString())
