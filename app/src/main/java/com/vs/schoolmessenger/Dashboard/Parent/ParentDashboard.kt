@@ -60,18 +60,10 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         super.setupViews()
         setupToolbarBlueWhite()
         enableEdgeToEdge()
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updateLayoutParams { height = systemBars.top }
-            WindowInsetsCompat.CONSUMED
-        }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(bottom = systemBars.bottom)
-            insets
-        }
 
 
         Constant.isParentChoose = true
@@ -289,5 +281,11 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        enableEdgeToEdge()
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+    }
 
 }
