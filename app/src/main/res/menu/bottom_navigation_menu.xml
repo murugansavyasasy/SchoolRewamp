@@ -3,16 +3,16 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/lock_open"
-        android:title="Home" />
+        android:title="@string/lblHome" />
 
     <item
         android:id="@+id/nav_dashboard"
         android:icon="@drawable/lock_open"
-        android:title="Dashboard" />
+        android:title="@string/dashboard" />
 
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/lock_open"
-        android:title="Profile" />
+        android:title="@string/lblProfile" />
 
 </menu>

@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_reply"
-        android:title="Answer" />
+        android:title="@string/answer" />
     <item
         android:id="@+id/menu_reply_all"
-        android:title="Update Answer" />
+        android:title="@string/update_answer" />
 
     <item
         android:id="@+id/block_student"
-        android:title="Block" />
+        android:title="@string/block" />
 </menu>

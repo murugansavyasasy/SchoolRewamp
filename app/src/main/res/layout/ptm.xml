@@ -61,7 +61,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="Your Meetings"
+                android:text="@string/your_meetings"
                 android:textColor="@color/black"></TextView>
         </LinearLayout>
 

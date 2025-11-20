@@ -1257,6 +1257,8 @@
     <string name="select_date_time"><![CDATA[اختر التاريخ والوقت]]></string>
     <string name="your_attachment_s">المرفقات الخاصة بك</string>
     <string name="my_submissions">تقديماتي</string>
+    <string name="your_meetings">اجتماعاتك</string>
+    <string name="images_docs"><![CDATA[🖼️ الصور & المستندات]]></string>
 
 
 </resources>

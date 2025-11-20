@@ -1257,6 +1257,8 @@
     <string name="select_date_time"><![CDATA[เลือกวันที่และเวลา]]></string>
     <string name="your_attachment_s">ไฟล์แนบของคุณ</string>
     <string name="my_submissions">งานที่ฉันส่ง</string>
+    <string name="your_meetings">การประชุมของคุณ</string>
+    <string name="images_docs"><![CDATA[🖼️ รูปภาพ & เอกสาร]]></string>
 
 
 

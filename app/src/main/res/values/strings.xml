@@ -1079,6 +1079,7 @@
     <string name="students_found">students found!</string>
     <string name="not_taken">Not Taken</string>
     <string name="forenoon">ForeNoon</string>
+    <string name="forenoon">ForeNoon</string>
     <string name="afternoon">AfterNoon</string>
     <string name="Absentees">Absentees</string>
    <string name="select_the_time">Select the time</string>
@@ -1257,6 +1258,33 @@
     <string name="select_date_time"><![CDATA[Select Date & Time]]></string>
     <string name="your_attachment_s">Your Attachment\'s</string>
     <string name="my_submissions">My Submissions</string>
+    <string name="your_meetings">Your Meetings</string>
+    <string name="images_docs"><![CDATA[🖼️ Images & Docs]]></string>
+    <string name="my_account">My Account</string>
+    <string name="late_comer">Late Comer</string>
+    <string name="holiday2">Holiday</string>
+    <string name="fn_present_an_absent">FN Present - AN Absent</string>
+    <string name="fn_present_an_od">FN Present - AN OD</string>
+    <string name="fn_present_an_late_comer">FN Present - AN Late Comer</string>
+    <string name="fn_present_an_not_taken">FN Present - AN Not Taken</string>
+    <string name="fn_absent_an_present">FN Absent - AN Present</string>
+    <string name="fn_absent_an_od">FN Absent - AN OD</string>
+    <string name="fn_absent_an_late_comer">FN Absent - AN Late Comer</string>
+    <string name="fn_absent_an_not_taken">FN Absent - AN Not Taken</string>
+    <string name="fn_late_comer_an_present">FN Late Comer - AN Present</string>
+    <string name="fn_late_comer_an_absent">FN Late Comer - AN Absent</string>
+    <string name="fn_late_comer_an_od">FN Late Comer - AN OD</string>
+    <string name="fn_late_comer_an_not_taken">FN Late Comer - AN Not Taken</string>
+    <string name="fn_not_taken_an_present">FN Not Taken - AN Present</string>
+    <string name="fn_not_taken_an_absent">FN Not Taken - AN Absent</string>
+    <string name="fn_not_taken_an_od">FN Not Taken - AN OD</string>
+    <string name="fn_not_taken_an_late_comer">FN Not Taken - AN Late Comer</string>
+    <string name="fn_od_an_present">FN OD - AN Present</string>
+    <string name="fn_od_an_absent">FN OD - AN Absent</string>
+    <string name="fn_od_an_late_comer">FN OD - AN Late Comer</string>
+    <string name="fn_od_an_not_taken">FN OD - AN Not Taken</string>
+    <string name="answer">Answer</string>
+    <string name="update_answer">Update Answer</string>
 
 
 </resources>

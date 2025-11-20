@@ -2,139 +2,139 @@
 
     <!-- Present / Present -->
     <item
-        android:title="Present"
+        android:title="@string/present"
         android:icon="@drawable/present_icon" />
 
     <!-- Absent / Absent -->
     <item
-        android:title="Absent"
+        android:title="@string/absent"
         android:icon="@drawable/absent_icon" />
 
     <!-- No Taken -->
     <item
-        android:title="Not Taken"
+        android:title="@string/not_taken"
         android:icon="@drawable/att_no_taken" />
 
     <!-- OD / OD -->
     <item
-        android:title="OD"
+        android:title="@string/OD"
         android:icon="@drawable/att_od_icon" />
 
     <!-- Late / Late -->
     <item
-        android:title="Late Comer"
+        android:title="@string/late_comer"
         android:icon="@drawable/att_late_icon" />
 
     <!-- Holiday -->
     <item
-        android:title="Holiday"
+        android:title="@string/holiday2"
         android:icon="@drawable/holiday_icon" />
 
     <!-- Present / Absent -->
     <item
-        android:title="FN Present - AN Absent"
+        android:title="@string/fn_present_an_absent"
         android:icon="@drawable/p_and_a" />
 
     <!-- Present / OD -->
     <item
-        android:title="FN Present - AN OD"
+        android:title="@string/fn_present_an_od"
         android:icon="@drawable/p_and_od" />
 
     <!-- Present / Late -->
     <item
-        android:title="FN Present - AN Late Comer"
+        android:title="@string/fn_present_an_late_comer"
         android:icon="@drawable/p_and_l" />
 
     <!-- Present / No Taken -->
     <item
-        android:title="FN Present - AN Not Taken"
+        android:title="@string/fn_present_an_not_taken"
         android:icon="@drawable/p_and_n" />
 
 
     <!-- Absent / Present -->
     <item
-        android:title="FN Absent - AN Present"
+        android:title="@string/fn_absent_an_present"
         android:icon="@drawable/a_and_p" />
 
 
     <!-- Absent / OD -->
     <item
-        android:title="FN Absent - AN OD"
+        android:title="@string/fn_absent_an_od"
         android:icon="@drawable/a_and_od" />
 
     <!-- Absent / Late -->
     <item
-        android:title="FN Absent - AN Late Comer"
+        android:title="@string/fn_absent_an_late_comer"
         android:icon="@drawable/a_and_l" />
 
     <!-- Absent / No Taken -->
     <item
-        android:title="FN Absent - AN Not Taken"
+        android:title="@string/fn_absent_an_not_taken"
         android:icon="@drawable/a_and_n" />
 
 
     <!-- Late / Present -->
     <item
-        android:title="FN Late Comer - AN Present"
+        android:title="@string/fn_late_comer_an_present"
         android:icon="@drawable/a_and_p" />
 
     <!-- Late / Absent -->
     <item
-        android:title="FN Late Comer - AN Absent"
+        android:title="@string/fn_late_comer_an_absent"
         android:icon="@drawable/l_and_a" />
 
     <!-- Late / OD -->
     <item
-        android:title="FN Late Comer - AN OD"
+        android:title="@string/fn_late_comer_an_od"
         android:icon="@drawable/l_and_od" />
 
 
     <!-- Late / No Taken -->
     <item
-        android:title="FN Late Comer - AN Not Taken"
+        android:title="@string/fn_late_comer_an_not_taken"
         android:icon="@drawable/l_and_n" />
 
 
     <!-- Not Taken / Present -->
     <item
-        android:title="FN Not Taken - AN Present"
+        android:title="@string/fn_not_taken_an_present"
         android:icon="@drawable/n_and_p" />
 
     <!-- Not Taken / Absent -->
     <item
-        android:title="FN Not Taken - AN Absent"
+        android:title="@string/fn_not_taken_an_absent"
         android:icon="@drawable/n_and_a" />
 
     <!-- Not Taken / OD -->
     <item
-        android:title="FN Not Taken - AN OD"
+        android:title="@string/fn_not_taken_an_od"
         android:icon="@drawable/n_and_od" />
 
     <!-- Not Taken / Late -->
     <item
-        android:title="FN Not Taken - AN Late Comer"
+        android:title="@string/fn_not_taken_an_late_comer"
         android:icon="@drawable/n_and_l" />
 
 
     <!-- OD / Present -->
     <item
-        android:title="FN OD - AN Present"
+        android:title="@string/fn_od_an_present"
         android:icon="@drawable/od_and_p" />
 
     <!-- OD / Absent -->
     <item
-        android:title="FN OD - AN Absent"
+        android:title="@string/fn_od_an_absent"
         android:icon="@drawable/od_and_a" />
 
 
     <!-- OD / Late -->
     <item
-        android:title="FN OD - AN Late Comer"
+        android:title="@string/fn_od_an_late_comer"
         android:icon="@drawable/od_and_l" />
 
     <!-- OD / Not Taken -->
     <item
-        android:title="FN OD - AN Not Taken"
+        android:title="@string/fn_od_an_not_taken"
         android:icon="@drawable/od_and_n" />
 
 
