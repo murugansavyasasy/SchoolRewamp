@@ -1248,11 +1248,15 @@
     <string name="settings">الإعدادات</string>
     <string name="switch_role">تغيير الدور</string>
     <string name="logout">تسجيل الخروج</string>
-
-
-
-
-
+    <string name="absent_students_list">👨‍🎓 قائمة الطلاب الغائبين</string>
+    <string name="task_details">تفاصيل المهمة :</string>
+    <string name="chapter">الفصل</string>
+    <string name="mark">العلامة</string>
+    <string name="pick_from_question_bank">اختر من بنك الأسئلة</string>
+    <string name="import_question">استيراد السؤال</string>
+    <string name="select_date_time"><![CDATA[اختر التاريخ والوقت]]></string>
+    <string name="your_attachment_s">المرفقات الخاصة بك</string>
+    <string name="my_submissions">تقديماتي</string>
 
 
 </resources>

@@ -1811,13 +1811,13 @@ object Constant {
     //We use this to convert the Date Format 12 May 2025 to 12 Monday(we get Date And Day)
     fun getDayAndDateOnly2(inputDateStr: String): Pair<String, String> {
         return try {
-            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            val dayNameFormat = SimpleDateFormat("EEEE", Locale.getDefault()) // e.g., Fri
-            val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
+            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH) // force English
+            val dayNameFormat = SimpleDateFormat("EEEE", Locale.getDefault())   // still localized day name
+            val dayNumberFormat = SimpleDateFormat("dd", Locale.ENGLISH)        // day number
 
             val date = inputFormat.parse(inputDateStr)!!
-            val dayName = dayNameFormat.format(date)     // "Fri"
-            val dayNumber = dayNumberFormat.format(date) // "13"
+            val dayName = dayNameFormat.format(date)     // localized day name
+            val dayNumber = dayNumberFormat.format(date) // e.g., 13
 
             Pair(dayNumber, dayName)
         } catch (e: Exception) {
@@ -1825,6 +1825,23 @@ object Constant {
             Pair("", "") // fallback
         }
     }
+
+//    fun getDayAndDateOnly2(inputDateStr: String): Pair<String, String> {
+//        return try {
+//            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+//            val dayNameFormat = SimpleDateFormat("EEEE", Locale.getDefault()) // e.g., Fri
+//            val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
+//
+//            val date = inputFormat.parse(inputDateStr)!!
+//            val dayName = dayNameFormat.format(date)     // "Fri"
+//            val dayNumber = dayNumberFormat.format(date) // "13"
+//
+//            Pair(dayNumber, dayName)
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            Pair("", "") // fallback
+//        }
+//    }
 
 
     //Convert dd-MM-YYYY to dd MMM YYYY (12-02-2025 to 12 Feb 2025)

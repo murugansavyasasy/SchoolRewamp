@@ -24,7 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_toStartOf="@+id/cbSelect"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:text="Pick From Question Bank"
+                    android:text="@string/pick_from_question_bank"
                     android:layout_height="wrap_content">
                 </TextView>
                 <CheckBox
@@ -64,7 +64,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
-                android:text="Import Question"
+                android:text="@string/import_question"
                 android:layout_height="wrap_content">
 
             </TextView>
@@ -74,7 +74,7 @@
                 android:layout_margin="@dimen/ten"
                 android:layout_weight="0.5"
                 android:layout_width="match_parent"
-                android:text="Cancel"
+                android:text="@string/Cancel"
                 android:id="@+id/lblClose"
                 android:padding="@dimen/five"
                 style="@style/CustomTextStylePoppinsBold"

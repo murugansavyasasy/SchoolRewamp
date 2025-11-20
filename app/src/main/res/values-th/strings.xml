@@ -1248,6 +1248,15 @@
     <string name="settings">การตั้งค่า</string>
     <string name="switch_role">สลับบทบาท</string>
     <string name="logout">ออกจากระบบ</string>
+    <string name="absent_students_list">👨‍🎓 รายชื่อนักเรียนที่ขาดเรียน</string>
+    <string name="task_details">รายละเอียดงาน :</string>
+    <string name="chapter">บท</string>
+    <string name="mark">คะแนน</string>
+    <string name="pick_from_question_bank">เลือกจากคลังคำถาม</string>
+    <string name="import_question">นำเข้าคำถาม</string>
+    <string name="select_date_time"><![CDATA[เลือกวันที่และเวลา]]></string>
+    <string name="your_attachment_s">ไฟล์แนบของคุณ</string>
+    <string name="my_submissions">งานที่ฉันส่ง</string>
 
 
 

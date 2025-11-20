@@ -191,6 +191,8 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         binding.txtStartDate.text = Constant.convertToReadableDate(isSelectedDate)
         val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
         binding.lblDay.text = formattedDate
+        Log.d("formattedDate",formattedDate)
+        Log.d("formattedDate", binding.lblDay.text.toString())
         binding.lblTimePick.text = Constant.getCurrentTime()
 
         albumResultLauncher =

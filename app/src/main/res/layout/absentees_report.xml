@@ -142,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/eight"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="👨‍🎓 Absent students list"
+                        android:text="@string/absent_students_list"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twenty_sp"
                         android:textStyle="bold" />

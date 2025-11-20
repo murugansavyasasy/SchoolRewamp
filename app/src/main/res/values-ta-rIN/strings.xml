@@ -1248,6 +1248,16 @@
     <string name="settings">அமைப்புகள்</string>
     <string name="switch_role">பாத்திரத்தை மாற்று</string>
     <string name="logout">வெளியேறு</string>
+    <string name="absent_students_list">👨‍🎓 अनुपस्थित மாணவர்களின் பட்டியல்</string>
+    <string name="task_details">பணி விவரங்கள் :</string>
+    <string name="chapter">அத்தியாயம்</string>
+    <string name="mark">மதிப்பெண்</string>
+    <string name="pick_from_question_bank">கேள்வி வங்கி থেকে தேர்வு செய்யவும்</string>
+    <string name="import_question">கேள்வியை இறக்குமதி செய்யவும்</string>
+    <string name="select_date_time"><![CDATA[தேதி & நேரத்தை தேர்ந்தெடுக்கவும்]]></string>
+    <string name="your_attachment_s">உங்கள் இணைப்புகள்</string>
+    <string name="my_submissions">எனது சமர்ப்பிப்புகள்</string>
+
 
 
 
