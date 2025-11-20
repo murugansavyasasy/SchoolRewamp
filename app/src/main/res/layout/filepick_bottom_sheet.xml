@@ -45,7 +45,8 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
                     android:padding="@dimen/ten"
-                    android:src="@drawable/gallery_icon"></ImageView>
+                    android:src="@drawable/gallery_icon">
+                </ImageView>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -76,7 +77,8 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
                     android:padding="@dimen/ten"
-                    android:src="@drawable/camera_icon"></ImageView>
+                    android:src="@drawable/camera_icon">
+                </ImageView>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -207,6 +209,45 @@
 
                 </TextView>
             </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/rlavoicerecorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/thirty"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgVoicerecord"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
+                    android:src="@drawable/record_voice_icon">
+
+                </ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgVoicerecord"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/ten"
+                    android:text="@string/voice_record"
+                    >
+
+                </TextView>
+            </RelativeLayout>
+
+
+
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

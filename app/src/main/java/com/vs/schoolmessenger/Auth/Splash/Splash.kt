@@ -11,6 +11,8 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -57,6 +59,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
+import com.vs.schoolmessenger.Utils.AppDataCleaner
 import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
@@ -118,11 +121,11 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 runOnUiThread {
-                    if(noInternetalertDialog != null && noInternetalertDialog!!.isShowing) {
+                    if (noInternetalertDialog != null && noInternetalertDialog!!.isShowing) {
                         noInternetalertDialog!!.dismiss()
                     }
-                    Log.d("goToNext","goToNext1")
-                   // goToNext()
+                    Log.d("goToNext", "goToNext1")
+                    // goToNext()
                 }
             }
 
@@ -132,19 +135,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             }
         }
 
-        // Run cleanup
-//        val cleaned = AppDataCleaner.clearOldDataIfNeeded(this)
-//        if (cleaned) {
-//            Log.d("Cleanup","cleaned")
-//            // Optional: show a loading indicator since cleanup might take time
-//            Handler(Looper.getMainLooper()).postDelayed({
-////                goToNextScreen()
-//            }, 1500) // small delay after cleanup
-//        }
-//        else {
-////            goToNextScreen()
-//        }
-
 
         val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
         Log.d("fromNotification", fromNotification.toString())
@@ -152,7 +142,18 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         if (fromNotification) {
             handleNotificationIntent(intent)
         } else {
-            //  normal process
+            // Run cleanup
+//            val cleaned = AppDataCleaner.clearOldDataIfNeeded(this)
+//            if (cleaned) {
+//                Log.d("Cleanup", "cleaned")
+//                // Optional: show a loading indicator since cleanup might take time
+//                Handler(Looper.getMainLooper()).postDelayed({
+//                    askNotificationPermission()
+//                }, 1500) // small delay after cleanup
+//            } else {
+//                askNotificationPermission()
+//            }
+
         }
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
@@ -166,12 +167,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
-                Log.d("goToNext","goToNext2")
+                Log.d("goToNext", "goToNext2")
 
                 goToNext()
                 Log.d("PermissionResult", "✅ User clicked ALLOW for notification permission")
             } else {
-                Log.d("goToNext","goToNext3")
+                Log.d("goToNext", "goToNext3")
 
                 goToNext()
                 Log.d(
@@ -268,8 +269,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                         Constant.isPasswordCreation = true
                         startActivity(intent)
                     }
-                }
-                else{
+                } else {
                     Constant.errorAlert(this@Splash, "", message)
                 }
             }
@@ -593,6 +593,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 
                     pendingIntent?.send()
                 }
+
                 else -> {
                     // default behavior
                 }
@@ -609,12 +610,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             ) {
                 notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             } else {
-                Log.d("goToNext","goToNext4")
+                Log.d("goToNext", "goToNext4")
 
                 goToNext()
             }
         } else {
-            Log.d("goToNext","goToNext5")
+            Log.d("goToNext", "goToNext5")
 
             goToNext()
         }
@@ -630,14 +631,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     Log.d("countryId", countryId.toString())
                     if (countryId != 0) {
                         isVersionCheck()
-                    }
-                    else {
+                    } else {
                         val isIntroductionSkip = SharedPreference.getIntroductionSkip(this@Splash)
-                        if(isIntroductionSkip!!){
+                        if (isIntroductionSkip!!) {
                             startActivity(Intent(this@Splash, CountryScreen::class.java))
                             finish()
-                        }
-                        else{
+                        } else {
                             startActivity(Intent(this@Splash, Introduction::class.java))
                             finish()
                         }
@@ -746,7 +745,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         val btnNotNow = dialogView.findViewById<TextView>(R.id.btnNotNow)
         val lblNewVersionCode = dialogView.findViewById<TextView>(R.id.lblNewVersionCode)
         val lblYourAppVersionCode = dialogView.findViewById<TextView>(R.id.lblYourAppVersionCode)
-        val pInfo =this.packageManager.getPackageInfo(this.packageName, 0)
+        val pInfo = this.packageManager.getPackageInfo(this.packageName, 0)
         val versionName = pInfo.versionName
         lblNewVersionCode.setText(versionData[0].new_version)
         lblYourAppVersionCode.setText(versionName)

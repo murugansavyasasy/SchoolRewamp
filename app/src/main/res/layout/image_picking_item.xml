@@ -3,9 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/ninety"
-    android:layout_marginStart="@dimen/twenty"
-    android:layout_marginTop="@dimen/ten"
-    android:layout_marginEnd="@dimen/twenty">
+    android:layout_marginStart="@dimen/ten"
+    android:layout_marginTop="@dimen/ten">
 
     <ImageView
         android:id="@+id/imgPicking"
