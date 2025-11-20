@@ -1226,12 +1226,29 @@
     <string name="cannot_select_videos_larger_than_500_mb">ไม่สามารถเลือกวิดีโอที่มีขนาดเกิน 500 MB ได้</string>
     <string name="You_can_select_up_to">คุณสามารถเลือกได้สูงสุด</string>
     <string name="items_only">รายการเท่านั้น</string>
+    <string name="voice_record">บันทึกเสียง</string>
+    <string name="microphone_permission_is_required">ต้องการอนุญาตไมโครโฟน</string>
+    <string name="microphone_permission_is_permanently_denied_please_enable_it_from_app_settings">การอนุญาตไมโครโฟนถูกปฏิเสธ โปรดเปิดใช้งานจากการตั้งค่าแอป</string>
+    <string name="could_not_create_file_for_audio">ไม่สามารถสร้างไฟล์เสียงได้</string>
+    <string name="failed_to_start_recording">เริ่มบันทึกเสียงไม่สำเร็จ</string>
+    <string name="voice_recording">กำลังบันทึกเสียง</string>
+    <string name="recording_in_progress_tap_stop_to_finish">กำลังบันทึก แตะหยุดเพื่อเสร็จสิ้น</string>
+    <string name="stop">หยุด</string>
+    <string name="audio_recorded_and_added">บันทึกเสียงและเพิ่มเรียบร้อยแล้ว</string>
+    <string name="recording_failed_file_empty">บันทึกเสียงล้มเหลว</string>
     <string name="whats_new_updates">มีอะไรใหม่</string>
     <string name="UpdateProfile">อัปเดตโปรไฟล์</string>
     <string name="Feedback_2">ข้อเสนอแนะ</string>
     <string name="how_to_use_2">วิธีการใช้งาน?</string>
     <string name="about_the_app">เกี่ยวกับแอป</string>
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="enable_fingerprint_login">เปิดใช้งานการเข้าสู่ระบบด้วยลายนิ้วมือ</string>
+    <string name="preferences">การตั้งค่า</string>
+    <string name="view_profile">ดูโปรไฟล์</string>
+    <string name="settings">การตั้งค่า</string>
+    <string name="switch_role">สลับบทบาท</string>
+    <string name="logout">ออกจากระบบ</string>
+
 
 
 

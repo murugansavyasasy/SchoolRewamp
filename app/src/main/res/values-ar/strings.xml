@@ -1226,6 +1226,16 @@
     <string name="cannot_select_videos_larger_than_500_mb">لا يمكن اختيار فيديوهات أكبر من 500 ميجابايت</string>
     <string name="You_can_select_up_to">يمكنك اختيار حتى</string>
     <string name="items_only">عناصر فقط</string>
+    <string name="voice_record">تسجيل صوتي</string>
+    <string name="microphone_permission_is_required">مطلوب إذن الميكروفون</string>
+    <string name="microphone_permission_is_permanently_denied_please_enable_it_from_app_settings">تم رفض إذن الميكروفون، يرجى تمكينه من إعدادات التطبيق</string>
+    <string name="could_not_create_file_for_audio">تعذر إنشاء ملف صوتي</string>
+    <string name="failed_to_start_recording">فشل بدء التسجيل</string>
+    <string name="voice_recording">تسجيل الصوت</string>
+    <string name="recording_in_progress_tap_stop_to_finish">جارٍ التسجيل، اضغط إيقاف لإنهاء</string>
+    <string name="stop">إيقاف</string>
+    <string name="audio_recorded_and_added">تم تسجيل الصوت وإضافته</string>
+    <string name="recording_failed_file_empty">فشل التسجيل</string>
     <string name="whats_new_updates">ما الجديد</string>
     <string name="UpdateProfile">تحديث الملف الشخصي</string>
     <string name="Feedback_2">ملاحظات</string>

@@ -1226,18 +1226,29 @@
     <string name="cannot_select_videos_larger_than_500_mb">500 MB से बड़े वीडियो नहीं चुन सकते</string>
     <string name="You_can_select_up_to">आप अधिकतम चुन सकते हैं</string>
     <string name="items_only">आइटम ही</string>
+    <string name="voice_record">वॉइस रिकॉर्ड</string>
+    <string name="microphone_permission_is_required">माइक्रोफोन की अनुमति आवश्यक है</string>
+    <string name="microphone_permission_is_permanently_denied_please_enable_it_from_app_settings">माइक्रोफोन की अनुमति अस्वीकार कर दी गई है, कृपया ऐप सेटिंग्स से इसे सक्षम करें</string>
+    <string name="could_not_create_file_for_audio">ऑडियो फ़ाइल बनाने में विफल</string>
+    <string name="failed_to_start_recording">रिकॉर्डिंग शुरू करने में विफल</string>
+    <string name="voice_recording">वॉइस रिकॉर्डिंग</string>
+    <string name="recording_in_progress_tap_stop_to_finish">रिकॉर्डिंग चल रही है, समाप्त करने के लिए रोकें पर टैप करें</string>
+    <string name="stop">रोकें</string>
+    <string name="audio_recorded_and_added">ऑडियो रिकॉर्ड किया गया और जोड़ा गया</string>
+    <string name="recording_failed_file_empty">रिकॉर्डिंग विफल</string>
     <string name="whats_new_updates">नया क्या है</string>
     <string name="UpdateProfile">प्रोफ़ाइल अपडेट करें</string>
     <string name="Feedback_2">प्रतिक्रिया</string>
     <string name="how_to_use_2">कैसे उपयोग करें?</string>
     <string name="about_the_app">ऐप के बारे में</string>
     <string name="privacy_policy">गोपनीयता नीति</string>
-    <string name="enable_fingerprint_login">เปิดใช้งานการเข้าสู่ระบบด้วยลายนิ้วมือ</string>
-    <string name="preferences">การตั้งค่า</string>
-    <string name="view_profile">ดูโปรไฟล์</string>
-    <string name="settings">การตั้งค่า</string>
-    <string name="switch_role">สลับบทบาท</string>
-    <string name="logout">ออกจากระบบ</string>
+    <string name="enable_fingerprint_login">फिंगरप्रिंट लॉगिन सक्षम करें</string>
+    <string name="preferences">पसंद</string>
+    <string name="view_profile">प्रोफ़ाइल देखें</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="switch_role">भूमिका बदलें</string>
+    <string name="logout">लॉग आउट</string>
+
 
 
 
