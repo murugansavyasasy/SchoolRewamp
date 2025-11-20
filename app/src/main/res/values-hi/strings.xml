@@ -1259,6 +1259,31 @@
     <string name="my_submissions">मेरे प्रस्तुतिकरण</string>
     <string name="your_meetings">आपकी बैठकें</string>
     <string name="images_docs"><![CDATA[🖼️ चित्र & दस्तावेज़]]></string>
+    <string name="my_account">मेरा खाता</string>
+    <string name="late_comer">देर से आने वाला</string>
+    <string name="holiday2">छुट्टी</string>
+    <string name="fn_present_an_absent">प्रातःकाल उपस्थित - अपराह्न अनुपस्थित</string>
+    <string name="fn_present_an_od">प्रातःकाल उपस्थित - अपराह्न OD</string>
+    <string name="fn_present_an_late_comer">प्रातःकाल उपस्थित - अपराह्न देर से आने वाला</string>
+    <string name="fn_present_an_not_taken">प्रातःकाल उपस्थित - अपराह्न नहीं लिया गया</string>
+    <string name="fn_absent_an_present">प्रातःकाल अनुपस्थित - अपराह्न उपस्थित</string>
+    <string name="fn_absent_an_od">प्रातःकाल अनुपस्थित - अपराह्न OD</string>
+    <string name="fn_absent_an_late_comer">प्रातःकाल अनुपस्थित - अपराह्न देर से आने वाला</string>
+    <string name="fn_absent_an_not_taken">प्रातःकाल अनुपस्थित - अपराह्न नहीं लिया गया</string>
+    <string name="fn_late_comer_an_present">प्रातःकाल देर से आने वाला - अपराह्न उपस्थित</string>
+    <string name="fn_late_comer_an_absent">प्रातःकाल देर से आने वाला - अपराह्न अनुपस्थित</string>
+    <string name="fn_late_comer_an_od">प्रातःकाल देर से आने वाला - अपराह्न OD</string>
+    <string name="fn_late_comer_an_not_taken">प्रातःकाल देर से आने वाला - अपराह्न नहीं लिया गया</string>
+    <string name="fn_not_taken_an_present">प्रातःकाल नहीं लिया गया - अपराह्न उपस्थित</string>
+    <string name="fn_not_taken_an_absent">प्रातःकाल नहीं लिया गया - अपराह्न अनुपस्थित</string>
+    <string name="fn_not_taken_an_od">प्रातःकाल नहीं लिया गया - अपराह्न OD</string>
+    <string name="fn_not_taken_an_late_comer">प्रातःकाल नहीं लिया गया - अपराह्न देर से आने वाला</string>
+    <string name="fn_od_an_present">प्रातःकाल OD - अपराह्न उपस्थित</string>
+    <string name="fn_od_an_absent">प्रातःकाल OD - अपराह्न अनुपस्थित</string>
+    <string name="fn_od_an_late_comer">प्रातःकाल OD - अपराह्न देर से आने वाला</string>
+    <string name="fn_od_an_not_taken">प्रातःकाल OD - अपराह्न नहीं लिया गया</string>
+    <string name="answer">उत्तर</string>
+    <string name="update_answer">उत्तर अपडेट करें</string>
 
 
 

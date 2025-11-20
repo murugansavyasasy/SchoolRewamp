@@ -1259,6 +1259,31 @@
     <string name="my_submissions">งานที่ฉันส่ง</string>
     <string name="your_meetings">การประชุมของคุณ</string>
     <string name="images_docs"><![CDATA[🖼️ รูปภาพ & เอกสาร]]></string>
+    <string name="my_account">บัญชีของฉัน</string>
+    <string name="late_comer">ผู้มาสาย</string>
+    <string name="holiday2">วันหยุด</string>
+    <string name="fn_present_an_absent">เช้า – มา | บ่าย – ขาด</string>
+    <string name="fn_present_an_od">เช้า – มา | บ่าย – ลากิจ</string>
+    <string name="fn_present_an_late_comer">เช้า – มา | บ่าย – มาสาย</string>
+    <string name="fn_present_an_not_taken">เช้า – มา | บ่าย – ไม่บันทึก</string>
+    <string name="fn_absent_an_present">เช้า – ขาด | บ่าย – มา</string>
+    <string name="fn_absent_an_od">เช้า – ขาด | บ่าย – ลากิจ</string>
+    <string name="fn_absent_an_late_comer">เช้า – ขาด | บ่าย – มาสาย</string>
+    <string name="fn_absent_an_not_taken">เช้า – ขาด | บ่าย – ไม่บันทึก</string>
+    <string name="fn_late_comer_an_present">เช้า – มาสาย | บ่าย – มา</string>
+    <string name="fn_late_comer_an_absent">เช้า – มาสาย | บ่าย – ขาด</string>
+    <string name="fn_late_comer_an_od">เช้า – มาสาย | บ่าย – ลากิจ</string>
+    <string name="fn_late_comer_an_not_taken">เช้า – มาสาย | บ่าย – ไม่บันทึก</string>
+    <string name="fn_not_taken_an_present">เช้า – ไม่บันทึก | บ่าย – มา</string>
+    <string name="fn_not_taken_an_absent">เช้า – ไม่บันทึก | บ่าย – ขาด</string>
+    <string name="fn_not_taken_an_od">เช้า – ไม่บันทึก | บ่าย – ลากิจ</string>
+    <string name="fn_not_taken_an_late_comer">เช้า – ไม่บันทึก | บ่าย – มาสาย</string>
+    <string name="fn_od_an_present">เช้า – ลากิจ | บ่าย – มา</string>
+    <string name="fn_od_an_absent">เช้า – ลากิจ | บ่าย – ขาด</string>
+    <string name="fn_od_an_late_comer">เช้า – ลากิจ | บ่าย – มาสาย</string>
+    <string name="fn_od_an_not_taken">เช้า – ลากิจ | บ่าย – ไม่บันทึก</string>
+    <string name="answer">คำตอบ</string>
+    <string name="update_answer">อัปเดตคำตอบ</string>
 
 
 

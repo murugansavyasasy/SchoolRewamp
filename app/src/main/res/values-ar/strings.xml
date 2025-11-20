@@ -1259,6 +1259,31 @@
     <string name="my_submissions">تقديماتي</string>
     <string name="your_meetings">اجتماعاتك</string>
     <string name="images_docs"><![CDATA[🖼️ الصور & المستندات]]></string>
+    <string name="my_account">حسابي</string>
+    <string name="late_comer">متأخر الحضور</string>
+    <string name="holiday2">عطلة</string>
+    <string name="fn_present_an_absent">ص – حاضر | م – غائب</string>
+    <string name="fn_present_an_od">ص – حاضر | م – إجازة</string>
+    <string name="fn_present_an_late_comer">ص – حاضر | م – متأخر الحضور</string>
+    <string name="fn_present_an_not_taken">ص – حاضر | م – لم يتم التسجيل</string>
+    <string name="fn_absent_an_present">ص – غائب | م – حاضر</string>
+    <string name="fn_absent_an_od">ص – غائب | م – إجازة</string>
+    <string name="fn_absent_an_late_comer">ص – غائب | م – متأخر الحضور</string>
+    <string name="fn_absent_an_not_taken">ص – غائب | م – لم يتم التسجيل</string>
+    <string name="fn_late_comer_an_present">ص – متأخر الحضور | م – حاضر</string>
+    <string name="fn_late_comer_an_absent">ص – متأخر الحضور | م – غائب</string>
+    <string name="fn_late_comer_an_od">ص – متأخر الحضور | م – إجازة</string>
+    <string name="fn_late_comer_an_not_taken">ص – متأخر الحضور | م – لم يتم التسجيل</string>
+    <string name="fn_not_taken_an_present">ص – لم يتم التسجيل | م – حاضر</string>
+    <string name="fn_not_taken_an_absent">ص – لم يتم التسجيل | م – غائب</string>
+    <string name="fn_not_taken_an_od">ص – لم يتم التسجيل | م – إجازة</string>
+    <string name="fn_not_taken_an_late_comer">ص – لم يتم التسجيل | م – متأخر الحضور</string>
+    <string name="fn_od_an_present">ص – إجازة | م – حاضر</string>
+    <string name="fn_od_an_absent">ص – إجازة | م – غائب</string>
+    <string name="fn_od_an_late_comer">ص – إجازة | م – متأخر الحضور</string>
+    <string name="fn_od_an_not_taken">ص – إجازة | م – لم يتم التسجيل</string>
+    <string name="answer">الإجابة</string>
+    <string name="update_answer">تحديث الإجابة</string>
 
 
 </resources>
