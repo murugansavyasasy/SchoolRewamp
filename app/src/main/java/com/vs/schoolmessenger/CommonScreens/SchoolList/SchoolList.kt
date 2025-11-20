@@ -677,7 +677,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
         if (selectedRadioId != -1) {
             val selectedRadioButton = findViewById<RadioButton>(selectedRadioId)
-            intendedFor = selectedRadioButton.text.toString().lowercase() // Force lowercase
+            intendedFor = when (selectedRadioId) {
+                R.id.radioAll -> Constant.all__
+                R.id.radioStaff -> Constant.staff
+                R.id.radioStudent -> Constant.student
+                else -> ""
+            }
+//            intendedFor = selectedRadioButton.text.toString().lowercase() // Force lowercase
         }
 
         val noticeDetails = intent.getSerializableExtra(Constant.notice_data) as? NoticeBoardDetails

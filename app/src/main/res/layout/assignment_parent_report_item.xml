@@ -376,7 +376,7 @@
             android:background="@drawable/background_dark_blue"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsBold"
-            android:text="My Submissions"
+            android:text="@string/my_submissions"
             android:paddingVertical="@dimen/five"
             android:paddingHorizontal="@dimen/fifteen"
             android:textColor="@color/white"
@@ -394,7 +394,7 @@
             android:layout_marginEnd="10dp"
             android:paddingVertical="@dimen/five"
             android:paddingHorizontal="@dimen/fifteen"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
             style="@style/CustomTextStylePoppinsBold">

@@ -45,7 +45,7 @@
                 android:id="@+id/imageslabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="🖼️ Images &amp; Docs"
+                android:text="@string/images_docs"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
                 style="@style/CustomTextStylePoppinsBold"

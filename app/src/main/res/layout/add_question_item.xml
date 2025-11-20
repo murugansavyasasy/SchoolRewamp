@@ -51,7 +51,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chapter" />
+                android:text="@string/chapter" />
 
             <TextView
                 style="@style/CustomTextStylePoppinsBold"
@@ -354,7 +354,7 @@
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mark"
+                        android:text="@string/mark"
                         android:textSize="@dimen/fourteen_sp" />
 
                     <TextView

@@ -39,7 +39,7 @@
                 android:layout_below="@+id/toolbarLayout"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Task Details :"
+                android:text="@string/task_details"
                 android:textColor="@color/mild_grey_dark"
                 android:textSize="@dimen/fifteen_sp" />
 

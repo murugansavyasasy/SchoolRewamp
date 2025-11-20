@@ -320,6 +320,11 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
+            android:name=".Dashboard.Settings.Faq.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
             android:name=".Testing.AutoScrolling"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"

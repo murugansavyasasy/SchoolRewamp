@@ -191,6 +191,8 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         binding.txtStartDate.text = Constant.convertToReadableDate(isSelectedDate)
         val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
         binding.lblDay.text = formattedDate
+        Log.d("formattedDate",formattedDate)
+        Log.d("formattedDate", binding.lblDay.text.toString())
         binding.lblTimePick.text = Constant.getCurrentTime()
 
         albumResultLauncher =
@@ -254,7 +256,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                        Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
+                      //  Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
