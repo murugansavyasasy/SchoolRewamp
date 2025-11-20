@@ -9,11 +9,9 @@
         android:id="@+id/bigCard"
         android:layout_width="match_parent"
         android:layout_height="@dimen/zero"
-        android:layout_margin="@dimen/thirty"
-        app:cardCornerRadius="@dimen/fifty"
         app:cardElevation="@dimen/eight"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rootLayout"
@@ -26,9 +24,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
+                android:gravity="center"
                 android:text="CONNECTING EDUCATION\nCOMMUNITIES"
                 android:textAlignment="center"
-                android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty"
                 android:textStyle="bold"
@@ -37,32 +35,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <View
-                android:id="@+id/bubbleView"
-                android:layout_width="@dimen/sixty"
-                android:layout_height="@dimen/sixty"
-                android:background="@drawable/bubble_circle"
-                android:alpha="0"
-                app:layout_constraintStart_toStartOf="parent"
+            <FrameLayout
+                android:id="@+id/confettiContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/llBottomText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtConnecting" />
 
 
             <ImageView
                 android:id="@+id/imgLogo"
-                android:layout_width="@dimen/two_hundred"
-                android:layout_height="@dimen/two_hundred"
-                android:src="@drawable/school_chimes"
+                android:layout_width="@dimen/three_hundred"
+                android:layout_height="@dimen/three_hundred"
                 android:alpha="0"
-                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/school_chimes"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <LinearLayout
-                    android:id="@+id/llBottomText"
+                android:id="@+id/llBottomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="60dp"
@@ -70,8 +66,8 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgLogo">
 
                 <TextView
@@ -80,8 +76,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:text="Empowering "
-                    android:textSize="@dimen/eighteen_sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/eighteen_sp" />
 
                 <TextView
                     android:id="@+id/txtSchoolCount"
@@ -89,27 +85,29 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:text="3000+"
-                    android:textColor="@color/purple_2"
+                    android:textColor="@color/purple_color_lite_2"
                     android:textSize="@dimen/twenty_sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="sans-serif-medium"
                     android:text=" Schools"
-                    android:textColor="@color/purple_2"
+                    android:textColor="@color/purple_color_lite_2"
                     android:textSize="@dimen/twenty_sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <View
                 android:id="@+id/underline"
-                android:layout_width="@dimen/two_hundred"
+                android:layout_width="@dimen/two_hundred_fifty"
                 android:layout_height="@dimen/three"
                 android:layout_marginTop="6dp"
                 android:alpha="0"
-                android:background="@color/purple_2"
+                android:background="@color/purple_color_lite_2"
+                app:layout_constraintEnd_toEndOf="@+id/llBottomText"
                 app:layout_constraintStart_toStartOf="@+id/llBottomText"
                 app:layout_constraintTop_toBottomOf="@+id/llBottomText" />
 
@@ -126,24 +124,24 @@
 
                 <View
                     android:id="@+id/dot1"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="@dimen/eight"
+                    android:layout_height="@dimen/eight"
                     android:layout_margin="8dp"
                     android:alpha="0"
                     android:background="@drawable/dot_background" />
 
                 <View
                     android:id="@+id/dot2"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="@dimen/eight"
+                    android:layout_height="@dimen/eight"
                     android:layout_margin="8dp"
                     android:alpha="0"
                     android:background="@drawable/dot_background" />
 
                 <View
                     android:id="@+id/dot3"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="@dimen/eight"
+                    android:layout_height="@dimen/eight"
                     android:layout_margin="8dp"
                     android:alpha="0"
                     android:background="@drawable/dot_background" />
