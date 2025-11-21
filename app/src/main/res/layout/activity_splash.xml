@@ -21,15 +21,13 @@
 
             <TextView
                 android:id="@+id/txtConnecting"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="CONNECTING EDUCATION\nCOMMUNITIES"
                 android:textAlignment="center"
-                android:textColor="@color/black"
                 android:textSize="@dimen/twenty"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/imgLogo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +42,39 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtConnecting" />
 
+
+            <View
+                android:id="@+id/wave1"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:alpha="0"
+                android:background="@drawable/wave_circle"
+                app:layout_constraintBottom_toBottomOf="@id/imgLogo"
+                app:layout_constraintEnd_toEndOf="@id/imgLogo"
+                app:layout_constraintStart_toStartOf="@id/imgLogo"
+                app:layout_constraintTop_toTopOf="@id/imgLogo" />
+
+            <View
+                android:id="@+id/wave2"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:alpha="0"
+                android:background="@drawable/wave_circle"
+                app:layout_constraintBottom_toBottomOf="@id/imgLogo"
+                app:layout_constraintEnd_toEndOf="@id/imgLogo"
+                app:layout_constraintStart_toStartOf="@id/imgLogo"
+                app:layout_constraintTop_toTopOf="@id/imgLogo" />
+
+            <View
+                android:id="@+id/wave3"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:alpha="0"
+                android:background="@drawable/wave_circle"
+                app:layout_constraintBottom_toBottomOf="@id/imgLogo"
+                app:layout_constraintEnd_toEndOf="@id/imgLogo"
+                app:layout_constraintStart_toStartOf="@id/imgLogo"
+                app:layout_constraintTop_toTopOf="@id/imgLogo" />
 
             <ImageView
                 android:id="@+id/imgLogo"
@@ -72,39 +103,27 @@
 
                 <TextView
                     android:id="@+id/txtEmpowering"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
                     android:text="Empowering "
-                    android:textColor="@color/black"
                     android:textSize="@dimen/eighteen_sp" />
 
                 <TextView
                     android:id="@+id/txtSchoolCount"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="3000+"
+                    android:text="3000+ Schools"
                     android:textColor="@color/purple_color_lite_2"
-                    android:textSize="@dimen/twenty_sp"
-                    android:textStyle="bold" />
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="sans-serif-medium"
-                    android:text=" Schools"
-                    android:textColor="@color/purple_color_lite_2"
-                    android:textSize="@dimen/twenty_sp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/eighteen_sp" />
             </LinearLayout>
 
             <View
                 android:id="@+id/underline"
-                android:layout_width="@dimen/two_hundred_fifty"
+                android:layout_width="@dimen/two_hundred_eighty"
                 android:layout_height="@dimen/three"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/six"
                 android:alpha="0"
                 android:background="@color/purple_color_lite_2"
                 app:layout_constraintEnd_toEndOf="@+id/llBottomText"
@@ -126,7 +145,7 @@
                     android:id="@+id/dot1"
                     android:layout_width="@dimen/eight"
                     android:layout_height="@dimen/eight"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/eight"
                     android:alpha="0"
                     android:background="@drawable/dot_background" />
 
@@ -134,7 +153,7 @@
                     android:id="@+id/dot2"
                     android:layout_width="@dimen/eight"
                     android:layout_height="@dimen/eight"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/eight"
                     android:alpha="0"
                     android:background="@drawable/dot_background" />
 
@@ -142,7 +161,7 @@
                     android:id="@+id/dot3"
                     android:layout_width="@dimen/eight"
                     android:layout_height="@dimen/eight"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/eight"
                     android:alpha="0"
                     android:background="@drawable/dot_background" />
 
