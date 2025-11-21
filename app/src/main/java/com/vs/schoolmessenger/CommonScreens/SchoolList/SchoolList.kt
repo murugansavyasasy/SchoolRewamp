@@ -656,7 +656,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     }
 
-
     fun attachmentSendApi() {
         val jsonObject = ApiCallRequest.isSendAttachment(
             isAcademicYearId = isAcademicYearId,

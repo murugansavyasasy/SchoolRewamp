@@ -56,7 +56,6 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Re
 import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.LSRW.MySubmissionModel.ActivityResponse
-import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotCountResponse
@@ -224,7 +223,7 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
 
-    var isNoticeBoardReport: LiveData<NoticeBoardResponse?>? = null
+    var isNoticeBoardReport: LiveData<NoticeBoardStaffResponse?>? = null
     var isNoticeBoardStaffReport: LiveData<NoticeBoardStaffResponse?>? = null
         private set
 
