@@ -141,7 +141,7 @@ class SchoolServices {
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
     var isHomeWorkDetailsData: MutableLiveData<GetHomeworkData?>
-    var isNoticeBoardReport: MutableLiveData<NoticeBoardResponse?>
+    var isNoticeBoardReport: MutableLiveData<NoticeBoardStaffResponse?>
     var isNoticeBoardStaffReport: MutableLiveData<NoticeBoardStaffResponse?>
     var isGetSchoolStrengthReport: MutableLiveData<SchoolStrengthResponse?>
     var isDetailedPendingReport: MutableLiveData<FeePendingReportResponse?>
@@ -1196,9 +1196,9 @@ class SchoolServices {
         isToken: String, activity: Activity
     ) {
         RestClient.apiInterfaces.isNoticeBoardReport(isToken)
-            ?.enqueue(object : Callback<NoticeBoardResponse?> {
+            ?.enqueue(object : Callback<NoticeBoardStaffResponse?> {
                 override fun onResponse(
-                    call: Call<NoticeBoardResponse?>, response: Response<NoticeBoardResponse?>
+                    call: Call<NoticeBoardStaffResponse?>, response: Response<NoticeBoardStaffResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -1217,14 +1217,14 @@ class SchoolServices {
                     }
                 }
 
-                override fun onFailure(call: Call<NoticeBoardResponse?>, t: Throwable) {
+                override fun onFailure(call: Call<NoticeBoardStaffResponse?>, t: Throwable) {
                     isNoticeBoardReport.postValue(null)
                     Log.d("t.printStackTrace()", t.printStackTrace().toString())
                 }
             })
     }
 
-    val isNoticeBoardReportLiveData: LiveData<NoticeBoardResponse?>
+    val isNoticeBoardReportLiveData: LiveData<NoticeBoardStaffResponse?>
         get() = isNoticeBoardReport
 
 

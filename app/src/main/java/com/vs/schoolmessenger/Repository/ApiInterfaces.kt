@@ -523,7 +523,7 @@ interface ApiInterfaces {
     @GET(APIMethods.isNoticeBoardReport)
     fun isNoticeBoardReport(
         @Header(APIKeyNames.Authorization) token: String
-    ): Call<NoticeBoardResponse?>?
+    ): Call<NoticeBoardStaffResponse?>?
 
     @GET(APIMethods.isNoticeBoardStaffReport)
     fun isNoticeBoardStaffReport(

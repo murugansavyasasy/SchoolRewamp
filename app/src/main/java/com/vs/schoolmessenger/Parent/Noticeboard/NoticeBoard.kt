@@ -24,6 +24,9 @@ import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
+import com.vs.schoolmessenger.School.NoticeBoard.NoticeBoardClickListener
+import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.NoticeRevampBinding
@@ -38,7 +41,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         return NoticeRevampBinding.inflate(layoutInflater)
     }
 
-    lateinit var mAdapter: NoticeBoardAdapter
+    lateinit var mAdapter: SchoolNoticeBoardAdapter
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var msg_id: Int = -1
@@ -113,34 +116,34 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
         appViewModel?.isNoticeBoardReport?.observe(this) { response ->
             Constant.hideLoading(this)
-            if (response != null) {
-                if (response?.status == true && !response.data.isNullOrEmpty()) {
 
-                    val mobileNumber = SharedPreference.getMobileNumber(this)
-                    val jsonObject = JsonObject().apply {
-                        addProperty(APIKeyNames.mobile_number, mobileNumber)
-                        addProperty(APIKeyNames.activity, Constant.add_points_view_noticeboard)
-                        addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
-                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
-                    }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
+            if (response != null) {
+                if (response.status == true && !response.data.isNullOrEmpty()) {
 
                     binding.rcyNoticeBoard.visibility = View.VISIBLE
                     binding.nomessage.visibility = View.GONE
                     binding.txtNoData.visibility = View.GONE
+
                     isloadhomeworkData(response.data)
+
+
+                    mAdapter.updateList(response.data)
+
                     if (fromNotification) {
                         scrollToMessageId(headerId)
                     }
+
                 } else {
                     binding.rcyNoticeBoard.visibility = View.GONE
                     binding.nomessage.visibility = View.VISIBLE
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.txtNoData.visibility = View.VISIBLE
-                    binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
+                    binding.txtNoData.text =
+                        response?.message ?: getString(R.string.no_data_found)
                 }
             }
         }
+
 
 
         val channel = NotificationChannel(
@@ -182,12 +185,16 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     }
 
 
-    private fun isloadhomeworkData(newData: List<Notice>?) {
+    private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
         if (newData.isNullOrEmpty()) {
             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         } else {
             binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-            mAdapter = NoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
+            mAdapter = SchoolNoticeBoardAdapter(
+                emptyList(), this, this, false,
+                binding.nomessage,
+                binding.txtNoData
+            )
             binding.rcyNoticeBoard.adapter = mAdapter
         }
     }
@@ -221,6 +228,14 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         }
     }
 
+    override fun onClickListener(
+        data: NoticeStaffData,
+        anchorView: View,
+        adapterPosition: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
@@ -236,7 +251,11 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
     private fun isGetNoticeBoardList() {
         Constant.showLoading(this)
-        mAdapter = NoticeBoardAdapter(null, this, this, Constant.isShimmerViewDisable)
+        mAdapter = SchoolNoticeBoardAdapter(
+            emptyList(), this, this, false,
+            binding.nomessage,
+            binding.txtNoData
+        )
         binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
         binding.rcyNoticeBoard.adapter = mAdapter
