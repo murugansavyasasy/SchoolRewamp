@@ -16,12 +16,9 @@ class StandardListAdapter(
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
     private val selectedIds = mutableSetOf<Int>()
-
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }

@@ -1302,18 +1302,22 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
 
-        val builder = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.voice_recording))
-            .setMessage(getString(R.string.recording_in_progress_tap_stop_to_finish))
-            .setPositiveButton(getString(R.string.stop)) { _, _ ->
-                stopVoiceRecording()
-            }
+        // Replace your old dialog code with this:
+        val dialogView = layoutInflater.inflate(R.layout.dialog_voice_recording, null)
+        val stopBtn = dialogView.findViewById<TextView>(R.id.btnStop)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
             .setCancelable(false)
-            .setOnCancelListener {
-                stopVoiceRecording()
-            }
-        val dialog = builder.create()
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
+
+        stopBtn.setOnClickListener {
+            stopVoiceRecording()
+            dialog.dismiss()
+        }
     }
 
 

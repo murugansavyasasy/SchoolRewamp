@@ -21,8 +21,10 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -354,13 +356,18 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     private fun startVoiceRecording() {
         if (isRecording) return
 
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val timeStamp: String =
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir("recordings") ?: cacheDir
         val audioFile: File = try {
             File.createTempFile("AUDIO_${timeStamp}_", ".m4a", storageDir)
         } catch (ex: IOException) {
             ex.printStackTrace()
-            Toast.makeText(this, getString(R.string.could_not_create_file_for_audio), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.could_not_create_file_for_audio),
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
         recordingFilePath = audioFile.absolutePath
@@ -377,27 +384,35 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             } catch (e: Exception) {
                 e.printStackTrace()
                 releaseRecorder()
-                Toast.makeText(this@CreateNewTask, getString(R.string.failed_to_start_recording), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@CreateNewTask,
+                    getString(R.string.failed_to_start_recording),
+                    Toast.LENGTH_SHORT
+                ).show()
                 return
             }
         }
 
-        val builder = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.voice_recording))
-            .setMessage(getString(R.string.recording_in_progress_tap_stop_to_finish))
-            .setPositiveButton(getString(R.string.stop)) { _, _ ->
-                stopVoiceRecording()
-            }
+        // Replace your old dialog code with this:
+        val dialogView = layoutInflater.inflate(R.layout.dialog_voice_recording, null)
+        val stopBtn = dialogView.findViewById<TextView>(R.id.btnStop)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
             .setCancelable(false)
-            .setOnCancelListener {
-                stopVoiceRecording()
-            }
-        val dialog = builder.create()
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
+
+        stopBtn.setOnClickListener {
+            stopVoiceRecording()
+            dialog.dismiss()
+        }
     }
 
 
-    private fun stopVoiceRecording() {
+        private fun stopVoiceRecording() {
         if (!isRecording) return
         isRecording = false
         try {
@@ -708,6 +723,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             binding.edtdate.requestFocus()
             return
         }
+
 
         val isLsrwnewTaskSendingData = LsrwnewTaskSendingData(
             title,

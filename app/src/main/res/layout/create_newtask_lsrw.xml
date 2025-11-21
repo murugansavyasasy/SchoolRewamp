@@ -145,15 +145,14 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <ScrollView
+    <!-- FIXED: Replaced ScrollView with NestedScrollView -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/ten"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontal_scrollview">
+        app:layout_constraintTop_toBottomOf="@id/horizontal_scrollview"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <RelativeLayout
             android:id="@+id/rytcreateNewTasklsrw"
@@ -239,10 +238,6 @@
                 android:text="@string/Description"
                 android:textSize="@dimen/fifteen_sp" />
 
-
-
-
-
             <LinearLayout
                 android:id="@+id/lnrDesc"
                 android:layout_width="match_parent"
@@ -261,9 +256,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:editable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
                     android:gravity="start"
                     android:hint="@string/Enterdescription"
                     android:padding="@dimen/ten"
@@ -295,7 +287,6 @@
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
 
-
             <TextView
                 android:id="@+id/lbldate"
                 style="@style/CustomTextStylePoppinsBold"
@@ -317,14 +308,15 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/twenty"
                 android:background="@drawable/field_background"
-                android:clickable="true"
                 android:drawableEnd="@drawable/calendar_icon"
                 android:drawablePadding="8dp"
-                android:focusable="false"
                 android:gravity="start|center_vertical"
                 android:hint="@string/dd_mm_yyyy"
                 android:padding="@dimen/ten"
-                android:textSize="@dimen/thirteen_sp" />
+                android:textSize="@dimen/thirteen_sp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"/>
+
 
             <RelativeLayout
                 android:id="@+id/rlaFilePicking"
@@ -375,6 +367,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
+                        android:nestedScrollingEnabled="false"
                         android:orientation="vertical" />
                 </RelativeLayout>
 
@@ -395,7 +388,9 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
+
         </RelativeLayout>
-    </ScrollView>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
