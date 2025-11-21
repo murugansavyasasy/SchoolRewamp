@@ -114,6 +114,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isTotalSelectedItem = 0
     var isStandardId = ""
     var isClickedTab = 0
+    private var isAssignmentData: AssignmentSendingData? = null
+
 
     override fun setupViews() {
         super.setupViews()
@@ -141,6 +143,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isUserDetails = SharedPreference.getUserDetails(this)
         binding.toolbarLayout.lblParentToolBar.text = isStaffDetails!!.school_name
+        isAssignmentData = intent.getParcelableExtra(Constant.assignment_data)
 
         if (isStaffDetails!!.school_name_regional != "") {
             binding.toolbarLayout.lblSchoolName.visibility = View.GONE
@@ -615,13 +618,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isLoadGroupData(isGetGroupListData: List<NameAndIds>?) {
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         isGroupStaffAdapter = GroupStaffAdapter(
             true, isGetGroupListData, this@RecipientActivity, this, Constant.isShimmerViewDisable
         )
         binding.recyclerView.adapter = isGroupStaffAdapter
-
     }
 
     private fun isLoadCheckLevelData(data: List<GetCheckLevelData>?) {
@@ -636,7 +637,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, displayList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.isSpinnerLevel.adapter = adapter
-
         binding.isSpinnerLevel.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -837,6 +837,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 intent.putExtra(Constant.isCurrentAcademicYear, isCurrentAcademicYear)
                 intent.putExtra(Constant.lblAcademicYear, isSelectedAcademicYear)
                 intent.putStringArrayListExtra(Constant.isSelectedId, ArrayList(selectedIds))
+                if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+//                    val isAssignmentData = intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
+                    intent.putExtra(Constant.assignment_data, isAssignmentData)
+                    intent.putExtra("subject_id", isSubjectId)
+                }
                 startActivity(intent)
             }
 
@@ -1707,13 +1712,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             fileSize = isFileSize,
         )
         appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
-
     }
 
-
     fun isAssignmentSend() {
-        val isAssignmentData =
-            intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
+//        val isAssignmentData = intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
         isAssignmentData?.let {
             val jsonObject = ApiCallRequest.isSendAssignment(
                 targetType = isTargetType!!,

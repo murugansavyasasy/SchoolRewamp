@@ -15,14 +15,17 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -153,6 +156,23 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             }
         }
 
+        appViewModel!!.isAssignmentSend?.observe(this) { response ->
+            Constant.hideLoading(this@SpecificStudent)
+            if (response != null) {
+                Constant.showTopAlertPopup(response.message, this)
+                if (response.status) {
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_assignment)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                }
+            }
+        }
+
 
         binding.toolbarLayout.txtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -268,6 +288,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     voiceSendApi()
                 } else if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                     attachmentSendApi()
+                } else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+                    isAssignmentSend()
                 }
             } else {
                 videoUploading()
@@ -347,6 +369,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                                             voiceSendApi()
                                         } else if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                                             attachmentSendApi()
+                                        } else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+                                            isAssignmentSend()
                                         }
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
@@ -467,6 +491,16 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     }
                 }
 
+                M_ASSIGNMENT -> {
+                    if (Constant.selectedFiles.size != 1) {
+                        isUploadFilesInServer("file")
+                    } else {
+                        when (SELECTED_MENU_ID) {
+                            M_ASSIGNMENT -> isAssignmentSend()
+                        }
+                    }
+                }
+
                 M_COMMUNICATION -> {
                     if (Constant.isCommunicationType == 3) {
                         Constant.isTextSendingData?.let { textData ->
@@ -516,7 +550,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             }
         } else {
             ProgressDialogHelper.dismiss()
-            attachmentSendApi()
+            if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+                isAssignmentSend()
+            } else if (SELECTED_MENU_ID == M_ATTACHMENTS) {
+                attachmentSendApi()
+            }
         }
     }
 
@@ -537,6 +575,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 ProgressDialogHelper.dismiss()
                 if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                     attachmentSendApi()
+                }else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+                    isAssignmentSend()
                 }
             }
         }
@@ -596,9 +636,39 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                         resources.getString(R.string.Please_select_least_student),
                         this
                     )
-
                 }
             }
+        }
+    }
+
+    fun isAssignmentSend() {
+
+        val subjectId = intent.getIntExtra("subject_id", 0)
+        val isAssignmentData =
+            intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
+        isAssignmentData?.let {
+            val jsonObject = ApiCallRequest.isSendAssignment(
+                targetType = isTargetType!!,
+                iframe = isIframe,
+                file_size = isFileSize,
+                isAcademicYearId = isAcademicYearId,
+                selectedIds = selectedIds,
+                title = it.isTitle,
+                description = it.isDescription,
+                assignmentType = it.isAssignmentType,
+                date = it.isDate,
+                time = it.isTime,
+                subjectId = subjectId
+            )
+            Log.d("jsonObject", jsonObject.toString())
+            appViewModel!!.isSendAssignment(isAccessToken!!, jsonObject, this)
+
+        } ?: run {
+            Constant.showValidationAlertPopup(
+                getString(R.string.alert),
+                "Assignment details is missing.",
+                this
+            )
         }
     }
 
