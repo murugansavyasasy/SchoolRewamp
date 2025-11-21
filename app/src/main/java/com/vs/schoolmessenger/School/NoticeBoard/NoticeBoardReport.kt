@@ -187,6 +187,31 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
             }
         }
 
+
+
+        appViewModel?.isNoticeBoardReport?.observe(this) { response ->
+            Constant.hideLoading(this)
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
+                    binding.rcyNoticeBoard.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    isloadhomeworkData(response.data)
+                    completeNoticeList = response.data
+                    binding.edtSearch.text.clear()
+
+                } else {
+                    isloadhomeworkData(emptyList())
+                    binding.rcyNoticeBoard.visibility = View.GONE
+                    binding.nomessage.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    binding.rytSearch323.visibility = View.GONE
+                    binding.edtSearch.text.clear()
+                }
+            }
+        }
+
         val channel = NotificationChannel(
             "reminder_channel", "Reminders", NotificationManager.IMPORTANCE_HIGH
         )
@@ -317,7 +342,13 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         noticeboardadapter.isLoading = true
         noticeboardadapter.notifyDataSetChanged()
 
-        appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
+        if(userDetails!!.staff_role == Constant.isPrincipalRole) {
+            appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
+        } else {
+            appViewModel!!.isNoticeBoardReport(isAccessToken!!, this)
+
+        }
+
     }
 
 
@@ -396,10 +427,14 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         okButton.setOnClickListener {
             alertDialog.dismiss()
             val jsonObject = JsonObject()
-                jsonObject.addProperty(APIKeyNames.id, isNoticeBoardId)
-                appViewModel?.isnoticeboarddelete(isAccessToken!!, jsonObject, this)
-
+            jsonObject.addProperty(APIKeyNames.id, isNoticeBoardId)
+            appViewModel?.isnoticeboarddelete(
+                isAccessToken!!,
+                jsonObject,
+                this
+            )
         }
+
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
 

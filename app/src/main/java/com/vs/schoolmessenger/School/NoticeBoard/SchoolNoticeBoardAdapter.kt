@@ -28,6 +28,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
+import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
@@ -157,6 +158,11 @@ class SchoolNoticeBoardAdapter(
             }
         }
     }
+
+    fun getCurrentList(): List<NoticeStaffData> {
+        return filteredList
+    }
+
 
     class DataViewHolder(
         itemView: View,
@@ -341,5 +347,3 @@ class SchoolNoticeBoardAdapter(
     }
 
 }
-
-

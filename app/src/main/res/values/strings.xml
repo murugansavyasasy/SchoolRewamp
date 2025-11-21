@@ -1284,6 +1284,8 @@
     <string name="fn_od_an_not_taken">FN OD - AN Not Taken</string>
     <string name="answer">Answer</string>
     <string name="update_answer">Update Answer</string>
+    <string name="only_x_files_added">Files Added</string>
+    <string name="max_10_files_allowed">Maximum 10 Files Allowed</string>
 
 
 </resources>

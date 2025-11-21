@@ -92,7 +92,7 @@
                 android:id="@+id/llBottomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="60dp"
+                android:layout_marginBottom="@dimen/sixty"
                 android:alpha="0"
                 android:gravity="center"
                 android:orientation="horizontal"
