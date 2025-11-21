@@ -273,7 +273,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:text="Select Date &amp; Time"
+                    android:text="@string/select_date_time"
                     android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <RelativeLayout

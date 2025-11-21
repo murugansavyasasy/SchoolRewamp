@@ -41,6 +41,6 @@ class OnboardingAdapter(
             .into(holder.img)
 
         holder.title.text = item.title
-        holder.desc.text = item.description
+        holder.desc.text=item.description
     }
 }

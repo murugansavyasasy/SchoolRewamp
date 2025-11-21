@@ -242,7 +242,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/eight"
-                    android:text="Your Attachment's"
+                    android:text="@string/your_attachment_s"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -434,7 +434,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/sixteen"
         android:background="@drawable/rect_shadow_light_primary"
-        android:text="Submit"
+        android:text="@string/submit"
         android:textColor="@color/white"
         android:textSize="@dimen/fourteen_sp"
         android:visibility="gone"

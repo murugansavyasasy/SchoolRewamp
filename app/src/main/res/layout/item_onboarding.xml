@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,8 +14,8 @@
         android:scaleType="fitXY"
         android:src="@drawable/wave_primary_colour"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Main image floating above wave -->
     <ImageView
@@ -26,12 +25,12 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/disabled_girl_in_involved_in_business_presentation_discussion"
-        app:layout_constraintWidth_percent="0.7"
-        app:layout_constraintDimensionRatio="1:1"
         android:translationY="80dp"
         app:layout_constraintBottom_toTopOf="@id/imgWaveBackground"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintWidth_percent="0.7" />
 
     <!-- 📝 Scrollable text content -->
     <ScrollView
@@ -39,217 +38,293 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/imgWaveBackground"
+        app:layout_constraintBottom_toTopOf="@id/imgOnboard"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/layoutTextContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/twenty"
-            android:paddingTop="40dp"
-            android:paddingBottom="200dp"
-            android:gravity="center_horizontal">
+            android:paddingTop="40dp">
 
-        <TextView
-            android:id="@+id/txtTitle"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Super Easy Transaction"
-            android:textColor="@color/PrimaryColor"
-            android:textSize="@dimen/twenty_four_sp" />
+            <TextView
+                android:id="@+id/txtTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Super Easy Transaction"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="@dimen/twenty_four_sp" />
 
-        <TextView
-            android:id="@+id/txtDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Pay anything, anywhere, anytime more easy with this emoney. This is a long sample text that will now scroll properly without being hidden behind the image or wave. Just keep adding more text to test scrolling comfortably."
-            android:textColor="#808080"
-            android:textSize="@dimen/fourteen_sp" />
-    </LinearLayout>
-</ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/txtDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Pay anything, anywhere, anytime more easy with this emoney. This is a long sample text that will now scroll properly without being hidden behind the image or wave. Just keep adding more text to test scrolling comfortably."
+                android:textColor="#808080"
+                android:textSize="@dimen/fourteen_sp" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:background="@color/white">-->
+
+    <!--    &lt;!&ndash; Wave at bottom &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imgWaveBackground"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:adjustViewBounds="true"-->
+    <!--        android:scaleType="fitXY"-->
+    <!--        android:src="@drawable/wave_primary_colour"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+    <!--    &lt;!&ndash; Main image floating above wave &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imgOnboard"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:adjustViewBounds="true"-->
+    <!--        android:scaleType="fitCenter"-->
+    <!--        android:src="@drawable/disabled_girl_in_involved_in_business_presentation_discussion"-->
+    <!--        app:layout_constraintWidth_percent="0.7"-->
+    <!--        app:layout_constraintDimensionRatio="1:1"-->
+    <!--        android:translationY="80dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/imgWaveBackground"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+    <!--    &lt;!&ndash; 📝 Scrollable text content &ndash;&gt;-->
+    <!--    <ScrollView-->
+    <!--        android:id="@+id/scrollTextContainer"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:fillViewport="true"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/imgWaveBackground"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/layoutTextContent"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:paddingHorizontal="@dimen/twenty"-->
+    <!--            android:paddingTop="40dp"-->
+    <!--            android:paddingBottom="200dp"-->
+    <!--            android:gravity="center_horizontal">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/txtTitle"-->
+    <!--            style="@style/CustomTextStylePoppinsBold"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="Super Easy Transaction"-->
+    <!--            android:textColor="@color/PrimaryColor"-->
+    <!--            android:textSize="@dimen/twenty_four_sp" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/txtDesc"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="8dp"-->
+    <!--            android:text="Pay anything, anywhere, anytime more easy with this emoney. This is a long sample text that will now scroll properly without being hidden behind the image or wave. Just keep adding more text to test scrolling comfortably."-->
+    <!--            android:textColor="#808080"-->
+    <!--            android:textSize="@dimen/fourteen_sp" />-->
+    <!--    </LinearLayout>-->
+    <!--</ScrollView>-->
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<androidx.constraintlayout.widget.ConstraintLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:background="@color/white">-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:background="@color/white">-->
 
-<!--    &lt;!&ndash; 🌊 Wave at bottom &ndash;&gt;-->
-<!--    <ImageView-->
-<!--        android:id="@+id/imgWaveBackground"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:adjustViewBounds="true"-->
-<!--        android:scaleType="fitXY"-->
-<!--        android:src="@drawable/wave_primary_colour"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+    <!--    &lt;!&ndash; 🌊 Wave at bottom &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imgWaveBackground"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:adjustViewBounds="true"-->
+    <!--        android:scaleType="fitXY"-->
+    <!--        android:src="@drawable/wave_primary_colour"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent" />-->
 
-<!--    &lt;!&ndash; 🖼 Main image floating above wave &ndash;&gt;-->
-<!--    <ImageView-->
-<!--        android:id="@+id/imgOnboard"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:adjustViewBounds="true"-->
-<!--        android:scaleType="fitCenter"-->
-<!--        android:src="@drawable/disabled_girl_in_involved_in_business_presentation_discussion"-->
-<!--        app:layout_constraintWidth_percent="0.7"-->
-<!--        app:layout_constraintDimensionRatio="1:1"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/imgWaveBackground"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:translationY="80dp" />-->
+    <!--    &lt;!&ndash; 🖼 Main image floating above wave &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imgOnboard"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:adjustViewBounds="true"-->
+    <!--        android:scaleType="fitCenter"-->
+    <!--        android:src="@drawable/disabled_girl_in_involved_in_business_presentation_discussion"-->
+    <!--        app:layout_constraintWidth_percent="0.7"-->
+    <!--        app:layout_constraintDimensionRatio="1:1"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/imgWaveBackground"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        android:translationY="80dp" />-->
 
-<!--    &lt;!&ndash; 📝 Scrollable text (prevents clipping for long content) &ndash;&gt;-->
-<!--    <ScrollView-->
-<!--        android:id="@+id/scrollTextContainer"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:fillViewport="true"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/imgOnboard"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent">-->
+    <!--    &lt;!&ndash; 📝 Scrollable text (prevents clipping for long content) &ndash;&gt;-->
+    <!--    <ScrollView-->
+    <!--        android:id="@+id/scrollTextContainer"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:fillViewport="true"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/imgOnboard"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent">-->
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/layoutTextContent"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical"-->
-<!--            android:paddingHorizontal="24dp"-->
-<!--            android:paddingTop="40dp"-->
-<!--            android:gravity="center_horizontal">-->
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/layoutTextContent"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:paddingHorizontal="24dp"-->
+    <!--            android:paddingTop="40dp"-->
+    <!--            android:gravity="center_horizontal">-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/txtTitle"-->
-<!--                style="@style/CustomTextStylePoppinsBold"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Super Easy Transaction"-->
-<!--                android:textColor="@color/PrimaryColor"-->
-<!--                android:textSize="@dimen/twenty_four_sp"-->
-<!--                />-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/txtTitle"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Super Easy Transaction"-->
+    <!--                android:textColor="@color/PrimaryColor"-->
+    <!--                android:textSize="@dimen/twenty_four_sp"-->
+    <!--                />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/txtDesc"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:text="Pay anything, anywhere, anytime more easy with thi buicasbubacs bu ubascb csbuabsca scabuicsa uscaiub acsubsca uscabuicsa csuibabucs acsuiabcsa casuibu uu sacuibisca csahucisaacu nac cuaca  iuh 9h canc cauhicbai uuc au  chucaca cuac  8ac hca uiah cuahihca ica uucas emoney. This text can grow very large and still be scrollable, without hiding the title."-->
-<!--                android:textColor="#808080"-->
-<!--                android:textSize="@dimen/sixteen_sp"-->
-<!--                 />-->
-<!--        </LinearLayout>-->
-<!--    </ScrollView>-->
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:background="@color/white">-->
-
-<!--    &lt;!&ndash; 🔹 Decorative wave background (fixed bottom) &ndash;&gt;-->
-<!--    <ImageView-->
-<!--        android:id="@+id/imgWaveBackground"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom"-->
-<!--        android:adjustViewBounds="true"-->
-<!--        android:scaleType="fitXY"-->
-<!--        android:src="@drawable/wave_primary_colour" />-->
-
-<!--    &lt;!&ndash; 🔹 Dynamic image from URL (above wave) &ndash;&gt;-->
-<!--    <ImageView-->
-<!--        android:id="@+id/imgOnboard"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:adjustViewBounds="true"-->
-<!--        android:scaleType="fitCenter"-->
-<!--        android:layout_gravity="center" />-->
-
-<!--    &lt;!&ndash; 🔹 Text content &ndash;&gt;-->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="16dp"-->
-<!--        android:background="@android:color/transparent">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/txtTitle"-->
-<!--            style="@style/CustomTextStylePoppinsBold"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/fourty"-->
-<!--            android:text="Super Easy Transaction"-->
-<!--            android:textColor="@color/PrimaryColor"-->
-<!--            android:textSize="@dimen/twenty_four_sp" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/txtDesc"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:text="Pay anything, anywhere cuabuiascubi casubucasbubiucasbuiscabuibucas acbuibcsabucsa ascbcas csacscasiugcsa csagas bscaubcb cauibauciubcaubacbbucabuabucsabuibabcsbacsbbuscabuasbuscabubcsabcsbabacbusacbucasbubuascbucsabusacbuascbusbaucbuscabucsabucasbbsaucbuascbubucsabucsabucabubucsabucsabucasbucsabucsaubbcsabucsabuscaubcsabucsabucsbabacubcsabucbubcasubuscabucasbuscabucasbuubacsbbuscabcsabbucsabbsabubsucbiasbscbacsabbcbubsabucsabucsabubuiscabbuicsabucabucbaubuasbucscabbuscabucsbuacsbucbubcsbusabubucasbucsabbcsaubucsabuscabucsbbacsbcasbuacsbbcabuacbacbsabbacbacsbcsbsabcbbcsabbasbacabbbdabhdcbhabdcbbasdbdbasdyusbydsacbyacbdydbybycbycbycebybycebwycebyucbeybbweobcbbUB DBwbewb bouwbeub oububd bew ubcbow  bbeuowbuceb vcu oydcvove    yq  hvcvocvqyv  ecuvcv  cuycvcuhqvuqvuyb    shxbhxwb    oybqXOY VVCBCWHBCWB BYC BOCB    CYBBYB  BWWBYCQB    BCUYBQWUBCQ HUBCHUB QUWBCWQVVYCWQVYCVWQ UYVWQ   YWCV    UCVUCV  UYCVWUYCVO  YCVC    YVCWYQVUCWQYVCUVCWUYCVWUVCWQUYCWUYVCW   YCWVYWC     WVYVW   CVYWCVYVCYWQ    VYCQVYWCVYQYVCWQVYQCVYVYWCVYVYVYCWQVYCWVVWYQ    VYWQV   CQVYVYCQVYVYCVYCQ   VYCVYUCVQYYVCQ  YVUQCVYVYCQYVVYCQ   VVQYVYQWCVYVYQVYVYCWQYV, anytime more easy with this emoney"-->
-<!--            android:textColor="#808080" />-->
-<!--    </LinearLayout>-->
-
-<!--</FrameLayout>-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/txtDesc"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="8dp"-->
+    <!--                android:text="Pay anything, anywhere, anytime more easy with thi buicasbubacs bu ubascb csbuabsca scabuicsa uscaiub acsubsca uscabuicsa csuibabucs acsuiabcsa casuibu uu sacuibisca csahucisaacu nac cuaca  iuh 9h canc cauhicbai uuc au  chucaca cuac  8ac hca uiah cuahihca ica uucas emoney. This text can grow very large and still be scrollable, without hiding the title."-->
+    <!--                android:textColor="#808080"-->
+    <!--                android:textSize="@dimen/sixteen_sp"-->
+    <!--                 />-->
+    <!--        </LinearLayout>-->
+    <!--    </ScrollView>-->
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:background="@color/white"-->
-<!--    android:layout_height="match_parent">-->
+    <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:background="@color/white">-->
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imgOnboard"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:background="@drawable/wave_primary_colour"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:scaleType="fitEnd"-->
-<!--         />-->
+    <!--    &lt;!&ndash; 🔹 Decorative wave background (fixed bottom) &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imgWaveBackground"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        android:adjustViewBounds="true"-->
+    <!--        android:scaleType="fitXY"-->
+    <!--        android:src="@drawable/wave_primary_colour" />-->
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="16dp">-->
+    <!--    &lt;!&ndash; 🔹 Dynamic image from URL (above wave) &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imgOnboard"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:adjustViewBounds="true"-->
+    <!--        android:scaleType="fitCenter"-->
+    <!--        android:layout_gravity="center" />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/txtTitle"-->
-<!--            style="@style/CustomTextStylePoppinsBold"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/fourty"-->
-<!--            android:text="Super Easy Transaction"-->
-<!--            android:textColor="@color/PrimaryColor"-->
-<!--            android:textSize="@dimen/twenty_four_sp" />-->
+    <!--    &lt;!&ndash; 🔹 Text content &ndash;&gt;-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:padding="16dp"-->
+    <!--        android:background="@android:color/transparent">-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/txtDesc"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:text="Pay anything, anywhere, anytime more easy with this emoney"-->
-<!--            android:textColor="#808080" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/txtTitle"-->
+    <!--            style="@style/CustomTextStylePoppinsBold"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="@dimen/fourty"-->
+    <!--            android:text="Super Easy Transaction"-->
+    <!--            android:textColor="@color/PrimaryColor"-->
+    <!--            android:textSize="@dimen/twenty_four_sp" />-->
 
-<!--    </LinearLayout>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/txtDesc"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="8dp"-->
+    <!--            android:text="Pay anything, anywhere cuabuiascubi casubucasbubiucasbuiscabuibucas acbuibcsabucsa ascbcas csacscasiugcsa csagas bscaubcb cauibauciubcaubacbbucabuabucsabuibabcsbacsbbuscabuasbuscabubcsabcsbabacbusacbucasbubuascbucsabusacbuascbusbaucbuscabucsabucasbbsaucbuascbubucsabucsabucabubucsabucsabucasbucsabucsaubbcsabucsabuscaubcsabucsabucsbabacubcsabucbubcasubuscabucasbuscabucasbuubacsbbuscabcsabbucsabbsabubsucbiasbscbacsabbcbubsabucsabucsabubuiscabbuicsabucabucbaubuasbucscabbuscabucsbuacsbucbubcsbusabubucasbucsabbcsaubucsabuscabucsbbacsbcasbuacsbbcabuacbacbsabbacbacsbcsbsabcbbcsabbasbacabbbdabhdcbhabdcbbasdbdbasdyusbydsacbyacbdydbybycbycbycebybycebwycebyucbeybbweobcbbUB DBwbewb bouwbeub oububd bew ubcbow  bbeuowbuceb vcu oydcvove    yq  hvcvocvqyv  ecuvcv  cuycvcuhqvuqvuyb    shxbhxwb    oybqXOY VVCBCWHBCWB BYC BOCB    CYBBYB  BWWBYCQB    BCUYBQWUBCQ HUBCHUB QUWBCWQVVYCWQVYCVWQ UYVWQ   YWCV    UCVUCV  UYCVWUYCVO  YCVC    YVCWYQVUCWQYVCUVCWUYCVWUVCWQUYCWUYVCW   YCWVYWC     WVYVW   CVYWCVYVCYWQ    VYCQVYWCVYQYVCWQVYQCVYVYWCVYVYVYCWQVYCWVVWYQ    VYWQV   CQVYVYCQVYVYCVYCQ   VYCVYUCVQYYVCQ  YVUQCVYVYCQYVVYCQ   VVQYVYQWCVYVYQVYVYCWQYV, anytime more easy with this emoney"-->
+    <!--            android:textColor="#808080" />-->
+    <!--    </LinearLayout>-->
 
-<!--</FrameLayout>-->
+    <!--</FrameLayout>-->
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:background="@color/white"-->
+    <!--    android:layout_height="match_parent">-->
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imgOnboard"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:background="@drawable/wave_primary_colour"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:scaleType="fitEnd"-->
+    <!--         />-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:background="@android:color/transparent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:padding="16dp">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/txtTitle"-->
+    <!--            style="@style/CustomTextStylePoppinsBold"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="@dimen/fourty"-->
+    <!--            android:text="Super Easy Transaction"-->
+    <!--            android:textColor="@color/PrimaryColor"-->
+    <!--            android:textSize="@dimen/twenty_four_sp" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/txtDesc"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="8dp"-->
+    <!--            android:text="Pay anything, anywhere, anytime more easy with this emoney"-->
+    <!--            android:textColor="#808080" />-->
+
+    <!--    </LinearLayout>-->
+
+    <!--</FrameLayout>-->
 
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->

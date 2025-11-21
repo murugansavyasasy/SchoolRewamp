@@ -2,9 +2,9 @@
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/share_icon"
-        android:title="Share" />
+        android:title="@string/share" />
     <item
         android:id="@+id/action_download"
         android:icon="@drawable/cloud_download_icon"
-        android:title="Download" />
+        android:title="@string/download" />
 </menu>
