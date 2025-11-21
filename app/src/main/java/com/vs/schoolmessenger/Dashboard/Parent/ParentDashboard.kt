@@ -224,6 +224,8 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         }
 
         rlaLogout.setOnClickListener {
+            clearDim()
+            popupWindow.dismiss()
             isLogout(
                 activity = this,
                 viewModel =authViewModel,
@@ -240,7 +242,8 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                     //            SharedPreference.setFingerprintEnabled(requireActivity(), false)
                     startActivity(Intent(this, Login::class.java))
                 } else {
-                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    Constant.showErrorAlert(this,getString(R.string.Oops),message)
                 }
             }
 

@@ -269,6 +269,8 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         }
 
         rlaLogout.setOnClickListener {
+            clearDim()
+            popupWindow.dismiss()
             isLogout(
                 activity = this,
                 viewModel =authViewModel,
@@ -283,7 +285,9 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                     SharedPreference.setLoggedIn(this, false)
                     startActivity(Intent(this, Login::class.java))
                 } else {
-                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    Constant.showErrorAlert(this,getString(R.string.Oops),message)
+
                 }
             }
 
