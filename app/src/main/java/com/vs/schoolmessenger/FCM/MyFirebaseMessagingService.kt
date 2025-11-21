@@ -33,7 +33,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "MyFirebaseMessaging"
-        private const val CHANNEL_ID = "fcm_default_channel_v2"
+        private const val CHANNEL_ID = "fcm_default_channel"
         private const val CHANNEL_NAME = "Custom Notifications"
     }
 
