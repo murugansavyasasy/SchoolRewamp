@@ -22,5 +22,6 @@ data class NoticeStaffData(
     val sent_by: String,
     val can_edit: Boolean,
     val can_delete: Boolean,
-    val file_path: List<FilePath>
+    val file_path: List<FilePath>,
+    val is_management: Boolean,
 ) : Parcelable

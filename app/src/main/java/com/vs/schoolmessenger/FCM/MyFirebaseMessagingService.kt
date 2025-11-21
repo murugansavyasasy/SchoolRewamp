@@ -33,7 +33,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "MyFirebaseMessaging"
-        private const val CHANNEL_ID = "fcm_default_channel"
+        private const val CHANNEL_ID = "fcm_default_channel_v2"
         private const val CHANNEL_NAME = "Custom Notifications"
     }
 
@@ -53,24 +53,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val msgId = remoteMessage.data["msg_id"] ?: ""  // Separate top-level msg_id from payload
         val msgInfo = remoteMessage.data["msg_info"] ?: ""
         // Optional: Parse nested msg_info JSON if it's in valid JSON format
-        var menuId = ""
-        var menuName = ""
-        var receiverType = ""
-        var receiver_id = ""
-        var header_id = ""
-        var institute_id = ""
         try {
             // Firebase may send it like: {"menu_id":"39", "menu_name":"Attachments", ...}
             val json = JSONObject(msgInfo)
-            menuId = json.optString("menu_id")
-            menuName = json.optString("menu_name")
-            receiverType = json.optString("receiver_type")
-            receiver_id = json.optString("receiverid")
-            header_id = json.optString("header_id")
-            institute_id = json.optString("institute_id")
+           val menuId = json.optString("menu_id")
+           val menuName = json.optString("menu_name")
+           val receiverType = json.optString("receiver_type")
+           val receiver_id = json.optString("receiverid")
+           val header_id = json.optString("header_id")
+           val institute_id = json.optString("institute_id")
 
             if (type.equals("isCall")) {
-                sendNotificationCall(title, body)
+                sendNotificationCall(title, body,receiver_id.toString(),header_id.toString())
             } else {
                 sendNotification(
                     title,
@@ -93,21 +87,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         } catch (e: Exception) {
             Log.e("FCM", "Error parsing msg_info: ${e.message}")
             // Fallback: If parsing fails, still send basic notification
-            if (!type.equals("isCall")) {
-                sendNotification(
-                    title,
-                    body,
-                    tone,
-                    imageUrl,
-                    menuName,  // Empty fallback
-                    0,
-                    "",  // Empty String fallback
-                    msgId.toIntOrNull() ?: 0,
-                    receiverType,  // Empty fallback
-                    receiver_id,
-                    0
-                )
-            }
+//            if (!type.equals("isCall")) {
+//                sendNotification(
+//                    title,
+//                    body,
+//                    tone,
+//                    imageUrl,
+//                    menuName,  // Empty fallback
+//                    0,
+//                    "",  // Empty String fallback
+//                    msgId.toIntOrNull() ?: 0,
+//                    receiverType,  // Empty fallback
+//                    receiver_id,
+//                    0
+//                )
+//            }
         }
     }
 
@@ -116,7 +110,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "New FCM Token: $token")
     }
 
-    private fun sendNotificationCall(title: String, body: String) {
+    private fun sendNotificationCall(title: String, body: String,receiver_id : String,headerId : String) {
         // Check for notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
@@ -151,8 +145,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
+        val uniqueID = (receiver_id + headerId).hashCode()
+        val requestCode = uniqueID.takeIf { it != 0 } ?: System.currentTimeMillis().toInt()
+
         val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
+            this, requestCode, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -214,7 +211,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         try {
-            manager.notify(System.currentTimeMillis().toInt(), builder.build())
+//            manager.notify(System.currentTimeMillis().toInt(), builder.build())
+            val uniqueID = (receiver_id + headerId).hashCode()
+            val notificationId = uniqueID ?: (0..999999).random()
+            manager.notify(notificationId, builder.build())
             Log.d(TAG, "Notification sent successfully")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send notification: ${e.message}")
@@ -259,8 +259,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
+        val uniqueID = (receiverId + headerId).hashCode()
+        val requestCode = uniqueID.takeIf { it != 0 } ?: System.currentTimeMillis().toInt()
+
         val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
+            this, requestCode, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val message = Uri.parse("android.resource://${packageName}/raw/message")
@@ -346,7 +349,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         try {
-            manager.notify(System.currentTimeMillis().toInt(), builder.build())
+//            manager.notify(System.currentTimeMillis().toInt(), builder.build())
+            val uniqueID = (receiverId + headerId).hashCode()
+            val notificationId = uniqueID ?: (0..999999).random()
+            manager.notify(notificationId, builder.build())
             Log.d(TAG, "Notification sent successfully")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send notification: ${e.message}")

@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -24,6 +25,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -52,7 +54,6 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
@@ -67,6 +68,8 @@ import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardAdapter
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.SchoolNameTarget
 import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.LSRW.Adapter.LSRWImagePickingAdapter
+import com.vs.schoolmessenger.School.LSRW.CreateNewTask
 import com.vs.schoolmessenger.School.LSRW.LsrwStudentListFragment
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
@@ -107,7 +110,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
-    private var mAdapter: ImagePickingAdapter? = null
+    private var mAdapter: LSRWImagePickingAdapter? = null
 
     lateinit var childstandardadapter: ChildStandardAdapter
     lateinit var assignmentchildstandardAdapter: AssignmentChildStandardAdapter
@@ -120,6 +123,15 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         private const val MAX_FILES = 10
     }
 
+
+    private var selectedSkill: String = Constant.Listening
+    private lateinit var tabList: List<LinearLayout>
+    private var mediaRecorder: MediaRecorder? = null
+    private var recordingFilePath: String? = null
+    private var isRecording = false
+    private val RECORD_AUDIO_PERMISSION_REQUEST_CODE = 201
+    private var audioPermissionDeniedCount = 0
+
     private var data: FilePreview? = null
 
     private var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
@@ -130,6 +142,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
     private var dummyPath: String? = null
+
+
+    private fun updateRemainingCount() {
+        val usedSlots = Constant.selectedFiles.size - 1
+        Constant.Remaining = (CreateNewTask.Companion.MAX_FILES - usedSlots).coerceAtLeast(0)
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -398,73 +417,70 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
                 }
             }
-//            dummyPath = saveDrawableToCache(R.drawable.attachment_with_bg)
-//            dummyPath?.let {
-//                Constant.selectedFiles.add(
-//                    FileItem(
-//                        it, FileType.IMAGE
-//                    )
-//                )
-//            }
+            dummyPath = saveDrawableToCache(R.drawable.attachment_with_bg)
+            dummyPath?.let {
+                Constant.selectedFiles.add(
+                    FileItem(
+                        it, FileType.IMAGE
+                    )
+                )
+            }
 
-            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
-            binding.childlsrwlayoutxml.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            mAdapter = LSRWImagePickingAdapter(this, Constant.selectedFiles!!, this)
+            binding.childlsrwlayoutxml.rcyImages.layoutManager = GridLayoutManager(this, 1)
             binding.childlsrwlayoutxml.rcyImages.adapter = mAdapter
+
+            updateRemainingCount()
+
+
             albumResultLauncher =
                 registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
-                        val selectedUris =
-                            result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                        if (Constant.Remaining!! > 0) {
-                            Constant.Remaining = Constant.Remaining - selectedUris!!.size
-                            selectedUris?.forEach { uri ->
-                                val mimeType = contentResolver.getType(uri)
-                                val path = when (uri.scheme) {
-                                    "file" -> uri.path
-                                    else -> getPathFromUri(uri)
-                                }
+                        val selectedUris = result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
+                        if (selectedUris.isNullOrEmpty()) return@registerForActivityResult
 
-                                if (path == null) {
-                                    Log.w("addPath", "Could not resolve path from URI: $uri")
-                                    return@forEach
-                                }
-
-                                val fileName = getFileName(uri).ifEmpty { File(path).name }
-                                val type = when {
-                                    mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                                    mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                                    mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-                                    fileName.endsWith(".pdf", true) -> FileType.PDF
-                                    fileName.endsWith(".doc", true) || fileName.endsWith(
-                                        ".docx", true
-                                    ) -> FileType.DOC
-
-                                    fileName.endsWith(".xls", true) || fileName.endsWith(
-                                        ".xlsx", true
-                                    ) -> FileType.EXCEL
-
-                                    fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                        ".pptx", true
-                                    ) -> FileType.PPT
-
-                                    fileName.endsWith(".txt", true) -> FileType.TXT
-                                    else -> FileType.OTHER
-                                }
-
-                                if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                                    Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                                } else {
-                                    Constant.Remaining = 0
-                                }
-
-                                Log.d("SelectedFile", "URI: $uri, Type: $type")
+                        var addedCount = 0
+                        selectedUris.forEach { uri ->
+                            if (Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
+                                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+                                return@forEach
                             }
+
+                            val mimeType = contentResolver.getType(uri)
+                            val path = when (uri.scheme) {
+                                Constant.file_ -> uri.path
+                                else -> getPathFromUri(uri)
+                            } ?: run {
+                                Log.w("addPath", "Could not resolve path from URI: $uri")
+                                return@forEach
+                            }
+
+                            val fileName = getFileName(uri).ifEmpty { File(path).name }
+                            val type = when {
+                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
+                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
+                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+                                fileName.endsWith(".pdf", true) -> FileType.PDF
+                                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
+                                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                                fileName.endsWith(".txt", true) -> FileType.TXT
+                                else -> FileType.OTHER
+                            }
+
+                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            addedCount++
+                        }
+
+                        if (addedCount > 0) {
                             mAdapter!!.notifyDataSetChanged()
+                            updateRemainingCount()
 
-
+                            if (addedCount < selectedUris.size) {
+                                Toast.makeText(this, getString(R.string.only_x_files_added, Constant.Remaining), Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
-                    mAdapter?.notifyDataSetChanged()
                 }
             val audioList =
                 data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
@@ -627,9 +643,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         FileItem(aws.isFileUrl, FileType.valueOf(aws.isFileType))
                     }
 
-//                    if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
-//                        Constant.selectedFiles.removeAll { it.path == dummyPath }
-//                    }
+                    if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
+                        Constant.selectedFiles.removeAll { it.path == dummyPath }
+                    }
 
                     Constant.selectedFiles.clear()
                     Constant.selectedFiles.addAll(submittedFiles)
@@ -1123,6 +1139,29 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
     }
 
+
+    private fun checkRecordPermissionAndStartRecording() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            startVoiceRecording()
+        } else {
+            if (audioPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
+                    this, Manifest.permission.RECORD_AUDIO
+                )
+            ) {
+                showAudioPermissionSettingsDialog()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.RECORD_AUDIO), RECORD_AUDIO_PERMISSION_REQUEST_CODE
+                )
+            }
+        }
+    }
+
+
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -1139,6 +1178,21 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     showCameraPermissionSettingsDialog()
                 } else {
                     Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        if (requestCode == RECORD_AUDIO_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startVoiceRecording()
+            } else {
+                audioPermissionDeniedCount++
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        this, Manifest.permission.RECORD_AUDIO
+                    )
+                ) {
+                    showAudioPermissionSettingsDialog()
+                } else {
+                    Toast.makeText(this, getString(R.string.microphone_permission_is_required), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -1199,9 +1253,110 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
                 dialog.dismiss()
             }.show()
+    }
+
+    private fun showAudioPermissionSettingsDialog() {
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.microphone_permission_is_permanently_denied_please_enable_it_from_app_settings))
+            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.parse("package:$packageName")
+                }
+                startActivity(intent)
+            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+    }
+
+    private fun startVoiceRecording() {
+        if (isRecording) return
+
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File = getExternalFilesDir("recordings") ?: cacheDir
+        val audioFile: File = try {
+            File.createTempFile("AUDIO_${timeStamp}_", ".m4a", storageDir)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            Toast.makeText(this, getString(R.string.could_not_create_file_for_audio), Toast.LENGTH_SHORT).show()
+            return
+        }
+        recordingFilePath = audioFile.absolutePath
+
+        mediaRecorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setOutputFile(recordingFilePath)
+            try {
+                prepare()
+                start()
+                isRecording = true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                releaseRecorder()
+                Toast.makeText(this@ChildHomeWork, getString(R.string.failed_to_start_recording), Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
+        // Replace your old dialog code with this:
+        val dialogView = layoutInflater.inflate(R.layout.dialog_voice_recording, null)
+        val stopBtn = dialogView.findViewById<TextView>(R.id.btnStop)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+
+        stopBtn.setOnClickListener {
+            stopVoiceRecording()
+            dialog.dismiss()
+        }
+    }
+
+
+    private fun stopVoiceRecording() {
+        if (!isRecording) return
+        isRecording = false
+        try {
+            mediaRecorder?.stop()
+        } catch (e: RuntimeException) { }
+        mediaRecorder?.release()
+        mediaRecorder = null
+
+        recordingFilePath?.let { path ->
+            val file = File(path)
+            if (file.exists() && file.length() > 0) {
+                if (Constant.selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
+                    Constant.selectedFiles.add(FileItem(path, FileType.AUDIO))
+                    mAdapter?.notifyDataSetChanged()
+                    updateRemainingCount()
+                    Toast.makeText(this, getString(R.string.audio_recorded_and_added), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+                    file.delete()
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.recording_failed_file_empty), Toast.LENGTH_SHORT).show()
+                file.delete()
+            }
+        }
+        recordingFilePath = null
+    }
+
+    private fun releaseRecorder() {
+        if (isRecording) {
+            stopVoiceRecording()
+        } else {
+            mediaRecorder?.release()
+            mediaRecorder = null
+        }
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
@@ -1230,11 +1385,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     private fun calculateFileSize(): String {
         var totalSize = 0L
-//        Constant.selectedFiles.filter { it.path != dummyPath }.forEach { fileItem ->
-//            val size = getFileSize(Uri.parse(fileItem.path))
-//            Log.d("FileSizeDebug", "File: ${fileItem.path}, Size: $size bytes")
-//            totalSize += size
-//        }
+        Constant.selectedFiles.filter { it.path != dummyPath }.forEach { fileItem ->
+            val size = getFileSize(Uri.parse(fileItem.path))
+            Log.d("FileSizeDebug", "File: ${fileItem.path}, Size: $size bytes")
+            totalSize += size
+        }
         val sizeInKB = totalSize / 1024
         Log.d("FileSizeDebug", "Total Size: $sizeInKB KB")
         return "$sizeInKB KB"
@@ -1255,16 +1410,24 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     override fun onBackPressed() {
       //  Constant.selectedFiles.clear()
+        Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         isVideoSelectedArrayList.clear()
         Constant.Remaining = MAX_FILES
-
+        updateRemainingCount()
         super.onBackPressed()
     }
-
     override fun onPause() {
         super.onPause()
+        if (isRecording) {
+            stopVoiceRecording()
+        }
         Constant.stopDelay()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releaseRecorder()
     }
 
     override fun onImageClick(position: Int) {
@@ -1313,14 +1476,16 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.filepick_bottom_sheet)
 
-
         val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
         val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
         val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
+        val rlavoicerecorder = dialog.findViewById<RelativeLayout>(R.id.rlavoicerecorder)
 
         rlaVoice.visibility = View.VISIBLE
+        rlavoicerecorder.visibility = View.VISIBLE
+
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
             Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())
@@ -1332,6 +1497,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         rlaVoice.setOnClickListener {
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.AUDIO)
+            dialog.dismiss()
+        }
+
+        rlavoicerecorder.setOnClickListener {
+            Constant.isFileLimit = 10
+            openVoiceRecorder()
             dialog.dismiss()
         }
 
@@ -1371,6 +1542,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
 
+    private fun openVoiceRecorder() {
+        checkRecordPermissionAndStartRecording()
+    }
+
+
+
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
@@ -1398,101 +1575,63 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode != RESULT_OK) return
-
-        if (Constant.Remaining!! == 0) {
-            Toast.makeText(
-                this,
-                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
-                Toast.LENGTH_SHORT
-            ).show()
+        if (resultCode != RESULT_OK || Constant.selectedFiles.size >= MAX_FILES + 1) {
+            if (Constant.selectedFiles.size >= MAX_FILES + 1) {
+                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+            }
             return
         }
 
-        fun addPath(uri: Uri) {
-            Log.d("isFilePickingUrl", uri.toString())
+        fun addFile(uri: Uri) {
+            if (Constant.selectedFiles.size >= MAX_FILES + 1) return
 
             val mimeType = contentResolver.getType(uri)
-            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
-                Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
-                return
-            }
+            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) return
 
             val fileName = getFileName(uri)
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                fileName.endsWith(".xls", true) || fileName.endsWith(
-                    ".xlsx", true
-                ) -> FileType.EXCEL
-
+                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
 
-
-            if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                Constant.selectedFiles.add(FileItem(uri.toString(), type))
-            } else {
-                Constant.Remaining = 0
-            }
-            for (item in Constant.selectedFiles) {
-                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
-            }
+            Constant.selectedFiles.add(FileItem(uri.toString(), type))
         }
 
         when (requestCode) {
-            CreateEvent.Companion.CAMERA_IMAGE_REQUEST -> {
-                cameraImageFilePath?.let { filePath ->
-                    var file = File(filePath)
+            CAMERA_IMAGE_REQUEST -> {
+                cameraImageFilePath?.let { path ->
+                    val file = File(path)
                     if (file.exists()) {
-                        if (!file.name.endsWith(".jpg", true)) {
+                        val finalFile = if (!file.name.endsWith(".jpg", true)) {
                             val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
-                            if (file.renameTo(newFile)) {
-                                cameraImageFilePath = newFile.absolutePath
-                                file = newFile
-                            }
-                        }
-                        val uri = Uri.fromFile(file)
-                        Constant.Remaining = Constant.Remaining - 1
-
-                        addPath(uri)
-                    } else {
-                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
-                            .show()
+                            file.renameTo(newFile)
+                            newFile
+                        } else file
+                        addFile(Uri.fromFile(finalFile))
                     }
-                } ?: run {
-                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
                 }
             }
-
-            ChildHomeWork.Companion.PICK_DOCUMENT_REQUEST -> {
-                val clipData = data?.clipData
-                val singleUri = data?.data
-
-                if (clipData != null) {
-                    for (i in 0 until clipData.itemCount) {
-                        val uri = clipData.getItemAt(i).uri
-                        addPath(uri)
+            PICK_DOCUMENT_REQUEST -> {
+                data?.clipData?.let { clip ->
+                    for (i in 0 until clip.itemCount) {
+                        addFile(clip.getItemAt(i).uri)
                     }
-                    Constant.Remaining = Constant.Remaining - clipData.itemCount
-
-                } else if (singleUri != null) {
-                    addPath(singleUri)
-                    Constant.Remaining = Constant.Remaining - 1
-
-                }
+                } ?: data?.data?.let { addFile(it) }
             }
         }
+
         mAdapter?.notifyDataSetChanged()
+        updateRemainingCount()
     }
 
     private fun getPathFromUri(uri: Uri): String? {
-
-        if (uri.scheme.equals("content", ignoreCase = true)) {
+        // Content scheme
+        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
             val projection = arrayOf(MediaStore.Images.Media.DATA)
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
@@ -1502,7 +1641,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
 
-        if (uri.scheme.equals("file", ignoreCase = true)) {
+        // File scheme fallback
+        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
             return uri.path
         }
         return null
@@ -1511,7 +1651,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     @SuppressLint("Range")
     private fun getFileName(uri: Uri): String {
         var result: String? = null
-        if (uri.scheme == "content") {
+        if (uri.scheme == Constant.content_) {
             val cursor = contentResolver.query(uri, null, null, null, null)
             cursor?.use {
                 if (it.moveToFirst()) {
@@ -1532,9 +1672,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
+        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
     }
 
 

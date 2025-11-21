@@ -114,6 +114,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isTotalSelectedItem = 0
     var isStandardId = ""
     var isClickedTab = 0
+    private var isAssignmentData: AssignmentSendingData? = null
+
 
     override fun setupViews() {
         super.setupViews()
@@ -128,7 +130,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         binding.btnSpecificStudent.setOnClickListener(this)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytAcademicYear.setOnClickListener(this)
-
         binding.tapEntireSchool.setOnClickListener(this)
         binding.tapStandards.setOnClickListener(this)
         binding.tabSectionsStudent.setOnClickListener(this)
@@ -142,6 +143,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isUserDetails = SharedPreference.getUserDetails(this)
         binding.toolbarLayout.lblParentToolBar.text = isStaffDetails!!.school_name
+        isAssignmentData = intent.getParcelableExtra(Constant.assignment_data)
 
         if (isStaffDetails!!.school_name_regional != "") {
             binding.toolbarLayout.lblSchoolName.visibility = View.GONE
@@ -557,6 +559,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tapEntireSchool.visibility = View.GONE
                     binding.tapStandards.visibility = View.GONE
                     binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabLayout.visibility = View.GONE
                     binding.tabGroups.visibility = View.GONE
                     binding.tapStaffs.visibility = View.GONE
                     changeTapBg(Constant.isSection)
@@ -615,13 +618,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isLoadGroupData(isGetGroupListData: List<NameAndIds>?) {
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         isGroupStaffAdapter = GroupStaffAdapter(
             true, isGetGroupListData, this@RecipientActivity, this, Constant.isShimmerViewDisable
         )
         binding.recyclerView.adapter = isGroupStaffAdapter
-
     }
 
     private fun isLoadCheckLevelData(data: List<GetCheckLevelData>?) {
@@ -636,7 +637,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, displayList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.isSpinnerLevel.adapter = adapter
-
         binding.isSpinnerLevel.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -742,7 +742,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (isSubject.isNullOrEmpty()) return
 
         val subjectList = isSubject.toMutableList()
-        subjectList.add(0, NameAndIds(0, "Get Subject", "", "", ""))
+//        subjectList.add(0, NameAndIds(0, "Get Subject", "", "", ""))
 
         val adapter = SubjectLoadAdapter(this, subjectList)
         binding.isSpinnerSubject.adapter = adapter
@@ -760,15 +760,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         "DropdownMenu",
                         "Clicked Subject: ID = ${selectedItem.id}, Name = ${selectedItem.name}"
                     )
-                    isSubjectId = if (position != 0) selectedItem.id else null
+                    isSubjectId =  selectedItem.id
 
                     if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
-                        if (position != 0) {
-                            binding.rytLevelDropDown.visibility = View.VISIBLE
-                            isCheckLevel()
-                        } else {
-                            binding.rytLevelDropDown.visibility = View.GONE
-                        }
+//                        if (position != 0) {
+                        binding.rytLevelDropDown.visibility = View.VISIBLE
+                        isCheckLevel()
+//                        } else {
+//                            binding.rytLevelDropDown.visibility = View.GONE
+//                        }
                     }
                 }
 
@@ -837,6 +837,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 intent.putExtra(Constant.isCurrentAcademicYear, isCurrentAcademicYear)
                 intent.putExtra(Constant.lblAcademicYear, isSelectedAcademicYear)
                 intent.putStringArrayListExtra(Constant.isSelectedId, ArrayList(selectedIds))
+                if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+//                    val isAssignmentData = intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
+                    intent.putExtra(Constant.assignment_data, isAssignmentData)
+                    intent.putExtra("subject_id", isSubjectId)
+                }
                 startActivity(intent)
             }
 
@@ -899,49 +904,49 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
-                        if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID || Constant.M_HOMEWORK == SELECTED_MENU_ID || Constant.M_LSRW == SELECTED_MENU_ID) {
-                            if (isSubjectId == null) {
-                                Constant.showValidationAlertPopup(
-                                    getString(R.string.alert),
-                                    getString(R.string.select_the_subject),
-                                    this
-                                )
-                            } else {
-                                if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
-                                    if (selectedLevelValue == 0) {
-                                        Constant.showValidationAlertPopup(
-                                            getString(R.string.alert),
-                                            getString(R.string.select_the_level),
-                                            this
-                                        )
-                                    } else {
-                                        showSendConfirmationDialog(
-                                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-                                                R.string._s
-                                            ), isAcademicYearNote
-                                        )
-
-                                    }
+                    if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID || Constant.M_HOMEWORK == SELECTED_MENU_ID || Constant.M_LSRW == SELECTED_MENU_ID) {
+                        if (isSubjectId == null) {
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.alert),
+                                getString(R.string.select_the_subject),
+                                this
+                            )
+                        } else {
+                            if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
+                                if (selectedLevelValue == 0) {
+                                    Constant.showValidationAlertPopup(
+                                        getString(R.string.alert),
+                                        getString(R.string.select_the_level),
+                                        this
+                                    )
                                 } else {
                                     showSendConfirmationDialog(
                                         resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
                                             R.string._s
                                         ), isAcademicYearNote
                                     )
-                                }
 
+                                }
+                            } else {
+                                showSendConfirmationDialog(
+                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                        R.string._s
+                                    ), isAcademicYearNote
+                                )
                             }
 
                         }
 
-                        else {
+                    }
 
-                            showSendConfirmationDialog(
-                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-                                    R.string._s
-                                ), isAcademicYearNote
-                            )
-                        }
+                    else {
+
+                        showSendConfirmationDialog(
+                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                R.string._s
+                            ), isAcademicYearNote
+                        )
+                    }
 
                 } else {
                     Constant.showValidationAlertPopup(
@@ -1086,7 +1091,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.chAllSelect.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
                 binding.subjectlabel.visibility = View.GONE
-                if (SELECTED_MENU_ID == M_COMMUNICATION || SELECTED_MENU_ID == M_ATTACHMENTS) {
+                if (SELECTED_MENU_ID == M_COMMUNICATION || SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_ASSIGNMENT) {
                     binding.btnSpecificStudent.visibility = View.VISIBLE
                 } else {
                     binding.btnSpecificStudent.visibility = View.GONE
@@ -1707,13 +1712,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             fileSize = isFileSize,
         )
         appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
-
     }
 
-
     fun isAssignmentSend() {
-        val isAssignmentData =
-            intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
+//        val isAssignmentData = intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
         isAssignmentData?.let {
             val jsonObject = ApiCallRequest.isSendAssignment(
                 targetType = isTargetType!!,

@@ -169,20 +169,6 @@ class ImagePickingAdapter(
         val contentResolver = context.contentResolver
         return contentResolver.getType(uri) ?: "*/*"
     }
-
-
     override fun getItemCount() = items.size
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
