@@ -417,6 +417,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
                 }
             }
+            Constant.selectedFiles.clear()
             dummyPath = saveDrawableToCache(R.drawable.attachment_with_bg)
             dummyPath?.let {
                 Constant.selectedFiles.add(
