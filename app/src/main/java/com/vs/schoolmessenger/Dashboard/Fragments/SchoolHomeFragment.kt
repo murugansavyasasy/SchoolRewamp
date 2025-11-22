@@ -800,7 +800,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_LEAVE_REQUEST -> {
-                LeaveRequests::class.java
+//                LeaveRequests::class.java
+                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                    LeaveRequests::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        LeaveRequests::class.java
+                    }
+                }
             }
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_ONLINE_TEXT_BOOK -> Ebooks::class.java
