@@ -142,7 +142,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         if (fromNotification) {
             handleNotificationIntent(intent)
         } else {
-            // Run cleanup
+             //Run cleanup
 //            val cleaned = AppDataCleaner.clearOldDataIfNeeded(this)
 //            if (cleaned) {
 //                Log.d("Cleanup", "cleaned")
@@ -151,8 +151,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 //                    askNotificationPermission()
 //                }, 1500) // small delay after cleanup
 //            } else {
-//                askNotificationPermission()
-//            }
+                askNotificationPermission()
+           // }
 
         }
 
@@ -182,7 +182,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
             }
         }
 
-        askNotificationPermission()
+//        askNotificationPermission()
         authViewModel!!.isUserValidation?.observe(this) { response ->
             Constant.hideLoading(this@Splash)
             if (response != null) {
@@ -595,11 +595,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                 }
 
                 else -> {
-                    // default behavior
+                    askNotificationPermission()
                 }
             }
         } else {
-            // usual process
+            askNotificationPermission()
+
         }
     }
 

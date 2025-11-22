@@ -108,10 +108,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 if (isLastBubble) {
                     container.visibility = View.GONE
                     startWaveAnimation()
-                    startAllSplashAnimations()
+//                    startAllSplashAnimations()
                 }
             }
             .start()
+
+        startAllSplashAnimations()
+
     }
 
 
@@ -252,7 +255,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun animateLogoPulse() {
-        binding.root.postDelayed({
+//        binding.root.postDelayed({
             val pulseScaleX = ObjectAnimator.ofFloat(binding.imgLogo, "scaleX", 1f, 1.05f, 1f)
             val pulseScaleY = ObjectAnimator.ofFloat(binding.imgLogo, "scaleY", 1f, 1.05f, 1f)
             AnimatorSet().apply {
@@ -261,7 +264,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 interpolator = AccelerateDecelerateInterpolator()
                 start()
             }
-        }, 2700)
+//        }, 1000)
     }
 
     override fun isToolBarNoticeCallTheme() {
