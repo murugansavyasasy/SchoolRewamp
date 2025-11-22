@@ -60,6 +60,7 @@ import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -177,6 +178,24 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             }
         }
 
+        notificationPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                Log.d("goToNext", "goToNext2")
+
+                goToNext()
+                Log.d("PermissionResult", "✅ User clicked ALLOW for notification permission")
+            } else {
+                Log.d("goToNext", "goToNext3")
+
+                goToNext()
+                Log.d(
+                    "PermissionResult",
+                    "❌ User clicked DENY or DISMISSED the notification permission dialog"
+                )
+            }
+        }
 
         val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
         Log.d("fromNotification", fromNotification.toString())
@@ -205,24 +224,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         for (signature in appSignatures) {
             Log.d("AppHash", signature)
         }
-        notificationPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted ->
-            if (isGranted) {
-                Log.d("goToNext", "goToNext2")
 
-                goToNext()
-                Log.d("PermissionResult", "✅ User clicked ALLOW for notification permission")
-            } else {
-                Log.d("goToNext", "goToNext3")
-
-                goToNext()
-                Log.d(
-                    "PermissionResult",
-                    "❌ User clicked DENY or DISMISSED the notification permission dialog"
-                )
-            }
-        }
 
 //        askNotificationPermission()
         authViewModel!!.isUserValidation?.observe(this) { response ->
@@ -760,6 +762,27 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     pendingIntent?.send()
                 }
 
+                Constant.M_ATTENDANCE_REPORT -> {
+                    val detailIntent = Intent(this, LeaveRequest::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.header_id, headerId)
+                        putExtra(Constant.receiverid, receiverId)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(LeaveRequest::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+
+                    pendingIntent?.send()
+                }
+
                 Constant.M_FEE_DETAILS -> {
                     val detailIntent = Intent(this, PTM::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
@@ -780,7 +803,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
                     pendingIntent?.send()
                 }
-
 
                 Constant.M_INTERACTION_WITH_STAFF -> {
                     val detailIntent = Intent(this, InteractionWithStaff::class.java).apply {
@@ -803,7 +825,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     pendingIntent?.send()
                 }
 
-
                 Constant.M_QUIZ_EXAM -> {
                     val detailIntent = Intent(this, Quiz::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
@@ -824,7 +845,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
                     pendingIntent?.send()
                 }
-
 
                 Constant.M_MESSAGES_FROM_MANAGEMENT -> {
                     val detailIntent = Intent(this, MessageFromManagement::class.java).apply {
