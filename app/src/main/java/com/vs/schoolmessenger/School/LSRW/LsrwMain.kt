@@ -117,9 +117,18 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgBack -> onBackPressed()
+            R.id.imgBack -> {
+                Constant.selectedFiles.clear()
+                onBackPressed()
+            }
+
             R.id.newtaskbutton -> RedirectToNewTaskPage()
         }
+    }
+
+    override fun onBackPressed() {
+        Constant.selectedFiles.clear()
+        super.onBackPressed()
     }
 
     private fun RedirectToNewTaskPage() {
