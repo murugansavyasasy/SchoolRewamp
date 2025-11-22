@@ -299,18 +299,18 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
     private fun scrollToMessageId(headerId: String?) {
         val dataList = mAdapter?.getCurrentList()
-        if (!dataList.isNullOrEmpty()) {
-            val index = dataList.indexOfFirst { it.header_id == headerId }
-            if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index")
-                binding.rcyLeaveRequestHistory.post {
-                    binding.rcyLeaveRequestHistory.smoothScrollToPosition(index)
-                    highlightItemTemporarily(binding.rcyLeaveRequestHistory, index)
-                }
-            } else {
-                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
-            }
-        }
+//        if (!dataList.isNullOrEmpty()) {
+////            val index = dataList.indexOfFirst { it.header_id == headerId }
+//            if (index != -1) {
+//                Log.d("ScrollDebug", "Scrolling to index $index")
+//                binding.rcyLeaveRequestHistory.post {
+//                    binding.rcyLeaveRequestHistory.smoothScrollToPosition(index)
+//                    highlightItemTemporarily(binding.rcyLeaveRequestHistory, index)
+//                }
+//            } else {
+//                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+//            }
+//        }
     }
 
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
