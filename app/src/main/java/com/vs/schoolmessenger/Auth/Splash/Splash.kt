@@ -53,6 +53,7 @@ import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -507,6 +508,29 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     pendingIntent?.send()
                 }
 
+
+                Constant.M_ATTENDANCE_REPORT -> {
+                    val detailIntent = Intent(this, LeaveRequest::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.header_id, headerId)
+                        putExtra(Constant.receiverid, receiverId)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(LeaveRequest::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+
+                    pendingIntent?.send()
+                }
+
+
                 Constant.M_FEE_DETAILS -> {
                     val detailIntent = Intent(this, PTM::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
@@ -571,6 +595,9 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
 
                     pendingIntent?.send()
                 }
+
+
+
 
 
                 Constant.M_MESSAGES_FROM_MANAGEMENT -> {
