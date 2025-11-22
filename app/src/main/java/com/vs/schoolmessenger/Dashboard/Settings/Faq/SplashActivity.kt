@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import android.widget.FrameLayout
+import android.widget.ImageView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.ActivitySplashBinding
@@ -31,6 +32,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         Color.parseColor("#FFB6C1"), Color.parseColor("#87CEEB"), Color.parseColor("#98D8C8"),
         Color.parseColor("#F7DC6F"), Color.parseColor("#BB8FCE")
     )
+
     override fun getViewBinding(): ActivitySplashBinding {
         return ActivitySplashBinding.inflate(layoutInflater)
     }
@@ -64,9 +66,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         animateRemainingDots()
 
         binding.root.postDelayed({
-            finish()
+//            finish()
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        }, 3000)
+        }, 5000)
     }
 
     private fun playBubbleAnimation() {
@@ -74,17 +76,24 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         val centerX = container.width / 2f
         val centerY = container.height / 2f
         val bubbleCount = 30
-        val bubbleDuration = 1000L
+        val bubbleDuration = 1050L
         val bubbleDelay = 20L
 
         repeat(bubbleCount) { i ->
             val isLastBubble = i == bubbleCount - 1
-            container.postDelayed({ createBubble(container, centerX, centerY, bubbleDuration, isLastBubble)
+            container.postDelayed({
+                createBubble(container, centerX, centerY, bubbleDuration, isLastBubble)
             }, i * bubbleDelay)
         }
     }
 
-    private fun createBubble(container: FrameLayout, centerX: Float, centerY: Float, duration: Long, isLastBubble: Boolean) {
+    private fun createBubble(
+        container: FrameLayout,
+        centerX: Float,
+        centerY: Float,
+        duration: Long,
+        isLastBubble: Boolean
+    ) {
         val bubble = View(this)
         val size = (20..25).random()
         bubble.layoutParams = FrameLayout.LayoutParams(size, size)
@@ -104,13 +113,23 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         val clusterSpread = 70
         val finalX = centerX + (-clusterSpread..clusterSpread).random() - size / 2
         val finalY = centerY + (-clusterSpread..clusterSpread).random() - size / 2
-        bubble.animate().x(finalX).y(finalY).alpha(0f).setDuration(duration).setInterpolator(AccelerateDecelerateInterpolator()).withEndAction { container.removeView(bubble)
-                if (isLastBubble) {
-                    container.visibility = View.GONE
-                    startWaveAnimation()
-                    startAllSplashAnimations()
-                }
+        bubble.animate().x(finalX).y(finalY).alpha(0f).setDuration(duration)
+            .setInterpolator(AccelerateDecelerateInterpolator()).withEndAction {
+            container.removeView(bubble)
+//                if (isLastBubble) {
+//                    binding.rootLayout.setBackgroundResource(R.drawable.bg_gradient_dark_blue)
+//                    container.visibility = View.GONE
+//                    startWaveAnimation()
+//                    startAllSplashAnimations()
+//                }
+            if (isLastBubble) {
+                binding.rootLayout.setBackgroundResource(R.drawable.bg_gradient_dark_blue)
+                container.removeAllViews()
+                startWaveAnimation()
+                startAllSplashAnimations()
             }
+
+        }
             .start()
     }
 
@@ -122,7 +141,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             wave.scaleY = 0f
             wave.alpha = 0f
             wave.visibility = View.VISIBLE
-            wave.animate().alpha(0.4f).scaleX(1.7f).scaleY(1.7f).setStartDelay(index * 400L).setDuration(1600).withEndAction { wave.animate().alpha(0f).scaleX(2.2f).scaleY(2.2f).setDuration(900).withEndAction { startWaveAnimation() }.start() }.start()
+            wave.animate().alpha(0.4f).scaleX(1.7f).scaleY(1.7f).setStartDelay(index * 400L)
+                .setDuration(1600).withEndAction {
+                wave.animate().alpha(0f).scaleX(2.2f).scaleY(2.2f).setDuration(900)
+                    .withEndAction { startWaveAnimation() }.start()
+            }.start()
         }
     }
 
@@ -132,12 +155,67 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         animateBottomText()
         animateRemainingDots()
         animateLogoPulse()
+
         binding.imgLogo.visibility = View.VISIBLE
         binding.imgLogo.alpha = 0f
         binding.imgLogo.scaleX = 0f
         binding.imgLogo.scaleY = 0f
-        binding.imgLogo.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(500).setInterpolator(OvershootInterpolator(1.4f)).start()
+
+        binding.imgLogo.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(500)
+            .setInterpolator(OvershootInterpolator(1.4f))
+            .withEndAction {
+                startStarTwinkleAnimation()
+            }
+            .start()
     }
+
+    private fun startStarTwinkleAnimation() {
+        val container = binding.confettiContainer
+        val starCount = 12
+
+        repeat(starCount) {
+            createStar(container)
+        }
+    }
+
+    private fun createStar(container: FrameLayout) {
+        val star = ImageView(this)
+        val size = (28..38).random()
+
+        star.layoutParams = FrameLayout.LayoutParams(size, size)
+        star.setImageResource(R.drawable.star_vector)
+        star.alpha = 0f
+        star.scaleX = 0f
+        star.scaleY = 0f
+
+        val startX = (0..container.width).random().toFloat()
+        val startY = (0..container.height).random().toFloat()
+        star.x = startX
+        star.y = startY
+
+        container.addView(star)
+
+        val fadeInDuration = (350..450).random().toLong()
+        val fadeOutDuration = (350..450).random().toLong()
+
+        star.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(fadeInDuration)
+            .withEndAction {
+                star.animate()
+                    .alpha(0f)
+                    .setDuration(fadeOutDuration)
+                    .withEndAction {
+                        container.removeView(star)
+                        createStar(container)
+                    }
+                    .start()
+            }
+            .start()
+    }
+
 
     private fun animateTopText() {
         txtConnecting.translationY = -60f
