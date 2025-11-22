@@ -58,13 +58,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val json = JSONObject(msgInfo)
            val menuId = json.optString("menu_id")
            val menuName = json.optString("menu_name")
-           val receiverType = json.optString("receiver_type")
+           val receiver_type = json.optString("receiver_type")
            val receiver_id = json.optString("receiverid")
            val header_id = json.optString("header_id")
            val institute_id = json.optString("institute_id")
 
             if (type.equals("isCall")) {
-                sendNotificationCall(title, body,receiver_id.toString(),header_id.toString())
+                sendNotificationCall(title, body,receiver_id.toString(),header_id.toString(),receiver_type.toString())
             } else {
                 sendNotification(
                     title,
@@ -75,14 +75,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     menuId.toIntOrNull() ?: 0,
                     header_id,  // Pass as String
                     msgId.toIntOrNull() ?: 0,  // Pass top-level msg_id separately if needed
-                    receiverType,
+                    receiver_type,
                     receiver_id,
                     institute_id.toIntOrNull() ?: 0
                 )
             }
             Log.d(
                 "FCM_MSG_INFO",
-                "Parsed msg_info -> menu_id: $menuId, menu_name: $menuName, receiver_type: $receiverType"
+                "Parsed msg_info -> menu_id: $menuId, menu_name: $menuName, receiver_type: $receiver_type"
             )
         } catch (e: Exception) {
             Log.e("FCM", "Error parsing msg_info: ${e.message}")
@@ -110,7 +110,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "New FCM Token: $token")
     }
 
-    private fun sendNotificationCall(title: String, body: String,receiver_id : String,headerId : String) {
+    private fun sendNotificationCall(title: String, body: String,receiver_id : String,headerId : String,receiverType: String) {
         // Check for notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
@@ -252,7 +252,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra(Constant.menu_id, menuId)
             putExtra(Constant.msg_id, msgId)
             putExtra(Constant.header_id, headerId)
-            putExtra("receiver_type", receiverType)
+            putExtra(Constant.receiver_type, receiverType)
             putExtra(Constant.receiverid, receiverId)
             putExtra("institute_id", instituteId.toString())
             putExtra(Constant.fromNotification, true)
