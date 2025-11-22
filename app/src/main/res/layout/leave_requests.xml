@@ -44,6 +44,7 @@
         app:tabTextColor="@color/black" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/five"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

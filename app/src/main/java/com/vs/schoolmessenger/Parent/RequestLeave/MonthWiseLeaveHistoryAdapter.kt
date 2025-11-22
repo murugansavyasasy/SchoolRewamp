@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -54,6 +55,12 @@ class MonthWiseLeaveHistoryAdapter(
         fullList = newList
         filteredList = newList
         notifyDataSetChanged()
+    }
+
+
+
+    fun getCurrentList(): List<MonthWiseLeaveData> {
+        return itemList!!
     }
 
 

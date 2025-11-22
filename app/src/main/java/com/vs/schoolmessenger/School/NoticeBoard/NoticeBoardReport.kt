@@ -342,11 +342,10 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         noticeboardadapter.isLoading = true
         noticeboardadapter.notifyDataSetChanged()
 
-        if(userDetails!!.staff_role == Constant.isPrincipalRole) {
-            appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
-        } else {
+        if(userDetails!!.staff_role == Constant.isStaffRole) {
             appViewModel!!.isNoticeBoardReport(isAccessToken!!, this)
-
+        } else {
+            appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
         }
 
     }

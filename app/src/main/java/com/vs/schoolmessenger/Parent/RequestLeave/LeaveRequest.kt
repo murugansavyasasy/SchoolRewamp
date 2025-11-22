@@ -1,8 +1,11 @@
 package com.vs.schoolmessenger.Parent.RequestLeave
 
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -12,9 +15,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -48,6 +53,14 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var originalLeaveList: List<MonthWiseLeaveData> = emptyList()
     private var isLeaveList: List<MonthWiseLeaveData> = emptyList()
 
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
+
+
 
 
     private enum class TabType {
@@ -64,10 +77,37 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this, matchedChild!!)
+//            Constant.isParentMenuName = menu_name!!
+            Constant.isSelectedMenuName = menu_name!!
+        }
+
+        val isChildDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = isChildDetails?.access_token
+
+
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
-        val isChildDetails = SharedPreference.getChildDetails(this)
+
+
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
@@ -154,6 +194,10 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 originalLeaveList = response.data
                 isLeaveList=response.data
                 isloadleaverequestData(isLeaveList)
+                Log.d("Message Id Value Indication", msg_id.toString())
+                if (fromNotification) {
+                    scrollToMessageId(headerId)
+                }
                 binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
             } else {
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
@@ -251,6 +295,39 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
     }
+
+
+    private fun scrollToMessageId(headerId: String?) {
+        val dataList = mAdapter?.getCurrentList()
+//        if (!dataList.isNullOrEmpty()) {
+////            val index = dataList.indexOfFirst { it.header_id == headerId }
+//            if (index != -1) {
+//                Log.d("ScrollDebug", "Scrolling to index $index")
+//                binding.rcyLeaveRequestHistory.post {
+//                    binding.rcyLeaveRequestHistory.smoothScrollToPosition(index)
+//                    highlightItemTemporarily(binding.rcyLeaveRequestHistory, index)
+//                }
+//            } else {
+//                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+//            }
+//        }
+    }
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
+            }
+        }
+    }
+
 
     private fun filter(text: String) {
         val searchWords = text.trim().lowercase().split("\\s+".toRegex())

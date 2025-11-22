@@ -78,8 +78,8 @@
 
             <ImageView
                 android:id="@+id/imgLogo"
-                android:layout_width="@dimen/three_hundred"
-                android:layout_height="@dimen/three_hundred"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
                 android:alpha="0"
                 android:src="@drawable/school_chimes"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -92,7 +92,6 @@
                 android:id="@+id/llBottomText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/sixty"
                 android:alpha="0"
                 android:gravity="center"
                 android:orientation="horizontal"
