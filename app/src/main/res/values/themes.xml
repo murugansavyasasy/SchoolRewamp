@@ -20,13 +20,8 @@
 <!--        <item name="android:windowTranslucentStatus">false</item>-->
         <item name="android:windowTranslucentNavigation">false</item>
 
-
-
         <item name="android:fontFamily">@font/inter_regular</item>
         <item name="fontFamily">@font/inter_regular</item> <!-- For newer APIs -->
-
-
-
     </style>
 
 </resources>
