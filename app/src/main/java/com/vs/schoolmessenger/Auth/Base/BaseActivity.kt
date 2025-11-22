@@ -113,10 +113,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         viewModel!!.isLogout?.observe(activity) { response ->
             Constant.hideLoading(activity)
 
-            if (response != null && response.status) {
-                onResult(true, response.message ?: "Success")
-            } else {
-                onResult(false, response?.message ?: "Something went wrong")
+            if (response != null ) {
+                if (response.status) {
+                    onResult(true, response.message ?: "Success")
+                }
+                else {
+                    onResult(false, response?.message ?: "Something went wrong")
+                }
             }
         }
     }

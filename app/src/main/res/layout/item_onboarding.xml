@@ -30,7 +30,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.7" />
+        app:layout_constraintWidth_percent="0.9" />
 
     <!-- 📝 Scrollable text content -->
     <ScrollView
@@ -59,13 +59,14 @@
                 android:layout_height="wrap_content"
                 android:text="Super Easy Transaction"
                 android:textColor="@color/PrimaryColor"
-                android:textSize="@dimen/twenty_four_sp" />
+                android:textSize="@dimen/thirty_sp" />
 
             <TextView
                 android:id="@+id/txtDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:visibility="gone"
                 android:text="Pay anything, anywhere, anytime more easy with this emoney. This is a long sample text that will now scroll properly without being hidden behind the image or wave. Just keep adding more text to test scrolling comfortably."
                 android:textColor="#808080"
                 android:textSize="@dimen/fourteen_sp" />

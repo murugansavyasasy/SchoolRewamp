@@ -200,7 +200,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
 
         rlaLogout.setOnClickListener {
-
+            clearDim()
+            popupWindow.dismiss()
             isLogout(
                 activity = this,
                 viewModel =authViewModel,
@@ -217,7 +218,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else {
-                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    Constant.showErrorAlert(this,getString(R.string.Oops),message)
                 }
             }
 

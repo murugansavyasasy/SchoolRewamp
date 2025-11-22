@@ -431,7 +431,7 @@ class AuthServices {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
-                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
+                        Constant.showErrorAlert(activity, activity.getString(R.string.Oops), errorModel.message)
                     }
                 }
 

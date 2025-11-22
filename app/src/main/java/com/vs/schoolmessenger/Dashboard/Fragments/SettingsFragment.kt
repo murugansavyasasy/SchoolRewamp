@@ -125,25 +125,29 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
         authViewModel!!.isLogout?.observe(requireActivity()) { response ->
             Constant.hideLoading(requireActivity())
-            if (response != null && response.status) {
+            if (response != null) {
+                if(response.status){
+                    // Dismiss popup to prevent WindowLeaked
+                    popupWindow?.dismiss()
+                    popupWindow = null
+                    clearDim()
 
-                // Dismiss popup to prevent WindowLeaked
-                popupWindow?.dismiss()
-                popupWindow = null
-                clearDim()
+                    SharedPreference.putLogout(requireActivity(), true)
+                    SharedPreference.setLoggedIn(requireActivity(), false)
 
-                SharedPreference.putLogout(requireActivity(), true)
-                SharedPreference.setLoggedIn(requireActivity(), false)
+                    val intent = Intent(requireActivity(), Login::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    requireActivity().finish()
+                    Toast.makeText(requireActivity(), response.message, Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(requireActivity(), Login::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                requireActivity().finish()
-                Toast.makeText(requireActivity(), response.message, Toast.LENGTH_SHORT).show()
+                }
+                else {
+//                Toast.makeText(requireActivity(), response?.message?:getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
+                    Constant.showErrorAlert(requireActivity(),getString(R.string.Oops),response?.message?:getString(R.string.something_went_wrong_please_try_again_later))
+                }
             }
-            else {
-                Toast.makeText(requireActivity(), response?.message?:getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
-            }
+
         }
 
         if (Constant.checkBiometricSupport(requireActivity())) {
@@ -344,6 +348,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         }
 
         rlaLogout.setOnClickListener {
+            clearDim()
+            popupWindow!!.dismiss()
 
             val jsonObject = JsonObject().apply {
                 addProperty(APIKeyNames.Req_mobile_number,SharedPreference.getMobileNumber(requireActivity()).toString())
