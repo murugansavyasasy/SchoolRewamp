@@ -337,7 +337,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         // Open the target screen only if launched from notification
         if (fromNotification) {
             when (menu_id) {
-                Constant.M_COMMUNICATION && student-> {
+                Constant.M_COMMUNICATION -> {
                     val detailIntent = Intent(this, CommunicationParent::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
