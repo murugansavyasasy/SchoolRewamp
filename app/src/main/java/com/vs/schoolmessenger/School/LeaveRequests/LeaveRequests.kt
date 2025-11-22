@@ -35,6 +35,9 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     private var isStaffDetails: StaffDetails? = null
     var isApproveRejectId = ""
     var isApprovedOrRejectedSuccessful = false
+
+    lateinit var request: LeaveApproveRequest
+
     private var pendingApprovalCallback: ((Boolean) -> Unit)? = null
 
     private var leaveRequestMonthWiseList: List<MonthWiseLeaveData>? = null
@@ -249,12 +252,14 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         isButtonClick: Boolean,
         resultCallback: (Boolean) -> Unit
     ) {
-        val request = LeaveApproveRequest(id = data.id, is_approve = true)
+        Log.d("isStatus",isButtonClick.toString())
         isApproveRejectId = data.id
         var isMessage = ""
         if (isButtonClick) {
+            request = LeaveApproveRequest(id = data.id, is_approve = true)
             isMessage = getString(R.string.Are_you_sure_you_want_to_approve_this_request)
         } else {
+            request = LeaveApproveRequest(id = data.id, is_approve = false)
             isMessage = getString(R.string.Are_you_sure_you_want_to_reject_this_request)
         }
         Constant.showSendConfirmationDialog(

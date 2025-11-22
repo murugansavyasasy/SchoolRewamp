@@ -61,7 +61,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         animateCardEntrance()
         animateFirstDotWithEmphasis()
         binding.confettiContainer.post { playBubbleAnimation() }
-        animateRemainingDots()
+        //animateRemainingDots()
 
         binding.root.postDelayed({
             finish()
@@ -86,7 +86,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     private fun createBubble(container: FrameLayout, centerX: Float, centerY: Float, duration: Long, isLastBubble: Boolean) {
         val bubble = View(this)
-        val size = (20..25).random()
+        val size = (10..15).random()
         bubble.layoutParams = FrameLayout.LayoutParams(size, size)
         bubble.background = GradientDrawable().apply {
             shape = GradientDrawable.OVAL

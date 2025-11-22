@@ -14,7 +14,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMonthWiseHistory"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
         android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
