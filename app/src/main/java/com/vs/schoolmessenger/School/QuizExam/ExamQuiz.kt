@@ -242,7 +242,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             binding.edtQuestion.requestFocus()
             return
         }
-        if (no_of_questions=="0") {
+        if (no_of_questions.toInt()<=0) {
             binding.edtQuestion.error = getString(R.string.no_of_question_greater_than_zero)
             binding.edtQuestion.requestFocus()
             return

@@ -255,7 +255,8 @@
         <activity
             android:name=".Auth.MobilePasswordSignIn.Login"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".Auth.Introduction.Introduction"
             android:theme="@style/AppTheme"

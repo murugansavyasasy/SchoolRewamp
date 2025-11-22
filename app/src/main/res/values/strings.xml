@@ -4,11 +4,11 @@
     <string name="isPasswordMisMatching">Password is mismatching</string>
     <string name="SuccessfullyPasswordCreation">Successfully creation your password</string>
     <string name="EnterTheNewPassword">Enter the new password</string>
-    <string name="EnterTheConformPassword">Enter the confirm password</string>
+    <string name="EnterTheConformPassword">Confirm the new password</string>
     <string name="EnterTheMobileNumber">Enter the 10 digit mobile number</string>
     <string name="EnterThePassWord">Enter the password</string>
     <string name="EnterTheOtp">Enter the otp</string>
-    <string name="ResetThePassword">Reset the new password</string>
+    <string name="ResetThePassword">Reset password</string>
     <string name="Introduction">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est</string>
     <string name="AgreeTermsConditions">Please accept the Terms and Conditions to proceed.</string>
     <string name="EnterTheBug">Enter the bug.</string>
