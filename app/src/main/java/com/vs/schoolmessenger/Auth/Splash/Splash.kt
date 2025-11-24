@@ -15,6 +15,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -30,6 +31,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
@@ -143,6 +145,14 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     private lateinit var networkCallback: ConnectivityManager.NetworkCallback
 
     var noInternetalertDialog: AlertDialog? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        // 🚀 Android 12+ instant splash
+        installSplashScreen()
+
+        super.onCreate(savedInstanceState)
+    }
 
     override fun setupViews() {
         super.setupViews()
