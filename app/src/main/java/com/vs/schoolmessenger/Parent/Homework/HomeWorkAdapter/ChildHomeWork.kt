@@ -1409,8 +1409,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     override fun onBackPressed() {
-      //  Constant.selectedFiles.clear()
-        Constant.selectedFiles.clear()
+//        Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         isVideoSelectedArrayList.clear()
         Constant.Remaining = MAX_FILES
