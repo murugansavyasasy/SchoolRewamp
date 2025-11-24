@@ -1,6 +1,9 @@
 package com.vs.schoolmessenger.School.LeaveRequests
 
+import android.graphics.Color
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -9,9 +12,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.RequestLeave.MonthWiseLeaveData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -45,6 +50,17 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     var isSearching = false
 
 
+    private var userDetails: UserDetails? = null
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var instituteId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -55,6 +71,30 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
+
+
+        userDetails = SharedPreference.getUserDetails(this)
+
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = false
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            instituteId = intent.getStringExtra(Constant.institute_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
+            SharedPreference.putStaffDetails(this,matchedChild!!)
+            Constant.isSelectedMenuName = menu_name!!
+        }
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         isGetLeaveRequestList()
@@ -160,6 +200,9 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                     binding.txtNoData.visibility = View.GONE
                     leaveRequestMonthWiseList = response.data
                     isloadleaverequestData(leaveRequestMonthWiseList)
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
+                    }
 
                 } else {
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
@@ -282,6 +325,43 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
 
     override fun onUpdateStatus(leaveData: LeaveData) {
         mAdapter.notifyDataSetChanged()
+    }
+
+
+
+    private fun scrollToMessageId(headerId: String?) {
+        if (msg_id == -1) return
+
+        leaveRequestMonthWiseList?.let { list ->
+            val index = list.indexOfFirst { it.details[0].id== headerId}
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
+                binding.rcyleaverequest.post {
+                    binding.rcyleaverequest.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcyleaverequest, index)
+                }
+            } else {
+                Log.d("ScrollDebug", "No item found with headerId: $headerId")
+            }
+        }
+        Log.d("ScrollDebug", "No index found for headerId $headerId")
+    }
+
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
+            }
+        }
     }
 
 

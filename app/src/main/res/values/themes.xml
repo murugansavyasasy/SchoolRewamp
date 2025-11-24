@@ -24,4 +24,30 @@
         <item name="fontFamily">@font/inter_regular</item> <!-- For newer APIs -->
     </style>
 
+    <style name="AppSplashTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/PrimaryColor</item>
+        <!-- Defining that new color in ColorPrimaryDark -->
+        <item name="colorPrimaryDark">@color/PrimaryColor</item>
+        <item name="colorAccent">@color/PrimaryColor</item>
+        <item name="colorSecondary">@color/PrimaryColor</item>
+        <!--        this will disable the default android splash screen and show only Custom Splash which we done!-->
+
+        <item name="android:windowIsTranslucent">true</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!--        <item name="android:statusBarColor">@color/PrimaryColor</item>-->
+        <item name="android:navigationBarColor">@color/white</item>
+        <!--        <item name="android:navigationBarColor">@color/colorPrimary</item>-->
+
+        <!--        <item name="android:windowTranslucentStatus">false</item>-->
+
+        <item name="android:windowTranslucentNavigation">false</item>
+
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/inter_regular</item> <!-- For newer APIs -->
+    </style>
+
 </resources>
