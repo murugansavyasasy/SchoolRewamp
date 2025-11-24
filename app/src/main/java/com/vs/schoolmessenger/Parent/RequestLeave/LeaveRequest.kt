@@ -20,6 +20,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Parent.Attendance.Attendance
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -298,19 +300,21 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
     private fun scrollToMessageId(headerId: String?) {
-        val dataList = mAdapter?.getCurrentList()
-//        if (!dataList.isNullOrEmpty()) {
-////            val index = dataList.indexOfFirst { it.header_id == headerId }
-//            if (index != -1) {
-//                Log.d("ScrollDebug", "Scrolling to index $index")
-//                binding.rcyLeaveRequestHistory.post {
-//                    binding.rcyLeaveRequestHistory.smoothScrollToPosition(index)
-//                    highlightItemTemporarily(binding.rcyLeaveRequestHistory, index)
-//                }
-//            } else {
-//                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
-//            }
-//        }
+        if (msg_id == -1) return
+
+        isLeaveList?.let { list ->
+            val index = list.indexOfFirst { it.details[0].id== headerId }
+            if (index != -1) {
+                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
+                binding.rcyLeaveRequestHistory.post {
+                    binding.rcyLeaveRequestHistory.smoothScrollToPosition(index)
+                    highlightItemTemporarily(binding.rcyLeaveRequestHistory, index)
+                }
+            } else {
+                Log.d("ScrollDebug", "No item found with headerId: $headerId")
+            }
+        }
+        Log.d("ScrollDebug", "No index found for headerId $headerId")
     }
 
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
@@ -613,5 +617,14 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         intent.putExtra(Constant.isLeaveType, data.leave_type)
         intent.putExtra(Constant.isRequestEdit, true)
         startActivity(intent)
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, Attendance::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

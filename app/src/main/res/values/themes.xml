@@ -24,4 +24,25 @@
         <item name="fontFamily">@font/inter_regular</item> <!-- For newer APIs -->
     </style>
 
+
+    <!-- 🚀 Launch splash theme (Shows instantly) -->
+    <style name="App.LaunchTheme" parent="Theme.SplashScreen">
+        <!-- Splash background color -->
+        <item name="windowSplashScreenBackground">@color/white</item>
+
+        <!-- Splash logo -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/school_chimes_logo</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+        <!-- After splash, switch to AppTheme -->
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
+    </style>
+
+<!--    <style name="App.LaunchTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
+<!--        <item name="android:windowBackground">@drawable/splash_background</item>-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        <item name="android:windowFullscreen">true</item>-->
+<!--    </style>-->
+
 </resources>

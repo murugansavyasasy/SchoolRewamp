@@ -175,6 +175,13 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
                 }
             }
         }
+
+//        Constant.setupEditTextWithScroll(
+//            this,
+//            binding.scrollRoot,
+//            binding.txtPassword
+//        )
+
     }
 
     private fun isValidMobileNumber(mobileNumber: String,password : String): Boolean {

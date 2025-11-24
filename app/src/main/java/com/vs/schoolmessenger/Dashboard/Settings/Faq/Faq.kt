@@ -73,15 +73,7 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
                 binding.txtNoData.text= response?.message
             }
         }
-        binding.btnAddFaq.setOnClickListener {
-            navigateToAddFaq()
-        }
     }
-
-    private fun navigateToAddFaq() {
-        startActivity(Intent(this, SplashActivity::class.java))
-    }
-
 
     private fun loadfaqdata() {
         appViewModel?.isfrequentlyasked(isAccessToken!!)
@@ -102,9 +94,6 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
             binding.rcyfaq.adapter = faqadapter
         }
     }
-
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
