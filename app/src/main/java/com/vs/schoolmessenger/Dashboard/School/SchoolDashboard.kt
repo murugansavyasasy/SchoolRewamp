@@ -255,7 +255,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             }
       //  requestContactPermission()
 
-        isGetAcademicYear()
+            isGetAcademicYear()
     }
 
 

@@ -47,6 +47,7 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
@@ -419,13 +420,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
     }
 
-    override fun onBackPressed() {
-        Constant.selectedFiles.clear()
-        Constant.isAwsUploadedFiles.clear()
-        Constant.Remaining = MAX_FILES
 
-        super.onBackPressed()
-    }
 
     override fun onPause() {
         super.onPause()
@@ -1121,5 +1116,17 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         appViewModel!!.assignmentUpdate(isAccessToken!!, jsonObject, this)
     }
 
+
+
+    override fun onBackPressed() {
+        Constant.selectedFiles.clear()
+        Constant.isAwsUploadedFiles.clear()
+        Constant.Remaining = MAX_FILES
+        super.onBackPressed()
+        val intent = Intent(this, SchoolDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 
 }

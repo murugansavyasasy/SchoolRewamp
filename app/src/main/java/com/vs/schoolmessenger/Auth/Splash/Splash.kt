@@ -884,7 +884,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
-                        addParentStack(CommunicationParent::class.java)
+                        addParentStack(PTM::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(
                         0,
