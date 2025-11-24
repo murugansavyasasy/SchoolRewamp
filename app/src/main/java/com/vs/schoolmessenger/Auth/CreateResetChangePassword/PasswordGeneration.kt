@@ -54,7 +54,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
 
             } else {
                 binding.lblHeading.text = getString(R.string.ResetThePassword)
-                binding.lblCreatePassword.text = getString(R.string.ResetThePassword)
+                binding.lblCreatePassword.text = getString(R.string.NewPassword)
                 binding.btnCreate.text = getString(R.string.lblReset)
 
             }

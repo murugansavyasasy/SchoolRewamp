@@ -1284,6 +1284,7 @@
     <string name="fn_od_an_not_taken">ص – إجازة | م – لم يتم التسجيل</string>
     <string name="answer">الإجابة</string>
     <string name="update_answer">تحديث الإجابة</string>
+    <string name="NewPassword">كلمة المرور الجديدة</string>
 
 
 </resources>
