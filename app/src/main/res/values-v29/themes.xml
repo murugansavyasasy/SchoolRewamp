@@ -13,6 +13,27 @@
         <item name="android:enforceNavigationBarContrast">false</item>
 
 
+
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/inter_regular</item> <!-- For newer APIs -->
+    </style>
+    <style name="AppSplashTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/PrimaryColor</item>
+        <item name="colorSecondary">@color/PrimaryColor</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/white</item>
+
+        <!-- Required to disable forced gray contrast in Android 10+ -->
+        <item name="android:enforceStatusBarContrast">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+
+<!--        this will disable the default android splash screen and show only Custom Splash which we done!-->
+        <item name="android:windowIsTranslucent">true</item>
+
+
+
         <item name="android:fontFamily">@font/inter_regular</item>
         <item name="fontFamily">@font/inter_regular</item> <!-- For newer APIs -->
     </style>
