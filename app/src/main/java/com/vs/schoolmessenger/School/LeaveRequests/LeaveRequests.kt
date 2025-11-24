@@ -333,7 +333,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         if (msg_id == -1) return
 
         leaveRequestMonthWiseList?.let { list ->
-            val index = list.indexOfFirst { it.header_id== headerId }
+            val index = list.indexOfFirst { it.details[0].id== headerId}
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.rcyleaverequest.post {

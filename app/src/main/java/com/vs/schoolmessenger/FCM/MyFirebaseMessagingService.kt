@@ -45,23 +45,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d("FCM_PAYLOAD", "FCM Payload: ${remoteMessage.data}")
         }
         // Example: Extract fields safely
-        val title = remoteMessage.data["title"] ?: "School Chimes"
-        val body = remoteMessage.data["body"] ?: "You have a new message from your school"
-        val tone = remoteMessage.data["tone"] ?: "message"
-        val type = remoteMessage.data["type"] ?: "normal"
-        val imageUrl = remoteMessage.data["image_url"] ?: "Default"
-        val msgId = remoteMessage.data["msg_id"] ?: ""  // Separate top-level msg_id from payload
-        val msgInfo = remoteMessage.data["msg_info"] ?: ""
+        val title = remoteMessage.data[Constant.title_] ?: Constant.School_Chimes
+        val body = remoteMessage.data[Constant.body_] ?: Constant.You_have_a_new_message_from_your_school
+        val tone = remoteMessage.data[Constant.tone_] ?: Constant.normal
+        val type = remoteMessage.data[Constant.type_] ?: Constant.normal
+        val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
+        val msgId = remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
+        val msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
         // Optional: Parse nested msg_info JSON if it's in valid JSON format
         try {
             // Firebase may send it like: {"menu_id":"39", "menu_name":"Attachments", ...}
             val json = JSONObject(msgInfo)
-           val menuId = json.optString("menu_id")
-           val menuName = json.optString("menu_name")
-           val receiver_type = json.optString("receiver_type")
-           val receiver_id = json.optString("receiverid")
-           val header_id = json.optString("header_id")
-           val institute_id = json.optString("institute_id")
+           val menuId = json.optString(Constant.menu_id)
+           val menuName = json.optString(Constant.menu_name)
+           val receiver_type = json.optString(Constant.receiver_type)
+           val receiver_id = json.optString(Constant.receiverid)
+           val header_id = json.optString(Constant.header_id)
+           val institute_id = json.optString(Constant.institute_id)
 
             if (type.equals("isCall")) {
                 sendNotificationCall(title, body,receiver_id.toString(),header_id.toString(),receiver_type.toString())
@@ -126,22 +126,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Create Intent for notification tap
         val intent = Intent(this, NotificationCallScreen::class.java).apply {
             putExtra(Constant.menu_name, title)
-            putExtra("isNotificationId", "")
-            putExtra("isVoiceUrl", "")
-            putExtra("isReceiverId", "")
-            putExtra("retrycount", "")
-            putExtra("circularId", "")
-            putExtra("ei1", "")
-            putExtra("ei2", "")
-            putExtra("ei3", "")
-            putExtra("ei4", "")
-            putExtra("ei5", "")
-            putExtra("role", "")
-            putExtra("menuId", "")
-            putExtra("welcome", "")
-            putExtra("school_name", "")
-            putExtra("member_name", "")
-            putExtra("call_title", "")
+            putExtra(Constant.isNotificationId, "")
+            putExtra(Constant.isVoiceUrl, "")
+            putExtra(Constant.isReceiverId, "")
+            putExtra(Constant.retrycount, "")
+            putExtra(Constant.circularId, "")
+            putExtra(Constant.ei1, "")
+            putExtra(Constant.ei2, "")
+            putExtra(Constant.ei3, "")
+            putExtra(Constant.ei4, "")
+            putExtra(Constant.ei5, "")
+            putExtra(Constant.role, "")
+            putExtra(Constant.menuId, "")
+            putExtra(Constant.welcome, "")
+            putExtra(Constant.school_name, "")
+            putExtra(Constant.member_name, "")
+            putExtra(Constant.call_title, "")
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
@@ -162,7 +162,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Channel for custom notifications"
+                description = Constant.Channel_for_custom_notifications
                 enableLights(true)
                 enableVibration(true)
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
@@ -190,8 +190,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Try simple notification first to isolate RemoteViews issues
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.school_chimes)
-            .setContentTitle(title ?: "School Chimes")
-            .setContentText(body ?: "You have a new message from your school")
+            .setContentTitle(title ?: Constant.School_Chimes)
+            .setContentText(body ?: Constant.You_have_a_new_message_from_your_school)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -270,11 +270,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val emergency_message = Uri.parse("android.resource://${packageName}/raw/emergencyvoice")
 
         var notificationSound: Uri? = null
-        if (tone.equals("message")) {
+        if (tone.equals(Constant.normal)) {
             notificationSound = message
-        } else if (tone.equals("emergency_voice")) {
+        } else if (tone.equals(Constant.emergency_voice)) {
             notificationSound = emergency_message
         }
+
 
         // Create notification channel
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -284,7 +285,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Channel for custom notifications"
+                description = Constant.Channel_for_custom_notifications
                 enableLights(true)
                 enableVibration(true)
                 setSound(notificationSound, audioAttributes)  // ✅ Custom tone for this channel
@@ -297,8 +298,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Try simple notification first to isolate RemoteViews issues
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.school_chimes)
-            .setContentTitle(title ?: "School Chimes")
-            .setContentText(messageBody ?: "You have a new message from your school")
+            .setContentTitle(title ?: Constant.School_Chimes)
+            .setContentText(messageBody ?: Constant.You_have_a_new_message_from_your_school)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -307,16 +308,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Handle custom notification with RemoteViews
         try {
             val remoteView = RemoteViews(packageName, R.layout.custom_notification).apply {
-                setTextViewText(R.id.notification_title, title ?: "School Chimes")
+                setTextViewText(R.id.notification_title, title ?: Constant.School_Chimes)
                 setTextViewText(
                     R.id.notification_body,
-                    messageBody ?: "You have a new message from your school"
+                    messageBody ?: Constant.You_have_a_new_message_from_your_school
                 )
             }
 
             // Handle image download
             var bitmap: Bitmap? = null
-            if (!imageUrl.isNullOrEmpty() && imageUrl != "Default") {
+            if (!imageUrl.isNullOrEmpty() && imageUrl != Constant.Default) {
                 try {
                     val url = URL(imageUrl)
                     val connection = url.openConnection() as HttpURLConnection
@@ -370,7 +371,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // Creates a delete intent for handling notification dismissal
     private fun createDeleteIntent(): PendingIntent? {
         val dismissIntent: Intent = Intent(this, NotificationDismissService::class.java)
-        dismissIntent.setAction("NOTIFICATION_DISMISSED")
+        dismissIntent.setAction(Constant.NOTIFICATION_DISMISSED)
         return PendingIntent.getService(
             this,
             0,
