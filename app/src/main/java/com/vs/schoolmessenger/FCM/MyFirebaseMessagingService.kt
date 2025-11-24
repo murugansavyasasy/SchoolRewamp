@@ -63,7 +63,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
            val header_id = json.optString(Constant.header_id)
            val institute_id = json.optString(Constant.institute_id)
 
-            if (type.equals("isCall")) {
+            if (type.equals(Constant.isCall)) {
                 sendNotificationCall(title, body,receiver_id.toString(),header_id.toString(),receiver_type.toString())
             } else {
                 sendNotification(
@@ -86,22 +86,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
         } catch (e: Exception) {
             Log.e("FCM", "Error parsing msg_info: ${e.message}")
-            // Fallback: If parsing fails, still send basic notification
-//            if (!type.equals("isCall")) {
-//                sendNotification(
-//                    title,
-//                    body,
-//                    tone,
-//                    imageUrl,
-//                    menuName,  // Empty fallback
-//                    0,
-//                    "",  // Empty String fallback
-//                    msgId.toIntOrNull() ?: 0,
-//                    receiverType,  // Empty fallback
-//                    receiver_id,
-//                    0
-//                )
-//            }
         }
     }
 
@@ -350,7 +334,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         try {
-//            manager.notify(System.currentTimeMillis().toInt(), builder.build())
             val uniqueID = (receiverId + headerId).hashCode()
             val notificationId = uniqueID ?: (0..999999).random()
             manager.notify(notificationId, builder.build())

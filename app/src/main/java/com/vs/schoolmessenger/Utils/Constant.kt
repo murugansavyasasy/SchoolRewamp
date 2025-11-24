@@ -652,6 +652,7 @@ object Constant {
     var expiry_type = "expiry_type"
     var thumbnail = "thumbnail"
     var normal = "normal"
+    var isCall = "isCall"
     var isNotificationId = "isNotificationId"
     var isVoiceUrl = "isVoiceUrl"
     var isReceiverId = "isReceiverId"
