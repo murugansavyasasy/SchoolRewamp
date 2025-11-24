@@ -28,6 +28,8 @@ import androidx.core.content.FileProvider
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import kotlin.apply
+import kotlin.text.toLong
 
 class LSRWImagePickingAdapter(
     private val context: Context,
@@ -199,7 +201,8 @@ class LSRWImagePickingAdapter(
 
             if (item.type.toString() == Constant.IMAGE || item.type.toString() == Constant.VIDEO) {
 
-                val filtered = Constant.selectedFiles.filter {
+                val realFiles = Constant.selectedFiles.drop(1) // Exclude placeholder at index 0
+                val filtered = realFiles.filter {
                     it.type.toString() in listOf(Constant.IMAGE, Constant.VIDEO)
                 }
 
@@ -252,7 +255,7 @@ class LSRWImagePickingAdapter(
 
     }
 
-    
+
     private fun handleDelete(pos: Int) {
 
         // If deleting the currently playing audio → stop it

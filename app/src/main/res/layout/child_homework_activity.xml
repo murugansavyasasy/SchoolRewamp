@@ -446,6 +446,7 @@
     <include
         android:id="@+id/childlsrwlayoutxml"
         layout="@layout/child_homework_lsrw"
-        android:visibility="gone"></include>
+        android:visibility="gone">
+    </include>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
