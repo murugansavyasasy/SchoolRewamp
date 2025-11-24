@@ -31,7 +31,7 @@
         <item name="windowSplashScreenBackground">@color/white</item>
 
         <!-- Splash logo -->
-        <item name="windowSplashScreenAnimatedIcon">@drawable/school_chimes_logo</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/school_chimes</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowFullscreen">true</item>
 

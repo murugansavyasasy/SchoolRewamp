@@ -14,6 +14,7 @@ import android.graphics.drawable.GradientDrawable
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -34,6 +35,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -884,7 +886,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
-                        addParentStack(CommunicationParent::class.java)
+                        addParentStack(PTM::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(
                         0,
@@ -1155,6 +1157,15 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         val btnNotNow = dialogView.findViewById<TextView>(R.id.btnNotNow)
         val lblNewVersionCode = dialogView.findViewById<TextView>(R.id.lblNewVersionCode)
         val lblYourAppVersionCode = dialogView.findViewById<TextView>(R.id.lblYourAppVersionCode)
+        val lblNewUpdates = dialogView.findViewById<TextView>(R.id.lblNewUpdates)
+
+        if(!versionData[0].new_version_updates.equals("")) {
+            val text = versionData[0].new_version_updates
+            val updates = text.split(",")
+            val finalText = updates.joinToString("\n") { "• $it" }
+            lblNewUpdates.text = finalText
+        }
+
         val pInfo = this.packageManager.getPackageInfo(this.packageName, 0)
         val versionName = pInfo.versionName
         lblNewVersionCode.setText(versionData[0].new_version)
@@ -1170,13 +1181,33 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
         btnUpdateButton.setOnClickListener {
             alertDialog.dismiss() // Close popup
-            startInAppUpdate()
+            //startInAppUpdate()
+            openPlayStore()
         }
 
         btnNotNow.setOnClickListener {
             alertDialog.dismiss() // Close popup
             autoLoginFlowCheck(isVersionData!!)
 
+        }
+    }
+    private fun openPlayStore() {
+        val appPackageName = packageName
+        try {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=$appPackageName")
+                )
+            )
+        } catch (e: Exception) {
+            // Play Store not installed → open in browser
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                )
+            )
         }
     }
 

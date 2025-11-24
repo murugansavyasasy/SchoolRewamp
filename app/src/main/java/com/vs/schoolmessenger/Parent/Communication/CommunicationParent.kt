@@ -241,17 +241,18 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         if (msg_id == -1) return
 
         allVoiceData?.let { list ->
-            val index = list.indexOfFirst { it.header_id == headerId }
+            val index = list.indexOfFirst { it.header_id== headerId }
             if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index in completed")
+                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.recyclerInitial.post {
                     binding.recyclerInitial.smoothScrollToPosition(index)
                     highlightItemTemporarily(binding.recyclerInitial, index)
                 }
-                return
+            } else {
+                Log.d("ScrollDebug", "No item found with headerId: $headerId")
             }
         }
-        Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+        Log.d("ScrollDebug", "No index found for headerId $headerId")
     }
 
 
