@@ -1287,7 +1287,8 @@
     <string name="only_x_files_added">Files Added</string>
     <string name="max_10_files_allowed">Maximum 10 Files Allowed</string>
     <string name="NewPassword">New password</string>
-
+    <string name="select_your_class">Select Your Class</string>
+    <string name="choose_a_class_to_start_processing_marks">Choose a class to start processing marks</string>
 
 
 </resources>
