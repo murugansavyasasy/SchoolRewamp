@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -31,6 +32,14 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
     private var appViewModel: App? = null
     private lateinit var mAdapter: InteractionWithStudentAdapter
 
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+
+    private var instituteId: String? = null
+    private var userDetails: UserDetails? = null
 
     override fun getViewBinding(): IntrectionWithStudentBinding {
         return IntrectionWithStudentBinding.inflate(layoutInflater)
@@ -45,6 +54,32 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.blocklistLabel.setOnClickListener(this)
+
+        userDetails = SharedPreference.getUserDetails(this)
+
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = false
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            instituteId = intent.getStringExtra(Constant.institute_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
+            SharedPreference.putStaffDetails(this,matchedChild!!)
+            Constant.isSelectedMenuName = menu_name!!
+        }
+
+
+
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()

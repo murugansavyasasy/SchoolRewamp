@@ -5,5 +5,6 @@ import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 data class MonthWiseLeaveData(
 
     val month: String,
+    val header_id: String,
     val details: List<LeaveData>
 )

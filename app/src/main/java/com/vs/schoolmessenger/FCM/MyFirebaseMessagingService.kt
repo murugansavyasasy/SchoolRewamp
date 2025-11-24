@@ -77,7 +77,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     msgId.toIntOrNull() ?: 0,  // Pass top-level msg_id separately if needed
                     receiver_type,
                     receiver_id,
-                    institute_id.toIntOrNull() ?: 0
+                    institute_id
                 )
             }
             Log.d(
@@ -232,7 +232,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         msgId: Int,     // Top-level msg_id from payload
         receiverType: String,
         receiverId: String,
-        instituteId: Int
+        instituteId: String
     ) {
         // Check for notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -254,7 +254,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra(Constant.header_id, headerId)
             putExtra(Constant.receiver_type, receiverType)
             putExtra(Constant.receiverid, receiverId)
-            putExtra("institute_id", instituteId.toString())
+            putExtra(Constant.institute_id, instituteId)
             putExtra(Constant.fromNotification, true)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }

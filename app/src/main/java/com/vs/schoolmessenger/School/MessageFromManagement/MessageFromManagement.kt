@@ -70,6 +70,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
     private var msg_id: Int = -1
     private var headerId: String? = null
+    private var instituteId: String? = null
     private var receiverId: String? = null
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
@@ -102,6 +103,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             msg_id = intent.getIntExtra(Constant.msg_id, -1)
             headerId = intent.getStringExtra(Constant.header_id)
             receiverId = intent.getStringExtra(Constant.receiverid)
+            instituteId = intent.getStringExtra(Constant.institute_id)
             menu_name = intent.getStringExtra(Constant.menu_name)
 
             Log.d(
@@ -109,7 +111,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
             )
 
-            val matchedChild = userDetails?.staff_details?.find { it.staff_id == receiverId }
+            val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
             SharedPreference.putStaffDetails(this,matchedChild!!)
             Constant.isSelectedMenuName = menu_name!!
         }

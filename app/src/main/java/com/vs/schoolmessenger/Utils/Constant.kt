@@ -186,6 +186,7 @@ object Constant {
     var menu_id = "menu_id"
     var msg_id = "msg_id"
     var header_id = "header_id"
+    var institute_id = "institute_id"
     var receiver_type = "receiver_type"
     var receiverid = "receiverid"
     var fromNotification = "fromNotification"
@@ -199,6 +200,7 @@ object Constant {
     var group = "G"
     var student = "student"
     var staff = "staff"
+    var Staff___ = "Staff"
     var isVoiceSendingData: VoiceSendingData? = null
     var isTextSendingData: TextSendingData? = null
     var commonFileList: MutableList<CommonFileData> = mutableListOf()
@@ -507,6 +509,7 @@ object Constant {
     var three = "3"
     var time02d = "%02d"
     var STUDENT_ = "STUDENT"
+    var Student__ = "Student"
     var isReason = "isReason"
     var isId = "isId"
     var isLeaveTo = "isLeaveTo"
