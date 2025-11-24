@@ -335,7 +335,8 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                         startActivity(intent)
                     }
                 } else {
-                    Constant.errorAlert(this@Splash, "", message)
+                    val intent = Intent(this@Splash, Login::class.java)
+                    startActivity(intent)
                 }
             }
         }
