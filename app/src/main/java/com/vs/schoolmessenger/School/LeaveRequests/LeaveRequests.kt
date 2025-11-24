@@ -35,9 +35,15 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     private var isStaffDetails: StaffDetails? = null
     var isApproveRejectId = ""
     var isApprovedOrRejectedSuccessful = false
+
+    lateinit var request: LeaveApproveRequest
+
     private var pendingApprovalCallback: ((Boolean) -> Unit)? = null
 
     private var leaveRequestMonthWiseList: List<MonthWiseLeaveData>? = null
+
+    var isSearching = false
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -91,15 +97,20 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
 
         binding.tabLayoutStatus.clearOnTabSelectedListeners()
 
+
+
         binding.tabLayoutStatus.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+
                 val selectedTitle = tab.text.toString()
                 val filterStatus = tabStatusMap[selectedTitle] ?: Constant.All_
                 binding.toolbarLayout.txtSearch.text.clear()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                 mAdapter.filterByStatus(filterStatus)
+                isSearching = false
+
 
                 binding.rcyleaverequest.post {
                     val count = mAdapter.filteredList.size
@@ -128,6 +139,8 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         binding.toolbarLayout.txtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                isSearching = true
+
                 if (::mAdapter.isInitialized) {
                     mAdapter.filter.filter(s)
                 }
@@ -196,16 +209,41 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
-        if (isEmpty) {
-            binding.nomessage.visibility = View.VISIBLE
-            binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = getString(R.string.no_leave_request_found)
-            binding.rcyleaverequest.visibility = View.GONE
+        if (isSearching) {
+            // During search – keep search bar visible always
+            binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+
+            binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.nomessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.rcyleaverequest.visibility = if (isEmpty) View.GONE else View.VISIBLE
+
         } else {
-            binding.nomessage.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
-            binding.rcyleaverequest.visibility = View.VISIBLE
+            // Tab normal mode
+            if (isEmpty) {
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.VISIBLE
+                binding.rcyleaverequest.visibility = View.GONE
+            } else {
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                binding.txtNoData.visibility = View.GONE
+                binding.nomessage.visibility = View.GONE
+                binding.rcyleaverequest.visibility = View.VISIBLE
+            }
         }
+//        if (isEmpty) {
+//            binding.nomessage.visibility = View.VISIBLE
+//            binding.txtNoData.visibility = View.VISIBLE
+//            binding.txtNoData.text = getString(R.string.no_leave_request_found)
+//            binding.rcyleaverequest.visibility = View.GONE
+//        } else {
+//            binding.nomessage.visibility = View.GONE
+//            binding.txtNoData.visibility = View.GONE
+//            binding.rcyleaverequest.visibility = View.VISIBLE
+//        }
     }
 
     override fun onApproveClicked(
@@ -214,12 +252,14 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         isButtonClick: Boolean,
         resultCallback: (Boolean) -> Unit
     ) {
-        val request = LeaveApproveRequest(id = data.id, is_approve = true)
+        Log.d("isStatus",isButtonClick.toString())
         isApproveRejectId = data.id
         var isMessage = ""
         if (isButtonClick) {
+            request = LeaveApproveRequest(id = data.id, is_approve = true)
             isMessage = getString(R.string.Are_you_sure_you_want_to_approve_this_request)
         } else {
+            request = LeaveApproveRequest(id = data.id, is_approve = false)
             isMessage = getString(R.string.Are_you_sure_you_want_to_reject_this_request)
         }
         Constant.showSendConfirmationDialog(

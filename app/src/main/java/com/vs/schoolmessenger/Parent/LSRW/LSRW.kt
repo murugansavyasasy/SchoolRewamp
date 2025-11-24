@@ -223,6 +223,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
         binding.rcyrecyclerview.scrollToPosition(0)
     }
     override fun onBackPressed() {
+        Constant.selectedFiles.clear()
         super.onBackPressed()
         val intent = Intent(this, ParentDashboard::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -232,7 +233,11 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.imgBack -> onBackPressed()
+            R.id.imgBack -> {
+                Constant.selectedFiles.clear()
+                onBackPressed()
+            }
+
 
         }
 
