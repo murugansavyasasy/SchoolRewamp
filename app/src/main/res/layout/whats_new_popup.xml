@@ -138,16 +138,22 @@
                 android:id="@+id/lnrNewUpdates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fourty"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
                 android:orientation="vertical"
                 android:padding="@dimen/ten">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycleNewUpdates"
+                <TextView
+                    android:id="@+id/lblNewUpdates"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vwYour"
+                    android:padding="@dimen/five"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:text="Bug fixed."
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sixteen_sp"
+             />
 
             </LinearLayout>
 
