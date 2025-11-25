@@ -35,9 +35,10 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <RelativeLayout
+
             android:id="@+id/rlaQuizExamReport"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/five"
