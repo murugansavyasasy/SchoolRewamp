@@ -47,11 +47,12 @@ class SchoolNoticeBoardAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
     private var originalList: MutableList<NoticeStaffData> =
         (itemList ?: emptyList()).toMutableList()
     private var filteredList: MutableList<NoticeStaffData> =
         (itemList ?: emptyList()).toMutableList()
+
+    private var currentQuery: String = ""
 
     init {
         originalList = (itemList ?: emptyList()).toMutableList()
@@ -107,28 +108,30 @@ class SchoolNoticeBoardAdapter(
                 filterResults.values = result
                 return filterResults
             }
-
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                currentQuery = constraint?.toString()?.trim() ?: ""
                 filteredList =
                     (results?.values as? List<NoticeStaffData>)?.toMutableList() ?: mutableListOf()
-                listener.onSearchResultEmpty(filteredList.isEmpty())
+                val isEmpty = filteredList.isEmpty()
+                listener.onSearchResultEmpty(isEmpty)
+                handleEmptyState(isEmpty, currentQuery)
                 notifyDataSetChanged()
             }
         }
     }
 
     private fun handleEmptyState(isEmpty: Boolean, query: String) {
-        if (isEmpty && query.isNotEmpty()) {
-            noDataImage?.visibility = View.VISIBLE
-            noDataText?.visibility = View.VISIBLE
-            noDataText?.text = "${context.getString(R.string.No_results_found_for)} '$query'"
-        } else if (isEmpty && query.isEmpty() && originalList.isEmpty()) {
-            noDataImage?.visibility = View.VISIBLE
-            noDataText?.visibility = View.VISIBLE
-            noDataText?.text = context.getString(R.string.no_notices_available)
-        } else {
+        if (!isEmpty) {
             noDataImage?.visibility = View.GONE
             noDataText?.visibility = View.GONE
+            return
+        }
+        noDataImage?.visibility = View.VISIBLE
+        noDataText?.visibility = View.VISIBLE
+        if (originalList.isEmpty()) {
+            noDataText?.text = context.getString(R.string.no_notices_available)
+        } else {
+            noDataText?.text = "${context.getString(R.string.No_results_found_for)} '$query'"
         }
     }
 
@@ -152,9 +155,12 @@ class SchoolNoticeBoardAdapter(
             originalList.remove(removedItem)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, filteredList.size)
-
+            // NEW: Re-evaluate post-removal
+            val nowEmpty = filteredList.isEmpty()
+            listener.onSearchResultEmpty(nowEmpty)
+            handleEmptyState(nowEmpty, currentQuery)
             if (filteredList.isEmpty()) {
-                handleEmptyState(true, "")
+              handleEmptyState(true,"")
             }
         }
     }

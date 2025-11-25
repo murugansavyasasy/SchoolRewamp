@@ -33,6 +33,8 @@ class ImagePickingAdapter(
     private val items: MutableList<FileItem>,
     private val listener: OnImageClickListener
 ) : RecyclerView.Adapter<ImagePickingAdapter.FileViewHolder>() {
+    private val defaultStartEndMargin: Int = context.resources.getDimensionPixelSize(R.dimen.twenty)
+    private val defaultTopMargin: Int = context.resources.getDimensionPixelSize(R.dimen.ten)
 
     inner class FileViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val img: ImageView = v.findViewById(R.id.imgPicking)
@@ -40,6 +42,7 @@ class ImagePickingAdapter(
         val delete: ImageView = v.findViewById(R.id.imgaudiodelete)
         val imgVideoPlay: ImageView = v.findViewById(R.id.imgVideoPlay)
         val lblTime: TextView = v.findViewById(R.id.lblTime)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
@@ -52,6 +55,15 @@ class ImagePickingAdapter(
         val item = items[pos]
         Log.d("isFileType", item.type.toString())
         Log.d("isFilePath", item.path.toString())
+
+        // Layout margins
+        val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
+
+            layoutParams.marginStart = defaultStartEndMargin
+            layoutParams.marginEnd = defaultStartEndMargin
+            layoutParams.topMargin = defaultTopMargin
+
+        holder.itemView.layoutParams = layoutParams
 
         if (item.type.toString() == Constant.VIDEO) {
             holder.imgVideoPlay.visibility = VISIBLE

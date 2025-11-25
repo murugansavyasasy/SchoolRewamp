@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -34,6 +33,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
@@ -63,17 +63,13 @@ import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CreateNewtaskLsrwBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.text.endsWith
-import kotlin.text.ifEmpty
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
 class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickListener,
     OnDateSelectedListener, OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
 
@@ -389,7 +385,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir("recordings") ?: cacheDir
         val audioFile: File = try {
-            File.createTempFile("AUDIO_${timeStamp}_", ".wav", storageDir)
+            File.createTempFile("AUDIO_${timeStamp}_", Constant.wav, storageDir)
         } catch (ex: IOException) {
             ex.printStackTrace()
             Toast.makeText(
