@@ -155,7 +155,6 @@
                     android:layout_marginStart="@dimen/five"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/five"
-                    android:layout_marginBottom="@dimen/ten"
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -163,7 +162,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rcSeekBarAndTitle"
-                    android:layout_marginTop="@dimen/ten"
                     android:layout_marginBottom="@dimen/ten" />
 
                 <LinearLayout
