@@ -12,9 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.Introduction.Introduction
+import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
 import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HelpFragmentBinding
@@ -39,6 +41,11 @@ class HolidaysFragment : Fragment(), View.OnClickListener {
         appViewModel?.init()
         userDetails = SharedPreference.getUserDetails(requireActivity())
         isStaffDetails = SharedPreference.getStaffDetails(requireActivity())
+
+        binding.lblCreateNoticeBoard.setOnClickListener {
+            val intent = Intent(requireActivity(), ClassList::class.java)
+            startActivity(intent)
+        }
 
         if (Constant.isParentChoose){
             val isChildDetails = SharedPreference.getChildDetails(requireActivity())

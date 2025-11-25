@@ -32,6 +32,7 @@
             android:id="@+id/recyclerOnboarding"
             android:background="@color/white"
             android:layout_width="match_parent"
+            tools:listitem="@layout/item_onboarding"
             android:layout_height="match_parent"
             android:clipToPadding="false"
              />

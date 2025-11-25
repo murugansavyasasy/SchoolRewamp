@@ -21,6 +21,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -140,6 +141,15 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             }
         }
 
+        binding.edtDescription.apply {
+            isVerticalScrollBarEnabled = true
+            overScrollMode = View.OVER_SCROLL_ALWAYS
+            setOnTouchListener { v, event ->
+                v.parent.requestDisallowInterceptTouchEvent(true)
+                false
+            }
+        }
+
         binding.btnChooseRecipient.setOnClickListener(this)
 
         tabList = listOf(
@@ -148,6 +158,8 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             binding.readingLayout,
             binding.writingLayout
         )
+
+
 
         tabList.forEach { layout ->
             layout.setOnClickListener { setSelectedTab(layout) }
@@ -412,7 +424,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     }
 
 
-        private fun stopVoiceRecording() {
+    private fun stopVoiceRecording() {
         if (!isRecording) return
         isRecording = false
         try {
@@ -474,9 +486,13 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     }
 
     override fun onBackPressed() {
+        if (isRecording) {
+            stopVoiceRecording()
+        }
+        mAdapter?.releaseMediaPlayer()
         Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
-        updateRemainingCount() // or just set to MAX_FILES
+        updateRemainingCount()
         super.onBackPressed()
     }
 
@@ -485,12 +501,14 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         if (isRecording) {
             stopVoiceRecording()
         }
+        mAdapter?.releaseMediaPlayer()
         Constant.stopDelay()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         releaseRecorder()
+        mAdapter?.releaseMediaPlayer()
     }
 
     override fun onImageClick(position: Int) {
@@ -707,20 +725,22 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         val title = binding.edtTitle.text.toString().trim()
         val description = binding.edtDescription.text.toString().trim()
         val edtdate = binding.edtdate.text.toString().trim()
+
         if (title.isEmpty()) {
-            binding.edtTitle.error = getString(R.string.This_field_required)
-            binding.edtTitle.requestFocus()
-            return
-        }
-        if (description.isEmpty()) {
-            binding.edtDescription.error = getString(R.string.This_field_required)
-            binding.edtDescription.requestFocus()
+            binding.edtTitle.shake()
+            Toast.makeText(this, "Please select title", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (edtdate.isEmpty()) {
-            binding.edtdate.error = getString(R.string.This_field_required)
-            binding.edtdate.requestFocus()
+            binding.edtdate.shake()
+            Toast.makeText(this, "Please select date", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (description.isEmpty()) {
+            binding.edtDescription.shake()
+            Toast.makeText(this, "Please select description", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -736,6 +756,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         startActivity(intent)
     }
 
+
+    fun View.shake() {
+        val anim = AnimationUtils.loadAnimation(context, R.anim.shake)
+        startAnimation(anim)
+    }
 
     fun isUploadFilesInServer(isFileType: String?) {
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD || SELECTED_MENU_ID == M_LSRW) {

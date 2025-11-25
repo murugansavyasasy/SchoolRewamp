@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.LeaveRequests
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Handler
@@ -17,6 +18,7 @@ import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.RequestLeave.MonthWiseLeaveData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -392,5 +394,14 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         appViewModel!!.getleaverequest(
             isAccessToken!!, Constant.STAFF__, this
         )
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, SchoolDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

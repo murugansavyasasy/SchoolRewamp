@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/athens_gray">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+
+    <ScrollView
+        android:id="@+id/svOverallCreateQE"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
+        <RelativeLayout
+            android:id="@+id/rlaQuizExamReport"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
+            >
+
+            <RelativeLayout
+                android:id="@+id/rytSearch1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/rect_grey"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgSearch1"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:src="@drawable/ic_search" />
+
+                <EditText
+                    android:id="@+id/txtSearch1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@id/imgSearch1"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/lblSearch"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_below="@+id/rytSearch1"
+                android:id="@+id/lblSelectClass"
+                android:layout_width="match_parent"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/fifteen_sp"
+                android:text="@string/select_your_class"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblClassDetail"
+                android:layout_below="@+id/lblSelectClass"
+                android:layout_width="match_parent"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/fifteen_sp"
+                android:text="@string/choose_a_class_to_start_processing_marks"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcClassList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblClassDetail"
+                tools:listitem="item_class_section"
+                android:layout_marginTop="@dimen/twenty">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+            <LinearLayout
+                android:id="@+id/lytList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rcClassList"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/noDataImage"
+                    android:layout_width="@dimen/two_hundred"
+                    android:layout_height="@dimen/two_hundred"
+                    android:layout_marginTop="@dimen/twenty_five"
+                    android:src="@drawable/no_school_quiz_message">
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/txtNoData"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:text=""
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
