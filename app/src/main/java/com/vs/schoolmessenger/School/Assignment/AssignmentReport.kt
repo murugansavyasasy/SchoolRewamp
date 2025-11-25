@@ -240,6 +240,9 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                     val isAssignmentReport = response.data ?: emptyList() // Ensure non-null
                     isAssignmentReportData = isAssignmentReport
                     loadAssignmentReportData()
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
+                    }
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                 } else {
@@ -257,26 +260,49 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
 
 
     private fun scrollToMessageId(headerId: String?) {
-        if (msg_id == -1) return
+        if (msg_id == -1 || headerId.isNullOrEmpty()) return
 
-        isAssignmentReportData?.let { list ->
-            val index = list.indexOfFirst { it.id== headerId }
-            if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
-                binding.rcyAssignmentReport.post {
-                    binding.rcyAssignmentReport.smoothScrollToPosition(index)
-                    highlightItemTemporarily(binding.rcyAssignmentReport, index)
-                }
-            } else {
-                Log.d("ScrollDebug", "No item found with headerId: $headerId")
-            }
+        val pos = isAssignmentAdapter?.getPositionById(headerId)
+            ?: isAssignmentReportData?.indexOfFirst { it.id == headerId } ?: -1
+
+        if (pos == -1) {
+            Log.d("ScrollDebug", "No item found with headerId: $headerId")
+            return
         }
-        Log.d("ScrollDebug", "No index found for headerId $headerId")
+
+        Log.d("ScrollDebug", "Scrolling to index $pos")
+
+        binding.rcyAssignmentReport.post {
+            (binding.rcyAssignmentReport.layoutManager as? LinearLayoutManager)
+                ?.scrollToPositionWithOffset(pos, 0)
+
+            val listener = object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(rv: RecyclerView, newState: Int) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        rv.removeOnScrollListener(this)
+                        rv.post { highlightItemTemporarily(rv, pos) }
+                    }
+                }
+            }
+
+            binding.rcyAssignmentReport.addOnScrollListener(listener)
+            binding.rcyAssignmentReport.postDelayed({
+                highlightItemTemporarily(binding.rcyAssignmentReport, pos)
+            }, 60)
+        }
     }
+
+
+
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
-        recyclerView.post {
+        // Try a few times if not yet bound.
+        val maxRetries = 6
+        val retryDelay = 80L
+
+        fun tryHighlight(attempt: Int) {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.let { itemView ->
+            if (viewHolder?.itemView != null) {
+                val itemView = viewHolder.itemView
                 val originalBackground = itemView.background
 
                 itemView.setBackgroundColor(Color.parseColor("#FFE082"))
@@ -284,8 +310,14 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                 Handler(Looper.getMainLooper()).postDelayed({
                     itemView.background = originalBackground
                 }, 3000)
+            } else if (attempt < maxRetries) {
+                recyclerView.postDelayed({ tryHighlight(attempt + 1) }, retryDelay)
+            } else {
+                Log.d("ScrollDebug", "Failed to highlight position $position after $maxRetries attempts")
             }
         }
+
+        tryHighlight(0)
     }
 
 

@@ -27,8 +27,8 @@ class MonthwiseLeaveAdapter(
     private var currentStatusFilter: String = Constant.All_
 
 
-     var fullList: List<MonthWiseLeaveData> = itemList ?: emptyList()
-     var filteredList: List<MonthWiseLeaveData> = fullList
+    var fullList: List<MonthWiseLeaveData> = itemList ?: emptyList()
+    var filteredList: List<MonthWiseLeaveData> = fullList
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -169,7 +169,7 @@ class MonthwiseLeaveAdapter(
         RecyclerView.ViewHolder(itemView) {
 
         private val lblMonthName: TextView = itemView.findViewById(R.id.lblMonthName)
-        private val rvMonthWiseHistory: RecyclerView =
+        val rvMonthWiseHistory: RecyclerView =
             itemView.findViewById(R.id.rvMonthWiseHistory)
 
 
