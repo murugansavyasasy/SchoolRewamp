@@ -70,7 +70,10 @@ import java.util.Date
 import java.util.Locale
 import kotlin.text.endsWith
 import kotlin.text.ifEmpty
-
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickListener,
     OnDateSelectedListener, OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
 
@@ -216,6 +219,21 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                             else -> FileType.OTHER
                         }
 
+                        if (type == FileType.AUDIO) {
+                            lifecycleScope.launch {
+                                val wavFile = Constant.convertToWav(this@CreateNewTask, uri)
+                                if (wavFile != null) {
+                                    Constant.selectedFiles.add(FileItem(wavFile.absolutePath, FileType.AUDIO))
+                                    mAdapter?.notifyDataSetChanged()
+                                    updateRemainingCount()
+                                } else {
+                                    Toast.makeText(this@CreateNewTask, "Audio convert failed!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            return@forEach
+                        }
+
+
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
                         addedCount++
                     }
@@ -231,7 +249,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 }
             }
     }
-
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -372,7 +389,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir("recordings") ?: cacheDir
         val audioFile: File = try {
-            File.createTempFile("AUDIO_${timeStamp}_", ".m4a", storageDir)
+            File.createTempFile("AUDIO_${timeStamp}_", ".wav", storageDir)
         } catch (ex: IOException) {
             ex.printStackTrace()
             Toast.makeText(

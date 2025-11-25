@@ -369,7 +369,6 @@ class AwsUploadingPreSigned {
         val baseURL = "https://api.schoolchimes.com/nodejs/api/MergedApi/"
         RestClient.changeApiBaseUrl(baseURL)
         val apiService = RestClient.apiInterfaces
-
         val isFileName = getFileNameFromPath(activity, isFilePathUrl)
         Log.d("isFileName", isFileName)
         val call =

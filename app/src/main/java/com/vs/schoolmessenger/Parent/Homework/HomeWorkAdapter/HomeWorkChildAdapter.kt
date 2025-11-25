@@ -4,15 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.media.MediaMetadataRetriever
-import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
@@ -21,17 +18,13 @@ import com.bumptech.glide.request.target.Target
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
-import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
-import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_NEEDS
 import com.vs.schoolmessenger.databinding.FileviewItemBinding
-import com.vs.schoolmessenger.databinding.LsrwBinding
 import java.net.HttpURLConnection
 import java.net.URL
-import kotlin.math.max
 
 class HomeWorkChildAdapter(
     private var context: Context,
@@ -177,6 +170,7 @@ class HomeWorkChildAdapter(
                 binding.childrelativeLayout.visibility = View.VISIBLE
                 when (item.type.uppercase()) {
                     Constant.IMAGE -> {
+                        binding.relativelayoutHeader.visibility = View.VISIBLE
                         binding.imgFileType.setText(context.getString(R.string.img))
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
@@ -186,6 +180,7 @@ class HomeWorkChildAdapter(
                         binding.progressBar.visibility = View.GONE
                     }
                     Constant.VIDEO -> {
+                        binding.relativelayoutHeader.visibility = View.VISIBLE
                         binding.imgFileType.setText(context.getString(R.string.vid))
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
@@ -196,6 +191,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PDF -> {
+                        binding.relativelayoutHeader.visibility = View.VISIBLE
                         binding.imgFileType.setText(context.getString(R.string.pdf))
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
@@ -206,6 +202,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.DOC, Constant.DOCX -> {
+                        binding.relativelayoutHeader.visibility = View.VISIBLE
                         binding.imgFileType.setText(context.getString(R.string.docx))
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
@@ -216,6 +213,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.TXT -> {
+                        binding.relativelayoutHeader.visibility = View.VISIBLE
                         binding.imgFileType.setText(context.getString(R.string.txt))
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
@@ -226,6 +224,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PPT, Constant.PPTX -> {
+                        binding.relativelayoutHeader.visibility = View.VISIBLE
                         binding.imgFileType.setText(context.getString(R.string.pptx))
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
@@ -236,6 +235,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.EXCEL -> {
+                        binding.relativelayoutHeader.visibility = View.VISIBLE
                         binding.imgFileType.setText(context.getString(R.string.exc))
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
@@ -245,9 +245,14 @@ class HomeWorkChildAdapter(
                         binding.progressBar.visibility = View.GONE
                     }
 
+
+                    Constant.AUDIO -> {
+                        binding.relativelayoutHeader.visibility = View.GONE
+                    }
+
                     else -> {
-                        binding.imgFileType.setText(context.getString(R.string.exc))
-                        binding.progressBar.visibility = View.GONE
+//                        binding.imgFileType.setText(context.getString(R.string.exc))
+//                        binding.progressBar.visibility = View.GONE
                     }
                 }
             } else if (selectedSchoolMenu == M_LSRW && isParentAssignment == false) {

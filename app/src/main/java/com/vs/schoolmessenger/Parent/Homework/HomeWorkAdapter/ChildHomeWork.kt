@@ -339,7 +339,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             Log.d("FragmentCheck", "LsrwStudentListFragment should now be loaded")
 
             val audioList =
-                data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
+                data!!.fileList.filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
                     .map { it.url }
             if (audioList.isNotEmpty()) {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
@@ -483,9 +483,15 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         }
                     }
                 }
-            val audioList =
-                data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
-                    .map { it.url }
+
+            val audioList = data!!.fileList
+                .filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
+                .map { it.url }
+
+            data!!.fileList.forEach {
+                Log.d("IncomingType", "Value: ${it.type}")
+            }
+
             if (audioList.isNotEmpty()) {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
                 val audioAdapter = AudioAdapter(audioList)
