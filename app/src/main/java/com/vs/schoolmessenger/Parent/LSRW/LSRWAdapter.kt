@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.LSRW
 import android.content.Context
 import android.content.Intent
 import android.media.Image
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -148,11 +149,13 @@ class LSRWAdapter(
             headerrelative_layout.setOnClickListener {
                 markAsRead()
                 val convertedList = item.file_path.map {
+                    Log.d("FileType", "type = ${it.type}")
                     GetFilePathDetails(
                         type = it.type,
-                        url = it.url,
+                        url = it.url
                     )
                 }
+
                 val isHomeWorkData = FilePreview(
                     id = item.id,
                     title = item.title,
