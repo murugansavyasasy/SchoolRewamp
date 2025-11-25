@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.LSRW
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.SeekBar
@@ -30,7 +31,7 @@ class AudioAdapter(
 
     override fun onBindViewHolder(holder: AudioViewHolder, position: Int) {
         val url = audioList[position]
-
+        Log.d("isComingAdapter", "isComingAdapter")
         resetUI(holder)
 
 

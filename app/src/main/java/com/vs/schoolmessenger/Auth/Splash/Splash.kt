@@ -717,6 +717,28 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
 
+                (menu_id == Constant.M_PTM && receiverType == Constant.Staff___) -> {
+                    val detailIntent = Intent(this, com.vs.schoolmessenger.School.PTM.Activity.PTM::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.header_id, headerId)
+                        putExtra(Constant.institute_id, instituteId)
+                        putExtra(Constant.receiverid, receiverId)
+                        putExtra(Constant.receiver_type, receiverType)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(com.vs.schoolmessenger.School.PTM.Activity.PTM::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                    pendingIntent?.send()
+                }
+
                 // Student Notification Redirection
 
                 (menu_id == Constant.M_COMMUNICATION && receiverType == Constant.Student__) -> {

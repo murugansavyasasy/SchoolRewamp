@@ -332,39 +332,116 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
 
 
     private fun scrollToMessageId(headerId: String?) {
-        if (msg_id == -1) return
+        if (msg_id == -1 || headerId.isNullOrEmpty()) return
 
-        leaveRequestMonthWiseList?.let { list ->
-            val index = list.indexOfFirst { it.details[0].id== headerId}
-            if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
-                binding.rcyleaverequest.post {
-                    binding.rcyleaverequest.smoothScrollToPosition(index)
-                    highlightItemTemporarily(binding.rcyleaverequest, index)
+        // find outer month index that contains the headerId
+        val targetMonthIndex = mAdapter.filteredList.indexOfFirst { month ->
+            month.details.any { it.id == headerId }
+        }
+        if (targetMonthIndex == -1) {
+            Log.d("ScrollDebug", "No month found with headerId: $headerId")
+            return
+        }
+
+        // ensure this runs on UI thread after any pending layout
+        binding.rcyleaverequest.post {
+            // Use instant scroll to make sure the ViewHolder is created (smoothScroll is async)
+            binding.rcyleaverequest.scrollToPosition(targetMonthIndex)
+
+            // Listen for scrolling/layout changes so we know when the outer item is actually visible
+            val outerListener = object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                    val lm = rv.layoutManager as? LinearLayoutManager ?: return
+                    val first = lm.findFirstVisibleItemPosition()
+                    val last = lm.findLastVisibleItemPosition()
+
+                    if (targetMonthIndex in first..last) {
+                        // Target outer month is visible — we can stop listening
+                        rv.removeOnScrollListener(this)
+
+                        // Try to get the outer ViewHolder
+                        val outerVH =
+                            rv.findViewHolderForAdapterPosition(targetMonthIndex) as? MonthwiseLeaveAdapter.DataViewHolder
+
+                        if (outerVH == null) {
+                            // fallback: post again shortly to allow layout to settle
+                            rv.post {
+                                performInnerScrollAndHighlight(targetMonthIndex, headerId)
+                            }
+                        } else {
+                            performInnerScrollAndHighlight(targetMonthIndex, headerId)
+                        }
+                    }
                 }
+            }
+
+            // Add listener and also call listener logic once in case already visible
+            binding.rcyleaverequest.addOnScrollListener(outerListener)
+            // Immediately try in case the item is already visible
+            outerListener.onScrolled(binding.rcyleaverequest, 0, 0)
+        }
+    }
+
+    /**
+     * Helper that scrolls inner RV to the item with headerId and highlights it.
+     * Uses a tiny retry if inner ViewHolder is not yet attached.
+     */
+    private fun performInnerScrollAndHighlight(targetMonthIndex: Int, headerId: String?) {
+        val outerVH =
+            binding.rcyleaverequest.findViewHolderForAdapterPosition(targetMonthIndex) as? MonthwiseLeaveAdapter.DataViewHolder
+        val innerRV = outerVH?.rvMonthWiseHistory
+
+        if (innerRV == null) {
+            Log.d("ScrollDebug", "Inner RV not found for month index $targetMonthIndex — retrying shortly")
+            // small retry to give RecyclerView time to layout the inner recycler
+            binding.rcyleaverequest.postDelayed({
+                performInnerScrollAndHighlight(targetMonthIndex, headerId)
+            }, 100)
+            return
+        }
+
+        // find inner index
+        val innerPosition = mAdapter.filteredList[targetMonthIndex].details.indexOfFirst { it.id == headerId }
+        if (innerPosition == -1) {
+            Log.d("ScrollDebug", "No inner position found for headerId: $headerId")
+            return
+        }
+
+        // scroll inner RV to the target item (instant)
+        innerRV.scrollToPosition(innerPosition)
+
+        // highlight when the inner view holder is available; add small retry loop
+        innerRV.post {
+            // Try to grab the inner view holder (may be null immediately)
+            val innerVH =
+                innerRV.findViewHolderForAdapterPosition(innerPosition) as? LeaveRequestAdapter.DataViewHolder
+
+            if (innerVH == null) {
+                // retry once more after a tiny delay
+                innerRV.postDelayed({
+                    val retryInnerVH =
+                        innerRV.findViewHolderForAdapterPosition(innerPosition) as? LeaveRequestAdapter.DataViewHolder
+                    retryInnerVH?.itemView?.let { itemView ->
+                        highlightItemView(itemView)
+                    } ?: Log.d("ScrollDebug", "Inner VH still null after retry for pos $innerPosition")
+                }, 100)
             } else {
-                Log.d("ScrollDebug", "No item found with headerId: $headerId")
-            }
-        }
-        Log.d("ScrollDebug", "No index found for headerId $headerId")
-    }
-
-
-
-    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
-        recyclerView.post {
-            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.let { itemView ->
-                val originalBackground = itemView.background
-
-                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
-
-                Handler(Looper.getMainLooper()).postDelayed({
-                    itemView.background = originalBackground
-                }, 3000)
+                innerVH.itemView?.let { itemView ->
+                    highlightItemView(itemView)
+                }
             }
         }
     }
+
+    private fun highlightItemView(itemView: View) {
+        val originalBackground = itemView.background
+        itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+        Handler(Looper.getMainLooper()).postDelayed({
+            itemView.background = originalBackground
+        }, 3000)
+    }
+
+
 
 
     private fun isloadleaverequestData(newData: List<MonthWiseLeaveData>?) {
