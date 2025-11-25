@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.AttendanceReport
 import com.vs.schoolmessenger.Parent.Attendance.Model.GetWeekStatusData
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStatsData
@@ -213,6 +215,14 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, ParentDashboard::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }
 

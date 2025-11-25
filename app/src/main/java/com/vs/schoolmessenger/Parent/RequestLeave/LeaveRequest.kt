@@ -300,37 +300,51 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
     private fun scrollToMessageId(headerId: String?) {
-        if (msg_id == -1) return
+        if (msg_id == -1 || headerId.isNullOrEmpty()) return
 
-        isLeaveList?.let { list ->
-            val index = list.indexOfFirst { it.details[0].id== headerId }
-            if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
-                binding.rcyLeaveRequestHistory.post {
-                    binding.rcyLeaveRequestHistory.smoothScrollToPosition(index)
-                    highlightItemTemporarily(binding.rcyLeaveRequestHistory, index)
+        val targetMonthIndex = isLeaveList.indexOfFirst { month ->
+            month.details.any { it.id == headerId }
+        }
+        if (targetMonthIndex != -1) {
+            Log.d("ScrollDebug", "Found month at index $targetMonthIndex")
+            binding.rcyLeaveRequestHistory.smoothScrollToPosition(targetMonthIndex)
+            binding.rcyLeaveRequestHistory.post {
+                val outerAdapter = binding.rcyLeaveRequestHistory.adapter as? MonthWiseLeaveHistoryAdapter
+                val monthData = outerAdapter?.fullList?.getOrNull(targetMonthIndex)
+                if (monthData != null) {
+                    val outerVH = binding.rcyLeaveRequestHistory.findViewHolderForAdapterPosition(targetMonthIndex) as? MonthWiseLeaveHistoryAdapter.DataViewHolder
+                    val innerRV = outerVH?.rvMonthWiseHistory
+                    if (innerRV != null) {
+                        val innerPosition = monthData.details.indexOfFirst { it.id == headerId }
+                        if (innerPosition != -1) {
+                            Log.d("ScrollDebug", "Scrolling inner to $innerPosition")
+                            innerRV.smoothScrollToPosition(innerPosition)
+                            innerRV.post {
+                                val innerVH = innerRV.findViewHolderForAdapterPosition(innerPosition) as? LeaveRequestAdapter.DataViewHolder
+                                innerVH?.itemView?.let { itemView ->
+                                    val originalBackground = itemView.background
+                                    itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        itemView.background = originalBackground
+                                    }, 3000)
+                                }
+                            }
+                        } else {
+                            Log.d("ScrollDebug", "No inner position found for headerId: $headerId")
+                        }
+                    } else {
+                        Log.d("ScrollDebug", "Inner RV not found for month index $targetMonthIndex")
+                    }
+                } else {
+                    Log.d("ScrollDebug", "Month data not found for index $targetMonthIndex")
                 }
-            } else {
-                Log.d("ScrollDebug", "No item found with headerId: $headerId")
             }
-        }
-        Log.d("ScrollDebug", "No index found for headerId $headerId")
-    }
-
-    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
-        recyclerView.post {
-            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.let { itemView ->
-                val originalBackground = itemView.background
-
-                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
-
-                Handler(Looper.getMainLooper()).postDelayed({
-                    itemView.background = originalBackground
-                }, 3000)
-            }
+        } else {
+            Log.d("ScrollDebug", "No month found with headerId: $headerId")
         }
     }
+
+
 
 
     private fun filter(text: String) {

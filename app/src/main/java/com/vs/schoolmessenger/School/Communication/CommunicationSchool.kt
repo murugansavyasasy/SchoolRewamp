@@ -1638,7 +1638,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     val timeStamp = SimpleDateFormat(
                         Constant.yyyyMMdd_HHmmss, Locale.getDefault()
                     ).format(Date())
-                    var isFileExtension = Constant.wav_
+                    val isFileExtension = Constant.wav_
                     val fileName = "${Constant.Communication_}${timeStamp}.$isFileExtension"
                     isFileName = fileName
                     val inputStream = contentResolver.openInputStream(uri)

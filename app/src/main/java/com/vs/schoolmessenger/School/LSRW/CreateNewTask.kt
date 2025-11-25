@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -34,6 +33,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
@@ -63,13 +63,12 @@ import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CreateNewtaskLsrwBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.text.endsWith
-import kotlin.text.ifEmpty
 
 class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickListener,
     OnDateSelectedListener, OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
@@ -216,6 +215,21 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                             else -> FileType.OTHER
                         }
 
+                        if (type == FileType.AUDIO) {
+                            lifecycleScope.launch {
+                                val wavFile = Constant.convertToWav(this@CreateNewTask, uri)
+                                if (wavFile != null) {
+                                    Constant.selectedFiles.add(FileItem(wavFile.absolutePath, FileType.AUDIO))
+                                    mAdapter?.notifyDataSetChanged()
+                                    updateRemainingCount()
+                                } else {
+                                    Toast.makeText(this@CreateNewTask, "Audio convert failed!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            return@forEach
+                        }
+
+
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
                         addedCount++
                     }
@@ -231,7 +245,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 }
             }
     }
-
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -490,7 +503,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             stopVoiceRecording()
         }
         mAdapter?.releaseMediaPlayer()
-        Constant.selectedFiles.clear()
+//        Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         updateRemainingCount()
         super.onBackPressed()

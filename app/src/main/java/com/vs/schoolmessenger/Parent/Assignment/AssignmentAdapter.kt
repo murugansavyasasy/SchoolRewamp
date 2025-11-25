@@ -77,6 +77,12 @@ class AssignmentAdapter(
         notifyDataSetChanged()
     }
 
+    fun getPositionById(id: String?): Int {
+        if (id == null) return -1
+        return filteredList.indexOfFirst { it.id == id }
+    }
+
+
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {

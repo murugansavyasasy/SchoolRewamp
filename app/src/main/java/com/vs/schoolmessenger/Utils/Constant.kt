@@ -12,6 +12,9 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
+import android.media.MediaCodec
+import android.media.MediaExtractor
+import android.media.MediaFormat
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
@@ -77,8 +80,11 @@ import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
+import java.io.RandomAccessFile
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -2748,4 +2754,131 @@ object Constant {
         }
     }
 
+    suspend fun convertToWav(context: Context, uri: Uri): File? = withContext(Dispatchers.IO) {
+        try {
+            val extractor = MediaExtractor()
+            extractor.setDataSource(context, uri, null)
+
+            var audioTrack = -1
+            for (i in 0 until extractor.trackCount) {
+                val format = extractor.getTrackFormat(i)
+                val mime = format.getString(MediaFormat.KEY_MIME)
+                if (mime != null && mime.startsWith("audio/")) {
+                    audioTrack = i
+                    break
+                }
+            }
+            if (audioTrack < 0) return@withContext null
+
+            extractor.selectTrack(audioTrack)
+            val format = extractor.getTrackFormat(audioTrack)
+            val mime = format.getString(MediaFormat.KEY_MIME) ?: return@withContext null
+            val sampleRate = format.getInteger(MediaFormat.KEY_SAMPLE_RATE)
+            val channels = format.getInteger(MediaFormat.KEY_CHANNEL_COUNT)
+
+            val decoder = MediaCodec.createDecoderByType(mime)
+            decoder.configure(format, null, null, 0)
+            decoder.start()
+
+            val outputDir = File(context.cacheDir, "wav_output")
+            if (!outputDir.exists()) outputDir.mkdirs()
+            val outputFile = File(outputDir, "audio_${System.currentTimeMillis()}.wav")
+
+            val outStream = FileOutputStream(outputFile)
+            val header = ByteArray(44)
+            outStream.write(header)
+
+            val bufferInfo = MediaCodec.BufferInfo()
+            var totalBytes = 0
+            var end = false
+
+            while (!end) {
+                val inBuff = decoder.dequeueInputBuffer(10000)
+                if (inBuff >= 0) {
+                    val buffer = decoder.getInputBuffer(inBuff)!!
+                    val size = extractor.readSampleData(buffer, 0)
+                    if (size < 0) {
+                        decoder.queueInputBuffer(inBuff, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM)
+                        end = true
+                    } else {
+                        decoder.queueInputBuffer(inBuff, 0, size, extractor.sampleTime, 0)
+                        extractor.advance()
+                    }
+                }
+
+                val outBuff = decoder.dequeueOutputBuffer(bufferInfo, 10000)
+                if (outBuff >= 0) {
+                    val buffer = decoder.getOutputBuffer(outBuff)!!
+                    val chunk = ByteArray(bufferInfo.size)
+                    buffer.get(chunk)
+                    outStream.write(chunk)
+                    totalBytes += chunk.size
+                    decoder.releaseOutputBuffer(outBuff, false)
+                }
+            }
+
+            decoder.stop()
+            decoder.release()
+            extractor.release()
+
+            // Write WAV header
+            writeWavHeader(RandomAccessFile(outputFile, "rw"), totalBytes, sampleRate, channels)
+            return@withContext outputFile
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    fun writeWavHeader(out: RandomAccessFile, pcmSize: Int, sampleRate: Int, channels: Int) {
+        out.seek(0)
+        val totalData = pcmSize + 36
+        val byteRate = sampleRate * channels * 16 / 8
+
+        val h = ByteArray(44)
+
+        h[0] = 'R'.code.toByte()
+        h[1] = 'I'.code.toByte()
+        h[2] = 'F'.code.toByte()
+        h[3] = 'F'.code.toByte()
+
+        writeInt(h, 4, totalData)
+        h[8] = 'W'.code.toByte()
+        h[9] = 'A'.code.toByte()
+        h[10] = 'V'.code.toByte()
+        h[11] = 'E'.code.toByte()
+
+        h[12] = 'f'.code.toByte()
+        h[13] = 'm'.code.toByte()
+        h[14] = 't'.code.toByte()
+        h[15] = ' '.code.toByte()
+
+        writeInt(h, 16, 16)
+        writeShort(h, 20, 1)
+        writeShort(h, 22, channels.toShort())
+        writeInt(h, 24, sampleRate)
+        writeInt(h, 28, byteRate)
+        writeShort(h, 32, (channels * 2).toShort())
+        writeShort(h, 34, 16)
+        h[36] = 'd'.code.toByte()
+        h[37] = 'a'.code.toByte()
+        h[38] = 't'.code.toByte()
+        h[39] = 'a'.code.toByte()
+        writeInt(h, 40, pcmSize)
+
+        out.write(h)
+    }
+
+    fun writeInt(h: ByteArray, offset: Int, value: Int) {
+        h[offset] = (value and 0xff).toByte()
+        h[offset + 1] = ((value shr 8) and 0xff).toByte()
+        h[offset + 2] = ((value shr 16) and 0xff).toByte()
+        h[offset + 3] = ((value shr 24) and 0xff).toByte()
+    }
+
+    fun writeShort(h: ByteArray, offset: Int, value: Short) {
+        h[offset] = (value.toInt() and 0xff).toByte()
+        h[offset + 1] = ((value.toInt() shr 8) and 0xff).toByte()
+    }
 }
