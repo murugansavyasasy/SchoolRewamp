@@ -51,7 +51,9 @@
     <color name="dark_blue_backgrund">#09199d</color>
     <color name="AthensGray">#f2f2f7</color>
     <color name="very_light_gray_12">#e8e9eb</color>
+    <color name="very_light_gray_13">#fcfdfd</color>
     <color name="athens_gray">#efeff0</color>
+    <color name="dark_gray_9">#f9fafb</color>
     <color name="emerald">#57cd76</color>
     <color name="jaffa">#ec874c</color>
     <color name="Emerald1">#34c759</color>
@@ -165,6 +167,7 @@
     <color name="system_orange">#FF9500</color>
 
     <color name="orange">#e9a243</color>
+    <color name="dark_orange_2">#ff6700</color>
     <color name="system_pink">#FF2D55</color>
     <color name="light_pink1">#ffb6c1</color>
 
@@ -231,6 +234,7 @@
     <color name="pale_light_orange">#ffedd4</color>
     <color name="dark_bg_voilet">#a22d00</color>
     <color name="dark_bg_orange_2">#e17100</color>
+    <color name="light_bg_orange_3">#fff7ed</color>
     <color name="pale_light_yellow">#fef3c6</color>
     <color name="pale_light_brown">#c37652</color>
 

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/athens_gray">
+    android:background="@color/dark_gray_9">
 
     <View
         android:id="@+id/statusBarBackground"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/svOverallCreateQE"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -44,69 +44,31 @@
             android:layout_marginEnd="@dimen/five"
             >
 
-            <RelativeLayout
-                android:id="@+id/rytSearch1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:background="@drawable/rect_grey"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/imgSearch1"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
-                    android:src="@drawable/ic_search" />
-
-                <EditText
-                    android:id="@+id/txtSearch1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@id/imgSearch1"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/lblSearch"
-                    android:imeOptions="actionDone"
-                    android:maxLines="1"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
-            </RelativeLayout>
 
             <TextView
+                android:layout_marginHorizontal="@dimen/ten"
                 android:layout_below="@+id/rytSearch1"
                 android:id="@+id/lblSelectClass"
                 android:layout_width="match_parent"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/fifteen_sp"
-                android:text="@string/select_your_class"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:textColor="@color/dark_orange_2"
+                android:textSize="@dimen/eighteen"
+                android:text="@string/upload_mark_sheet"
                 android:layout_height="wrap_content">
             </TextView>
 
             <TextView
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginHorizontal="@dimen/ten"
                 android:id="@+id/lblClassDetail"
                 android:layout_below="@+id/lblSelectClass"
                 android:layout_width="match_parent"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textSize="@dimen/fifteen_sp"
-                android:text="@string/choose_a_class_to_start_processing_marks"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:textSize="@dimen/fifteen"
+                android:text="@string/upload_an_image_for_ai_processing_or_skip_to_map_manually"
                 android:layout_height="wrap_content">
 
             </TextView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcClassList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblClassDetail"
-                tools:listitem="item_class_section"
-                android:layout_marginTop="@dimen/twenty">
-            </androidx.recyclerview.widget.RecyclerView>
 
 
             <LinearLayout
@@ -124,7 +86,7 @@
                     android:layout_width="@dimen/two_hundred"
                     android:layout_height="@dimen/two_hundred"
                     android:layout_marginTop="@dimen/twenty_five"
-                    android:src="@drawable/no_school_quiz_message">
+                    android:src="@drawable/no_data_found">
                 </ImageView>
 
                 <TextView
@@ -141,7 +103,7 @@
             </LinearLayout>
         </RelativeLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 

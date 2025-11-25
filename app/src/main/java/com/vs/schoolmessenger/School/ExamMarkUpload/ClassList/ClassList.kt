@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
@@ -13,16 +14,16 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.Model.ClassSection
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.ExamClassListBinding
+import com.vs.schoolmessenger.databinding.ClassListBinding
 import com.vs.schoolmessenger.databinding.NewFeaturesBinding
 import kotlin.collections.filter
 import kotlin.collections.isNotEmpty
 import kotlin.collections.orEmpty
 
-class ClassList : BaseActivity<ExamClassListBinding >(), View.OnClickListener {
+class ClassList : BaseActivity<ClassListBinding >(), View.OnClickListener {
 
-    override fun getViewBinding(): ExamClassListBinding {
-        return ExamClassListBinding .inflate(layoutInflater)
+    override fun getViewBinding(): ClassListBinding {
+        return ClassListBinding .inflate(layoutInflater)
     }
 
     private var appViewModel: App? = null
@@ -38,12 +39,19 @@ class ClassList : BaseActivity<ExamClassListBinding >(), View.OnClickListener {
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName?:"ExamMarks"
+        if (Constant.isSelectedMenuName==""){
+            binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+        }else{
+            binding.toolbarLayout.lblParentToolBar.text="ExamMarks"
+        }
+
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text=isStaffDetails!!.school_name
 
@@ -88,13 +96,23 @@ class ClassList : BaseActivity<ExamClassListBinding >(), View.OnClickListener {
             ClassSectionData("Grade 10", "A", 32),
             ClassSectionData("Grade 9", "B", 28),
             ClassSectionData("Grade 8", "C", 26),
+            ClassSectionData("Grade 12", "A", 31),
+            ClassSectionData("Grade 10", "A", 32),
+            ClassSectionData("Grade 9", "B", 28),
+            ClassSectionData("Grade 8", "C", 26),
             ClassSectionData("Grade 12", "A", 31)
         )
         isClassList=dummyList
+        binding.toolbarLayout.imgSearchToolBar.visibility= View.VISIBLE
 
         adapter = ClassListAdapter(dummyList,this,false)
 
-        binding.rcClassList.adapter = adapter
+        binding.rcClassList.apply {
+            layoutManager = object : LinearLayoutManager(context) {
+                override fun canScrollVertically() = false
+            }
+            adapter = this@ClassList.adapter
+        }
 
     }
 
@@ -140,5 +158,11 @@ class ClassList : BaseActivity<ExamClassListBinding >(), View.OnClickListener {
 
 
 
-    override fun onClick(v: View?) {}
+    override fun onClick(p0: View?) {
+        when (p0?.id) {
+            R.id.imgBack -> {
+                onBackPressed()
+            }
+        }
+    }
 }
