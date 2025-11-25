@@ -23,17 +23,16 @@
                 android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/thirty"
                 android:src="@drawable/arrow_back_black"
-                android:visibility="gone">
-            </ImageView>
+                android:visibility="gone"></ImageView>
 
             <TextView
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgBack"
                 android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/fifty"
                 android:text="@string/permission_settings"
-                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold">
@@ -43,13 +42,14 @@
 
         <TextView
             android:id="@+id/lblGeneral"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaLblSettings"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/account_securityl"
-            style="@style/CustomTextStylePoppinsBold"
+            android:textColor="@color/black1"
             android:textSize="@dimen/fifteen_sp">
 
         </TextView>
@@ -83,17 +83,17 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/ic_change_password">
+                        android:src="@drawable/lock_rotation">
 
                     </ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:text="@string/change_password"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
@@ -118,7 +118,7 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey"/>
+                    android:background="@color/grey" />
 
 
                 <LinearLayout
@@ -128,11 +128,11 @@
                     android:layout_below="@+id/isViewChangePassword"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginBottom="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/thirty"
+                    android:layout_marginBottom="@dimen/fifteen"
                     android:gravity="center"
-                    android:visibility="gone"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:weightSum="1">
 
                     <ImageView
@@ -144,24 +144,24 @@
                     </ImageView>
 
                     <RelativeLayout
-                        android:layout_marginStart="@dimen/thirty"
-                        android:layout_weight="0.8"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_weight="0.8">
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/thirteen_sp"
+                            android:text="@string/enable_fingerprint_login"
                             android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsRegular"
-                            android:text="@string/enable_fingerprint_login" />
+                            android:textSize="@dimen/thirteen_sp" />
 
                         <Switch
-                            android:layout_weight="0.8"
                             android:id="@+id/switchFingerprint"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8" />
 
                     </RelativeLayout>
 
@@ -169,8 +169,8 @@
                         android:layout_width="@dimen/twenty_five_sp"
                         android:layout_height="@dimen/twenty_five_sp"
                         android:layout_weight="0.1"
-                        android:visibility="gone"
-                        android:src="@drawable/arrow_right_gray">
+                        android:src="@drawable/arrow_right_gray"
+                        android:visibility="gone">
 
                     </ImageView>
                 </LinearLayout>
@@ -180,26 +180,28 @@
 
             <TextView
                 android:id="@+id/lblFeedBack"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytGeneral"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty"
-                style="@style/CustomTextStylePoppinsBold"
                 android:text="@string/preferences"
+                android:textColor="@color/black1"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
             <RelativeLayout
                 android:id="@+id/rytPref"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblFeedBack"
-                android:layout_marginBottom="@dimen/fifteen"
                 android:layout_marginHorizontal="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/fifteen"
                 android:background="@drawable/rect_white">
+
                 <LinearLayout
                     android:id="@+id/lnrNotification"
                     android:layout_width="match_parent"
@@ -215,18 +217,16 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/notification_icon_gray">
-                    </ImageView>
+                        android:src="@drawable/notification_icon_gray"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        android:text="@string/lblNotifications"
-                        style="@style/CustomTextStylePoppinsRegular"
-                        >
+                        android:text="@string/lblNotifications">
 
                     </TextView>
 
@@ -252,7 +252,6 @@
 
 
                 <LinearLayout
-                    android:layout_marginBottom="@dimen/ten"
                     android:id="@+id/lnrLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -260,6 +259,7 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/thirty"
+                    android:layout_marginBottom="@dimen/ten"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="1">
@@ -268,17 +268,16 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/ic_language">
-                    </ImageView>
+                        android:src="@drawable/ic_language"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblChangeLanguage"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -300,25 +299,26 @@
 
             <TextView
                 android:id="@+id/lblSupportInformation"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytPref"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                style="@style/CustomTextStylePoppinsBold"
                 android:text="@string/support_information"
+                android:textColor="@color/black1"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
             <RelativeLayout
                 android:id="@+id/rytSupportInfo"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSupportInformation"
-                android:layout_marginBottom="@dimen/fifteen"
                 android:layout_marginHorizontal="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/fifteen"
                 android:background="@drawable/rect_white">
 
                 <LinearLayout
@@ -339,13 +339,13 @@
                         android:src="@drawable/faq_icon"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblFAQ"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -387,17 +387,16 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/contact_us_icon">
-                    </ImageView>
+                        android:src="@drawable/contact_us"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblContact"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -439,16 +438,15 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/terms_conditions_icon">
-                    </ImageView>
+                        android:src="@drawable/terms_and_conditions"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:text="@string/lblTermsCondition"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
@@ -491,17 +489,16 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/ic_privacy_policy">
-                    </ImageView>
+                        android:src="@drawable/privacy_policy"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/privacy_policy"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -544,17 +541,16 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/ic_about_app">
-                    </ImageView>
+                        android:src="@drawable/info_circle_fill"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/about_the_app"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -596,17 +592,16 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/ic_how_to_use">
-                    </ImageView>
+                        android:src="@drawable/questionmark_circle"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/how_to_use_2"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -633,9 +628,7 @@
                     android:background="@color/grey"></View>
 
 
-
                 <LinearLayout
-                    android:layout_marginBottom="@dimen/ten"
                     android:id="@+id/lnrwhatsnew"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -643,6 +636,7 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/thirty"
+                    android:layout_marginBottom="@dimen/ten"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="1">
@@ -651,18 +645,18 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/whats_new">
+                        android:src="@drawable/new_1">
 
                     </ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/what_s_new"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -682,25 +676,26 @@
 
             <TextView
                 android:id="@+id/lblFeedBacks"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytSupportInfo"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                style="@style/CustomTextStylePoppinsBold"
                 android:text="@string/Feedback_2"
+                android:textColor="@color/black1"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
 
             <RelativeLayout
-                android:layout_marginTop="@dimen/ten"
-                android:layout_below="@+id/lblFeedBacks"
                 android:id="@+id/rytFeedBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/lblFeedBacks"
                 android:layout_marginHorizontal="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/rect_white">
 
                 <LinearLayout
@@ -721,13 +716,13 @@
                         android:src="@drawable/send_feedback_icon"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblRateus"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -750,13 +745,13 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey"/>
+                    android:background="@color/grey" />
 
                 <LinearLayout
-                    android:layout_below="@+id/isViewRateUs"
                     android:id="@+id/lnrReportBug"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/isViewRateUs"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/thirty"
@@ -771,13 +766,13 @@
                         android:src="@drawable/report_bug_icon"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblReportbug"
-                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -801,7 +796,7 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey"/>
+                    android:background="@color/grey" />
 
 
                 <LinearLayout
@@ -821,17 +816,16 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/logout">
-                    </ImageView>
+                        android:src="@drawable/logout"></ImageView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblLogout"
-                        style="@style/CustomTextStylePoppinsBold"
                         android:textColor="@color/red"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold">
@@ -855,26 +849,24 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"
-                    android:background="@color/grey"/>
+                    android:background="@color/grey" />
 
                 <TextView
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginBottom="@dimen/ten"
                     android:id="@+id/lblAppVersion"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:layout_below="@+id/isViewLogout"
-                    style="@style/CustomTextStylePoppinsRegular"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grey"
+                    android:layout_below="@+id/isViewLogout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:layout_marginBottom="@dimen/ten"
                     android:text="App Version 1.0"
-                    android:textSize="@dimen/fourteen_sp"/>
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/fourteen_sp" />
 
 
             </RelativeLayout>
-
-
 
 
         </RelativeLayout>

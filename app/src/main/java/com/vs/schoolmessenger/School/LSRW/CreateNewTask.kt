@@ -372,7 +372,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir("recordings") ?: cacheDir
         val audioFile: File = try {
-            File.createTempFile("AUDIO_${timeStamp}_", ".m4a", storageDir)
+            File.createTempFile("AUDIO_${timeStamp}_", Constant.wav, storageDir)
         } catch (ex: IOException) {
             ex.printStackTrace()
             Toast.makeText(

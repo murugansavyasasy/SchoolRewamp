@@ -411,14 +411,13 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         val finalY = centerY + (-clusterSpread..clusterSpread).random() - size / 2
         bubble.animate().x(finalX).y(finalY).alpha(0f).setDuration(duration).setInterpolator(AccelerateDecelerateInterpolator()).withEndAction { container.removeView(bubble)
             if (isLastBubble) {
-                container.visibility = View.GONE
                 startWaveAnimation()
-//                    startAllSplashAnimations()
+                container.visibility = View.GONE
+                startAllSplashAnimations()
+
             }
         }
             .start()
-
-        startAllSplashAnimations()
 
     }
     private fun startWaveAnimation() {
@@ -428,7 +427,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             wave.scaleY = 0f
             wave.alpha = 0f
             wave.visibility = View.VISIBLE
-            wave.animate().alpha(0.4f).scaleX(1.7f).scaleY(1.7f).setStartDelay(index * 400L).setDuration(1600).withEndAction { wave.animate().alpha(0f).scaleX(2.2f).scaleY(2.2f).setDuration(900).withEndAction { startWaveAnimation() }.start() }.start()
+            wave.animate().alpha(0.4f).scaleX(1.7f).scaleY(1.7f).setStartDelay(index * 200L).setDuration(1000).withEndAction { wave.animate().alpha(0f).scaleX(2.2f).scaleY(2.2f).setDuration(400).start() }.start()
         }
     }
     private fun startAllSplashAnimations() {
@@ -716,6 +715,28 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     pendingIntent?.send()
                 }
 
+
+                (menu_id == Constant.M_PTM && receiverType == Constant.Staff___) -> {
+                    val detailIntent = Intent(this, com.vs.schoolmessenger.School.PTM.Activity.PTM::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.header_id, headerId)
+                        putExtra(Constant.institute_id, instituteId)
+                        putExtra(Constant.receiverid, receiverId)
+                        putExtra(Constant.receiver_type, receiverType)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(com.vs.schoolmessenger.School.PTM.Activity.PTM::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                    pendingIntent?.send()
+                }
 
                 // Student Notification Redirection
 
