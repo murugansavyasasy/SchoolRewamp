@@ -82,16 +82,25 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         super.setupViews()
         enableEdgeToEdge()
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updateLayoutParams { height = systemBars.top }
-            WindowInsetsCompat.CONSUMED
-        }
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            // Android 10 and below → use legacy fullscreen flags
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        } else {
+            // Android 11 and above → handle insets with customBottomNav
+            ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.updateLayoutParams { height = systemBars.top }
+                WindowInsetsCompat.CONSUMED
+            }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(bottom = systemBars.bottom)
-            insets
+            ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.updatePadding(bottom = systemBars.bottom)
+                insets
+            }
         }
 
         userDetails = SharedPreference.getUserDetails(this)
@@ -368,6 +377,32 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
     override fun onClick(v: View?) {
         TODO("Not yet implemented")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        enableEdgeToEdge()
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            // Android 10 and below → use legacy fullscreen flags
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        } else {
+            // Android 11 and above → handle insets with customBottomNav
+            ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.updateLayoutParams { height = systemBars.top }
+                WindowInsetsCompat.CONSUMED
+            }
+
+            ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.updatePadding(bottom = systemBars.bottom)
+                insets
+            }
+        }
     }
 
 }

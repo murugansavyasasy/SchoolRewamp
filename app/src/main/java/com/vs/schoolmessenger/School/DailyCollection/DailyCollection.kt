@@ -196,6 +196,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         when (v?.id) {
 
             R.id.class_name -> {
+                if (selectedType == Constant.two) return
                 selectedType = Constant.two
                 binding.className.setBackgroundResource(R.drawable.bg_primary)
                 binding.className.setTextColor(Color.WHITE)
@@ -208,6 +209,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             }
 
             R.id.mode_name -> {
+                if(selectedType == Constant.three) return
                 selectedType = Constant.three
                 binding.modeName.setBackgroundResource(R.drawable.bg_primary)
                 binding.modeName.setTextColor(Color.WHITE)
@@ -220,6 +222,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             }
 
             R.id.category_name -> {
+                if (selectedType == Constant.one) return
                 selectedType = Constant.one
                 binding.categoryName.setBackgroundResource(R.drawable.bg_primary)
                 binding.categoryName.setTextColor(Color.WHITE)

@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.Parent
 
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -59,19 +60,34 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()
+
+
         enableEdgeToEdge()
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updateLayoutParams { height = systemBars.top }
-            WindowInsetsCompat.CONSUMED
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            // Android 10 and below → use legacy fullscreen flags
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        } else {
+            // Android 11 and above → handle insets with customBottomNav
+            ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.updateLayoutParams { height = systemBars.top }
+                WindowInsetsCompat.CONSUMED
+            }
+
+            ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.updatePadding(bottom = systemBars.bottom)
+                insets
+            }
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(bottom = systemBars.bottom)
-            insets
-        }
+
+
+
 
 
         Constant.isParentChoose = true
@@ -289,6 +305,31 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     fun openDrawer() {
         if (::drawerLayout.isInitialized) {
             drawerLayout.openDrawer(GravityCompat.START)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        enableEdgeToEdge()
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            // Android 10 and below → use legacy fullscreen flags
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        } else {
+            // Android 11 and above → handle insets with customBottomNav
+            ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.updateLayoutParams { height = systemBars.top }
+                WindowInsetsCompat.CONSUMED
+            }
+
+            ViewCompat.setOnApplyWindowInsetsListener(binding.customBottomNav) { view, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.updatePadding(bottom = systemBars.bottom)
+                insets
+            }
         }
     }
 
