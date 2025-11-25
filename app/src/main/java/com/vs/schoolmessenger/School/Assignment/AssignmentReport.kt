@@ -254,8 +254,11 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
     private fun isGetAcademicYear() {
         appViewModel!!.isGetAcademicYear(isAccessToken!!, this)
     }
+
+
     private fun scrollToMessageId(headerId: String?) {
         if (msg_id == -1) return
+
         isAssignmentReportData?.let { list ->
             val index = list.indexOfFirst { it.id== headerId }
             if (index != -1) {
@@ -275,13 +278,17 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
             viewHolder?.itemView?.let { itemView ->
                 val originalBackground = itemView.background
+
                 itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
                 Handler(Looper.getMainLooper()).postDelayed({
                     itemView.background = originalBackground
                 }, 3000)
             }
         }
     }
+
+
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = NewAcademicYearAdapter(this, isAcademicYear)
         binding.toolbarLayout.isAcademicSpinner.adapter = adapter
