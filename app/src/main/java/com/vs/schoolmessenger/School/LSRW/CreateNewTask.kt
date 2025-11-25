@@ -503,7 +503,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             stopVoiceRecording()
         }
         mAdapter?.releaseMediaPlayer()
-        Constant.selectedFiles.clear()
+//        Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         updateRemainingCount()
         super.onBackPressed()
