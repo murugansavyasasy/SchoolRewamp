@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/rlaSeekBarAndTitle"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:id="@+id/audioBubble"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/twenty_five"
-    android:background="@drawable/rect_shadow_white">
+    android:visibility="visible"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentEnd="true"
+    android:background="@drawable/rect_shadow_white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <ImageView
         android:id="@+id/imgVoicePlay"
-        android:layout_width="@dimen/thirty"
-        android:layout_height="@dimen/thirty"
+        android:layout_width="@dimen/fourty"
+        android:layout_height="@dimen/fourty"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/eight"
         android:src="@drawable/video_play" />
@@ -22,9 +25,9 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/thirty"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/imgVoicePlay"
+        android:layout_toEndOf="@id/lblTime"
         android:layout_toStartOf="@id/lblCurrentDuration"
-        android:layout_marginStart="@dimen/twele"
+        android:layout_marginStart="0dp"
         android:layout_marginEnd="@dimen/twele" />
 
 
@@ -50,6 +53,8 @@
         android:text="00:00"
         android:textColor="@color/black"
         android:textSize="@dimen/fourteen_sp"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 </RelativeLayout>
+
+
