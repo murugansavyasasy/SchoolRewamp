@@ -246,15 +246,29 @@
                                 android:textColor="#7A7A7A"
                                 android:textSize="14sp" />
                         </LinearLayout>
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:layout_marginTop="@dimen/ten"
+                            android:id="@+id/lnrUpload"
+                            android:layout_width="match_parent"
+                            android:gravity="center"
+                            android:paddingVertical="@dimen/twele"
+                            android:background="@drawable/rect_orange_bg"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/lblUpload"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:textSize="@dimen/fifteen_sp"
+                                android:layout_width="wrap_content"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:drawablePadding="@dimen/twele"
+                                android:drawableEnd="@drawable/right_arrow_ic"
+                                android:text="@string/continue_to_upload"
+                                android:layout_height="wrap_content">
+                            </TextView>
+                        </LinearLayout>
                     </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btnUpload"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Upload">
-
-                    </Button>
 
                 </LinearLayout>
 
